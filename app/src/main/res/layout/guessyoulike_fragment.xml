@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+      style="@style/divider10dp"></View>
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/roles_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/bg_f2"
+        android:dividerHeight="10dp"
+        android:scrollbars="none" />
+
+    <include layout="@layout/item_no_data_layout" />
+
+</LinearLayout>

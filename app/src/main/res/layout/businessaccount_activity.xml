@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="账户余额"
+            android:textColor="@color/font_black_28"
+            android:textSize="15sp"/>
+
+        <com.zemult.merchant.view.RiseNumberTextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0"
+            android:textColor="@color/red"
+            android:textSize="60sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_money"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/tv_money"
+            android:text="元"
+            android:textColor="@color/red"
+            android:textSize="16sp"/>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/btn_withdrawals"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/tv_money"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="提现"
+            android:textColor="@color/btn_normal"
+            android:textSize="16sp"
+            app:rv_cornerRadius="5dp"
+            app:rv_strokeColor="@color/btn_normal"
+            app:rv_strokeWidth="1dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/bg_f2"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="记录"
+        android:textColor="@color/font_black_28"
+        android:textSize="15sp"/>
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/lv_business_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/dividerinset"
+        android:dividerHeight="1dp"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:scrollbars="none"/>
+
+    <View
+        style="@style/divider"></View>
+
+    <include
+        layout="@layout/item_no_data_layout"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_f2"></View>
+
+
+</LinearLayout>

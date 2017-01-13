@@ -1,0 +1,250 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/layout_head"/>
+
+    <View style="@style/divider10dp"
+        android:background="@color/bg_e5"/>
+    
+    <RelativeLayout
+        android:id="@+id/ll_liuliang"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/liuliang_moshi"/>
+
+        <!--<com.inroids.slash.view.SwitchView-->
+            <!--android:id="@+id/ispublic_sv"-->
+            <!--android:layout_width="50dip"-->
+            <!--android:layout_height="20dip"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="10dp" />-->
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sc_liuliang"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false" />
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_xiaoxi_tixing"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/xiaoxi_tingxing"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sc_xiaoxi_tixing"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_black"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="黑名单管理"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_invite_friend"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/invite_friend"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_empty_cache"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/empty_cache"/>
+        <TextView
+            android:id="@+id/tv_cashsize"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@+id/iv_empty_cache_right"
+            style="@style/my_setting_text"
+            android:textColor="#bfbfbf"
+            android:textSize="@dimen/font_30px"
+            android:text="96.8M"/>
+
+
+        <ImageView
+            android:id="@+id/iv_empty_cache_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+    </RelativeLayout>
+
+    <View style="@style/divider10dp"
+        android:background="@color/bg_e5"/>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_fankui"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/yijian_fankui"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_help"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/help"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true"
+            android:background="#b3b4b5"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_about_us"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="@string/about_us"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/divider"
+        android:layout_alignParentBottom="true"
+        android:background="#b3b4b5"/>
+
+    <!--开启debug-->
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_debug"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+
+    </RelativeLayout>
+</LinearLayout>

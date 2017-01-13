@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_f0"
+    tools:context=".activity.mine.message.PushMessageActivity">
+
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head" />
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_atme"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_wode_icon"
+            android:text="\@我" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_atme_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right1"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_commentlist"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_pinglun_icon"
+            android:text="评论" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_comment_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right2"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/xiaoxiliang_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_zanlsit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_zan_icon"
+            android:text="赞" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_zan_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right3"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_sysmessage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_xiaoxi_icon"
+            android:text="系统消息" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_sysmessage_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right4"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_noticemessage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_tongzhi_icon"
+            android:text="通知消息" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_noticemessage_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right7"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_coastmessage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/message_xiaofei_icon"
+            android:text="消费任务消息" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_coastmessage_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right5"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_topicmessage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            style="@style/my_mini_text"
+            android:gravity="left|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/msg_xiaoxi_icon"
+            android:text="圈子邀请消息" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_topicmessage_count"
+            android:layout_marginLeft="10dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right6"
+            android:layout_marginRight="10dp"
+            style="@style/text_12_wtite"
+            android:background="@mipmap/inform_icon"
+            android:text="2" />
+
+        <ImageView
+            android:id="@+id/iv_right6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>
+

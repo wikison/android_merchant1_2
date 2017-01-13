@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:id="@+id/view"
+        android:layout_above="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_transparent"/>
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="146dp">
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_sina"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/xinglang_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="新浪微博"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_wechat"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/wei_xing_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="微信"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_wechat_friend"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/peng_you_quan_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="微信朋友圈"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_qq"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/qq_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="QQ"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_resend"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/fasong_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="转发"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/divider" />
+
+        <RelativeLayout
+            android:clickable="true"
+            android:background="@drawable/ripple_item_clicked"
+            android:id="@+id/ll_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
+
+            <TextView
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textSize="@dimen/font_34px"
+                android:textColor="@color/font_black_333" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

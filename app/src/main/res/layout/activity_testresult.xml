@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+    <include layout="@layout/layout_head"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_width="310dp"
+        android:layout_height="400dp"
+        app:rv_cornerRadius="10dp"
+        app:rv_backgroundColor="@color/white">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/yes_sj"/>
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="验单成功!"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="42dp"
+            android:textColor="@color/font_black_333"
+            android:textSize="17sp"
+            android:layout_below="@+id/iv"
+            />
+        
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优惠商家"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="45dp"
+            android:textColor="@color/font_black_333"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv"/>
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_black_999"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_alignTop="@+id/tv1"
+            android:text=""/>
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优惠金额"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="19dp"
+            android:textColor="@color/font_black_333"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv1"/>
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_black_999"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_alignTop="@+id/tv2"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="兑换码"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="19dp"
+            android:textColor="@color/font_black_333"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv2"/>
+        <TextView
+            android:id="@+id/code_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_black_999"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_alignTop="@+id/tv3"
+            android:text=""/>
+
+
+
+    </com.flyco.roundview.RoundRelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

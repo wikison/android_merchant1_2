@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_f2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_merchant_type_buy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/length_88px"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/white"
+            android:drawableRight="@mipmap/right_btn"
+            android:drawableEnd="@mipmap/right_btn"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:paddingRight="@dimen/margin_12dp"
+            android:text="@string/buy_slash"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_30px">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:text="@string/buy_slash_note"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px"
+            android:padding="@dimen/margin_12dp" />
+
+        <TextView
+            android:id="@+id/tv_merchant_type_normal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/length_88px"
+            android:background="@color/white"
+            android:drawableRight="@mipmap/right_btn"
+            android:drawableEnd="@mipmap/right_btn"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:paddingRight="@dimen/margin_12dp"
+            android:text="@string/normal_slash"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_30px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:text="@string/normal_slash_note"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px"
+            android:padding="@dimen/margin_12dp" />
+    </LinearLayout>
+</LinearLayout>

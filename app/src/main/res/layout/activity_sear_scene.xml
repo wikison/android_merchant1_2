@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/re0"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/include_layout_head"
+        android:background="@color/bg_f2">
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="horizontal"
+            rv:rv_backgroundColor="@color/white"
+            rv:rv_cornerRadius="6dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:background="@mipmap/search_spoiler_source" />
+
+            <EditText
+                android:id="@+id/scensear_et_search"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/include_layout_head"
+                android:layout_marginLeft="-12dp"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="#9a9999"
+                android:textSize="15sp" />
+
+        </com.flyco.roundview.RoundLinearLayout>
+    </RelativeLayout>
+
+
+    <View style="@style/view1dp"></View>
+
+    <LinearLayout
+        android:id="@+id/tucao_ll"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tucao_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="23dp"
+            android:drawableLeft="@mipmap/search_spoiler_source"
+            android:drawablePadding="11dp"
+            android:text="没搜到   吐个槽"
+            android:textColor="@color/bg_head"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"></View>
+
+    <View style="@style/view1dp"></View>
+
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/scencsea_lv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/suggust_go_lv"
+        android:background="@color/white"
+        android:padding="3dp" />
+
+
+</LinearLayout>

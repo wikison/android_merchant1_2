@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.activity.search.SendLabelActivity">
+    <include layout="@layout/layout_head" />
+
+
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:text="回复彩虹象"
+        android:layout_margin="@dimen/j10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_labeldestription"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="top|left"
+        android:textColor="@color/font_black_666"
+        android:text=""
+        android:maxLength="500"
+        android:scrollHorizontally="true"
+        android:padding="12dp"
+        android:background="@color/white"/>
+
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="提交"
+        android:id="@+id/btn_send"
+        style="@style/btn_common_orange"
+        android:layout_width="200dp"
+        android:layout_height="35dp" />
+
+</LinearLayout>

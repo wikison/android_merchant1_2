@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/urlTv"
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/ip_switch_sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/ips" />
+
+    <Button
+        android:layout_marginTop="35dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_head"
+        android:onClick="switchIp"
+        android:padding="5dp"
+        android:text="切换"
+        android:textColor="#fff"
+        android:textSize="16sp" />
+
+</LinearLayout>

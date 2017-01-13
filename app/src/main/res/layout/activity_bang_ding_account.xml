@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zemult.merchant.activity.mine.BangDingAccountActivity">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginTop="21dp"
+        android:id="@+id/rel_zhifu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_left"
+            android:background="@mipmap/zhifu_btn"
+            android:layout_width="166dp"
+            android:layout_height="128dp" />
+
+        <TextView
+            android:id="@+id/tv_myaccount"
+            android:layout_toRightOf="@+id/iv_left"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/zhifu_btn_right"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:gravity="bottom|right"
+            style="@style/text_18_white"
+            android:layout_height="128dp"/>
+
+    </RelativeLayout>
+        <TextView
+            android:id="@+id/account_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/text_18_white"
+            android:text="未绑定"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+
+
+    </FrameLayout>
+</LinearLayout>

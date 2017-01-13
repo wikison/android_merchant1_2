@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textColor="@color/font_black_28"
+        android:textSize="@dimen/font_32px"
+        android:text="ddddddddddd"
+        />
+
+    <RelativeLayout
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_head"
+            android:textSize="@dimen/font_28px"
+            android:text="去探索"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@mipmap/zuorenwu_icon"/>
+
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxde探索  xx人参与"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px" />
+
+    </RelativeLayout>
+</LinearLayout>
+
+
+
+

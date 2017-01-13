@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.zemult.merchant.activity.mine.MyInfoActivity">
+
+    <include
+        layout="@layout/layout_head"/>
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:id="@+id/rll_task_describe"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="12dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="5dp"
+        app:rv_strokeColor="#e1e1e1"
+        app:rv_strokeWidth="1px">
+
+        <EditText
+            android:id="@+id/et_task_describe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="这个人很懒，说两句话都懒得说，别说动了。。。。。。"
+            android:maxLines="6"
+            android:minLines="6"
+            android:padding="@dimen/margin_12dp"
+            android:textColor="@color/font_black_46"
+            android:textSize="@dimen/font_28px"/>
+
+    </com.flyco.roundview.RoundRelativeLayout>
+
+    <View style="@style/divider_1px"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_f2">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="13dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_leftsecond"
+            style="@style/text_16_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1''"
+            android:visibility="invisible"/>
+
+        <RelativeLayout
+            android:id="@+id/rel_voice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:visibility="invisible">
+
+            <com.flyco.roundview.RoundRelativeLayout
+                android:id="@+id/rll_voice"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                app:rv_cornerRadius="8dp"
+                app:rv_strokeColor="@color/divider_dc"
+                app:rv_strokeWidth="1dp">
+
+                <ImageView
+                    android:id="@+id/iv_voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/yuyan_icon"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_second"
+                    android:layout_toRightOf="@+id/iv_voice"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="点击播放"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:progressDrawable="@drawable/progressbar"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:gravity="center"
+                    android:text="0s"
+                    android:textColor="@color/font_black_46"
+                    android:textSize="@dimen/font_30px"/>
+
+            </com.flyco.roundview.RoundRelativeLayout>
+            <!--<com.flyco.roundview.RoundRelativeLayout-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:id="@+id/rll_voice"-->
+            <!--android:layout_width="190dp"-->
+            <!--android:layout_height="32dp"-->
+            <!--android:layout_marginTop="12dp"-->
+            <!--app:rv_backgroundColor="@color/bg_head"-->
+            <!--app:rv_backgroundPressColor="@color/btn_press"-->
+            <!--app:rv_cornerRadius="8dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_voice"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/luying_icon" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_length"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="1''"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/font_30px" />-->
+
+            <!--</com.flyco.roundview.RoundRelativeLayout>-->
+
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/imageButtonDial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@mipmap/btn_speak_normal"
+            />
+
+        <TextView
+            style="@style/text_16_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="随便说两句"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

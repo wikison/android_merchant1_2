@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_34px"
+            android:text="dddd"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_merchant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:textColor="@color/font_black_46"
+            android:text="ddddddddddd"
+            android:textSize="@dimen/font_28px"/>
+
+    </LinearLayout>
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="5dp"
+        app:rv_strokeColor="#e1e1e1"
+        app:rv_strokeWidth="1px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="消费总额(元)："
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_30px"/>
+
+        <TextView
+            android:visibility="gone"
+            android:gravity="center_vertical|right"
+            android:id="@+id/tv_fuhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥ "
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/font_36px"/>
+
+        <EditText
+            android:id="@+id/et_paymoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:hint="请输入支付金额"
+            android:inputType="numberDecimal"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/font_36px"/>
+
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_16_black_666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="实付金额"
+            android:textColor="@color/font_black_28"/>
+
+        <TextView
+            android:id="@+id/tv_money_realpay"
+            style="@style/text_18_black_666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:textColor="@color/bg_head"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_pay"
+        style="@style/text_18_white"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/common_selector_btn"
+        android:text="确认支付"/>
+</LinearLayout>

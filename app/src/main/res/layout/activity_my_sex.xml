@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical"
+    tools:context=".activity.mine.MySexActivity">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#f4f4f4"></View>
+
+    <!--<RadioGroup-->
+    <!--android:id="@+id/rg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/white"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/man_rb"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:button="@null"-->
+    <!--android:layout_marginLeft="14dp"-->
+    <!--android:layout_marginRight="14dp"-->
+    <!--android:text="男"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textColor="#535252"-->
+    <!--android:drawableRight="@mipmap/chec_btn"-->
+    <!--android:layout_height="43dp" />-->
+
+    <!--<View style="@style/viewonedp"></View>-->
+
+    <!--<RadioButton-->
+    <!--android:id="@+id/woman_rb"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:button="@null"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textColor="#535252"-->
+    <!--android:layout_marginLeft="14dp"-->
+    <!--android:layout_marginRight="14dp"-->
+    <!--android:text="女"-->
+    <!--android:drawableRight="@mipmap/chec_btn"-->
+    <!--android:layout_height="43dp" />-->
+
+
+    <!--</RadioGroup>-->
+
+    <RelativeLayout
+        android:id="@+id/male_rl"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:text="男"
+            android:textColor="#535252"
+            android:layout_centerVertical="true"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/male_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/chec_btn"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp" />
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/female_rl"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:text="女"
+            android:textColor="#535252"
+            android:layout_centerVertical="true"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/female_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/chec_btn"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>

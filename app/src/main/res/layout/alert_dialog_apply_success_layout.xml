@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="50dp">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_backgroundColor="@color/aliceblue"
+        app:rv_cornerRadius="8dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_32px"
+            android:text="恭喜您申请成功"/>
+
+        <View style="@style/divider"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_ok"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="#007aff"
+            android:textSize="@dimen/font_34px"
+            android:text="确定"
+            android:textStyle="bold"/>
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+</LinearLayout>

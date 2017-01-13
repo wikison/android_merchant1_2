@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <!--<RelativeLayout-->
+    <!--android:clickable="true"-->
+    <!--android:background="@drawable/ripple_item_clicked2"-->
+    <!--android:id="@+id/certification_rl"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="44dp">-->
+
+    <!--<TextView-->
+    <!--android:layout_marginLeft="12dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:drawableLeft="@mipmap/cer_icon"-->
+    <!--android:drawablePadding="12dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="实名认证"-->
+    <!--android:textColor="#666666" />-->
+
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="18dp"-->
+    <!--android:src="@mipmap/right_btn" />-->
+
+    <!--</RelativeLayout>-->
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2"
+        android:id="@+id/change_rl"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="12dp"
+            android:drawableLeft="@mipmap/screat_icon"
+            android:gravity="center"
+            android:text="修改密码"
+            android:textColor="#666666" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:src="@mipmap/right_btn" />
+
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+
+</LinearLayout>

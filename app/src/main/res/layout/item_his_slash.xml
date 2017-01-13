@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingRight="12dp">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        app:rv_cornerRadius="8dp"
+        app:rv_strokeColor="@color/divider_dc"
+        app:rv_strokeWidth="1px">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_level"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:maxLines="1"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_20px"
+                android:text="xxx"/>
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:maxLines="1"
+                android:textColor="@color/bg_head"
+                android:textSize="@dimen/font_24px"
+                android:text="0"/>
+
+
+        </LinearLayout>
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+
+
+
+</LinearLayout>
+
+

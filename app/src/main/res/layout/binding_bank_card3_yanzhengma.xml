@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/binding_linearLayout">
+
+        <TextView
+
+            style="@style/binding_text"
+            android:text="手机号" />
+
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/binding_edittext"
+            android:layout_weight="10"
+            android:hint="请输入手机号"
+            android:inputType="number"
+            android:maxLength="11"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="12dp"
+            android:layout_height="2px"
+            android:background="@color/white"/>
+        <View
+            android:layout_marginLeft="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#f7f7f7"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/binding_linearLayout">
+
+        <TextView
+            style="@style/binding_text"
+            android:text="验证码" />
+
+        <EditText
+            android:id="@+id/et_code"
+            style="@style/binding_edittext"
+            android:layout_weight="10"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:maxLength="6"/>
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/view_resend_divider"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="#f7f7f7"/>
+
+        <TextView
+            android:id="@+id/tv_sendcode"
+            android:layout_width="124dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:background="#ffa726"
+            android:gravity="center"
+            android:text="发送验证码"
+            android:textColor="#fff"
+            android:textSize="@dimen/font_30px" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bt_over"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="54dp"
+            android:background="@drawable/commit"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_30px" />
+    </RelativeLayout>
+</LinearLayout>

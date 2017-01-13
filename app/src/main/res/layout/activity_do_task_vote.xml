@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head" />
+    <include layout="@layout/layout_do_task_info" />
+
+    <View
+        style="@style/divider10dp"
+        />
+    <RadioGroup
+        android:layout_marginBottom="50dp"
+        android:background="@color/white"
+        android:id="@+id/rg_vote"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RadioGroup>
+
+        </LinearLayout>
+</ScrollView>

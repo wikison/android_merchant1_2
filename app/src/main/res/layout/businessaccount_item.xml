@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="交易入账"
+            android:textColor="@color/font_black_46"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_type"
+            android:layout_marginTop="2dp"
+            android:text="2016-8-10"
+            android:textColor="@color/font_black_999"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/go_btn"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/font_black_46"
+            android:textSize="14sp"
+            android:text="+1000"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/note_tv"
+            android:layout_below="@+id/money_tv"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/go_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="12"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/font_black_999"
+            android:textSize="11sp"
+            android:text="10天销售100"/>
+       <ImageView
+           android:id="@+id/go_btn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:layout_alignParentRight="true"
+           android:src="@mipmap/right_btn"/>
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

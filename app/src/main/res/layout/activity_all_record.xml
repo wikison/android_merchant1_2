@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f0">
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/smoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="88dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:scrollbars="none"></com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_head" />
+
+        <com.zemult.merchant.view.FilterViewHasTwoListViewView
+            android:id="@+id/fv_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.zemult.merchant.view.FilterViewHasTwoListViewView>
+
+
+    </LinearLayout>
+</FrameLayout>

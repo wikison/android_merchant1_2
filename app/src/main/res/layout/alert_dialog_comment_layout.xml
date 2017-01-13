@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_reply"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="@color/font_black_888"
+        android:textSize="@dimen/font_30px"
+        android:text="回复"/>
+
+    <View style="@style/divider"/>
+
+    <TextView
+        android:id="@+id/tv_report"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="@color/font_black_888"
+        android:textSize="@dimen/font_30px"
+        android:text="举报"/>
+
+    <View style="@style/divider"/>
+
+    <View style="@style/divider10dp"
+        android:layout_height="12dp"/>
+
+    <View style="@style/divider"/>
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="@color/font_black_888"
+        android:textSize="@dimen/font_30px"
+        android:text="取消"/>
+
+
+</LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:elevation="1dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_12dp"
+        android:background="@color/bg_f2" />
+
+    <RelativeLayout
+        android:id="@+id/rl_task_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_12dp">
+
+        <TextView
+            android:id="@+id/tv_role_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:singleLine="true"
+            android:text="美食管家de探索"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_28px" />
+
+        <TextView
+            android:id="@+id/tv_join_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_toRightOf="@id/tv_role_name"
+            android:singleLine="true"
+            android:text="15人参与"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/font_28px" />
+
+        <TextView
+            android:id="@+id/tv_task_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/font_black_888"
+            android:textSize="@dimen/font_28px"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_role_name"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:gravity="left"
+            android:text=""
+            android:textColor="@color/font_black_333"
+            android:textSize="@dimen/font_32px"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_publish_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:paddingBottom="@dimen/margin_12dp"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px" />
+
+        <TextView
+            android:id="@+id/tv_publish_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:paddingBottom="@dimen/margin_12dp"
+            android:singleLine="true"
+            android:text="13分钟前"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px" />
+    </RelativeLayout>
+
+</LinearLayout>

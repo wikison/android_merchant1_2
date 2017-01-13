@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/layout_head" />
+    <LinearLayout
+        android:background="@color/bg_f0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/margin_lr_12dp"
+            android:layout_height="@dimen/length_88px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/people" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:text="@string/hint_select_role"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_28px" />
+        </LinearLayout>
+
+
+        <com.zemult.merchant.view.SmoothListView.SmoothListView
+            android:id="@+id/lv_my_role"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/dividerinset"
+            android:dividerHeight="1dp"
+            android:fadingEdge="none"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
+    </LinearLayout>
+</LinearLayout>

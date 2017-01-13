@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.flyco.roundview.RoundRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:layout_marginTop="12dp"
+            app:rv_cornerRadius="5dp"
+            app:rv_strokeColor="#e1e1e1"
+            app:rv_strokeWidth="1px">
+
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="发你想的..."
+                android:lines="5"
+                android:padding="@dimen/margin_12dp"
+                android:scrollHorizontally="true"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_30px" />
+
+            <TextView
+                android:id="@+id/editnum"
+                style="@style/text_10_black_999"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/et_task_title"
+                android:paddingBottom="@dimen/margin_6dp"
+                android:paddingRight="@dimen/margin_6dp"
+                android:text="500" />
+
+        </com.flyco.roundview.RoundRelativeLayout>
+
+        <include
+            layout="@layout/include_choose_imgs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white" />
+
+        <View style="@style/divider10dp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_remindwho"
+            style="@style/container_height100"
+            android:background="@drawable/ripple_item_clicked2"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:paddingRight="@dimen/margin_12dp">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@mipmap/dotask_at"
+                android:text="提醒谁看" />
+
+            <TextView
+                android:id="@+id/tv_remindwho"
+                style="@style/text_14_black_999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@mipmap/right_btn"
+                android:text="" />
+        </RelativeLayout>
+
+        <View style="@style/divider_1px" />
+
+        <RelativeLayout
+            android:id="@+id/rl_putvoice"
+            style="@style/container_height100"
+            android:background="@drawable/ripple_item_clicked2"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:paddingRight="@dimen/margin_12dp">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@mipmap/dotask_voice"
+                android:text="插入语音" />
+
+            <TextView
+                android:id="@+id/tv_putvoice"
+                style="@style/text_14_black_999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/margin_12dp"
+                android:drawableRight="@mipmap/right_btn"
+                android:text="" />
+        </RelativeLayout>
+
+        <View style="@style/divider_1px" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.activity.mine.ChangePassSucActivity">
+
+    <include
+        layout="@layout/layout_head"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="44dp"
+        android:src="@mipmap/check_btn_yes3" />
+
+    <TextView
+        android:id="@+id/tv_remark"
+        style="@style/text_15_black_999"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:text="修改成功"/>
+
+    <Button
+        android:id="@+id/ok_btn"
+        style="@style/common_btn_235"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:text="@string/btn_finish"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

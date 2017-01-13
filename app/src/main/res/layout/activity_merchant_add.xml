@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_full_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_88px"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true"
+                android:paddingRight="@dimen/margin_12dp">
+
+                <ImageView
+                    android:id="@+id/iv_full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/merchant_name_icon"/>
+
+                <EditText
+                    android:id="@+id/tv_fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@+id/iv_name_right"
+                    android:layout_toRightOf="@+id/iv_full_name"
+                    android:background="@color/transparent"
+                    android:enabled="false"
+                    android:singleLine="true"
+                    android:text="商家名称"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+
+                <ImageView
+                    android:id="@+id/iv_name_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/right_btn"/>
+            </RelativeLayout>
+
+            <View style="@style/divider_1px"/>
+
+            <LinearLayout
+                android:id="@+id/ll_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_chooseclassify"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dip"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:clickable="true"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <ImageView
+                        android:id="@+id/iv_classify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:scaleType="matrix"
+                        android:src="@mipmap/merchant_scene_classification_icon"/>
+
+                    <TextView
+                        android:id="@+id/tv_classify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/iv_classify"
+                        android:text="选择行业"
+                        android:textColor="@color/font_black_999"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <ImageView
+                        android:id="@+id/iv_class"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="matrix"
+                        android:src="@mipmap/right_btn"/>
+                </RelativeLayout>
+
+                <View style="@style/divider_1px"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_choosearea"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dip"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:clickable="true"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <ImageView
+                        android:id="@+id/area_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:scaleType="matrix"
+                        android:src="@mipmap/merchant_region_icon"/>
+
+                    <TextView
+                        android:id="@+id/tv_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/area_iv"
+                        android:layout_toRightOf="@+id/area_iv"
+                        android:text="选择地区"
+                        android:textColor="@color/font_black_999"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="matrix"
+                        android:src="@mipmap/right_btn"/>
+
+                </RelativeLayout>
+
+                <View style="@style/divider_1px"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dip"
+                    android:background="@color/white"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <ImageView
+                        android:id="@+id/iv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:scaleType="matrix"
+                        android:src="@mipmap/merchant_address_icon"/>
+
+                    <EditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_address"
+                        android:layout_toRightOf="@+id/iv_address"
+                        android:background="@null"
+                        android:hint="填写详细地址"
+                        android:textColor="@color/font_black_999"
+                        android:textSize="@dimen/font_30px"/>
+                </RelativeLayout>
+
+                <View style="@style/divider_1px"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_12dp"></LinearLayout>
+
+
+            <View
+                style="@style/divider_1px"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_certification"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_88px"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true"
+                android:paddingRight="12dp">
+
+
+                <ImageView
+                    android:id="@+id/naap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/merchant_real_name"/>
+
+                <ImageView
+                    android:id="@+id/iv_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_btn"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="法人/负责人实名认证"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/naap"
+                    android:layout_toEndOf="@+id/naap"
+                    android:id="@+id/textView9" />
+            </RelativeLayout>
+
+            <View
+                style="@style/divider_1px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_12dp"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_uploadimage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_88px"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true">
+
+                <View
+                    style="@style/divider_1px"
+                    android:layout_alignParentTop="true"/>
+
+
+                <ImageView
+                    android:id="@+id/cer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/merchant_document_upload_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/cer"
+                    android:text="证件上传"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+
+                <TextView
+                    android:id="@+id/tv_uploadimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="40dip"
+                    android:text="营业执照或住所证明等"
+                    android:textColor="@color/font_black_999"/>
+
+                <ImageView
+                    android:id="@+id/iv_uploadimage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/right_btn"/>
+
+                <View
+                    style="@style/divider_1px"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_12dp"></LinearLayout>
+
+            <View
+                style="@style/divider_1px"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/margin_12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/yonjin_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:text="佣金比例"
+                    android:textColor="@color/font_black_28"
+                    android:textSize="@dimen/font_30px"/>
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:rv_cornerRadius="6dp"
+                    app:rv_strokeColor="@color/divider_c1"
+                    app:rv_strokeWidth="1px">
+
+                    <EditText
+                        android:id="@+id/et_yongjin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:gravity="center_horizontal"
+                        android:hint="0~100"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/font_black_333"
+                        android:textSize="@dimen/font_30px"/>
+                </com.flyco.roundview.RoundLinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:background="@color/transparent"
+                    android:text="%"
+                    android:textColor="@color/font_black_28"
+                    android:textSize="@dimen/font_30px"/>
+
+
+            </LinearLayout>
+
+            <View style="@style/divider_1px"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/margin_12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    android:src="@mipmap/dianhua_icon"/>
+
+
+                <EditText
+                    android:id="@+id/et_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transparent"
+                    android:hint="联系电话"
+                    android:inputType="phone"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+            </LinearLayout>
+
+            <View style="@style/divider_1px"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_tixian"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_88px"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/merchant_real_name"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提现方式"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"
+                     />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_btn"/>
+            </LinearLayout>
+
+            <View style="@style/divider_1px"/>
+
+            <TextView
+                android:visibility="gone"
+                android:text="审核不通过的原因如下"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:id="@+id/tv_check_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_28px"/>
+
+            <LinearLayout
+                android:id="@+id/ll_protocol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_6dp">
+
+                <CheckBox
+                    android:id="@+id/cb_agree"
+                    style="@style/MyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我确定同意"
+                    android:textSize="@dimen/font_24px"/>
+
+                <TextView
+                    android:id="@+id/tv_protocol"
+                    style="@style/text_12_black_46"
+                    android:text="《商家入驻协议》"
+                    android:textColor="@color/font_main"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_commit"
+                style="@style/common_btn_235"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:text="完成"
+                android:textColor="@color/font_fff"
+                android:textSize="18dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#5004080f">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_scan"
+        android:layout_width="@dimen/j200dp"
+        android:layout_height="@dimen/j200dp"
+        android:layout_below="@+id/layout_head"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/j60dp">
+
+        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+            android:id="@+id/qrv_View"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/qrv_View"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/line_btn"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/qrv_View"
+            android:layout_alignTop="@+id/qrv_View"
+            android:src="@mipmap/bugle_btn_four"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/qrv_View"
+            android:layout_alignTop="@+id/qrv_View"
+            android:src="@mipmap/bugle_btn_one"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/qrv_View"
+            android:layout_alignLeft="@+id/qrv_View"
+            android:src="@mipmap/bugle_btn_two"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/qrv_View"
+            android:layout_alignRight="@+id/qrv_View"
+            android:src="@mipmap/bugle_btn_three"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_scan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/j35dp"
+        android:gravity="center"
+        android:text="@string/hint_qr"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_30px"/>
+
+    <TextView
+        android:id="@+id/tv_mine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_hint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/j35dp"
+        android:gravity="center"
+        android:text="我的二维码"
+        android:textColor="#09bc07"
+        android:textSize="@dimen/font_30px"
+        android:visibility="gone"/>
+
+</RelativeLayout>

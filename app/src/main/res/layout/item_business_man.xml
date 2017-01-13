@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_16dp"
+        android:paddingBottom="@dimen/margin_16dp">
+
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_32px" />
+
+
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_28px" />
+
+        </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_daiqianyue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="等待签约"
+            android:layout_marginRight="16dp"
+            android:textColor="#e6bb7c"
+            android:textSize="@dimen/font_32px" />
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_right"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_btn"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_qianyue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View style="@style/divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/tv_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="约客管理"
+                android:textColor="#e6bb7c"
+                android:textSize="@dimen/font_28px" />
+
+            <View style="@style/divider"
+                android:layout_width="1px"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/tv_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="商户账户"
+                android:textColor="#e6bb7c"
+                android:textSize="@dimen/font_28px" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View style="@style/divider"/>
+    <View style="@style/divider12dp"/>
+
+
+</LinearLayout>

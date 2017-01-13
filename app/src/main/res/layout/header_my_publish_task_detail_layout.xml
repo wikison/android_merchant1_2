@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="1px"
+              android:elevation="1px"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/container_height88"
+        android:elevation="1px">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:text="状态"/>
+
+        <TextView
+            android:id="@+id/tv_task_state"
+            style="@style/text_15_black_28"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/container_height88"
+        android:layout_marginTop="1px"
+        android:elevation="1px">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:text="角色"/>
+
+        <TextView
+            android:id="@+id/tv_task_role_name"
+            style="@style/text_15_black_28"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:background="@color/white"
+        android:elevation="1px"
+        android:paddingBottom="@dimen/margin_12dp"
+        android:paddingLeft="@dimen/margin_12dp"
+        android:paddingRight="@dimen/margin_12dp">
+
+        <TextView
+            android:id="@+id/tv_title_task_title"
+            style="@style/text_15_black_28"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:text="标题"/>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_task_title"
+            style="@style/text_14_black_46"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_task_title"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:gravity="left"
+            android:minLines="1"
+            android:padding="@dimen/margin_12dp"
+            android:text=""
+            app:rv_cornerRadius="5dp"
+            app:rv_strokeColor="@color/divider_c1"
+            app:rv_strokeWidth="1px"/>
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_below="@+id/tv_task_title"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:text="描述"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_task_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="1px"
+        android:paddingBottom="@dimen/margin_12dp"
+        android:paddingRight="@dimen/margin_12dp">
+
+        <com.flyco.roundview.RoundRelativeLayout
+            android:id="@+id/rll_task_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            app:rv_cornerRadius="5dp"
+            app:rv_strokeColor="@color/divider_c1"
+            app:rv_strokeWidth="1px">
+
+            <EditText
+                android:id="@+id/et_task_describe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:focusable="false"
+                android:gravity="top|left"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_28px"/>
+        </com.flyco.roundview.RoundRelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/container_height88"
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:elevation="1px">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:text="截止时间"/>
+
+        <TextView
+            android:id="@+id/tv_task_end_time"
+            style="@style/text_14_black_999"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_merchant_trade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1px"
+        android:background="@color/white"
+        android:elevation="1px"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_12dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_width="match_parent"
+            android:text="交易设置"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp">
+
+            <TextView
+                style="@style/text_15_black_999"
+                android:layout_alignParentLeft="true"
+                android:text="折扣比例"/>
+
+            <TextView
+                android:id="@+id/tv_discount"
+                style="@style/text_15_black_999"
+                android:layout_alignParentRight="true"
+                android:text="折扣比例"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp">
+
+            <TextView
+                style="@style/text_15_black_999"
+                android:layout_alignParentLeft="true"
+                android:text="佣金比例"/>
+
+            <TextView
+                android:id="@+id/tv_commission"
+                style="@style/text_15_black_999"
+                android:layout_alignParentRight="true"
+                android:text="佣金比例"/>
+        </RelativeLayout>
+
+        <View style="@style/divider_1px"
+            android:layout_marginTop="@dimen/margin_12dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_reward"
+        style="@style/container_height88"
+        android:layout_marginTop="1px"
+        android:elevation="1px">
+
+        <TextView
+            android:id="@+id/tv_reward"
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:text="红包"/>
+
+        <TextView
+            android:id="@+id/tv_task_bonuse"
+            style="@style/text_14_black_999"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_complete_num"
+        style="@style/text_15_black_28"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:layout_marginTop="1px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_12dp"
+        android:text="当前任务完成人数"
+        android:textColor="@color/font_black_28"
+        android:textSize="@dimen/font_28px"/>
+
+
+    <com.zemult.merchant.view.FixedListView
+        android:id="@+id/lv_vote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+    </com.zemult.merchant.view.FixedListView>
+
+
+</LinearLayout>
+

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_f2"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.flyco.roundview.RoundTextView
+                android:layout_marginRight="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_pic_num"
+                app:rv_backgroundColor="@color/half_transparent"
+                app:rv_cornerRadius="12dp"
+                android:textColor="@color/white"
+                android:text="0张"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="@dimen/font_24px"
+                android:background="@color/half_transparent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="8dp" />
+        </RelativeLayout>
+    </FrameLayout>
+
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_32px" />
+
+        <LinearLayout
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/dingwei_icon" />
+
+            <TextView
+                android:layout_marginLeft="6dp"
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_28px" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人均"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_28px" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_28px"
+                android:text="0"/>
+
+            <View style="@style/divider"
+                android:background="#3b424c"
+                android:layout_width="1px"
+                android:layout_height="24dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_28px"
+                android:text="0人到店消费"/>
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/divider"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <View style="@style/divider12dp" />
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <View style="@style/divider"
+            android:layout_marginTop="4dp"
+            android:layout_width="12dp"
+            android:layout_height="2px"
+            android:background="#e6bb7c"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#e6bb7c"
+            android:textSize="@dimen/font_32px"
+            android:text="约客推荐"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            />
+
+        <View style="@style/divider"
+            android:layout_marginTop="4dp"
+            android:layout_width="12dp"
+            android:layout_height="2px"
+            android:background="#e6bb7c"/>
+
+    </LinearLayout>
+</LinearLayout>

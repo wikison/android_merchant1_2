@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/bg_e5"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_12dp"
+        android:text="@string/text_my_slash"
+        android:textColor="@color/font_black_333"
+        android:textSize="@dimen/font_28px" />
+
+    <View style="@style/divider_1px" />
+
+
+
+    <com.zemult.merchant.view.swipelistview.SwipeListView
+        android:id="@+id/sml_my_slash"
+        android:divider="@color/divider_c1"
+        android:dividerHeight="1px"
+        android:headerDividersEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"/>
+
+</LinearLayout>

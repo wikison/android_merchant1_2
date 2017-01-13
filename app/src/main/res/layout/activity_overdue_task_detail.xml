@@ -1,0 +1,63 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_head" />
+
+        <include layout="@layout/layout_do_task_info" />
+
+        <RelativeLayout
+            android:id="@+id/rl_all_task_complete"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="@drawable/ripple_item_clicked"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <View
+                style="@style/divider"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="看看完成任务的还有谁"
+                android:textColor="@color/font_black_666"
+                android:textSize="@dimen/font_24px" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/right_btn" />
+
+        </RelativeLayout>
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true" />
+
+
+        <com.zemult.merchant.view.FixedListView
+            android:id="@+id/lv_task_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@null"
+            android:scrollbars="none"></com.zemult.merchant.view.FixedListView>
+
+
+    </LinearLayout>
+
+</ScrollView>
+
+

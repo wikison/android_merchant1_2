@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/lh_btn_back"
+                android:layout_width="@dimen/j44dp"
+                android:layout_height="@dimen/j44dp"
+                android:background="@mipmap/back_btn"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lh_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/font_main"
+            android:textSize="18sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/lh_btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="right|center_vertical"
+            android:paddingRight="@dimen/margin_12dp"
+            android:src="@mipmap/fabutansuo_icon"
+            android:visibility="visible" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_marginRight="@dimen/margin_12dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/bg_head"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/font_black_28"
+                app:tabTextColor="@color/font_black_999" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View style="@style/divider" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_my_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

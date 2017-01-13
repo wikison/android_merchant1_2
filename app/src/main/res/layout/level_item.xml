@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="74dp">
+        <TextView
+            android:id="@+id/rank_tv"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/bg_head"
+            android:textSize="15sp"
+            android:text="10"/>
+
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="31dp">
+
+        <ImageView
+            android:id="@+id/myhead_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/xml_circle_grey_bg"
+            />
+
+            <ImageView
+                android:id="@+id/paizi_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+            />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/myname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="17dp"
+            android:layout_toRightOf="@+id/frame"
+            android:text="张美食家"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/tv_state"
+            android:textColor="#666"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/others_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myname_tv"
+            android:layout_below="@+id/myname_tv"
+            android:layout_marginTop="10dp"
+            android:text="等级5"
+            android:textColor="#999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/tomark"
+            android:textSize="@dimen/font_24px"
+            android:layout_marginRight="12dp"
+             />
+    </RelativeLayout>
+</LinearLayout>

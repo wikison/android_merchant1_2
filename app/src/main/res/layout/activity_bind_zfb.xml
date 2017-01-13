@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+    <TextView
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请输入您的账号"
+        android:textColor="@color/font_black_999"
+        android:textSize="@dimen/font_28px"/>
+
+    <View style="@style/divider"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:background="@color/transparent"
+            android:id="@+id/et_zfb"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:hint="账号"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_30px"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/common_btn_235"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="55dp"
+        android:text="完成"
+        android:textColor="@color/font_fff"
+        android:textSize="18dp"/>
+
+</LinearLayout>

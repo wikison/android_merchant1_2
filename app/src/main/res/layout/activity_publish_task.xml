@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/layout_head"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_f2"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_part1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_role"
+                    style="@style/container_height88"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:elevation="1px"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_select_role"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/select_task_role"/>
+
+                    <TextView
+                        android:id="@+id/tv_select_role"
+                        style="@style/text_14_black_999"
+                        android:layout_toLeftOf="@+id/iv_right_role"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/margin_12dp"
+                        android:layout_marginRight="@dimen/margin_12dp"
+                        android:text="点击选择"/>
+
+                    <ImageView
+                        android:id="@+id/iv_right_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/right_btn"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_task_title"
+                    style="@style/container_height88"
+                    android:layout_marginTop="1px"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_task_title"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/task_title"/>
+
+
+                </RelativeLayout>
+
+                <com.flyco.roundview.RoundRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_strokeColor="#e1e1e1"
+                    app:rv_strokeWidth="1px">
+
+                    <EditText
+                        android:id="@+id/et_task_title"
+                        style="@style/edit_14_black_46"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="top|left"
+                        android:hint="@string/input_task_title"
+                        android:minLines="1"
+                        android:padding="@dimen/margin_12dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_num_limit"
+                        style="@style/text_10_black_999"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/et_task_title"
+                        android:paddingBottom="@dimen/margin_6dp"
+                        android:paddingRight="@dimen/margin_6dp"
+                        android:text="50"/>
+                </com.flyco.roundview.RoundRelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_publish_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_title_select_publish_type"
+                        style="@style/font32color666"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/select_task_type"/>
+
+                    <TextView
+                        android:id="@+id/tv_select_publish_type"
+                        style="@style/font32color999"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/margin_12dp"
+                        android:drawableRight="@mipmap/right_btn"
+                        android:text=""/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_task_describe"
+                    style="@style/container_height88"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_task_describe"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/task_describe"/>
+                </RelativeLayout>
+
+                <com.flyco.roundview.RoundRelativeLayout
+                    android:id="@+id/rll_task_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_strokeColor="#e1e1e1"
+                    app:rv_strokeWidth="1px">
+
+                    <EditText
+                        android:id="@+id/et_task_describe"
+                        style="@style/edit_14_black_46"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="top|left"
+                        android:hint="@string/input_task_describe"
+                        android:minLines="3"
+                        android:padding="@dimen/margin_12dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_num_limit"
+                        style="@style/text_10_black_999"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/et_task_describe"
+                        android:paddingBottom="@dimen/margin_6dp"
+                        android:paddingRight="@dimen/margin_6dp"
+                        android:text="150"/>
+                </com.flyco.roundview.RoundRelativeLayout>
+
+                <View
+                    style="@style/divider_1px"
+                    android:layout_marginTop="@dimen/margin_12dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_select_deadline"
+                    style="@style/container_height88"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_select_deadline"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/select_task_deadline"/>
+
+                    <com.zemult.merchant.view.PMNumView
+                        android:id="@+id/pmnv_select_deadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_part2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_bonuse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:elevation="1px"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_content_bonuse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/iv_del_bonuse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:src="@mipmap/qingchu_icon"
+                                android:visibility="gone"/>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_select_task_bonuses"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/ripple_item_clicked2"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/margin_12dp"
+                                android:paddingRight="@dimen/margin_12dp">
+
+                                <TextView
+                                    android:id="@+id/tv_title_select_task_bonuses"
+                                    style="@style/text_15_black_28"
+                                    android:layout_alignParentLeft="true"
+                                    android:text="@string/select_task_bonuses"/>
+
+                                <TextView
+                                    android:id="@+id/tv_select_task_bonuses"
+                                    style="@style/text_14_black_999"
+                                    android:layout_alignParentRight="true"
+                                    android:drawablePadding="@dimen/margin_12dp"
+                                    android:drawableRight="@mipmap/right_btn"
+                                    android:text=""/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_action_bonuse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/clear_bonuse"
+                                android:layout_width="@dimen/j60dp"
+                                android:layout_height="match_parent"
+                                android:background="#ffff4444"
+                                android:text="清除"
+                                android:textColor="@color/white"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_coupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1px"
+                    android:background="@color/white"
+                    android:elevation="1px"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_content_coupon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/iv_del_coupon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:src="@mipmap/qingchu_icon"
+                                android:visibility="gone"/>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_select_task_coupon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/ripple_item_clicked2"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/margin_12dp"
+                                android:paddingRight="@dimen/margin_12dp">
+
+                                <TextView
+                                    android:id="@+id/tv_title_select_task_coupon"
+                                    style="@style/text_15_black_28"
+                                    android:layout_alignParentLeft="true"
+                                    android:text="@string/select_task_coupon"/>
+
+                                <TextView
+                                    android:id="@+id/tv_select_task_coupon"
+                                    style="@style/text_14_black_999"
+                                    android:layout_alignParentRight="true"
+                                    android:drawablePadding="@dimen/margin_12dp"
+                                    android:drawableRight="@mipmap/right_btn"
+                                    android:text=""/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_action_coupon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/clear_coupon"
+                                android:layout_width="@dimen/j60dp"
+                                android:layout_height="match_parent"
+                                android:background="#ffff4444"
+                                android:text="清除"
+                                android:textColor="@color/white"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_vote"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1px"
+                    android:background="@color/white"
+                    android:elevation="1px"
+
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_content_vote"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/iv_del_vote"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:src="@mipmap/qingchu_icon"
+                                android:visibility="gone"/>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_insert_vote"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/ripple_item_clicked2"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="@dimen/margin_12dp"
+                                android:paddingRight="@dimen/margin_12dp">
+
+                                <TextView
+                                    android:id="@+id/tv_title_select_insert_vote"
+                                    style="@style/text_15_black_28"
+                                    android:layout_alignParentLeft="true"
+                                    android:text="@string/insert_vote"/>
+
+                                <TextView
+                                    android:id="@+id/tv_select_insert_vote"
+                                    style="@style/text_14_black_999"
+                                    android:layout_alignParentRight="true"
+                                    android:drawablePadding="@dimen/margin_12dp"
+                                    android:drawableRight="@mipmap/right_btn"
+                                    android:text=""/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_action_vote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/clear_vote"
+                                android:layout_width="@dimen/j60dp"
+                                android:layout_height="match_parent"
+                                android:background="#ffff4444"
+                                android:text="清除"
+                                android:textColor="@color/white"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1px"
+                    android:background="@color/white"
+                    android:elevation="1px"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/ll_content_person"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:id="@+id/iv_del_person"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="12dp"
+                                android:src="@mipmap/qingchu_icon"
+                                android:visibility="gone"/>
+
+                            <RelativeLayout
+                                android:id="@+id/rl_select_task_person"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ripple_item_clicked2"
+                                android:paddingLeft="@dimen/margin_12dp"
+                                android:paddingRight="@dimen/margin_12dp">
+
+                                <TextView
+                                    android:id="@+id/tv_title_select_task_person"
+                                    style="@style/text_15_black_28"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/select_task_person"/>
+
+                                <TextView
+                                    android:id="@+id/tv_select_task_person"
+                                    style="@style/text_14_black_999"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:drawablePadding="@dimen/margin_12dp"
+                                    android:drawableRight="@mipmap/right_btn"
+                                    android:text=""/>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_action_person"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/clear_person"
+                                android:layout_width="@dimen/j60dp"
+                                android:layout_height="match_parent"
+                                android:background="#ffff4444"
+                                android:text="清除"
+                                android:textColor="@color/white"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <View style="@style/divider_1px"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_part3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:layout_marginBottom="@dimen/margin_12dp"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_merchant_name"
+                    style="@style/container_height88"
+                    android:elevation="1px"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_merchant_name"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/trade_merchant"/>
+
+                    <TextView
+                        android:id="@+id/tv_merchant_name"
+                        style="@style/text_14_black_999"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/margin_12dp"
+                        android:text="XXX"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_commission"
+                    style="@style/container_height88"
+                    android:layout_marginTop="1px"
+                    android:elevation="1px"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_commission"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/commission_set"/>
+
+                    <com.flyco.roundview.RoundRelativeLayout
+                        android:id="@+id/rll_task_commission"
+                        android:layout_width="@dimen/j50dp"
+                        android:layout_height="@dimen/j36dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_12dp"
+                        android:layout_toLeftOf="@+id/tv_commission"
+                        app:rv_cornerRadius="5dp"
+                        app:rv_strokeColor="@color/divider_c1"
+                        app:rv_strokeWidth="1px">
+
+                        <EditText
+                            android:id="@+id/et_commission"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:digits="0123456789."
+                            android:gravity="center"
+                            android:hint="0-100"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:maxLines="1"
+                            android:textColor="@color/font_black_46"
+                            android:textSize="@dimen/font_32px"/>
+                    </com.flyco.roundview.RoundRelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_commission"
+                        style="@style/text_14_black_999"
+                        android:layout_width="@dimen/margin_12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/margin_12dp"
+                        android:gravity="center_vertical|right"
+                        android:text="%"
+                        android:textColor="@color/font_black_46"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_discount"
+                    style="@style/container_height88"
+                    android:layout_marginTop="1px"
+                    android:elevation="1px"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:paddingRight="@dimen/margin_12dp">
+
+                    <TextView
+                        android:id="@+id/tv_title_discount"
+                        style="@style/text_15_black_28"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/discount_set"/>
+
+                    <com.flyco.roundview.RoundRelativeLayout
+                        android:id="@+id/rll_task_discount"
+                        android:layout_width="@dimen/j50dp"
+                        android:layout_height="@dimen/j36dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_12dp"
+                        android:layout_toLeftOf="@+id/tv_discount"
+                        app:rv_cornerRadius="5dp"
+                        app:rv_strokeColor="@color/divider_c1"
+                        app:rv_strokeWidth="1px">
+
+                        <EditText
+                            android:id="@+id/et_discount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:digits="0123456789."
+                            android:gravity="center"
+                            android:hint="0-10"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"
+                            android:textColor="@color/font_black_46"
+                            android:textSize="@dimen/font_32px"/>
+                    </com.flyco.roundview.RoundRelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_discount"
+                        style="@style/text_14_black_999"
+                        android:layout_width="@dimen/margin_12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="@dimen/margin_12dp"
+                        android:gravity="center_vertical|right"
+                        android:text="折"
+                        android:textColor="@color/font_black_46"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

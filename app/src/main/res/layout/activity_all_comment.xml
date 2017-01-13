@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_root"
+    tools:context="com.zemult.merchant.activity.slash.AllCommentActivity">
+
+    <include layout="@layout/layout_head"/>
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/smoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:scrollbars="none">
+
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+
+    // 评论栏
+
+    <RelativeLayout
+        android:background="@color/divider_dc"
+        android:id="@+id/rl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentTop="true" />
+
+
+        <EditText
+            android:imeOptions="actionSend"
+            style="@style/topbar_edit_text"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:id="@+id/et_comment"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/xml_round_white_bg2"
+            android:hint="写评论..."
+            android:maxLength="250"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

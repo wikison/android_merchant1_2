@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="@color/font_black_666"
+        android:textSize="@dimen/font_24px"
+        android:text="ddddddddd"/>
+
+    <View style="@style/divider"/>
+
+    <TextView
+        android:id="@+id/tv_del"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="#e9494a"
+        android:textSize="@dimen/font_36px"
+        android:text="删除"/>
+
+    <View style="@style/divider"/>
+
+    <View style="@style/divider10dp"
+        android:layout_height="12dp"/>
+
+    <View style="@style/divider"/>
+    <TextView
+        android:id="@+id/tv_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:gravity="center"
+        android:textColor="@color/font_black_333"
+        android:textSize="@dimen/font_36px"
+        android:text="取消"/>
+
+
+</LinearLayout>

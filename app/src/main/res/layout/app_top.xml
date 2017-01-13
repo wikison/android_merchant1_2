@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_layout_top"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/font_black_28"
+    android:visibility="gone" >
+
+    <!-- android:visibility="gone" -->
+
+    <Button
+        android:id="@+id/top_left_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:drawableLeft="@mipmap/back_btn"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone"
+         />
+
+    <Button
+        android:id="@+id/top_left_btn_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/back_btn"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/top_center_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:maxEms="7"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <!-- android:layout_marginRight="8.6dip" -->
+
+    <Button
+        android:id="@+id/top_right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:textColor="@drawable/head_right_text_color"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/top_right_btn_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="17.3dip"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/top_right_btn_image_2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dip"
+        android:layout_toLeftOf="@+id/top_right_btn_image"
+        android:background="@null"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/top_right_btn_image_3"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dip"
+        android:layout_toLeftOf="@+id/top_right_btn"
+        android:background="@null"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ivTopRightDot2"
+        style="@style/btm_dot"
+        android:layout_alignRight="@+id/top_right_btn_image_2"
+        android:layout_alignTop="@+id/top_right_btn_image_2"
+        android:layout_marginRight="-3dp"
+        android:layout_marginTop="-2dp" />
+
+    <ImageButton
+        android:id="@+id/_ib_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:padding="10dp"
+        android:src="@null"
+        android:visibility="gone" />
+
+</RelativeLayout>

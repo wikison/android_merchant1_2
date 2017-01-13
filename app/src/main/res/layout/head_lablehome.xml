@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_toplab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大家眼中的我"
+            style="@style/text_14_black_666"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_seeMore"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查看更多"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            style="@style/text_14_black_999"
+            />
+    </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        style="@style/divider" />
+
+    <com.zemult.merchant.view.FNRadioGroup
+        android:id="@+id/view_wordwrap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        />
+    <ImageView
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:id="@+id/iv_nodatalabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/zanwushuju"
+        />
+    <TextView
+        android:id="@+id/tv_goTask"
+        android:gravity="left|center_vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="去做任务获取更多标签"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        style="@style/text_14_black_666"
+        />
+
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="标签记录"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        style="@style/text_14_black_666"
+        />
+
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        style="@style/divider" />
+
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:id="@+id/iv_nodatalist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/zanwushuju"
+        />
+</LinearLayout>

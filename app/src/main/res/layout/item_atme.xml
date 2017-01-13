@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View style="@style/divider10dp"
+            android:background="@color/transparent" />
+
+        <View style="@style/divider"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/include_plan_user_message_layout"/>
+    <TextView
+        android:id="@+id/tv_atwho"
+        android:textColor="@color/bg_head"
+        android:textSize="14sp"
+        android:text="我"
+        android:background="@drawable/ripple_item_clicked2"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/include_atme_bottum_layout"/>
+
+    <View
+        style="@style/divider10dp"/>
+
+</LinearLayout>
+

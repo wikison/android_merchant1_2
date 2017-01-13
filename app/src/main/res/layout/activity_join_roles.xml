@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/joinrole_iv"
+                android:layout_width="match_parent"
+                android:layout_height="228dp"
+                android:src="@mipmap/add_friend_icon" />
+
+            <TextView
+                android:id="@+id/joinrole_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="美食管家"
+                android:textColor="#d05f1d"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="20dp"
+                android:background="#d05f1d"></View>
+
+            <TextView
+                android:id="@+id/joinrole_intro1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="21dp"
+                android:text="你是一个名副其实的美食达人吗?"
+                android:textColor="#b35219"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/joinrole_intro2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:text="你了解各式各样的美食店铺吗?"
+                android:textColor="#b35219"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/joinrole_intro3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:text="你有一套特有的美食心得吗?"
+                android:textColor="#b35219"
+                android:textSize="16dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="21dp"
+                android:background="#d05f1d"></View>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/joinrole_go_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:layout_weight="1"
+                android:text="点击查看如何玩转角色"
+                android:textColor="#793209"
+                android:textSize="11sp" />
+
+            <RelativeLayout
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/joinrole_check"
+                        style="@style/CheckboxTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="我确定满足以上要求并同意"
+                        android:textColor="#adadad"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/joinrole_rule_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="8dp"
+                        android:text="xxxx条款"
+                        android:textColor="#ffa726"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/joinrole_commit"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/commit"
+                android:text="立即参与"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

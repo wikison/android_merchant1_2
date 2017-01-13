@@ -1,0 +1,287 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f0"
+    android:orientation="vertical"
+    android:id="@+id/ll_root">
+
+    <include layout="@layout/layout_head" />
+
+    <com.zemult.merchant.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_top_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_comment_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:clickable="true"
+                    android:id="@+id/rl_all_comment"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/ripple_item_clicked">
+
+                    <LinearLayout
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="全部评论  ("
+                            android:textColor="@color/font_black_666"
+                            android:textSize="@dimen/font_24px" />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:id="@+id/tv_comment_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/font_black_666"
+                            android:textSize="@dimen/font_24px"  />
+
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=")"
+                            android:textColor="@color/font_black_666"
+                            android:textSize="@dimen/font_24px"  />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/right_btn"/>
+                </RelativeLayout>
+
+                <View style="@style/divider"
+                    android:layout_alignParentBottom="true"/>
+
+                <com.zemult.merchant.view.FixedListView
+                    android:id="@+id/lv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:divider="@null"
+                    android:background="@color/white">
+                </com.zemult.merchant.view.FixedListView>
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </LinearLayout>
+    </com.zemult.merchant.view.BounceScrollView>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        // 评论栏
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:visibility="gone"
+            android:id="@+id/rl_comment"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <View
+                style="@style/divider"
+                android:layout_alignParentTop="true" />
+
+            <ImageButton
+                android:layout_alignParentRight="true"
+                android:id="@+id/iv_commentexpression"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/expression"
+                android:background="@color/transparent"/>
+
+            <EditText
+                android:imeOptions="actionSend"
+                style="@style/topbar_edit_text"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:id="@+id/et_comment"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_commentexpression"
+                android:background="@drawable/xml_round_white_bg2"
+                android:hint="请输入评论"
+                android:maxLength="250"
+                android:padding="8dp" />
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/include_emoji_vierpager_layout"
+            android:visibility="gone" />
+
+        // bottom bar
+
+
+        <View style="@style/divider" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:background="@color/bg_f4"
+            android:gravity="center_vertical"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/zhuanfa_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="@string/slash_trans"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="35dp"
+                android:background="@color/divider_c1" />
+
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/chat2_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="@string/slash_comment"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="35dp"
+                android:background="@color/divider_c1" />
+
+            <LinearLayout
+                android:id="@+id/ll_star"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/star_btn" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="@string/slash_collect"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="35dp"
+                android:background="@color/divider_c1" />
+
+            <LinearLayout
+                android:id="@+id/ll_like"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked"
+                android:clickable="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/heart2_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="@string/slash_like"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

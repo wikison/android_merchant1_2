@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <include
+        layout="@layout/include_plan_user_message_zan_layout"/>
+
+    <include layout="@layout/include_zanandcomment_bottum_layout"/>
+
+
+    <View
+        style="@style/divider10dp"/>
+
+</LinearLayout>
+

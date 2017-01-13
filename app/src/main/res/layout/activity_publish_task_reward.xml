@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_f2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_12_black_333"
+                android:text="优惠券单张抵扣金额"/>
+
+            <EditText
+                android:id="@+id/et_voucher_money"
+                style="@style/edit_15_black_333"
+                android:digits="0123456789."
+                android:elevation="1dp"
+                android:hint="输入优惠券抵扣金额"
+                android:imeOptions="actionNext"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/text_12_black_333"
+                android:text="优惠券数量"/>
+
+            <EditText
+                android:id="@+id/et_voucher_num"
+                style="@style/edit_15_black_333"
+                android:digits="0123456789"
+                android:elevation="1dp"
+                android:hint="输入本次发布的优惠券数量"
+                android:imeOptions="actionNext"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/text_12_black_333"
+                android:text="最低消费额度"/>
+
+            <EditText
+                android:id="@+id/et_voucher_min_money"
+                style="@style/edit_15_black_333"
+                android:digits="0123456789"
+                android:elevation="1dp"
+                android:hint="满足最低消费额度才能使用本券, 无最低额度写0"
+                android:imeOptions="actionNext"
+                android:inputType="number"/>
+
+            <TextView
+                style="@style/text_12_black_333"
+                android:text="优惠券有效期"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_88px"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true"
+                android:elevation="1dp">
+
+                <TextView
+                    android:id="@+id/tv_voucher_end_time"
+                    style="@style/edit_15_black_333"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:clickable="true"
+                    android:text="设置优惠券有效期"
+                    android:textColor="@color/font_black_999"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <CheckBox
+                    android:id="@+id/cb_is_union"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_12dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_6dp"
+                    android:text="可以和其他优惠券叠加使用"
+                    android:textColor="@color/font_black_666"
+                    android:textSize="@dimen/font_22px"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/j120dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_6dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:textColor="@color/font_black_333"
+                    android:text="@string/remark"/>
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_12dp"
+                    android:padding="@dimen/margin_12dp"
+                    app:rv_cornerRadius="10dp"
+                    app:rv_strokeColor="@color/divider_c1"
+                    app:rv_strokeWidth="1px">
+
+                    <EditText
+                        android:id="@+id/et_voucher_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:gravity="left|top"
+                        android:hint="备注使用规则..."
+
+                        android:textColor="@color/font_black_666"
+                        android:textSize="@dimen/font_24px"/>
+                </com.flyco.roundview.RoundLinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/j80dp"
+                android:background="@color/white"
+                android:gravity="bottom|center_horizontal">
+
+                <Button
+                    android:id="@+id/btn_commit"
+                    style="@style/common_btn_235"
+                    android:layout_marginBottom="@dimen/margin_12dp"
+                    android:text="发布"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"></LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

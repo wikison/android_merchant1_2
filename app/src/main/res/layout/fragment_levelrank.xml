@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="#f2f2f2"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="我的排行"
+        android:textColor="@color/font_black_333"
+        android:textSize="10sp" />
+    <View
+        style="@style/view1dp">
+
+    </View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp">
+
+        <ImageView
+            android:id="@+id/myhead_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:src="@drawable/xml_circle_grey_bg" />
+
+        <TextView
+            android:id="@+id/myname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="17dp"
+            android:layout_toRightOf="@+id/myhead_iv"
+            android:text="用户名"
+            android:textColor="#666"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/others_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myname_tv"
+            android:layout_below="@+id/myname_tv"
+            android:layout_marginTop="10dp"
+            android:text="等级"
+            android:textColor="#999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/tomark"
+            android:textSize="@dimen/font_24px"
+            android:layout_marginRight="12dp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+    <View
+        style="@style/view1dp">
+
+    </View>
+
+
+<TextView
+    android:id="@+id/rank_tv"
+    android:layout_width="match_parent"
+    android:layout_height="24dp"
+    android:background="#f2f2f2"
+    android:gravity="center_vertical"
+    android:paddingLeft="12dp"
+    android:text="我的排行"
+    android:textColor="@color/font_black_333"
+    android:textSize="10sp"
+    />
+
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/rank_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+</LinearLayout>

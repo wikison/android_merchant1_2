@@ -1,0 +1,152 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.zemult.merchant"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.1.0"
+        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel", RELEASE_VERSION_VALUE:"v1.1.0",DEBUG_VERSION_VALUE:"测试版本号:Android_${releaseTime()}"]
+    }
+
+
+    signingConfigs {
+        config {
+            keyPassword 'password'
+            keyAlias "android.keystore"
+            storeFile file('androids.keystore')
+            storePassword 'password'
+        }
+
+        release {
+            keyAlias "slash"
+            keyPassword "zemaslash"
+            storeFile file("../zema.jks")
+            storePassword "314159"
+        }
+    }
+
+
+    buildTypes {
+
+        release {
+            debuggable true
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        //XieGang__d00_2016-06-18_v6.2.0.apk
+                        def fileName = "Yogous_${releaseTime()}_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a","x86"
+            }
+        }
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a","x86"
+            }
+        }
+    }
+
+
+    productFlavors {
+        d00 {}
+//        d01 {}
+//        d02 {}
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE:name]
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.belerweb/pinyin4j/pom.properties'
+        exclude 'META-INF/maven/com.belerweb/pinyin4j/pom.xml'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.1'
+    compile files('libs/com.umeng.fb.5.4.0.jar')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.belerweb:pinyin4j:2.5.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0'
+    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.jungly:gridPasswordView:0.3'
+    compile 'cn.trinea.android.common:trinea-android-common:4.2.15'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    testCompile 'junit:junit:4.12'
+    compile files('libs/aliyun-oss-sdk-android-2.2.0.jar')
+    compile files('libs/photoview.jar')
+    compile files('libs/AMap_Location_V2.2.0_20151222.jar')
+    compile files('libs/mta-sdk-1.6.2.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile files('libs/open_sdk_r5509.jar')
+    compile files('libs/SocialSDK_QQZone_3.jar')
+    compile files('libs/SocialSDK_Sina.jar')
+    compile files('libs/SocialSDK_WeiXin_1.jar')
+    compile files('libs/SocialSDK_WeiXin_2.jar')
+    compile files('libs/weiboSDKCore_3.1.4.jar')
+    compile files('libs/umeng_social_sdk.jar')
+    compile 'com.wang.avi:library:1.0.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
+    compile project(':Pushlib')
+    compile project(':YunWangVideoSDK')
+    compile project(':OneSDK')
+    compile project(':volley')
+    compile project(':library')
+    compile 'info.hoang8f:android-segmented:1.0.6'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'in.srain.cube:grid-view-with-header-footer:1.0.12'
+    compile 'co.lujun:androidtagview:1.0.3'
+    compile 'com.yanzhenjie:permission:1.0.4'
+    compile files('libs/alipaySingle-20161009.jar')
+    compile 'com.hedgehog.ratingbar:app:1.1.2'
+}

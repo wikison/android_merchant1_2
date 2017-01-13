@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f0"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head" />
+
+
+    <TextView
+        android:id="@+id/tip_tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="请设置支付密码,建议勿与银行卡取款密码相同"
+        android:textColor="#666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:padding="10dp"
+        android:textSize="@dimen/font_32px"
+        android:textStyle="bold"
+        android:text="请输入旧密码以确认身份" />
+
+    <com.zemult.merchant.view.password.GridPasswordView
+        android:id="@+id/password_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="30dp"
+        android:clickable="true" />
+
+    <Button
+        android:id="@+id/next_step_btn"
+        style="@style/btn_common_orange"
+        android:layout_marginTop="@dimen/margin_48dp"
+        android:gravity="center"
+        android:text="下一步"/>
+
+</LinearLayout>

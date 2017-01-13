@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/fl_root">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/view_fraction"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@color/bg_head"/>
+    </RelativeLayout>
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:padding="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        app:rv_strokeColor="#dcdcdc"
+        app:rv_strokeWidth="1dp">
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/tv_num"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十"
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_24px"
+            android:maxLines="2"/>
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1222ww2人"
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_24px"/>
+    </com.flyco.roundview.RoundRelativeLayout>
+</FrameLayout>
+

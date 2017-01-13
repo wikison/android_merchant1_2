@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="58dp"
+    android:orientation="vertical">
+    <View style="@style/divider10dp"
+        android:layout_height="12dp"
+        android:id="@+id/view_top"
+        android:elevation="1px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_marginLeft="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_black_28"
+                    android:textSize="@dimen/font_28px"
+                    android:text="dddd"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:src="@mipmap/dengji_icon"/>
+
+                <TextView
+                    android:id="@+id/tv_user_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_head"
+                    android:textSize="@dimen/font_26px" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv_describe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_20px"
+                android:text="ddddddddd"/>
+        </LinearLayout>
+
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/iv_selected"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/chec_btn"
+            />
+
+    </LinearLayout>
+
+
+    <View style="@style/divider"/>
+
+
+</LinearLayout>

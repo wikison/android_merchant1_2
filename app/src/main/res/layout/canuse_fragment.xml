@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:orientation="vertical">
+
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/card_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:divider="@null"
+        android:background="#f2f2f2"
+        android:scrollbars="none">
+
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+    <include layout="@layout/item_no_data_layout"/>
+
+
+</LinearLayout>

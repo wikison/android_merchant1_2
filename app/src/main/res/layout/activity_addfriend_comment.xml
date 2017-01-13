@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_e5"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_12dp"
+        android:text="你需要发送验证申请, 等待对方通过"
+        android:textColor="@color/font_black_888"
+        android:textSize="@dimen/font_24px" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_100px"
+        android:background="@color/font_fff">
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:text="dddddddddd"
+            android:textSize="@dimen/font_36px" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/et_comment"
+            android:layout_alignRight="@+id/et_comment"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:src="@mipmap/delete_btn" />
+    </RelativeLayout>
+</LinearLayout>

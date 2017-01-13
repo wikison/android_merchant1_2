@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <View style="@style/divider_1px" />
+
+    <com.zemult.merchant.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/white"
+                android:elevation="1px"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/j20dp"
+                android:paddingTop="@dimen/j20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/task_finish"
+                    android:textColor="@color/font_main"
+                    android:textSize="@dimen/font_36px" />
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/rll_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    android:layout_marginTop="@dimen/margin_12dp"
+                    android:gravity="left|center_vertical"
+                    android:padding="@dimen/margin_12dp"
+                    app:rv_backgroundColor="@color/experience"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_strokeColor="@color/divider_c1"
+                    app:rv_strokeWidth="1px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_experience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:text="XXXXXXX"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px" />
+                </com.flyco.roundview.RoundLinearLayout>
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/rll_bonus"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    android:layout_marginTop="@dimen/margin_12dp"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_12dp"
+                    app:rv_backgroundColor="@color/bonuse"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_strokeColor="@color/divider_c1"
+                    app:rv_strokeWidth="1px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                       />
+
+
+                    <TextView
+                        android:id="@+id/tv_bonuses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:text="XXXXXXX"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px" />
+
+                </com.flyco.roundview.RoundLinearLayout>
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/rll_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    android:layout_marginTop="@dimen/margin_12dp"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_12dp"
+                    app:rv_backgroundColor="@color/label"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_strokeColor="@color/divider_c1"
+                    app:rv_strokeWidth="1px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <com.flyco.roundview.RoundTextView
+                        android:id="@+id/rtv_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:padding="@dimen/margin_6dp"
+                        android:text="@string/get_task_reward"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px"
+                        app:rv_backgroundColor="@color/transparent"
+                        app:rv_cornerRadius="16dp"
+                        app:rv_strokeColor="@color/white"
+                        app:rv_strokeWidth="1px" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:text="@string/label_number"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px" />
+
+                </com.flyco.roundview.RoundLinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:paddingLeft="@dimen/margin_12dp"
+                android:paddingRight="@dimen/margin_12dp"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.zemult.merchant.view.FixedListView
+                    android:id="@+id/lv_vote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:scrollbars="none"
+                    android:visibility="gone">
+
+                </com.zemult.merchant.view.FixedListView>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_vote_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_vote_chose_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:text="6...等"
+                        android:textColor="@color/font_black_46"
+                        android:textSize="@dimen/font_30px" />
+
+                    <TextView
+                        android:id="@+id/tv_vote_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="展开"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_28px" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/j80dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="@dimen/common_btn_width_235"
+                    android:layout_height="@dimen/common_btn_height_35"
+                    android:background="@drawable/common_selector_btn"
+                    android:text="@string/confirm"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.zemult.merchant.view.BounceScrollView>
+</LinearLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/font_black_28">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/back_btn"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/chatdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="申请约客"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/channel_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@drawable/head_right_text_color"
+            android:textSize="15sp"
+            android:layout_marginRight="17dp"
+            android:layout_centerVertical="true"
+            android:text="编辑" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+            android:id="@+id/subscribe_main_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingBottom="14.0dip">
+
+            <TextView
+                android:id="@+id/shopname_tv"
+                android:layout_marginTop="15dp"
+                style="@style/subscribe_my_tip_text"
+                android:layout_marginLeft="12dp"
+                android:text="------"
+                 />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:padding="12dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/my_category_text"
+                    style="@style/subscribe_my_tip_text"
+                    android:text="我的服务" />
+
+                <TextView
+                    android:id="@+id/my_category_tip_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12.0dip"
+                    android:text="拖拽可以排序"
+                    android:visibility="invisible"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+
+            <com.zemult.merchant.view.DragGrid
+                android:id="@+id/userGridView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:gravity="center"
+                android:horizontalSpacing="5dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+
+
+            <TextView
+
+                android:layout_marginTop="12dp"
+                android:textColor="@color/font_black_46"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                style="@style/subscribe_more_tip_text"
+                android:text="选择服务" />
+
+            <com.zemult.merchant.view.OtherGridView
+                android:id="@+id/otherGridView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:gravity="center"
+                android:horizontalSpacing="5dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+                android:scrollbars="vertical"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp" />
+
+
+
+        </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/apply_btn"
+        style="@style/common_btn_235"
+        android:layout_gravity="center_horizontal"
+        android:text="申请成为约客"
+        android:layout_marginBottom="40dp"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:textSize="18sp"/>
+
+</LinearLayout>

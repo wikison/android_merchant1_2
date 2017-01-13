@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+    
+
+        <com.zemult.merchant.app.view.ScrollViewPager
+            android:id="@+id/imagebrowser_svp_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+		<include layout="@layout/include_image_detial_top"/>
+    <RelativeLayout
+        android:id="@+id/photo_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/naming_bg"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/photo_bt_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/commit"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="3dp"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+     <TextView
+        android:padding="5dp"
+        android:id="@+id/photo_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center_vertical|left"
+        android:paddingLeft="10dp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:textColor="@color/white"
+         android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/naming_bg"
+        android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

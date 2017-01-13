@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp">
+
+        <ImageView
+            android:id="@+id/level_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+             />
+
+        <TextView
+            android:id="@+id/level_tv"
+            style="@style/iamyueke_style"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="29dp"
+            android:layout_toRightOf="@+id/level_iv"
+            android:text="------约客 :" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            style="@style/iamyueke_style"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="29dp"
+            android:layout_toRightOf="@+id/level_tv"
+            android:text="------" />
+
+        <TextView
+            android:id="@+id/tv1"
+            style="@style/iamyueke_style"
+            android:layout_below="@+id/level_tv"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@+id/level_iv"
+            android:text="累积金额 :" />
+
+        <TextView
+            android:id="@+id/money_tv"
+            style="@style/iamyueke_style"
+            android:layout_alignTop="@+id/tv1"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@+id/tv1"
+            android:text="------" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/money_tv"
+            android:layout_marginLeft="17dp"
+            android:gravity="center"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="25dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar1"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="70dp"
+                android:max="9999"
+                android:layout_height="4dp"
+                android:progressDrawable="@drawable/progress_back" />
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_toRightOf="@+id/progress_bar1"
+                android:background="@color/white"></View>
+            <ProgressBar
+                android:id="@+id/progress_bar2"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="80dp"
+                android:max="99999"
+                android:layout_toRightOf="@id/v1"
+                android:layout_height="4dp"
+                android:progressDrawable="@drawable/progress_back" />
+            <View
+                android:id="@+id/v2"
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_toRightOf="@+id/progress_bar2"
+                android:background="@color/white"></View>
+
+            <ProgressBar
+                android:id="@+id/progress_bar3"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="80dp"
+                android:max="999999"
+                android:layout_toRightOf="@id/v2"
+                android:layout_height="4dp"
+                android:progressDrawable="@drawable/progress_back" />
+            <View
+                android:id="@+id/v3"
+                android:layout_width="2dp"
+                android:layout_height="4dp"
+                android:layout_toRightOf="@+id/progress_bar3"
+                android:background="@color/white"></View>
+            <ProgressBar
+                android:id="@+id/progress_bar4"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="80dp"
+                android:layout_toRightOf="@id/v3"
+                android:layout_height="4dp"
+                android:max="1000000"
+                android:progressDrawable="@drawable/progress_back" />
+
+            <TextView
+                android:id="@+id/tv0"
+            style="@style/levelranktop"
+            android:layout_below="@+id/v1"
+            android:layout_marginTop="8dp"
+            android:text="0" />
+
+            <TextView
+            android:id="@+id/tv11"
+            style="@style/levelranktop"
+            android:layout_below="@+id/v1"
+               android:layout_toRightOf="@id/tv0"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="8dp"
+            android:text="9999" />
+
+            <TextView
+            android:id="@+id/tv12"
+            style="@style/levelranktop"
+            android:layout_below="@+id/v3"
+           android:layout_toRightOf="@+id/tv11"
+                android:layout_marginLeft="60dp"
+            android:layout_marginTop="8dp"
+            android:text="99999" />
+
+
+            <TextView
+            android:id="@+id/tv13"
+            style="@style/levelranktop"
+            android:layout_below="@+id/v3"
+            android:layout_toRightOf="@+id/tv12"
+                android:layout_marginLeft="50dp"
+            android:layout_marginTop="8dp"
+            android:text="999999" />
+
+            <TextView
+            android:id="@+id/tv14"
+            style="@style/levelranktop"
+            android:layout_below="@+id/v3"
+            android:layout_toRightOf="@+id/tv13"
+                android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
+            android:text="1000000" />
+
+
+            <TextView
+            style="@style/levelrankbelow"
+            android:layout_below="@+id/tv11"
+            android:layout_alignLeft="@+id/tv11"
+            android:layout_marginTop="8dp"
+            android:text="铜牌" />
+
+            <TextView
+            style="@style/levelrankbelow"
+            android:layout_below="@+id/tv12"
+            android:layout_alignLeft="@+id/tv12"
+            android:layout_marginTop="8dp"
+            android:text="银牌" />
+
+            <TextView
+            style="@style/levelrankbelow"
+            android:layout_below="@+id/tv13"
+           android:layout_alignLeft="@+id/tv13"
+            android:layout_marginTop="8dp"
+            android:text="金牌" />
+
+
+            <TextView
+            style="@style/levelrankbelow"
+            android:layout_below="@+id/tv14"
+           android:layout_alignLeft="@+id/tv14"
+            android:layout_marginTop="8dp"
+            android:text="钻石" />
+
+
+        </RelativeLayout>
+
+
+        <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/level_iv"-->
+        <!--android:layout_marginLeft="17dp"-->
+        <!--android:layout_marginRight="17dp"-->
+        <!--android:layout_marginTop="25dp"-->
+        <!--android:gravity="center">-->
+
+        <!--<ProgressBar-->
+        <!--android:id="@+id/progress"-->
+        <!--style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="4dp"-->
+
+        <!--android:max="400"-->
+        <!--android:progressDrawable="@drawable/progress_back" />-->
+
+        <!--<LinearLayout-->
+        <!--android:background="@color/transparent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<View-->
+        <!--android:id="@+id/v1"-->
+        <!--android:layout_width="1px"                        android:layout_height="4dp"-->
+        <!--android:background="@color/bg_e5"></View>-->
+
+        <!--<TextView-->
+        <!--style="@style/levelranktop"-->
+        <!--android:layout_below="@+id/v1"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="0" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<View-->
+        <!--android:id="@+id/v2"-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="4dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@color/white"></View>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv11"-->
+        <!--style="@style/levelranktop"-->
+        <!--android:layout_below="@+id/v2"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="9999" />-->
+
+        <!--<TextView-->
+        <!--style="@style/levelrankbelow"-->
+        <!--android:layout_below="@+id/tv11"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="铜牌" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<View-->
+        <!--android:id="@+id/v3"-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="4dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@color/white"></View>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv12"-->
+        <!--style="@style/levelranktop"-->
+        <!--android:layout_below="@+id/v3"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="99999" />-->
+
+        <!--<TextView-->
+        <!--style="@style/levelrankbelow"-->
+        <!--android:layout_below="@+id/tv12"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="银牌" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<View-->
+        <!--android:id="@+id/v4"-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="4dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@color/white"></View>-->
+
+
+
+        <!--<TextView-->
+        <!--style="@style/levelrankbelow"-->
+        <!--android:layout_below="@+id/tv13"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="金牌" />-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="right">-->
+
+        <!--<View-->
+        <!--android:id="@+id/v5"-->
+        <!--android:layout_width="2dp"-->
+        <!--android:layout_height="4dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@color/bg_e5"></View>-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv14"-->
+        <!--style="@style/levelranktop"-->
+        <!--android:layout_below="@+id/v5"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="1000000" />-->
+
+        <!--<TextView-->
+        <!--style="@style/levelrankbelow"-->
+        <!--android:layout_below="@+id/tv14"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="钻石" />-->
+
+        <!--</RelativeLayout>-->
+        <!--</LinearLayout>-->
+        <!--</FrameLayout>-->
+
+        <TextView
+            android:id="@+id/distance_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="17dp"
+            android:text="还差-经验值升级为---"
+            android:textColor="@color/e6bb7c"
+            android:textSize="11sp" />
+
+    </RelativeLayout>
+
+
+    <View style="@style/divider12dp"></View>
+
+
+    <RelativeLayout
+        android:id="@+id/service_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            style="@style/iamyueke_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="服务记录"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="60dp"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/iamyueke_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="预约订单" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn" />
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/busmanage_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            style="@style/iamyueke_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="商户管理"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn" />
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/customanage_rl"
+
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            style="@style/iamyueke_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="客户管理"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn" />
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+</LinearLayout>

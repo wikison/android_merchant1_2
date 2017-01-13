@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="热门探索"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/font_black_46"
+        android:background="@color/bg_f2" />
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/hot_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <RelativeLayout
+        android:id="@+id/rl_more"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/font_black_46"
+            android:layout_centerInParent="true"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="更多热门探索" />
+
+        <View
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/hot"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:background="@color/font_black_46"
+
+            ></View>
+
+        <View
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/hot"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@color/font_black_46"
+
+            ></View>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="最新探索"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:textSize="12sp"
+        android:textColor="@color/font_black_46"
+        android:background="@color/bg_f2" />
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/newest_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+
+</LinearLayout>

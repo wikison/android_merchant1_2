@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_e5"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/contact_friend_list_Letter"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/headline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_e5"
+        />
+
+    <RelativeLayout
+        style="@style/margin_lr_12dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+
+                <TextView
+                    android:id="@+id/tv_my_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="醋溜蛋"
+                    android:padding="6dp"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px" />
+
+        <TextView
+            android:layout_below="@+id/tv_my_name"
+            android:id="@+id/tv_my_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="123"
+            android:padding="6dp"
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_30px" />
+
+
+        <Button
+            android:layout_height="26dp"
+            android:layout_width="70dp"
+            android:background="@drawable/common_selector_btn"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_fff"
+            android:textSize="@dimen/font_26px"
+            android:padding="3dp"
+            android:text="邀请"
+            android:visibility="gone"
+            android:id="@+id/btn_invite"
+            />
+        <Button
+            android:background="@drawable/common_selector_btn"
+            android:layout_height="30dp"
+            android:layout_width="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/font_fff"
+            android:textSize="@dimen/font_26px"
+            android:padding="3dp"
+            android:text="再邀请"
+            android:id="@+id/btn_againinvite"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <LinearLayout
+        android:id="@+id/ll_commit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:padding="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/bg_f2"
+            android:text="请选择举报原因"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px"
+            android:id="@+id/textView7" />
+
+        <View style="@style/divider"/>
+
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:divider="@null">
+
+        </ListView>
+        <View style="@style/divider"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ll_complete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_marginTop="52dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/check_btn_yes3"/>
+
+        <TextView
+        android:layout_marginTop="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="举报已提交"
+        android:textColor="@color/font_black_333"
+        android:textSize="@dimen/font_36px"/>
+        <TextView
+            android:gravity="center"
+            android:layout_margin="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/report_has_commit_tip"
+        android:textColor="@color/font_black_888"
+        android:textSize="@dimen/font_30px"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

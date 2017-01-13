@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:id="@+id/rtv_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:rv_backgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    style="@style/text_14_black_999"
+                    android:drawablePadding="@dimen/margin_8dp"
+                    android:gravity="center_vertical"
+                    android:text="2016-10-15"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/text_14_black_999"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="1"
+                    android:text="19:30"
+                    android:textSize="@dimen/font_22px"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_sale_cover"
+                        android:layout_width="@dimen/j40dp"
+                        android:layout_height="@dimen/j40dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/tv_money"
+                                style="@style/text_18_black_28"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:text="￥--"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/tv_state"
+                                style="@style/text_14_black_28"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="订单已完成"/>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tv_sale_name"
+                            style="@style/text_18_black_28"
+                            android:layout_marginTop="@dimen/margin_6dp"
+                            android:gravity="center_vertical"
+                            android:text="ddddddddd"
+                            android:textSize="@dimen/font_22px"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_to_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    style="@style/divider"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_12dp">
+
+                    <com.flyco.roundview.RoundTextView
+                        android:id="@+id/rtv_to_pay"
+                        style="@style/text_14_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/margin_12dp"
+                        android:paddingRight="@dimen/margin_12dp"
+                        android:text="去支付(还剩23小时19分)"
+                        android:textColor="@color/white"
+                        app:rv_backgroundColor="@color/font_main"
+                        app:rv_backgroundPressColor="@color/orange"
+                        app:rv_cornerRadius="35dp"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/divider_1px"/>
+    </com.flyco.roundview.RoundLinearLayout>
+
+</LinearLayout>
+

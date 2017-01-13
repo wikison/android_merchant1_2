@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_e5"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_12dp"
+        android:layout_marginRight="@dimen/margin_12dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="@dimen/radius_16px">
+
+        <EditText
+            android:id="@+id/search_et_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:drawableLeft="@mipmap/search_search_icon"
+            android:drawablePadding="5dp"
+            android:hint="输入场景全称"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingLeft="12dp"
+            android:singleLine="true"
+            android:textSize="16sp" />
+    </com.flyco.roundview.RoundLinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_search_hint"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/font_black_666"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/warn_icon_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_6dp"
+            android:text="@string/search_merchant_notfound"
+            android:textColor="@color/font_fff"
+            android:textSize="@dimen/font_26px" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="@dimen/margin_10dp">
+
+    </ListView>
+</LinearLayout>

@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+    <RelativeLayout
+        android:id="@+id/rl_share"
+        android:clickable="true"
+        android:background="@drawable/ripple_item_clicked2"
+        android:layout_marginTop="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_32px"
+            android:textColor="@color/font_black_666"
+            android:text="分享"/>
+
+        <ImageView
+            android:layout_marginRight="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/right_btn"/>
+
+    </RelativeLayout>
+
+
+    <com.flyco.roundview.RoundTextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_del"
+        android:gravity="center"
+        android:layout_width="@dimen/common_btn_width_235"
+        android:layout_height="@dimen/common_btn_height_35"
+        app:rv_backgroundColor="#e9494a"
+        app:rv_backgroundPressColor="@color/darkred"
+        app:rv_cornerRadius="15dp"
+        android:orientation="horizontal"
+        android:text="删除角色"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_36px"></com.flyco.roundview.RoundTextView>
+
+</RelativeLayout>

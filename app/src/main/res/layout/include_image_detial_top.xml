@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_layout_top"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@drawable/naming_bg"
+    android:visibility="visible">
+
+    <Button
+        android:id="@+id/top_left_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8.6dip"
+        android:background="@null"
+        android:drawableLeft="@mipmap/btn_back"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:visibility="gone" >
+    </Button>
+
+    <TextView
+        android:id="@+id/top_center_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:maxEms="7"
+        android:shadowColor="#FF000000"
+        android:shadowDx="0"
+        android:shadowDy="-1.0"
+        android:shadowRadius="2.5"
+        android:singleLine="true"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" >
+    </TextView>
+
+    <CheckBox
+        android:id="@+id/top_right_btn"
+        android:layout_width="@dimen/j20dp"
+        android:layout_height="@dimen/j20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/checkbox_img"
+        android:button="@null"
+        android:checked="true"
+        android:text=""
+        android:visibility="gone"
+        >
+    </CheckBox>
+
+    <ImageButton
+        android:id="@+id/moreaction_right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@null"
+        android:padding="10dp"
+        android:src="@mipmap/btn_more_write"
+        android:visibility="gone" />
+
+</RelativeLayout>

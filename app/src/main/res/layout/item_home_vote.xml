@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_f2">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/white"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/ll_cover"
+            android:background="#e4f8ff"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/iv_check"
+                android:layout_marginLeft="6dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/right_icon"/>
+
+            <TextView
+                android:layout_marginLeft="6dp"
+                android:id="@+id/tv_vote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_30px"
+                android:maxLength="40"/>
+
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:id="@+id/tv_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_30px"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+<View style="@style/divider"/>
+
+
+
+</LinearLayout>

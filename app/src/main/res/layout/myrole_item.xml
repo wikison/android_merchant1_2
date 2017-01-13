@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/ll_myrole"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/rolcre_iv_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/xml_circle_grey_bg"
+        android:layout_gravity="center_vertical"
+
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
+
+        <TextView
+            android:id="@+id/rolcre_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/font_black_333"
+            android:text="品味居" />
+
+        <TextView
+            android:id="@+id/rolcre_describe_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="美食管家"
+            android:textSize="11sp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/font_black_666"
+            android:layout_below="@+id/rolcre_name_tv" />
+
+        <TextView
+            android:id="@+id/rolcre_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/font_black_999"
+            android:text="250名用户参与"
+            android:layout_marginTop="3dp"
+            android:layout_below="@+id/rolcre_describe_tv" />
+
+    </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

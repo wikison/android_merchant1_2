@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="12dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@drawable/item_myjoined"
+    android:layout_height="126dp">
+
+    <ImageView
+        android:id="@+id/shop_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+     />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/shop_tv"
+            android:layout_marginTop="36dp"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            android:text="御荣福"
+            android:textColor="@color/white"
+           android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/adress_tv"
+           android:text="高新科技园"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/shop_tv"
+            android:layout_marginTop="27dp"
+            android:textSize="14sp"
+            android:drawablePadding="8dp"
+            android:textColor="@color/white"
+            android:drawableLeft="@mipmap/dingwei_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="46dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#3c434d"
+        android:layout_marginLeft="16dp"
+        android:text="我的服务"/>
+
+
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="46dp">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="14sp"
+    android:textColor="#3c434d"
+    android:layout_marginLeft="16dp"
+    android:text="交易金额"/>
+
+<TextView
+    android:id="@+id/money_tv"
+    android:textSize="14sp"
+    android:textColor="@color/e6bb7c"
+    android:text="------元"
+   android:layout_toLeftOf="@+id/add_tv"
+    android:layout_marginRight="12dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/add_tv"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:textColor="#3c434d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共计---笔交易"/>
+
+    </RelativeLayout>
+<View
+   style="@style/divider1dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="46dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#3c434d"
+            android:layout_marginLeft="16dp"
+            android:text="交易二维码"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#3c434d"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:text="分享"/>
+
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"></View>
+
+    <View style="@style/view1dp"></View>
+
+    <View
+        style="@style/divider12dp"></View>
+    <View style="@style/view1dp"></View>
+</LinearLayout>

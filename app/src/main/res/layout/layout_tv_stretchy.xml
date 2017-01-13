@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_stretchy_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/font_30px"
+        android:text="文本内容"
+        />
+    <TextView
+        android:id="@+id/tv_stretchy_bottom"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:textColor="#ff576b95"
+        android:textSize="@dimen/font_30px"
+        android:text="展开"
+        android:visibility="visible" />
+
+</LinearLayout>

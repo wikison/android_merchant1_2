@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_plan_content_layout"/>
+
+
+    <View style="@style/divider"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_more_record"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="11dp"
+            android:text="查看更多记录"
+            android:textColor="@color/font_black_888"
+            android:textSize="@dimen/font_28px"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:src="@mipmap/right_btn"/>
+    </RelativeLayout>
+
+</LinearLayout>
+

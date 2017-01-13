@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view_mask_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000" />
+
+    <RelativeLayout
+        android:layout_alignParentRight="true"
+        android:id="@+id/ll_content_list_view"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <com.zemult.merchant.view.MyListView
+            android:id="@+id/lv_jiaose"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e8e6e6"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:src="@mipmap/yanzheng_icon"
+        />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/font_black_666"
+    android:textSize="13sp"
+    android:layout_marginTop="12dp"
+    android:text="输码验证"/>
+    
+    <EditText
+        android:id="@+id/shuru_ed"
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:paddingLeft="12dp"
+        android:textColor="@color/font_black_999"
+        android:textSize="15sp"
+        android:inputType="number"
+        android:hint="输入优惠券兑换码"
+        android:background="@drawable/cards_ed"
+        android:layout_height="50dp" />
+    
+    <Button
+        android:id="@+id/commit_btn"
+        android:layout_width="match_parent"
+        android:layout_marginTop="44dp"
+        android:text="提交"
+        android:background="@drawable/common_selector_btn"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:layout_height="40dp" />
+
+
+    
+
+</LinearLayout>

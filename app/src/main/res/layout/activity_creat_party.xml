@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:paddingLeft="@dimen/margin_12dp"
+        android:paddingRight="@dimen/margin_12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_1"
+                android:layout_alignParentLeft="true"
+                android:text="活动发布人"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_toRightOf="@+id/tv_1"
+                android:id="@+id/et_publisher"
+                style="@style/edit_14_black_46"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="请填写活动发布人"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_2"
+                android:layout_alignParentLeft="true"
+                android:text="活动发布人联系方式"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_toRightOf="@+id/tv_2"
+                android:id="@+id/et_publisher_tel"
+                style="@style/edit_14_black_46"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="输入活动发布人联系方式"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_3"
+                android:layout_alignParentLeft="true"
+                android:text="活动分类"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <RadioGroup
+                android:layout_toRightOf="@+id/tv_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/rb_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="线上"
+                    />
+                <RadioButton
+                    android:id="@+id/rb_offline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="线下"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_alignParentLeft="true"
+                android:text="活动名称"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_below="@+id/tv_4"
+                android:id="@+id/et_partyname"
+                style="@style/edit_14_black_46"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="输入活动名称"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_5"
+                android:layout_alignParentLeft="true"
+                android:text="活动时间"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_toRightOf="@+id/tv_5"
+                android:id="@+id/et_partytime"
+                style="@style/edit_14_black_46"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="输入活动时间"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_6"
+                android:layout_alignParentLeft="true"
+                android:text="活动人数"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_toRightOf="@+id/tv_6"
+                android:id="@+id/et_partypeonum"
+                style="@style/edit_14_black_46"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="输入活动人数"
+                android:minLines="1"
+                android:padding="@dimen/margin_12dp" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_7"
+            android:layout_alignParentLeft="true"
+            android:text="活动内容描述"
+            style="@style/text_15_black_28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+        <EditText
+            android:id="@+id/etContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/white"
+            android:gravity="top|left"
+            android:hint="发你想的..."
+            android:lines="5"
+            android:padding="@dimen/margin_12dp"
+            android:scrollHorizontally="true"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_30px" />
+
+        <TextView
+            android:id="@+id/editnum"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:paddingRight="20dp"
+            android:text="100"
+            android:textColor="#bebbb4" />
+
+        <include
+            layout="@layout/include_choose_imgs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+    </LinearLayout>
+</ScrollView>

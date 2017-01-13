@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:layout_width="72dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/j3dp"
+    android:background="@drawable/ripple_item_clicked3"
+    android:clickable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:gravity="center">
+
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/iv_role"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/merchant_online" />
+
+            <ImageView
+                android:id="@+id/iv_role_selected"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/check_btn_yes"
+                android:visibility="gone" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <com.flyco.roundview.RoundTextView
+        android:id="@+id/tv_level"
+        android:layout_width="40dp"
+        android:layout_height="@dimen/j15dp"
+        android:layout_marginTop="7dp"
+        android:clickable="false"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/darkorange"
+        android:textSize="@dimen/font_22px"
+        app:rv_backgroundColor="@color/white"
+        app:rv_isRadiusHalfHeight="true"
+        app:rv_isRippleEnable="false"
+        app:rv_strokeColor="@color/bg_head"
+        app:rv_strokeWidth="1dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/font_black_666"
+        android:textSize="@dimen/font_20px" />
+
+</LinearLayout>

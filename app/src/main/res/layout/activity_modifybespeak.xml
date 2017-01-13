@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_bespeak"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.im.ModifyBespeakActivity">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head"/>
+
+
+    <EditText
+        android:enabled="false"
+        android:background="@color/white"
+        android:layout_margin="8dp"
+        android:hint="请输入你的预定信息"
+        android:id="@+id/et_bespeak"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+
+    <RelativeLayout
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            style="@style/text_16_black_666"
+            android:text="预定时间"
+            />
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/bespek_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableRight="@mipmap/right_btn"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            style="@style/text_16_black_666"
+            android:text="商户名称"
+            />
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/bespek_shopname"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableRight="@mipmap/right_btn"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            style="@style/text_16_black_666"
+            android:text="活动人数"
+            />
+
+        <EditText
+            android:enabled="false"
+            android:layout_toLeftOf="@+id/tv_label1"
+            android:id="@+id/ed_bespeak_people"
+            android:layout_width="100dp"
+            android:hint="请输入人数"
+            style="@style/text_16_black_666"
+            android:padding="3dp"
+            android:background="@color/white"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_label1"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/right_btn"
+            />
+
+    </RelativeLayout>
+    
+    
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="确认"
+        android:id="@+id/btn_bespeak_commit"
+        android:layout_width="120dp"
+        android:layout_height="50dp" />
+
+</LinearLayout>

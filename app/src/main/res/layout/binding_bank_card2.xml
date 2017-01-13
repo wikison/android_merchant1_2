@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <LinearLayout
+                style="@style/binding_linearLayout">
+
+                <TextView
+                    style="@style/binding_text"
+                    android:text="卡类型" />
+
+                <TextView
+                    android:id="@+id/tv_bank_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:text="xxxx"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_30px" />
+
+                <TextView
+                    android:id="@+id/tv_bankcard_kind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="xxxx"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_30px" />
+            </LinearLayout>
+
+            <View
+                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#f7f7f7"/>
+
+            <LinearLayout style="@style/binding_linearLayout">
+
+                <TextView
+                    style="@style/binding_text"
+                    android:text="持卡人" />
+
+                <EditText
+                    android:layout_marginLeft="38dp"
+                    android:id="@+id/et_ownername"
+                    style="@style/binding_edittext"
+                    android:hint="请输入持卡人姓名" />
+            </LinearLayout>
+
+            <View
+                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#f7f7f7"/>
+            <LinearLayout style="@style/binding_linearLayout">
+
+                <TextView
+                    style="@style/binding_text"
+                    android:text="身份证" />
+
+                <EditText
+                    android:layout_marginLeft="38dp"
+                    android:id="@+id/et_identification"
+                    style="@style/binding_edittext"
+                    android:hint="输入身份证号"
+                    android:maxLength="18"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <View
+                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#f7f7f7"/>
+
+            // 安全码 有效期
+            <LinearLayout
+                android:id="@+id/ll_just_credit_card_has"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/binding_linearLayout"
+                    android:id="@+id/ll_safe_num">
+
+                    <TextView
+                        style="@style/binding_text"
+                        android:text="安全码" />
+
+                    <EditText
+                        android:layout_marginLeft="38dp"
+                        android:id="@+id/et_safe_num"
+                        style="@style/binding_edittext"
+                        android:hint="卡背面三位安全码"
+                        android:maxLength="3"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="#f7f7f7"/>
+
+                <LinearLayout
+                    style="@style/binding_linearLayout"
+                    android:id="@+id/ll_use_time">
+
+                    <TextView
+                        style="@style/binding_text"
+                        android:text="有效期" />
+
+                    <EditText
+                        android:layout_marginLeft="38dp"
+                        android:id="@+id/et_use_time"
+                        style="@style/binding_edittext"
+                        android:hint="输入月份年份,例如0620"
+                        android:maxLength="4"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <View
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="#f7f7f7"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout style="@style/binding_linearLayout">
+
+                <TextView
+
+                    style="@style/binding_text"
+                    android:text="手机号" />
+
+                <EditText
+                    android:layout_marginLeft="38dp"
+                    android:id="@+id/et_phone"
+                    style="@style/binding_edittext"
+                    android:hint="输入银行预留手机号"
+                    android:inputType="phone"
+                    android:maxLength="11"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:text="身份信息严格加密，仅用户银行认证"
+                android:textColor="#000"
+                android:textSize="@dimen/font_24px" />
+
+            <Button
+                android:id="@+id/bt_next"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="54dp"
+                android:background="@drawable/commit"
+                android:text="下一步"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_30px" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

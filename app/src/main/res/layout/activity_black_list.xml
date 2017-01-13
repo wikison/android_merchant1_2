@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/smoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none"/>
+
+    <include layout="@layout/item_no_data_layout"
+        android:visibility="gone"/>
+
+</LinearLayout>

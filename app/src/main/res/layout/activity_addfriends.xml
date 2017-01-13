@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:id="@+id/rl_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_backgroundPressColor="@color/bg_ce"
+        app:rv_cornerRadius="25dp"
+        android:layout_margin="10dp"
+        app:rv_strokeColor="#e1e1e1"
+        app:rv_strokeWidth="1px"
+        android:layout_below="@+id/include_layout_head"
+     >
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/sousuo_black_icon" />
+
+        <EditText
+            android:layout_marginLeft="15dp"
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/iv_search"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_search"
+            android:background="@null"
+            android:hint="搜索约客手机号"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:maxLength="11"
+            android:textColorHint="@color/font_black_999"
+            android:textSize="@dimen/font_30px" />
+    </com.flyco.roundview.RoundRelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/main_search_friends_ll"
+            android:layout_width="fill_parent"
+            android:layout_height="52dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:layout_marginLeft="16dp"
+                android:id="@+id/btn_plus"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:scaleType="center"
+                android:background="@mipmap/chazhao_icon" />
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:text="搜索:"
+                android:textColor="@color/sel_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/main_search_keywords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/e6bb7c"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_my_account"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/rl_search"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的账号"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px" />
+
+        <TextView
+            android:id="@+id/tv_my_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_my_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:src="@mipmap/erweima_icon" />
+    </LinearLayout>
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:visibility="gone"
+        android:id="@+id/smoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_128px"
+        android:layout_below="@+id/rl_search"
+        android:background="#50333333"
+        android:gravity="center"
+        android:text="@string/no_result"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_30px" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_my_account"
+        android:layout_marginTop="@dimen/j20dp"
+        android:orientation="vertical">
+
+        <View style="@style/divider_1px" />
+
+        <RelativeLayout
+            android:id="@+id/rel_scan_add"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/j40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_item_clicked2">
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:src="@mipmap/saoyisao_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_scan"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:layout_toRightOf="@+id/iv_scan"
+                android:text="@string/text_scan_add"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:background="@mipmap/right_btn" />
+
+            <TextView
+                android:id="@+id/tv_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_scan"
+                android:textColor="@color/ls_color_666666"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_scan"
+                android:layout_toEndOf="@+id/iv_scan" />
+        </RelativeLayout>
+
+        <View style="@style/divider10dp" />
+
+        <RelativeLayout
+            android:id="@+id/rel_invitepeople"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/j40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_item_clicked2">
+
+            <ImageView
+                android:id="@+id/iv_invitepeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:src="@mipmap/yaoqing_icon" />
+
+            <TextView
+                android:id="@+id/tv_invitepeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_invitepeople"
+                android:text="邀请联系人"
+                android:textColor="@color/ls_color_666666"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_invitepeople"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:layout_toRightOf="@+id/iv_invitepeople"
+                android:text="平台用户"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:background="@mipmap/right_btn" />
+        </RelativeLayout>
+
+        <View style="@style/divider_1px" />
+
+        <RelativeLayout
+            android:id="@+id/rel_recognizepeople"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/j40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_item_clicked2">
+
+            <ImageView
+                android:id="@+id/iv_recognizepeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:src="@mipmap/kenengrenshi_icon" />
+
+            <TextView
+                android:id="@+id/tv_recognizepeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_recognizepeople"
+                android:text="可能认识的人"
+                android:textColor="@color/ls_color_666666"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_recognizepeople"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:layout_toRightOf="@+id/iv_recognizepeople"
+                android:text="通讯录好友或二度人脉"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:background="@mipmap/right_btn" />
+        </RelativeLayout>
+        <View style="@style/divider_1px" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingLeft="8dp"
+    android:paddingBottom="8dp"
+    android:paddingRight="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/tv_fromwho"
+            style="@style/text_14_black_999"
+            android:text="我给    彩虹象贴了一个标签"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_tietime"
+            style="@style/text_14_black_999"
+            android:text="1天前"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        style="@style/text_16_black_666"
+        android:text="我觉得你骨骼惊奇，身轻而气凝，必是百年一遇的奇才！特赠标签一枚，以资勉励！"
+        android:id="@+id/tv_labdescription"
+        android:maxLength="50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_fromwho"
+        android:layout_gravity="center_vertical"
+        style="@style/text_14_black_666"
+        android:text="标签名称"
+        android:id="@+id/tv_labname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_marginTop="8dp"
+        style="@style/divider" />
+
+</LinearLayout>

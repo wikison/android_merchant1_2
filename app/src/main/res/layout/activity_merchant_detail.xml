@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zemult.merchant.view.SmoothListView.SmoothListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:divider="@null"
+            android:background="@color/white">
+        </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:layout_marginLeft="6dp"
+                android:id="@+id/iv_back"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_circle_btn"/>
+
+            <TextView
+                android:id="@+id/lh_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/transparent"
+                android:textSize="18sp"
+                android:visibility="visible"
+                android:text="商户详情"/>
+
+            <ImageView
+                android:layout_marginRight="6dp"
+                android:id="@+id/iv_more"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/shenqing_icon"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_first"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/half_transparent">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_marginRight="6dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/shenqing_icon"/>
+            <ImageView
+                android:layout_marginRight="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/merchant_tip"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

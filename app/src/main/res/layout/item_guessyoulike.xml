@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/add_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:text="------"
+        android:textColor="@color/font_black_999"
+        android:textSize="13sp"/>
+
+    <View
+        style="@style/divider1dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/head_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="11dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="11dp"
+            android:src="@mipmap/user_icon"/>
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/head_iv"
+            android:text="--------"
+            android:textColor="@color/font_black_46"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/note_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/name_tv"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_toLeftOf="@+id/go_btn"
+            android:text="--------"
+            android:textColor="@color/font_black_999"
+            android:textSize="11sp"/>
+
+        <Button
+            android:id="@+id/go_btn"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/roleapply_btn"
+            android:text="申请"
+            android:textColor="@color/bg_head"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/divider"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"></View>
+
+    <include layout="@layout/include_user_plan_content_layout"/>
+
+
+</LinearLayout>

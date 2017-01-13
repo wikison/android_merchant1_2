@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/guanbi_icon"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:layout_width="32dp"
+                android:layout_height="35dp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@color/bg_f2"/>
+            <TextView
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_32px"
+                android:text="ddddddddd"/>
+
+            <TextView
+                android:layout_marginTop="12dp"
+                android:id="@+id/tv_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_head"
+                android:textSize="@dimen/font_36px"
+                android:text="ddddddddd"/>
+
+        </LinearLayout>
+
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_apply"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:text="申请成为营销经理"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_30px"
+            android:height="35dp"
+            app:rv_cornerRadius="12dp"
+            app:rv_backgroundColor="@color/bg_head"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

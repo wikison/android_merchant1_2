@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_merchant_enter2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/layout_head"/>
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="商户名称"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:gravity="right|center_vertical"
+                android:id="@+id/et_name"
+                android:background="@color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入商户名称"
+                android:maxLength="15"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:textColorHint="@color/font_black_999"/>
+        </RelativeLayout>
+
+        <View style="@style/divider"/>
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="地址"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:gravity="right|center_vertical"
+                android:id="@+id/et_address"
+                android:background="@color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入商户所在地址"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:textColorHint="@color/font_black_999"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <View style="@style/divider"/>
+        <View style="@style/divider12dp"/>
+        <View style="@style/divider"/>
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="联系人"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:gravity="right|center_vertical"
+                android:id="@+id/et_person_name"
+                android:background="@color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入联系人姓名"
+                android:maxLength="4"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:textColorHint="@color/font_black_999"/>
+        </RelativeLayout>
+        <View style="@style/divider"/>
+        <RelativeLayout
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="联系电话"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:gravity="right|center_vertical"
+                android:id="@+id/et_person_phone"
+                android:background="@color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入联系人电话"
+                android:textColor="#211d2e"
+                android:textSize="@dimen/font_30px"
+                android:textColorHint="@color/font_black_999"
+                android:inputType="number"
+                android:maxLength="11"/>
+        </RelativeLayout>
+        <View style="@style/divider"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="50dp"
+        android:text="完成"
+        style="@style/common_btn_235"
+         />
+</LinearLayout>

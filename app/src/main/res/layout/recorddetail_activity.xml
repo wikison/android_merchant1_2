@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            style="@style/recorddetailleft"
+            android:layout_height="46dp"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:text="交易金额" />
+<View
+    style="@style/divider1dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"></View>
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:textSize="50sp"
+            android:textColor="@color/font_black_28"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:text="------" />
+
+
+    </LinearLayout>
+
+    <View style="@style/divider1dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp">
+
+        <TextView
+            android:id="@+id/tv1"
+            style="@style/recorddetailleft"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="18dp"
+            android:text="交易客户" />
+
+        <TextView
+            android:id="@+id/tv2"
+            style="@style/recorddetailleft"
+
+            android:layout_below="@+id/tv1"
+            android:layout_marginTop="18dp"
+            android:text="交易商户" />
+
+        <ImageView
+            android:id="@+id/head_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@+id/name_tv"
+            android:src="@drawable/xml_circle_grey_bg" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            style="@style/servicehistoryitem"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv1"
+            android:layout_marginRight="16dp"
+            android:text="------" />
+
+        <TextView
+            android:id="@+id/shop_tv"
+            style="@style/servicehistoryitem"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv2"
+            android:layout_marginRight="16dp"
+            android:text="------" />
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <View style="@style/divider12dp"></View>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv3"
+            style="@style/recorddetailleft"
+            android:layout_marginTop="18dp"
+            android:text="客户评价" />
+
+        <TextView
+            android:id="@+id/tv4"
+            style="@style/recorddetailleft"
+            android:layout_below="@+id/tv3"
+            android:layout_marginTop="18dp"
+            android:text="订单号码" />
+
+        <TextView
+            android:id="@+id/tv5"
+            style="@style/recorddetailleft"
+            android:layout_below="@+id/tv4"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="18dp"
+            android:text="交易时间" />
+
+        <TextView
+            android:id="@+id/number_tv"
+            style="@style/servicehistoryitem"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/tv4"
+            android:layout_marginRight="16dp"
+            android:text="---------" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            style="@style/servicehistoryitem"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv5"
+            android:layout_marginRight="16dp"
+            android:text="---------" />
+
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <View style="@style/divider12dp"></View>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/hongbao_rl"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:gravity="center_vertical">
+
+        <TextView
+
+            style="@style/recorddetailleft"
+            android:text="平台红包" />
+
+        <TextView
+            android:id="@+id/hongbao_tv"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/right_btn"
+            android:drawablePadding="12dp"
+            android:text="------"
+            android:layout_marginRight="16dp"
+            style="@style/recordtailright" />
+
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+    <View
+        style="@style/divider12dp"
+        android:layout_height="match_parent"></View>
+
+</LinearLayout>

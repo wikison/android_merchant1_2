@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <RelativeLayout
+        android:id="@+id/rl_public"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:id="@+id/tv_public"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:gravity="center_vertical"
+            android:text="公开"
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_32px" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn"
+            android:visibility="visible" />
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_friend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_88px"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            android:id="@+id/tv_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:gravity="center_vertical"
+            android:text="好友"
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_32px" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/right_btn"
+            android:visibility="visible" />
+
+        <View
+            style="@style/divider"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</LinearLayout>

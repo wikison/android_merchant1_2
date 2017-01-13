@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_item_clicked2"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/xml_circle_grey_bg" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_bonuses"
+            android:layout_toRightOf="@+id/iv_head"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_12dp"
+                android:paddingRight="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+
+                    android:gravity="bottom">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="zz"
+                        android:textColor="@color/font_black_666"
+                        android:textSize="@dimen/font_24px" />
+
+                    <TextView
+                        android:id="@+id/tv_finish_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/font_black_666"
+                        android:textSize="@dimen/font_24px" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="bottom"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_18px" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bonuses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_right"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:gravity="center_vertical|right"
+            android:text="dddddddddddd"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:src="@mipmap/right_btn"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/divider_common"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            style="@style/divider"
+            android:layout_width="55dp"
+            android:background="@color/white" />
+
+        <View style="@style/divider" />
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/divider_bottom"
+        style="@style/divider" />
+
+
+</LinearLayout>
+

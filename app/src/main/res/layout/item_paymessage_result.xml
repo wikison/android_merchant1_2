@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+    android:background="@color/bg_f0"
+     >
+
+	<TextView
+		android:textColor="@color/font_black_46"
+		android:textSize="16sp"
+		android:gravity="center"
+		android:layout_marginTop="10dp"
+		android:id="@+id/tv_messagedate"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="2016-6-20"
+		/>
+
+
+	<LinearLayout
+		android:visibility="gone"
+		android:background="@color/white"
+		android:id="@+id/ll_hongbao"
+		android:layout_margin="10dp"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:clickable="false"
+			android:layout_margin="10dp"
+			android:id="@+id/tv_messagetitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingRight="5dp"
+			android:textColor="@color/font_black_28"
+			android:text="你获得一个红包奖励" />
+
+			<TextView
+				android:clickable="false"
+				android:layout_marginLeft="10dp"
+				android:id="@+id/tv_hongbaomessagecontent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingRight="5dp"
+				android:textColor="@color/font_black_28"
+				android:text="移动互联网时代，为什么大家关注创新设计比关注科技技术更多" />
+
+
+		<LinearLayout
+			android:layout_marginTop="10dp"
+			android:layout_marginBottom="10dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			>
+			<TextView
+				android:id="@+id/tv_cashType"
+				android:clickable="false"
+				android:paddingLeft="10dp"
+				android:gravity="center_vertical|left"
+				android:text="红包金额"
+				android:textColor="@color/normal_tab"
+				android:textSize="14sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+
+
+			<TextView
+				android:id="@+id/tv_money"
+				android:clickable="false"
+				android:paddingLeft="10dp"
+				android:gravity="center_vertical|left"
+				android:text="100元"
+				android:textColor="@color/bg_head"
+				android:textSize="14sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" />
+
+		</LinearLayout>
+
+
+	</LinearLayout>
+
+
+
+
+	<LinearLayout
+		android:visibility="gone"
+		android:id="@+id/ll_tuiguang"
+		android:background="@color/white"
+		android:layout_margin="10dp"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+
+		    <ImageView
+				android:layout_margin="10dp"
+				android:clickable="false"
+				android:scaleType="centerCrop"
+				android:id="@+id/iv_news_icon"
+		        android:layout_width="match_parent"
+		        android:layout_height="100dp"/>
+		
+		    <TextView
+				android:clickable="false"
+				android:layout_marginLeft="10dp"
+		        android:id="@+id/tv_messagecontent"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:paddingRight="5dp"
+				android:textColor="@color/font_black_28"
+		        android:text="移动互联网时代，为什么大家关注创新设计比关注科技技术更多" />
+
+
+			<TextView
+				android:clickable="false"
+				android:paddingLeft="10dp"
+				android:gravity="center_vertical|left"
+				android:text="查看更多"
+				android:textColor="@color/normal_tab"
+				android:textSize="14sp"
+				android:drawableRight="@mipmap/back_right_btn_mini"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+	</LinearLayout>
+
+
+</LinearLayout>

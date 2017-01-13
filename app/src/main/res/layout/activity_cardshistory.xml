@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <com.flyco.roundview.RoundTextView
+        android:visibility="gone"
+        android:id="@+id/rtv_unuse"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        style="@style/text_18_black_666"
+        android:text="不使用优惠券"
+        app:rv_backgroundPressColor="@color/white"
+        app:rv_cornerRadius="5dp"
+        app:rv_backgroundColor="@color/white"
+        android:layout_height="45dp" />
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/history_lv"
+        android:layout_width="match_parent"
+        android:divider="@null"
+        android:layout_height="match_parent">
+
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+    <include layout="@layout/item_no_data_layout"/>
+
+
+</LinearLayout>
+

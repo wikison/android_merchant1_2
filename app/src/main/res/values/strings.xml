@@ -1,0 +1,331 @@
+<resources>
+    <string name="app_name">约购</string>
+    <string name="app_key">Yogous</string>
+    <string name="app_im_key">23424222</string>
+
+    <string name="smoothlistview_header_hint_normal">下拉刷新</string>
+    <string name="smoothlistview_header_hint_ready">松开刷新数据</string>
+    <string name="smoothlistview_header_hint_loading">正在加载...</string>
+    <string name="smoothlistview_header_last_time">上次更新时间：</string>
+    <string name="smoothlistview_footer_hint_normal">查看更多</string>
+    <string name="smoothlistview_footer_hint_ready">松开载入更多</string>
+
+    <string name="title_search">搜索</string>
+    <string name="mobile_num">手机号码</string>
+    <string name="btn_register">注册</string>
+    <string name="txt_register_notnow">先去看看</string>
+    <string name="txt_86">+86</string>
+    <string name="txt_register_getcode">获取验证码</string>
+    <string name="txt_register_phone">请输入您的手机号</string>
+    <string name="txt_register_code">请输入您的手机验证码</string>
+    <string name="btn_login">登录</string>
+    <string name="txt_pwd">密码</string>
+    <string name="txt_pwd_again">确认密码</string>
+    <string name="ht_pwd_again">请再次输入密码</string>
+    <string name="ht_username">输入您的手机号码</string>
+    <string name="ht_pwd">输入您的帐号密码</string>
+    <string name="title_set_password">请设置登录密码</string>
+    <string name="title_find_password">找回密码</string>
+    <string name="txt_user">账号</string>
+    <string name="umeng_appkey">df62890956b17aff75bda854cb87bfa5</string>
+
+    <string name="select_city">选择城市</string>
+    <string name="hot_city">热门城市</string>
+    <string name="located_city">定位城市</string>
+    <string name="hint_search_city">城市/行政区/拼音</string>
+    <string name="nothing_found">没有搜索结果~</string>
+    <string name="locating">正在定位…</string>
+    <string name="located_failed">定位失败</string>
+
+    <string name="retry_large_image"><u>加载失败，点击重试</u></string>
+    <string name="btn_accept">同意</string>
+    <string name="delete">删除</string>
+    <string name="btn_cancel">取消</string>
+
+    <string name="txt_select_all">全部选择</string>
+    <string name="txt_search_hint">搜索一下, 呈现更多精彩</string>
+    <string name="txt_login_forget_password">忘记密码?</string>
+    <string name="btn_next">下一步</string>
+    <string name="btn_submit">提交</string>
+    <string name="sex_male">男</string>
+    <string name="sex_female">女</string>
+    <string name="txt_hint_set_nick">请设置您的昵称</string>
+    <string name="btn_finish">完成</string>
+    <string name="txt_set_head">设置头像</string>
+    <string name="title_resource">资源</string>
+    <string name="txt_my_source">我的资源</string>
+    <string name="txt_suggest_source">推荐角色资源</string>
+
+    // 斜杠页
+    <string name="filter_sex">性别</string>
+    <string name="filter_sex_all">全部</string>
+    <string name="filter_sex_boy">男生</string>
+    <string name="filter_sex_girl">女生</string>
+    <string name="filter_distance">距离</string>
+    <string name="filter_distance_all">不限</string>
+    <string name="filter_distance_5">5公里内</string>
+    <string name="filter_distance_10">10公里内</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    // 方案详情
+    <string name="slash_trans">转发</string>
+    <string name="slash_comment">评论</string>
+    <string name="slash_collect">收藏</string>
+    <string name="slash_like">赞</string>
+    <string name="detail">详情</string>
+    <string name="title_activity_my_info_set">MyInfoSetActivity</string>
+
+    <string name="title_all_category">全部分类</string>
+    <string name="title_all_changjing">全部场景</string>
+    <string name="title_all_slash">全部斜杠</string>
+    <string name="title_all_record">全部记录</string>
+    <string name="title_business">我是商户</string>
+    <string name="title_invite_friend">邀请好友使用</string>
+    <string name="title_bind_card">绑定认证</string>
+
+    <string name="search_no_result_hint">没有找到合适的东东, 搜搜别的呢?</string>
+    <string name="search_hot">热门搜索</string>
+    <string name="search_merchant_notfound">如果没有找到你想要的店铺, 请直接提交</string>
+    <string name="new_friend">新的好友</string>
+    <string name="invite_friend">邀请好友使用</string>
+    <string name="xiaoxi_tingxing">消息提醒</string>
+    <string name="liuliang_moshi">省流量模式</string>
+    <string name="empty_cache">清空缓存</string>
+    <string name="yijian_fankui">意见反馈</string>
+    <string name="help">帮助</string>
+    <string name="about_us">关于我们</string>
+    <string name="marked">已关注</string>
+    <string name="tomark">添加关注</string>
+    <string name="hint_add_merchant">您目前还没有场景，点击添加场景。</string>
+    <string name="hint_select_merchant">请选择您的场景</string>
+    <string name="hint_select_role">请选择您的角色</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_slash">新增斜杠</string>
+    <string name="record_slash">记录斜杠</string>
+
+    <string name="search_header">S</string>
+    <string name="text_my_slash">我的斜杠</string>
+    <string name="add_focus">+关注</string>
+    <string name="add_focus_yogouser">关注约客</string>
+    <string name="has_focus">已关注</string>
+    <string name="add_friend">加好友</string>
+    <string name="del_friend">删除好友</string>
+    <string name="del_friend_tip">是否删除好友</string>
+    <string name="not_login_tip">您现在还未登录，是否登录</string>
+    <string name="login_out_tip">是否退出账号</string>
+
+    <string name="umeng_openshare">打开分享面板</string>
+    <string name="umeng_openshare_custom">打开自定义分享面板</string>
+    <string name="title_activity_image_show">ImageShowActivity</string>
+    <string name="phone">手机号</string>
+    <string name="text_scan">扫一扫</string>
+    <string name="text_scan_add">扫描二维码添加朋友</string>
+    <string name="no_result">没有结果</string>
+    <string name="title_my_qr">我的二维码</string>
+    <string name="title_scan">扫一扫</string>
+    <string name="hint_qr">将二维码放入框内, 即可自动扫描</string>
+    <string name="shop_desc">简介</string>
+    <string name="text_add_friend_wait">你需要发送验证申请, 等待好友通过</string>
+    <string name="hint_add_friend_note">说说爱TA的理由</string>
+    <string name="add_friend_send">发送</string>
+    <string name="add_friend_back">取消</string>
+
+
+    <!--友盟-->
+    <string name="umeng_fb_contact_info_hint">QQ, 电话等我们能联系您的联系方式</string>
+    <string name="umeng_fb_back">返回</string>
+    <string name="umeng_fb_title">用户反馈</string>
+    <string name="umeng_fb_write_contact_title">填写联系信息</string>
+    <string name="umeng_fb_change_contact_title">更改联系信息</string>
+    <string name="umeng_fb_contact_info">联系方式</string>
+    <string name="umeng_fb_send">发送</string>
+    <string name="umeng_fb_reply_content_default">你好， 我是产品经理，欢迎您反馈使用产品的感受和建议</string>
+    <string name="umeng_fb_notification_ticker_text">有新的回复</string>
+    <string name="umeng_fb_notification_content_formatter_single_msg">新回复: %s</string>
+    <string name="umeng_fb_notification_content_formatter_multiple_msg">收到来自开发者的 %d 条回复。</string>
+    <string name="umeng_fb_feedback">意见反馈</string>
+    <string name="umeng_fb_contact_save">保存</string>
+    <string name="umeng_fb_time_right_now">刚刚</string>
+    <string name="umeng_fb_time_minutes_ago">%d分钟前</string>
+    <string name="umeng_fb_time_this_year_format">MM/dd HH:mm:ss</string>
+    <string name="umeng_fb_time_pre_year_format">yy/MM/dd HH:mm:ss</string>
+    <string name="umeng_fb_contact_qq">QQ</string>
+    <string name="umeng_fb_contact_email">邮箱</string>
+    <string name="umeng_fb_contact_phone">手机</string>
+    <string name="umeng_fb_contact_other">其他</string>
+    <string name="umeng_fb_send_fail">发送失败</string>
+    <string name="umeng_fb_sending">正在发送&#8230;</string>
+    <string name="umeng_fb_contact_key_qq">qq</string>
+    <string name="umeng_fb_contact_key_email">email</string>
+    <string name="umeng_fb_contact_key_phone">phone</string>
+    <string name="umeng_fb_contact_key_other">plain</string>
+    <!-- 5.0.1 -->
+    <string name="umeng_fb_press_speech">按住说话</string>
+    <string name="umeng_fb_release_send">松开发送</string>
+    <string name="umeng_fb_release_cancel">松开手指,取消发送</string>
+    <string name="umeng_fb_slide_up_cancel">向上滑动,取消发送</string>
+    <string name="umeng_fb_record_time_short">录音时间太短</string>
+    <string name="umeng_fb_count_down">限时倒数</string>
+    <string name="umeng_fb_record_fail">录音失败</string>
+    <string name="umeng_fb_no_record_permission">没有录音权限</string>
+    <string name="umeng_fb_please_select_picture">请选择图片</string>
+    <string name="password_match">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <string-array name="umeng_fb_contact_type_array">
+        <item>@string/umeng_fb_contact_email</item>
+        <item>@string/umeng_fb_contact_qq</item>
+        <item>@string/umeng_fb_contact_phone</item>
+        <item>@string/umeng_fb_contact_other</item>
+    </string-array>
+
+    <string-array name="umeng_fb_contact_key_array">
+        <item>@string/umeng_fb_contact_key_email</item>
+        <item>@string/umeng_fb_contact_key_qq</item>s
+        <item>@string/umeng_fb_contact_key_phone</item>
+        <item>@string/umeng_fb_contact_key_other</item>
+    </string-array>
+
+    <string-array name="umeng_fb_tabs_title">
+        <item>用户反馈</item>
+        <item>常见问题</item>
+    </string-array>
+
+    <!--IM-->
+    <string name="title_activity_at_msg_list">AtMsgListActivity</string>
+
+    <string name="feedback_demo">反馈demo</string>
+
+    <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
+    <string name="guest_login">账号不存在，是否以游客方式登录？</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="setting_sound">声音提醒</string>
+    <string name="setting_vibration">振动提醒</string>
+    <string name="setting_nodisturb_dsc">消息免打扰</string>
+    <string name="title_activity_test_activity1">TestActivity1</string>
+    <string name="title_activity_test_activity2">TestActivity2</string>
+    <string name="title_activity_tribe_members">TribeMembersActivity</string>
+    <string name="title_activity_tribe_info">TribeInfoActivity</string>
+    <string name="title_activity_seacher_tribe">SeacherTribeActivity</string>
+    <string name="title_activity_edit_tribe_info">EditTribeInfoActivity</string>
+    <string name="title_activity_invite_tribe_member">InviteTribeMemberActivity</string>
+
+    <string name="search_friend_hint">账号</string>
+    <string name="search">搜索</string>
+    <string name="net_null">哎呀，怎么没网络了，请联网后试试！</string>
+    <string name="search_friend_not_found">该用户不存在</string>
+    <string name="search_friend_not_found_message">无法找到该用户，请检查输入的帐号是否正确</string>
+    <string name="search_friend_processing">正在为您查找</string>
+    <string name="send_msg">发送消息</string>
+    <string name="remark_name">昵 称: </string>
+    <string name="profile_account">账 号: </string>
+
+    <string name="title_activity_system_message">SystemMessageActivity</string>
+
+    <string-array name="pref_config_tcms_storage_titles">
+        <item>In Settings(public)</item>
+        <item>In externalStorage(public)</item>
+        <item>In preference(private)</item>
+    </string-array>
+    <string-array name="pref_config_tcms_storage_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string name="pref_header_general">测试设置</string>
+    <string name="title_activity_contact_setting">ContactSettingActivity</string>
+    <string name="title_activity_tribe_msg_rec_type_set">TribeMsgRecTypeSetActivity</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="mark_all_read">全部已读</string>
+
+    <string name="demo_forward">转发</string>
+    <string name="demo_delete">删除消息</string>
+    <string name="demo_copy">复制</string>
+    <string name="title_activity_choose_picture">ChoosePictureActivity</string>
+    <string name="title_activity_preview_image">PreviewImageActivity</string>
+    <string name="title_activity_pay_password_manager">PayPasswordManagerActivity</string>
+    <string name="new_play">体验角色</string>
+    <string name="new_record">记录</string>
+    <string name="my_role">我的角色</string>
+    <string name="my_publish">发任务</string>
+    <string name="publish">发布</string>
+    <string name="title_my_publish_task">探索发布管理</string>
+    <string name="title_publish_task_detail">探索发布详情</string>
+    <string name="title_my_task">微任务</string>
+    <string name="title_publish_task">发布探索</string>
+    <string name="text_bonuses">现金红包</string>
+    <string name="text_receive_task">领取任务</string>
+    <string name="text_do_task">做任务</string>
+    <string name="text_view_task">查看任务</string>
+    <string name="test_string"></string>
+    <string name="task_describe">描述(选填)</string>
+    <string name="task_reward">奖励</string>
+    <string name="get_task_reward">获得奖励</string>
+    <string name="report_has_commit_tip">您的举报已提交审核，我们会尽快处理。"\n"感谢您的支持</string>
+    <string name="search_no_find">没有找到合适的东东，试试别的呢？</string>
+    <string name="select_task_role">角色</string>
+    <string name="select_task_type">选择任务方式</string>
+    <string name="task_title">标题</string>
+    <string name="select_task_deadline">时限(1~30天)</string>
+    <string name="select_task_deadline_365">时限(1~365天)</string>
+    <string name="select_task_person">提醒好友(选填)</string>
+    <string name="select_task_bonuses">红包(选填)</string>
+    <string name="input_task_title">请输入探索标题</string>
+    <string name="input_task_describe">请输入探索相关内容描述</string>
+    <string name="text_task_vote">至少设置两个选项, 最多支持10个选项, 每个选项不超过40个字</string>
+    <string name="title_activity_business_manage">BusinessManageActivity</string>
+    <string name="title_activity_business_describe">BusinessDescribeActivity</string>
+    <string name="title_activity_merchant_phone">MerchantPhoneActivity</string>
+    <string name="bonuses_number">红包个数</string>
+    <string name="bonuses_money_all">总金额</string>
+    <string name="bonuses_money_one">单个金额</string>
+    <string name="yuan">元</string>
+    <string name="ge">个</string>
+    <string name="input_money">输入金额</string>
+    <string name="bonuses_money_hint1">当前为普通红包,</string>
+    <string name="bonuses_money_hint2">当前为拼手气红包,</string>
+    <string name="bonuses_money_change1">改为拼手气红包</string>
+    <string name="bonuses_money_change2">改为普通红包</string>
+    <string name="bonuses_hand_hint">发布者根据用户完成探索的情况自主选择红包的发放对象</string>
+    <string name="publish_bonuses">发红包</string>
+    <string name="text_hand_bonuses">手动发红包</string>
+    <string name="input_number">填写个数</string>
+    <string name="select_task_reward">任务奖励(可选)</string>
+    <string name="insert_vote">插入投票(选填)</string>
+    <string name="trade_shop">交易店铺</string>
+    <string name="set_trade_amount">设置消费金额</string>
+    <string name="title_activity_role_set">RoleSetActivity</string>
+    <string name="search_recent">搜索历史</string>
+    <string name="delete_recent">清除历史记录</string>
+    <string name="new_role">我们将以最快速度审核并加入角色库,感谢您为实现多重职业社会化做出贡献!</string>
+    <string name="slash_recommend">探索推荐</string>
+    <string name="label_interactive">标签互动</string>
+    <string name="task_finish">恭喜你完成了本次探索</string>
+    <string name="label_hint">标签在标签互动中查看</string>
+    <string name="bonuse_hint">红包在我的账户中查看</string>
+    <string name="label_number">标签一张</string>
+    <string name="buy_slash">交易任务</string>
+    <string name="normal_slash">普通任务</string>
+    <string name="buy_slash_note">发布给营销经理的交易任务, 由营销经理帮助推广营销</string>
+    <string name="normal_slash_note">发布给普通角色的任务</string>
+    <string name="title_merchant_publish_task">商家探索发布管理</string>
+    <string name="select_task_coupon">优惠券(选填)</string>
+    <string name="trade_set">交易设置</string>
+    <string name="trade_merchant">交易店铺</string>
+    <string name="discount_set">折扣设置</string>
+    <string name="commission_set">佣金设置</string>
+    <string name="remark">备注</string>
+    <string name="is_public">是否公开</string>
+    <string name="share">分享</string>
+    <string name="cancel_bill">取消订单</string>
+    <string name="go_pay">立即付款</string>
+    <string name="trade">交易</string>
+    <string name="sale_manager">营销经理</string>
+    <string name="text_phone_isopen">设置“打开”，您的手机号码将在您的个人详情页面对外公开，否则不显示。</string>
+
+</resources>
