@@ -25,6 +25,7 @@ import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ColorUtil;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.ModelUtil;
@@ -159,11 +160,10 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         mAdapter.setOnMerchantDetailClick(new MerchantDetailAdpater.OnMerchantDetailClick() {
             @Override
             public void onUserClick(int position) {
-                if (mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
-                    return;
+//                if (mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
+//                    return;
                 Intent intent = new Intent(mContext, UserDetailActivity.class);
                 intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position).getUserId());
-//                intent.putExtra(UserDetailActivity.MERCHANT_INFO, merchantDetailActivity.merchantInfo);
                 intent.putExtra(UserDetailActivity.USER_NAME, mAdapter.getItem(position).getUserName());
                 intent.putExtra(UserDetailActivity.USER_HEAD, mAdapter.getItem(position).getUserHead());
                 intent.putExtra(UserDetailActivity.USER_SEX, mAdapter.getItem(position).getSex());
@@ -171,14 +171,10 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             }
 
             @Override
-            public void onAllClick(int position) {
-                if (noLogin(mContext))
-                    return;
-                if (mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
-                    return;
-
-                Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mAdapter.getItem(position).getUserId() + "", LoginSampleHelper.APP_KEY);
-                startActivity(IMkitintent);
+            public void onHeadClick(int position) {
+                List<String> list = new ArrayList<String>();
+                list.add(mAdapter.getItem(position).getUserHead());
+                AppUtils.toImageDetial(mActivity, 0, list, false);
             }
         });
     }

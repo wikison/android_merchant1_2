@@ -187,6 +187,13 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
                     onMerchantDetailClick.onUserClick(position);
             }
         });
+        holder.ivHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onMerchantDetailClick != null)
+                    onMerchantDetailClick.onHeadClick(position);
+            }
+        });
     }
 
     private void initTags(ViewHolder holder, M_Userinfo entity) {
@@ -229,7 +236,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     public interface OnMerchantDetailClick {
         void onUserClick(int position);
 
-        void onAllClick(int position);
+        void onHeadClick(int position);
     }
 
     static class ViewHolder {
