@@ -214,7 +214,7 @@ public class AppUtils {
      * @param //图片详情页面是否可以删除
      */
     public static void toImageDetial(Activity activity, int position,
-                                     List<String> pics, List<Integer> picIds, boolean deleteable, boolean coverable, int merchantId, int userId) {
+                                     List<String> pics, List<Integer> picIds, boolean deleteable, boolean coverable,boolean unshowTitle,int merchantId, int userId) {
         try {
             Intent intent = new Intent(activity, ImageBrowserNewActivity.class);
             intent.putExtra(ImageBrowserNewActivity.INTENT_PICS, (Serializable) pics);
@@ -224,11 +224,14 @@ public class AppUtils {
             intent.putExtra(ImageBrowserNewActivity.INTENT_DELABLE, deleteable);
             intent.putExtra(ImageBrowserNewActivity.INTENT_MERCHANTID, merchantId);
             intent.putExtra(ImageBrowserNewActivity.INTENT_USERID, userId);
+            intent.putExtra(ImageBrowserNewActivity.INTENT_UNSHOWTITLE, unshowTitle);
             activity.startActivityForResult(intent, Constants.IMAGEDITAL);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
     /**
      * 跳转到图片详情
      *

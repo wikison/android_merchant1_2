@@ -270,11 +270,11 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     public void picDetail(int pos, List<String> pics, List<Integer> picIds) {
         compareState();
         if (from == FROM.MERCHANT)
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,true, merchantId, userId);
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,true, false,merchantId, userId);
         else if(from == FROM.ME)
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,false, merchantId, userId);
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,false, false,merchantId, userId);
         else
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, null , false ,false, merchantId, userId);
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, null , false ,false, false,merchantId, userId);
     }
 
     private void compareState(){

@@ -174,7 +174,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             public void onHeadClick(int position) {
                 List<String> list = new ArrayList<String>();
                 list.add(mAdapter.getItem(position).getUserHead());
-                AppUtils.toImageDetial(mActivity, 0, list, null , false ,false, 0, 0);
+                AppUtils.toImageDetial(mActivity, 0, list, null , false ,false,true, 0, 0);
             }
         });
     }

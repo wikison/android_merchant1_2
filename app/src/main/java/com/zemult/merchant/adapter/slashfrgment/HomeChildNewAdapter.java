@@ -119,7 +119,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         if (TextUtils.isEmpty(entity.saleUserHeads))
             holder.tvNum.setText("暂无服务管家");
         else
-            holder.tvNum.setText(entity.saleuserNum + "人提供约服");
+            holder.tvNum.setText("服务管家" + entity.saleuserNum + "人");
 
         // 是否有熟人-(关注的人)(0:否1:是)--游客默认为0
         if (entity.isFan == 1)

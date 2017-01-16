@@ -33,6 +33,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     public static final String INTENT_PICIDS = "picIds";
     public static final String INTENT_MERCHANTID = "merchantId";
     public static final String INTENT_USERID = "userId";
+    public static final String INTENT_UNSHOWTITLE = "unshowTitle";
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -49,8 +50,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
 
-    private boolean deleteable = false;
-    private boolean coverable = false;
+    private boolean coverable = false, deleteable = false, unshowTitle = false;
     private List<String> photos = new ArrayList<String>();
     private List<Integer> ids = new ArrayList<Integer>();
     private ImageBrowserAdapter mAdapter;
@@ -68,6 +68,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     public void init() {
         deleteable = getIntent().getBooleanExtra(INTENT_DELABLE, false);
         coverable = getIntent().getBooleanExtra(INTENT_COVERABLE, false);
+        unshowTitle = getIntent().getBooleanExtra(INTENT_UNSHOWTITLE, false);
         mPosition = getIntent().getIntExtra(INTENT_POS, 0);
         photos = (List<String>) getIntent().getSerializableExtra(INTENT_PICS);
         ids = (List<Integer>) getIntent().getSerializableExtra(INTENT_PICIDS);
@@ -79,6 +80,9 @@ public class ImageBrowserNewActivity extends BaseActivity implements
             if(coverable)
                 llCover.setVisibility(View.VISIBLE);
         }
+        if(unshowTitle)
+            lhTvTitle.setVisibility(View.GONE);
+
         if (photos == null) {
             return;
         }
