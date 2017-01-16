@@ -70,8 +70,8 @@ public class LabelHomeActivity extends BaseActivity implements SmoothListView.IS
     UserLabelListHistory_1_2Request userLabelListHistory_1_2Request;
     UserLabelDel_1_2Request userLabelDel_1_2Request;
     private int page = 1;
-    List<M_Label> labelHistoryList= new ArrayList<M_Label>();;
-    List<M_Label> labelList= new ArrayList<M_Label>();;
+    List<M_Label> labelHistoryList= new ArrayList<M_Label>();
+    List<M_Label> labelList= new ArrayList<M_Label>();
     CommonAdapter commonAdapter;
     @Override
     public void setContentView() {
