@@ -560,6 +560,8 @@
         <activity android:name=".activity.mine.MerchantEnter2Activity"/>
         <activity android:name=".alipay.taskpay.AssessmentActivity"></activity>
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity"/>
+        <activity android:name=".activity.mine.AccountSafeActivity"></activity>
+        <activity android:name=".activity.mine.MyAppointmentActivity"></activity>
     </application>
 
 </manifest>

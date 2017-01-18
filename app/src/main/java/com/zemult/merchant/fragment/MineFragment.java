@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.BusinessManActivity;
 import com.zemult.merchant.activity.mine.IamYuekeActivity;
+import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyCardsActivity;
 import com.zemult.merchant.activity.mine.MyCollectionActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
@@ -76,8 +77,7 @@ public class MineFragment extends BaseFragment {
     RelativeLayout rlRecord;
     @Bind(R.id.mtag_layout)
     RelativeLayout mtagLayout;
-    @Bind(R.id.mcollect_layout)
-    RelativeLayout mcollectLayout;
+
     @Bind(R.id.rl_sale_manage)
     RelativeLayout rlSaleManage;
     @Bind(R.id.msafe_layout)
@@ -93,6 +93,10 @@ public class MineFragment extends BaseFragment {
     int isSetPaypwd, isConfirm;
     double mymoney;
     String myname, head;
+    @Bind(R.id.rl_my_prorder)
+    RelativeLayout rlMyProrder;
+    @Bind(R.id.rl_my_gift)
+    RelativeLayout rlMyGift;
 
     private boolean hasStarted = false;
 
@@ -131,9 +135,9 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.tv_to_pay, R.id.tv_to_comment, R.id.tv_has_expired, R.id.rl_record, R.id.mtag_layout,
-            R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage, R.id.mcollect_layout,
+            R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
             R.id.mshop_layout, R.id.iv_set, R.id.msafe_layout,
-            R.id.mhead_iv})
+            R.id.mhead_iv,R.id.rl_my_prorder, R.id.rl_my_gift})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -183,9 +187,9 @@ public class MineFragment extends BaseFragment {
                 intent = new Intent(getActivity(), MyinfoSetActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mcollect_layout:
-                startActivity(new Intent(getActivity(), MyCollectionActivity.class));
-                break;
+//            case R.id.mcollect_layout:
+//                startActivity(new Intent(getActivity(), MyCollectionActivity.class));
+//                break;
             case R.id.mshop_layout:
                 //我是商家
                 startActivity(new Intent(getActivity(), BusinessManActivity.class));
@@ -214,6 +218,14 @@ public class MineFragment extends BaseFragment {
                 intent_wallet.putExtra("mymoney", mymoney);
                 startActivity(intent_wallet);
                 break;
+            case R.id.rl_my_prorder:
+                startActivity(new Intent(getActivity(), MyAppointmentActivity.class));
+                //我的预约
+                break;
+            case R.id.rl_my_gift:
+                //我的礼物箱
+                break;
+
         }
     }
 

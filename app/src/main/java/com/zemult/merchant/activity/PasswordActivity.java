@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.DigestUtils;
 import cn.trinea.android.common.util.StringUtils;
@@ -29,6 +31,7 @@ import zema.volley.network.ResponseListener;
 /**
  * Created by Wikison on 2016/2/24.
  */
+//设置登录密码
 public class PasswordActivity extends BaseActivity {
     private static String LOG_TAG = "PasswordActivity";
 
@@ -57,6 +60,8 @@ public class PasswordActivity extends BaseActivity {
     EditText etPwdAgain;
     @Bind(R.id.btn_regist)
     Button btnRegist;
+    @Bind(R.id.et_nickname)
+    EditText etNickname;
 
     private TextWatcher watcher = new TextWatcher() {
         @Override
@@ -68,7 +73,9 @@ public class PasswordActivity extends BaseActivity {
             if (s.toString().length() > 0) {
                 if (etPwd.getText().toString().length() > 0
                         && etPhone.getText().toString().length() > 0
-                        && etPwdAgain.getText().toString().length() > 0) {
+                        && etPwdAgain.getText().toString().length() > 0
+                        && etNickname.getText().toString().length() > 0
+                        ) {
                     btnRegist.setEnabled(true);
                     btnRegist.setBackgroundResource(R.drawable.commit);
                 }
@@ -117,6 +124,7 @@ public class PasswordActivity extends BaseActivity {
         etPhone.addTextChangedListener(watcher);
         etPwd.addTextChangedListener(watcher);
         etPwdAgain.addTextChangedListener(watcher);
+        etNickname.addTextChangedListener(watcher);
     }
 
     @OnClick(R.id.btn_regist)
@@ -215,7 +223,6 @@ public class PasswordActivity extends BaseActivity {
 //    }
 
 
-
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -226,5 +233,12 @@ public class PasswordActivity extends BaseActivity {
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
