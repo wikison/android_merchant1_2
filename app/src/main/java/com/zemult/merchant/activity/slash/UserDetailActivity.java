@@ -3,6 +3,7 @@ package com.zemult.merchant.activity.slash;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -177,7 +178,7 @@ public class UserDetailActivity extends BaseActivity {
             }
         }
 
-        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
+        btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         taMerchantAdapter = new TaMerchantAdapter(mContext, listMerchant);
         flvMerchant.setAdapter(taMerchantAdapter);
@@ -327,8 +328,15 @@ public class UserDetailActivity extends BaseActivity {
                 llPhone.setVisibility(View.GONE);
         }
 
+
+        Drawable drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
+        // 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+        tvBuyNum.setTextColor(getColor(R.color.font_black_999));
+
         // 买单数
-        tvBuyNum.setText(userInfo.saleNum + "人找TA买单");
+        //tvBuyNum.setText(userInfo.saleNum + "人找TA买单");
         // 相册图片(多个用","分隔，最多显示3个)
         if (!TextUtils.isEmpty(userInfo.pics)) {
             PhotoFix3Adapter adapter = new PhotoFix3Adapter(mContext, userInfo.pics);

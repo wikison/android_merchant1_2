@@ -88,7 +88,7 @@ public class PhotoFix3Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_photo_fix3, null);
             holder = new ViewHolder(convertView);
-            convertView.setTag(R.string.app_name, holder);
+            convertView.setTag(R.string.app_name, holder );
         } else {
             holder = (ViewHolder) convertView.getTag(R.string.app_name);
         }
