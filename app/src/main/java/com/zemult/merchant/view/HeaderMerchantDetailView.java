@@ -56,6 +56,9 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
         // 封面
         if (!TextUtils.isEmpty(merchantInfo.pic))
             mImageManager.loadUrlImage(merchantInfo.pic, ivCover, "@320h");
+        else
+            ivCover.setImageResource(R.mipmap.merchant_default_cover);
+
         tvPicNum.setText(merchantInfo.picNum + "张");
         // 名字
         if (!TextUtils.isEmpty(merchantInfo.name))

@@ -93,7 +93,7 @@ public class MerchantManagerManageActivity extends BaseActivity implements Smoot
     }
 
     private void initView() {
-        lhTvTitle.setText("约客管理");
+        lhTvTitle.setText("服务管家管理");
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("管理");
         mAdapter = new MerchantManagerAdpater(mContext, new ArrayList<M_Userinfo>());
