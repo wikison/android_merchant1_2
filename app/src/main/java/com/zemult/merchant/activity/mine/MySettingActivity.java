@@ -3,6 +3,7 @@ package com.zemult.merchant.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ import com.zemult.merchant.view.common.MMAlert;
 import java.io.File;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MySettingActivity extends BaseActivity {
@@ -75,9 +77,13 @@ public class MySettingActivity extends BaseActivity {
 
     @Bind(R.id.ll_debug)
     RelativeLayout llDebug;
+    @Bind(R.id.ll_account)
+    RelativeLayout llAccount;
     private Context mContext;
     private PushAgent mPushAgent;
     int clickcount;
+    int isSetPaypwd, isConfirm;
+    double mymoney;
 
     @Override
     public void setContentView() {
@@ -95,6 +101,9 @@ public class MySettingActivity extends BaseActivity {
 
     private void initData() {
         mContext = this;
+        isSetPaypwd = SlashHelper.userManager().getUserinfo().getIsSetPaypwd();
+        isConfirm =SlashHelper.userManager().getUserinfo().getIsConfirm();
+        mymoney =SlashHelper.userManager().getUserinfo().getMoney();
 
         new AsyncTask<Void, Integer, String>() {
             @Override
@@ -139,6 +148,14 @@ public class MySettingActivity extends BaseActivity {
     private void getNetworkData() {
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
 
     public class ClearImageCashThead implements Runnable {
         public void run() {
@@ -202,11 +219,18 @@ public class MySettingActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_back, R.id.sc_liuliang, R.id.ll_debug,
+    @OnClick({R.id.ll_account,R.id.ll_back, R.id.sc_liuliang, R.id.ll_debug,
             R.id.sc_xiaoxi_tixing, R.id.ll_invite_friend, R.id.ll_empty_cache,
             R.id.ll_fankui, R.id.ll_help, R.id.ll_about_us, R.id.lh_btn_back, R.id.ll_black})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_account:
+                Intent intent_wallet = new Intent(this, AccountSafeActivity.class);
+                intent_wallet.putExtra("isSetPaypwd", isSetPaypwd);
+                intent_wallet.putExtra("isConfirm", isConfirm);
+                intent_wallet.putExtra("mymoney", mymoney);
+                startActivity(intent_wallet);
+            break;
             case R.id.ll_back:
                 onBackPressed();
                 break;

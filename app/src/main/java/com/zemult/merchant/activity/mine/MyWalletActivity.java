@@ -50,6 +50,7 @@ public class MyWalletActivity extends BaseActivity {
     boolean isfirstload=true;
     int isSetPaypwd,isConfirm;
     double mymoney;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_mywallet);

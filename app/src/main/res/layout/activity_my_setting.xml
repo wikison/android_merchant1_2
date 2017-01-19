@@ -9,6 +9,31 @@
 
     <View style="@style/divider10dp"
         android:background="@color/bg_e5"/>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:id="@+id/ll_account"
+        android:paddingLeft="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/my_setting_text"
+            android:text="账户与安全"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/right_btn"/>
+
+    </RelativeLayout>
+    <View style="@style/divider10dp"
+        android:background="@color/bg_e5"/>
+
     
     <RelativeLayout
         android:id="@+id/ll_liuliang"

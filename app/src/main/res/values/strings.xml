@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">约购</string>
+    <string name="app_name">约服</string>
     <string name="app_key">Yogous</string>
     <string name="app_im_key">23424222</string>
 
@@ -24,6 +24,7 @@
     <string name="ht_pwd_again">请再次输入密码</string>
     <string name="ht_username">输入您的手机号码</string>
     <string name="ht_pwd">输入您的帐号密码</string>
+    <string name="ht_nickname">请输入昵称,不超过11个字</string>
     <string name="title_set_password">请设置登录密码</string>
     <string name="title_find_password">找回密码</string>
     <string name="txt_user">账号</string>
@@ -109,9 +110,9 @@
 
     <string name="search_header">S</string>
     <string name="text_my_slash">我的斜杠</string>
-    <string name="add_focus">+关注</string>
-    <string name="add_focus_yogouser">关注约客</string>
-    <string name="has_focus">已关注</string>
+    <string name="add_focus">＋关注</string>
+    <string name="add_focus_yogouser">＋熟人</string>
+    <string name="has_focus">－熟人</string>
     <string name="add_friend">加好友</string>
     <string name="del_friend">删除好友</string>
     <string name="del_friend_tip">是否删除好友</string>

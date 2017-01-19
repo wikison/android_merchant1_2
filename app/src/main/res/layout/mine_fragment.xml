@@ -145,6 +145,7 @@
             android:id="@+id/rl_wallet"
             android:layout_width="match_parent"
             android:layout_height="58dp"
+            android:visibility="gone"
             android:background="@drawable/ripple_item_clicked2"
             android:clickable="true">
 
@@ -175,7 +176,7 @@
                 android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
-        <include layout="@layout/include_devider10dp_layout"/>
+
 
         <RelativeLayout
             android:id="@+id/rl_record"
@@ -226,17 +227,18 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/mcollect_layout"
+            android:id="@+id/rl_my_prorder"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="58dp"
             android:background="@drawable/ripple_item_clicked2"
-            android:clickable="true"
-            android:visibility="gone">
+            android:clickable="true">
 
             <TextView
-                style="@style/my_mini_text"
-                android:drawableLeft="@mipmap/shoucang_icon"
-                android:text="我的收藏"/>
+                style="@style/text_15_black_28"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:text="我的预约"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -246,6 +248,35 @@
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/right_btn"/>
         </RelativeLayout>
+        <View
+            style="@style/divider_1px"/>
+        <RelativeLayout
+            android:id="@+id/rl_my_gift"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:visibility="gone"
+            android:background="@drawable/ripple_item_clicked2"
+            android:clickable="true">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:text="我的礼物箱"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="@mipmap/right_btn"/>
+        </RelativeLayout>
+        <View
+            style="@style/divider_1px"/>
+
+
 
         <RelativeLayout
             android:id="@+id/rl_sale_manage"
@@ -259,7 +290,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我是约客"/>
+                android:text="我是服务管家"/>
 
             <ImageView
                 android:layout_width="wrap_content"
