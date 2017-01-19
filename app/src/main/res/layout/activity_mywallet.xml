@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <include
         android:id="@+id/layout_head"
         layout="@layout/layout_head"/>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,10 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_f2"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_48dp">
+            android:orientation="vertical">
 
+            <View style="@style/divider12dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -30,22 +29,15 @@
                 android:background="@color/white"
                 android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/tv_xgpostion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我的斜杠价值：全国排名5264589位"
-                    android:visibility="gone"/>
-
 
                 <com.zemult.merchant.view.RiseNumberTextView
                     android:id="@+id/tv_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin_48dp"
+                    android:layout_marginTop="48dp"
                     android:text="0"
-                    android:textColor="@color/ff0000"
+                    android:textColor="#d84f42"
                     android:textSize="60sp"/>
 
                 <TextView
@@ -56,150 +48,299 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/tv_money"
                     android:text="元"
-                    android:textColor="@color/ff0000"
-                    android:textSize="16sp"/>
+                    android:textColor="#d84f42"
+                    android:textSize="@dimen/font_24px"/>
 
-                <com.flyco.roundview.RoundTextView
-                    android:id="@+id/btn_withdrawals"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/tv_money"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
+                <Button
+                    android:id="@+id/btn_tixian"
+                    style="@style/common_btn_235"
                     android:text="提现"
-                    android:textColor="@color/btn_normal"
-                    android:textSize="16sp"
-                    app:rv_cornerRadius="5dp"
-                    app:rv_strokeColor="@color/btn_normal"
-                    app:rv_strokeWidth="1dp"/>
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/tv_money"
+                    android:layout_centerHorizontal="true"/>
+
 
             </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:background="@color/bg_f2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
-                android:text=" 账户安全（请设置下列项目保护账号）"
-                android:textColor="@color/font_black_999"
-                />
+                android:padding="12dp"
+                android:text="收到的礼物"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_28px"/>
+
 
             <RelativeLayout
-                android:id="@+id/rl_bangbankcard"
+                android:paddingTop="40dp"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true">
-
-                <TextView
-                    style="@style/my_mini_text"
-                    android:drawableLeft="@mipmap/zhanghao_icon"
-                    android:text="账户绑定"/>
+                android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/iv_car"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn"/>
+                    android:src="@mipmap/che_icon"/>
+
+                <TextView
+                    android:id="@+id/tv_car_num"
+                    android:layout_toRightOf="@+id/iv_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x0"
+                    android:textColor="@color/bg_head"
+                    android:textSize="@dimen/font_30px"/>
+
+                <LinearLayout
+                    android:layout_marginTop="12dp"
+                    android:layout_below="@+id/iv_car"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="兰博基尼"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(可兑换￥11.32)"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                </LinearLayout>
             </RelativeLayout>
 
-            <include layout="@layout/include_devider1dp_layout"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_zuan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/zuanjie_icon"/>
+
+                    <TextView
+                        android:id="@+id/tv_zuan_num"
+                        android:layout_toRightOf="@+id/iv_zuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x0"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/iv_zuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="通灵钻戒"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(可兑换￥7.88)"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_wallet"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/qianbao_icon"/>
+
+                    <TextView
+                        android:id="@+id/tv_wallet_num"
+                        android:layout_toRightOf="@+id/iv_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x0"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/iv_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LV钱包"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(可兑换￥5.32)"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_six"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/liu_cion"/>
+
+                    <TextView
+                        android:id="@+id/tv_six_num"
+                        android:layout_toRightOf="@+id/iv_six"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x0"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/iv_six"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="六六大顺"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(可兑换￥3.99)"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_flower"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/hua_icon"/>
+
+                    <TextView
+                        android:id="@+id/tv_flower_num"
+                        android:layout_toRightOf="@+id/iv_flower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x0"
+                        android:textColor="@color/bg_head"
+                        android:textSize="@dimen/font_30px"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/iv_flower"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="爱の花"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(可兑换￥3.12)"
+                            android:textColor="@color/bg_head"
+                            android:textSize="@dimen/font_30px"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+
+
+
+            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_changephone"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true">
-
-                <TextView
-                    style="@style/my_mini_text"
-                    android:drawableLeft="@mipmap/shouji_icon"
-                    android:text="更换绑定手机号"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn"/>
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_duihuan"
+                    style="@style/common_btn_235"
+                    android:text="兑换"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
 
-            <include layout="@layout/include_devider1dp_layout"/>
 
-            <RelativeLayout
-                android:id="@+id/rl_authentication"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true">
 
-                <TextView
-                    style="@style/my_mini_text"
-                    android:drawableLeft="@mipmap/shiming_icon"
-                    android:text="实名认证"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn"/>
-            </RelativeLayout>
-
-            <include layout="@layout/include_devider10dp_layout"/>
-
-            <RelativeLayout
-                android:id="@+id/rl_loginpassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true">
-
-                <TextView
-                    style="@style/my_mini_text"
-                    android:drawableLeft="@mipmap/home_icon"
-                    android:text="登录密码"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn"/>
-            </RelativeLayout>
-
-            <include layout="@layout/include_devider1dp_layout"/>
-
-            <RelativeLayout
-                android:id="@+id/rl_paypassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true">
-
-                <TextView
-                    style="@style/my_mini_text"
-                    android:drawableLeft="@mipmap/zhifumima_icon"
-                    android:text="支付密码"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn"/>
-            </RelativeLayout>
-
-            <include layout="@layout/include_devider1dp_layout"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
