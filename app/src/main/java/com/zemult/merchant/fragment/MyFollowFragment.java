@@ -234,6 +234,23 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                                         }
 //                                        if (!TextUtils.isEmpty(mfollow.note))
 //                                            holder.setText(R.id.tv_describe, mfollow.note);
+                                        switch (mfollow.state){
+                                            case 0:
+                                                holder.setImageResource(R.id.iv_status, R.mipmap.kongxian_icon);
+                                                holder.setText(R.id.tv_status, "空闲");
+                                                holder.setTextColor(R.id.tv_status, 0xff5eb31b);
+                                                break;
+                                            case 1:
+                                                holder.setImageResource(R.id.iv_status, R.mipmap.xiuxi_icon);
+                                                holder.setText(R.id.tv_status, "休息");
+                                                holder.setTextColor(R.id.tv_status, 0xff999999);
+                                                break;
+                                            case 2:
+                                                holder.setImageResource(R.id.iv_status, R.mipmap.manglu_icon);
+                                                holder.setText(R.id.tv_status, "忙碌");
+                                                holder.setTextColor(R.id.tv_status, 0xffeb4f38);
+                                                break;
+                                        }
 
                                         holder.setText(R.id.tv_follow_name, mfollow.name);
                                         holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);

@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin_12dp"
-            android:layout_marginRight="56dp"
             android:layout_toRightOf="@+id/iv_follow_head"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -30,7 +29,7 @@
                 android:id="@+id/ll_follow_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_12dp"
+                android:layout_marginRight="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -41,26 +40,40 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColor="@color/font_black_333"
-                    android:textSize="@dimen/font_24px" />
+                    android:textSize="@dimen/font_28px" />
 
                 <ImageView
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/iv_sex"
                     android:src="@mipmap/xinshou_icon"/>
+
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:id="@+id/tv_describe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/e6bb7c"
+                    android:textSize="@dimen/font_22px" />
+                <ImageView
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_status"
+                    android:src="@mipmap/kongxian_icon"/>
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_24px" />
+
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_describe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_12dp"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/e6bb7c"
-                android:textSize="@dimen/font_22px" />
+
         </LinearLayout>
 
 
