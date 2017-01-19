@@ -59,7 +59,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
     private String strSearch;
 
     private int maxWordNum;
-
+    private boolean unThinking;
 
     public SearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -110,6 +110,14 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
     public void setTvCancelSize(int textSize){
         tvCancel.setTextSize(textSize);
+    }
+
+    public void setUnThinking(boolean unThinking) {
+        this.unThinking = unThinking;
+    }
+
+    public boolean isUnThinking() {
+        return unThinking;
     }
 
     /**
@@ -235,7 +243,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             } else {
                 ivDelete.setVisibility(GONE);
             }
-            if (onThinkingClickListener != null) {
+            if (onThinkingClickListener != null && !isUnThinking()) {
                 onThinkingClickListener.onThinkingClick(etInput.getText().toString());
             }
         }

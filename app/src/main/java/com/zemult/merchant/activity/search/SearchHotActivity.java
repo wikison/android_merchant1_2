@@ -83,7 +83,6 @@ public class SearchHotActivity extends BaseActivity {
 
     private Context mContext;
     private Activity mActivity;
-    private String key;
 
     @Override
     public void setContentView() {
@@ -129,11 +128,10 @@ public class SearchHotActivity extends BaseActivity {
         mSearchView.setOnThinkingClickListener(new SearchView.OnThinkingClickListener() {
             @Override
             public void onThinkingClick(String text) {
-                if(TextUtils.isEmpty(text)){
+                if(TextUtils.isEmpty(text.trim())){
                     lv.setVisibility(View.GONE);
                     return;
                 }
-                key = text;
                 merchant_firstpage_search_List(text);
             }
         });
@@ -149,6 +147,7 @@ public class SearchHotActivity extends BaseActivity {
         tclHotSearch.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(int position, String text) {
+                mSearchView.setUnThinking(true);
                 mSearchView.setStrSearch(text);
                 goToSearch(text);
             }
@@ -161,6 +160,7 @@ public class SearchHotActivity extends BaseActivity {
         tclRecentSearch.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(int position, String text) {
+                mSearchView.setUnThinking(true);
                 mSearchView.setStrSearch(text);
                 goToSearch(text);
             }
@@ -183,7 +183,7 @@ public class SearchHotActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                changeListRecentTags(key);
+                changeListRecentTags(mSearchView.getStrSearch());
                 Intent intent = new Intent(mContext, MerchantDetailActivity.class);
                 intent.putExtra(MerchantDetailActivity.MERCHANT_ID, adapter.getItem(position).merchantId);
                 startActivity(intent);
@@ -234,7 +234,7 @@ public class SearchHotActivity extends BaseActivity {
         MerchantFirstpageSearchListRequest.Input input = new MerchantFirstpageSearchListRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.industryId = -1;
-        input.name = key;
+        input.name = key.trim();
         input.city = Constants.CITYID;
         input.center = Constants.CENTER;
         input.page = 1;
@@ -365,5 +365,11 @@ public class SearchHotActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSearchView.setUnThinking(false);
     }
 }
