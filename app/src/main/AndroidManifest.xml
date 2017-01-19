@@ -562,6 +562,7 @@
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity"/>
         <activity android:name=".activity.mine.AccountSafeActivity"></activity>
         <activity android:name=".activity.mine.MyAppointmentActivity"></activity>
+        <activity android:name=".activity.mine.AppointmentDetailActivity"></activity>
     </application>
 
 </manifest>

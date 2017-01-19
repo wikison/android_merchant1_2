@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+<include layout="@layout/layout_head"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/level_tv"
+            style="@style/housekeeper_tv"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:text="----服务管家"/>
+
+        <Spinner
+            android:id="@+id/state_sp"
+            android:layout_toRightOf="@+id/level_tv"
+            android:layout_alignTop="@+id/level_tv"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Spinner>
+
+      <TextView
+          android:id="@+id/tv_exp"
+          style="@style/housekeeper_tv"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="12dp"
+          android:text="经验值--------------"
+          android:layout_below="@+id/level_tv"
+          />
+
+        <TextView
+            android:id="@+id/dis_exp_tv"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/e6bb7c"
+            android:textSize="11sp"
+            android:layout_below="@+id/tv_exp"
+            android:text="距离---还差--------"
+            android:layout_height="wrap_content" />
+        
+        <LinearLayout
+            android:id="@+id/level_ll"
+            android:layout_below="@+id/dis_exp_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal"
+                app:rv_backgroundColor="@color/bg_f2"
+                app:rv_cornerRadius="8dp">
+
+                <com.flyco.roundview.RoundLinearLayout
+                    android:id="@+id/rll_child"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:rv_backgroundColor="@color/yellow"
+                    app:rv_cornerRadius="8dp"></com.flyco.roundview.RoundLinearLayout>
+            </com.flyco.roundview.RoundLinearLayout>
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/left_level"
+            android:layout_below="@+id/level_ll"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="16dp"
+            android:text="------"
+            style="@style/housekeeper_tv"/>
+        <TextView
+            android:id="@+id/right_level"
+            android:layout_below="@+id/level_ll"
+            android:layout_marginTop="4dp"
+           android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:text="------"
+            style="@style/housekeeper_tv"/>
+
+
+        <TextView
+            android:id="@+id/read_tv"
+            android:layout_below="@+id/right_level"
+            android:layout_alignRight="@+id/right_level"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="12dp"
+            android:text="查看详细服务等级规则"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+       style="@style/divider12dp"></View>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:weightSum="3"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_height="80dp">
+
+    <com.zemult.merchant.view.DrawableCenterTextView
+        android:id="@+id/zhanghu_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:drawablePadding="8dp"
+        android:drawableTop="@mipmap/zhanghu_icons"
+        android:text="账户"
+        style="@style/housekeeper_tv"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:background="@color/divider_dc"></View>
+
+    <com.zemult.merchant.view.DrawableCenterTextView
+        android:id="@+id/merchantmanage_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:drawablePadding="8dp"
+        android:drawableTop="@mipmap/shanghuguanli_icons"
+        android:text="商户管理"
+        style="@style/housekeeper_tv"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:background="@color/divider_dc"></View>
+
+    <com.zemult.merchant.view.DrawableCenterTextView
+        android:id="@+id/consumermanage_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:drawablePadding="8dp"
+        android:drawableTop="@mipmap/kehuguanli_icons"
+        android:text="客户管理"
+        style="@style/housekeeper_tv"
+        />
+
+
+</LinearLayout>
+    <View
+       style="@style/divider1dp"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_height="80dp">
+
+        <com.zemult.merchant.view.DrawableCenterTextView
+            android:id="@+id/servicehis_tv"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/fuwujilu_icons"
+            android:text="服务记录"
+            style="@style/housekeeper_tv"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:background="@color/divider_dc"></View>
+
+        <com.zemult.merchant.view.DrawableCenterTextView
+            android:id="@+id/yuyuehis_tv"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/yuyuejilu_icons"
+            android:text="预约记录"
+            style="@style/housekeeper_tv"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:background="@color/divider_dc"></View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="3"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:background="@color/divider_dc"
+            android:layout_height="1dp"></View>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

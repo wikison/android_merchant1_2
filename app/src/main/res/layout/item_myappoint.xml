@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <View
+       style="@style/divider12dp"></View>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="58dp">
+
+<LinearLayout
+    android:id="@+id/ll1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="16dp">
+    <TextView
+        android:id="@+id/day_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/font_black_999"
+        android:text="今天"/>
+
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/font_black_999"
+        android:layout_height="wrap_content"
+        android:text="123456"/>
+
+
+</LinearLayout>
+
+<ImageView
+    android:id="@+id/head_iv"
+    android:layout_marginLeft="16dp"
+    android:layout_toRightOf="@+id/ll1"
+    android:layout_width="40dp"
+    android:src="@drawable/xml_circle_grey_bg"
+    android:layout_centerVertical="true"
+    android:layout_height="40dp" />
+
+    <LinearLayout
+        android:layout_toRightOf="@+id/head_iv"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/servicer_tv"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/font_black_28"
+            android:layout_height="wrap_content"
+            android:text="服务管家"/>
+        <TextView
+            android:id="@+id/shop_tv"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/font_black_28"
+            android:text="--------"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:text="---------"
+        android:textSize="14sp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+    <View
+        style="@style/divider12dp"></View>
+</LinearLayout>

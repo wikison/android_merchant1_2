@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="预约状态" />
+
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View style="@style/divider12dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/object_tv"
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="客户" />
+
+                <ImageView
+                    android:id="@+id/head_iv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_toLeftOf="@+id/name_tv"
+                    android:src="@drawable/xml_circle_grey_bg" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:text="------" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="商家" />
+
+
+                <TextView
+                    android:id="@+id/shop_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View style="@style/divider12dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="人数" />
+
+
+                <TextView
+                    android:id="@+id/pernumber_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="时间" />
+
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="备注" />
+
+
+                <TextView
+                    android:id="@+id/tv_extra"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="联系人" />
+
+
+                <TextView
+                    android:id="@+id/tv_contacter"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/ripple_item_clicked2"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="电话" />
+
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View style="@style/divider12dp"></View>
+
+            <LinearLayout
+                android:id="@+id/others_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:layout_height="60dp">
+
+                    <TextView
+                        style="@style/detail_left"
+                        android:text="预约结果" />
+
+                    <TextView
+                        android:id="@+id/appresult_tv"
+                        style="@style/detail_right"
+                        android:layout_centerVertical="true"
+                        android:text="------" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/view1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"></View>
+
+                <RelativeLayout
+                    android:id="@+id/havefinished_rl"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        style="@style/detail_left"
+                        android:text="订单号" />
+
+                    <TextView
+                        android:id="@+id/ordernum_tv"
+                        style="@style/detail_right"
+                        android:layout_centerVertical="true"
+                        android:text="------" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/mis_bt"
+                    android:visibility="gone"
+                    style="@style/common_btn_235"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="94dp"
+                    android:layout_marginTop="22dp"
+                    android:onClick="click"
+                    android:text="查看订单详情"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="订好咯,好友约起来~"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#e6bb7c"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/ordersuccess_btn_rl"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/invite_btn"
+                    android:layout_width="130dp"
+                    android:text="邀请好友"
+                    android:drawableLeft="@mipmap/fenxiang"
+                    android:padding="8dp"
+                    style="@style/common_btn_235"/>
+
+                    <Button
+                        android:id="@+id/jiezhang_btn"
+                        android:layout_width="128dp"
+                        style="@style/common_btn_235"
+                        android:text="快速结账"
+                        android:padding="8dp"
+                        android:layout_marginLeft="20dp"
+                        android:drawableLeft="@mipmap/complete"
+                        android:textColor="#e6bb7c"
+                        android:layout_toRightOf="@+id/invite_btn"
+                       android:background="@drawable/detail_btn" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -684,6 +684,29 @@
     <style name="levelrankbelow" parent="levelranktop">
         <item name="textSize">11sp</item>
     </style>
+
+    <style name="detail_left">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/font_black_28</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="detail_right" parent="detail_left">
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="textColor">@color/font_black_999</item>
+    </style>
+
+    <style name="housekeeper_tv">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/font_black_28</item>
+    </style>
+
     
     
     <declare-styleable name="FNRadioGroup">
