@@ -58,6 +58,42 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
+            android:text="昵称"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="60dp"
+            android:background="@null"
+            android:digits="@string/password_match"
+            android:drawableBottom="@drawable/selector_drawable_line"
+            android:hint="@string/ht_nickname"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:maxLength="11"
+            android:paddingLeft="96dp"
+            android:textColorHint="@color/hint_text_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
             android:text="@string/txt_pwd"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -115,39 +151,7 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp">
 
-        <TextView
-            android:layout_width="72dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:text="昵称"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="60dp"
-            android:background="@null"
-            android:digits="@string/password_match"
-            android:drawableBottom="@drawable/selector_drawable_line"
-            android:hint="@string/ht_nickname"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword"
-            android:maxLength="20"
-            android:paddingLeft="96dp"
-            android:textColorHint="@color/hint_text_color"
-            android:textSize="16sp" />
-    </RelativeLayout>
 
 
 

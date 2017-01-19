@@ -24,7 +24,7 @@
     <string name="ht_pwd_again">请再次输入密码</string>
     <string name="ht_username">输入您的手机号码</string>
     <string name="ht_pwd">输入您的帐号密码</string>
-    <string name="ht_nickname">请输入昵称</string>
+    <string name="ht_nickname">请输入昵称,不超过11个字</string>
     <string name="title_set_password">请设置登录密码</string>
     <string name="title_find_password">找回密码</string>
     <string name="txt_user">账号</string>
