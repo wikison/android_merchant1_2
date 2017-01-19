@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity {
             if (etName.getText().toString().length() == 11 && !SlashHelper.getSettingString(etName.getText().toString(), "").equals("")) {
                 imageManager.loadCircleImage(SlashHelper.getSettingString(etName.getText().toString(), ""), userIcon);
             } else {
-                imageManager.loadCircleResImage(R.mipmap.user_icon, userIcon);
+                userIcon.setImageResource(R.mipmap.user_icon);
             }
         }
 

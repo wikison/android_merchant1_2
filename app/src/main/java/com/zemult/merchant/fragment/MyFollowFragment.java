@@ -120,7 +120,7 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
 //        }
 
         llRight.setVisibility(View.VISIBLE);
-        ivRight.setImageResource(R.mipmap.tianjia2_icon);
+        ivRight.setImageResource(R.mipmap.add_btn);
         llBack.setVisibility(View.GONE);
         concernLv.setRefreshEnable(true);
         concernLv.setLoadMoreEnable(false);
