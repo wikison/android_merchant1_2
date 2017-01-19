@@ -135,6 +135,11 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         //设置适配器
         HomePeopleAdapter adapter = new HomePeopleAdapter(mContext, entity.saleUserHeads);
         holder.recyclerview.setAdapter(adapter);
+
+        if(entity.reviewstatus == 2)
+            holder.ivQianyue.setVisibility(View.VISIBLE);
+        else
+            holder.ivQianyue.setVisibility(View.GONE);
     }
 
     static class ViewHolder {

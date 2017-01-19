@@ -9,12 +9,8 @@ import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.Convert;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,6 +37,8 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     ImageView ivCover;
     @Bind(R.id.tv_pic_num)
     RoundTextView tvPicNum;
+    @Bind(R.id.tv_qianyue)
+    RoundTextView tvQianyue;
 
 
     public HeaderMerchantDetailView(Activity context) {
@@ -74,6 +72,8 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                     headerClickListener.onCoverClick();
             }
         });
+        if(merchantInfo.reviewstatus == 2)
+            tvQianyue.setVisibility(View.VISIBLE);
     }
 
     public interface OnHeaderClickListener {

@@ -160,6 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/iv_qianyue"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
