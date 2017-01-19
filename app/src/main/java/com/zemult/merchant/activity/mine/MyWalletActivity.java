@@ -102,7 +102,7 @@ public class MyWalletActivity extends BaseActivity {
                 startActivity(intentwithdrawals);
                 break;
             case R.id.btn_duihuan:
-                // TODO: 2017/1/19  
+                // TODO: 2017/1/19
                 break;
         }
     }

@@ -101,7 +101,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(entity.pic))
             mImageManager.loadUrlImage(entity.pic, holder.ivCover, "@450h");
         else
-            holder.ivCover.setImageResource(R.color.bg_f0);
+            holder.ivCover.setImageResource(R.mipmap.merchant_default_cover);
         // 商家名称
         if (!TextUtils.isEmpty(entity.name))
             holder.tvName.setText(entity.name);
