@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -17,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +56,6 @@ import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderHomeView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
-import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,12 +86,20 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     EditText etSearch;
     @Bind(R.id.rll_search_bg)
     RoundLinearLayout rllSearchBg;
-    @Bind(R.id.ll_saomiao)
-    LinearLayout llSaomiao;
+    //    @Bind(R.id.ll_saomiao)
+//    LinearLayout llSaomiao;
     @Bind(R.id.ll_topbar)
     LinearLayout llTopbar;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
+    @Bind(R.id.iv_maidan)
+    ImageView ivMaidan;
+    @Bind(R.id.iv_red_dot)
+    ImageView ivRedDot;
+    @Bind(R.id.rl_maidan)
+    RelativeLayout rlMaidan;
+    @Bind(R.id.rl_scan)
+    RelativeLayout rlScan;
 
     private Context mContext;
     private Activity mActivity;
@@ -109,7 +115,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private int titleHeight = 48, bottomHeight = 50, noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin;
 
-    @OnClick({R.id.ll_city, R.id.ll_saomiao})
+    @OnClick({R.id.ll_city, R.id.rl_scan, R.id.rl_maidan})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -117,49 +123,21 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 intent = new Intent(mContext, CityPickerActivity.class);
                 startActivityForResult(intent, REQ_CITY);
                 break;
-            case R.id.ll_saomiao:
-                showPopupWindow(mContext, view);
-
-                break;
-        }
-    }
-
-    private void showPopupWindow(final Context context, View rightButton) {
-        //设置contentView
-        View contentView = LayoutInflater.from(context).inflate(R.layout.home_pop, null);
-        final PopupWindow mPopWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        mPopWindow.setContentView(contentView);
-        mPopWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        mPopWindow.setOutsideTouchable(true);
-
-        LinearLayout l1 = (LinearLayout) contentView.findViewById(R.id.l1);
-        LinearLayout l2 = (LinearLayout) contentView.findViewById(R.id.l2);
-
-        l1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPopWindow.dismiss();
-            }
-        });
-        l2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPopWindow.dismiss();
+            case R.id.rl_scan:
                 boolean cameraPermission = AndPermission.hasPermission(mContext, Manifest.permission.CAMERA);
                 if (cameraPermission) {
-                    Intent intent = new Intent(mActivity, ScanQrActivity.class);
+                    intent = new Intent(mActivity, ScanQrActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 } else {
                     requestCameraPermission();
                 }
-            }
-        });
-        //显示PopupWindow
-        mPopWindow.showAsDropDown(rightButton, -155, -16);
+                break;
+            case R.id.rl_maidan:
+                // TODO: 2017/1/19
+                break;
+        }
     }
-
 
     @Override
     protected void lazyLoad() {
@@ -211,7 +189,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position-2).merchantId);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
                 startActivity(intent);
             }
         });
@@ -228,7 +206,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(smoothListView.getChildAt(1 - firstVisibleItem) != null){
+                if (smoothListView.getChildAt(1 - firstVisibleItem) != null) {
                     headerTopMargin = (float) smoothListView.getChildAt(1 - firstVisibleItem).getTop();
 
                     if (mTopViewHeight == 0) {
@@ -236,8 +214,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                     }
                     if (headerTopMargin == 0)
                         fraction = 0f;
-                    else if(headerTopMargin > 0)
-                        if(headerTopMargin < mTopViewHeight)
+                    else if (headerTopMargin > 0)
+                        if (headerTopMargin < mTopViewHeight)
                             fraction = 1 - (mTopViewHeight - headerTopMargin) / mTopViewHeight;
                         else
                             fraction = 1f;
@@ -435,6 +413,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public enum HomeEnum {
         TASK, MOOD
     }
+
     /**
      * =================================================处理刷新请求===========================================================================
      */
@@ -456,8 +435,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void refreshEvent(String s) {
         //从商户管理返回刷新
-        if (s.equals(SaleManageActivity.REFLASH))
-        {
+        if (s.equals(SaleManageActivity.REFLASH)) {
             onRefresh();
         }
 

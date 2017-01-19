@@ -194,6 +194,16 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         this.onBackClickListner = onBackClickListner;
     }
 
+    public interface OnThinkingClickListener {
+        void onThinkingClick(String text);
+    }
+
+    private OnThinkingClickListener onThinkingClickListener;
+
+    public void setOnThinkingClickListener(OnThinkingClickListener onThinkingClickListener) {
+        this.onThinkingClickListener = onThinkingClickListener;
+    }
+
     /**
      * search view回调方法
      */
@@ -225,7 +235,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             } else {
                 ivDelete.setVisibility(GONE);
             }
-
+            if (onThinkingClickListener != null) {
+                onThinkingClickListener.onThinkingClick(etInput.getText().toString());
+            }
         }
 
         @Override

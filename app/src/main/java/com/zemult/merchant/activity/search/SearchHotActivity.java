@@ -3,23 +3,31 @@ package com.zemult.merchant.activity.search;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
+import com.zemult.merchant.adapter.slashfrgment.ThinkingAdapter;
 import com.zemult.merchant.aip.common.CommonHotSearchList;
+import com.zemult.merchant.aip.slash.MerchantFirstpageSearchListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_HotWord;
+import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_HotList;
+import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.SearchView;
 
@@ -29,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import co.lujun.androidtagview.TagContainerLayout;
@@ -60,6 +69,9 @@ public class SearchHotActivity extends BaseActivity {
     TagContainerLayout tclRecentSearch;
     @Bind(R.id.tv_delete_history)
     TextView tvDeleteHistory;
+    @Bind(R.id.lv)
+    ListView lv;
+
     List<M_HotWord> hotWordList = new ArrayList<>();
     CommonAdapter hotWordAdapter;
     CommonHotSearchList commonHotSearchList;
@@ -67,9 +79,11 @@ public class SearchHotActivity extends BaseActivity {
     List<String> listRecentTags = new ArrayList<>();
     List<String> listRecentTagsTemp = new ArrayList<>();
     String strRecentTags = "";
+    private ThinkingAdapter adapter;
 
     private Context mContext;
     private Activity mActivity;
+    private String key;
 
     @Override
     public void setContentView() {
@@ -91,6 +105,7 @@ public class SearchHotActivity extends BaseActivity {
         strRecentTags = SlashHelper.getSettingString("home_search_history", "");
         listRecentTagsTemp = Arrays.asList(strRecentTags.split(",,"));
         listRecentTags.addAll(listRecentTagsTemp);
+        adapter = new ThinkingAdapter(mContext, new ArrayList<M_Merchant>());
     }
 
     private void initView() {
@@ -101,6 +116,7 @@ public class SearchHotActivity extends BaseActivity {
             listRecentTags.clear();
             llRecentSearch.setVisibility(View.GONE);
         }
+        lv.setAdapter(adapter);
     }
 
     private void initListener() {
@@ -108,6 +124,17 @@ public class SearchHotActivity extends BaseActivity {
             @Override
             public void onSearch(String text) {
                 goToSearch(text);
+            }
+        });
+        mSearchView.setOnThinkingClickListener(new SearchView.OnThinkingClickListener() {
+            @Override
+            public void onThinkingClick(String text) {
+                if(TextUtils.isEmpty(text)){
+                    lv.setVisibility(View.GONE);
+                    return;
+                }
+                key = text;
+                merchant_firstpage_search_List(text);
             }
         });
 
@@ -152,9 +179,28 @@ public class SearchHotActivity extends BaseActivity {
                 SlashHelper.setSettingString("home_search_history", "");
             }
         });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                changeListRecentTags(key);
+                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, adapter.getItem(position).merchantId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void goToSearch(String key) {
+        changeListRecentTags(key);
+
+        Intent intent = new Intent(mActivity, SearchActivity.class);
+        intent.putExtra(SearchActivity.INTENT_KEY, key);
+        intent.putExtra("requesttype", Constants.BROCAST_SEARCH_RECENT_WORD);
+        startActivity(intent);
+    }
+
+    private void changeListRecentTags(String key) {
         if (!listRecentTags.contains(key)) {
             if (listRecentTags.size() == Constants.RECENT_SEARCH_ROWS) {
                 //元素循环向前移动一位 删除最后一位
@@ -175,13 +221,53 @@ public class SearchHotActivity extends BaseActivity {
 
         tclRecentSearch.removeAllTags();
         tclRecentSearch.setTags(listRecentTags);
-
-        Intent intent = new Intent(mActivity, SearchActivity.class);
-        intent.putExtra(SearchActivity.INTENT_KEY, key);
-        intent.putExtra("requesttype", Constants.BROCAST_SEARCH_RECENT_WORD);
-        startActivity(intent);
     }
 
+
+    private MerchantFirstpageSearchListRequest request;
+
+    public void merchant_firstpage_search_List(String key) {
+        if (request != null) {
+            request.cancel();
+        }
+
+        MerchantFirstpageSearchListRequest.Input input = new MerchantFirstpageSearchListRequest.Input();
+        input.operateUserId = SlashHelper.userManager().getUserId();
+        input.industryId = -1;
+        input.name = key;
+        input.city = Constants.CITYID;
+        input.center = Constants.CENTER;
+        input.page = 1;
+        input.rows = 100;
+
+        input.convertJosn();
+        request = new MerchantFirstpageSearchListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_MerchantList) response).status == 1) {
+                    fillAdapter(((APIM_MerchantList) response).merchantList);
+
+                } else {
+                    ToastUtil.showMessage(((APIM_MerchantList) response).info);
+                }
+            }
+        });
+        sendJsonRequest(request);
+    }
+
+    // 填充数据
+    private void fillAdapter(List<M_Merchant> list) {
+        if (list == null || list.size() == 0) {
+            lv.setVisibility(View.GONE);
+        } else {
+            lv.setVisibility(View.VISIBLE);
+            adapter.setData(list);
+        }
+    }
     private void common_hot_search_list() {
         {
             if (commonHotSearchList != null) {
@@ -274,4 +360,10 @@ public class SearchHotActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
