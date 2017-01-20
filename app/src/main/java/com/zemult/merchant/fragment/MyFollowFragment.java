@@ -186,11 +186,11 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                             concernLv.setVisibility(View.VISIBLE);
                             rlNoData.setVisibility(View.GONE);
 
-                            if (mDatas != null && mDatas.size() > 0) {
-                                for (M_Fan bean : mDatas) {
-                                    bean.state = 0;
-                                }
-                            }
+//                            if (mDatas != null && mDatas.size() > 0) {
+//                                for (M_Fan bean : mDatas) {
+//                                    bean.state = 0;
+//                                }
+//                            }
                             if (mDatas != null && !mDatas.isEmpty()) {
                                 concernLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(mContext, R.layout.item_my_follow, mDatas) {
                                     @Override
@@ -215,23 +215,8 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
 //                                            }
 //                                        });
 
-                                        if(mfollow.experience <= 0){
-                                            holder.setImageResource(R.id.iv_sex, R.mipmap.xinshou_icon);
-                                            holder.setText(R.id.tv_describe, "新手");
-                                        }else if(mfollow.experience > 0 && mfollow.experience <= 9999){
-                                            holder.setImageResource(R.id.iv_sex, R.mipmap.tong_icon2);
-                                            holder.setText(R.id.tv_describe, "铜牌");
-                                        }else if(mfollow.experience > 9999 && mfollow.experience <= 99999){
-                                            holder.setImageResource(R.id.iv_sex, R.mipmap.yin_icon2);
-                                            holder.setText(R.id.tv_describe, "银牌");
-                                        }
-                                        else if(mfollow.experience > 99999 && mfollow.experience <= 999999){
-                                            holder.setImageResource(R.id.iv_sex, R.mipmap.jingpai_icon2);
-                                            holder.setText(R.id.tv_describe, "金牌");
-                                        }else {
-                                            holder.setImageResource(R.id.iv_sex, R.mipmap.demon_icon2);
-                                            holder.setText(R.id.tv_describe, "钻石");
-                                        }
+                                        holder.setImageResource(R.id.iv_sex, mfollow.getExperienceImg());
+                                        holder.setText(R.id.tv_describe, mfollow.getExperienceText());
 //                                        if (!TextUtils.isEmpty(mfollow.note))
 //                                            holder.setText(R.id.tv_describe, mfollow.note);
                                         switch (mfollow.state){
@@ -255,18 +240,18 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                                         holder.setText(R.id.tv_follow_name, mfollow.name);
                                         holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);
 
-                                        holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-
-                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
-                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
-
-                                                }
-                                            }
-                                        });
+//                                        holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                if (mDatas.get(position).state == 0) {       //已关注的状态
+//                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
+//
+//                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
+//                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
+//
+//                                                }
+//                                            }
+//                                        });
                                     }
                                 });
 

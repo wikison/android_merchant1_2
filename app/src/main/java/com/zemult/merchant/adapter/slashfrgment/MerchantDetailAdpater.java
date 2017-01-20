@@ -155,8 +155,8 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         holder.tvNum.setText("约服人次：" + entity.saleNum);
         holder.tvComment.setText(entity.commentNumber + "人评价");
 
-        holder.ivService.setImageResource(entity.getExperienceImg(entity.experience));
-        holder.tvService.setText(entity.getExperienceText(entity.experience));
+        holder.ivService.setImageResource(entity.getExperienceImg());
+        holder.tvService.setText(entity.getExperienceText());
     }
 
     /**

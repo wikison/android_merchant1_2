@@ -19,21 +19,21 @@ public class M_Userinfo implements Serializable {
     public int height;
     public String header;
     @Expose
-    int userId;    //	用户id
+    public int userId;    //	用户id
     @Expose
     String phoneNum;    //	注册手机号
     @Expose
     String account;    //	斜杠账号
     @Expose
-    String name, userName;    //	用户昵称
+    public String name, userName;    //	用户昵称
     @Expose
-    String head, userHead;    //	用户头像
+    public String head, userHead;    //	用户头像
     @Expose
     public String note;    //	用户签名
     @Expose
     public String userNote;    //	用户签名
     @Expose
-    int sex, userSex;    //	性别(0男,1女)
+    public int sex, userSex;    //	性别(0男,1女)
     @Expose
     String province;    //	所属省份
     @Expose
@@ -64,7 +64,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     int attractNum;    //	关注数
     @Expose
-    int isFan;    //operateUserId有值时提供 是否已经关注(0:未关注1:已关注)
+    public int isFan;    //operateUserId有值时提供 是否已经关注(0:未关注1:已关注)
     @Expose
     int isFriend;    //	operateUserId有值时提供 是否好友(0:是好友,1:不是好友或者我之前申请过对方暂未同意,2:不是好友且 对方曾向我申请成为好友,我还未通过)
     private String nicknamepinyin; // 拼音
@@ -81,7 +81,7 @@ public class M_Userinfo implements Serializable {
     public int friendDimension;//好友维度(0:非好友,1:1度好友,2:2度好友)
 
     @Expose
-    int state;//状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)//状态(0:空闲,1:休息,2:忙碌)
+    public int state;//状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)//状态(0:空闲,1:休息,2:忙碌)
 
     @Expose
     public int level, userLevel;//账户等级

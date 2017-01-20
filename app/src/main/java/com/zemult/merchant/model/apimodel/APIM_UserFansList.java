@@ -3,6 +3,7 @@ package com.zemult.merchant.model.apimodel;
 import com.google.gson.annotations.Expose;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
+import com.zemult.merchant.model.M_Userinfo;
 
 import java.util.List;
 
