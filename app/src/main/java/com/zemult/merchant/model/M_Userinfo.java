@@ -460,7 +460,7 @@ public class M_Userinfo implements Serializable {
         this.experience = experience;
     }
 
-    public String getExperienceText(double experience) {
+    public String getExperienceText() {
         String result = "";
         if (experience < 100) {
             result = "新手";
@@ -477,7 +477,7 @@ public class M_Userinfo implements Serializable {
         return result;
     }
 
-    public int getExperienceImg(double experience) {
+    public int getExperienceImg() {
         int result = 0;
         if (experience < 100) {
             result = R.mipmap.xinshou_icon;
