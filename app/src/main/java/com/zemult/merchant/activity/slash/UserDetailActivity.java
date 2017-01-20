@@ -236,6 +236,7 @@ public class UserDetailActivity extends BaseActivity {
         });
         sendJsonRequest(userInfoRequest);
     }
+
     /**
      * 设置用户信息
      *
@@ -265,25 +266,34 @@ public class UserDetailActivity extends BaseActivity {
                 llPhone.setVisibility(View.GONE);
         }
 
-
+        //是否有挂靠商家
+        if (userInfo.saleUserNum == 0) {
+            btnService.setVisibility(View.INVISIBLE);
+            btnBuy.setVisibility(View.INVISIBLE);
+            btnGift.setVisibility(View.INVISIBLE);
+        } else {
+            btnService.setVisibility(View.VISIBLE);
+            btnBuy.setVisibility(View.VISIBLE);
+            btnGift.setVisibility(View.VISIBLE);
+        }
 
         Drawable drawable;
-        switch (userInfo.getState()){
+        switch (userInfo.getState()) {
             case 0:
-                drawable= getResources().getDrawable(R.mipmap.kongxian_icon);
+                drawable = getResources().getDrawable(R.mipmap.kongxian_icon);
                 // 这一步必须要做,否则不会显示.
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getColor(R.color.font_idle));
                 break;
             case 1:
-                drawable= getResources().getDrawable(R.mipmap.xiuxi_icon);
+                drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getColor(R.color.font_black_999));
                 break;
             case 2:
-                drawable= getResources().getDrawable(R.mipmap.manglu_icon);
+                drawable = getResources().getDrawable(R.mipmap.manglu_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getColor(R.color.font_busy));

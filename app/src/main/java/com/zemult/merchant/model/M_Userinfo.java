@@ -1,6 +1,7 @@
 package com.zemult.merchant.model;
 
 import com.google.gson.annotations.Expose;
+import com.zemult.merchant.R;
 
 import java.io.Serializable;
 import java.util.List;
@@ -457,5 +458,39 @@ public class M_Userinfo implements Serializable {
 
     public void setExperience(double experience) {
         this.experience = experience;
+    }
+
+    public String getExperienceText(double experience) {
+        String result = "";
+        if (experience < 100) {
+            result = "新手";
+        } else if (experience >= 100 && experience < 10000) {
+            result = "铜牌";
+        } else if (experience >= 10000 && experience < 100000) {
+            result = "银牌";
+        } else if (experience >= 100000 && experience < 1000000) {
+            result = "金牌";
+        } else {
+            result = "钻石";
+        }
+
+        return result;
+    }
+
+    public int getExperienceImg(double experience) {
+        int result = 0;
+        if (experience < 100) {
+            result = R.mipmap.xinshou_icon;
+        } else if (experience >= 100 && experience < 10000) {
+            result = R.mipmap.tong_icon2;
+        } else if (experience >= 10000 && experience < 100000) {
+            result = R.mipmap.yin_icon2;
+        } else if (experience >= 100000 && experience < 1000000) {
+            result = R.mipmap.jingpai_icon2;
+        } else {
+            result = R.mipmap.demon_icon2;
+        }
+
+        return result;
     }
 }
