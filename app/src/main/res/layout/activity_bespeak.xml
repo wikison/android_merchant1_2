@@ -5,23 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.zemult.merchant.im.BespeakActivity">
+    tools:context="com.zemult.merchant.im.CreateBespeakActivity">
 
     <include
         android:id="@+id/layout_head"
         layout="@layout/layout_head"/>
 
 
-    <EditText
-        android:background="@color/white"
-        android:layout_margin="8dp"
-        android:hint="请输入你的预定信息"
-        android:id="@+id/et_bespeak"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
-
 
     <RelativeLayout
+        android:id="@+id/rl_ordershopname"
+        style="@style/container_height88"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="商户"
+            />
+
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/bespek_shopname"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableRight="@mipmap/right_btn"
+            />
+
+    </RelativeLayout>
+
+    <View
+        style="@style/divider1dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_ordertime"
+        style="@style/container_height88"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
         android:layout_width="match_parent"
@@ -32,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            style="@style/text_16_black_666"
-            android:text="预定时间"
+            style="@style/text_15_black_28"
+            android:text="时间"
             />
 
 
@@ -50,76 +78,134 @@
     </RelativeLayout>
 
 
+    <View
+        style="@style/divider1dp"
+        />
+
+
     <RelativeLayout
+        android:id="@+id/rl_select_deadline"
+        style="@style/container_height88"
+        android:background="@color/white"
         android:paddingRight="8dp"
-        android:paddingLeft="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:paddingLeft="8dp">
 
         <TextView
+            android:id="@+id/tv_title_select_deadline"
+            style="@style/text_15_black_28"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:text="人数"/>
+
+        <com.zemult.merchant.view.PMNumView
+            android:id="@+id/pmnv_select_deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            style="@style/text_16_black_666"
-            android:text="商户名称"
-            />
-
-
-        <TextView
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
-            android:id="@+id/bespek_shopname"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:drawableRight="@mipmap/right_btn"
-            />
-
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
+
+
+    <View
+        style="@style/divider1dp"
+        />
     <RelativeLayout
+        android:id="@+id/rl_customername"
+        style="@style/container_height88"
+        android:background="@color/white"
         android:paddingRight="8dp"
-        android:paddingLeft="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:paddingLeft="8dp">
 
         <TextView
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_15_black_28"
             android:layout_alignParentLeft="true"
-            style="@style/text_16_black_666"
-            android:text="活动人数"
-            />
+            android:layout_centerVertical="true"
+            android:text="联系人"/>
 
         <EditText
-            android:layout_toLeftOf="@+id/tv_label1"
-            android:id="@+id/ed_bespeak_people"
-            android:layout_width="100dp"
-            android:hint="请输入人数"
-            style="@style/text_16_black_666"
-            android:padding="3dp"
-            android:background="@color/white"
-            android:layout_height="match_parent" />
+            android:layout_marginLeft="70dp"
+            android:id="@+id/et_customername"
+            style="@style/text_15_black_28"
+            android:hint="输入您的姓名"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"/>
 
-        <ImageView
-            android:layout_marginLeft="5dp"
-            android:id="@+id/tv_label1"
+        <RadioGroup
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
+            android:checkedButton="@+id/rb_xiansheng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/right_btn"
-            />
+            android:orientation="horizontal"
+
+            >
+            <RadioButton
+                android:id="@+id/rb_nvshi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女士"
+                />
+            <RadioButton
+                android:id="@+id/rb_xiansheng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="先生"
+                />
+
+        </RadioGroup>
 
     </RelativeLayout>
-    
-    
+
+
+    <View
+        style="@style/divider1dp"
+        />
+    <RelativeLayout
+        android:id="@+id/rl_customerphone"
+        style="@style/container_height88"
+        android:background="@color/white"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="电话"/>
+
+        <EditText
+            android:layout_marginLeft="70dp"
+            android:id="@+id/et_customerphone"
+            style="@style/text_15_black_28"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入手机号"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="备注"
+        />
+    <EditText
+        android:background="@color/white"
+        android:layout_margin="8dp"
+        android:hint="请输入你的预定信息"
+        style="@style/text_15_black_28"
+        android:id="@+id/et_bespeak"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+
     <Button
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
-        android:text="发送订单"
+        android:text="预约服务"
         android:id="@+id/btn_bespeak_commit"
         android:layout_width="120dp"
         android:layout_height="50dp" />

@@ -496,4 +496,13 @@ public class Urls {
     //服务记录列表
     public static String USER_SALE_PAYLIST="user_sale_payList.do";
 
+
+
+    //约服  1.2
+    //用户预约申请
+    public static String USER_RESERVATION_ADD="user_reservation_add.do";
+    //用户预约单详情
+    public static String USER_RESERVATION_INFO="user_reservation_info.do";
+    //约客修改预约单(答复)
+    public static String USER_RESERVATION_EDIT="user_reservation_edit.do";
 }

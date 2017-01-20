@@ -284,19 +284,19 @@ public class UserDetailActivity extends BaseActivity {
                 // 这一步必须要做,否则不会显示.
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getColor(R.color.font_idle));
+                tvBuyNum.setTextColor(getResources().getColor(R.color.font_idle));
                 break;
             case 1:
                 drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getColor(R.color.font_black_999));
+                tvBuyNum.setTextColor(getResources().getColor(R.color.font_black_999));
                 break;
             case 2:
                 drawable = getResources().getDrawable(R.mipmap.manglu_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getColor(R.color.font_busy));
+                tvBuyNum.setTextColor(getResources().getColor(R.color.font_busy));
                 break;
         }
 
