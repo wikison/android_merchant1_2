@@ -11,6 +11,6 @@
         android:dividerHeight="0dp"
         android:scrollbars="none"/>
 
-    <include layout="@layout/item_no_data_layout"
+    <include layout="@layout/item_no_search_data_layout"
         android:visibility="gone"/>
 </FrameLayout>

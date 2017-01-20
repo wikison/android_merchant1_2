@@ -23,7 +23,7 @@
         android:scrollbars="none">
     </com.zemult.merchant.view.SmoothListView.SmoothListView>
 
-    <include layout="@layout/item_no_data_layout"/>
+    <include layout="@layout/item_no_search_data_layout"/>
 
 
 </LinearLayout>
