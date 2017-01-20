@@ -17,6 +17,7 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.util.ArrayList;
@@ -100,6 +101,10 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
         mAdapter.setItemClickListener(new BusinessManAdapter.OnBusinessMenItemClickListener() {
             @Override
             public void rightClick(int pos) {
+                if(mAdapter.getItem(pos).daiqiyue){
+                    ToastUtil.showMessage("商户审核中");
+                    return;
+                }
                 Intent intent = new Intent(mContext, MerchantManageActivity.class);
                 intent.putExtra("merchantId", mAdapter.getItem(pos).merchantId);
                 startActivity(intent);

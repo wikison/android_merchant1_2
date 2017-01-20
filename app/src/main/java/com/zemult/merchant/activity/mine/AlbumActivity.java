@@ -343,7 +343,7 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     @Override
     public void setPicList(List<M_Pic> list) {
         if (from == FROM.MERCHANT || from == FROM.ME){
-            if (list.isEmpty()) {
+            if (list == null || list.isEmpty()) {
                 list = new ArrayList<>();
             }
             list.add(0, new M_Pic());
