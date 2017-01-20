@@ -500,13 +500,20 @@ public class Urls {
     //服务记录列表
     public static String USER_SALE_PAYLIST="user_sale_payList.do";
 
+    //用户的预约单列表
+    public static String USER_RESERVATION_LIST="user_reservation_list.do";
+    //约客的预约记录列表     (不包含待确认的)
+    public static String USER_SALE_RESERVATION_LIST="user_sale_reservation_list";
+
+
+    //用户预约单详情
+     public static String USER_RESERVATION_INFO="user_reservation_info.do";
 
 
     //约服  1.2
     //用户预约申请
     public static String USER_RESERVATION_ADD="user_reservation_add.do";
-    //用户预约单详情
-    public static String USER_RESERVATION_INFO="user_reservation_info.do";
+
     //约客修改预约单(答复)
     public static String USER_RESERVATION_EDIT="user_reservation_edit.do";
 

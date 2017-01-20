@@ -78,4 +78,14 @@
             <enum name="FILL" value="1"></enum>
         </attr>
     </declare-styleable>
+
+
+    <string-array name="state">
+        <item>空闲</item>
+        <item>休息 </item>
+        <item>忙碌</item>
+    </string-array>
+
+
+
 </resources>

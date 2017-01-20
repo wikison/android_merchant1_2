@@ -1,25 +1,46 @@
 package com.zemult.merchant.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.adapter.CommonAdapter;
+import com.zemult.merchant.adapter.CommonViewHolder;
+import com.zemult.merchant.aip.mine.UserReservationListRequest;
+import com.zemult.merchant.aip.mine.UserSaleReservationList;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
+import com.zemult.merchant.util.ImageManager;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.ToastUtils;
+import zema.volley.network.ResponseListener;
 
 /**
  * Created by admin on 2017/1/18.
  */
 
-public class MyAppointmentActivity extends BaseActivity {
+public class MyAppointmentActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -31,6 +52,18 @@ public class MyAppointmentActivity extends BaseActivity {
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
 
+    public ImageManager imageManager;
+    UserReservationListRequest userReservationListRequest;//消费者的预约列表
+    private int page = 1;
+
+    private Context mContext;
+    CommonAdapter commonAdapter;
+    private List<M_Reservation> mDatas = new ArrayList<M_Reservation>();
+    public static String INTENT_TYPE = "type";
+    UserSaleReservationList userSaleReservationList;//服务管家的预约列表
+    int type;
+
+    //此处item使用item_myappoint
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_myappointment);
@@ -39,6 +72,197 @@ public class MyAppointmentActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("我的预约");
+        mContext = this;
+        imageManager = new ImageManager(this);
+        myappointmentLv.setRefreshEnable(true);
+        myappointmentLv.setLoadMoreEnable(false);
+        myappointmentLv.setSmoothListViewListener(this);
+        myappointmentLv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        showPd();
+        type = getIntent().getIntExtra(INTENT_TYPE, 0);
+        if (type == 0) {
+            userReservationList();
+        }else if(type==1){
+            userSaleReservation();
+        }
+
+        myappointmentLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
+                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, mReservation.reservationId);
+                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,type);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+    private void userReservationList() {
+
+        if (userReservationListRequest != null) {
+            userReservationListRequest.cancel();
+        }
+        UserReservationListRequest.Input input = new UserReservationListRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.state = -1;
+        input.page = page;
+        input.rows = Constants.ROWS;     //每页显示的行数
+        input.convertJosn();
+        userReservationListRequest = new UserReservationListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+                myappointmentLv.stopRefresh();
+                myappointmentLv.stopLoadMore();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                dismissPd();
+                if (((APIM_UserReservationList) response).status == 1) {
+                    if (page == 1) {
+                        mDatas = ((APIM_UserReservationList) response).reservationList;
+                        if (mDatas == null || mDatas.size() == 0) {
+                            myappointmentLv.setVisibility(View.GONE);
+                            rlNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            myappointmentLv.setVisibility(View.VISIBLE);
+                            rlNoData.setVisibility(View.GONE);
+                            if (mDatas != null && !mDatas.isEmpty()) {
+                                myappointmentLv.setAdapter(commonAdapter = new CommonAdapter<M_Reservation>(MyAppointmentActivity.this, R.layout.item_myappoint, mDatas) {
+                                    @Override
+                                    public void convert(CommonViewHolder holder, M_Reservation mReservation, final int position) {
+
+                                        if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
+                                            holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
+                                        }
+                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
+
+                                        holder.setText(R.id.shop_tv, mReservation.merchantName);
+                                        //状态(1:预约成功,2:已支付,3:预约结束)
+                                        if (mReservation.state == 1) {
+                                            //tv_state
+                                            holder.setText(R.id.tv_state, "预约成功");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                        } else if (mReservation.state == 2) {
+                                            holder.setText(R.id.tv_state, "已支付");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                        } else if (mReservation.state == 3) {
+                                            holder.setText(R.id.tv_state, "预约结束");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+                                        }
+                                    }
+
+                                });
+                            }
+
+                        }
+                    } else {
+                        mDatas.addAll(((APIM_UserReservationList) response).reservationList);
+                        commonAdapter.notifyDataSetChanged();
+                    }
+
+                    if (((APIM_UserReservationList) response).maxpage <= page) {
+                        myappointmentLv.setLoadMoreEnable(false);
+                    } else {
+                        myappointmentLv.setLoadMoreEnable(true);
+                        page++;
+                        Log.i("sunjian", "" + page);
+                    }
+                } else {
+                    ToastUtils.show(MyAppointmentActivity.this, ((APIM_UserReservationList) response).info);
+                }
+                myappointmentLv.stopRefresh();
+                myappointmentLv.stopLoadMore();
+            }
+        });
+        sendJsonRequest(userReservationListRequest);
+    }
+
+
+    private void userSaleReservation() {
+
+        if (userSaleReservationList != null) {
+            userSaleReservationList.cancel();
+        }
+        UserSaleReservationList.Input input = new UserSaleReservationList.Input();
+        input.saleUserId = SlashHelper.userManager().getUserId();
+        ;//约客的用户id
+        input.page = page;
+        input.rows = Constants.ROWS;     //每页显示的行数
+        input.convertJosn();
+        userSaleReservationList = new UserSaleReservationList(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+                myappointmentLv.stopRefresh();
+                myappointmentLv.stopLoadMore();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                dismissPd();
+                if (((APIM_UserReservationList) response).status == 1) {
+                    if (page == 1) {
+                        mDatas = ((APIM_UserReservationList) response).reservationList;
+                        if (mDatas == null || mDatas.size() == 0) {
+                            myappointmentLv.setVisibility(View.GONE);
+                            rlNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            myappointmentLv.setVisibility(View.VISIBLE);
+                            rlNoData.setVisibility(View.GONE);
+                            if (mDatas != null && !mDatas.isEmpty()) {
+                                myappointmentLv.setAdapter(commonAdapter = new CommonAdapter<M_Reservation>(MyAppointmentActivity.this, R.layout.item_myappoint, mDatas) {
+                                    @Override
+                                    public void convert(CommonViewHolder holder, M_Reservation mReservation, final int position) {
+
+                                        if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
+                                            holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
+                                        }
+                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
+
+                                        holder.setText(R.id.shop_tv, mReservation.merchantName);
+                                        //状态(1:预约成功,2:已支付,3:预约结束)
+                                        if (mReservation.state == 1) {
+                                            //tv_state
+                                            holder.setText(R.id.tv_state, "预约成功");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                        } else if (mReservation.state == 2) {
+                                            holder.setText(R.id.tv_state, "已支付");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                        } else if (mReservation.state == 3) {
+                                            holder.setText(R.id.tv_state, "预约结束");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+                                        }
+                                    }
+
+                                });
+                            }
+
+                        }
+                    } else {
+                        mDatas.addAll(((APIM_UserReservationList) response).reservationList);
+                        commonAdapter.notifyDataSetChanged();
+                    }
+
+                    if (((APIM_UserReservationList) response).maxpage <= page) {
+                        myappointmentLv.setLoadMoreEnable(false);
+                    } else {
+                        myappointmentLv.setLoadMoreEnable(true);
+                        page++;
+                        Log.i("sunjian", "" + page);
+                    }
+                } else {
+                    ToastUtils.show(MyAppointmentActivity.this, ((APIM_UserReservationList) response).info);
+                }
+                myappointmentLv.stopRefresh();
+                myappointmentLv.stopLoadMore();
+            }
+        });
+        sendJsonRequest(userSaleReservationList);
     }
 
 
@@ -51,5 +275,26 @@ public class MyAppointmentActivity extends BaseActivity {
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        if (type == 0) {
+            userReservationList();
+        }else if(type==1){
+            userSaleReservation();
+        }
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (type == 0) {
+            userReservationList();
+        }else if(type==1){
+            userSaleReservation();
+        }
+
     }
 }

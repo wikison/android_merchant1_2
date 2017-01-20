@@ -47,7 +47,7 @@
                     android:id="@+id/object_tv"
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="客户" />
+                    android:text="-------" />
 
                 <ImageView
                     android:id="@+id/head_iv"
@@ -210,6 +210,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:visibility="gone"
+                    android:id="@+id/yuyueresult_rl"
                     android:background="@drawable/ripple_item_clicked2"
                     android:layout_height="60dp">
 
@@ -225,12 +226,14 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/v1"
                     style="@style/view1dp"
+                    android:visibility="gone"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"></View>
 
                 <RelativeLayout
-                    android:id="@+id/havefinished_rl"
+                    android:id="@+id/ordernum_rl"
                     android:layout_width="match_parent"
                     android:visibility="gone"
                     android:background="@drawable/ripple_item_clicked2"
@@ -248,7 +251,7 @@
                 </RelativeLayout>
 
                 <Button
-                    android:id="@+id/mis_bt"
+                    android:id="@+id/lookorder_btn"
                     android:visibility="gone"
                     style="@style/common_btn_235"
                     android:layout_gravity="center_horizontal"
@@ -260,6 +263,7 @@
                     android:textSize="18sp"/>
 
                 <TextView
+                    android:id="@+id/dinghaole_tv"
                     android:layout_width="match_parent"
                     android:text="订好咯,好友约起来~"
                     android:visibility="gone"

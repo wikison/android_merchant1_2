@@ -18,12 +18,14 @@ public class UserRegisterRequest extends PostStringRequest<Type>  {
     public static class Input {
         public String phone;       //手机号
         public String password;//密码(经过MD5加密过后的)
+        public String name;
         public String ejson;
 
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("password", password),
+                    new Pair<String, String>("name", name),
                     new Pair<String, String>("phone", phone)));
         }
 

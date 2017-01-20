@@ -39,7 +39,7 @@ public class PasswordActivity extends BaseActivity {
     Button btnBack;
     TextView tvTitle;
 
-    String strPhone, strPwd, strPwd2;
+    String strPhone, strPwd, strPwd2,name;
     UserRegisterRequest userRegisterRequest;
     UserLoginRequest userLoginRequest;
     @Bind(R.id.lh_btn_back)
@@ -131,6 +131,7 @@ public class PasswordActivity extends BaseActivity {
     public void onBtnRegisterClick(View v) {
         strPwd = etPwd.getText().toString();
         strPwd2 = etPwdAgain.getText().toString();
+        name =etNickname.getText().toString();
 
         if (!StringUtils.isEquals(strPwd, strPwd2)) {
             etPwdAgain.setError("密码不同, 请重新设置");
@@ -139,7 +140,7 @@ public class PasswordActivity extends BaseActivity {
                 etPwdAgain.setError("密码长度设置不正确");
             } else if (StringMatchUtils.isAllNum(strPwd)) {
                 etPwdAgain.setError("密码不能全为数字");
-            } else {
+            }  {
                 userRegister();
             }
 
@@ -156,6 +157,7 @@ public class PasswordActivity extends BaseActivity {
             UserRegisterRequest.Input input = new UserRegisterRequest.Input();
             input.phone = strPhone;
             input.password = DigestUtils.md5(strPwd).toUpperCase();
+            input.name=name;
             input.convertJosn();
 
             userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {

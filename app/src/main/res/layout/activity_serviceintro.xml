@@ -1,10 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/bg_f2"
     android:layout_height="match_parent">
     <include layout="@layout/layout_head"></include>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="58dp">
+<ImageView
+    android:id="@+id/iv1"
+    android:layout_width="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="25dp"
+    android:src="@mipmap/xinshou_iconsj"
+    android:layout_height="wrap_content" />
 
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="80dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/font_black_28"
+        android:text="新手服务管家"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="11sp"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/font_black_28"
+        android:text="可以挂靠1家商户"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="-------"
+        android:layout_centerVertical="true"
+        android:textSize="11sp"
+        android:textColor="@color/e6bb7c"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/divider1dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/xinshou_iconsj"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_28"
+                android:text="新手服务管家"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/font_black_28"
+                android:text="可以挂靠1家商户"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="-------"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:textColor="@color/e6bb7c"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/divider1dp"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/xinshou_iconsj"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_28"
+                android:text="新手服务管家"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/font_black_28"
+                android:text="可以挂靠1家商户"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="-------"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:textColor="@color/e6bb7c"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/divider1dp"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <ImageView
+            android:id="@+id/iv4"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/xinshou_iconsj"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_28"
+                android:text="新手服务管家"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/font_black_28"
+                android:text="可以挂靠1家商户"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="-------"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:textColor="@color/e6bb7c"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/divider1dp"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <ImageView
+            android:id="@+id/iv5"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/xinshou_iconsj"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_28"
+                android:text="新手服务管家"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/font_black_28"
+                android:text="可以挂靠1家商户"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="-------"
+            android:layout_centerVertical="true"
+            android:textSize="11sp"
+            android:textColor="@color/e6bb7c"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        style="@style/divider1dp"></View>
 
 
 

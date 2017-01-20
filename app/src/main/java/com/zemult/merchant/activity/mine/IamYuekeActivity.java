@@ -1,6 +1,8 @@
 package com.zemult.merchant.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,10 +12,14 @@ import android.widget.TextView;
 import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.util.DensityUtil;
+import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.UIUtil;
 import com.zemult.merchant.view.DrawableCenterTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by admin on 2016/12/22.
@@ -79,38 +85,69 @@ public class IamYuekeActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("我是服务管家");
+        initdata();
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+    private void initdata() {
+        experience= SlashHelper.userManager().getUserinfo().getExperience();
+
+       if(experience<100){
+           levelTv.setText("新手服务管家");
+       }else if(experience>=100&&experience<100000){
+           levelTv.setText("铜牌服务管家");
+       }else if(experience>=100000&&experience<1000000){
+           levelTv.setText("金牌服务管家");
+       }
 
 
-//    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.service_rl, R.id.busmanage_rl, R.id.customanage_rl})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.lh_btn_back:
-//            case R.id.ll_back:
-//                onBackPressed();
-//                break;
-//            case R.id.service_rl:
-//                //服务记录
-//                startActivity(new Intent(IamYuekeActivity.this, ServiceHistoryActivity.class));
-//                break;
-//            case R.id.busmanage_rl:
-//                //商户管理
-//                startActivity(new Intent(IamYuekeActivity.this, SaleManageActivity.class));
-//                break;
-//            case R.id.customanage_rl:
-//                //客户管理
-//                startActivity(new Intent(IamYuekeActivity.this, CustomManageActivity.class));
-//                break;
+
+//        if(experience> 0){
+//            int allWidth = DensityUtil.dip2px(this, UIUtil.getWindowsWidth(this)-32);
+//            float itemWidth = (float) allWidth / info.nextEXP;
+//
+//            RoundLinearLayout.LayoutParams lp = (RoundLinearLayout.LayoutParams) rllChild.getLayoutParams();
+//            lp.width = (int) (itemWidth * info.experience);
+//            rllChild.setLayoutParams(lp);
 //        }
-//    }
+
+    }
+
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.read_tv, R.id.zhanghu_tv, R.id.merchantmanage_tv, R.id.consumermanage_tv, R.id.servicehis_tv, R.id.yuyuehis_tv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lh_btn_back:
+
+            case R.id.ll_back:
+                onBackPressed();
+                break;
+            case R.id.read_tv:
+
+                break;
+            case R.id.zhanghu_tv:
+                //商户管理
+                startActivity(new Intent(IamYuekeActivity.this, MyWalletActivity.class));
+                break;
+            case R.id.merchantmanage_tv:
+                //商户管理
+                startActivity(new Intent(IamYuekeActivity.this, SaleManageActivity.class));
+                break;
+            case R.id.consumermanage_tv:
+                //客户管理
+                startActivity(new Intent(IamYuekeActivity.this, CustomManageActivity.class));
+                break;
+            case R.id.servicehis_tv:
+                //服务记录
+               startActivity(new Intent(IamYuekeActivity.this, ServiceHistoryActivity.class));
+                break;
+            case R.id.yuyuehis_tv:
+                Intent it = new Intent(this,MyAppointmentActivity.class);
+                it.putExtra(MyAppointmentActivity.INTENT_TYPE,1);
+                startActivity(it);
+                break;
+        }
+    }
+
 
 
 }

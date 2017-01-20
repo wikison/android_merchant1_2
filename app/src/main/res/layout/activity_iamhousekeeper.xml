@@ -17,13 +17,21 @@
             android:textSize="16sp"
             android:text="----服务管家"/>
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_toRightOf="@+id/level_tv"
+    android:layout_marginLeft="20dp"
+    android:background="@drawable/detail_btn"
+    android:layout_alignTop="@+id/level_tv"
+    android:layout_height="wrap_content">
         <Spinner
             android:id="@+id/state_sp"
-            android:layout_toRightOf="@+id/level_tv"
-            android:layout_alignTop="@+id/level_tv"
-            android:layout_marginLeft="20dp"
+
+            android:padding="3dp"
             android:layout_width="wrap_content"
+            android:entries="@array/state"
             android:layout_height="wrap_content"></Spinner>
+</RelativeLayout>
 
       <TextView
           android:id="@+id/tv_exp"
@@ -162,7 +170,7 @@
 
 </LinearLayout>
     <View
-       style="@style/divider1dp"></View>
+       style="@style/view1dp"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
