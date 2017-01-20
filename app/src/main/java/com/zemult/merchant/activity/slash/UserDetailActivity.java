@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,24 +19,19 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
-import com.zemult.merchant.activity.mine.AlbumActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
-import com.zemult.merchant.adapter.slashfrgment.PhotoFix3Adapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
-import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
-import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.FixedListView;
@@ -48,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -104,8 +96,8 @@ public class UserDetailActivity extends BaseActivity {
     LinearLayout llPhone;
     @Bind(R.id.gv_pic)
     FixedGridView gvPic;
-    @Bind(R.id.ll_phote)
-    LinearLayout llPhote;
+    @Bind(R.id.ll_photo)
+    LinearLayout llPhoto;
     @Bind(R.id.flv_merchant)
     FixedListView flvMerchant;
     @Bind(R.id.btn_gift)
@@ -168,14 +160,17 @@ public class UserDetailActivity extends BaseActivity {
         // 用户名
         if (!TextUtils.isEmpty(userName))
             tvName.setText(userName);
+
+        if (userId == SlashHelper.userManager().getUserId()) {
+            btnFocus.setVisibility(View.GONE);
+            llBottom.setVisibility(View.GONE);
+        } else {
+            llRight.setVisibility(View.VISIBLE);
+            ivRight.setImageResource(R.mipmap.jubao_white_icon);
+        }
+
         if (merchant == null) {
-            if (userId == SlashHelper.userManager().getUserId()) {
-                btnFocus.setVisibility(View.GONE);
-                llBottom.setVisibility(View.GONE);
-            } else {
-                llRight.setVisibility(View.VISIBLE);
-                ivRight.setImageResource(R.mipmap.jubao_white_icon);
-            }
+
         }
 
         btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
@@ -186,28 +181,6 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private void initListener() {
-        gvPic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, AlbumActivity.class);
-                intent.putExtra(AlbumActivity.INTENT_USERID, userId);
-                startActivityForResult(intent, REQ_ALBUM);
-            }
-        });
-
-        taMerchantAdapter.setOnBuyClickListener(new TaMerchantAdapter.OnBuyClickListener() {
-            @Override
-            public void onBuyClick(int position) {
-                if (noLogin(mContext))
-                    return;
-                M_Merchant entity = listMerchant.get(position);
-                Intent intent = new Intent(mContext, FindPayActivity.class);
-                intent.putExtra(FindPayActivity.MERCHANT_INFO, entity);
-                intent.putExtra(FindPayActivity.USER_INFO, userInfo);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-            }
-        });
         taMerchantAdapter.setOnAllClickListener(new TaMerchantAdapter.OnAllClickListener() {
             @Override
             public void onAllClick(int position) {
@@ -220,7 +193,6 @@ public class UserDetailActivity extends BaseActivity {
     private void getNetworkData() {
         showPd();
         getUserInfo();
-        getOtherMerchantList();
     }
 
 
@@ -264,41 +236,6 @@ public class UserDetailActivity extends BaseActivity {
         });
         sendJsonRequest(userInfoRequest);
     }
-
-    /**
-     * 查看TA挂靠的商家
-     */
-    private void getOtherMerchantList() {
-        if (merchantOtherMerchantListRequest != null) {
-            merchantOtherMerchantListRequest.cancel();
-        }
-        MerchantOtherMerchantListRequest.Input input = new MerchantOtherMerchantListRequest.Input();
-        input.operateUserId = SlashHelper.userManager().getUserId();
-        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
-        input.userId = userId;
-        input.page = 1;
-        input.rows = Constants.ROWS;
-        input.convertJosn();
-        merchantOtherMerchantListRequest = new MerchantOtherMerchantListRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                if (((APIM_MerchantList) response).status == 1) {
-                    listMerchant = ((APIM_MerchantList) response).merchantList;
-                    fillAdapter(listMerchant, false);
-                } else {
-                    ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
-                }
-                dismissPd();
-            }
-        });
-        sendJsonRequest(merchantOtherMerchantListRequest);
-    }
-
     /**
      * 设置用户信息
      *
@@ -329,21 +266,39 @@ public class UserDetailActivity extends BaseActivity {
         }
 
 
-        Drawable drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
-        // 这一步必须要做,否则不会显示.
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-        tvBuyNum.setTextColor(getColor(R.color.font_black_999));
+
+        Drawable drawable;
+        switch (userInfo.getState()){
+            case 0:
+                drawable= getResources().getDrawable(R.mipmap.kongxian_icon);
+                // 这一步必须要做,否则不会显示.
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                tvBuyNum.setTextColor(getColor(R.color.font_idle));
+                break;
+            case 1:
+                drawable= getResources().getDrawable(R.mipmap.xiuxi_icon);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                tvBuyNum.setTextColor(getColor(R.color.font_black_999));
+                break;
+            case 2:
+                drawable= getResources().getDrawable(R.mipmap.manglu_icon);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                tvBuyNum.setTextColor(getColor(R.color.font_busy));
+                break;
+        }
 
         // 买单数
         //tvBuyNum.setText(userInfo.saleNum + "人找TA买单");
         // 相册图片(多个用","分隔，最多显示3个)
-        if (!TextUtils.isEmpty(userInfo.pics)) {
-            PhotoFix3Adapter adapter = new PhotoFix3Adapter(mContext, userInfo.pics);
-            adapter.setWidth(DensityUtil.dip2px(mContext, 50));
-            adapter.setRule("@50p");
-            gvPic.setAdapter(adapter);
-        }
+//        if (!TextUtils.isEmpty(userInfo.pics)) {
+//            PhotoFix3Adapter adapter = new PhotoFix3Adapter(mContext, userInfo.pics);
+//            adapter.setWidth(DensityUtil.dip2px(mContext, 50));
+//            adapter.setRule("@50p");
+//            gvPic.setAdapter(adapter);
+//        }
         // 是否已经关注(0:未关注1:已关注)
         if (userInfo.getIsFan() == 0) {
             btnFocus.setText(R.string.add_focus_yogouser);
@@ -458,7 +413,7 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_phote, R.id.btn_contact, R.id.btn_focus})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -470,10 +425,10 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.ll_right:
                 doReport();
                 break;
-            case R.id.ll_phote:
-                intent = new Intent(mContext, AlbumActivity.class);
-                intent.putExtra(AlbumActivity.INTENT_USERID, userId);
-                startActivityForResult(intent, REQ_ALBUM);
+            case R.id.ll_photo:
+                intent = new Intent(mContext, TAMerchantListActivity.class);
+                intent.putExtra(USER_ID, userId);
+                startActivity(intent);
                 break;
             case R.id.tv_phone:
                 call();
@@ -499,10 +454,4 @@ public class UserDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

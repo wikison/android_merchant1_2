@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.flyco.roundview.RoundTextView;
+import com.flyco.roundview.RoundLinearLayout;
+import com.hedgehog.ratingbar.RatingBar;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
@@ -69,13 +70,6 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     private void initListener(final ViewHolder holder, final int position) {
-        holder.rtvBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onBuyClickListener != null)
-                    onBuyClickListener.onBuyClick(position);
-            }
-        });
         holder.llRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +121,6 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
             }
         }
 
-
     }
 
     /**
@@ -156,10 +149,16 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 holder.tvDistance.setText(entity.distance + "m");
         }
 
-        if (entity.reviewstatus == 2) {
-            holder.rtvBuy.setVisibility(View.VISIBLE);
+        if (entity.commentNumber != 0) {
+            holder.rb5.setStar(entity.comment / entity.commentNumber);
         } else {
-            holder.rtvBuy.setVisibility(View.GONE);
+            holder.rb5.setStar(0);
+        }
+        holder.tvComment.setText(entity.commentNumber + "人评价");
+        holder.tvService.setText("约服人次: " + entity.saleNum);
+        if (!StringUtils.isBlank(entity.createTime)) {
+            holder.tvAddTime.setText("于" + entity.createTime.substring(0, 12) + "加入");
+        } else {
 
         }
 
@@ -167,20 +166,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     /**
-     * 找TA买单
-     */
-    private OnBuyClickListener onBuyClickListener;
-
-    public void setOnBuyClickListener(OnBuyClickListener onBuyClickListener) {
-        this.onBuyClickListener = onBuyClickListener;
-    }
-
-    public interface OnBuyClickListener {
-        void onBuyClick(int position);
-    }
-
-    /**
-     * 找TA买单
+     * 点击Item
      */
     private OnAllClickListener onAllClickListener;
 
@@ -193,6 +179,14 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     static class ViewHolder {
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
+        @Bind(R.id.rb_5)
+        RatingBar rb5;
+        @Bind(R.id.tv_comment)
+        TextView tvComment;
+        @Bind(R.id.tv_service)
+        TextView tvService;
         @Bind(R.id.iv_cover)
         ImageView ivCover;
         @Bind(R.id.tv_name)
@@ -202,13 +196,11 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
         @Bind(R.id.tv_distance)
         TextView tvDistance;
         @Bind(R.id.card_view)
-        CardView cardView;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
-        @Bind(R.id.rtv_buy)
-        RoundTextView rtvBuy;
+        FrameLayout cardView;
+        @Bind(R.id.tv_add_time)
+        TextView tvAddTime;
         @Bind(R.id.ll_root)
-        LinearLayout llRoot;
+        RoundLinearLayout llRoot;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -6,7 +6,6 @@ package com.zemult.merchant.config;
 public class Urls {
 //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
     public static String BASIC_URL = "http://server.54xiegang.com/dzyx_test/inter_json/";
-//    public static  String BASIC_URL = "http://192.168.0.151:8080/dzyx/inter_json/";
 
     //验证码
     public static String COMMON_GETCODE = "common_getcode.do";

@@ -1,28 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:padding="16dp"
+
+    <com.flyco.roundview.RoundLinearLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:elevation="1dp"
         android:orientation="vertical"
-        android:background="@drawable/ripple_item_clicked2">
-        <View
-            style="@style/divider_1px"/>
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="10dp">
 
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <com.zemult.merchant.view.FNRadioGroup
+            android:id="@+id/rg_ta_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:gravity="center_vertical">
+
+            <com.hedgehog.ratingbar.RatingBar
+                android:id="@+id/rb_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                hedgehog:clickable="false"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                hedgehog:halfstart="true"
+                hedgehog:starCount="5"
+                hedgehog:starEmpty="@mipmap/kongxing_icon"
+                hedgehog:starFill="@mipmap/xing_icon"
+                hedgehog:starHalf="@mipmap/banxing_icon"
+                hedgehog:starImageHeight="16dp"
+                hedgehog:starImagePadding="3dp"
+                hedgehog:starImageWidth="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/rb_5"
+                android:gravity="center"
+                android:text="评价"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_22px"/>
+
+            <TextView
+                android:id="@+id/tv_service"
+                style="@style/text_12_black_999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:text="约服人次: ---"/>
+        </RelativeLayout>
+
+        <FrameLayout
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="126dp"
-            card_view:cardBackgroundColor="@color/transparent"
-            card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="0dp">
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/transparent">
 
             <ImageView
                 android:id="@+id/iv_cover"
@@ -30,11 +85,13 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@color/bg_head"/>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="#30000000"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="#30000000"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -107,37 +164,14 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </FrameLayout>
 
-        <com.zemult.merchant.view.FNRadioGroup
-            android:clickable="false"
-            android:id="@+id/rg_ta_service"
+        <TextView
+            android:id="@+id/tv_add_time"
+            style="@style/text_12_black_28"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="vertical"
-            android:visibility="gone"/>
-
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/rtv_buy"
-            android:layout_width="@dimen/common_btn_width_235"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="找TA买单"
-            android:textColor="@color/font_main"
-            android:textSize="@dimen/font_36px"
-            app:rv_backgroundColor="@color/white"
-            app:rv_backgroundPressColor="@color/bg_head_red"
-            app:rv_cornerRadius="18dp"
-            app:rv_strokeColor="@color/font_main"
-            app:rv_strokeWidth="1px"/>
-    </LinearLayout>
-
-
-
-    <View
-        style="@style/divider12dp"/>
+            android:text=""
+            android:paddingLeft="@dimen/margin_16dp"
+            android:layout_height="@dimen/j35dp"/>
+    </com.flyco.roundview.RoundLinearLayout>
 </LinearLayout>
