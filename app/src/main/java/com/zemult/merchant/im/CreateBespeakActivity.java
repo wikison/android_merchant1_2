@@ -16,6 +16,7 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.aip.task.TaskIndustryInfoRequest;
@@ -50,7 +51,7 @@ public class CreateBespeakActivity extends BaseActivity {
     @Bind(R.id.bespek_shopname)
     TextView bespekShopname;
     @Bind(R.id.btn_bespeak_commit)
-    Button btnBespeakCommit;
+    RoundTextView btnBespeakCommit;
     @Bind(R.id.pmnv_select_deadline)
     PMNumView pmnvSelectDeadline;
     @Bind(R.id.et_bespeak)
@@ -67,13 +68,6 @@ public class CreateBespeakActivity extends BaseActivity {
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_bespeak);
-        pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
-            @Override
-            public void onNumChanged(int num) {
-                orderpeople = num+"";
-            }
-        });
-
 
     }
 
@@ -81,6 +75,13 @@ public class CreateBespeakActivity extends BaseActivity {
     public void init() {
         serviceId=getIntent().getIntExtra("serviceId",50);
         shophead=getIntent().getStringExtra("shophead");
+
+        pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
+            @Override
+            public void onNumChanged(int num) {
+                orderpeople = num+"";
+            }
+        });
     }
 
     @Override

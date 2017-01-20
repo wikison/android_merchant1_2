@@ -25,6 +25,7 @@ import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
@@ -423,7 +424,7 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
+    @OnClick({R.id.lh_btn_back,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -452,6 +453,12 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_focus:
                 focus_operate();
                 break;
+            case R.id.btn_service:
+                intent = new Intent(mContext, CreateBespeakActivity.class);
+                intent.putExtra("serviceId", userId);
+                startActivity(intent);
+                break;
+
         }
     }
 
