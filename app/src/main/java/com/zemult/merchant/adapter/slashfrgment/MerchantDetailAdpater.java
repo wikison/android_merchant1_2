@@ -155,22 +155,8 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         holder.tvNum.setText("约服人次：" + entity.saleNum);
         holder.tvComment.setText(entity.commentNumber + "人评价");
 
-        if(entity.experience <= 0){
-            holder.ivService.setImageResource(R.mipmap.xinshou_icon);
-            holder.tvService.setText("新手");
-        }else if(entity.experience > 0 && entity.experience <= 9999){
-            holder.ivService.setImageResource(R.mipmap.tong_icon2);
-            holder.tvService.setText("铜牌");
-        }else if(entity.experience > 9999 && entity.experience <= 99999){
-            holder.ivService.setImageResource(R.mipmap.yin_icon2);
-            holder.tvService.setText("银牌");
-        }else if(entity.experience > 99999 && entity.experience <= 999999){
-            holder.ivService.setImageResource(R.mipmap.jingpai_icon2);
-            holder.tvService.setText("金牌");
-        }else {
-            holder.ivService.setImageResource(R.mipmap.demon_icon2);
-            holder.tvService.setText("钻石");
-        }
+        holder.ivService.setImageResource(entity.getExperienceImg(entity.experience));
+        holder.tvService.setText(entity.getExperienceText(entity.experience));
     }
 
     /**
