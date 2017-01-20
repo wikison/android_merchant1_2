@@ -56,7 +56,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
@@ -162,9 +162,8 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <View style="@style/divider"/>
-
+        <View
+            style="@style/divider_1px"/>
         <View style="@style/divider12dp"/>
 
         <LinearLayout
@@ -173,13 +172,10 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <View
-                style="@style/divider_1px"/>
-
             <LinearLayout
-                android:id="@+id/ll_phote"
+                android:id="@+id/ll_photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 android:background="@drawable/ripple_item_clicked2"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -205,18 +201,16 @@
                     android:layout_marginLeft="16dp"
                     android:src="@mipmap/right_btn"/>
             </LinearLayout>
-
-
-            <View style="@style/divider"/>
         </LinearLayout>
 
 
         <View
             style="@style/divider12dp"
-            android:layout_height="12dp"/>
+            android:layout_height="12dp"
+            android:visibility="gone"/>
 
-        <View style="@style/divider"/>
-
+        <View
+            style="@style/divider_1px"/>
 
         <TextView
             style="@style/text_15_black_28"
@@ -225,10 +219,8 @@
             android:background="@color/white"
             android:drawableRight="@mipmap/right_btn"
             android:padding="@dimen/margin_16dp"
-            android:text="TA的动态"/>
-
-        <View
-            style="@style/divider"/>
+            android:text="TA的动态"
+            android:visibility="gone"/>
 
         <com.zemult.merchant.view.FixedListView
             android:id="@+id/flv_merchant"
@@ -244,9 +236,6 @@
     <View
         style="@style/divider12dp"
         android:layout_height="12dp"/>
-
-    <View style="@style/divider"/>
-
 
     <RelativeLayout
         android:id="@+id/ll_bottom"

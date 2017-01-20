@@ -132,4 +132,13 @@ public class M_Merchant implements Serializable{
     public boolean daiqiyue;
     @Expose
     public String tags;  // 他在商家下的标签(多个用","分隔)
+
+    @Expose
+    public int comment;  // 被评价的总星数
+
+    @Expose
+    public int commentNumber;  // 被评价的总次数
+    @Expose
+    public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
+
 }

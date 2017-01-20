@@ -80,7 +80,8 @@ public class M_Userinfo implements Serializable {
     public int friendDimension;//好友维度(0:非好友,1:1度好友,2:2度好友)
 
     @Expose
-    int state;//状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)
+    int state;//状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)//状态(0:空闲,1:休息,2:忙碌)
+
     @Expose
     public int level, userLevel;//账户等级
     @Expose

@@ -378,7 +378,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -558,11 +558,12 @@
         <activity android:name=".im.CreateBespeakActivity"/>
         <activity android:name=".im.ModifyBespeakActivity"/>
         <activity android:name=".activity.mine.MerchantEnter2Activity"/>
-        <activity android:name=".alipay.taskpay.AssessmentActivity"></activity>
+        <activity android:name=".alipay.taskpay.AssessmentActivity"/>
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity"/>
-        <activity android:name=".activity.mine.AccountSafeActivity"></activity>
-        <activity android:name=".activity.mine.MyAppointmentActivity"></activity>
-        <activity android:name=".activity.mine.AppointmentDetailActivity"></activity>
+        <activity android:name=".activity.mine.AccountSafeActivity"/>
+        <activity android:name=".activity.mine.MyAppointmentActivity"/>
+        <activity android:name=".activity.slash.TAMerchantListActivity"/>
+        <activity android:name=".activity.mine.AppointmentDetailActivity"/>
     </application>
 
 </manifest>
