@@ -782,4 +782,176 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
+    <!--用户的账单详情-购买礼物(type=7)-->
+    <LinearLayout
+        android:id="@+id/ll_present"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:text="赠送对象"
+                    android:textSize="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_user_head_present"
+                        android:layout_width="@dimen/j30dp"
+                        android:layout_height="@dimen/j30dp"
+                        android:src="@mipmap/user_icon"
+                        android:scaleType="centerCrop"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_name_present"
+                        style="@style/text_15_black_999"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:text="----"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <View
+                style="@style/divider_1px"
+                android:layout_marginTop="@dimen/margin_8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="12dp"
+                    android:text="交易时间"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_trade_time_present"
+                    style="@style/text_15_black_999"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="----"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="12dp"
+                    android:text="订单号码"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_pay_num_present"
+                    style="@style/text_15_black_999"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="----"/>
+            </LinearLayout>
+
+            <View
+                style="@style/divider_1px"
+                android:layout_marginTop="@dimen/margin_8dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:padding="8dp"
+                android:layout_marginLeft="12dp"
+                style="@style/text_15_black_28"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="订单内容"
+                android:textSize="15sp"/>
+            <View
+                style="@style/divider_1px"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+
+
+            <LinearLayout
+                android:layout_marginLeft="12dp"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_persent_name"
+                    android:layout_weight="1"
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tv_persent_price"
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/bg_head"/>
+            </LinearLayout>
+            <View
+                style="@style/divider_1px"
+                android:layout_marginTop="@dimen/margin_8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

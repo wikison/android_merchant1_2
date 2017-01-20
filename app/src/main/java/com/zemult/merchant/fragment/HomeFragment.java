@@ -34,6 +34,7 @@ import com.zemult.merchant.activity.CityPickerActivity;
 import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
+import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
@@ -188,7 +189,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+//                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+//                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
+//                startActivity(intent);
+                Intent intent = new Intent(mContext, MyWalletActivity.class);
                 intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
                 startActivity(intent);
             }

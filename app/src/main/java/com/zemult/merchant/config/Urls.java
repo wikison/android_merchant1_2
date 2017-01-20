@@ -296,6 +296,10 @@ public class Urls {
     public static String USER_BILL_INFO_WITHDRAW = "user_bill_info_withdraw.do";
     //用户的账户明细详情-佣金类型 type=6
     public static String USER_BILL_INFO_COMMISSION = "user_bill_info_commission.do";
+    //用户的账户明细详情-佣金类型 type=7
+    public static String USER_BILL_INFO_PRESENT = "user_bill_info_present";
+    //用户的账户明细详情-佣金类型 type=8
+    public static String USER_BILL_INFO_PRESENT_EXCHANGE = "user_bill_info_present_exchange";
 
     //商家的账户明细详情
     public static String MERCHANT_BILL_INFO = "merchant_bill_info.do";
@@ -505,4 +509,9 @@ public class Urls {
     public static String USER_RESERVATION_INFO="user_reservation_info.do";
     //约客修改预约单(答复)
     public static String USER_RESERVATION_EDIT="user_reservation_edit.do";
+
+    //用户的礼物列表
+    public static String USER_PRESENT_LIST="user_present_list";
+    //用户兑换礼物
+    public static String USER_PRESENT_EXCHANGE="user_present_exchange";
 }

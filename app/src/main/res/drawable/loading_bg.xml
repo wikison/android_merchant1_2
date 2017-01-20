@@ -4,65 +4,65 @@
 
     <item
         android:drawable="@mipmap/bee0"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee1"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee2"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee3"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee4"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee5"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee6"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee7"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee8"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee9"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee10"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee11"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee12"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee13"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee14"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee15"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee16"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee17"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee18"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee19"
-        android:duration="80" />
+        android:duration="40" />
     <item
         android:drawable="@mipmap/bee20"
-        android:duration="80" />
+        android:duration="40" />
 </animation-list>

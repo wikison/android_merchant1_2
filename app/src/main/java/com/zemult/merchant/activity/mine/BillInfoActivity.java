@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserBillInfoBandRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoCommissionRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPayRequest;
+import com.zemult.merchant.aip.mine.UserBillInfoPresentRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.M_Bill;
@@ -19,6 +21,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.Convert;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -111,6 +114,20 @@ public class BillInfoActivity extends BaseActivity {
     TextView tvTradeTimeCommission;
     @Bind(R.id.ll_commission)
     LinearLayout llCommission;
+    @Bind(R.id.iv_user_head_present)
+    ImageView ivUserHeadPresent;
+    @Bind(R.id.tv_user_name_present)
+    TextView tvUserNamePresent;
+    @Bind(R.id.tv_trade_time_present)
+    TextView tvTradeTimePresent;
+    @Bind(R.id.tv_pay_num_present)
+    TextView tvPayNumPresent;
+    @Bind(R.id.tv_persent_name)
+    TextView tvPersentName;
+    @Bind(R.id.tv_persent_price)
+    TextView tvPersentPrice;
+    @Bind(R.id.ll_present)
+    LinearLayout llPresent;
 
 
     UserBillInfoPayRequest userBillInfoPayRequest;
@@ -119,6 +136,7 @@ public class BillInfoActivity extends BaseActivity {
     UserBillInfoCommissionRequest userBillInfoCommissionRequest;
     int billId, type;
     M_Bill m_bill;
+
 
 
     @Override
@@ -136,7 +154,7 @@ public class BillInfoActivity extends BaseActivity {
     private void initData() {
         billId = getIntent().getIntExtra("billId", 0);
         type = getIntent().getIntExtra("type", -1);
-        lhTvTitle.setText("账单详情");
+        lhTvTitle.setText("消费单详情");
         //类型(0:支付买单,2:支付绑定支付宝账户,3:取现,6:佣金)
         if (type == 0) {
             tvBillName.setText("交易");
@@ -158,6 +176,18 @@ public class BillInfoActivity extends BaseActivity {
         }
 
         if (type == 6) {
+            tvBillName.setText("红包");
+            tvState.setText("");
+            llCommission.setVisibility(View.VISIBLE);
+            user_bill_info_commission();
+        }
+        if (type == 7) {
+            tvBillName.setText("礼物消费");
+            tvState.setText("");
+            llPresent.setVisibility(View.VISIBLE);
+            user_bill_info_present();
+        }
+        if (type == 8) {
             tvBillName.setText("红包");
             tvState.setText("");
             llCommission.setVisibility(View.VISIBLE);
@@ -354,6 +384,53 @@ public class BillInfoActivity extends BaseActivity {
         sendJsonRequest(userBillInfoCommissionRequest);
     }
 
+    //type=7
+    private UserBillInfoPresentRequest presentRequest;
+
+    private void user_bill_info_present() {
+        showPd();
+        if (presentRequest != null) {
+            presentRequest.cancel();
+        }
+
+        UserBillInfoPresentRequest.Input input = new UserBillInfoPresentRequest.Input();
+        input.billId = billId;
+
+        input.convertJosn();
+        presentRequest = new UserBillInfoPresentRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserBillInfo) response).status == 1) {
+                    m_bill = ((APIM_UserBillInfo) response).billInfo;
+                    if (m_bill.inCome == 0) {//(0:收入,1:支出)
+                        tvMoney.setText("+" + (m_bill.commissionMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.commissionMoney)));
+                    } else {
+                        tvMoney.setText("-" + (m_bill.commissionMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.commissionMoney)));
+                    }
+                    if (!TextUtils.isEmpty(m_bill.toUserHead)) {
+                        imageManager.loadCircleImage(m_bill.toUserHead, ivUserHeadPresent);
+                    }
+                    tvUserNamePresent.setText(m_bill.toUserName);
+
+                    tvPersentPrice.setText(m_bill.payMoney + "");
+                    tvPersentName.setText(m_bill.presentName+ "x1");
+                    tvPayNumPresent.setText(m_bill.number);
+                    tvTradeTimePresent.setText(m_bill.createtime);
+
+                } else {
+                    ToastUtils.show(BillInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(presentRequest);
+    }
+
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -364,4 +441,10 @@ public class BillInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

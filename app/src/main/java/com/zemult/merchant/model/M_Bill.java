@@ -97,4 +97,13 @@ public class M_Bill {
     public String getCommissionMoney() {
         return Convert.getMoneyString(commissionMoney);
     }
+
+    @Expose
+    public String toUserHead;//赠送对象的用户头像
+    @Expose
+    public String toUserName;//赠送对象的用户名称
+    @Expose
+    public String presentName;//礼物名称
+    @Expose
+    public String presentPic;//礼物图片
 }

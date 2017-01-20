@@ -94,6 +94,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
         lv_my_bill.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, -1);
+        showPd();
         // 用户的账户明细列表
         if (merchantId == -1) {
             userBillListRequest(true);
@@ -204,7 +205,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                 dismissPd();
                 lv_my_bill.stopRefresh();
                 lv_my_bill.stopLoadMore();
-
+                dismissPd();
             }
 
             @Override
@@ -216,7 +217,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                         lv_my_bill.setAdapter(commonAdapter = new CommonAdapter<M_Bill>(MyBillActivity.this, R.layout.item_mybill, mbillList) {
                             @Override
                             public void convert(CommonViewHolder holder, M_Bill mbill, int position) {
-                                //类型(0:支付买单,1:支付红包,2:支付绑定支付宝账户,3:取现,4:领取红包,5:红包退还)
+                                //类型(0:支付买单,2:支付绑定支付宝账户,3:提现,6:消费任务佣金,7:购买礼物,8:礼物兑换)
                                 holder.setText(R.id.tv_mybill_note, mbill.note);
                                 if (mbill.type == 0) {
                                     holder.setText(R.id.tv_mybill_name, "支付买单");
@@ -245,6 +246,14 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                                     holder.setText(R.id.tv_mybill_name, "红包");
                                     holder.setViewInvisible(R.id.tv_state);
                                 }
+                                if (mbill.type == 7) {
+                                    holder.setText(R.id.tv_mybill_name, "购买礼物");
+                                    holder.setViewInvisible(R.id.tv_state);
+                                }
+                                if (mbill.type == 8) {
+                                    holder.setText(R.id.tv_mybill_name, "礼物兑换");
+                                    holder.setViewInvisible(R.id.tv_state);
+                                }
 
                                 holder.setText(R.id.tv_mybill_date, mbill.createtime);
                                 if (mbill.inCome == 0) {  //收入
@@ -270,7 +279,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                 }
                 lv_my_bill.stopRefresh();
                 lv_my_bill.stopLoadMore();
-
+                dismissPd();
 
             }
         });
@@ -298,7 +307,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
             public void onErrorResponse(VolleyError error) {
                 lv_my_bill.stopRefresh();
                 lv_my_bill.stopLoadMore();
-
+                dismissPd();
             }
 
             @Override
@@ -351,7 +360,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                 }
                 lv_my_bill.stopRefresh();
                 lv_my_bill.stopLoadMore();
-
+                dismissPd();
 
             }
         });
@@ -361,7 +370,6 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
 
     @Override
     public void onRefresh() {
-        showPd();
         if (merchantId == -1)
             userBillListRequest(true);
         else
