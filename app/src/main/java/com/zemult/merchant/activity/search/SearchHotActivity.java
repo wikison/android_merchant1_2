@@ -183,7 +183,7 @@ public class SearchHotActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                changeListRecentTags(mSearchView.getStrSearch());
+                changeListRecentTags(adapter.getItem(position).name);
                 Intent intent = new Intent(mContext, MerchantDetailActivity.class);
                 intent.putExtra(MerchantDetailActivity.MERCHANT_ID, adapter.getItem(position).merchantId);
                 startActivity(intent);

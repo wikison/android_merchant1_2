@@ -11,15 +11,14 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/shenmedoumeiyou_icon" />
+        android:src="@mipmap/zanwushuju" />
     <TextView
         android:layout_marginTop="32dp"
         android:layout_below="@+id/iv"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="阿欧~暂无搜索结果"
         android:textSize="@dimen/font_32px"
-        android:textColor="@color/font_black_666"
-        android:text="什么都没有..."/>
-
+        android:textColor="@color/font_black_666"/>
 </RelativeLayout>
