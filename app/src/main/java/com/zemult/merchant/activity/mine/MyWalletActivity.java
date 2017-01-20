@@ -16,6 +16,7 @@ import com.zemult.merchant.aip.mine.UserPresentExchangeRequest;
 import com.zemult.merchant.aip.mine.UserPresentRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.model.apimodel.APIM_ManagerNewsInfo;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
@@ -177,7 +178,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onResponse(Object response) {
-                if (((APIM_ManagerNewsInfo) response).status == 1) {
+                if (((APIM_PresentList) response).status == 1) {
                     setPresent(((APIM_PresentList) response).userPresentList);
                 } else {
                     ToastUtil.showMessage(((APIM_PresentList) response).info);
@@ -231,7 +232,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onResponse(Object response) {
-                if (((APIM_ManagerNewsInfo) response).status == 1) {
+                if (((CommonResult) response).status == 1) {
                     ToastUtil.showMessage("兑换成功");
 
                     Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
@@ -242,7 +243,7 @@ public class MyWalletActivity extends BaseActivity {
                     tvMoney.start();
                     getPresentList();
                 } else {
-                    ToastUtil.showMessage(((APIM_PresentList) response).info);
+                    ToastUtil.showMessage(((CommonResult) response).info);
                 }
                 dismissPd();
             }

@@ -270,7 +270,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.merchantId = merchantId;
         input.page = 1;
-        input.rows = 5;
+        input.rows = 100;
         input.convertJosn();
         fanRequest = new MerchantSaleuserListFanRequest(input, new ResponseListener() {
             @Override
