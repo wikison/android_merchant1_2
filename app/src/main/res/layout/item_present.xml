@@ -5,14 +5,13 @@
     android:paddingTop="40dp"
     android:id="@+id/ll">
 
-    <CheckBox
+    <ImageView
+        android:visibility="invisible"
         android:layout_toLeftOf="@+id/iv"
-        android:id="@+id/cb"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:background="@drawable/check_box_style"
-        android:button="@null"
-        android:layout_alignBottom="@+id/tv_num" />
+        android:id="@+id/iv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/sel" />
 
     <TextView
         android:id="@+id/tv_num"

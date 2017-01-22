@@ -58,9 +58,8 @@ public class PresentAdapter extends
             super(arg0);
         }
 
-        ImageView iv;
+        ImageView iv, ivSelect;
         TextView tvNum, tvName, tvExchangePrice;
-        CheckBox cb;
         RelativeLayout ll;
     }
 
@@ -81,11 +80,11 @@ public class PresentAdapter extends
         ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.iv = (ImageView) view.findViewById(R.id.iv);
+        viewHolder.ivSelect = (ImageView) view.findViewById(R.id.iv_select);
         viewHolder.tvNum = (TextView) view.findViewById(R.id.tv_num);
         viewHolder.tvName = (TextView) view.findViewById(R.id.tv_name);
         viewHolder.tvExchangePrice = (TextView) view.findViewById(R.id.tv_exchanege_price);
         viewHolder.ll = (RelativeLayout) view.findViewById(R.id.ll);
-        viewHolder.cb = (CheckBox) view.findViewById(R.id.cb);
 
         return viewHolder;
     }
@@ -124,27 +123,30 @@ public class PresentAdapter extends
         if(fromSend == true){
             holder.tvNum.setVisibility(View.GONE);
             holder.tvExchangePrice.setVisibility(View.GONE);
-            holder.cb.setVisibility(View.VISIBLE);
 
             if(selectedId == present.presentId)
-                holder.cb.setChecked(true);
+                holder.ivSelect.setVisibility(View.VISIBLE);
             else
-                holder.cb.setChecked(false);
+                holder.ivSelect.setVisibility(View.INVISIBLE);
 
-            holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.ll.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
+                public void onClick(View v) {
+                    if(selectedId == present.presentId){
+                        selectedId = 0;
+                        if(mOnItemClickLitener != null){
+                            mOnItemClickLitener.onItemClick(0);
+                        }
+                    }else {
                         selectedId = present.presentId;
-                        notifyDataSetChanged();
                         if(mOnItemClickLitener != null){
                             mOnItemClickLitener.onItemClick(present.price);
                         }
                     }
+                    notifyDataSetChanged();
                 }
             });
         }
-
     }
 
     /**

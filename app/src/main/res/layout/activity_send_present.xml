@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,40 +39,50 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="@color/aliceblue"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:paddingLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="支付金额:"
-            android:textColor="@color/font_black_28"
-            android:textSize="@dimen/font_36px"/>
-        <TextView
-        android:layout_weight="1"
-        android:id="@+id/tv_pay_money"
-        android:layout_marginLeft="8dp"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/bg_head"
-        android:textSize="@dimen/font_36px"/>
+        android:orientation="vertical">
 
-        <TextView
-            android:gravity="center"
-            android:background="#e6bc7d"
-            android:id="@+id/tv_pay"
-            android:layout_width="90dp"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"
-            android:text="确认"/>
+        <View style="@style/divider"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:paddingLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支付金额:"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_36px"/>
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tv_pay_money"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_head"
+                android:textSize="@dimen/font_36px"/>
+
+            <TextView
+                android:enabled="false"
+                android:gravity="center"
+                android:background="@color/font_black_999"
+                android:id="@+id/tv_pay"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_36px"
+                android:text="确认"/>
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>
