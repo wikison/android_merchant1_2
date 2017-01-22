@@ -249,8 +249,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                         //客户的头像和姓名
                         if (!TextUtils.isEmpty(mReservation.head)) {
                             imageManager.loadCircleImage(mReservation.head, headIv);
-                            nameTv.setText(mReservation.name);
                         }
+                        nameTv.setText(mReservation.name);
                     }
                 } else {
                     ToastUtils.show(AppointmentDetailActivity.this, ((M_Reservation) response).info);
