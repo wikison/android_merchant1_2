@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -26,6 +27,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
@@ -364,6 +366,12 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
             case R.id.jiezhang_btn:
                 //快速结账
+                Intent intent = new Intent(this, FindPayActivity.class);
+                intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
+                intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
+                startActivity(intent);
+
+
                 break;
             case R.id.btn_service:
                 replayNote=appresultcommitEt.getText().toString();
