@@ -6,13 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.adapter.minefragment.PresentExchangeAdapter;
 import com.zemult.merchant.aip.mine.UserBillInfoBandRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoCommissionRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPayRequest;
+import com.zemult.merchant.aip.mine.UserBillInfoPresentExchangeRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPresentRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -128,7 +131,14 @@ public class BillInfoActivity extends BaseActivity {
     TextView tvPersentPrice;
     @Bind(R.id.ll_present)
     LinearLayout llPresent;
-
+    @Bind(R.id.tv_trade_time_present_exchange)
+    TextView tvTradeTimePresentExchange;
+    @Bind(R.id.tv_pay_num_present_exchange)
+    TextView tvPayNumPresentExchange;
+    @Bind(R.id.lv)
+    ListView lv;
+    @Bind(R.id.ll_present_exchange)
+    LinearLayout llPresentExchange;
 
     UserBillInfoPayRequest userBillInfoPayRequest;
     UserBillInfoBandRequest userBillInfoBandRequest;
@@ -136,8 +146,6 @@ public class BillInfoActivity extends BaseActivity {
     UserBillInfoCommissionRequest userBillInfoCommissionRequest;
     int billId, type;
     M_Bill m_bill;
-
-
 
     @Override
     public void setContentView() {
@@ -188,10 +196,10 @@ public class BillInfoActivity extends BaseActivity {
             user_bill_info_present();
         }
         if (type == 8) {
-            tvBillName.setText("红包");
+            tvBillName.setText("礼物兑换金额");
             tvState.setText("");
-            llCommission.setVisibility(View.VISIBLE);
-            user_bill_info_commission();
+            llPresentExchange.setVisibility(View.VISIBLE);
+            user_bill_info_present_exchange();
         }
     }
 
@@ -408,9 +416,9 @@ public class BillInfoActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m_bill = ((APIM_UserBillInfo) response).billInfo;
                     if (m_bill.inCome == 0) {//(0:收入,1:支出)
-                        tvMoney.setText("+" + (m_bill.commissionMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.commissionMoney)));
+                        tvMoney.setText("+" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     } else {
-                        tvMoney.setText("-" + (m_bill.commissionMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.commissionMoney)));
+                        tvMoney.setText("-" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     }
                     if (!TextUtils.isEmpty(m_bill.toUserHead)) {
                         imageManager.loadCircleImage(m_bill.toUserHead, ivUserHeadPresent);
@@ -418,7 +426,7 @@ public class BillInfoActivity extends BaseActivity {
                     tvUserNamePresent.setText(m_bill.toUserName);
 
                     tvPersentPrice.setText(m_bill.payMoney + "");
-                    tvPersentName.setText(m_bill.presentName+ "x1");
+                    tvPersentName.setText(m_bill.presentName + "x1");
                     tvPayNumPresent.setText(m_bill.number);
                     tvTradeTimePresent.setText(m_bill.createtime);
 
@@ -429,6 +437,50 @@ public class BillInfoActivity extends BaseActivity {
             }
         });
         sendJsonRequest(presentRequest);
+    }
+
+    //type=8
+    private UserBillInfoPresentExchangeRequest exchangeRequest;
+
+    private void user_bill_info_present_exchange() {
+        showPd();
+        if (exchangeRequest != null) {
+            exchangeRequest.cancel();
+        }
+
+        UserBillInfoPresentExchangeRequest.Input input = new UserBillInfoPresentExchangeRequest.Input();
+        input.billId = billId;
+
+        input.convertJosn();
+        exchangeRequest = new UserBillInfoPresentExchangeRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserBillInfo) response).status == 1) {
+                    m_bill = ((APIM_UserBillInfo) response).billInfo;
+                    if (m_bill.inCome == 0) {//(0:收入,1:支出)
+                        tvMoney.setText("+" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                    } else {
+                        tvMoney.setText("-" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                    }
+
+                    if(m_bill.presentList != null && !m_bill.presentList.isEmpty()){
+                        lv.setAdapter(new PresentExchangeAdapter(BillInfoActivity.this, m_bill.presentList));
+                    }
+                    tvPayNumPresentExchange.setText(m_bill.number);
+                    tvTradeTimePresentExchange.setText(m_bill.createtime);
+
+                } else {
+                    ToastUtils.show(BillInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(exchangeRequest);
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
