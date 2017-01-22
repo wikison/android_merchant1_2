@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item
+        android:drawable="@mipmap/pull0"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull1"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull2"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull3"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull4"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull5"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull6"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull7"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull8"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull9"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull10"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull11"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull12"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull13"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull14"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull15"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull16"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull17"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull18"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull19"
+        android:duration="40" />
+    <item
+        android:drawable="@mipmap/pull20"
+        android:duration="40" />
+</animation-list>

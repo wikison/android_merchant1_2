@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="bottom">
 
     <RelativeLayout
@@ -18,61 +17,25 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/smoothlistview_header_hint_textview"
+            <ImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/iv_bee_pull"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/smoothlistview_header_hint_normal"
-                android:textStyle="bold"/>
-
-            <LinearLayout
+                />
+            <ImageView
                 android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:id="@+id/iv_bee_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp">
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/smoothlistview_header_last_time"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/smoothlistview_header_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"/>
-            </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/smoothlistview_header_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/smoothlistview_header_text"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-35dp"
-            android:src="@mipmap/smoothlistview_arrow"/>
 
-        <!--<ProgressBar-->
-            <!--android:id="@+id/smoothlistview_header_progressbar"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_alignLeft="@+id/smoothlistview_header_text"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginLeft="-40dp"-->
-            <!--android:visibility="invisible"/>-->
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/smoothlistview_header_progressbar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@+id/smoothlistview_header_text"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-45dp"
-            app:indicator="LineSpinFadeLoader"
-            app:indicator_color="@color/bg_head"
-            android:visibility="invisible"/>
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -85,7 +85,7 @@ public class SmoothListView extends ListView implements OnScrollListener {
         // init header view
         mHeaderView = new SmoothListViewHeader(context);
         mHeaderViewContent = (RelativeLayout) mHeaderView.findViewById(R.id.smoothlistview_header_content);
-        mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.smoothlistview_header_time);
+//        mHeaderTimeView = (TextView) mHeaderView.findViewById(R.id.smoothlistview_header_time);
         addHeaderView(mHeaderView);
 
         // init footer view

@@ -1,6 +1,7 @@
 package com.zemult.merchant.view.SmoothListView;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,19 +18,15 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 public class SmoothListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;
-	private ImageView mArrowImageView;
-	private AVLoadingIndicatorView mProgressBar;
-	private TextView mHintTextView;
+	private ImageView ivBeePull, ivBeeDown;
 	private int mState = STATE_NORMAL;
 
-	private Animation mRotateUpAnim;
-	private Animation mRotateDownAnim;
-	
-	private final int ROTATE_ANIM_DURATION = 180;
-	
+
 	public final static int STATE_NORMAL = 0;
 	public final static int STATE_READY = 1;
 	public final static int STATE_REFRESHING = 2;
+
+	private AnimationDrawable pullAnimationDrawable, downAnimationDrawable;
 
 	public SmoothListViewHeader(Context context) {
 		super(context);
@@ -50,57 +47,54 @@ public class SmoothListViewHeader extends LinearLayout {
 		addView(mContainer, lp);
 		setGravity(Gravity.BOTTOM);
 
-		mArrowImageView = (ImageView)findViewById(R.id.smoothlistview_header_arrow);
-		mHintTextView = (TextView)findViewById(R.id.smoothlistview_header_hint_textview);
-		mProgressBar = (AVLoadingIndicatorView)findViewById(R.id.smoothlistview_header_progressbar);
-		
-		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
-		mRotateUpAnim.setFillAfter(true);
-		mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
-		mRotateDownAnim.setFillAfter(true);
+		ivBeePull = (ImageView)findViewById(R.id.iv_bee_pull);
+		ivBeeDown = (ImageView)findViewById(R.id.iv_bee_down);
+
+
+		ivBeePull.setImageResource(R.drawable.pull_anim);
+		ivBeeDown.setImageResource(R.drawable.down_anim);
+		pullAnimationDrawable= (AnimationDrawable) ivBeePull.getDrawable();
+		downAnimationDrawable= (AnimationDrawable) ivBeeDown.getDrawable();
 	}
 
 	public void setState(int state) {
 		if (state == mState) return ;
 		
 		if (state == STATE_REFRESHING) {	// 显示进度
-			mArrowImageView.clearAnimation();
-			mArrowImageView.setVisibility(View.INVISIBLE);
-			mProgressBar.setVisibility(View.VISIBLE);
-		} else {	// 显示箭头图片
-			mArrowImageView.setVisibility(View.VISIBLE);
-			mProgressBar.setVisibility(View.INVISIBLE);
+			ivBeePull.setVisibility(View.GONE);
+			pullAnimationDrawable.stop();
+			ivBeeDown.setVisibility(View.VISIBLE);
+			downAnimationDrawable.start();
+		} else {
+			ivBeePull.setVisibility(View.VISIBLE);
+			pullAnimationDrawable.start();
+			ivBeeDown.setVisibility(View.GONE);
+			downAnimationDrawable.stop();
 		}
 		
-		switch(state){
-		case STATE_NORMAL:
-			if (mState == STATE_READY) {
-				mArrowImageView.startAnimation(mRotateDownAnim);
-			}
-			if (mState == STATE_REFRESHING) {
-				mArrowImageView.clearAnimation();
-			}
-			mHintTextView.setText(R.string.smoothlistview_header_hint_normal);
-			break;
-		case STATE_READY:
-			if (mState != STATE_READY) {
-				mArrowImageView.clearAnimation();
-				mArrowImageView.startAnimation(mRotateUpAnim);
-				mHintTextView.setText(R.string.smoothlistview_header_hint_ready);
-			}
-			break;
-		case STATE_REFRESHING:
-			mHintTextView.setText(R.string.smoothlistview_header_hint_loading);
-			break;
-			default:
-		}
-		
+//		switch(state){
+//		case STATE_NORMAL:
+//			if (mState == STATE_READY) {
+//				mArrowImageView.startAnimation(mRotateDownAnim);
+//			}
+//			if (mState == STATE_REFRESHING) {
+//				mArrowImageView.clearAnimation();
+//			}
+//			mHintTextView.setText(R.string.smoothlistview_header_hint_normal);
+//			break;
+//		case STATE_READY:
+//			if (mState != STATE_READY) {
+//				mArrowImageView.clearAnimation();
+//				mArrowImageView.startAnimation(mRotateUpAnim);
+//				mHintTextView.setText(R.string.smoothlistview_header_hint_ready);
+//			}
+//			break;
+//		case STATE_REFRESHING:
+//			mHintTextView.setText(R.string.smoothlistview_header_hint_loading);
+//			break;
+//			default:
+//		}
+//
 		mState = state;
 	}
 	

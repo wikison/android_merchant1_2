@@ -1,9 +1,11 @@
 package com.zemult.merchant.view.SmoothListView;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +20,11 @@ public class SmoothListViewFooter extends LinearLayout {
 	private Context mContext;
 
 	private View mContentView;
-	private View mProgressBar;
 	private TextView mHintView;
+
+	private ImageView ivBeeDown;
+
+	private AnimationDrawable downAnimationDrawable;
 	
 	public SmoothListViewFooter(Context context) {
 		super(context);
@@ -34,13 +39,14 @@ public class SmoothListViewFooter extends LinearLayout {
 	
 	public void setState(int state) {
 		mHintView.setVisibility(View.INVISIBLE);
-		mProgressBar.setVisibility(View.INVISIBLE);
+		ivBeeDown.setVisibility(View.INVISIBLE);
 		mHintView.setVisibility(View.INVISIBLE);
 		if (state == STATE_READY) {
 			mHintView.setVisibility(View.VISIBLE);
 			mHintView.setText(R.string.smoothlistview_footer_hint_ready);
 		} else if (state == STATE_LOADING) {
-			mProgressBar.setVisibility(View.VISIBLE);
+			ivBeeDown.setVisibility(View.VISIBLE);
+			downAnimationDrawable.start();
 		} else {
 			mHintView.setVisibility(View.VISIBLE);
 			mHintView.setText(R.string.smoothlistview_footer_hint_normal);
@@ -65,7 +71,8 @@ public class SmoothListViewFooter extends LinearLayout {
 	 */
 	public void normal() {
 		mHintView.setVisibility(View.VISIBLE);
-		mProgressBar.setVisibility(View.GONE);
+		ivBeeDown.setVisibility(View.GONE);
+		downAnimationDrawable.stop();
 	}
 	
 	
@@ -74,7 +81,9 @@ public class SmoothListViewFooter extends LinearLayout {
 	 */
 	public void loading() {
 		mHintView.setVisibility(View.GONE);
-		mProgressBar.setVisibility(View.VISIBLE);
+
+		ivBeeDown.setVisibility(View.VISIBLE);
+		downAnimationDrawable.start();
 	}
 	
 	/**
@@ -102,8 +111,10 @@ public class SmoothListViewFooter extends LinearLayout {
 		moreView.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		
 		mContentView = moreView.findViewById(R.id.smoothlistview_footer_content);
-		mProgressBar = moreView.findViewById(R.id.smoothlistview_footer_progressbar);
 		mHintView = (TextView)moreView.findViewById(R.id.smoothlistview_footer_hint_textview);
+		ivBeeDown = (ImageView)findViewById(R.id.iv_bee_down);
+		ivBeeDown.setImageResource(R.drawable.down_anim);
+		downAnimationDrawable= (AnimationDrawable) ivBeeDown.getDrawable();
 	}
 	
 	
