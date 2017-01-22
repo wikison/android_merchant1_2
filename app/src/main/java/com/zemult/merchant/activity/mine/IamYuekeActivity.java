@@ -100,6 +100,8 @@ public class IamYuekeActivity extends BaseActivity {
     }
 
     private void initdata() {
+
+
         experience = SlashHelper.userManager().getUserinfo().getExperience();
         tvExp.setText("经验值  " + experience + "exp");
 
@@ -225,7 +227,10 @@ public class IamYuekeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        userEditState();
+        if (SlashHelper.userManager().getUserinfo().getState() == stateSp.getSelectedItemPosition()) {
+        } else {
+            userEditState();
+        }
     }
 
     UserEditStateRequest userEditStateRequest;
