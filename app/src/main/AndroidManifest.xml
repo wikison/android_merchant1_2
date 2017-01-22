@@ -566,6 +566,9 @@
         <activity android:name=".activity.mine.AppointmentDetailActivity" />
         <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentActivity"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity android:name=".activity.mine.GiftAboutDetailActivity"></activity>
     </application>
 
 </manifest>

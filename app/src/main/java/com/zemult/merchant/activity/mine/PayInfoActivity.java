@@ -96,7 +96,6 @@ public class PayInfoActivity extends BaseActivity {
     @Override
     public void init() {
         initData();
-
     }
 
     private void initData() {

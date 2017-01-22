@@ -19,7 +19,6 @@ import com.zemult.merchant.activity.mine.BusinessManActivity;
 import com.zemult.merchant.activity.mine.IamYuekeActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyCardsActivity;
-import com.zemult.merchant.activity.mine.MyCollectionActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
 import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
@@ -55,18 +54,12 @@ public class MineFragment extends BaseFragment {
     ImageView ivSet;
     @Bind(R.id.mygo_layout)
     RelativeLayout mygoLayout;
-    @Bind(R.id.tv_my_order)
-    TextView tvMyOrder;
+
     @Bind(R.id.iv_my_order_right)
     ImageView ivMyOrderRight;
     @Bind(R.id.rl_my_order)
     RelativeLayout rlMyOrder;
-    @Bind(R.id.tv_to_pay)
-    TextView tvToPay;
-    @Bind(R.id.tv_to_comment)
-    TextView tvToComment;
-    @Bind(R.id.tv_has_expired)
-    TextView tvHasExpired;
+
     @Bind(R.id.tv_my_account)
     TextView tvMyAccount;
     @Bind(R.id.iv_right)
@@ -97,6 +90,11 @@ public class MineFragment extends BaseFragment {
     RelativeLayout rlMyProrder;
     @Bind(R.id.rl_my_gift)
     RelativeLayout rlMyGift;
+    @Bind(R.id.level_iv)
+    ImageView levelIv;
+    @Bind(R.id.level_tv)
+    TextView levelTv;
+    double experience;
 
     private boolean hasStarted = false;
 
@@ -134,28 +132,14 @@ public class MineFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tv_to_pay, R.id.tv_to_comment, R.id.tv_has_expired, R.id.rl_record, R.id.mtag_layout,
+    @OnClick({R.id.rl_record, R.id.mtag_layout,
             R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
             R.id.mshop_layout, R.id.iv_set, R.id.msafe_layout,
-            R.id.mhead_iv,R.id.rl_my_prorder, R.id.rl_my_gift})
+            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
-            case R.id.tv_to_pay:
-                intent = new Intent(getActivity(), MyOrderActivity.class);
-                intent.putExtra("page_position", 1);
-                startActivity(intent);
-                break;
-            case R.id.tv_to_comment:
-                intent = new Intent(getActivity(), MyOrderActivity.class);
-                intent.putExtra("page_position", 2);
-                startActivity(intent);
-                break;
-            case R.id.tv_has_expired:
-                intent = new Intent(getActivity(), MyOrderActivity.class);
-                intent.putExtra("page_position", 3);
-                startActivity(intent);
-                break;
+
             /*case R.id.concern_rl:
                 intent = new Intent(getActivity(), MyFollowActivity.class);
                 startActivity(intent);
@@ -277,6 +261,25 @@ public class MineFragment extends BaseFragment {
                         isSetPaypwd = ((APIM_UserLogin) response).userInfo.isSetPaypwd;
                         mymoney = ((APIM_UserLogin) response).userInfo.money;
                         tvMyAccount.setText(mymoney + "元");
+
+                        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText()+"服务管家");
+                        experience = SlashHelper.userManager().getUserinfo().getExperience();
+                        if (experience < 100) {
+                            levelIv.setBackgroundResource(R.mipmap.xinshou_iconsj);
+                        } else if (experience >= 100 && experience < 10000) {
+                            levelIv.setBackgroundResource(R.mipmap.tong_iconsj);
+                        } else if (experience >= 10000 && experience < 100000) {
+                            levelIv.setBackgroundResource(R.mipmap.yin_iconsj);
+                        } else if (experience >= 100000 && experience < 1000000) {
+                            levelIv.setBackgroundResource(R.mipmap.jin_iconsj);
+                        } else {
+                            levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
+                        }
+
+
+
+
+                        
                         SlashHelper.setSettingString(((APIM_UserLogin) response).userInfo.getPhoneNum(), ((APIM_UserLogin) response).userInfo.getHead());
                     }
                 } else {

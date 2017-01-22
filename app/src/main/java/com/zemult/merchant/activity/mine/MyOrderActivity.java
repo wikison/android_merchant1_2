@@ -69,6 +69,7 @@ public class MyOrderActivity extends BaseActivity {
         tabs.setupWithViewPager(vpMyOrder);
     }
 
+
     private void initListener() {
         vpMyOrder.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

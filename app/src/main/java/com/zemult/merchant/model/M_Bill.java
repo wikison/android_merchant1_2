@@ -105,6 +105,8 @@ public class M_Bill {
     @Expose
     public String toUserName;//赠送对象的用户名称
     @Expose
+    public int toUserId;//接受用户id(type=3时有值)
+    @Expose
     public String presentName;//礼物名称
     @Expose
     public String presentPic;//礼物图片

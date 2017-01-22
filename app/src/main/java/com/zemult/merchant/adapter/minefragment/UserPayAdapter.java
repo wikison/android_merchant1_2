@@ -31,6 +31,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
 
     int pagePosition;
 
+
     private List<M_Bill> mDatas = new ArrayList<M_Bill>();
 
     private void initListener(ViewHolder holder, M_Bill m_bill) {
@@ -78,46 +79,58 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
         mDatas = getData();
         final M_Bill m = mDatas.get(position);
 
-        switch (m.state) {
-            case 0:
-                holder.tvState.setText("待付款");
-                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                holder.rtvToPay.setText(String.format("去支付 (还剩%s)", DateTimeUtil.strLeftTime(m.createtime, 30)));
-                holder.llToPay.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                if (pagePosition == 0) {
-                    if (m.payMoney >= 100 && m.isComment==0) {
+
+        if (m.type == 0) {
+            holder.tvSaleName.setText("交易约客: " + m.saleUserName);
+            if (!TextUtils.isEmpty(m.saleUserHead)) {
+                //加载带外边框的
+                mImageManager.loadCircleHasBorderImage(m.saleUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
+            }
+            switch (m.state) {
+                case 0:
+                    holder.tvState.setText("待付款");
+                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
+                    holder.rtvToPay.setText(String.format("去支付 (还剩%s)", DateTimeUtil.strLeftTime(m.createtime, 30)));
+                    holder.llToPay.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    if (pagePosition == 0) {
+                        if (m.payMoney >= 100 && m.isComment == 0) {
+                            holder.tvState.setText("待评价");
+                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
+                        } else {
+                            holder.tvState.setText("");
+                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
+                        }
+                    } else {
                         holder.tvState.setText("待评价");
                         holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                    } else {
-                        holder.tvState.setText("");
-                        holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
                     }
-                } else {
-                    holder.tvState.setText("待评价");
-                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                }
 
-                holder.llToPay.setVisibility(View.GONE);
-                break;
-            case 2:
-                holder.tvState.setText("订单失效");
-                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
-                holder.llToPay.setVisibility(View.GONE);
-                break;
-            case 3:
-                holder.tvState.setText("已取消");
-                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
-                holder.llToPay.setVisibility(View.GONE);
-                break;
+                    holder.llToPay.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    holder.tvState.setText("订单失效");
+                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+                    holder.llToPay.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    holder.tvState.setText("已取消");
+                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+                    holder.llToPay.setVisibility(View.GONE);
+                    break;
+            }
+
+        } else if (m.type == 3) {
+            holder.tvSaleName.setText("赠送对象: " + m.toUserName);
+            holder.tvState.setText("送礼物");
+            if (!TextUtils.isEmpty(m.toUserHead)) {
+                //加载带外边框的
+                mImageManager.loadCircleHasBorderImage(m.toUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
+            }
         }
 
-        if (!TextUtils.isEmpty(m.saleUserHead)) {
-            //加载带外边框的
-            mImageManager.loadCircleHasBorderImage(m.saleUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
-        }
-        holder.tvSaleName.setText("交易约客: " + m.saleUserName);
+
         holder.tvMoney.setText("-" + Convert.getMoneyString(m.payMoney));
         holder.tvDate.setText(m.createtime.substring(5, 10));
         holder.tvTime.setText(m.createtime.substring(11, 16));

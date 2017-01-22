@@ -154,6 +154,10 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                             holder.setText(R.id.tv_state, "预约结束");
                                             holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
                                         }
+
+                                        holder.setText(R.id.day_tv,mReservation.reservationTime.substring(5, 10));
+                                        holder.setText(R.id.time_tv,mReservation.reservationTime.substring(11, 16));
+
                                     }
 
                                 });
