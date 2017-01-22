@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
@@ -34,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 
@@ -60,6 +63,10 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     MeasuredGridView gvImgs;
     @Bind(R.id.ll_del)
     LinearLayout llDel;
+    @Bind(R.id.rl_has_data)
+    RelativeLayout rlHasData;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
     private AlbumAdpater mAdpater;
     protected String tackPhotoName = "", coverPic = "";
@@ -69,9 +76,18 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     private int callbackcount = 0;
     private List<String> ossImgnameList = new ArrayList<String>();
     private OssService ossService;
-    private enum FROM{
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    private enum FROM {
         MERCHANT, MERCHANT_JUSTLOOK, ME, OTHERUSER
     }
+
     private FROM from;
 
     protected Handler chooseImgHandler = new Handler() {
@@ -137,33 +153,35 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
         userId = getIntent().getIntExtra(INTENT_USERID, -1);
         picPresenter = new PicPresenter(listJsonRequest, this);
 
-        if (merchantId != -1){
-            if(merchantJustlook != -1)
+        if (merchantId != -1) {
+            if (merchantJustlook != -1)
                 from = FROM.MERCHANT_JUSTLOOK;
             else
                 from = FROM.MERCHANT;
 
             lhTvTitle.setText("商家相册");
-        }else if (userId != -1){
-            if(userId == SlashHelper.userManager().getUserId()){
+        } else if (userId != -1) {
+            if (userId == SlashHelper.userManager().getUserId()) {
                 from = FROM.ME;
                 lhTvTitle.setText("我的相册");
-            }else {
+            } else {
                 from = FROM.OTHERUSER;
                 lhTvTitle.setText("TA的相册");
             }
         }
-        if(from == FROM.MERCHANT || from == FROM.ME){
+        if (from == FROM.MERCHANT || from == FROM.ME) {
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText("编辑");
         }
 
         List<M_Pic> pics = new ArrayList<>();
         // 商家相册和个人相册 第一项都为拍照选照片
-        if(from == FROM.MERCHANT || from == FROM.ME)
+        if (from == FROM.MERCHANT || from == FROM.ME)
             pics.add(new M_Pic());
 
         mAdpater = new AlbumAdpater(this, pics);
+        if (from == FROM.OTHERUSER || from == FROM.MERCHANT_JUSTLOOK)
+            mAdpater.unshowAdd(true);
         gvImgs.setAdapter(mAdpater);
         mAdpater.setChoosePicCallBack(this);
 
@@ -171,8 +189,6 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
             picPresenter.merchant_picList(merchantId);
         else
             picPresenter.user_picList(userId);
-        if(from == FROM.OTHERUSER || from == FROM.MERCHANT_JUSTLOOK)
-            mAdpater.unshowAdd(true);
     }
 
     //接收广播回调
@@ -227,19 +243,19 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
                 }
                 break;
             case R.id.ll_del:
-                if(mAdpater.getData().size() == 1)
+                if (mAdpater.getData().size() == 1)
                     ToastUtil.showMessage("没有选中的图片");
                 else {
                     String picIds = "";
-                    for (int i = 1; i < mAdpater.getData().size(); i++){
-                        if(mAdpater.getData().get(i).isSelected())
+                    for (int i = 1; i < mAdpater.getData().size(); i++) {
+                        if (mAdpater.getData().get(i).isSelected())
                             picIds += mAdpater.getData().get(i).picId + ",";
                     }
-                    if(picIds.equals(""))
+                    if (picIds.equals(""))
                         ToastUtil.showMessage("没有选中的图片");
                     else {
-                        if(picIds.endsWith(","))
-                            picIds = picIds.substring(0, picIds.length() -1);
+                        if (picIds.endsWith(","))
+                            picIds = picIds.substring(0, picIds.length() - 1);
                         if (merchantId != -1)
                             picPresenter.merchant_pic_del(merchantId, picIds);
                         else
@@ -270,14 +286,14 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     public void picDetail(int pos, List<String> pics, List<Integer> picIds) {
         compareState();
         if (from == FROM.MERCHANT)
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,true, false,merchantId, userId);
-        else if(from == FROM.ME)
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds , true ,false, false,merchantId, userId);
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds, true, true, false, merchantId, userId);
+        else if (from == FROM.ME)
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, picIds, true, false, false, merchantId, userId);
         else
-            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, null , false ,false, false,merchantId, userId);
+            AppUtils.toImageDetial(AlbumActivity.this, pos, pics, null, false, false, false, merchantId, userId);
     }
 
-    private void compareState(){
+    private void compareState() {
         mAdpater.clearCheck(); //清除选中状态
         tvRight.setText("编辑");
         mAdpater.showCheckbox(false);
@@ -309,11 +325,11 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
             // 拍照
             if (requestCode == Constants.TACKPHOTO)
                 AppUtils.tackPickResult(tackPhotoName, chooseImgHandler);
-            if(resultCode == RESULT_OK && requestCode == Constants.IMAGEDITAL){
+            if (resultCode == RESULT_OK && requestCode == Constants.IMAGEDITAL) {
                 if (merchantId != -1)
-                picPresenter.merchant_picList(merchantId);
+                    picPresenter.merchant_picList(merchantId);
                 else
-                picPresenter.user_picList(userId);
+                    picPresenter.user_picList(userId);
 
                 coverPic = data.getStringExtra("coverPic");
 
@@ -342,14 +358,18 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
 
     @Override
     public void setPicList(List<M_Pic> list) {
-        if (from == FROM.MERCHANT || from == FROM.ME){
-            if (list == null || list.isEmpty()) {
+        if (from == FROM.MERCHANT || from == FROM.ME) {
+            if (list == null)
                 list = new ArrayList<>();
-            }
             list.add(0, new M_Pic());
         }
 
-        mAdpater.setData(list);
+        if (list == null || list.isEmpty()) {
+            rlHasData.setVisibility(View.GONE);
+        }else {
+            rlHasData.setVisibility(View.VISIBLE);
+            mAdpater.setData(list);
+        }
     }
 
     @Override
@@ -378,3 +398,4 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
     }
 
 }
+

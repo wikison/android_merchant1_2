@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_head"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="觉得TA不错，就送TA个小礼物吧~"
+                    android:textColor="@color/font_black_666"
+                    android:textSize="@dimen/font_36px"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="58dp"/>
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@color/aliceblue"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:paddingLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付金额:"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_36px"/>
+        <TextView
+        android:layout_weight="1"
+        android:id="@+id/tv_pay_money"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/bg_head"
+        android:textSize="@dimen/font_36px"/>
+
+        <TextView
+            android:gravity="center"
+            android:background="#e6bc7d"
+            android:id="@+id/tv_pay"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_36px"
+            android:text="确认"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

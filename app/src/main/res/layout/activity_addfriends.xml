@@ -40,7 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_search"
             android:background="@null"
-            android:hint="搜索约客手机号"
+            android:hint="搜索服务管家手机号"
             android:inputType="text"
             android:imeOptions="actionSearch"
             android:maxLength="11"

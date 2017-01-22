@@ -87,8 +87,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     EditText etSearch;
     @Bind(R.id.rll_search_bg)
     RoundLinearLayout rllSearchBg;
-    //    @Bind(R.id.ll_saomiao)
-//    LinearLayout llSaomiao;
     @Bind(R.id.ll_topbar)
     LinearLayout llTopbar;
     @Bind(R.id.smoothListView)
@@ -113,8 +111,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HomeChildNewAdapter mAdapter;
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
-    private int titleHeight = 48, bottomHeight = 50, noDataViewHeight, page = 1;
-    private float mTopViewHeight, fraction, headerTopMargin;
+    private int titleHeight = 44, bottomHeight = 50, noDataViewHeight, page = 1;
+    private float mTopViewHeight, fraction, headerTopMargin,headerTopHeight;
 
     @OnClick({R.id.ll_city, R.id.rl_scan, R.id.rl_maidan})
     public void onClick(View view) {
@@ -192,9 +190,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 Intent intent = new Intent(mContext, MerchantDetailActivity.class);
                 intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
                 startActivity(intent);
-//                Intent intent = new Intent(mContext, MyWalletActivity.class);
-//                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
-//                startActivity(intent);
             }
         });
         smoothListView.setOnScrollListener(new SmoothListView.OnSmoothScrollListener() {
@@ -215,7 +210,12 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
                     if (mTopViewHeight == 0) {
                         mTopViewHeight = (float) llTopbar.getLayoutParams().height;
+                        headerTopHeight = (float) DensityUtil.dip2px(mContext, 213);
                     }
+
+//                    Log.i("djy", "headerTopMargin－－－－＞" +headerTopMargin);
+//                    Log.i("djy", "mTopViewHeight－－－－＞" +mTopViewHeight);
+//                    Log.i("djy", "headerTopHeight－－－－＞" +headerTopHeight);
                     if (headerTopMargin == 0)
                         fraction = 0f;
                     else if (headerTopMargin > 0)
@@ -223,10 +223,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                             fraction = 1 - (mTopViewHeight - headerTopMargin) / mTopViewHeight;
                         else
                             fraction = 1f;
-                    else if (-headerTopMargin >= mTopViewHeight) {
+                    else if (headerTopHeight+headerTopMargin <= mTopViewHeight) {
                         fraction = 1f;
                     } else
-                        fraction = 1 - (headerTopMargin + mTopViewHeight) / mTopViewHeight;
+                        fraction = 1 - ((headerTopHeight+headerTopMargin) /headerTopHeight);
 
                     llTopbar.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.transparent, R.color.font_black_28));
                 }
