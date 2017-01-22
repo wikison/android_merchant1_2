@@ -28,12 +28,11 @@ import cn.trinea.android.common.util.StringUtils;
 
 public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
     Context mContext;
-    Map<Integer, String> groupList;
 
     private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
     private List<M_Merchant> merchantCanList = new ArrayList<M_Merchant>();
     private List<M_Merchant> merchantCannotList = new ArrayList<M_Merchant>();
-    Map<Integer, String> groupIndex = new HashMap<Integer, String>();
+    List<Map<String, Object>> groupIndex = new ArrayList<>();
 
     public TaMerchantChooseAdapter(Context context, List<M_Merchant> list) {
         super(context, list);
@@ -53,8 +52,17 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
                 merchantCannotList.add(m);
             }
         }
-        groupIndex.put(0, "已支持买单的商户");
-        groupIndex.put(merchantCanList.size(), "暂不支持买单的的商户");
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("number", merchantCanList.size());
+        map.put("value", "已支持买单的商户");
+        groupIndex.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("number", merchantCannotList.size());
+        map.put("value", "暂不支持买单的商户");
+        groupIndex.add(map);
+
 
         merchantList.addAll(merchantCanList);
         merchantList.addAll(merchantCannotList);
@@ -96,12 +104,28 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
      * @param m
      */
     private void initData(ViewHolder holder, M_Merchant m, int position) {
+        Map<String, Object> map = groupIndex.get(0);
+        Map<String, Object> map1 = groupIndex.get(1);
+
         holder.tvTitle.setText(m.name);
         if (m.reviewstatus == 2) {
             holder.rtvStatus.setVisibility(View.VISIBLE);
+            if (position == 0) {
+                holder.llHead.setVisibility(View.VISIBLE);
+                holder.tvHeadTitle.setText((String) map.get("value"));
+            } else {
+                holder.llHead.setVisibility(View.GONE);
+            }
         } else {
             holder.rtvStatus.setVisibility(View.GONE);
+            if (position == 0 || position == (int) map.get("number")) {
+                holder.llHead.setVisibility(View.VISIBLE);
+                holder.tvHeadTitle.setText((String) map1.get("value"));
+            } else {
+                holder.llHead.setVisibility(View.GONE);
+            }
         }
+
 
         holder.tvPerPrice.setText("人均" + Convert.getMoneyString(m.perMoney));
         if (!StringUtils.isEmpty(m.distance)) {

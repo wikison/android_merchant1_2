@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head"/>
+
+    <com.zemult.merchant.view.BounceScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/user_icon"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text="dddd"
+                    android:textColor="@color/font_black_28"
+                    android:textSize="@dimen/font_34px"
+                    android:textStyle="bold"/>
+
+
+                <TextView
+                    android:id="@+id/tv_merchant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16dp"
+                    android:text=""
+                    android:textColor="@color/font_black_46"
+                    android:textSize="@dimen/font_28px"/>
+
+            </LinearLayout>
+
+            <com.zemult.merchant.view.FixedListView
+                android:id="@+id/flv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.zemult.merchant.view.FixedListView>
+        </LinearLayout>
+    </com.zemult.merchant.view.BounceScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_12dp">
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/btn_common_orange"
+            android:text="@string/btn_next"
+            android:layout_width="@dimen/common_btn_width_235"
+            android:layout_height="@dimen/common_btn_height_35"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -513,6 +513,8 @@ public class Urls {
     //约服  1.2
     //用户预约申请
     public static String USER_RESERVATION_ADD="user_reservation_add.do";
+    //获取用户在某个约客下的某家商户下的预约单列表
+    public static String USER_RESERVATION_SALE_LIST="user_reservation_sale_list.do";
 
     //约客修改预约单(答复)
     public static String USER_RESERVATION_EDIT="user_reservation_edit.do";

@@ -2,24 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/bg_f2"
               android:orientation="vertical">
 
     <include layout="@layout/layout_head"/>
 
-
     <com.zemult.merchant.view.FixedListView
         android:id="@+id/flv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/bg_f2"
-        android:dividerHeight="@dimen/margin_12dp"
-        android:footerDividersEnabled="true">
+        android:layout_height="match_parent"
+        android:background="@color/bg_f2"
+        android:divider="@color/bg_f2">
 
     </com.zemult.merchant.view.FixedListView>
-    '
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_12dp"
-        android:background="@color/bg_f2"/>
 </LinearLayout>
