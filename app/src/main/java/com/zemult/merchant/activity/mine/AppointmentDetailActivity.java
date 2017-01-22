@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
@@ -35,6 +37,7 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -118,6 +121,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     int reservationId;
     int type;
     String replayNote;
+    int userPayId;
     M_Reservation mReservation;
     UserReservationInfoRequest userReservationInfoRequest;
     UserReservationEditRequest userReservationEditRequest;
@@ -188,6 +192,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                 dismissPd();
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
+                    userPayId = mReservation.userPayId;
+
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
                         appresultTv.setText("暂无");
@@ -336,10 +342,18 @@ public class AppointmentDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.head_iv:
+                if (type == 0) {
+                    //服务管家的头像和姓名
+                    IntentUtil.intStart_activity(this, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, mReservation.saleUserId));
+                } else if (type == 1) {
+                    //客户的头像和姓名
+                    IntentUtil.intStart_activity(this, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, mReservation.userId));
+                }
                 break;
             case R.id.lookorder_btn:
                 //查看订单详情
-
+                IntentUtil.intStart_activity(this,
+                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", userPayId));
                 break;
             case R.id.invite_btn:
                 //邀请好友
