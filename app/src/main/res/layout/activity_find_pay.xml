@@ -58,7 +58,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:background="@color/white"
+        app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="5dp"
         app:rv_strokeColor="#e1e1e1"
         app:rv_strokeWidth="1px">

@@ -115,7 +115,7 @@ public class MyWalletActivity extends BaseActivity {
                 startActivity(intentwithdrawals);
                 break;
             case R.id.btn_duihuan:
-                CommonDialog.showDialogListener(mContext, null, "确认", "取消", "总计兑换" + exchangeMoney + "元，是否确认兑换？", new View.OnClickListener() {
+                CommonDialog.showDialogListener(mContext, null, "确认", "取消", "总计兑换" + Convert.getMoneyString(exchangeMoney) + "元，是否确认兑换？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         CommonDialog.DismissProgressDialog();
@@ -173,7 +173,7 @@ public class MyWalletActivity extends BaseActivity {
 
     private void setPresent(List<M_Present> userPresentList) {
         for (M_Present p : userPresentList) {
-            exchangeMoney += p.num * p.exchangePrice;
+            exchangeMoney += p.num* p.exchangePrice;
         }
 
         GridLayoutManager manager = new GridLayoutManager(mContext, 2);
