@@ -20,6 +20,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.model.apimodel.APIM_ManagerNewsInfo;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.RiseNumberTextView;
@@ -191,23 +192,23 @@ public class MyWalletActivity extends BaseActivity {
 
     private void setPresent(List<M_Present> userPresentList) {
         for (M_Present p : userPresentList) {
-            exchangeMoney += p.exchangePrice;
+            exchangeMoney += p.num*p.exchangePrice;
             if (p.name.contains("兰博基尼")) {
                 tvCarNum.setText("x" + p.num);
-                tvCarExchanege.setText("(可兑换￥" + p.exchangePrice + ")");
+                tvCarExchanege.setText("(可兑换￥" + Convert.getMoneyString(p.exchangePrice) + ")");
 
             } else if (p.name.contains("钻戒")) {
                 tvZuanNum.setText("x" + p.num);
-                tvZuanExchanege.setText("(可兑换￥" + p.exchangePrice + ")");
+                tvZuanExchanege.setText("(可兑换￥" + Convert.getMoneyString(p.exchangePrice) + ")");
             } else if (p.name.contains("钱包")) {
                 tvWalletNum.setText("x" + p.num);
-                tvWalletExchanege.setText("(可兑换￥" + p.exchangePrice + ")");
+                tvWalletExchanege.setText("(可兑换￥" + Convert.getMoneyString(p.exchangePrice) + ")");
             } else if (p.name.contains("花")) {
                 tvFlowerNum.setText("x" + p.num);
-                tvFlowerExchanege.setText("(可兑换￥" + p.exchangePrice + ")");
+                tvFlowerExchanege.setText("(可兑换￥" + Convert.getMoneyString(p.exchangePrice) + ")");
             } else {
                 tvSixNum.setText("x" + p.num);
-                tvSixExchanege.setText("(可兑换￥" + p.exchangePrice + ")");
+                tvSixExchanege.setText("(可兑换￥" + Convert.getMoneyString(p.exchangePrice) + ")");
             }
         }
     }
