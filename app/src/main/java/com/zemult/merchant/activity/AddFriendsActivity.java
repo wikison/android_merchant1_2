@@ -144,7 +144,7 @@ public class AddFriendsActivity extends BaseActivity {
     private void initView() {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("查找约客");
+        lhTvTitle.setText("查找服务管家");
         tvNoResult.setVisibility(View.INVISIBLE);
         strMyPhone = SlashHelper.userManager().getUserinfo().getPhoneNum();
         tvMyNumber.setText(strMyPhone);

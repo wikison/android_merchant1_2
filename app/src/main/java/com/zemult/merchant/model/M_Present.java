@@ -23,6 +23,7 @@ public class M_Present {
     @Expose
     public   int	num		     	;	//	数量
 
+
 }
 
 

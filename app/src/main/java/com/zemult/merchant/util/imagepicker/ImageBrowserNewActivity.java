@@ -80,13 +80,21 @@ public class ImageBrowserNewActivity extends BaseActivity implements
             if(coverable)
                 llCover.setVisibility(View.VISIBLE);
         }
-        if(unshowTitle)
-            lhTvTitle.setVisibility(View.GONE);
 
         if (photos == null) {
             return;
         }
         mAdapter = new ImageBrowserAdapter(this, photos);
+        if(unshowTitle){
+            lhTvTitle.setVisibility(View.GONE);
+            mAdapter.setOnItemClickCallback(new ImageBrowserAdapter.OnItemClickCallback() {
+                @Override
+                public void onItemClick() {
+                    onBackPressed();
+                }
+            });
+        }
+
         if (photos.size() > 1) {
             mTotal = photos.size();
             if (mPosition > mTotal) {

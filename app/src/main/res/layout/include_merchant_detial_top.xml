@@ -170,7 +170,7 @@
             android:layout_height="wrap_content"
             android:textColor="#e6bb7c"
             android:textSize="@dimen/font_32px"
-            android:text="约客推荐"
+            android:text="服务管家推荐"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp"

@@ -17,5 +17,7 @@ import java.util.List;
 public class APIM_PresentList extends CommonResult {
     @Expose
     public List<M_Present> userPresentList;
+    @Expose
+    public List<M_Present> sysPresentList;
 
 }

@@ -430,7 +430,7 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.btn_buy,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
+    @OnClick({R.id.lh_btn_back, R.id.btn_buy,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus, R.id.btn_gift})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -467,6 +467,10 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_service:
                 intent = new Intent(mContext, CreateBespeakActivity.class);
                 intent.putExtra("serviceId", userId);
+                startActivity(intent);
+                break;
+            case R.id.btn_gift:
+                intent = new Intent(mContext, SendPresentActivity.class);
                 startActivity(intent);
                 break;
 

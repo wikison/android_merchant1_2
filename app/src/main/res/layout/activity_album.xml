@@ -9,8 +9,9 @@
     <include layout="@layout/layout_head" />
 
     <RelativeLayout
+        android:id="@+id/rl_has_data"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <com.zemult.merchant.app.view.MeasuredGridView
             android:id="@+id/gvImgs"
@@ -60,4 +61,5 @@
 
 
 
+    <include layout="@layout/item_no_data_layout"/>
 </LinearLayout>

@@ -523,4 +523,6 @@ public class Urls {
     public static String USER_PRESENT_LIST="user_present_list";
     //用户兑换礼物
     public static String USER_PRESENT_EXCHANGE="user_present_exchange";
+    //获取系统的礼物列表
+    public static String COMMON_SYSPRESENTLIST="common_syspresentList";
 }

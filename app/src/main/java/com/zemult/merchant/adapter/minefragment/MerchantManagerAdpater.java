@@ -144,7 +144,9 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
         // 用户名
         if (!TextUtils.isEmpty(entity.getUserName()))
             holder.tvName.setText(entity.getUserName());
-        holder.tvMoney.setText("交易额 " + Convert.getMoneyString(entity.saleMoney) + "   共" + entity.saleNum + "笔交易");
+        holder.tvMoney.setText("交易额￥" + Convert.getMoneyString(entity.saleMoney) + "   共" + entity.saleNum + "笔交易");
+        holder.ivService.setImageResource(entity.getExperienceImg());
+        holder.tvService.setText(entity.getExperienceText());
     }
 
 
@@ -169,20 +171,23 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
         ImageView ivHead;
         @Bind(R.id.tv_name)
         TextView tvName;
+        @Bind(R.id.iv_service)
+        ImageView ivService;
+        @Bind(R.id.tv_service)
+        TextView tvService;
         @Bind(R.id.tv_money)
         TextView tvMoney;
+        @Bind(R.id.ll_content)
+        LinearLayout llContent;
         @Bind(R.id.del)
         Button del;
         @Bind(R.id.ll_action)
         LinearLayout llAction;
         @Bind(R.id.hsv)
         HorizontalScrollView hsv;
-        @Bind(R.id.ll_content)
-        LinearLayout llContent;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
-
 }
