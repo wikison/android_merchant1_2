@@ -635,6 +635,10 @@
         <item name="android:layout_height">@dimen/j50dp</item>
     </style>
 
+    <style name="container_height140" parent="container">
+        <item name="android:layout_height">@dimen/j70dp</item>
+    </style>
+
     <style name="popup_window_anim_style">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>

@@ -119,7 +119,6 @@ public class Constants {
     public static int ORDER_EXPIRE_MINUTE = 30;
     public static int ORDER_EXPIRE_SECOND = 1800;
 
-    //大图小图切换
 
 }
 

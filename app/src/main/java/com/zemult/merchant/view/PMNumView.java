@@ -82,7 +82,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         decrease.setOnClickListener(this);
         plus.setOnClickListener(this);
         etNum.addTextChangedListener(this);
-        etNum.setText("7");
+        etNum.setText("");
         etNum.setLongClickable(false);
 
         //此处是禁止复制粘贴

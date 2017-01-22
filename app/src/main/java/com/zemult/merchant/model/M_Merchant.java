@@ -151,4 +151,28 @@ public class M_Merchant implements Serializable {
     @Expose
     public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
 
+
+    public int getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(int merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
 }
