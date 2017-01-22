@@ -24,6 +24,7 @@
             android:layout_height="146dp">
 
             <LinearLayout
+                android:visibility="gone"
                 android:background="@drawable/ripple_item_clicked2"
                 android:id="@+id/ll_share_sina"
                 android:layout_width="0dp"
@@ -98,6 +99,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:background="@drawable/ripple_item_clicked2"
                 android:id="@+id/ll_share_qq"
                 android:layout_width="0dp"

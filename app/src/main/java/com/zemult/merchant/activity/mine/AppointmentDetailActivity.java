@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -18,6 +20,10 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
@@ -29,8 +35,10 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,7 +96,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     LinearLayout othersLl;
     @Bind(R.id.appresultcommit_et)
     EditText appresultcommitEt;
-
+    private SharePopwindow popwindow;
 
 
     public static String INTENT_RESERVATIONID = "intent";
@@ -101,7 +109,8 @@ public class AppointmentDetailActivity extends BaseActivity {
     RelativeLayout ordernumRl;
     @Bind(R.id.yuyueresultcommit_rl)
     RelativeLayout yuyueresultcommitRl;
-
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
     @Bind(R.id.lookorder_btn)
     Button lookorderBtn;
     @Bind(R.id.dinghaole_tv)
@@ -130,6 +139,34 @@ public class AppointmentDetailActivity extends BaseActivity {
         }
         showPd();
         userReservationInfo();
+
+
+        popwindow = new SharePopwindow(AppointmentDetailActivity.this, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                UMImage shareImage = new UMImage(AppointmentDetailActivity.this, R.mipmap.ic_launcher);
+                switch (position) {
+                    case SharePopwindow.WECHAT:
+                        new ShareAction(AppointmentDetailActivity.this)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText( mReservation.merchantName+"预约成功")
+                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId="+ reservationId)
+                                .withMedia(shareImage).withTitle("预约服务")
+                                .share();
+                        break;
+                    case SharePopwindow.WECHAT_FRIEND:
+                        new ShareAction(AppointmentDetailActivity.this)
+                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText( mReservation.merchantName+"预约成功")
+                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId="+ reservationId)
+                                .withMedia(shareImage).withTitle("预约服务")
+                                .share();
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -306,6 +343,10 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
             case R.id.invite_btn:
                 //邀请好友
+                if (popwindow.isShowing())
+                    popwindow.dismiss();
+                else
+                    popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
                 break;
             case R.id.jiezhang_btn:
                 //快速结账
@@ -320,5 +361,33 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+
+            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功啦", Toast.LENGTH_SHORT).show();
+            }
+            popwindow.dismiss();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            popwindow.dismiss();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
+            popwindow.dismiss();
+        }
+    };
+
 
 }
