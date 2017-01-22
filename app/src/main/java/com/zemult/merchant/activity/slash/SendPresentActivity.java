@@ -34,13 +34,12 @@ public class SendPresentActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.rv)
-    RecyclerView rv;
     @Bind(R.id.tv_pay_money)
     TextView tvPayMoney;
     @Bind(R.id.tv_pay)
     TextView tvPay;
-
+    @Bind(R.id.rv)
+    RecyclerView rv;
     private Context mContext;
 
     @Override
@@ -52,13 +51,13 @@ public class SendPresentActivity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("赞赏礼物");
-
-        getPresentList();
+        tvPay.setEnabled(false);
+        common_syspresentList();
     }
 
     private CommonSysPresentListRequest presentRequest;
 
-    private void getPresentList() {
+    private void common_syspresentList() {
         if (presentRequest != null) {
             presentRequest.cancel();
         }
@@ -102,6 +101,13 @@ public class SendPresentActivity extends BaseActivity {
             @Override
             public void onItemClick(double price) {
                 tvPayMoney.setText(Convert.getMoneyString(price));
+                if(price == 0){
+                    tvPay.setEnabled(false);
+                    tvPay.setBackgroundColor(0xff999999);
+                }else{
+                    tvPay.setEnabled(true);
+                    tvPay.setBackgroundColor(0xffe6bc7d);
+                }
             }
         });
 
@@ -115,12 +121,15 @@ public class SendPresentActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.tv_pay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.tv_pay:
+                // TODO: 2017/1/22
                 break;
         }
     }
