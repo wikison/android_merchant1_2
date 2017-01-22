@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.GiftAboutDetailActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.minefragment.UserPayAdapter;
@@ -144,15 +145,25 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
         userPayAdapter.setOnItemRootClickListener(new UserPayAdapter.ItemRootClickListener() {
             @Override
             public void onItemClick(final M_Bill m_bill) {
-                IntentUtil.intStart_activity(mActivity,
-                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", m_bill.userPayId));
+                if(m_bill.type==0){
+                    IntentUtil.intStart_activity(mActivity,
+                            PayInfoActivity.class, new Pair<String, Integer>("userPayId", m_bill.userPayId));
+                }else if(m_bill.type==3){
+                    IntentUtil.intStart_activity(mActivity,
+                            GiftAboutDetailActivity.class, new Pair<String, Integer>("userPayId", m_bill.userPayId));
+                }
             }
         });
 
         userPayAdapter.setOnItemSaleUserClickListener(new UserPayAdapter.ItemSaleUserClickListener() {
             @Override
             public void onItemClick(M_Bill m_bill) {
-                IntentUtil.intStart_activity(mActivity, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, m_bill.saleUserId));
+                if(m_bill.type==0){
+                    IntentUtil.intStart_activity(mActivity, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, m_bill.saleUserId));
+                }else if(m_bill.type==3){
+                    IntentUtil.intStart_activity(mActivity, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, m_bill.toUserId));
+                }
+
             }
         });
 
@@ -175,10 +186,15 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                 selectPosition = position - 1;
                 M_Bill m_bill = userPayAdapter.getItem(position - 1);
                 selectPayId = m_bill.userPayId;
-
-                Intent intent = new Intent(mContext, PayInfoActivity.class);
-                intent.putExtra("userPayId", m_bill.userPayId);
-                startActivity(intent);
+                if (m_bill.type == 0) {
+                    Intent intent = new Intent(mContext, PayInfoActivity.class);
+                    intent.putExtra("userPayId", m_bill.userPayId);
+                    startActivity(intent);
+                } else if (m_bill.type == 3) {
+                    Intent intent = new Intent(mContext, GiftAboutDetailActivity.class);
+                    intent.putExtra("userPayId", m_bill.userPayId);
+                    startActivity(intent);
+                }
 
             }
         });

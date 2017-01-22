@@ -525,4 +525,13 @@ public class Urls {
     public static String USER_PRESENT_EXCHANGE="user_present_exchange";
     //获取系统的礼物列表
     public static String COMMON_SYSPRESENTLIST="common_syspresentList";
+
+    //修改用户状态(服务管家状态)
+    public static String USER_EDITSTATE="user_editstate";
+
+    //服务管家等级
+    public static String SERVICELEVEL="http://server.54xiegang.com/html/dzyx_common/level.html";
+     //服务管家协议
+
+    public static String SERVICEXIEYI="http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
 }

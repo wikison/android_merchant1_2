@@ -60,84 +60,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_my_order"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@drawable/ripple_item_clicked2"
-            android:clickable="true">
 
-            <TextView
-                style="@style/text_15_black_28"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin_16dp"
-                android:gravity="center_vertical"
-                android:text="我的订单"/>
-
-            <TextView
-                android:id="@+id/tv_my_order"
-                style="@style/text_15_black_999"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_12dp"
-                android:layout_toLeftOf="@+id/iv_my_order_right"
-                android:text="查看全部订单"/>
-
-            <ImageView
-                android:id="@+id/iv_my_order_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn"/>
-        </RelativeLayout>
-
-        <View style="@style/view1dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/tv_to_pay"
-                style="@style/text_12_black_28"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_item_clicked2"
-                android:drawableTop="@mipmap/daifukuan_icon"
-                android:gravity="center"
-                android:paddingBottom="@dimen/margin_6dp"
-                android:paddingTop="@dimen/margin_12dp"
-                android:text="待付款"/>
-
-            <TextView
-                android:id="@+id/tv_to_comment"
-                style="@style/text_12_black_28"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_item_clicked2"
-                android:drawableTop="@mipmap/daipingjia_icon"
-                android:gravity="center"
-                android:paddingBottom="@dimen/margin_6dp"
-                android:paddingTop="@dimen/margin_12dp"
-                android:text="待评价"/>
-
-            <TextView
-                android:id="@+id/tv_has_expired"
-                style="@style/text_12_black_28"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_item_clicked2"
-                android:drawableTop="@mipmap/yishixiao_icon"
-                android:gravity="center"
-                android:paddingBottom="@dimen/margin_6dp"
-                android:paddingTop="@dimen/margin_12dp"
-                android:text="已失效"/>
-
-        </LinearLayout>
 
         <include layout="@layout/include_devider10dp_layout"/>
 
@@ -250,6 +173,34 @@
         </RelativeLayout>
         <View
             style="@style/divider_1px"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_my_order"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:background="@drawable/ripple_item_clicked2"
+            android:clickable="true">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:gravity="center_vertical"
+                android:text="我的消费单"/>
+
+            <ImageView
+                android:id="@+id/iv_my_order_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="@mipmap/right_btn"/>
+        </RelativeLayout>
+
+
+
+
         <RelativeLayout
             android:id="@+id/rl_my_gift"
             android:layout_width="match_parent"
@@ -292,7 +243,29 @@
                 android:gravity="center_vertical"
                 android:text="我是服务管家"/>
 
+
             <ImageView
+                android:id="@+id/level_iv"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+               android:layout_toLeftOf="@+id/level_tv"
+                android:layout_marginRight="12dp"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/level_tv"
+                android:text="------服务管家"
+                android:layout_marginRight="12dp"
+                android:textColor="@color/e6bb7c"
+                android:layout_toLeftOf="@+id/iv1"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <ImageView
+                android:id="@+id/iv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

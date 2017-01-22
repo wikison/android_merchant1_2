@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -11,6 +13,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,18 +28,20 @@ import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.aip.slash.UserSaleMerchantEditRequest;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.bean.ChannelManage;
 import com.zemult.merchant.bean.IndusPreferItem;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
+import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.DragGrid;
 import com.zemult.merchant.view.OtherGridView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,7 +59,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     public static String TAG = "TabManageActivity";
     public static String NAME = "merchantname";
     public static String TAGS = "tags";
-    public static String COMEFROM="COMEFROM";
+    public static String COMEFROM = "COMEFROM";
 
     /**
      * 用户栏目对应的适配器，可以拖动
@@ -72,7 +77,15 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
      * 用户栏目列表
      */
     ArrayList<IndusPreferItem> userChannelList = new ArrayList<IndusPreferItem>();
+    @Bind(R.id.cb_agree)
+    CheckBox cbAgree;
+    @Bind(R.id.tv_protocol)
+    TextView tvProtocol;
 
+    @Bind(R.id.subscribe_main_layout)
+    LinearLayout subscribeMainLayout;
+    @Bind(R.id.xieyi_ll)
+    LinearLayout xieyiLl;
 
 
     private List<M_Industry> sysdatalist = new ArrayList<M_Industry>();
@@ -104,8 +117,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     Button applyBtn;
     private Context mContext;
     private int merchantId;
-    private int comefrom =1;//来源于申请为1,来源为修改为2
-    private int isvisibily=-1;
+    private int comefrom = 1;//来源于申请为1,来源为修改为2
+    private int isvisibily = -1;
     /**
      * 用户栏目的GRIDVIEW
      */
@@ -117,11 +130,12 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     //获取服务人员标签
     CommonServiceTagListRequest commonServiceTagListRequest;
 
-  private  String name="";
-    private  String tags="";
+    private String name = "";
+    private String tags = "";
 
     //编辑服务标签
     UserSaleMerchantEditRequest userSaleMerchantEditRequest;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.tabmanage_activity);
@@ -133,8 +147,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         mContext = this;
         textView = (TextView) findViewById(R.id.channel_edit);
         merchantId = getIntent().getIntExtra(TAG, -1);
-        comefrom = getIntent().getIntExtra(COMEFROM,1);
-
+        comefrom = getIntent().getIntExtra(COMEFROM, 1);
+        tvProtocol.setText(Html.fromHtml("<u>《服务管家协议》</u>"));
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setText(name);
@@ -144,8 +158,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 
             String[] res = tags.split(",");
 
-            if(!res[0].equals("")) {
-            for (int j = 0; j < res.length; j++) {
+            if (!res[0].equals("")) {
+                for (int j = 0; j < res.length; j++) {
                     userChannelList.add(new IndusPreferItem(0, res[j], j + 1, 0));//数组越界
                 }
             }
@@ -163,6 +177,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             myCategoryTipText.setVisibility(View.VISIBLE);
             shopnameTv.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
+            xieyiLl.setVisibility(View.VISIBLE);
             applyBtn.setVisibility(View.VISIBLE);
 
         }
@@ -187,8 +202,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     }
 
 
-
-
     /**
      * 初始化布局
      */
@@ -204,7 +217,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     private void initData() {
 //        userChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getUserChannel());
 //        otherChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getOtherChannel());
-        if(comefrom==1){
+        if (comefrom == 1) {
             userChannelList.clear();
         }
         userAdapter = new DragAdapter(this, userChannelList);
@@ -225,7 +238,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 //如果点击的时候，之前动画还没结束，那么就让点击事件无效
 
-        if (textView.getText().toString().equals("完成")||isvisibily==0) {
+        if (textView.getText().toString().equals("完成") || isvisibily == 0) {
 
             if (isMove) {
                 return;
@@ -233,7 +246,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             switch (parent.getId()) {
                 case R.id.userGridView:
                     //position为 0，1 的不可以进行任何操作
-                    if (position !=-1) {//&& position != 1
+                    if (position != -1) {//&& position != 1
                         final ImageView moveImageView = getView(view);
                         if (moveImageView != null) {
                             TextView newTextView = (TextView) view.findViewById(R.id.text_item);
@@ -409,16 +422,13 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 //            finish();
 //            Log.d(TAG, "数据发生改变");
 //        } else {
-            super.onBackPressed();
+        super.onBackPressed();
 
-       overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 
-
-
-
-//编辑服务标签
+    //编辑服务标签
     private void userSaleMerchantEdit() {
         if (userSaleMerchantEditRequest != null) {
             userSaleMerchantEditRequest.cancel();
@@ -437,7 +447,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();    //	用户id
         }
-       input.merchantId= merchantId;
+        input.merchantId = merchantId;
         input.tags = tagsname.toString();
         input.convertJosn();
         userSaleMerchantEditRequest = new UserSaleMerchantEditRequest(input, new ResponseListener() {
@@ -473,45 +483,46 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 dismissPd();
 
             }
+
             @Override
             public void onResponse(Object response) {
                 if (((APIM_CommonGetallindustry) response).status == 1) {
-                   dismissPd();
+                    dismissPd();
                     sysdatalist = ((APIM_CommonGetallindustry) response).tagList;
-                        if (comefrom == 1) {
-                            //来源于申请
-                            if (otherChannelList.size() == 0) {
-                                for (int k = 0; k < sysdatalist.size(); k++) {
-                                    otherChannelList.add(new IndusPreferItem(0, sysdatalist.get(k).name, 1 + k, 0));
-                                    //ChannelManage.saveUserChannel(userChannelList);
-                                    otherAdapter.setListDate(otherChannelList);
-                                //    ChannelManage.saveOtherChannel(otherChannelList);
-                                }
-                            }
-                        } else if (comefrom == 2) {
-                            //来源于修改
+                    if (comefrom == 1) {
+                        //来源于申请
+                        if (otherChannelList.size() == 0) {
                             for (int k = 0; k < sysdatalist.size(); k++) {
                                 otherChannelList.add(new IndusPreferItem(0, sysdatalist.get(k).name, 1 + k, 0));
                                 //ChannelManage.saveUserChannel(userChannelList);
+                                otherAdapter.setListDate(otherChannelList);
                                 //    ChannelManage.saveOtherChannel(otherChannelList);
                             }
-                             //从otherChannelList里面删除与userChannelList里面name参数相同的部分
-                           for (int i = 0; i < userChannelList.size(); i++) {
-                                for (int j = otherChannelList.size()-1; j >=0; j--) {
-                                    if (otherChannelList.get(j).getName().equals(userChannelList.get(i).getName())) {
-                                        otherChannelList.remove(j);
-                                    }
+                        }
+                    } else if (comefrom == 2) {
+                        //来源于修改
+                        for (int k = 0; k < sysdatalist.size(); k++) {
+                            otherChannelList.add(new IndusPreferItem(0, sysdatalist.get(k).name, 1 + k, 0));
+                            //ChannelManage.saveUserChannel(userChannelList);
+                            //    ChannelManage.saveOtherChannel(otherChannelList);
+                        }
+                        //从otherChannelList里面删除与userChannelList里面name参数相同的部分
+                        for (int i = 0; i < userChannelList.size(); i++) {
+                            for (int j = otherChannelList.size() - 1; j >= 0; j--) {
+                                if (otherChannelList.get(j).getName().equals(userChannelList.get(i).getName())) {
+                                    otherChannelList.remove(j);
                                 }
                             }
-                          //  otherChannelList.removeAll(userChannelList);//从userChannelList中删除和sysdatalist中相同的元素
+                        }
+                        //  otherChannelList.removeAll(userChannelList);//从userChannelList中删除和sysdatalist中相同的元素
 //                            for (int k = 0; k < sysdatalist.size(); k++) {
 //                                otherChannelList.add(new IndusPreferItem(sysdatalist.get(k).industryId, sysdatalist.get(k).name, 1 + k, 0));
 ////                                ChannelManage.saveUserChannel(userChannelList);
 ////                                ChannelManage.saveOtherChannel(otherChannelList);
 //                            }
-                            userAdapter.setListDate(userChannelList);
-                            otherAdapter.setListDate(otherChannelList);
-                        }
+                        userAdapter.setListDate(userChannelList);
+                        otherAdapter.setListDate(otherChannelList);
+                    }
 
                 } else {
                     ToastUtils.show(TabManageActivity.this, ((APIM_CommonGetallindustry) response).info);
@@ -522,13 +533,26 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     }
 
 
-    @OnClick({R.id.back, R.id.ll_back})
+    @OnClick({R.id.back, R.id.ll_back, R.id.tv_protocol, R.id.apply_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
 
             case R.id.ll_back:
                 onBackPressed();
+                break;
+
+            case R.id.tv_protocol:
+
+                IntentUtil.start_activity(this, BaseWebViewActivity.class,
+                        new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Urls.SERVICEXIEYI));
+                break;
+            case R.id.apply_btn:
+                if (cbAgree.isChecked()) {
+                    user_add_saleuser();
+                } else {
+                    ToastUtils.show(this,"请勾选同意本平台协议");
+                }
                 break;
         }
     }
@@ -558,7 +582,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         input.userId = SlashHelper.userManager().getUserId();
 
         input.merchantId = merchantId;
-        input.tags=tagsname.toString();
+        input.tags = tagsname.toString();
         input.convertJosn();
         userAddSaleUserRequest = new UserAddSaleUserRequest(input, new ResponseListener() {
             @Override
@@ -583,9 +607,12 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     }
 
 
-    @OnClick(R.id.apply_btn)
-    public void onClick() {
-        
-        user_add_saleuser();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
+
+
 }

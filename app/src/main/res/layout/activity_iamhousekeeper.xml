@@ -50,7 +50,7 @@
             android:textColor="@color/e6bb7c"
             android:textSize="11sp"
             android:layout_below="@+id/tv_exp"
-            android:text="距离---还差--------"
+            android:text="-----------------------------"
             android:layout_height="wrap_content" />
         
         <LinearLayout
@@ -77,7 +77,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    app:rv_backgroundColor="@color/yellow"
+                    app:rv_backgroundColor="@color/e6bb7c"
                     app:rv_cornerRadius="8dp"></com.flyco.roundview.RoundLinearLayout>
             </com.flyco.roundview.RoundLinearLayout>
         </LinearLayout>
