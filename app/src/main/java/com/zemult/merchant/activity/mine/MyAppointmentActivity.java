@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ScanQrActivity;
+import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
@@ -62,6 +64,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     public static String INTENT_TYPE = "type";
     UserSaleReservationList userSaleReservationList;//服务管家的预约列表
     int type;
+    private boolean fromHome;
 
     //此处item使用item_myappoint
     @Override
@@ -71,7 +74,6 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
     @Override
     public void init() {
-        lhTvTitle.setText("我的预约");
         mContext = this;
         imageManager = new ImageManager(this);
         myappointmentLv.setRefreshEnable(true);
@@ -79,6 +81,12 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         myappointmentLv.setSmoothListViewListener(this);
         myappointmentLv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         showPd();
+
+        fromHome = getIntent().getBooleanExtra("fromHome", false);
+        if(fromHome)
+            lhTvTitle.setText("预约买单");
+        else
+            lhTvTitle.setText("我的预约");
         type = getIntent().getIntExtra(INTENT_TYPE, 0);
         if (type == 0) {
             userReservationList();
@@ -107,7 +115,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         }
         UserReservationListRequest.Input input = new UserReservationListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-        input.state = -1;
+        input.state = fromHome? 1:-1;
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的行数
         input.convertJosn();
@@ -134,7 +142,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                             if (mDatas != null && !mDatas.isEmpty()) {
                                 myappointmentLv.setAdapter(commonAdapter = new CommonAdapter<M_Reservation>(MyAppointmentActivity.this, R.layout.item_myappoint, mDatas) {
                                     @Override
-                                    public void convert(CommonViewHolder holder, M_Reservation mReservation, final int position) {
+                                    public void convert(CommonViewHolder holder, final M_Reservation mReservation, final int position) {
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
@@ -142,17 +150,39 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
-                                        //状态(1:预约成功,2:已支付,3:预约结束)
-                                        if (mReservation.state == 1) {
-                                            //tv_state
-                                            holder.setText(R.id.tv_state, "预约成功");
-                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
-                                        } else if (mReservation.state == 2) {
-                                            holder.setText(R.id.tv_state, "已支付");
-                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
-                                        } else if (mReservation.state == 3) {
-                                            holder.setText(R.id.tv_state, "预约结束");
-                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+
+                                        if(fromHome){
+                                            holder.setViewVisible(R.id.tv_buy);
+                                            holder.setViewGone(R.id.tv_state);
+
+                                            holder.setOnclickListener(R.id.tv_buy, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Intent intent = new Intent(mContext, FindPayActivity.class);
+                                                    // 预约单id
+                                                    intent.putExtra("reservationId", Integer.valueOf(mReservation.reservationId));
+                                                    intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
+                                                    intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
+                                                    startActivity(intent);
+
+                                                }
+                                            });
+                                        }else {
+                                            holder.setViewVisible(R.id.tv_state);
+                                            holder.setViewGone(R.id.tv_buy);
+                                            //状态(1:预约成功,2:已支付,3:预约结束)
+                                            if (mReservation.state == 1) {
+                                                //tv_state
+                                                holder.setText(R.id.tv_state, "预约成功");
+                                                holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                            } else if (mReservation.state == 2) {
+                                                holder.setText(R.id.tv_state, "已支付");
+                                                holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                            } else if (mReservation.state == 3) {
+                                                holder.setText(R.id.tv_state, "预约结束");
+                                                holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+                                            }
+
                                         }
 
                                         holder.setText(R.id.day_tv,mReservation.reservationTime.substring(5, 10));

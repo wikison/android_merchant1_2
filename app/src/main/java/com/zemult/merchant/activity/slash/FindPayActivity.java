@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserMerchantPayAddRequest;
+import com.zemult.merchant.aip.mine.UserReservationPayAddRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
@@ -68,7 +69,7 @@ public class FindPayActivity extends BaseActivity {
 
     private M_Merchant merchant;
     private M_Userinfo userinfo;
-    int merchantId, userSaleId;
+    int merchantId, userSaleId, reservationId;
 
     public static final String MERCHANT_INFO = "merchantInfo";
     public static final String USER_INFO = "userInfo";
@@ -91,9 +92,11 @@ public class FindPayActivity extends BaseActivity {
         lhTvTitle.setText("找TA买单");
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
+        reservationId = getIntent().getIntExtra("reservationId", 0);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         userinfo = (M_Userinfo) getIntent().getSerializableExtra(USER_INFO);
 
+        showPd();
         if (merchant == null) {
             merchant_info(merchantId);
         } else {
@@ -125,7 +128,10 @@ public class FindPayActivity extends BaseActivity {
             case R.id.btn_pay:
                 truepaymoney = Double.parseDouble(etPaymoney.getText().toString());
                 if (truepaymoney > 0) {
-                    userTaskPayRequest();
+                    if(reservationId > 0)
+                        user_reservation_pay_add();
+                    else
+                        userTaskPayRequest();
                 }
 
                 break;
@@ -181,6 +187,55 @@ public class FindPayActivity extends BaseActivity {
         }
     }
 
+    private UserReservationPayAddRequest reservationPayAddRequest;
+    private void user_reservation_pay_add() {
+        try {
+            showPd();
+
+            if (reservationPayAddRequest != null) {
+                reservationPayAddRequest.cancel();
+            }
+            UserReservationPayAddRequest.Input input = new UserReservationPayAddRequest.Input();
+            input.userId = SlashHelper.userManager().getUserId();
+            input.reservationId = reservationId;
+            input.consumeMoney = truepaymoney;
+            input.money = truepaymoney;
+            input.convertJosn();
+
+            reservationPayAddRequest = new UserReservationPayAddRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dismissPd();
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        ORDER_SN = ((CommonResult) response).number;
+                        userPayId = ((CommonResult) response).userPayId;
+                        Intent intent = new Intent(FindPayActivity.this, ChoosePayTypeActivity.class);
+                        intent.putExtra("consumeMoney", truepaymoney);
+                        intent.putExtra("order_sn", ORDER_SN);
+                        intent.putExtra("userPayId", userPayId);
+                        intent.putExtra("merchantName", merchant.name);
+                        intent.putExtra("merchantHead", merchant.head);
+                        intent.putExtra("managerhead", managerhead);
+                        intent.putExtra("managername", managername);
+                        startActivityForResult(intent, 10000);
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(reservationPayAddRequest);
+        } catch (Exception e) {
+            dismissPd();
+        }
+    }
+
     //商家详情
     private void merchant_info(int merchantId) {
         showPd();
@@ -203,7 +258,7 @@ public class FindPayActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((APIM_MerchantGetinfo) response).status == 1) {
                     merchant = ((APIM_MerchantGetinfo) response).merchant;
-                    tvMerchant.setText(merchant.name);
+                    tvMerchant.setText("消费商户:  " + merchant.name);
                 } else {
                     ToastUtils.show(FindPayActivity.this, ((APIM_MerchantGetinfo) response).info);
                 }

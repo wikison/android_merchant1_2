@@ -54,13 +54,11 @@
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_marginBottom="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
         android:layout_marginTop="12dp"
         android:gravity="center_vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        app:rv_backgroundColor="@color/white"
+        android:background="@color/white"
         app:rv_cornerRadius="5dp"
         app:rv_strokeColor="#e1e1e1"
         app:rv_strokeWidth="1px">
@@ -69,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="消费总额(元)："
+            android:text="消费金额："
             android:textColor="@color/font_black_28"
             android:textSize="@dimen/font_30px"/>
 

@@ -34,6 +34,7 @@ import com.zemult.merchant.activity.CityPickerActivity;
 import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
+import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
@@ -133,7 +134,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 }
                 break;
             case R.id.rl_maidan:
-                // TODO: 2017/1/19
+                intent = new Intent(mContext, MyAppointmentActivity.class);
+                intent.putExtra("fromHome", true);
+                startActivity(intent);
+                ivRedDot.setVisibility(View.GONE);
                 break;
         }
     }
