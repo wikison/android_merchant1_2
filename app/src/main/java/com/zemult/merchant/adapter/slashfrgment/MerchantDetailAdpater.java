@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import com.hedgehog.ratingbar.RatingBar;
 import com.zemult.merchant.R;
-import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
-import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.view.FNRadioGroup;
 
@@ -27,7 +25,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.trinea.android.common.util.StringUtils;
 
 /**
  * 商户详情页适配器

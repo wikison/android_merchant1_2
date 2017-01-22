@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by zhangkai on 2016/6/8.
  */
 
-public class M_Merchant implements Serializable{
+public class M_Merchant implements Serializable {
     @Expose
     public int merchantId;    //	商家(场景)id
     @Expose
@@ -67,6 +67,16 @@ public class M_Merchant implements Serializable{
     public String shortName;
     @Expose
     public String IDphotos;
+
+    private String strHeadTag;
+
+    public String getStrHeadTag() {
+        return strHeadTag;
+    }
+
+    public void setStrHeadTag(String strHeadTag) {
+        this.strHeadTag = strHeadTag;
+    }
 
     @Expose
     public double commissionDiscount;  //佣金百分比(0-100)

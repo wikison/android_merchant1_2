@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -107,6 +109,8 @@ public class UserDetailActivity extends BaseActivity {
     RoundTextView btnBuy;
     @Bind(R.id.btn_service)
     RoundTextView btnService;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
 
 
     private Context mContext;
@@ -244,6 +248,7 @@ public class UserDetailActivity extends BaseActivity {
      * @param userInfo
      */
     private void setUserInfo(M_Userinfo userInfo) {
+        Drawable drawable;
         // 头像
         if (!TextUtils.isEmpty(userInfo.getHead())) {
             imageManager.loadCircleImage(userInfo.getHead(), ivHead, "@120w_120h");
@@ -252,19 +257,19 @@ public class UserDetailActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userInfo.getName()))
             tvName.setText(userInfo.getName());
         // 电话
-/*        if (!TextUtils.isEmpty(userInfo.getPhoneNum())) {
-            if (userInfo.getIsOpen() == 1)
-                tvPhone.setText(userInfo.getPhoneNum());
-            else
-                tvPhone.setText(userInfo.getPhoneNum().substring(0, 3) + "****" + userInfo.getPhoneNum().substring(7, userInfo.getPhoneNum().length()));
-        }*/
-        // 电话
         tvPhone.setText(userInfo.getPhoneNum());
         if (!TextUtils.isEmpty(userInfo.getPhoneNum())) {
             if (userInfo.getIsOpen() == 1) {
                 llPhone.setVisibility(View.VISIBLE);
             } else
                 llPhone.setVisibility(View.GONE);
+        }
+
+        tvLevel.setText(userInfo.getExperienceText());
+        if (userInfo.getExperienceImg() > 0) {
+            drawable = getResources().getDrawable(userInfo.getExperienceImg());
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
 
         //是否有挂靠商家
@@ -278,7 +283,7 @@ public class UserDetailActivity extends BaseActivity {
             btnGift.setVisibility(View.VISIBLE);
         }
 
-        Drawable drawable;
+
         switch (userInfo.getState()) {
             case 0:
                 drawable = getResources().getDrawable(R.mipmap.kongxian_icon);
@@ -300,6 +305,7 @@ public class UserDetailActivity extends BaseActivity {
                 tvBuyNum.setTextColor(getResources().getColor(R.color.font_busy));
                 break;
         }
+
 
         // 买单数
         //tvBuyNum.setText(userInfo.saleNum + "人找TA买单");
@@ -424,7 +430,7 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
+    @OnClick({R.id.lh_btn_back, R.id.btn_buy,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -443,6 +449,11 @@ public class UserDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_phone:
                 call();
+                break;
+            case R.id.btn_buy:
+                intent = new Intent(mContext, ChoosePayMerchantActivity.class);
+                intent.putExtra(USER_ID, userId);
+                startActivity(intent);
                 break;
             case R.id.btn_contact:
                 if (noLogin(mContext))
@@ -471,4 +482,10 @@ public class UserDetailActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
