@@ -1,7 +1,6 @@
 package com.zemult.merchant.activity.slash;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,7 +27,6 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -72,6 +70,7 @@ public class FindPayActivity extends BaseActivity {
 
     public static final String MERCHANT_INFO = "merchantInfo";
     public static final String USER_INFO = "userInfo";
+    public static final String MERCHANT_ID = "merchant_id";
     // 商户订单号
     private String ORDER_SN = "", managerhead, managername;
     private int userPayId = 0;
@@ -283,10 +282,4 @@ public class FindPayActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

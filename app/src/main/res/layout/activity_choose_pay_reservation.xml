@@ -10,8 +10,10 @@
         layout="@layout/layout_head"/>
 
     <com.zemult.merchant.view.BounceScrollView
+        android:id="@+id/bsv_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/bg_f2"
         android:layout_weight="1">
 
         <LinearLayout
@@ -41,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16dp"
-                    android:text="dddd"
+                    android:text=""
                     android:textColor="@color/font_black_28"
                     android:textSize="@dimen/font_34px"
                     android:textStyle="bold"/>
@@ -58,6 +60,9 @@
 
             </LinearLayout>
 
+            <View
+                style="@style/divider_1px"/>
+
             <com.zemult.merchant.view.FixedListView
                 android:id="@+id/flv"
                 android:layout_width="match_parent"
@@ -71,15 +76,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center"
-        android:padding="@dimen/margin_12dp">
+        android:orientation="vertical">
+
+        <View
+            style="@style/divider_1px"/>
 
         <Button
             android:id="@+id/btn_next"
             style="@style/btn_common_orange"
-            android:text="@string/btn_next"
             android:layout_width="@dimen/common_btn_width_235"
             android:layout_height="@dimen/common_btn_height_35"
-            />
+            android:layout_marginBottom="@dimen/margin_12dp"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:text="@string/btn_next"/>
     </LinearLayout>
 </LinearLayout>

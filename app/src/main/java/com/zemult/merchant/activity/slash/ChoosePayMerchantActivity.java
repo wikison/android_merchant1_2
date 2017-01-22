@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -54,6 +55,8 @@ public class ChoosePayMerchantActivity extends BaseActivity {
     Button lhBtnRightiamge;
     @Bind(R.id.flv)
     FixedListView flv;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     TaMerchantChooseAdapter adapter;
@@ -81,9 +84,13 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         adapter.setOnAllClickListener(new TaMerchantChooseAdapter.OnAllClickListener() {
             @Override
             public void onAllClick(int position) {
-                if(adapter.getItem(position).reviewstatus==2){
-
-                }else {
+                if (adapter.getItem(position).reviewstatus == 2) {
+                    Intent intent = new Intent(mContext, ChoosePayReservationActivity.class);
+                    intent.putExtra(UserDetailActivity.USER_ID, userId);
+                    intent.putExtra(FindPayActivity.MERCHANT_ID, adapter.getItem(position).merchantId);
+                    intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, adapter.getItem(position).name);
+                    startActivity(intent);
+                } else {
                     ToastUtil.showMessage("该商户暂不支持买单");
                 }
             }
@@ -141,7 +148,9 @@ public class ChoosePayMerchantActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Merchant> list, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
+            rlNoData.setVisibility(View.VISIBLE);
         } else {
+            rlNoData.setVisibility(View.GONE);
             adapter.setData(list, isLoadMore);
         }
 

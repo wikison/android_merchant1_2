@@ -62,8 +62,7 @@
         card_view:cardBackgroundColor="@color/transparent"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="0dp"
-        card_view:cardPreventCornerOverlap="false"
-        >
+        card_view:cardPreventCornerOverlap="false"   >
 
         <ImageView
             android:id="@+id/iv_cover"

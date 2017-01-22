@@ -21,6 +21,7 @@ public class UserMerchantPayAddRequest extends PostStringRequest<Type>  {
         public int saleUserId;	//	营销经理用户id
         public double consumeMoney;	//	消费总金额
         public double money;	//	买单金额, 实际支付金额
+        public String reservationIds;	//	否 预约单ids（多个用","分隔）
 
         public String ejson;
 
@@ -30,7 +31,8 @@ public class UserMerchantPayAddRequest extends PostStringRequest<Type>  {
                     new Pair<String, String>("merchantId", merchantId+""),
                     new Pair<String, String>("saleUserId", saleUserId+""),
                     new Pair<String, String>("consumeMoney", consumeMoney+""),
-                    new Pair<String, String>("money", money+"")));
+                    new Pair<String, String>("money", money+""),
+                    new Pair<String, String>("reservationIds", reservationIds)));
 
         }
 

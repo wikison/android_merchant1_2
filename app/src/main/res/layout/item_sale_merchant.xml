@@ -1,172 +1,339 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_root_view"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:clickable="true"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
               android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/tv_name"
-        style="@style/text_14_black_28"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:drawableRight="@mipmap/right_btn"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp"
-        android:text=""
-        android:textStyle="bold"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="0dp"
+        card_view:cardPreventCornerOverlap="false"
+        >
 
-    <View
-        style="@style/divider_1px"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:background="@color/transparent">
 
-    <RelativeLayout
-        android:id="@+id/rl_my_service"
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@color/bg_head"/>
 
-        <TextView
-            android:id="@+id/tv_my_service"
-            style="@style/text_14_black_28"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:text="我的服务"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="#30000000"/>
 
-        <com.zemult.merchant.view.FNRadioGroup
-            android:id="@+id/fn_my_service"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_bottom">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:maxLength="9"
+                        android:shadowColor="@color/font_black_28"
+                        android:shadowDx="1"
+                        android:shadowDy="3"
+                        android:shadowRadius="8"
+                        android:text="兰州大酒店"
+                        android:textColor="@color/white"
+                        android:textSize="23sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="@color/font_black_28"
+                        android:shadowDx="1"
+                        android:shadowDy="3"
+                        android:shadowRadius="8"
+                        android:text="人均100"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px"
+                        android:textStyle="bold"/>
+
+                    <View
+                        style="@style/divider"
+                        android:layout_width="2px"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:background="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="@color/font_black_28"
+                        android:shadowDx="1"
+                        android:shadowDy="3"
+                        android:shadowRadius="8"
+                        android:text="0m"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginLeft="@dimen/margin_24dp"
-            android:layout_toLeftOf="@+id/tv_service_right"
-            android:layout_toRightOf="@+id/tv_my_service"/>
+            android:layout_marginTop="126dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_service_right"
-            style="@style/text_14_black_28"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:drawableRight="@mipmap/right_btn"
-            android:gravity="center_vertical"
-            android:text=""/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:gravity="center_vertical">
 
-    </RelativeLayout>
+                <com.hedgehog.ratingbar.RatingBar
+                    android:id="@+id/rb_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    hedgehog:clickable="false"
+                    hedgehog:halfstart="true"
+                    hedgehog:starCount="5"
+                    hedgehog:starEmpty="@mipmap/kongxing_icon"
+                    hedgehog:starFill="@mipmap/xing_icon"
+                    hedgehog:starHalf="@mipmap/banxing_icon"
+                    hedgehog:starImageHeight="16dp"
+                    hedgehog:starImagePadding="3dp"
+                    hedgehog:starImageWidth="16dp"/>
 
-    <View
-        style="@style/divider_1px"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@+id/rb_5"
+                    android:gravity="center"
+                    android:text="评价"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_22px"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
-
-
-        <TextView
-            style="@style/text_14_black_28"
-            android:layout_gravity="center_vertical"
-            android:text="交易金额"/>
-
-        <TextView
-            android:id="@+id/tv_sale_user_money"
-            style="@style/text_14_black_28"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/margin_12dp"
-            android:layout_toLeftOf="@+id/tv_sale_num"
-            android:text=""
-            android:textColor="@color/font_main"/>
-
-        <TextView
-            android:id="@+id/tv_sale_num"
-            style="@style/text_14_black_28"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:text=""/>
-    </RelativeLayout>
-
-    <View
-        style="@style/divider_1px"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/rl_qr_share"
-            android:layout_width="0dp"
-            android:layout_height="58dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_12dp">
-
-            <TextView
-                android:id="@+id/tv_qr"
-                style="@style/text_14_black_28"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ripple_item_clicked2"
-                android:drawablePadding="@dimen/margin_16dp"
-                android:drawableRight="@mipmap/erweima_icon"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_12dp"
-                android:visibility="invisible"
-                android:text="交易二维码"/>
-
-            <TextView
-                android:id="@+id/tv_delete"
-                style="@style/text_14_black_28"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_toLeftOf="@+id/v_divider"
-                android:background="@drawable/ripple_item_clicked2"
-                android:drawableLeft="@mipmap/delete_icon"
-                android:gravity="center_vertical"
-                android:paddingRight="@dimen/margin_12dp"
-                android:text="@string/delete"/>
+                <TextView
+                    android:id="@+id/tv_service"
+                    style="@style/text_12_black_999"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_16dp"
+                    android:text="约服人次: ---"/>
+            </RelativeLayout>
 
             <View
-                android:id="@+id/v_divider"
-                android:layout_width="1dp"
-                android:visibility="invisible"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/bg_f2"/>
-        </RelativeLayout>
+                style="@style/divider_1px"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="@dimen/margin_12dp"/>
 
-        <TextView
-            android:id="@+id/tv_share"
-            style="@style/text_14_black_28"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/ripple_item_clicked2"
-            android:drawableLeft="@mipmap/share_icon"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/margin_16dp"
-            android:text="@string/share"/>
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_my_service"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+                <TextView
+                    android:id="@+id/tv_my_service"
+                    style="@style/text_14_black_28"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:text="我的服务"/>
+
+                <com.zemult.merchant.view.FNRadioGroup
+                    android:id="@+id/fn_my_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginLeft="@dimen/margin_24dp"
+                    android:layout_toLeftOf="@+id/tv_service_right"
+                    android:layout_toRightOf="@+id/tv_my_service"/>
+
+                <TextView
+                    android:id="@+id/tv_service_right"
+                    style="@style/text_14_black_28"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:drawableRight="@mipmap/right_btn"
+                    android:gravity="center_vertical"
+                    android:text=""/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/divider_1px"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+
+                <TextView
+                    style="@style/text_14_black_28"
+                    android:layout_gravity="center_vertical"
+                    android:text="交易金额"/>
+
+                <TextView
+                    android:id="@+id/tv_sale_user_money"
+                    style="@style/text_14_black_28"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_12dp"
+                    android:layout_toLeftOf="@+id/tv_sale_num"
+                    android:text=""
+                    android:textColor="@color/font_main"/>
+
+                <TextView
+                    android:id="@+id/tv_sale_num"
+                    style="@style/text_14_black_28"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:text=""/>
+            </RelativeLayout>
+
+            <View
+                style="@style/divider_1px"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rl_qr_share"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/margin_12dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_qr"
+                        style="@style/text_14_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:background="@drawable/ripple_item_clicked2"
+                        android:drawablePadding="@dimen/margin_16dp"
+                        android:drawableRight="@mipmap/erweima_icon"
+                        android:gravity="center_vertical"
+                        android:text="交易二维码"
+                        android:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_share"
+                        style="@style/text_14_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="2dp"
+                        android:layout_toLeftOf="@+id/v_divider"
+                        android:background="@drawable/ripple_item_clicked2"
+                        android:drawableLeft="@mipmap/share_icon"
+                        android:gravity="center_vertical"
+                        android:paddingRight="@dimen/margin_12dp"
+                        android:text="@string/share"/>
+
+                    <View
+                        android:id="@+id/v_divider"
+                        android:layout_width="1dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/bg_f2"
+                        android:visibility="invisible"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_no_add"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:gravity="center_vertical">
+
+                    <com.flyco.roundview.RoundTextView
+                        style="@style/text_12_black_28"
+                        android:layout_marginLeft="@dimen/margin_12dp"
+                        android:padding="@dimen/margin_6dp"
+                        android:text="商户未入驻"
+                        android:textColor="@color/white"
+                        app:rv_backgroundColor="@color/font_main"
+                        app:rv_cornerRadius="20dp"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_delete"
+                    style="@style/text_14_black_28"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="@dimen/margin_16dp"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:drawableLeft="@mipmap/tuichu_icon"
+                    android:drawablePadding="@dimen/margin_6dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/exit"
+                    android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
 
