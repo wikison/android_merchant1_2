@@ -425,7 +425,7 @@ public class BillInfoActivity extends BaseActivity {
                     }
                     tvUserNamePresent.setText(m_bill.toUserName);
 
-                    tvPersentPrice.setText(m_bill.payMoney + "");
+                    tvPersentPrice.setText(Convert.getMoneyString(m_bill.payMoney));
                     tvPersentName.setText(m_bill.presentName + "x1");
                     tvPayNumPresent.setText(m_bill.number);
                     tvTradeTimePresent.setText(m_bill.createtime);
