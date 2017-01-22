@@ -465,8 +465,8 @@ public class UserDetailActivity extends BaseActivity {
                 focus_operate();
                 break;
             case R.id.btn_service:
-                intent = new Intent(mContext, CreateBespeakActivity.class);
-                intent.putExtra("serviceId", userId);
+                intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
                 break;
 

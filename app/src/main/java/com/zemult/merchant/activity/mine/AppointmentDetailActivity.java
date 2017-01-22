@@ -4,21 +4,41 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.YWCustomMessageBody;
+import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
+import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
+import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.CreateBespeakActivity;
+import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -66,6 +86,10 @@ public class AppointmentDetailActivity extends BaseActivity {
     RelativeLayout ordersuccessBtnRl;
     @Bind(R.id.others_ll)
     LinearLayout othersLl;
+    @Bind(R.id.appresultcommit_et)
+    EditText appresultcommitEt;
+
+
 
     public static String INTENT_RESERVATIONID = "intent";
     public static String INTENT_TYPE = "type";
@@ -75,14 +99,19 @@ public class AppointmentDetailActivity extends BaseActivity {
     RelativeLayout yuyueresultRl;
     @Bind(R.id.ordernum_rl)
     RelativeLayout ordernumRl;
+    @Bind(R.id.yuyueresultcommit_rl)
+    RelativeLayout yuyueresultcommitRl;
+
     @Bind(R.id.lookorder_btn)
     Button lookorderBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
     int reservationId;
     int type;
+    String replayNote;
     M_Reservation mReservation;
     UserReservationInfoRequest userReservationInfoRequest;
+    UserReservationEditRequest userReservationEditRequest;
 
     @Override
     public void setContentView() {
@@ -122,16 +151,28 @@ public class AppointmentDetailActivity extends BaseActivity {
                 dismissPd();
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
-                    if (mReservation.state == 1) {
+                    if (mReservation.state == 0) {
+                        tvState.setText("待确认");
+                        appresultTv.setText("暂无");
+                        if(type==1){//客户
+                            yuyueresultRl.setVisibility(View.VISIBLE);
+                        }
+                       else if(type==0){//管家
+                            yuyueresultcommitRl.setVisibility(View.VISIBLE);
+                        }
+                    }
 
-                        //状态(1:预约成功,2:已支付,3:预约结束)
+                   else if (mReservation.state == 1) {
+
+                        //状态(0:待确认,1:预约成功,2:已支付,3:预约结束)
                         tvState.setText("预约成功");
                         yuyueresultRl.setVisibility(View.VISIBLE);
                         appresultTv.setText(mReservation.replayNote);
-                        if (type == 0) {
+                        if (type == 1) {
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             inviteBtn.setVisibility(View.VISIBLE);
                             jiezhangBtn.setVisibility(View.VISIBLE);
+                            ordersuccessBtnRl.setVisibility(View.VISIBLE);
                         }
 
                     } else if (mReservation.state == 2) {
@@ -175,7 +216,82 @@ public class AppointmentDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn})
+//约客修改预约单(答复)
+    private void user_reservation_edit() {
+
+        try {
+            if (userReservationEditRequest != null) {
+                userReservationEditRequest.cancel();
+            }
+            UserReservationEditRequest.Input input = new UserReservationEditRequest.Input();
+            input.reservationId = reservationId;
+            input.replayNote = replayNote;
+            input.userId = SlashHelper.userManager().getUserId();
+            input.convertJosn();
+
+            userReservationEditRequest = new UserReservationEditRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status==1) {
+
+                        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+                        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("customizeMessageType", "Task");
+                            object.put("tasktype", "ORDER");
+                            object.put("taskTitle", "[预约-已确认] 预约时间:"+mReservation.reservationTime+"预约地址:"+mReservation.merchantName);
+                            object.put("serviceId", mReservation.saleUserId);
+                            object.put("reservationId",reservationId);
+                        } catch (JSONException e) {
+
+                        }
+                        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+                        messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                        YWIMKit  imKit= LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.userId+"", imKit.getIMCore().getAppKey());
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        ,message,forwardCallBack);
+//                        startActivity(imKit.getChattingActivityIntent(mReservation.saleUserId+""));
+                        finish();
+
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(userReservationEditRequest);
+        } catch (Exception e) {
+        }
+    }
+
+
+    final IWxCallback forwardCallBack = new IWxCallback() {
+
+        @Override
+        public void onSuccess(Object... result) {
+            Notification.showToastMsg(AppointmentDetailActivity.this,"forward succeed!");
+        }
+
+        @Override
+        public void onError(int code, String info) {
+            Notification.showToastMsg(AppointmentDetailActivity.this,"forward fail!");
+
+        }
+
+        @Override
+        public void onProgress(int progress) {
+
+        }
+    };
+
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn,R.id.btn_service})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -193,6 +309,14 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
             case R.id.jiezhang_btn:
                 //快速结账
+                break;
+            case R.id.btn_service:
+                replayNote=appresultcommitEt.getText().toString();
+                if(StringUtils.isEmpty(replayNote)){
+                  ToastUtil.showMessage("请输入反馈信息");
+                    return;
+                }
+                user_reservation_edit();
                 break;
         }
     }

@@ -54,15 +54,14 @@ import com.alibaba.sdk.android.media.upload.UploadTask;
 import com.alibaba.sdk.android.media.utils.FailReason;
 import com.alibaba.wxlib.thread.WXThreadPoolMgr;
 import com.alibaba.wxlib.util.RequestPermissionUtil;
-import com.zemult.merchant.activity.slash.SearchDetailActivity;
+import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
-import com.zemult.merchant.im.CreateBespeakActivity;
-import com.zemult.merchant.im.ModifyBespeakActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.common.Constant;
+import com.zemult.merchant.util.SlashHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +86,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
     private static final String TAG = "ChattingOperationCustomSample";
 
-    int BECREATESPEAKCODE=1000;
+//    int BECREATESPEAKCODE=1000;
     int BEMODIFYSPEAKCODE=1001;
     YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
 
@@ -169,7 +168,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     public void onClick(DialogInterface dialog, int which) {
                         String content = text.getText().toString();
                         if (TextUtils.isEmpty(content)) {
-                           Notification.showToastMsg(context,"forward userid can't be empty!");
+                            Notification.showToastMsg(context,"forward userid can't be empty!");
                         }else{
                             YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
                             if(imKit!=null){
@@ -182,12 +181,12 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
                                         if(content.equals("e")){
                                             //转发给客服示例
-                                        EServiceContact eServiceContact = YWContactFactory.createEServiceContact("openim官方客服",0);
-                                        imKit.getConversationService()
-                                                .forwardMsgToEService(eServiceContact
-                                                        ,msg,forwardCallBack);
-                                        context.startActivity(imKit.getChattingActivityIntent(eServiceContact));
-                                        context.finish();
+                                            EServiceContact eServiceContact = YWContactFactory.createEServiceContact("openim官方客服",0);
+                                            imKit.getConversationService()
+                                                    .forwardMsgToEService(eServiceContact
+                                                            ,msg,forwardCallBack);
+                                            context.startActivity(imKit.getChattingActivityIntent(eServiceContact));
+                                            context.finish();
                                         }else if(content.startsWith("t:")){
                                             //转发给群示例
                                             String replace = content.replace("t:", "");
@@ -213,10 +212,6 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                                             context.startActivity(imKit.getChattingActivityIntent(content));
                                             context.finish();
                                         }
-
-
-
-
                                     }
                                 }
 
@@ -279,15 +274,15 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                         //TODO 获取多媒体service，如果您获取的mediaService == null可能是您的安全图片与私钥不匹配，请认真阅读多媒体集成文档
                         //TODO https://baichuan.taobao.com/doc2/detail.htm?spm=a3c0d.7629140.0.0.7kVR68&treeId=38&articleId=102765&docType=1
                         final MediaService mediaService = AlibabaSDK.getService(MediaService.class);
-                            WXThreadPoolMgr.getInstance().doAsyncRun(new Runnable() {
-                                @Override
-                                public void run() {
-                                    File file = new File(path);
-                                    if (file.exists()) {
-                                        mediaService.upload(file, AppApplication.NAMESPACE, uploadListener);
-                                    }
+                        WXThreadPoolMgr.getInstance().doAsyncRun(new Runnable() {
+                            @Override
+                            public void run() {
+                                File file = new File(path);
+                                if (file.exists()) {
+                                    mediaService.upload(file, AppApplication.NAMESPACE, uploadListener);
                                 }
-                            });
+                            }
+                        });
                     }
                 }
             }
@@ -543,17 +538,25 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                 mConversation=LoginSampleHelper.getInstance().getIMKit().getConversationService().getConversationByConversationId(message.getConversationId());
                 try {
                     //处理任务点击效果
-//                    {"customize":"{\"personId\":\"79\",\"customizeMessageType\":\"CallingCard\"}","header":{"summary":"[名片]","cstmMsgTrans":"0"}}
+//                   //{"taskId":"","customizeMessageType":"Task","taskTitle":"[预约-待确认] 预约时间:预约地址:"}
                     JSONObject contentObject = new JSONObject(message.getContent());
                     JSONObject customizeObject = new JSONObject(contentObject.optString("customize"));
+                    if("ORDER".equals(customizeObject.getString("tasktype"))){
+                            Intent intent =new Intent(fragment.getActivity(),AppointmentDetailActivity.class);
+                        if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){
+                            intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,0);
+                        }
+                        else{
+                            intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,1);//type1  客户  0商务管家
+                        }
 
-                    Intent intent =new Intent(fragment.getActivity(),ModifyBespeakActivity.class);
-                    intent.putExtra("shopname",customizeObject.getString("shopname"));
-                    intent.putExtra("bespeaktime",customizeObject.getString("bespeaktime"));
-                    intent.putExtra("bespeakpeople",customizeObject.getString("bespeakpeople"));
-                    intent.putExtra("bespeakremark",customizeObject.getString("bespeakremark"));
-                    intent.putExtra("taskTitle","预约订单:"+customizeObject.getString("shopname")+customizeObject.getString("bespeaktime"));
-                    fragment.startActivityForResult(intent,BEMODIFYSPEAKCODE);
+                            intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getInt("reservationId"));
+                            fragment.startActivity(intent);
+                    }
+                    else if("GIFT".equals(customizeObject.getString("tasktype"))){
+
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -885,24 +888,24 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             //首次进入会话
 //            if(isConversationFirstCreated){
 
-                final SharedPreferences defalultSprefs = fragment.getActivity().getSharedPreferences(
+            final SharedPreferences defalultSprefs = fragment.getActivity().getSharedPreferences(
                     "ywPrefsTools", Context.MODE_PRIVATE);
 
-                long lastSendTime = defalultSprefs.getLong("lastSendTime_"+conversation.getConversationId(), -1);
-                //24小时后再次发送本地隐藏消息
-                if(System.currentTimeMillis()-lastSendTime>24*60*60*1000){
+            long lastSendTime = defalultSprefs.getLong("lastSendTime_"+conversation.getConversationId(), -1);
+            //24小时后再次发送本地隐藏消息
+            if(System.currentTimeMillis()-lastSendTime>24*60*60*1000){
 
-                    YWMessage textMessage = YWMessageChannel.createTextMessage("你好");
-                    //添加发送的消息不显示在对方界面上的本地标记（todo 仅支持本地隐藏。当用户切换手机或清楚数据后，会漫游消息下这些消息并出现在用户的聊天界面上！！）
-                    textMessage.setLocallyHideMessage(true);
+                YWMessage textMessage = YWMessageChannel.createTextMessage("你好");
+                //添加发送的消息不显示在对方界面上的本地标记（todo 仅支持本地隐藏。当用户切换手机或清楚数据后，会漫游消息下这些消息并出现在用户的聊天界面上！！）
+                textMessage.setLocallyHideMessage(true);
 
-                    //保存发送时间戳
-                    SharedPreferences.Editor edit = defalultSprefs.edit();
-                    edit.putLong("lastSendTime_"+conversation.getConversationId(),System.currentTimeMillis());
-                    edit.commit();
+                //保存发送时间戳
+                SharedPreferences.Editor edit = defalultSprefs.edit();
+                edit.putLong("lastSendTime_"+conversation.getConversationId(),System.currentTimeMillis());
+                edit.commit();
 
-                    return textMessage;
-                }
+                return textMessage;
+            }
 
 //            }
 
@@ -1105,10 +1108,12 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
         }
         else if (viewType == type_4) {  //单聊自定义消息(任务消息)
             String taskTitle = null;
+            String tasktype = null;
             try {
                 String content = message.getMessageBody().getContent();
                 JSONObject object = new JSONObject(content);
                 taskTitle = object.getString("taskTitle");
+                tasktype= object.getString("tasktype");
             } catch (Exception e) {
             }
 
@@ -1125,7 +1130,13 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                 YWLog.i(TAG, "getCustomView, convertView != null");
             }
             holder.name.setText(taskTitle);
-             headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.baobiao_icon,null);
+            if("ORDER".equals(tasktype)){//预约消息图标
+                headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_yuyue_icon,null);
+            }
+            else {//礼物消息图标
+                headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_liwu_icon,null);
+            }
+
             return convertView;
         }
         return super.getCustomView(fragment, message, convertView, viewType, headLoadHelper);
@@ -1443,24 +1454,21 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
      */
     public boolean onActivityResult(int requestCode, int resultCode, Intent data, List<YWMessage> messageList) {
 
-        if(requestCode==BECREATESPEAKCODE&&resultCode==Activity.RESULT_OK){
-            JSONObject object = new JSONObject();
-            try {
-                object.put("customizeMessageType", CustomMessageType.TASK);
-                object.put("shopname", data.getStringExtra("shopname"));
-                object.put("bespeaktime", data.getStringExtra("bespeaktime"));
-                object.put("bespeakpeople", data.getStringExtra("bespeakpeople"));
-                object.put("bespeakremark", data.getStringExtra("bespeakremark"));
-                object.put("taskTitle",  "预约单，请查看"+data.getStringExtra("shopname")+data.getStringExtra("bespeaktime"));
-                sendP2PCustomTaskMessage(object);
-            } catch (JSONException e) {
-
-            }
-        }
-        if(requestCode==BEMODIFYSPEAKCODE&&resultCode==Activity.RESULT_OK){
-            sendOrderSureMessage();
-
-        }
+//        if(requestCode==BEMODIFYSPEAKCODE&&resultCode==Activity.RESULT_OK){
+//            JSONObject object = new JSONObject();
+//            try {
+//                object.put("customizeMessageType", CustomMessageType.TASK);
+//                object.put("tasktype", "ORDER");
+//                object.put("taskTitle", "[预约-已确认] 预约时间:"+data.getStringExtra("bespeaktime")+
+//                        "预约地址:"+data.getStringExtra("shopname"));
+//                object.put("serviceId",data.getIntExtra("serviceId",0) );
+//                object.put("reservationId",data.getIntExtra("reservationId",0));
+//                sendP2PCustomTaskMessage(object);
+//            } catch (JSONException e) {
+//
+//            }
+//
+//        }
 
         return true;
     }

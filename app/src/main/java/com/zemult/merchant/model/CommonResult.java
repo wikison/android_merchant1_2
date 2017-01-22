@@ -88,5 +88,7 @@ public class CommonResult {
     public String commissionMoney;//总佣金数
 
 
+    @Expose
+    public String reservationId;//用户的预约单列表
 
 }

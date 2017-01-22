@@ -1,11 +1,17 @@
 package com.zemult.merchant.im;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
@@ -19,21 +25,23 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
-import com.zemult.merchant.aip.task.TaskIndustryInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.common.Notification;
-import com.zemult.merchant.im.sample.ChattingOperationCustomSample;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
-import com.zemult.merchant.model.M_Task;
-import com.zemult.merchant.model.apimodel.APIM_TaskIndustryInfo;
+import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
-import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -42,10 +50,6 @@ import zema.volley.network.ResponseListener;
 
 public class CreateBespeakActivity extends BaseActivity {
 
-    @Bind(R.id.lh_btn_back)
-    Button lhBtnBack;
-    @Bind(R.id.ll_back)
-    LinearLayout llBack;
     @Bind(R.id.bespek_time)
     TextView bespekTime;
     @Bind(R.id.bespek_shopname)
@@ -56,14 +60,29 @@ public class CreateBespeakActivity extends BaseActivity {
     PMNumView pmnvSelectDeadline;
     @Bind(R.id.et_bespeak)
     EditText etBespeak;
+    @Bind(R.id.et_customername)
+    EditText etCustomername;
+    @Bind(R.id.et_customerphone)
+    EditText etCustomerphone;
+    @Bind(R.id.lh_btn_back)
+    Button lhBtnBack;
+    @Bind(R.id.lh_tv_title)
+    TextView lhTvTitle;
+    @Bind(R.id.ll_back)
+    LinearLayout llBack;
+    @Bind(R.id.rg_group)
+    RadioGroup rgGroup;
+    @Bind(R.id.fn_my_service)
+    FNRadioGroup fnMyService;
 
 
     UserReservationAddRequest userReservationAddRequest;
-
+    int userSex=0;
     int serviceId;
-    String shopname="",ordertime="",ordername="",orderphone="",orderpeople,
-            shophead="http://xiegang.oss-cn-shanghai.aliyuncs.com/app/android_1110201480495229434.jpg", note;
+    String shopname="",ordertime="",ordername="",orderphone="",orderpeople, note;
     int merchantId;
+    M_Merchant m_merchant;
+
 
     @Override
     public void setContentView() {
@@ -73,17 +92,38 @@ public class CreateBespeakActivity extends BaseActivity {
 
     @Override
     public void init() {
-        serviceId=getIntent().getIntExtra("serviceId",50);
-        shophead=getIntent().getStringExtra("shophead");
+        serviceId=getIntent().getIntExtra("serviceId",0);
+        m_merchant=(M_Merchant)getIntent().getExtras().getSerializable("m_merchant");
+        shopname=m_merchant.getName();
+        merchantId=m_merchant.getMerchantId();
+        initTags(m_merchant);
+        bespekShopname.setText(shopname);
+
+        pmnvSelectDeadline.setMinNum(1);
+        pmnvSelectDeadline.setMaxNum(99);
+        pmnvSelectDeadline.setDefaultNum(0);
+        pmnvSelectDeadline.setFilter();
+
 
         pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
             @Override
             public void onNumChanged(int num) {
                 orderpeople = num+"";
+                pmnvSelectDeadline.setDefaultNum(num);
             }
         });
-
-
+        lhTvTitle.setText("预约服务");
+        rgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.rb_nvshi){
+                    userSex=1;
+                }
+                else{
+                    userSex=0;
+                }
+            }
+        });
     }
 
     @Override
@@ -100,11 +140,12 @@ public class CreateBespeakActivity extends BaseActivity {
             UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
             input.merchantId = merchantId;
             input.saleUserId = serviceId;
-            input.reservationTime = ordertime;
+            input.reservationTime = ordertime+":00";
             input.num = orderpeople;
             input.userName = ordername;
             input.userPhone = orderphone;
             input.note = note;
+            input.userSex = userSex;
             input.userId = SlashHelper.userManager().getUserId();
             input.convertJosn();
 
@@ -115,11 +156,31 @@ public class CreateBespeakActivity extends BaseActivity {
                 }
                 @Override
                 public void onResponse(Object response) {
-                    int status = ((APIM_TaskIndustryInfo) response).status;
-                    if (status == 1) {
+                    if (((CommonResult) response).status==1) {
+                        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+                        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("customizeMessageType", "Task");
+                            object.put("tasktype", "ORDER");
+                            object.put("taskTitle", "[预约-待确认] 预约时间:"+ordertime+"预约地址:"+shopname);
+                            object.put("serviceId", serviceId);
+                            object.put("reservationId",((CommonResult) response).reservationId);
+                        } catch (JSONException e) {
+
+                        }
+                        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+                        messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                        YWIMKit  imKit= LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(serviceId+"", imKit.getIMCore().getAppKey());
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        ,message,forwardCallBack);
+                        startActivity(imKit.getChattingActivityIntent(serviceId+""));
                         finish();
                     } else {
-                        ToastUtil.showMessage(((APIM_TaskIndustryInfo) response).info);
+                        ToastUtil.showMessage(((CommonResult) response).info);
                     }
                 }
             });
@@ -128,6 +189,50 @@ public class CreateBespeakActivity extends BaseActivity {
         }
     }
 
+
+    private void initTags( M_Merchant entity) {
+        fnMyService.setChildMargin(0, 24, 24, 0);
+        fnMyService.removeAllViews();
+        if (!StringUtils.isBlank(entity.tags)) {
+            List<String> tagList = new ArrayList<String>(Arrays.asList(entity.tags.split(",")));
+            int iShowSize = tagList.size();
+            if (iShowSize > 0) {
+                fnMyService.setVisibility(View.VISIBLE);
+
+                RadioButton rbTitle = new RadioButton(this);
+                rbTitle.setTextSize(15);
+                rbTitle.setGravity(Gravity.CENTER_VERTICAL);
+                rbTitle.setPadding(0, 0, 8, 0);
+                rbTitle.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
+                rbTitle.setTextColor(0xff282828);
+//                rbTitle.setText("TA的服务");
+                fnMyService.addView(rbTitle);
+
+                for (int i = 0; i < iShowSize; i++) {
+                    GradientDrawable drawable = new GradientDrawable();
+                    drawable = new GradientDrawable();
+                    drawable.setShape(GradientDrawable.RECTANGLE); // 画框
+                    drawable.setCornerRadii(new float[]{50,
+                            50, 50, 50, 50, 50, 50, 50});
+                    drawable.setColor(0xffe8e8e8);  // 边框内部颜色
+                    RadioButton rbTag = new RadioButton(this);
+                    rbTag.setBackgroundDrawable(drawable); // 设置背景（效果就是有边框及底色）
+                    rbTag.setTextSize(12);
+                    rbTitle.setGravity(Gravity.CENTER_VERTICAL);
+                    rbTag.setPadding(22, 8, 22, 8);
+                    rbTag.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    rbTag.setTextColor(0xff464646);
+                    rbTag.setText(tagList.get(i).toString());
+
+                    fnMyService.addView(rbTag);
+
+                }
+            } else {
+                fnMyService.setVisibility(View.GONE);
+            }
+        }
+
+    }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit,R.id.rl_ordershopname,R.id.rl_ordertime})
     public void onClick(View view) {
@@ -143,9 +248,16 @@ public class CreateBespeakActivity extends BaseActivity {
                 ordertime=  bespekTime.getText().toString();
                 pmnvSelectDeadline.getText().toString();
                 note=etBespeak.getText().toString();
+                ordername=etCustomername.getText().toString();
+                orderphone=etCustomerphone.getText().toString();
                 if(StringUtils.isEmpty(shopname)){
                     return;
                 }
+                if(StringUtils.isEmpty(orderpeople)){
+                    ToastUtil.showMessage("请选择预约人数");
+                    return;
+                }
+
                 if(StringUtils.isEmpty(ordertime)){
                     ToastUtil.showMessage("请选择预约时间");
                     return;
@@ -163,28 +275,6 @@ public class CreateBespeakActivity extends BaseActivity {
                     return;
                 }
 
-                YWCustomMessageBody messageBody = new YWCustomMessageBody();
-                //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("customizeMessageType", "Task");
-                    object.put("userHead", shophead);
-                    object.put("taskTitle", "[预约-待确认] 预约时间:"+ordertime+"预约地址:"+shopname);
-                    object.put("serviceId", serviceId);
-                } catch (JSONException e) {
-
-                }
-
-                messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-                messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
-                YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-                YWIMKit  imKit= LoginSampleHelper.getInstance().getIMKit();
-                IYWContact appContact = YWContactFactory.createAPPContact(serviceId+"", imKit.getIMCore().getAppKey());
-
-                imKit.getConversationService()
-                        .forwardMsgToContact(appContact
-                                ,message,forwardCallBack);
-                startActivity(imKit.getChattingActivityIntent(serviceId+""));
                 user_reservation_add();
 
                 break;
@@ -201,6 +291,8 @@ public class CreateBespeakActivity extends BaseActivity {
 
         }
     }
+
+
 
     final IWxCallback forwardCallBack = new IWxCallback() {
 

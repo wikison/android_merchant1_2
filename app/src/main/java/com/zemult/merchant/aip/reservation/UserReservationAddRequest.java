@@ -24,9 +24,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
         public String userName;	//			是	联系人名称
         public String userPhone;//				是	联系人电话
         public String note;		//		否	备注
-
-
-
+        public int userSex;//联系人性别((0男,1女))
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
@@ -34,6 +32,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
                     new Pair<String, String>("merchantId", merchantId+""),
                     new Pair<String, String>("saleUserId", saleUserId+""),
                     new Pair<String, String>("reservationTime", reservationTime),
+                    new Pair<String, String>("userSex", userSex+""),
                     new Pair<String, String>("num", num+""),
                     new Pair<String, String>("userName", userName),
                     new Pair<String, String>("userPhone", userPhone),
