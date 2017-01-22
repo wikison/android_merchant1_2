@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2dp"
-                    android:text="找人"
+                    android:text="约服"
                     android:textColor="#98999b"
                     android:textSize="10sp" />
             </LinearLayout>
