@@ -13,10 +13,14 @@ import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.Convert;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by Wikison on 2016/12/28.
@@ -24,6 +28,12 @@ import butterknife.ButterKnife;
 
 public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
     Context mContext;
+    Map<Integer, String> groupList;
+
+    private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
+    private List<M_Merchant> merchantCanList = new ArrayList<M_Merchant>();
+    private List<M_Merchant> merchantCannotList = new ArrayList<M_Merchant>();
+    Map<Integer, String> groupIndex = new HashMap<Integer, String>();
 
     public TaMerchantChooseAdapter(Context context, List<M_Merchant> list) {
         super(context, list);
@@ -35,8 +45,21 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
         if (!isLoadMore) {
             clearAll();
         }
-        addALL(list);
 
+        for (M_Merchant m : list) {
+            if (m.reviewstatus == 2) {
+                merchantCanList.add(m);
+            } else {
+                merchantCannotList.add(m);
+            }
+        }
+        groupIndex.put(0, "已支持买单的商户");
+        groupIndex.put(merchantCanList.size(), "暂不支持买单的的商户");
+
+        merchantList.addAll(merchantCanList);
+        merchantList.addAll(merchantCannotList);
+
+        addALL(merchantList);
         notifyDataSetChanged();
     }
 
@@ -51,7 +74,7 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
             holder = new ViewHolder(convertView);
             convertView.setTag(R.string.app_name, holder);
         }
-        initData(holder, entity);
+        initData(holder, entity, position);
         initListener(holder, position);
         return convertView;
     }
@@ -72,16 +95,23 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
      * @param holder
      * @param m
      */
-    private void initData(ViewHolder holder, M_Merchant m) {
+    private void initData(ViewHolder holder, M_Merchant m, int position) {
         holder.tvTitle.setText(m.name);
         if (m.reviewstatus == 2) {
             holder.rtvStatus.setVisibility(View.VISIBLE);
         } else {
             holder.rtvStatus.setVisibility(View.GONE);
         }
-        holder.tvPerPrice.setText(Convert.getMoneyString(m.perMoney));
-        holder.tvDistance.setText(m.distance);
-        holder.tvAddress.setText(m.address);
+
+        holder.tvPerPrice.setText("人均" + Convert.getMoneyString(m.perMoney));
+        if (!StringUtils.isEmpty(m.distance)) {
+            if (m.distance.length() > 3) {
+                double d = Double.valueOf(m.distance);
+                holder.tvDistance.setText(d / 1000 + "km");
+            } else
+                holder.tvDistance.setText(m.distance + "m");
+        }
+        holder.tvAddress.setText("地址:" + m.address);
     }
 
     /**
@@ -98,6 +128,10 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     static class ViewHolder {
+        @Bind(R.id.tv_head_title)
+        TextView tvHeadTitle;
+        @Bind(R.id.ll_head)
+        LinearLayout llHead;
         @Bind(R.id.tv_title)
         TextView tvTitle;
         @Bind(R.id.rtv_status)

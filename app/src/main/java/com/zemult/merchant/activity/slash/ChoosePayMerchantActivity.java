@@ -2,10 +2,11 @@ package com.zemult.merchant.activity.slash;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -18,13 +19,14 @@ import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.view.BounceScrollView;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -50,21 +52,16 @@ public class ChoosePayMerchantActivity extends BaseActivity {
     Button lhBtnRight;
     @Bind(R.id.lh_btn_rightiamge)
     Button lhBtnRightiamge;
-    @Bind(R.id.flv_can)
-    FixedListView flvCan;
-    @Bind(R.id.flv_cannot)
-    FixedListView flvCannot;
-    @Bind(R.id.bsv_container)
-    BounceScrollView bsvContainer;
-
-    private List<M_Merchant> merchantCanList = new ArrayList<M_Merchant>();
-    private List<M_Merchant> merchantCannotList = new ArrayList<M_Merchant>();
+    @Bind(R.id.flv)
+    FixedListView flv;
 
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
-    TaMerchantChooseAdapter adapterCan, adapterCannot;
+    TaMerchantChooseAdapter adapter;
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
+
+    List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
 
     @Override
     public void setContentView() {
@@ -76,10 +73,21 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         initData();
         initView();
         initListener();
+        showPd();
         getOtherMerchantList();
     }
 
     private void initListener() {
+        adapter.setOnAllClickListener(new TaMerchantChooseAdapter.OnAllClickListener() {
+            @Override
+            public void onAllClick(int position) {
+                if(adapter.getItem(position).reviewstatus==2){
+
+                }else {
+                    ToastUtil.showMessage("该商户暂不支持买单");
+                }
+            }
+        });
 
     }
 
@@ -92,11 +100,8 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
 
-        adapterCan = new TaMerchantChooseAdapter(mContext, merchantCanList);
-        adapterCannot = new TaMerchantChooseAdapter(mContext, merchantCannotList);
-
-        flvCan.setAdapter(adapterCan);
-        flvCannot.setAdapter(adapterCannot);
+        adapter = new TaMerchantChooseAdapter(mContext, merchantList);
+        flv.setAdapter(adapter);
     }
 
     /**
@@ -122,8 +127,8 @@ public class ChoosePayMerchantActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    initList(((APIM_MerchantList) response).merchantList);
-
+                    merchantList = ((APIM_MerchantList) response).merchantList;
+                    fillAdapter(merchantList, false);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
                 }
@@ -133,34 +138,24 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         sendJsonRequest(merchantOtherMerchantListRequest);
     }
 
-    private void initList(List<M_Merchant> list) {
-        if (list == null || list.size() == 0)
-            return;
-
-        for (M_Merchant m : list) {
-            if (m.reviewstatus == 2) {
-                merchantCanList.add(m);
-            } else {
-                merchantCannotList.add(m);
-            }
+    // 填充数据
+    private void fillAdapter(List<M_Merchant> list, boolean isLoadMore) {
+        if (list == null || list.size() == 0) {
+        } else {
+            adapter.setData(list, isLoadMore);
         }
-
-        fillAdapter(false);
 
     }
 
-    // 填充数据
-    private void fillAdapter(boolean isLoadMore) {
-        adapterCan.setData(merchantCanList, isLoadMore);
-        adapterCannot.setData(merchantCannotList, isLoadMore);
-
-        bsvContainer.post(new Runnable() {
-            @Override
-            public void run() {
-
-                bsvContainer.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
+    @OnClick({R.id.lh_btn_back, R.id.ll_back})
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.lh_btn_back:
+            case R.id.ll_back:
+                onBackPressed();
+                break;
+        }
     }
 
 }

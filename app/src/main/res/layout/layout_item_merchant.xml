@@ -3,9 +3,26 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/ripple_item_clicked2"
+              android:background="@drawable/ripple_item_clicked"
               android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/ll_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/bg_f2"
+        android:padding="@dimen/margin_16dp">
+
+        <TextView
+            android:id="@+id/tv_head_title"
+            style="@style/text_15_black_28"
+            android:text="支持买单的商户"/>
+
+        <View
+            style="@style/divider_1px"/>
+    </LinearLayout>
 
     <com.flyco.roundview.RoundLinearLayout
         android:id="@+id/ll_root"

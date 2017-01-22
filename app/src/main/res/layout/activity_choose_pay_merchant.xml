@@ -6,74 +6,20 @@
 
     <include layout="@layout/layout_head"/>
 
-    <com.zemult.merchant.view.BounceScrollView
-        android:id="@+id/bsv_container"
+
+    <com.zemult.merchant.view.FixedListView
+        android:id="@+id/flv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:divider="@color/bg_f2"
+        android:dividerHeight="@dimen/margin_12dp"
+        android:footerDividersEnabled="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    </com.zemult.merchant.view.FixedListView>
+    '
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/margin_16dp">
-
-                    <TextView
-                        style="@style/text_15_black_28"
-                        android:text="已支持买单的商户"/>
-
-                    <View
-                        style="@style/divider_1px"/>
-                </LinearLayout>
-
-                <com.zemult.merchant.view.FixedListView
-                    android:id="@+id/flv_can"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </com.zemult.merchant.view.FixedListView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_16dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/margin_16dp">
-
-                    <TextView
-                        style="@style/text_15_black_28"
-                        android:text="暂不支持买单的商户"/>
-
-                    <View
-                        style="@style/divider_1px"/>
-                </LinearLayout>
-
-                <com.zemult.merchant.view.FixedListView
-                    android:id="@+id/flv_cannot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </com.zemult.merchant.view.FixedListView>
-            </LinearLayout>
-        </LinearLayout>
-    </com.zemult.merchant.view.BounceScrollView>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_12dp"
+        android:background="@color/bg_f2"/>
 </LinearLayout>
