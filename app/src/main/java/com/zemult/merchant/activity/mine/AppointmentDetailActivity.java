@@ -156,8 +156,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                         new ShareAction(AppointmentDetailActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText( mReservation.merchantName+"预约成功")
-                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId="+ reservationId)
+                                .withText(mReservation.merchantName + "预约成功")
+                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId=" + reservationId)
                                 .withMedia(shareImage).withTitle("预约服务")
                                 .share();
                         break;
@@ -165,8 +165,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                         new ShareAction(AppointmentDetailActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText( mReservation.merchantName+"预约成功")
-                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId="+ reservationId)
+                                .withText(mReservation.merchantName + "预约成功")
+                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId=" + reservationId)
                                 .withMedia(shareImage).withTitle("预约服务")
                                 .share();
                         break;
@@ -199,15 +199,12 @@ public class AppointmentDetailActivity extends BaseActivity {
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
                         appresultTv.setText("暂无");
-                        if(type==1){//客户
+                        if (type == 1) {//客户
                             yuyueresultRl.setVisibility(View.VISIBLE);
-                        }
-                       else if(type==0){//管家
+                        } else if (type == 0) {//管家
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
                         }
-                    }
-
-                   else if (mReservation.state == 1) {
+                    } else if (mReservation.state == 1) {
 
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约结束)
                         tvState.setText("预约成功");
@@ -244,12 +241,16 @@ public class AppointmentDetailActivity extends BaseActivity {
 
                     if (type == 0) {
                         //服务管家的头像和姓名
-                        imageManager.loadCircleImage(mReservation.saleUserHead, headIv);
+                        if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
+                            imageManager.loadCircleImage(mReservation.saleUserHead, headIv);
+                        }
                         nameTv.setText(mReservation.saleUserName);
                     } else if (type == 1) {
                         //客户的头像和姓名
-                        imageManager.loadCircleImage(mReservation.head, headIv);
-                        nameTv.setText(mReservation.name);
+                        if (!TextUtils.isEmpty(mReservation.head)) {
+                            imageManager.loadCircleImage(mReservation.head, headIv);
+                            nameTv.setText(mReservation.name);
+                        }
                     }
                 } else {
                     ToastUtils.show(AppointmentDetailActivity.this, ((M_Reservation) response).info);
@@ -261,7 +262,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     }
 
 
-//约客修改预约单(答复)
+    //约客修改预约单(答复)
     private void user_reservation_edit() {
 
         try {
@@ -279,9 +280,10 @@ public class AppointmentDetailActivity extends BaseActivity {
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
                 }
+
                 @Override
                 public void onResponse(Object response) {
-                    if (((CommonResult) response).status==1) {
+                    if (((CommonResult) response).status == 1) {
 
                         YWCustomMessageBody messageBody = new YWCustomMessageBody();
                         //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
@@ -289,20 +291,20 @@ public class AppointmentDetailActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[预约-已确认] 预约时间:"+mReservation.reservationTime+"预约地址:"+mReservation.merchantName);
+                            object.put("taskTitle", "[预约-已确认] 预约时间:" + mReservation.reservationTime + "预约地址:" + mReservation.merchantName);
                             object.put("serviceId", mReservation.saleUserId);
-                            object.put("reservationId",reservationId);
+                            object.put("reservationId", reservationId);
                         } catch (JSONException e) {
 
                         }
                         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
                         messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-                        YWIMKit  imKit= LoginSampleHelper.getInstance().getIMKit();
-                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.userId+"", imKit.getIMCore().getAppKey());
+                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.userId + "", imKit.getIMCore().getAppKey());
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
-                                        ,message,forwardCallBack);
+                                        , message, forwardCallBack);
 //                        startActivity(imKit.getChattingActivityIntent(mReservation.saleUserId+""));
                         finish();
 
@@ -321,12 +323,12 @@ public class AppointmentDetailActivity extends BaseActivity {
 
         @Override
         public void onSuccess(Object... result) {
-            Notification.showToastMsg(AppointmentDetailActivity.this,"forward succeed!");
+            Notification.showToastMsg(AppointmentDetailActivity.this, "forward succeed!");
         }
 
         @Override
         public void onError(int code, String info) {
-            Notification.showToastMsg(AppointmentDetailActivity.this,"forward fail!");
+            Notification.showToastMsg(AppointmentDetailActivity.this, "forward fail!");
 
         }
 
@@ -336,7 +338,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn,R.id.btn_service})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_service})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -374,9 +376,9 @@ public class AppointmentDetailActivity extends BaseActivity {
 
                 break;
             case R.id.btn_service:
-                replayNote=appresultcommitEt.getText().toString();
-                if(StringUtils.isEmpty(replayNote)){
-                  ToastUtil.showMessage("请输入反馈信息");
+                replayNote = appresultcommitEt.getText().toString();
+                if (StringUtils.isEmpty(replayNote)) {
+                    ToastUtil.showMessage("请输入反馈信息");
                     return;
                 }
                 user_reservation_edit();
