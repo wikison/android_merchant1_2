@@ -556,7 +556,6 @@
         <activity android:name=".activity.mine.TabManageActivity" />
         <activity android:name=".activity.mine.CustomManageActivity" />
         <activity android:name=".im.CreateBespeakActivity" />
-        <activity android:name=".im.ModifyBespeakActivity" />
         <activity android:name=".activity.mine.MerchantEnter2Activity" />
         <activity android:name=".alipay.taskpay.AssessmentActivity" />
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity" />
@@ -569,6 +568,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity android:name=".activity.mine.GiftAboutDetailActivity"></activity>
+        <activity android:name=".activity.slash.ChooseReservationMerchantActivity"/>
     </application>
 
 </manifest>
