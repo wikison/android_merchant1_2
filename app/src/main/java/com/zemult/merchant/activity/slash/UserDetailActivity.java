@@ -26,7 +26,6 @@ import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
@@ -291,18 +290,21 @@ public class UserDetailActivity extends BaseActivity {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getResources().getColor(R.color.font_idle));
+                tvBuyNum.setText("空闲");
                 break;
             case 1:
                 drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getResources().getColor(R.color.font_black_999));
+                tvBuyNum.setText("休息");
                 break;
             case 2:
                 drawable = getResources().getDrawable(R.mipmap.manglu_icon);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 tvBuyNum.setCompoundDrawables(drawable, null, null, null);
                 tvBuyNum.setTextColor(getResources().getColor(R.color.font_busy));
+                tvBuyNum.setText("忙碌");
                 break;
         }
 
@@ -471,6 +473,7 @@ public class UserDetailActivity extends BaseActivity {
                 break;
             case R.id.btn_gift:
                 intent = new Intent(mContext, SendPresentActivity.class);
+                intent.putExtra(USER_ID, userId);
                 startActivity(intent);
                 break;
 

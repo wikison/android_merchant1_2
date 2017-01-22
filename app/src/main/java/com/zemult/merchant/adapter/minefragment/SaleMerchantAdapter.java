@@ -4,13 +4,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hedgehog.ratingbar.RatingBar;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
@@ -83,26 +87,47 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
         mDatas = getData();
         final M_Merchant m = mDatas.get(position);
 
-        holder.tvName.setText(m.name);
+        // 商家封面
+        if (!TextUtils.isEmpty(m.head))
+            mImageManager.loadUrlImage(m.head, holder.ivCover, "@320h");
+        else
+            holder.ivCover.setImageResource(R.mipmap.user_icon);
+        // 商家名称
+        if (!TextUtils.isEmpty(m.name))
+            holder.tvName.setText(m.name);
+        // 人均消费
+        holder.tvMoney.setText("人均￥" + Convert.getMoneyString(m.perMoney));
+        // 距中心点距离(米)
+        if (!StringUtils.isEmpty(m.distance)) {
+            if (m.distance.length() > 3) {
+                double d = Double.valueOf(m.distance);
+                holder.tvDistance.setText(d / 1000 + "km");
+            } else
+                holder.tvDistance.setText(m.distance + "m");
+        }
+
+        if (m.commentNumber != 0) {
+            holder.rb5.setStar(m.comment / m.commentNumber);
+        } else {
+            holder.rb5.setStar(0);
+        }
+        holder.tvComment.setText(m.commentNumber + "人评价");
+        holder.tvService.setText("约服人次: " + m.saleNum);
         holder.tvSaleUserMoney.setText(String.format("%s", Convert.getMoneyString(m.saleMoney)));
         holder.tvSaleNum.setText(String.format("共计%s笔交易", m.saleNum));
         if (m.reviewstatus != 2) {
-            holder.tvQr.setVisibility(View.INVISIBLE);
-            holder.tvShare.setVisibility(View.GONE);
-            holder.vDivider.setVisibility(View.INVISIBLE);
-            //holder.rlQrShare.setVisibility(View.INVISIBLE);
+            holder.rlQrShare.setVisibility(View.GONE);
+            holder.llNoAdd.setVisibility(View.VISIBLE);
         } else {
-            holder.tvQr.setVisibility(View.VISIBLE);
-            holder.tvShare.setVisibility(View.VISIBLE);
-            holder.vDivider.setVisibility(View.VISIBLE);
-            //holder.rlQrShare.setVisibility(View.VISIBLE);
+            holder.rlQrShare.setVisibility(View.VISIBLE);
+            holder.llNoAdd.setVisibility(View.GONE);
         }
         initTags(holder, m);
         initListener(holder, m);
         return convertView;
     }
 
-    private void initTags(SaleMerchantAdapter.ViewHolder holder, M_Merchant m) {
+    private void initTags(ViewHolder holder, M_Merchant m) {
         holder.fnMyService.setChildMargin(0, 0, 24, 0);
         holder.fnMyService.removeAllViews();
         if (!StringUtils.isBlank(m.tags)) {
@@ -218,8 +243,20 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     static class ViewHolder {
+        @Bind(R.id.iv_cover)
+        ImageView ivCover;
         @Bind(R.id.tv_name)
         TextView tvName;
+        @Bind(R.id.tv_money)
+        TextView tvMoney;
+        @Bind(R.id.tv_distance)
+        TextView tvDistance;
+        @Bind(R.id.rb_5)
+        RatingBar rb5;
+        @Bind(R.id.tv_comment)
+        TextView tvComment;
+        @Bind(R.id.tv_service)
+        TextView tvService;
         @Bind(R.id.tv_my_service)
         TextView tvMyService;
         @Bind(R.id.fn_my_service)
@@ -240,10 +277,12 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
         View vDivider;
         @Bind(R.id.rl_qr_share)
         RelativeLayout rlQrShare;
+        @Bind(R.id.ll_no_add)
+        LinearLayout llNoAdd;
         @Bind(R.id.tv_delete)
         TextView tvDelete;
-        @Bind(R.id.ll_root_view)
-        LinearLayout llRootView;
+        @Bind(R.id.card_view)
+        CardView cardView;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

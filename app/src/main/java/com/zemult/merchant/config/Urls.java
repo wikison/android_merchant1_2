@@ -523,8 +523,13 @@ public class Urls {
     public static String USER_PRESENT_LIST="user_present_list";
     //用户兑换礼物
     public static String USER_PRESENT_EXCHANGE="user_present_exchange";
+    //用户赠送礼物-生成支付单
+    public static String USER_PRESENT_PAY_ADD="user_present_pay_add";
+
     //获取系统的礼物列表
     public static String COMMON_SYSPRESENTLIST="common_syspresentList";
+    //获取用户挂靠的商家列表(服务管家)
+    public static String USER_SALE_MERCHANTLIST_1_2="user_sale_merchantList_1_2";
 
     //修改用户状态(服务管家状态)
     public static String USER_EDITSTATE="user_editstate";

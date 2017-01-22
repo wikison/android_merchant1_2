@@ -157,7 +157,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
         holder.tvComment.setText(entity.commentNumber + "人评价");
         holder.tvService.setText("约服人次: " + entity.saleNum);
         if (!StringUtils.isBlank(entity.createTime)) {
-            holder.tvAddTime.setText("于" + entity.createTime.substring(0, 12) + "加入");
+            holder.tvAddTime.setText("于" + entity.createTime.substring(0, 10) + "加入");
         } else {
 
         }

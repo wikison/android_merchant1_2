@@ -127,7 +127,7 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
         }
 
 
-        holder.tvPerPrice.setText("人均" + Convert.getMoneyString(m.perMoney));
+        holder.tvPerPrice.setText("人均 " + Convert.getMoneyString(m.perMoney));
         if (!StringUtils.isEmpty(m.distance)) {
             if (m.distance.length() > 3) {
                 double d = Double.valueOf(m.distance);
@@ -135,7 +135,7 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
             } else
                 holder.tvDistance.setText(m.distance + "m");
         }
-        holder.tvAddress.setText("地址:" + m.address);
+        holder.tvAddress.setText("地址: " + m.address);
     }
 
     /**

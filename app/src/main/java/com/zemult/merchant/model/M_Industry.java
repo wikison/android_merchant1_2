@@ -46,6 +46,9 @@ public class M_Industry implements Serializable{
     @Expose
     public List<M_Industry> industryList			;	//	行业列表
 
+    @Expose
+    public List<M_Merchant> merchantList            ;	//	商家列表
+
     private boolean showAll = false;
     public boolean isShowAll() {
         return showAll;
