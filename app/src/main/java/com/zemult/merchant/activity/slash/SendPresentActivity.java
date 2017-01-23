@@ -190,7 +190,7 @@ public class SendPresentActivity extends BaseActivity {
                         intent.putExtra("consumeMoney", money);
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
-                        intent.putExtra("merchantName", "购买礼物" + m_present.name);
+                        intent.putExtra("merchantName", "购买礼物-" + m_present.name);
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");
                         intent.putExtra("managername", "");

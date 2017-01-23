@@ -13,8 +13,8 @@
         android:id="@+id/bsv_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/bg_f2"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/bg_f2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +66,12 @@
             <com.zemult.merchant.view.FixedListView
                 android:id="@+id/flv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:divider="@color/bg_f2"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:dividerHeight="@dimen/margin_12dp"
+                android:footerDividersEnabled="true"
+                android:headerDividersEnabled="true">
 
             </com.zemult.merchant.view.FixedListView>
         </LinearLayout>

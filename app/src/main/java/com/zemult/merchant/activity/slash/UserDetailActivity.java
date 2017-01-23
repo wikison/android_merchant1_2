@@ -476,6 +476,7 @@ public class UserDetailActivity extends BaseActivity {
                 intent = new Intent(mContext, SendPresentActivity.class);
                 intent.putExtra(USER_ID, userId);
                 intent.putExtra(USER_NAME, userName);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 break;
 
