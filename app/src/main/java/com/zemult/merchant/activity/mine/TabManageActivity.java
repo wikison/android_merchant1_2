@@ -163,7 +163,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     userChannelList.add(new IndusPreferItem(0, res[j], j + 1, 0));//数组越界
                 }
             }
-
         }
 
 

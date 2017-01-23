@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.city.adapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,11 +10,13 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.yanzhenjie.permission.AndPermission;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.entity.LocateState;
 import com.zemult.merchant.activity.city.utils.PinyinUtils;
 import com.zemult.merchant.activity.city.view.WrapHeightGridView;
+import com.zemult.merchant.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,10 +132,15 @@ public class CityListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View v) {
                         if (locateState == LocateState.FAILED) {
-                            //重新定位
-                            if (onCityClickListener != null) {
-                                onCityClickListener.onLocateClick();
+                            if (AndPermission.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                                //重新定位
+                                if (onCityClickListener != null) {
+                                    onCityClickListener.onLocateClick();
+                                }
+                            } else {
+                                ToastUtil.showMessage("请去设置定位权限");
                             }
+
                         } else if (locateState == LocateState.SUCCESS) {
                             //返回定位城市
                             if (onCityClickListener != null) {

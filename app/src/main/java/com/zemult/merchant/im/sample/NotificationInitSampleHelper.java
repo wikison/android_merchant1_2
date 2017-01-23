@@ -152,7 +152,7 @@ public class NotificationInitSampleHelper extends IMNotification {
      */
     @Override
     public String getAppName() {
-        return "斜杠消息";
+        return "约服消息";
     }
 
     /**

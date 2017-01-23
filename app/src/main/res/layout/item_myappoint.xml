@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <View
+        android:id="@+id/v1"
        style="@style/divider12dp"></View>
 
     <RelativeLayout

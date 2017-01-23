@@ -1,7 +1,6 @@
 package com.zemult.merchant.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,17 +11,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserRegisterRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.apimodel.APIM_UserLogin;
+import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.util.UserManager;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.DigestUtils;
 import cn.trinea.android.common.util.StringUtils;
@@ -38,8 +45,9 @@ public class PasswordActivity extends BaseActivity {
     RelativeLayout relativeLayoutHead;
     Button btnBack;
     TextView tvTitle;
+    private LoginSampleHelper loginHelper;
 
-    String strPhone, strPwd, strPwd2,name;
+    String strPhone, strPwd, strPwd2, name;
     UserRegisterRequest userRegisterRequest;
     UserLoginRequest userLoginRequest;
     @Bind(R.id.lh_btn_back)
@@ -77,7 +85,7 @@ public class PasswordActivity extends BaseActivity {
                         && etNickname.getText().toString().length() > 0
                         ) {
                     btnRegist.setEnabled(true);
-                    btnRegist.setBackgroundResource(R.drawable.commit);
+                    btnRegist.setBackgroundResource(R.drawable.common_selector_btn);
                 }
 
             } else {
@@ -103,7 +111,7 @@ public class PasswordActivity extends BaseActivity {
         Intent intent = getIntent();
         strPhone = intent.getStringExtra("RegisterPhone");
         etPhone.setText(strPhone);
-
+        loginHelper = LoginSampleHelper.getInstance();
         initViews();
     }
 
@@ -131,7 +139,7 @@ public class PasswordActivity extends BaseActivity {
     public void onBtnRegisterClick(View v) {
         strPwd = etPwd.getText().toString();
         strPwd2 = etPwdAgain.getText().toString();
-        name =etNickname.getText().toString();
+        name = etNickname.getText().toString();
 
         if (!StringUtils.isEquals(strPwd, strPwd2)) {
             etPwdAgain.setError("密码不同, 请重新设置");
@@ -140,7 +148,8 @@ public class PasswordActivity extends BaseActivity {
                 etPwdAgain.setError("密码长度设置不正确");
             } else if (StringMatchUtils.isAllNum(strPwd)) {
                 etPwdAgain.setError("密码不能全为数字");
-            }  {
+            }
+            {
                 userRegister();
             }
 
@@ -157,7 +166,7 @@ public class PasswordActivity extends BaseActivity {
             UserRegisterRequest.Input input = new UserRegisterRequest.Input();
             input.phone = strPhone;
             input.password = DigestUtils.md5(strPwd).toUpperCase();
-            input.name=name;
+            input.name = name;
             input.convertJosn();
 
             userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {
@@ -172,10 +181,7 @@ public class PasswordActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-//                        getUserLoginRequest();
-                        setResult(RESULT_OK);
-                        ToastUtil.showMessage("注册成功");
-                        finish();
+                        getUserLoginRequest();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -191,38 +197,67 @@ public class PasswordActivity extends BaseActivity {
 
 
     //用户登录
-//    private void getUserLoginRequest() {
-//        loadingDialog.show();
-//        if (userLoginRequest != null) {
-//            userLoginRequest.cancel();
-//        }
-//        UserLoginRequest.Input input = new UserLoginRequest.Input();
-//        input.account = strPhone;
-//        input.password = DigestUtils.md5(strPwd).toUpperCase();
-//        input.device_token = SlashHelper.deviceManager().getUmengDeviceToken();
-//        input.convertJosn();
-//
-//        userLoginRequest = new UserLoginRequest(input, new ResponseListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                loadingDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onResponse(Object response) {
-//                loadingDialog.dismiss();
-//                if (((APIM_UserLogin) response).status == 1) {
-//                    UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
-//                    setResult(RESULT_OK);
-//                    finish();
-//                } else {
-//                    ToastUtil.showMessage(((APIM_UserLogin) response).info);
-//                }
-//
-//            }
-//        });
-//        sendJsonRequest(userLoginRequest);
-//    }
+    private void getUserLoginRequest() {
+        loadingDialog.show();
+        if (userLoginRequest != null) {
+            userLoginRequest.cancel();
+        }
+        UserLoginRequest.Input input = new UserLoginRequest.Input();
+        input.account = strPhone;
+        input.password = DigestUtils.md5(strPwd).toUpperCase();
+        input.device_token = SlashHelper.deviceManager().getUmengDeviceToken();
+        input.convertJosn();
+
+        userLoginRequest = new UserLoginRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((APIM_UserLogin) response).status == 1) {
+                    AppUtils.initIm(((APIM_UserLogin) response).userInfo.getUserId() + "", LoginSampleHelper.APP_KEY);
+                    loginHelper.login_Sample(((APIM_UserLogin) response).userInfo.getUserId() + "", DigestUtils.md5(strPwd).toUpperCase(), LoginSampleHelper.APP_KEY, new IWxCallback() {
+                        @Override
+                        public void onSuccess(Object... arg0) {
+                            loadingDialog.dismiss();
+                            ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(strPwd).toUpperCase());
+                            UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
+                            SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
+                            setResult(RESULT_OK);
+                            ToastUtil.showMessage("注册成功");
+                            Intent intent = new Intent(Constants.BROCAST_LOGIN);
+                            sendBroadcast(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onProgress(int arg0) {
+
+                        }
+
+                        @Override
+                        public void onError(int errorCode, String errorMessage) {
+                            loadingDialog.dismiss();
+                            if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
+                                Notification.showToastMsg(PasswordActivity.this, "用户不存在");
+                            } else {
+                                Notification.showToastMsg(PasswordActivity.this, errorMessage);
+                            }
+                        }
+                    });
+//                        }
+
+                } else {
+                    loadingDialog.dismiss();
+                    ToastUtil.showMessage(((APIM_UserLogin) response).info);
+                }
+
+            }
+        });
+        sendJsonRequest(userLoginRequest);
+    }
 
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
@@ -235,12 +270,5 @@ public class PasswordActivity extends BaseActivity {
                 onBackPressed();
                 break;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

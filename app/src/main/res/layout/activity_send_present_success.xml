@@ -6,6 +6,15 @@
 
     <include layout="@layout/layout_head"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,8 +25,9 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/text_18_black_28"
-            android:layout_marginTop="@dimen/j80dp"
-            android:text=""/>
+            android:layout_marginTop="@dimen/j40dp"
+            android:padding="20dp"
+            android:text="----"/>
 
         <ImageView
             android:id="@+id/iv_present"
@@ -28,12 +38,44 @@
         <TextView
             android:id="@+id/tv_name"
             style="@style/text_18_black_28"
-            android:layout_marginTop="@dimen/j80dp"
-            android:text=""
+            android:layout_marginTop="@dimen/j40dp"
+            android:text="----"
             android:textColor="@color/font_main"/>
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/ll_tks"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:background="@color/white"
+            android:layout_margin="30dp"
+            android:padding="10dp"
+            android:text="谢谢土豪~祝你身体棒棒哒，事业顺顺哒~礼物已收到，么么哒~"
+            style="@style/text_15_black_28"
+            android:id="@+id/et_tks"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_tks"
+            style="@style/common_btn_235"
+            android:layout_marginBottom="@dimen/j15dp"
+            android:text="感谢TA"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:id="@+id/ll_comf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -45,6 +87,6 @@
             android:layout_marginBottom="@dimen/j15dp"
             android:text="@string/confirm"/>
     </LinearLayout>
-
-
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

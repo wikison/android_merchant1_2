@@ -240,7 +240,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             clearSelection();
             transaction = fragmentManager.beginTransaction();
 
-            slashImage.setImageResource(R.mipmap.tansuo_btn_sel);
+            slashImage.setImageResource(R.mipmap.shouye_icon);
             slashText.setTextColor(getResources().getColor(R.color.sel_color));
             transaction.hide(mineFragment).show(slashFragment).commitAllowingStateLoss();
 

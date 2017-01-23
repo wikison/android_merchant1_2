@@ -14,25 +14,43 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.YWCustomMessageBody;
+import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.mine.PayPasswordManagerActivity;
+import com.zemult.merchant.activity.slash.SendPresentActivity;
+import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.common.CommonSignNumberRequest;
 import com.zemult.merchant.aip.mine.UserMerchantPayRequest;
 import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Present;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.BalancePayAlertView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class ChoosePayTypeActivity extends BaseActivity {
@@ -46,7 +64,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
     CommonSignNumberRequest commonSignNumberRequest;
     double paymoney, truepaymoney;
     String merchantName = "", merchantHead = "",managerhead="",managername="";
-    int payType;
+    int payType,toUserId;
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -74,6 +92,9 @@ public class ChoosePayTypeActivity extends BaseActivity {
     Button pay;
     @Bind(R.id.tv_account_money)
     TextView tvAccountMoney;
+
+    M_Present m_present;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -87,13 +108,19 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
-                        intent.putExtra("managerhead", managerhead);
-                        intent.putExtra("paymoney", paymoney);
-                        intent.putExtra("managername", managername);
-                        intent.putExtra("merchantName", merchantName);
-                        intent.putExtra("userPayId", userPayId);
-                        startActivityForResult(intent, 1000);
+                        if(null!=m_present){
+                            sendPayGiftMsg();
+                        }
+                        else{
+                            Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                            intent.putExtra("managerhead", managerhead);
+                            intent.putExtra("paymoney", paymoney);
+                            intent.putExtra("managername", managername);
+                            intent.putExtra("merchantName", merchantName);
+                            intent.putExtra("userPayId", userPayId);
+                            startActivityForResult(intent, 1000);
+                        }
+
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
                         // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -125,11 +152,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
         paymoney = getIntent().getDoubleExtra("consumeMoney", 0);
         ORDER_SN = getIntent().getStringExtra("order_sn");
         userPayId = getIntent().getIntExtra("userPayId", 0);
+        toUserId= getIntent().getIntExtra("toUserId", 0);
         merchantName = getIntent().getStringExtra("merchantName");
         merchantHead = getIntent().getStringExtra("merchantHead");
         managerhead = getIntent().getStringExtra("managerhead");
         managername= getIntent().getStringExtra("managername");
-
+        m_present = (M_Present) getIntent().getSerializableExtra(SendPresentActivity.PRESENT);
         truepaymoney = paymoney;
 
         tvBuyMoney.setText(" ￥" + Convert.getMoneyString(truepaymoney));
@@ -138,7 +166,13 @@ public class ChoosePayTypeActivity extends BaseActivity {
         lhTvTitle.setText("支付订单");
         tvName.setText(""+merchantName);
         tvNum.setText(ORDER_SN);
-        imageManager.loadCircleImage(merchantHead, ivHead);
+        if(StringUtils.isEmpty(managerhead)){
+            imageManager.loadCircleResImage(R.mipmap.chart_liwu_icon, ivHead);
+        }
+        else{
+            imageManager.loadCircleImage(merchantHead, ivHead);
+        }
+
         if (SlashHelper.userManager().getUserinfo().getMoney() >= truepaymoney) {
             cbAccountpay.setChecked(true);
         } else {
@@ -151,6 +185,61 @@ public class ChoosePayTypeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
     }
+
+    private void  sendPayGiftMsg(){
+        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+        JSONObject object = new JSONObject();
+        try {
+            object.put("customizeMessageType", "Task");
+            object.put("tasktype", "GIFT");
+            object.put("taskTitle", AppUtils.giftDescription(m_present.name));
+            object.put("reservationId", m_present.presentId+"");
+            object.put("giftName", m_present.name);
+            object.put("serviceId", toUserId+"");
+            object.put("userId", SlashHelper.userManager().getUserId()+"");
+            object.put("giftPrice",m_present.price+"");
+        } catch (JSONException e) {
+
+        }
+        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+        messageBody.setSummary("[送礼物]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+        YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+"", imKit.getIMCore().getAppKey());
+        imKit.getConversationService()
+                .forwardMsgToContact(appContact
+                        ,message,forwardCallBack);
+//        startActivity(imKit.getChattingActivityIntent(userPayId+""));
+        Intent intent = new Intent(ChoosePayTypeActivity.this, SendPresentSuccessActivity.class);
+        intent.putExtra("giftName", m_present.name);
+        intent.putExtra("giftPrice", m_present.price+"");
+        startActivity(intent);
+        finish();
+
+
+    }
+
+
+    final IWxCallback forwardCallBack = new IWxCallback() {
+
+        @Override
+        public void onSuccess(Object... result) {
+            Notification.showToastMsg(ChoosePayTypeActivity.this, "forward succeed!");
+        }
+
+        @Override
+        public void onError(int code, String info) {
+            Notification.showToastMsg(ChoosePayTypeActivity.this, "forward fail!");
+
+        }
+
+        @Override
+        public void onProgress(int progress) {
+
+        }
+    };
+
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.cb_accountpay, R.id.cb_zhifubaopay, R.id.pay})
     public void onClick(View view) {
@@ -249,18 +338,23 @@ public class ChoosePayTypeActivity extends BaseActivity {
                             commonSignNumber();
                         } else {
                             Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
-                            intent.putExtra("userPayId", userPayId);
-                            intent.putExtra("payTime", ((CommonResult) response).payTime);
-                            intent.putExtra("paymoney", paymoney);
-                            intent.putExtra("managerhead", managerhead);
-                            intent.putExtra("managername", managername);
-                            intent.putExtra("merchantName", merchantName);
-                            startActivityForResult(intent, 1000);
-                            Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
-                            sendBroadcast(updateintent);
-                            setResult(RESULT_OK);
-                            finish();
+                            if(null!=m_present){
+                                sendPayGiftMsg();
+                            }
+                            else{
+                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                intent.putExtra("userPayId", userPayId);
+                                intent.putExtra("payTime", ((CommonResult) response).payTime);
+                                intent.putExtra("paymoney", paymoney);
+                                intent.putExtra("managerhead", managerhead);
+                                intent.putExtra("managername", managername);
+                                intent.putExtra("merchantName", merchantName);
+                                startActivityForResult(intent, 1000);
+                                Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
+                                sendBroadcast(updateintent);
+                                setResult(RESULT_OK);
+                                finish();
+                            }
                         }
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
