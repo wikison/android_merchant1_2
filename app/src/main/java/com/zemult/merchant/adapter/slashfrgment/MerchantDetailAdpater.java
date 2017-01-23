@@ -36,7 +36,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
     private boolean isNoData;
     private int mHeight;
-    private int noDividerPos;
+    private int noDividerPos, noDividerPos2;
 
     public MerchantDetailAdpater(Context context, List<M_Userinfo> list) {
         super(context, list);
@@ -68,10 +68,17 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         }
         noDividerPos = listFan.size() - 1;
         listFan.get(0).showLatest = true;
-        if (!listAll.isEmpty()) {
-            listAll.get(0).showAll = true;
-            listAll.addAll(0, listFan);
+
+        if (listAll == null || listAll.isEmpty()){
+            M_Userinfo userinfo = new M_Userinfo();
+            userinfo.setUserId(-1);
+            listAll = new ArrayList<>();
+            listAll.add(userinfo);
         }
+        listAll.get(0).showAll = true;
+        listAll.addAll(0, listFan);
+        noDividerPos2 = listAll.size() - 1;
+
         clearAll();
         addALL(listAll);
         notifyDataSetChanged();
@@ -102,7 +109,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
             convertView.setTag(R.string.app_name, holder);
         }
 
-        if (noDividerPos == position)
+        if (noDividerPos == position || noDividerPos2 == position)
             holder.divider.setVisibility(View.GONE);
         else
             holder.divider.setVisibility(View.VISIBLE);
