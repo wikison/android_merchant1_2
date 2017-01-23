@@ -464,6 +464,8 @@ public class UserDetailActivity extends BaseActivity {
                 call();
                 break;
             case R.id.btn_buy:
+                if (noLogin(mContext))
+                    return;
                 intent = new Intent(mContext, ChoosePayMerchantActivity.class);
                 intent.putExtra(USER_ID, userId);
                 startActivity(intent);
@@ -475,14 +477,20 @@ public class UserDetailActivity extends BaseActivity {
                 startActivity(IMkitintent);
                 break;
             case R.id.btn_focus:
+                if (noLogin(mContext))
+                    return;
                 focus_operate();
                 break;
             case R.id.btn_service:
+                if (noLogin(mContext))
+                    return;
                 intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
                 break;
             case R.id.btn_gift:
+                if (noLogin(mContext))
+                    return;
                 intent = new Intent(mContext, SendPresentActivity.class);
                 intent.putExtra(USER_ID, userId);
                 intent.putExtra(USER_NAME, userName);

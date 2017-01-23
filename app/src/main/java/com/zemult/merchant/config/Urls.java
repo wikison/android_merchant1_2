@@ -25,7 +25,7 @@ public class Urls {
 
     //注册登录登出
     public static String USER_ISREGISTER = "user_isRegister.do";
-    public static String USER_REGISTER = "user_register.do";
+    public static String USER_REGISTER = "user_register_1_1.do";
     public static String USER_LOGIN = "user_login.do";
     public static String USER_LOGOUT = "user_logout.do";
     public static String USER_FINDPWD = "user_findpwd.do";
