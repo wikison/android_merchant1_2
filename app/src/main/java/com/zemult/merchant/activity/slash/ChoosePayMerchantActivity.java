@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slash.TaMerchantChooseAdapter;
+import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -59,12 +62,15 @@ public class ChoosePayMerchantActivity extends BaseActivity {
     RelativeLayout rlNoData;
 
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
+    UserReservationSaleListRequest userReservationSaleListRequest; //判断是否有预约单
     TaMerchantChooseAdapter adapter;
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
 
     List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
+    List<M_Reservation> reservationList = new ArrayList<>();
+
 
     @Override
     public void setContentView() {
@@ -85,11 +91,8 @@ public class ChoosePayMerchantActivity extends BaseActivity {
             @Override
             public void onAllClick(int position) {
                 if (adapter.getItem(position).reviewstatus == 2) {
-                    Intent intent = new Intent(mContext, ChoosePayReservationActivity.class);
-                    intent.putExtra(UserDetailActivity.USER_ID, userId);
-                    intent.putExtra(FindPayActivity.MERCHANT_ID, adapter.getItem(position).merchantId);
-                    intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, adapter.getItem(position).name);
-                    startActivity(intent);
+                    getReservationSaleList(adapter.getItem(position));
+
                 } else {
                     ToastUtil.showMessage("该商户暂不支持买单");
                 }
@@ -143,6 +146,49 @@ public class ChoosePayMerchantActivity extends BaseActivity {
             }
         });
         sendJsonRequest(merchantOtherMerchantListRequest);
+    }
+
+    private void getReservationSaleList(final M_Merchant merchant) {
+        if (userReservationSaleListRequest != null) {
+            userReservationSaleListRequest.cancel();
+        }
+        UserReservationSaleListRequest.Input input = new UserReservationSaleListRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.saleUserId = userId;
+        input.merchantId = merchant.merchantId;
+        input.page = 1;
+        input.rows = Constants.ROWS;
+        input.convertJosn();
+        userReservationSaleListRequest = new UserReservationSaleListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserReservationList) response).status == 1) {
+                    reservationList = ((APIM_UserReservationList) response).reservationList;
+                    if (reservationList.size() > 0) {
+                        Intent intent = new Intent(mContext, ChoosePayReservationActivity.class);
+                        intent.putExtra(UserDetailActivity.USER_ID, userId);
+                        intent.putExtra(FindPayActivity.MERCHANT_ID, merchant.merchantId);
+                        intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, merchant.name);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(ChoosePayMerchantActivity.this, FindPayActivity.class);
+                        intent.putExtra("userSaleId", userId);
+                        intent.putExtra("merchantId", merchant.merchantId);
+                        intent.putExtra("reservationIds", "");
+                        startActivity(intent);
+                    }
+                } else {
+                    ToastUtil.showMessage(((APIM_UserReservationList) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userReservationSaleListRequest);
     }
 
     // 填充数据
