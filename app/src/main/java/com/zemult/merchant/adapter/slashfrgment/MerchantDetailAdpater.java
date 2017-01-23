@@ -81,6 +81,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
         clearAll();
         addALL(listAll);
+        isNoData = false;
         notifyDataSetChanged();
     }
 
