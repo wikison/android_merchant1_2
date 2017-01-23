@@ -37,8 +37,9 @@
         android:id="@+id/flv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_f2"
-        android:divider="@color/bg_f2">
+        android:divider="@color/bg_f2"
+        android:dividerHeight="@dimen/margin_6dp"
+        android:footerDividersEnabled="true">
 
     </com.zemult.merchant.view.FixedListView>
 

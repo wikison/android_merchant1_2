@@ -1,7 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
 import android.util.Pair;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.zemult.merchant.util.UIUtil;
 import com.zemult.merchant.view.DrawableCenterTextView;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;

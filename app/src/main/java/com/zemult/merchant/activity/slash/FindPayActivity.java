@@ -68,6 +68,7 @@ public class FindPayActivity extends BaseActivity {
     private M_Merchant merchant;
     private M_Userinfo userinfo;
     int merchantId, userSaleId, reservationId;
+    String reservationIds;
 
     public static final String MERCHANT_INFO = "merchantInfo";
     public static final String USER_INFO = "userInfo";
@@ -92,6 +93,7 @@ public class FindPayActivity extends BaseActivity {
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
         reservationId = getIntent().getIntExtra("reservationId", 0);
+        reservationIds = getIntent().getStringExtra("reservationIds");
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         userinfo = (M_Userinfo) getIntent().getSerializableExtra(USER_INFO);
 
@@ -127,7 +129,7 @@ public class FindPayActivity extends BaseActivity {
             case R.id.btn_pay:
                 truepaymoney = Double.parseDouble(etPaymoney.getText().toString());
                 if (truepaymoney > 0) {
-                    if(reservationId > 0)
+                    if (reservationId > 0)
                         user_reservation_pay_add();
                     else
                         userTaskPayRequest();
@@ -146,10 +148,11 @@ public class FindPayActivity extends BaseActivity {
             }
             UserMerchantPayAddRequest.Input input = new UserMerchantPayAddRequest.Input();
             input.userId = SlashHelper.userManager().getUserId();
-            input.merchantId = merchant.merchantId;
-            input.saleUserId = userinfo.getUserId() == 0 ? userSaleId : userinfo.getUserId();
+            input.merchantId = merchantId;
+            input.saleUserId = userSaleId;
             input.consumeMoney = truepaymoney;
             input.money = truepaymoney;
+            input.reservationIds = reservationIds;
             input.convertJosn();
 
             userMerchantPayAddRequest = new UserMerchantPayAddRequest(input, new ResponseListener() {
@@ -187,6 +190,7 @@ public class FindPayActivity extends BaseActivity {
     }
 
     private UserReservationPayAddRequest reservationPayAddRequest;
+
     private void user_reservation_pay_add() {
         try {
             showPd();

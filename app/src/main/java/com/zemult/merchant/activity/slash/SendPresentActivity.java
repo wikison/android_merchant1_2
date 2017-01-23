@@ -121,7 +121,7 @@ public class SendPresentActivity extends BaseActivity {
                     money = 0;
                     tvPay.setEnabled(false);
                     tvPay.setBackgroundColor(0xff999999);
-                    m_present = null;
+                    SendPresentActivity.this.m_present = null;
                 } else {
                     SendPresentActivity.this.presentId = presentId;
                     SendPresentActivity.this.m_present = m_present;
