@@ -154,7 +154,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             shopnameTv.setText(name);
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();
-            chatdetail.setText("标签管理");
+            chatdetail.setText("修改服务标签");
 
             String[] res = tags.split(",");
 
@@ -163,7 +163,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     userChannelList.add(new IndusPreferItem(0, res[j], j + 1, 0));//数组越界
                 }
             }
-
         }
 
 

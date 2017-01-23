@@ -52,6 +52,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     public static final String MERCHANT_ID = "merchantId";
     private static final int REQ_APPLY = 0x110;
 
+
     @Bind(R.id.lv)
     SmoothListView lv;
     @Bind(R.id.iv_back)
@@ -76,6 +77,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     private List<M_Userinfo> listFan;
     private int page = 1;
     private float mTopViewHeight, fraction, headerTopMargin;
+    String name = "", tags = "";
 
     @Override
     public void setContentView() {
@@ -97,11 +99,11 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     }
 
     private void initView() {
-        if(SPUtils.contains(mContext, "merchant_first_run"))
+        if (SPUtils.contains(mContext, "merchant_first_run"))
             rlFirst.setVisibility(View.GONE);
         else {
             rlFirst.setVisibility(View.VISIBLE);
-            SPUtils.put(mContext,"merchant_first_run",false);
+            SPUtils.put(mContext, "merchant_first_run", false);
         }
         // 设置其他头部
         headerMerchantDetailView = new HeaderMerchantDetailView(mActivity);
@@ -174,7 +176,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             public void onHeadClick(int position) {
                 List<String> list = new ArrayList<String>();
                 list.add(mAdapter.getItem(position).getUserHead());
-                AppUtils.toImageDetial(mActivity, 0, list, null , false ,false,true, 0, 0);
+                AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
             }
         });
     }
@@ -208,6 +210,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 if (((APIM_MerchantGetinfo) response).status == 1) {
                     merchantInfo = ((APIM_MerchantGetinfo) response).merchant;
                     merchantInfo.merchantId = merchantId;
+                    name = merchantInfo.name;
+                    tags = merchantInfo.tags;
                     headerMerchantDetailView.dealWithTheView(merchantInfo);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
@@ -228,12 +232,17 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 if (noLogin(mContext))
                     return;
                 if (merchantInfo != null && merchantInfo.isCommission == 1) {
-                    ToastUtil.showMessage("您已经申请过了");
-                    return;
+                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+                    intent.putExtra(TabManageActivity.TAG, merchantId);
+                    intent.putExtra(TabManageActivity.NAME, name);
+                    intent.putExtra(TabManageActivity.TAGS, tags);
+                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+                    startActivityForResult(intent, REQ_APPLY);
+                } else {
+                    Intent it = new Intent(mActivity, TabManageActivity.class);
+                    it.putExtra(TabManageActivity.TAG, merchantId);
+                    startActivityForResult(it, REQ_APPLY);
                 }
-                Intent it = new Intent(mActivity, TabManageActivity.class);
-                it.putExtra(TabManageActivity.TAG, merchantId);
-                startActivityForResult(it, REQ_APPLY);
                 break;
             case R.id.rl_first:
                 rlFirst.setVisibility(View.GONE);
@@ -248,6 +257,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             merchant_saleuserList_fan();
         else
             merchant_saleuserList_all(false);
+            merchant_info();
+
     }
 
     @Override

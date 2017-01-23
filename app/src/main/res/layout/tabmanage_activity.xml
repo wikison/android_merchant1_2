@@ -31,7 +31,7 @@
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="申请约客"
+            android:text="成为服务管家"
             android:textColor="@color/white"
             android:textSize="18sp"
             />

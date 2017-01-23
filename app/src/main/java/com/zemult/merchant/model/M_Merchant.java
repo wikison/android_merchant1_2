@@ -152,6 +152,7 @@ public class M_Merchant implements Serializable {
     public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
 
 
+
     public int getMerchantId() {
         return merchantId;
     }
