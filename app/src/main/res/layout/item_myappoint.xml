@@ -9,6 +9,7 @@
        style="@style/divider12dp"></View>
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="58dp">
 
@@ -44,7 +45,7 @@
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/ll1"
         android:layout_width="40dp"
-        android:src="@drawable/xml_circle_grey_bg"
+        android:src="@mipmap/user_icon"
         android:layout_centerVertical="true"
         android:layout_height="40dp" />
 
