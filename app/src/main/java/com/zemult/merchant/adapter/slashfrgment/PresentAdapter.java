@@ -124,12 +124,12 @@ public class PresentAdapter extends
                     if (selectedId == present.presentId) {
                         selectedId = 0;
                         if (mOnItemClickLitener != null) {
-                            mOnItemClickLitener.onItemClick(0, 0);
+                            mOnItemClickLitener.onItemClick(present);
                         }
                     } else {
                         selectedId = present.presentId;
                         if (mOnItemClickLitener != null) {
-                            mOnItemClickLitener.onItemClick(present.price, present.presentId);
+                            mOnItemClickLitener.onItemClick(present);
                         }
                     }
                     notifyDataSetChanged();
@@ -142,7 +142,7 @@ public class PresentAdapter extends
      * ItemClick的回调接口
      */
     public interface OnItemClickLitener {
-        void onItemClick(double price, int presentId);
+        void onItemClick(M_Present m_present);
     }
 
     private OnItemClickLitener mOnItemClickLitener;

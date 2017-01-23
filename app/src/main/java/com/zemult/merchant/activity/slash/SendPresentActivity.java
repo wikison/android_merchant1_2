@@ -52,6 +52,8 @@ public class SendPresentActivity extends BaseActivity {
     private double money = 0;
     String ORDER_SN;
     int userPayId;
+    M_Present m_present;
+    public static String PRESENT = "present";
 
     UserPresentPayAddRequest userPresentPayAddRequest;
 
@@ -113,17 +115,20 @@ public class SendPresentActivity extends BaseActivity {
         rv.setAdapter(adapter);
         adapter.setOnItemClickLitener(new PresentAdapter.OnItemClickLitener() {
             @Override
-            public void onItemClick(double price, int presentId) {
-                tvPayMoney.setText(Convert.getMoneyString(price));
-                if (price == 0) {
+            public void onItemClick(M_Present m_present) {
+                tvPayMoney.setText(Convert.getMoneyString(m_present.price));
+                if (m_present.price == 0) {
                     money = 0;
                     tvPay.setEnabled(false);
                     tvPay.setBackgroundColor(0xff999999);
+                    m_present = null;
                 } else {
                     SendPresentActivity.this.presentId = presentId;
-                    money = price;
+                    SendPresentActivity.this.m_present = m_present;
+                    money = m_present.price;
                     tvPay.setEnabled(true);
                     tvPay.setBackgroundColor(0xffe6bc7d);
+
                 }
 
             }
@@ -163,8 +168,8 @@ public class SendPresentActivity extends BaseActivity {
             }
             UserPresentPayAddRequest.Input input = new UserPresentPayAddRequest.Input();
             input.userId = SlashHelper.userManager().getUserId();
-            input.toUserId =
-                    input.presentId = presentId;
+            input.toUserId = toUserId;
+            input.presentId = presentId;
             input.money = money;
             input.convertJosn();
 
@@ -185,10 +190,11 @@ public class SendPresentActivity extends BaseActivity {
                         intent.putExtra("consumeMoney", money);
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
-                        intent.putExtra("merchantName", "购买礼物");
+                        intent.putExtra("merchantName", "购买礼物" + m_present.name);
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");
                         intent.putExtra("managername", "");
+                        intent.putExtra(PRESENT, m_present);
                         startActivityForResult(intent, 10001);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);

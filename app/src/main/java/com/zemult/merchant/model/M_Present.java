@@ -2,6 +2,8 @@ package com.zemult.merchant.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
+
 
 /**
  * 礼物
@@ -9,7 +11,7 @@ import com.google.gson.annotations.Expose;
  * @time 2017/1/20 13:23
  */
 
-public class M_Present {
+public class M_Present implements Serializable {
     @Expose
     public  int presentId;//  礼物id
     @Expose

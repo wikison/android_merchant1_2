@@ -327,6 +327,7 @@ public class UserDetailActivity extends BaseActivity {
 
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
+        this.userInfo.setUserName(userName);
     }
 
     /**
@@ -474,6 +475,7 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_gift:
                 intent = new Intent(mContext, SendPresentActivity.class);
                 intent.putExtra(USER_ID, userId);
+                intent.putExtra(USER_NAME, userName);
                 startActivity(intent);
                 break;
 
