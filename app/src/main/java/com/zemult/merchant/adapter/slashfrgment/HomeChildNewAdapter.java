@@ -99,7 +99,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
     private void initData(ViewHolder holder, M_Merchant entity) {
         // 商家封面
         if (!TextUtils.isEmpty(entity.pic))
-            mImageManager.loadUrlImage(entity.pic, holder.ivCover, "@450h");
+            mImageManager.loadUrlImageWithDefaultImg(entity.pic, holder.ivCover, "@450h", R.mipmap.merchant_default_cover);
         else
             holder.ivCover.setImageResource(R.mipmap.merchant_default_cover);
         // 商家名称
