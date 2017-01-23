@@ -38,7 +38,7 @@
             android:paddingTop="12dp"
             android:paddingLeft="16dp"
             android:paddingBottom="12dp"
-            android:text="没有加载到数据,先去关注人哟~~~"
+            android:text="暂无数据~~~"
             android:id="@+id/tv_no_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

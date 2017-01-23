@@ -154,7 +154,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
                                         }
-                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
+                                        holder.setText(R.id.servicer_tv,fromHome? mReservation.saleUserName : "服务管家:  " + mReservation.saleUserName);
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
 
