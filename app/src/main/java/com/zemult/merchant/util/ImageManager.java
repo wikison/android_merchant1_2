@@ -85,6 +85,27 @@ public class ImageManager {
                     .into(imageView);
         }
     }
+    // 加载网络图片
+    public void loadUrlImageWithDefaultImg(String url, ImageView imageView, String rule, int defaultImg) {
+        if (url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(AppApplication.instance().getApplicationContext())
+                    .load(url + rule)
+                    .placeholder(defaultImg)
+                    .error(defaultImg)
+                    .crossFade()
+                    .fitCenter()
+                    .into(imageView);
+        } else {
+            Glide.with(AppApplication.instance().getApplicationContext())
+                    .load(url)
+                    .placeholder(defaultImg)
+                    .error(defaultImg)
+                    .crossFade()
+                    .fitCenter()
+                    .into(imageView);
+        }
+    }
 
     // 加载网络图片
     public void loadUrlImage2(String url, ImageView imageView) {
