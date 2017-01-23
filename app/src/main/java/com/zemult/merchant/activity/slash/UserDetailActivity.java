@@ -31,6 +31,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
@@ -139,8 +140,8 @@ public class UserDetailActivity extends BaseActivity {
     public void init() {
         initData();
         initView();
-        initListener();
         getNetworkData();
+        initListener();
     }
 
     private void initData() {
@@ -190,6 +191,15 @@ public class UserDetailActivity extends BaseActivity {
             public void onAllClick(int position) {
                 IntentUtil.intStart_activity(mActivity,
                         MerchantDetailActivity.class, new Pair<String, Integer>(MerchantDetailActivity.MERCHANT_ID, taMerchantAdapter.getItem(position).merchantId));
+            }
+        });
+
+        ivHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> list = new ArrayList<String>();
+                list.add(userInfo.getHead());
+                AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
             }
         });
     }
@@ -433,7 +443,7 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.btn_buy,  R.id.btn_service,R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus, R.id.btn_gift})
+    @OnClick({R.id.lh_btn_back, R.id.btn_buy, R.id.btn_service, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus, R.id.btn_gift})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
