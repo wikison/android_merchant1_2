@@ -127,7 +127,6 @@ public class MerchantManagerManageActivity extends BaseActivity implements Smoot
         }
         MerchantSaleuserListRequest.Input input = new MerchantSaleuserListRequest.Input();
 
-        input.operateUserId = SlashHelper.userManager().getUserId();
         input.merchantId = merchantId;
         input.page = isLoadMore ? ++page : (page = 1);
         input.rows = Constants.ROWS;
