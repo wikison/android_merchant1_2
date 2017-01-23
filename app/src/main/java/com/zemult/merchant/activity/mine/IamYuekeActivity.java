@@ -181,7 +181,7 @@ public class IamYuekeActivity extends BaseActivity {
             rllChild.setLayoutParams(lp);
         }
 
-        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText());
+        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText()+"服务管家");
 
     }
 
