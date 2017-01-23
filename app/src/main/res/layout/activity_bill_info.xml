@@ -786,11 +786,12 @@
 
     <!--用户的账单详情-购买礼物(type=7)-->
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_present"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -841,8 +842,7 @@
 
 
             <View
-                style="@style/divider_1px"
-                android:layout_marginTop="@dimen/margin_8dp"/>
+                style="@style/divider_1px"/>
         </LinearLayout>
 
         <LinearLayout
@@ -854,7 +854,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp">
@@ -878,7 +878,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp">
@@ -901,8 +901,7 @@
             </LinearLayout>
 
             <View
-                style="@style/divider_1px"
-                android:layout_marginTop="@dimen/margin_8dp"/>
+                style="@style/divider_1px"/>
         </LinearLayout>
 
 
@@ -917,6 +916,7 @@
                 android:padding="8dp"
                 android:layout_marginLeft="12dp"
                 style="@style/text_15_black_28"
+                android:layout_height="46dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="订单内容"
@@ -932,7 +932,7 @@
                 android:layout_marginLeft="12dp"
                 android:padding="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 android:gravity="center_vertical">
                 <TextView
                     android:id="@+id/tv_persent_name"
@@ -948,19 +948,18 @@
                     android:gravity="right|center_vertical"/>
             </LinearLayout>
             <View
-                style="@style/divider_1px"
-                android:layout_marginTop="@dimen/margin_8dp"/>
+                style="@style/divider_1px"/>
         </LinearLayout>
     </LinearLayout>
 
 
     <!--用户的账单详情-兑换礼物(type=8)-->
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_present_exchange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -972,7 +971,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp">
@@ -996,7 +995,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="8dp">
@@ -1019,8 +1018,7 @@
             </LinearLayout>
 
             <View
-                style="@style/divider_1px"
-                android:layout_marginTop="@dimen/margin_8dp" />
+                style="@style/divider_1px"/>
         </LinearLayout>
 
 
@@ -1033,6 +1031,7 @@
 
             <TextView
                 style="@style/text_15_black_28"
+                android:layout_height="46dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
@@ -1054,8 +1053,7 @@
             </ListView>
 
             <View
-                style="@style/divider_1px"
-                android:layout_marginTop="@dimen/margin_8dp" />
+                style="@style/divider_1px" />
         </LinearLayout>
     </LinearLayout>
 
