@@ -86,6 +86,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     LinearLayout subscribeMainLayout;
     @Bind(R.id.xieyi_ll)
     LinearLayout xieyiLl;
+    @Bind(R.id.choose_yv)
+    TextView chooseYv;
 
 
     private List<M_Industry> sysdatalist = new ArrayList<M_Industry>();
@@ -151,11 +153,17 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         tvProtocol.setText(Html.fromHtml("<u>《服务管家协议》</u>"));
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
-            shopnameTv.setText(name);
+            shopnameTv.setVisibility(View.GONE);
+            chooseYv.setText("选择您在  "+name+"  提供的服务");
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();
+            myCategoryTipText.setVisibility(View.VISIBLE);
             chatdetail.setText("修改服务标签");
-
+            textView.setText("完成");
+            textView.setVisibility(View.INVISIBLE);
+            applyBtn.setVisibility(View.VISIBLE);
+            applyBtn.setText("保存");
+            myCategoryText.setText("已提供的服务");
             String[] res = tags.split(",");
 
             if (!res[0].equals("")) {
@@ -164,7 +172,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 }
             }
         }
-
 
         commonServiceTagList();
         initView();
@@ -180,24 +187,29 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             applyBtn.setVisibility(View.VISIBLE);
 
         }
+        if (comefrom == 2) {
+            userAdapter.setB(isFalse);
+        }
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //显示完成的时候
-                userAdapter.setB(isFalse);
-                textView.setText(isFalse ? "完成" : "编辑");
-                isFalse = !isFalse;
-                myCategoryText.setText("选择您可以提供的服务");
-                myCategoryTipText.setVisibility(View.VISIBLE);
-                if (isFalse) {
-                    //显示编辑的时候
-                    myCategoryText.setText("我的服务");
-                    myCategoryTipText.setVisibility(View.INVISIBLE);
-                    userSaleMerchantEdit();
-                }
-            }
-        });
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //显示完成的时候
+//                userAdapter.setB(isFalse);
+//                textView.setText(isFalse ? "完成" : "编辑");
+//                isFalse = !isFalse;
+//                myCategoryText.setText("选择您可以提供的服务");
+//                myCategoryTipText.setVisibility(View.VISIBLE);
+//                if (isFalse) {
+//                    //显示编辑的时候
+//                    myCategoryText.setText("我的服务");
+//                    myCategoryTipText.setVisibility(View.INVISIBLE);
+//                    userSaleMerchantEdit();
+//                }
+//            }
+//        });
+
+
     }
 
 
@@ -547,10 +559,14 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Urls.SERVICEXIEYI));
                 break;
             case R.id.apply_btn:
-                if (cbAgree.isChecked()) {
-                    user_add_saleuser();
-                } else {
-                    ToastUtils.show(this,"请勾选同意本平台协议");
+                if (comefrom == 1) {
+                    if (cbAgree.isChecked()) {
+                        user_add_saleuser();
+                    } else {
+                        ToastUtils.show(this, "请勾选同意本平台协议");
+                    }
+                } else if (comefrom == 2) {
+                    userSaleMerchantEdit();
                 }
                 break;
         }
@@ -605,13 +621,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         sendJsonRequest(userAddSaleUserRequest);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
-
 }
