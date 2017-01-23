@@ -120,7 +120,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     Button lookorderBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
-    int reservationId;
+    String reservationId;
     int type;
     String replayNote;
     int userPayId;
@@ -136,13 +136,8 @@ public class AppointmentDetailActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("预约详情");
-        reservationId = getIntent().getIntExtra(INTENT_RESERVATIONID, 0);
-        type = getIntent().getIntExtra(INTENT_TYPE, -1);
-        if (type == 1) {
-            objectTv.setText("客户");
-        } else if (type == 0) {
-            objectTv.setText("服务管家");
-        }
+        reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
+
         showPd();
         userReservationInfo();
 
@@ -195,6 +190,20 @@ public class AppointmentDetailActivity extends BaseActivity {
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
                     userPayId = mReservation.userPayId;
+
+                    if(mReservation.saleUserId==SlashHelper.userManager().getUserId()){
+                        type=0;
+                    }
+                    else{
+                        type=1;
+                    }
+
+                    if (type == 1) {
+                        objectTv.setText("客户");
+                    } else if (type == 0) {
+                        objectTv.setText("服务管家");
+                    }
+
 
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
@@ -292,8 +301,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
                             object.put("taskTitle", "[预约-已确认] 预约时间:" + mReservation.reservationTime + "预约地址:" + mReservation.merchantName);
-                            object.put("serviceId", mReservation.saleUserId);
-                            object.put("reservationId", reservationId);
+                            object.put("serviceId", mReservation.saleUserId+"");
+                            object.put("reservationId", reservationId+"");
                         } catch (JSONException e) {
 
                         }
@@ -371,6 +380,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                 Intent intent = new Intent(this, FindPayActivity.class);
                 intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
+                intent.putExtra("reservationId", reservationId);
                 startActivity(intent);
 
 

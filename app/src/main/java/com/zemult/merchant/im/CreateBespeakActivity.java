@@ -99,6 +99,8 @@ public class CreateBespeakActivity extends BaseActivity {
         initTags(m_merchant);
         bespekShopname.setText(shopname);
 
+        etCustomername.setText(SlashHelper.userManager().getUserinfo().getName());
+        etCustomerphone.setText(SlashHelper.userManager().getUserinfo().getPhoneNum());
         pmnvSelectDeadline.setMinNum(1);
         pmnvSelectDeadline.setMaxNum(99);
         pmnvSelectDeadline.setDefaultNum(0);
@@ -164,7 +166,7 @@ public class CreateBespeakActivity extends BaseActivity {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
                             object.put("taskTitle", "[预约-待确认] 预约时间:"+ordertime+"预约地址:"+shopname);
-                            object.put("serviceId", serviceId);
+                            object.put("serviceId", serviceId+"");
                             object.put("reservationId",((CommonResult) response).reservationId);
                         } catch (JSONException e) {
 
@@ -280,8 +282,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 break;
 
             case R.id.rl_ordershopname:
-                Intent intent1=new Intent(CreateBespeakActivity.this,ChooseShopListActivity.class);
-                startActivity(intent1);
+              finish();
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(

@@ -565,10 +565,11 @@
         <activity android:name=".activity.mine.AppointmentDetailActivity" />
         <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentActivity"></activity>
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-<activity android:name=".activity.slash.ChoosePayReservationActivity"/>
+        <activity android:name=".activity.slash.ChoosePayReservationActivity"/>
         <activity android:name=".activity.mine.GiftAboutDetailActivity"></activity>
         <activity android:name=".activity.slash.ChooseReservationMerchantActivity"/>
+        <activity android:name=".activity.slash.SendPresentSuccessActivity"/>
+
     </application>
 
 </manifest>
