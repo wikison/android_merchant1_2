@@ -134,7 +134,6 @@ public class SendPresentActivity extends BaseActivity {
             }
         });
 
-
     }
 
     @Override

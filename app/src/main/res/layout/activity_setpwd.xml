@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/include_layout_head"
         layout="@layout/layout_head"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="6dp"
             android:text="@string/txt_86"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_phone"
@@ -43,7 +43,7 @@
             android:paddingLeft="96dp"
             android:textColor="@color/black"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,7 +60,7 @@
             android:layout_marginLeft="6dp"
             android:text="昵称"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_nickname"
@@ -76,9 +76,8 @@
             android:maxLength="11"
             android:paddingLeft="96dp"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -95,7 +94,7 @@
             android:layout_marginLeft="6dp"
             android:text="@string/txt_pwd"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_pwd"
@@ -112,7 +111,7 @@
             android:maxLength="20"
             android:paddingLeft="96dp"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -130,7 +129,7 @@
             android:layout_marginLeft="6dp"
             android:text="@string/txt_pwd_again"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_pwd_again"
@@ -147,11 +146,8 @@
             android:maxLength="20"
             android:paddingLeft="96dp"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
-
-
-
 
 
     <TextView
@@ -161,7 +157,8 @@
         android:layout_marginTop="12dp"
         android:text="*密码长度6~20位,设置密码的格式不能是纯数字密码"
         android:textColor="#868686"
-        android:textSize="12sp" />
+        android:textSize="12sp"/>
+
     <Button
         android:id="@+id/btn_regist"
         android:layout_width="@dimen/common_btn_width_235"
@@ -170,7 +167,7 @@
         android:background="@drawable/common_selector_btn"
         android:text="@string/btn_register"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"/>
 
 
 </LinearLayout>

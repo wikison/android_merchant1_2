@@ -50,7 +50,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         //XieGang__d00_2016-06-18_v6.2.0.apk
-                        def fileName = "Yogous_${releaseTime()}_${defaultConfig.versionName}.apk"
+                        def fileName = "Yovoll_${releaseTime()}_${defaultConfig.versionName}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
