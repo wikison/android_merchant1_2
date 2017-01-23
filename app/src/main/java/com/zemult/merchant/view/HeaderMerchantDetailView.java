@@ -55,7 +55,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     public void dealWithTheView(final M_Merchant merchantInfo) {
         // 封面
         if (!TextUtils.isEmpty(merchantInfo.pic))
-            mImageManager.loadUrlImage(merchantInfo.pic, ivCover, "@320h");
+            mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@320h", R.mipmap.merchant_default_cover);
         else
             ivCover.setImageResource(R.mipmap.merchant_default_cover);
 
