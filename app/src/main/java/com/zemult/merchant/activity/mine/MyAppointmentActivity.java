@@ -144,6 +144,13 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                     @Override
                                     public void convert(CommonViewHolder holder, final M_Reservation mReservation, final int position) {
 
+                                        if(position==0){
+                                            holder.setViewVisible(R.id.v1);
+                                        }
+                                        else if(position>0){
+                                            holder.setViewGone(R.id.v1);
+                                        }
+
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
                                         }
@@ -252,6 +259,13 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                 myappointmentLv.setAdapter(commonAdapter = new CommonAdapter<M_Reservation>(MyAppointmentActivity.this, R.layout.item_myappoint, mDatas) {
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Reservation mReservation, final int position) {
+
+                                        if(position==0){
+                                            holder.setViewVisible(R.id.v1);
+                                        }
+                                        else if(position>0){
+                                            holder.setViewGone(R.id.v1);
+                                        }
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
