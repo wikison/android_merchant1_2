@@ -55,12 +55,14 @@ import com.alibaba.sdk.android.media.utils.FailReason;
 import com.alibaba.wxlib.thread.WXThreadPoolMgr;
 import com.alibaba.wxlib.util.RequestPermissionUtil;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
+import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.common.Constant;
+import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.util.SlashHelper;
 
 import org.json.JSONException;
@@ -543,18 +545,26 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     JSONObject customizeObject = new JSONObject(contentObject.optString("customize"));
                     if("ORDER".equals(customizeObject.getString("tasktype"))){
                             Intent intent =new Intent(fragment.getActivity(),AppointmentDetailActivity.class);
-                        if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){
-                            intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,0);
-                        }
-                        else{
-                            intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,1);//type1  客户  0商务管家
-                        }
-
-                            intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getInt("reservationId"));
+                            intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
                             fragment.startActivity(intent);
                     }
                     else if("GIFT".equals(customizeObject.getString("tasktype"))){
+                        if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家
+                            Intent intent =new Intent(fragment.getActivity(),SendPresentSuccessActivity.class);
+                            intent.putExtra("serviceId",customizeObject.getString("serviceId"));
+                            intent.putExtra("userId",customizeObject.getString("userId"));
+                            intent.putExtra("giftName",customizeObject.getString("giftName"));
+                            intent.putExtra("giftPrice",customizeObject.getString("giftPrice"));
 
+                            fragment.startActivity(intent);
+                        }
+                        else{
+                            Intent intent =new Intent(fragment.getActivity(),SendPresentSuccessActivity.class);
+                            intent.putExtra("giftName",customizeObject.getString("giftName"));
+                            intent.putExtra("giftPrice",customizeObject.getString("giftPrice"));
+                            fragment.startActivity(intent);
+
+                        }
                     }
 
                 } catch (JSONException e) {

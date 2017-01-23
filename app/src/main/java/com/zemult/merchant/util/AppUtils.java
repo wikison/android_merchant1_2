@@ -21,6 +21,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.zemult.merchant.R;
 import com.zemult.merchant.bean.ContactDataBean;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -473,4 +474,33 @@ public class AppUtils {
         }
         return mobile;
     }
+
+
+    public static String giftDescription(String giftname){
+            String desc="";
+        if (giftname.contains("兰博基尼")) {
+            desc="兰博基尼：电光火石，速度激情。";
+
+        } else if (giftname.contains("钻戒")) {
+            desc="通灵钻戒：一颗流传，伴生相随。";
+
+        } else if (giftname.contains("钱包")) {
+            desc="LV钱包：生命本身就是一场旅行。";
+
+        } else if (giftname.contains("花")) {
+            desc=" 爱の花：遇见最美的绽放……";
+        }
+        else if (giftname.contains("六六大顺")) {
+            desc=" 六六大顺：三三不尽，六六无穷。";
+        }
+        
+        return desc;
+        
+    }
+
+
+
+
+
+
 }

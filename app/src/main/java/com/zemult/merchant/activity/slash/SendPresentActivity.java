@@ -123,7 +123,7 @@ public class SendPresentActivity extends BaseActivity {
                     tvPay.setBackgroundColor(0xff999999);
                     SendPresentActivity.this.m_present = null;
                 } else {
-                    SendPresentActivity.this.presentId = presentId;
+                    presentId = m_present.presentId;
                     SendPresentActivity.this.m_present = m_present;
                     money = m_present.price;
                     tvPay.setEnabled(true);
@@ -190,6 +190,7 @@ public class SendPresentActivity extends BaseActivity {
                         intent.putExtra("consumeMoney", money);
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
+                        intent.putExtra("toUserId", toUserId);
                         intent.putExtra("merchantName", "购买礼物-" + m_present.name);
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");
