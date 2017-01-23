@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Present;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimeUtil;
 
 import java.util.List;
@@ -49,9 +50,9 @@ public class PresentExchangeAdapter extends BaseListAdapter<M_Present> {
 
         // 名称
         if (!TextUtils.isEmpty(entity.name))
-            holder.tvName.setText(entity.name + "x1");
+            holder.tvName.setText(entity.name + "x" + entity.num);
         // 兑换价格
-        holder.tvPrice.setText(entity.price + "");
+        holder.tvPrice.setText(Convert.getMoneyString(entity.price));
 
         return convertView;
     }
