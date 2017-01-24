@@ -26,6 +26,7 @@ import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
@@ -174,9 +175,7 @@ public class UserDetailActivity extends BaseActivity {
             ivRight.setImageResource(R.mipmap.jubao_white_icon);
         }
 
-        if (merchant == null) {
 
-        }
 
         btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
@@ -484,9 +483,22 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_service:
                 if (noLogin(mContext))
                     return;
-                intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
-                intent.putExtra("userId", userId);
-                startActivity(intent);
+
+                if (merchant != null) {
+                    Intent  merchantintent = new Intent(mContext, CreateBespeakActivity.class);
+                    merchantintent.putExtra("serviceId",userId);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("m_merchant",merchant);
+                    merchantintent.putExtras(mBundle);
+                    startActivity(merchantintent);
+                }
+                else{
+                    intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                }
+
+
                 break;
             case R.id.btn_gift:
                 if (noLogin(mContext))

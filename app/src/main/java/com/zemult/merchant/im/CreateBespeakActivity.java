@@ -24,6 +24,7 @@ import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.common.Notification;
@@ -282,7 +283,9 @@ public class CreateBespeakActivity extends BaseActivity {
                 break;
 
             case R.id.rl_ordershopname:
-              finish();
+                Intent  intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
+                intent.putExtra("userId", serviceId);// 管家id
+                startActivity(intent);
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(

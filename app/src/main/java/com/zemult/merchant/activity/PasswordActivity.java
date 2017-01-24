@@ -146,13 +146,13 @@ public class PasswordActivity extends BaseActivity {
         } else {
             if (strPwd.length() < 6) {
                 etPwdAgain.setError("密码长度设置不正确");
-            } else if (StringMatchUtils.isAllNum(strPwd)) {
+                return;
+            }
+            if (StringMatchUtils.isAllNum(strPwd)) {
                 etPwdAgain.setError("密码不能全为数字");
+                return;
             }
-            {
                 userRegister();
-            }
-
 
         }
     }

@@ -140,7 +140,7 @@ public class ImageManager {
 
     // 加载网络圆型图片
     public void loadCircleImage(String url, ImageView imageView) {
-        if (url.indexOf("xiegang.oss") != -1) {
+        if (null!=url&&url.indexOf("xiegang.oss") != -1) {
             url = url.replace("xiegang.oss", "xiegang.img");
             Glide.with(mContext)
                     .load(url + getImageSize())
