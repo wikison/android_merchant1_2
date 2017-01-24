@@ -120,7 +120,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     Button lookorderBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
-    String reservationId;
+    int reservationId;
     int type;
     String replayNote;
     int userPayId;
@@ -136,8 +136,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("预约详情");
-        reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
-
+        reservationId = getIntent().getIntExtra(INTENT_RESERVATIONID,-1);
         showPd();
         userReservationInfo();
 

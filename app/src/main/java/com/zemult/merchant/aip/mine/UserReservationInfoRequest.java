@@ -21,13 +21,13 @@ public class UserReservationInfoRequest extends PostStringRequest<Type> {
 
     public static class Input {
 
-        public String reservationId;    //	预约单id
+        public int reservationId;    //	预约单id
         public String ejson;
 
 
         public void convertJosn() {
             ejson = Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("reservationId", reservationId ))
+                    new Pair<String, String>("reservationId", reservationId +""))
             );
         }
 

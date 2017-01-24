@@ -15,7 +15,7 @@ import zema.volley.network.ResponseListener;
 public class UserReservationEditRequest extends PostStringRequest<Type>  {
 
     public static class Input {
-        public String reservationId;       //预约单id
+        public int reservationId;       //预约单id
         public int userId;       //用户id
         public String replayNote;       //答复
         public String ejson;
@@ -23,7 +23,7 @@ public class UserReservationEditRequest extends PostStringRequest<Type>  {
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("reservationId", reservationId),
+                    new Pair<String, String>("reservationId", reservationId+""),
                     new Pair<String, String>("userId", userId+""),
                     new Pair<String, String>("replayNote", replayNote)));
         }
