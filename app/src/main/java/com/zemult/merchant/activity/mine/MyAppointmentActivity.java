@@ -268,9 +268,9 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         }
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
-                                            holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
+                                            holder.setCircleImage(R.id.head_iv, mReservation.head);
                                         }
-                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
+                                        holder.setText(R.id.servicer_tv, "客户:  " + mReservation.name);
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
                                         //状态(1:预约成功,2:已支付,3:预约结束)
