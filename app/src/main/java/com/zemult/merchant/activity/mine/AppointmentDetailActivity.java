@@ -207,9 +207,9 @@ public class AppointmentDetailActivity extends BaseActivity {
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
                         appresultTv.setText("暂无");
-                        if (type == 1) {//客户
+                        if (type == 0) {//客户
                             yuyueresultRl.setVisibility(View.VISIBLE);
-                        } else if (type == 0) {//管家
+                        } else if (type == 1) {//管家
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
                         }
                     } else if (mReservation.state == 1) {
