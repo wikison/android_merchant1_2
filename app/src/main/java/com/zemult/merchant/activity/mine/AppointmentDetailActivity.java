@@ -120,7 +120,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     Button lookorderBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
-    int reservationId;
+    String reservationId="";
     int type;
     String replayNote;
     int userPayId;
@@ -136,7 +136,8 @@ public class AppointmentDetailActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("预约详情");
-        reservationId = getIntent().getIntExtra(INTENT_RESERVATIONID,-1);
+        reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
+        type=getIntent().getIntExtra(INTENT_TYPE,-1);
         showPd();
         userReservationInfo();
 
@@ -191,10 +192,10 @@ public class AppointmentDetailActivity extends BaseActivity {
                     userPayId = mReservation.userPayId;
 
                     if(mReservation.saleUserId==SlashHelper.userManager().getUserId()){
-                        type=0;
+                        type=1;
                     }
                     else{
-                        type=1;
+                        type=0;
                     }
 
                     if (type == 1) {
@@ -202,7 +203,6 @@ public class AppointmentDetailActivity extends BaseActivity {
                     } else if (type == 0) {
                         objectTv.setText("服务管家");
                     }
-
 
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
