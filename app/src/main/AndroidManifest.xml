@@ -573,6 +573,7 @@
             android:launchMode="singleTask"
             />
         <activity android:name=".activity.slash.SendPresentSuccessActivity"/>
+        <activity android:name=".activity.mine.SettingMoneyActivity"></activity>
 
     </application>
 

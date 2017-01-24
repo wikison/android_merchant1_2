@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical"
+    tools:context=".activity.mine.NicknameActivity">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#f4f4f4"></View>
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <EditText
+            android:id="@+id/niname_et"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@null"
+            android:hint="请填写收款金额"
+            android:maxLength="15"
+            android:padding="10dp" />
+    </RelativeLayout>
+
+    <View style="@style/view1dp"></View>
+
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_marginTop="50dp"
+        android:text="确定"
+        android:layout_gravity="center_horizontal"
+        style="@style/common_btn_235" />
+
+
+
+</LinearLayout>
