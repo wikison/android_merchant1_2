@@ -107,7 +107,7 @@ public class Constants {
     public static final double MIN_WITHDRAW = 50;
     public static final double MAX_WITHDRAW = 10000;
     public static String QR_PREFIX = "yogous";
-    public static String QR_PAY_PREFIX = "pay://";
+    public static String QR_PAY_PREFIX = "pay://doScan?";
     public static String QR_USER_PREFIX = "userInfo://";
     public static String SCHEME_PREFIX = "zm://";
 

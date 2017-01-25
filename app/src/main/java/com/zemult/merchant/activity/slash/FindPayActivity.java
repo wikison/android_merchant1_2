@@ -29,6 +29,7 @@ import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -74,7 +75,7 @@ public class FindPayActivity extends BaseActivity {
     public static final String USER_INFO = "userInfo";
     public static final String MERCHANT_ID = "merchant_id";
     // 商户订单号
-    private String ORDER_SN = "", managerhead, managername;
+    private String ORDER_SN = "", managerhead, managername,scanMoney;
     private int userPayId = 0;
     double paymoney = 0, truepaymoney = 0;
 
@@ -92,6 +93,7 @@ public class FindPayActivity extends BaseActivity {
         lhTvTitle.setText("找TA买单");
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
+        scanMoney = getIntent().getStringExtra("scanMoney");
         reservationId = getIntent().getIntExtra("reservationId", 0);
         reservationIds = getIntent().getStringExtra("reservationIds");
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
@@ -117,6 +119,9 @@ public class FindPayActivity extends BaseActivity {
         btnPay.setEnabled(false);
         btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
         etPaymoney.addTextChangedListener(watcher);
+        if(!StringUtils.isEmpty(scanMoney)){
+            etPaymoney.setText(scanMoney);
+        }
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_pay})
@@ -152,7 +157,9 @@ public class FindPayActivity extends BaseActivity {
             input.saleUserId = userSaleId;
             input.consumeMoney = truepaymoney;
             input.money = truepaymoney;
-            input.reservationIds = reservationIds;
+            if(StringUtils.isEmpty(reservationIds)){
+                input.reservationIds = "";
+            }
             input.convertJosn();
 
             userMerchantPayAddRequest = new UserMerchantPayAddRequest(input, new ResponseListener() {

@@ -23,7 +23,6 @@ import com.flyco.roundview.RoundRelativeLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.task.TaskIndustryPushMerchantRequest;
 import com.zemult.merchant.aip.task.TaskIndustryPushRequest;
-import com.zemult.merchant.alipay.taskpay.BonuseChoosePayTypeActivity;
 import com.zemult.merchant.app.MAppCompatActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -676,18 +675,18 @@ public class PublishTaskActivity extends MAppCompatActivity {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if (bonuseMoney > 0) {
-                        Intent intent1 = new Intent(PublishTaskActivity.this, BonuseChoosePayTypeActivity.class);
-                        intent1.putExtra("title", title);
-                        intent1.putExtra("taskIndustryId", ((CommonResult) response).taskIndustryId);
-                        intent1.putExtra("bonuseMoney", bonuseMoney);
-                        startActivityForResult(intent1, REQUESTCODE_PAY);
-                    } else {
-                        ToastUtil.showMessage("任务发布成功");
-                        sendBroadcast(new Intent(Constants.BROCAST_FRESHTASKLIST));
-                        setResult(RESULT_OK);
-                        PublishTaskActivity.this.finish();
-                    }
+//                    if (bonuseMoney > 0) {
+//                        Intent intent1 = new Intent(PublishTaskActivity.this, BonuseChoosePayTypeActivity.class);
+//                        intent1.putExtra("title", title);
+//                        intent1.putExtra("taskIndustryId", ((CommonResult) response).taskIndustryId);
+//                        intent1.putExtra("bonuseMoney", bonuseMoney);
+//                        startActivityForResult(intent1, REQUESTCODE_PAY);
+//                    } else {
+//                        ToastUtil.showMessage("任务发布成功");
+//                        sendBroadcast(new Intent(Constants.BROCAST_FRESHTASKLIST));
+//                        setResult(RESULT_OK);
+//                        PublishTaskActivity.this.finish();
+//                    }
 
 
                 } else {

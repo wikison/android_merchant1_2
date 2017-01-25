@@ -2,6 +2,7 @@ package com.zemult.merchant.activity;
 
 import android.content.Intent;
 import android.graphics.PointF;
+import android.net.Uri;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -45,7 +46,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
     TextView tvMine;
 
     //商家id, 营销经理id, 用户id;
-    String merchantId = "", userSaleId = "", userId = "";
+    String merchantId = "", userSaleId = "", userId = "",scanMoney="";
     String merchantIdPrefix = "merchantId=", userSaleIdPrefix = "userId=", userIdPrefix = "userId=";
 
 
@@ -104,20 +105,19 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
         if (!StringUtils.isBlank(text)) {
-            // pay://merchantId=1&userId=111022
+            // pay://merchantId=300757&userId=111057&price=0.01
             if (text.startsWith(Constants.QR_PAY_PREFIX)) {
-                String info = text.substring(Constants.QR_PAY_PREFIX.length());
-                int mIndex;
-                mIndex = info.indexOf('&');
-                String merchantInfo = info.substring(0, mIndex);
-                String userSaleInfo = info.substring(mIndex + 1);
-                merchantId = merchantInfo.substring(merchantIdPrefix.length());
-                userSaleId = userSaleInfo.substring(userSaleIdPrefix.length());
+                Uri uri = Uri.parse(text);
+                merchantId = uri.getQueryParameter("merchantId");
+                userSaleId = uri.getQueryParameter("userId");
+                scanMoney= uri.getQueryParameter("price");
                 try {
                     qrvView.getCameraManager().stopPreview();
                     Intent intent = new Intent(ScanQrActivity.this, FindPayActivity.class);
                     intent.putExtra("merchantId", Integer.valueOf(merchantId));
                     intent.putExtra("userSaleId", Integer.valueOf(userSaleId));
+                    intent.putExtra("scanMoney", scanMoney);
+
                     startActivity(intent);
 
 

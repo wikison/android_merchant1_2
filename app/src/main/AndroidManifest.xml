@@ -6,6 +6,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="23"
+        tools:ignore="OldTargetApi"
         tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest,com.taobao.taorecorder,com.taobao.taorecorde_sdk"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -30,7 +31,6 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- renren sso Permission for Unit Test -->
     <!-- QQ、QQ空间所需权限 -->
     <uses-permission android:name="android.permission.GET_TASKS"/>
@@ -452,6 +452,12 @@
             android:enabled="true"
             android:exported="false"/>
 
+        <!-- 推送 -->
+        <service
+            android:name=".push.MyPushIntentService"
+            android:process=":push" />
+        <service android:name=".push.NotificationService" />
+
         <meta-data
             android:name="com.zemult.merchant.view.common.MGlideMoudle"
             android:value="GlideModule"/>
@@ -486,7 +492,6 @@
         <activity android:name=".activity.mine.BillInfoActivity"/>
         <activity android:name=".alipay.taskpay.TaskPayInfoActivity"/>
         <activity android:name=".alipay.taskpay.ChoosePayTypeActivity"/>
-        <activity android:name=".alipay.taskpay.BonuseChoosePayTypeActivity"/>
         <activity android:name=".alipay.taskpay.TaskPayResultActivity"/>
         <activity android:name=".activity.mine.MerchantFullNameActivity"/>
         <activity

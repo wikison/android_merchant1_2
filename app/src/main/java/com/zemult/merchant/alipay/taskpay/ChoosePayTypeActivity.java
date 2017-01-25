@@ -173,11 +173,13 @@ public class ChoosePayTypeActivity extends BaseActivity {
             imageManager.loadCircleImage(merchantHead, ivHead);
         }
 
-        if (SlashHelper.userManager().getUserinfo().getMoney() >= truepaymoney) {
-            cbAccountpay.setChecked(true);
-        } else {
+//        if (SlashHelper.userManager().getUserinfo().getMoney() >= truepaymoney) {
+//            cbAccountpay.setChecked(true);
+//        }
+//        else {
+            payType = 1;
             cbZhifubaopay.setChecked(true);
-        }
+//        }
     }
 
     @Override
@@ -412,12 +414,18 @@ public class ChoosePayTypeActivity extends BaseActivity {
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
-                PayTask alipay = new PayTask(ChoosePayTypeActivity.this);
-                Map<String, String> result = alipay.payV2(orderStr, true);
-                Message msg = new Message();
-                msg.what = SDK_PAY_FLAG;
-                msg.obj = result;
-                mHandler.sendMessage(msg);
+                try {
+                    PayTask alipay = new PayTask(ChoosePayTypeActivity.this);
+                    Map<String, String> result = alipay.payV2(orderStr, true);
+                    Message msg = new Message();
+                    msg.what = SDK_PAY_FLAG;
+                    msg.obj = result;
+                    mHandler.sendMessage(msg);
+                }catch (Exception e){
+                    ToastUtil.showMessage("支付宝调用失败,请再试一次");
+                }
+
+
             }
         };
 

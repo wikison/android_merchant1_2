@@ -86,6 +86,7 @@
         </service>
 
         <service android:name="com.umeng.message.UmengIntentService"
+                 android:process=":channel"
                  android:exported="true">
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />

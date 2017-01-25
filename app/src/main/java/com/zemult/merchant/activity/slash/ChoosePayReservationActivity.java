@@ -125,7 +125,7 @@ public class ChoosePayReservationActivity extends BaseActivity {
             public void onAllClick(int position) {
                 Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
                 intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, 0);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId);
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId+"");
                 startActivity(intent);
             }
         });
