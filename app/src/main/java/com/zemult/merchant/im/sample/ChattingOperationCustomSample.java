@@ -1480,7 +1480,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 //
 //        }
 
-        return true;
+        return false;
     }
 
 
