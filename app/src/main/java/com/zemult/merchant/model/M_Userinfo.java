@@ -85,6 +85,17 @@ public class M_Userinfo implements Serializable {
 
     @Expose
     public int level, userLevel;//账户等级
+
+    @Expose int userState;
+
+    public int getUserState() {
+        return userState;
+    }
+
+    public void setUserState(int userState) {
+        this.userState = userState;
+    }
+
     @Expose
     int commonNum;//账户等级
 

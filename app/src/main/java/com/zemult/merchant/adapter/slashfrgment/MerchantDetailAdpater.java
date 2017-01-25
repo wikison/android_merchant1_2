@@ -166,7 +166,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         holder.tvService.setText(entity.getExperienceText());
 
 
-        switch (entity.getState()) {
+        switch (entity.getUserState()) {
             case 0:
                 drawable = mContext.getResources().getDrawable(R.mipmap.kongxian_icon);
                 // 这一步必须要做,否则不会显示.
