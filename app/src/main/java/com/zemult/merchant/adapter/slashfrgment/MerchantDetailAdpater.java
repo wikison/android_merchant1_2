@@ -3,6 +3,7 @@ package com.zemult.merchant.adapter.slashfrgment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +35,7 @@ import butterknife.ButterKnife;
  */
 public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
+    Drawable drawable;
     private boolean isNoData;
     private int mHeight;
     private int noDividerPos, noDividerPos2;
@@ -69,7 +71,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         noDividerPos = listFan.size() - 1;
         listFan.get(0).showLatest = true;
 
-        if (listAll == null || listAll.isEmpty()){
+        if (listAll == null || listAll.isEmpty()) {
             M_Userinfo userinfo = new M_Userinfo();
             userinfo.setUserId(-1);
             listAll = new ArrayList<>();
@@ -145,23 +147,51 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         if (entity.getUserId() == -1) {
             holder.tvNoData.setVisibility(View.VISIBLE);
             holder.llUser.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.tvNoData.setVisibility(View.GONE);
             holder.llUser.setVisibility(View.VISIBLE);
         }
 
-        if(entity.commentNumber > 0){
-            float starFloat = (float) entity.comment / (float)entity.commentNumber;
-            float starInt = (float)(entity.comment /entity.commentNumber);
+        if (entity.commentNumber > 0) {
+            float starFloat = (float) entity.comment / (float) entity.commentNumber;
+            float starInt = (float) (entity.comment / entity.commentNumber);
             holder.ratingbar.setStar(starFloat - starInt >= 0.5 ? starInt + 0.5f : starInt);
-        }else
+        } else
             holder.ratingbar.setStar(0);
 
-        holder.tvNum.setText("约服人次：" + entity.saleNum);
+        holder.tvNum.setText("服务" + entity.saleNum + "人次");
         holder.tvComment.setText(entity.commentNumber + "人评价");
 
         holder.ivService.setImageResource(entity.getExperienceImg());
         holder.tvService.setText(entity.getExperienceText());
+
+
+        switch (entity.getState()) {
+            case 0:
+                drawable = mContext.getResources().getDrawable(R.mipmap.kongxian_icon);
+                // 这一步必须要做,否则不会显示.
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_idle));
+                holder.tvBuyNum.setText("空闲");
+                break;
+            case 1:
+                drawable = mContext.getResources().getDrawable(R.mipmap.xiuxi_icon);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+                holder.tvBuyNum.setText("休息");
+                break;
+            case 2:
+                drawable = mContext.getResources().getDrawable(R.mipmap.manglu_icon);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
+                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_busy));
+                holder.tvBuyNum.setText("忙碌");
+                break;
+        }
+
+
     }
 
     /**
@@ -188,7 +218,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     }
 
     private void initTags(ViewHolder holder, M_Userinfo entity) {
-        if(TextUtils.isEmpty(entity.tags))
+        if (TextUtils.isEmpty(entity.tags))
             holder.rgTaService.setVisibility(View.GONE);
         else {
             holder.rgTaService.setVisibility(View.VISIBLE);
@@ -257,6 +287,9 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         View divider;
         @Bind(R.id.rg_ta_service)
         FNRadioGroup rgTaService;
+
+        @Bind(R.id.tv_buy_num)
+        TextView tvBuyNum;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

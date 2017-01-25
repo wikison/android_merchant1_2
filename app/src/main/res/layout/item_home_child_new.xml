@@ -195,7 +195,7 @@
             android:layout_height="wrap_content"
             android:text="约客x位"
             android:textSize="@dimen/font_32px"
-            android:textColor="#e6bb7c"/>
+            android:textColor="@color/font_black_46"/>
 
 
         <android.support.v7.widget.RecyclerView
