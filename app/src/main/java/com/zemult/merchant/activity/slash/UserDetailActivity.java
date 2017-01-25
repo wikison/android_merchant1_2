@@ -112,6 +112,8 @@ public class UserDetailActivity extends BaseActivity {
     RoundTextView btnService;
     @Bind(R.id.tv_level)
     TextView tvLevel;
+    @Bind(R.id.num_tv)
+    TextView numTv;
 
 
     private Context mContext;
@@ -126,6 +128,7 @@ public class UserDetailActivity extends BaseActivity {
     private M_Merchant merchant;
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+
 
     @Override
     public void setContentView() {
@@ -174,7 +177,6 @@ public class UserDetailActivity extends BaseActivity {
             llRight.setVisibility(View.VISIBLE);
             ivRight.setImageResource(R.mipmap.jubao_white_icon);
         }
-
 
 
         btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
@@ -285,11 +287,15 @@ public class UserDetailActivity extends BaseActivity {
             btnService.setVisibility(View.INVISIBLE);
             btnBuy.setVisibility(View.INVISIBLE);
             btnGift.setVisibility(View.INVISIBLE);
+            numTv.setText("");
         } else {
             btnService.setVisibility(View.VISIBLE);
             btnBuy.setVisibility(View.VISIBLE);
             btnGift.setVisibility(View.VISIBLE);
+            numTv.setText("共在"+userInfo.saleUserNum+"家商户提供服务");
         }
+
+
 
 
         switch (userInfo.getState()) {
@@ -485,14 +491,13 @@ public class UserDetailActivity extends BaseActivity {
                     return;
 
                 if (merchant != null) {
-                    Intent  merchantintent = new Intent(mContext, CreateBespeakActivity.class);
-                    merchantintent.putExtra("serviceId",userId);
+                    Intent merchantintent = new Intent(mContext, CreateBespeakActivity.class);
+                    merchantintent.putExtra("serviceId", userId);
                     Bundle mBundle = new Bundle();
-                    mBundle.putSerializable("m_merchant",merchant);
+                    mBundle.putSerializable("m_merchant", merchant);
                     merchantintent.putExtras(mBundle);
                     startActivity(merchantintent);
-                }
-                else{
+                } else {
                     intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
                     intent.putExtra("userId", userId);
                     startActivity(intent);

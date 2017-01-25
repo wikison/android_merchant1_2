@@ -183,10 +183,12 @@
 
                 <TextView
                     style="@style/text_15_black_28"
+                    android:layout_weight="1"
                     android:text="TA的服务"/>
 
                 <com.zemult.merchant.view.FixedGridView
                     android:id="@+id/gv_pic"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="36dp"
@@ -194,11 +196,22 @@
                     android:numColumns="3"
                     android:scrollbars="none"
                     android:stretchMode="columnWidth"/>
+                 <TextView
+                     android:id="@+id/num_tv"
+                     android:textColor="@color/font_black_28"
+                     android:textSize="14sp"
+                     android:layout_weight="1"
+                     android:gravity="right"
+                     android:layout_marginRight="30dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text=""/>
+
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                     android:layout_marginRight="12dp"
                     android:src="@mipmap/right_btn"/>
             </LinearLayout>
         </LinearLayout>

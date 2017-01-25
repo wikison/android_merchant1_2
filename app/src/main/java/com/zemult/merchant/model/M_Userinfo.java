@@ -83,6 +83,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     public int state;//状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)//状态(0:空闲,1:休息,2:忙碌)
 
+
     @Expose
     public int level, userLevel;//账户等级
 
