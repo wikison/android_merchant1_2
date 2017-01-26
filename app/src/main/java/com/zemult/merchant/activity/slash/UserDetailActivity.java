@@ -129,7 +129,6 @@ public class UserDetailActivity extends BaseActivity {
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
 
-
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_user_detail);
@@ -151,7 +150,6 @@ public class UserDetailActivity extends BaseActivity {
     private void initData() {
         userId = getIntent().getIntExtra(USER_ID, -1);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
-
         userName = getIntent().getStringExtra(USER_NAME);
         userHead = getIntent().getStringExtra(USER_HEAD);
 
@@ -499,6 +497,7 @@ public class UserDetailActivity extends BaseActivity {
                     startActivity(merchantintent);
                 } else {
                     intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
+                    intent.putExtra("actionFrom", "UserDetailActivity");// 管家id
                     intent.putExtra("userId", userId);
                     startActivity(intent);
                 }
@@ -525,6 +524,9 @@ public class UserDetailActivity extends BaseActivity {
                 && userId == SlashHelper.userManager().getUserId()) {
             getUserInfo();
         }
+
+
+
     }
 
     @Override

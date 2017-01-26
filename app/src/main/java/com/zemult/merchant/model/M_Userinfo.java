@@ -459,6 +459,15 @@ public class M_Userinfo implements Serializable {
     public int comment;//被评价的总星数
     @Expose
     public int commentNumber;//被评价的总次数
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     @Expose
     public String tags;//标签(多个用"，"分隔)
     @Expose

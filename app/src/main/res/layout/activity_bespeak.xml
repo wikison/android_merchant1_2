@@ -241,17 +241,33 @@
         android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="备注"
-        />
+        android:text="备注" />
+
+    <com.flyco.roundview.RoundRelativeLayout
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="5dp"
+        app:rv_strokeColor="#e1e1e1"
+        app:rv_strokeWidth="1px"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
     <EditText
         android:background="@color/white"
         android:layout_margin="8dp"
+        android:padding="5dp"
+        android:gravity="top"
         android:hint="请输入你的预定信息"
         style="@style/text_15_black_28"
         android:id="@+id/et_bespeak"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
-
+</com.flyco.roundview.RoundRelativeLayout>
 
 
     <com.flyco.roundview.RoundTextView

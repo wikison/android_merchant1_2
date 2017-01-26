@@ -140,6 +140,15 @@ public class M_Merchant implements Serializable {
     public int picNum;    //	相册数目
 
     public boolean daiqiyue;
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     @Expose
     public String tags;  // 他在商家下的标签(多个用","分隔)
 

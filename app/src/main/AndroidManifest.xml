@@ -560,9 +560,7 @@
         <activity android:name=".activity.mine.MyJoinedMerchantActivity"/>
         <activity android:name=".activity.mine.TabManageActivity"/>
         <activity android:name=".activity.mine.CustomManageActivity"/>
-        <activity android:name=".im.CreateBespeakActivity"
-            android:launchMode="singleTask"
-            />
+        <activity android:name=".im.CreateBespeakActivity"/>
         <activity android:name=".activity.mine.MerchantEnter2Activity"/>
         <activity android:name=".alipay.taskpay.AssessmentActivity"/>
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity"/>
@@ -574,9 +572,7 @@
         <activity android:name=".activity.slash.SendPresentActivity"></activity>
         <activity android:name=".activity.slash.ChoosePayReservationActivity"/>
         <activity android:name=".activity.mine.GiftAboutDetailActivity"></activity>
-        <activity android:name=".activity.slash.ChooseReservationMerchantActivity"
-            android:launchMode="singleTask"
-            />
+        <activity android:name=".activity.slash.ChooseReservationMerchantActivity"/>
         <activity android:name=".activity.slash.SendPresentSuccessActivity"/>
         <activity android:name=".activity.mine.SettingMoneyActivity"></activity>
 

@@ -53,17 +53,10 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
 
                                 <TextView
                                     android:id="@+id/tv_name"
@@ -71,20 +64,18 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/tv_level"
                                     android:ellipsize="end"
-                                    android:maxLength="11"
+                                    android:maxEms="8"
                                     android:maxLines="1"
                                     android:text="呵呵哒呵呵哒呵哒哒呵哒"
                                     android:textColor="@color/font_black_28"
                                     android:textSize="@dimen/font_34px"
                                     android:textStyle="bold"/>
-                            </LinearLayout>
 
                             <TextView
+                                android:layout_toRightOf="@+id/tv_name"
                                 android:id="@+id/tv_level"
                                 style="@style/text_12_black_28"
-                                android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginLeft="@dimen/margin_12dp"
                                 android:drawableLeft="@mipmap/tong_icon2"
@@ -94,7 +85,7 @@
                                 android:text="金牌"
                                 android:textColor="@color/bg_head"/>
 
-                        </LinearLayout>
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <TextView
