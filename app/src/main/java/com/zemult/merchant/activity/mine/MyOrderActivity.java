@@ -57,7 +57,7 @@ public class MyOrderActivity extends BaseActivity {
     }
 
     private void initData() {
-        lhTvTitle.setText("我的订单");
+        lhTvTitle.setText("我的消费单");
         page_position = getIntent().getIntExtra("page_position", 0);
     }
 

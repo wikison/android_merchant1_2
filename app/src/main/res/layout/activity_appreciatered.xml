@@ -42,15 +42,17 @@
         <TextView
             android:id="@+id/money_tv"
             android:layout_width="wrap_content"
-            android:text="XXX"
+            android:text="---"
             android:textSize="50sp"
             android:textColor="#d75847"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_toRightOf="@+id/money_tv"
             android:layout_width="wrap_content"
             android:text="元"
-            android:textSize="30sp"
+            android:layout_centerVertical="true"
+            android:textSize="50sp"
             android:textColor="#d75847"
             android:layout_alignBottom="@+id/money_tv"
             android:layout_height="wrap_content" />

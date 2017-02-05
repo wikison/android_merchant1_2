@@ -103,7 +103,7 @@ public class PayInfoActivity extends BaseActivity {
         mActivity = this;
         mImageManager = new ImageManager(mContext);
         userPayId = getIntent().getIntExtra("userPayId", 0);
-        lhTvTitle.setText("订单详情");
+        lhTvTitle.setText("记录详情");
         if (userPayId > 0)
             user_pay_info();
     }

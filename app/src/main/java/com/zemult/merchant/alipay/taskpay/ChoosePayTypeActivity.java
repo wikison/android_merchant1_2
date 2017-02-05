@@ -110,21 +110,22 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         if(null!=m_present){
+                                sendPayGiftMsg();
+                        }
+                        else{
                             if("赞赏红包".equals(merchantName)){
                                 sendPayMoneyMsg();
                             }
                             else{
-                                sendPayGiftMsg();
+                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                intent.putExtra("managerhead", managerhead);
+                                intent.putExtra("paymoney", paymoney);
+                                intent.putExtra("managername", managername);
+                                intent.putExtra("merchantName", merchantName);
+                                intent.putExtra("userPayId", userPayId);
+                                startActivityForResult(intent, 1000);
                             }
-                        }
-                        else{
-                            Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
-                            intent.putExtra("managerhead", managerhead);
-                            intent.putExtra("paymoney", paymoney);
-                            intent.putExtra("managername", managername);
-                            intent.putExtra("merchantName", merchantName);
-                            intent.putExtra("userPayId", userPayId);
-                            startActivityForResult(intent, 1000);
+
                         }
 
                     } else {

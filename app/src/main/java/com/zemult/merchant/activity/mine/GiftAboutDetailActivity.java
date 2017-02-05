@@ -2,8 +2,6 @@ package com.zemult.merchant.activity.mine;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +18,6 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -66,7 +63,7 @@ public class GiftAboutDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("订单详情");
+        lhTvTitle.setText("记录详情");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);
