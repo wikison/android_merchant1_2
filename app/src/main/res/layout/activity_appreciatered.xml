@@ -39,20 +39,22 @@
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content">
 
-        <textview
+        <TextView
             android:id="@+id/money_tv"
             android:layout_width="wrap_content"
             android:text="---"
-            android:textsize="50sp"
-            android:textcolor="#d75847"
+            android:textSize="50sp"
+            android:textColor="#d75847"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
-        <textview
-            android:layout_torightof="@+id/money_tv"
+        <TextView
+            android:layout_toRightOf="@+id/money_tv"
             android:layout_width="wrap_content"
             android:text="元"
-            android:textsize="30sp"
-            android:textcolor="#d75847"
-            android:layout_alignbottom="@+id/money_tv"
+            android:layout_centerVertical="true"
+            android:textSize="50sp"
+            android:textColor="#d75847"
+            android:layout_alignBottom="@+id/money_tv"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
