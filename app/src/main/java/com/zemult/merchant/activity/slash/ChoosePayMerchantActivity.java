@@ -24,6 +24,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.BounceScrollView;
 import com.zemult.merchant.view.FixedListView;
 
 import java.util.ArrayList;
@@ -60,6 +61,10 @@ public class ChoosePayMerchantActivity extends BaseActivity {
     FixedListView flv;
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
+    @Bind(R.id.iv)
+    ImageView iv;
+    @Bind(R.id.bsv_container)
+    BounceScrollView bsvContainer;
 
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     UserReservationSaleListRequest userReservationSaleListRequest; //判断是否有预约单

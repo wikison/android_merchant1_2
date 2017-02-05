@@ -177,7 +177,7 @@ public class UserDetailActivity extends BaseActivity {
         }
 
 
-        btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
+        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         taMerchantAdapter = new TaMerchantAdapter(mContext, listMerchant);
         flvMerchant.setAdapter(taMerchantAdapter);
@@ -282,14 +282,10 @@ public class UserDetailActivity extends BaseActivity {
 
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
-            btnService.setVisibility(View.INVISIBLE);
-            btnBuy.setVisibility(View.INVISIBLE);
-            btnGift.setVisibility(View.INVISIBLE);
+            btnBuy.setEnabled(false);
+            btnService.setEnabled(false);
             numTv.setText("");
         } else {
-            btnService.setVisibility(View.VISIBLE);
-            btnBuy.setVisibility(View.VISIBLE);
-            btnGift.setVisibility(View.VISIBLE);
             numTv.setText("共在"+userInfo.saleUserNum+"家商户提供服务");
         }
 
