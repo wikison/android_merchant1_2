@@ -53,12 +53,14 @@ public class RedRecordDetailActivity extends BaseActivity {
 
     @Override
     public void setContentView() {
+
         setContentView(R.layout.activity_redrecorddetail);
     }
 
 
     @Override
     public void init() {
+        lhTvTitle.setText("记录详情");
         mImageManager = new ImageManager(this);
         m= (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
         tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
