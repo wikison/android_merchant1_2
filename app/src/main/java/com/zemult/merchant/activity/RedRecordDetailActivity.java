@@ -48,6 +48,7 @@ public class RedRecordDetailActivity extends BaseActivity {
 
     @Override
     public void setContentView() {
+
         setContentView(R.layout.activity_redrecorddetail);
     }
 
