@@ -579,6 +579,9 @@
             />
         <activity android:name=".activity.slash.SendPresentSuccessActivity"/>
         <activity android:name=".activity.mine.SettingMoneyActivity"></activity>
+        <activity android:name=".activity.SendAppreciateRedActivity"></activity>
+        <activity android:name=".activity.ReceiveRedActivity"></activity>
+        <activity android:name=".activity.RedRecordDetailActivity"></activity>
 
     </application>
 

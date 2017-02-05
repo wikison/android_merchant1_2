@@ -1,13 +1,13 @@
-package com.zemult.merchant.activity.mine;
+package com.zemult.merchant.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -26,32 +26,25 @@ import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 /**
- * Created by admin on 2017/1/22.
+ * Created by admin on 2017/2/5.
  */
-
-public class GiftAboutDetailActivity extends BaseActivity {
+//发赞赏红包
+public class SendAppreciateRedActivity extends BaseActivity {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.tv_money)
-    TextView tvMoney;
-    @Bind(R.id.iv_user_head_present)
-    ImageView ivUserHeadPresent;
-    @Bind(R.id.tv_user_name_present)
-    TextView tvUserNamePresent;
-    @Bind(R.id.tv_trade_time_present)
-    TextView tvTradeTimePresent;
-    @Bind(R.id.tv_pay_num_present)
-    TextView tvPayNumPresent;
-    @Bind(R.id.tv_persent_name)
-    TextView tvPersentName;
-    @Bind(R.id.tv_persent_price)
-    TextView tvPersentPrice;
-    @Bind(R.id.ll_present)
-    LinearLayout llPresent;
+    @Bind(R.id.rl_head)
+    RelativeLayout rlHead;
+    @Bind(R.id.head_iv)
+    ImageView headIv;
+    @Bind(R.id.sendto_tv)
+    TextView sendtoTv;
+    @Bind(R.id.money_tv)
+    TextView moneyTv;
+
     UserPayInfoRequest userPayInfoRequest;
     M_Bill m;
     int userPayId;
@@ -61,18 +54,19 @@ public class GiftAboutDetailActivity extends BaseActivity {
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_giftaboutdetail);
+        setContentView(R.layout.activity_appreciatered);
     }
 
     @Override
     public void init() {
-        lhTvTitle.setText("订单详情");
+        lhTvTitle.setText("赞赏红包");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);
         userPayId = getIntent().getIntExtra("userPayId", 0);
         if (userPayId > 0)
             user_pay_info();
+
     }
 
 
@@ -98,22 +92,20 @@ public class GiftAboutDetailActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-                    imageManager.loadCircleImage(m.toUserHead,ivUserHeadPresent);
-                    tvUserNamePresent.setText(m.toUserName);
-                    tvTradeTimePresent.setText(m.createtime);
-                    tvPayNumPresent.setText(m.number);
-                    tvPersentName.setText(m.presentName+"x1");
-                    tvPersentPrice.setText(m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney));
+                    moneyTv.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                    imageManager.loadCircleImage(m.toUserHead,headIv);
+                    sendtoTv.setText("已向"+m.toUserName+"发送红包");
                 } else {
-                    ToastUtils.show(GiftAboutDetailActivity.this, ((APIM_UserBillInfo) response).info);
+                    ToastUtils.show(mActivity, ((APIM_UserBillInfo) response).info);
                 }
                 dismissPd();
             }
         });
         sendJsonRequest(userPayInfoRequest);
     }
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head_present})
+
+
+    @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -121,8 +113,7 @@ public class GiftAboutDetailActivity extends BaseActivity {
             case R.id.ll_back:
                 onBackPressed();
                 break;
-            case R.id.iv_user_head_present:
-                break;
+
         }
     }
 }
