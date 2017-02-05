@@ -541,9 +541,9 @@ public class BillInfoActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m_bill = ((APIM_UserBillInfo) response).billInfo;
                     if (m_bill.inCome == 0) {//(0:收入,1:支出)
-                        tvMoney.setText("+" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                        tvMoney.setText("+" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     } else {
-                        tvMoney.setText("-" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                        tvMoney.setText("-" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     }
 
                     if (!TextUtils.isEmpty(m_bill.toUserHead)) {
@@ -586,17 +586,17 @@ public class BillInfoActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m_bill = ((APIM_UserBillInfo) response).billInfo;
                     if (m_bill.inCome == 0) {//(0:收入,1:支出)
-                        tvMoney.setText("+" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                        tvMoney.setText("+" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     } else {
-                        tvMoney.setText("-" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
+                        tvMoney.setText("-" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     }
 
                     if (!TextUtils.isEmpty(m_bill.userHead)) {
-                        imageManager.loadCircleImage(m_bill.userHead, ivUserHeadReward);
+                        imageManager.loadCircleImage(m_bill.userHead, ivUserHeadRewardGet);
                     }
-                    tvUserNameReward.setText(m_bill.userName);
-                    tvPayNumReward.setText(m_bill.number);
-                    tvTradeTimeReward.setText(m_bill.createtime);
+                    tvUserNameRewardGet.setText(m_bill.userName);
+                    tvPayNumRewardGet.setText(m_bill.number);
+                    tvTradeTimeRewardGet.setText(m_bill.createtime);
 
                 } else {
                     ToastUtils.show(BillInfoActivity.this, ((APIM_UserBillInfo) response).info);
