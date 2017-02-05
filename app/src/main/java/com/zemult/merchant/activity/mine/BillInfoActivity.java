@@ -184,7 +184,7 @@ public class BillInfoActivity extends BaseActivity {
     private void initData() {
         billId = getIntent().getIntExtra("billId", 0);
         type = getIntent().getIntExtra("type", -1);
-        lhTvTitle.setText("消费单详情");
+        lhTvTitle.setText("账单详情");
         //类型(0:支付买单,2:支付绑定支付宝账户,3:取现,6:佣金)
         if (type == 0) {
             tvBillName.setText("交易");
