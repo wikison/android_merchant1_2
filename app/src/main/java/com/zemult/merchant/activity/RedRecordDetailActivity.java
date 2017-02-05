@@ -1,12 +1,10 @@
 package com.zemult.merchant.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
@@ -17,7 +15,6 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -57,6 +54,7 @@ public class RedRecordDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
+        lhTvTitle.setText("记录详情");
         mImageManager = new ImageManager(this);
         m= (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
         tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
