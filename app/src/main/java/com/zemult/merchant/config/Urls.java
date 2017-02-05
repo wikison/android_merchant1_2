@@ -300,6 +300,10 @@ public class Urls {
     public static String USER_BILL_INFO_PRESENT = "user_bill_info_present";
     //用户的账户明细详情-佣金类型 type=8
     public static String USER_BILL_INFO_PRESENT_EXCHANGE = "user_bill_info_present_exchange";
+    //用户的账单详情-打/赞赏类型的(type=9)
+    public static String USER_BILL_INFO_REWARD = "user_bill_info_reward";
+    //用户的账单详情-接收打/赞赏类型的(type=10)
+    public static String USER_BILL_INFO_REWARD_GET = "user_bill_info_reward_get";
 
     //商家的账户明细详情
     public static String MERCHANT_BILL_INFO = "merchant_bill_info.do";
