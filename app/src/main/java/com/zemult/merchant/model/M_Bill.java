@@ -96,6 +96,7 @@ public class M_Bill {
     public int isComment; //是否评价(0:否,1:是)
     @Expose
     public int comment; //评分
+
     public String getCommissionMoney() {
         return Convert.getMoneyString(commissionMoney);
     }
