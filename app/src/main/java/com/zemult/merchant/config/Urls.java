@@ -4,8 +4,8 @@ package com.zemult.merchant.config;
  * Created by Wikison on 2016/3/31.
  */
 public class Urls {
-//    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
-    public static String BASIC_URL = "http://server.54xiegang.com/dzyx_test/inter_json/";
+    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
+//    public static String BASIC_URL = "http://server.54xiegang.com/dzyx_test/inter_json/";
 
     //验证码
     public static String COMMON_GETCODE = "common_getcode.do";
@@ -545,8 +545,4 @@ public class Urls {
     public static String SERVICEXIEYI="http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
     // 通过预约单快捷生成支付买单(1)
     public static String USER_RESERVATION_PAY_ADD = "user_reservation_pay_add";
-    // 获取打赏的金额种类
-    public static String COMMON_REWARD = "common_reward";
-    //用户打/赞赏-生成支付单（支付宝）
-    public static String USER_REWARD_PAY_ADD="user_reward_pay_add";
 }

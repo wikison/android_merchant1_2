@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -129,6 +128,7 @@ public class UserDetailActivity extends BaseActivity {
     private M_Merchant merchant;
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+    int merchantNum = 0;
 
     @Override
     public void setContentView() {
@@ -178,7 +178,7 @@ public class UserDetailActivity extends BaseActivity {
         }
 
 
-        btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
+        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         taMerchantAdapter = new TaMerchantAdapter(mContext, listMerchant);
         flvMerchant.setAdapter(taMerchantAdapter);
@@ -281,20 +281,15 @@ public class UserDetailActivity extends BaseActivity {
             tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
 
+        merchantNum = userInfo.saleUserNum;
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
-            btnService.setVisibility(View.INVISIBLE);
-            btnBuy.setVisibility(View.INVISIBLE);
-            btnGift.setVisibility(View.INVISIBLE);
+            btnBuy.setEnabled(false);
+            btnService.setEnabled(false);
             numTv.setText("");
         } else {
-            btnService.setVisibility(View.VISIBLE);
-            btnBuy.setVisibility(View.VISIBLE);
-            btnGift.setVisibility(View.VISIBLE);
-            numTv.setText("共在"+userInfo.saleUserNum+"家商户提供服务");
+            numTv.setText("共在" + userInfo.saleUserNum + "家商户提供服务");
         }
-
-
 
 
         switch (userInfo.getState()) {
@@ -460,9 +455,12 @@ public class UserDetailActivity extends BaseActivity {
                 doReport();
                 break;
             case R.id.ll_photo:
-                intent = new Intent(mContext, TAMerchantListActivity.class);
-                intent.putExtra(USER_ID, userId);
-                startActivity(intent);
+                if (merchantNum > 0) {
+                    intent = new Intent(mContext, TAMerchantListActivity.class);
+                    intent.putExtra(USER_ID, userId);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.tv_phone:
                 call();
@@ -527,14 +525,6 @@ public class UserDetailActivity extends BaseActivity {
             getUserInfo();
         }
 
-
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
