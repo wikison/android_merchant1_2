@@ -2,6 +2,7 @@ package com.zemult.merchant.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class ReceiveRedActivity extends BaseActivity {
     private Context mContext;
     private Activity mActivity;
     protected ImageManager mImageManager;
+
 
 
     @Override
@@ -124,6 +126,9 @@ public class ReceiveRedActivity extends BaseActivity {
             case R.id.lh_btn_rightiamge:
                 break;
             case R.id.tv_seeMore:
+                Intent it = new Intent(mContext,RedRecordDetailActivity.class);
+                it.putExtra(RedRecordDetailActivity.INTENT_INFO,m);
+                startActivity(it);
                 break;
         }
     }
