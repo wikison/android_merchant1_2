@@ -50,7 +50,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         //XieGang__d00_2016-06-18_v6.2.0.apk
-                        def fileName = "Yovoll_${releaseTime()}_${defaultConfig.versionName}.apk"
+                        def fileName = "Yovoll_${variant.productFlavors[0].name}_${releaseTime()}_${defaultConfig.versionName}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
@@ -71,9 +71,9 @@ android {
 
 
     productFlavors {
-        d00 {}
-//        d01 {}
-//        d02 {}
+        d00 {}//360
+//        d01 {}//应用宝
+//        d02 {}//百度
     }
 
     productFlavors.all { flavor ->

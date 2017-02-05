@@ -21,6 +21,7 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
+import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -128,7 +128,7 @@ public class UserDetailActivity extends BaseActivity {
     private M_Merchant merchant;
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
-
+    int merchantNum = 0;
 
     @Override
     public void setContentView() {
@@ -151,7 +151,6 @@ public class UserDetailActivity extends BaseActivity {
     private void initData() {
         userId = getIntent().getIntExtra(USER_ID, -1);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
-
         userName = getIntent().getStringExtra(USER_NAME);
         userHead = getIntent().getStringExtra(USER_HEAD);
 
@@ -179,7 +178,7 @@ public class UserDetailActivity extends BaseActivity {
         }
 
 
-        btnBuy.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
+        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
         taMerchantAdapter = new TaMerchantAdapter(mContext, listMerchant);
         flvMerchant.setAdapter(taMerchantAdapter);
@@ -282,20 +281,15 @@ public class UserDetailActivity extends BaseActivity {
             tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
 
+        merchantNum = userInfo.saleUserNum;
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
-            btnService.setVisibility(View.INVISIBLE);
-            btnBuy.setVisibility(View.INVISIBLE);
-            btnGift.setVisibility(View.INVISIBLE);
+            btnBuy.setEnabled(false);
+            btnService.setEnabled(false);
             numTv.setText("");
         } else {
-            btnService.setVisibility(View.VISIBLE);
-            btnBuy.setVisibility(View.VISIBLE);
-            btnGift.setVisibility(View.VISIBLE);
-            numTv.setText("共在"+userInfo.saleUserNum+"家商户提供服务");
+            numTv.setText("共在" + userInfo.saleUserNum + "家商户提供服务");
         }
-
-
 
 
         switch (userInfo.getState()) {
@@ -461,9 +455,12 @@ public class UserDetailActivity extends BaseActivity {
                 doReport();
                 break;
             case R.id.ll_photo:
-                intent = new Intent(mContext, TAMerchantListActivity.class);
-                intent.putExtra(USER_ID, userId);
-                startActivity(intent);
+                if (merchantNum > 0) {
+                    intent = new Intent(mContext, TAMerchantListActivity.class);
+                    intent.putExtra(USER_ID, userId);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.tv_phone:
                 call();
@@ -499,6 +496,7 @@ public class UserDetailActivity extends BaseActivity {
                     startActivity(merchantintent);
                 } else {
                     intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
+                    intent.putExtra("actionFrom", "UserDetailActivity");// 管家id
                     intent.putExtra("userId", userId);
                     startActivity(intent);
                 }
@@ -508,7 +506,8 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_gift:
                 if (noLogin(mContext))
                     return;
-                intent = new Intent(mContext, SendPresentActivity.class);
+//                intent = new Intent(mContext, SendPresentActivity.class);
+                intent = new Intent(mContext, SendRewardActivity.class);
                 intent.putExtra(USER_ID, userId);
                 intent.putExtra(USER_NAME, userName);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -525,12 +524,7 @@ public class UserDetailActivity extends BaseActivity {
                 && userId == SlashHelper.userManager().getUserId()) {
             getUserInfo();
         }
+
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

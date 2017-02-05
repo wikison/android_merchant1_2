@@ -90,5 +90,7 @@ public class CommonResult {
 
     @Expose
     public String reservationId;//用户的预约单列表
+    @Expose
+    public String rewardMoney;//打赏金额（，隔开）
 
 }

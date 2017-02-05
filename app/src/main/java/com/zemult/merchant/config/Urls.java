@@ -300,6 +300,10 @@ public class Urls {
     public static String USER_BILL_INFO_PRESENT = "user_bill_info_present";
     //用户的账户明细详情-佣金类型 type=8
     public static String USER_BILL_INFO_PRESENT_EXCHANGE = "user_bill_info_present_exchange";
+    //用户的账单详情-打/赞赏类型的(type=9)
+    public static String USER_BILL_INFO_REWARD = "user_bill_info_reward";
+    //用户的账单详情-接收打/赞赏类型的(type=10)
+    public static String USER_BILL_INFO_REWARD_GET = "user_bill_info_reward_get";
 
     //商家的账户明细详情
     public static String MERCHANT_BILL_INFO = "merchant_bill_info.do";
@@ -541,4 +545,8 @@ public class Urls {
     public static String SERVICEXIEYI="http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
     // 通过预约单快捷生成支付买单(1)
     public static String USER_RESERVATION_PAY_ADD = "user_reservation_pay_add";
+    // 用户打/赞赏-生成支付单（支付宝）
+    public static String USER_REWARD_PAY_ADD = "user_reward_pay_add";
+    // 打赏种类
+    public static String COMMON_REWARD = "common_reward";
 }

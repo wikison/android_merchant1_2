@@ -17,6 +17,8 @@ import com.zemult.merchant.aip.mine.UserBillInfoCommissionRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPayRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPresentExchangeRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoPresentRequest;
+import com.zemult.merchant.aip.mine.UserBillInfoRewardGetRequest;
+import com.zemult.merchant.aip.mine.UserBillInfoRewardRequest;
 import com.zemult.merchant.aip.mine.UserBillInfoWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.M_Bill;
@@ -139,6 +141,26 @@ public class BillInfoActivity extends BaseActivity {
     ListView lv;
     @Bind(R.id.ll_present_exchange)
     LinearLayout llPresentExchange;
+    @Bind(R.id.iv_user_head_reward)
+    ImageView ivUserHeadReward;
+    @Bind(R.id.tv_user_name_reward)
+    TextView tvUserNameReward;
+    @Bind(R.id.tv_trade_time_reward)
+    TextView tvTradeTimeReward;
+    @Bind(R.id.tv_pay_num_reward)
+    TextView tvPayNumReward;
+    @Bind(R.id.ll_reward)
+    LinearLayout llReward;
+    @Bind(R.id.iv_user_head_reward_get)
+    ImageView ivUserHeadRewardGet;
+    @Bind(R.id.tv_user_name_reward_get)
+    TextView tvUserNameRewardGet;
+    @Bind(R.id.tv_trade_time_reward_get)
+    TextView tvTradeTimeRewardGet;
+    @Bind(R.id.tv_pay_num_reward_get)
+    TextView tvPayNumRewardGet;
+    @Bind(R.id.ll_reward_get)
+    LinearLayout llRewardGet;
 
     UserBillInfoPayRequest userBillInfoPayRequest;
     UserBillInfoBandRequest userBillInfoBandRequest;
@@ -200,6 +222,18 @@ public class BillInfoActivity extends BaseActivity {
             tvState.setText("");
             llPresentExchange.setVisibility(View.VISIBLE);
             user_bill_info_present_exchange();
+        }
+        if (type == 9) {
+            tvBillName.setText("赞赏红包");
+            tvState.setText("");
+            llReward.setVisibility(View.VISIBLE);
+            user_bill_info_reward();
+        }
+        if (type == 10) {
+            tvBillName.setText("赞赏红包");
+            tvState.setText("");
+            llRewardGet.setVisibility(View.VISIBLE);
+            user_bill_info_reward_get();
         }
     }
 
@@ -468,7 +502,7 @@ public class BillInfoActivity extends BaseActivity {
                         tvMoney.setText("-" + (m_bill.allPrice == 0 ? "0.00" : Convert.getMoneyString(m_bill.allPrice)));
                     }
 
-                    if(m_bill.presentList != null && !m_bill.presentList.isEmpty()){
+                    if (m_bill.presentList != null && !m_bill.presentList.isEmpty()) {
                         lv.setAdapter(new PresentExchangeAdapter(BillInfoActivity.this, m_bill.presentList));
                     }
                     tvPayNumPresentExchange.setText(m_bill.number);
@@ -481,6 +515,96 @@ public class BillInfoActivity extends BaseActivity {
             }
         });
         sendJsonRequest(exchangeRequest);
+    }
+
+    //type=9
+    private UserBillInfoRewardRequest rewardRequest;
+
+    private void user_bill_info_reward() {
+        showPd();
+        if (rewardRequest != null) {
+            rewardRequest.cancel();
+        }
+
+        UserBillInfoRewardRequest.Input input = new UserBillInfoRewardRequest.Input();
+        input.billId = billId;
+
+        input.convertJosn();
+        rewardRequest = new UserBillInfoRewardRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserBillInfo) response).status == 1) {
+                    m_bill = ((APIM_UserBillInfo) response).billInfo;
+                    if (m_bill.inCome == 0) {//(0:收入,1:支出)
+                        tvMoney.setText("+" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
+                    } else {
+                        tvMoney.setText("-" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
+                    }
+
+                    if (!TextUtils.isEmpty(m_bill.toUserHead)) {
+                        imageManager.loadCircleImage(m_bill.toUserHead, ivUserHeadReward);
+                    }
+                    tvUserNameReward.setText(m_bill.toUserName);
+                    tvPayNumReward.setText(m_bill.number);
+                    tvTradeTimeReward.setText(m_bill.createtime);
+
+                } else {
+                    ToastUtils.show(BillInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(rewardRequest);
+    }
+
+    //type=10
+    private UserBillInfoRewardGetRequest rewardGetRequest;
+
+    private void user_bill_info_reward_get() {
+        showPd();
+        if (rewardGetRequest != null) {
+            rewardGetRequest.cancel();
+        }
+
+        UserBillInfoRewardGetRequest.Input input = new UserBillInfoRewardGetRequest.Input();
+        input.billId = billId;
+
+        input.convertJosn();
+        rewardGetRequest = new UserBillInfoRewardGetRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserBillInfo) response).status == 1) {
+                    m_bill = ((APIM_UserBillInfo) response).billInfo;
+                    if (m_bill.inCome == 0) {//(0:收入,1:支出)
+                        tvMoney.setText("+" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
+                    } else {
+                        tvMoney.setText("-" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
+                    }
+
+                    if (!TextUtils.isEmpty(m_bill.userHead)) {
+                        imageManager.loadCircleImage(m_bill.userHead, ivUserHeadRewardGet);
+                    }
+                    tvUserNameRewardGet.setText(m_bill.userName);
+                    tvPayNumRewardGet.setText(m_bill.number);
+                    tvTradeTimeRewardGet.setText(m_bill.createtime);
+
+                } else {
+                    ToastUtils.show(BillInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(rewardGetRequest);
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})

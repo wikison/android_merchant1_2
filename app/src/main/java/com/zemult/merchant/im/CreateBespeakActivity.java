@@ -83,6 +83,7 @@ public class CreateBespeakActivity extends BaseActivity {
     String shopname="",ordertime="",ordername="",orderphone="",orderpeople, note;
     int merchantId;
     M_Merchant m_merchant;
+    int CHOOSEMERCHANT=100;
 
 
     @Override
@@ -97,7 +98,7 @@ public class CreateBespeakActivity extends BaseActivity {
         m_merchant=(M_Merchant)getIntent().getExtras().getSerializable("m_merchant");
         shopname=m_merchant.getName();
         merchantId=m_merchant.getMerchantId();
-        initTags(m_merchant);
+        initTags(m_merchant.tags);
         bespekShopname.setText(shopname);
 
         etCustomername.setText(SlashHelper.userManager().getUserinfo().getName());
@@ -193,11 +194,11 @@ public class CreateBespeakActivity extends BaseActivity {
     }
 
 
-    private void initTags( M_Merchant entity) {
+    private void initTags(String tags) {
         fnMyService.setChildMargin(0, 24, 24, 0);
         fnMyService.removeAllViews();
-        if (!StringUtils.isBlank(entity.tags)) {
-            List<String> tagList = new ArrayList<String>(Arrays.asList(entity.tags.split(",")));
+        if (!StringUtils.isBlank(tags)) {
+            List<String> tagList = new ArrayList<String>(Arrays.asList(tags.split(",")));
             int iShowSize = tagList.size();
             if (iShowSize > 0) {
                 fnMyService.setVisibility(View.VISIBLE);
@@ -285,7 +286,8 @@ public class CreateBespeakActivity extends BaseActivity {
             case R.id.rl_ordershopname:
                 Intent  intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
                 intent.putExtra("userId", serviceId);// 管家id
-                startActivity(intent);
+                intent.putExtra("actionFrom", "CreateBespeakActivity");
+                startActivityForResult(intent,CHOOSEMERCHANT);
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
@@ -297,6 +299,14 @@ public class CreateBespeakActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==CHOOSEMERCHANT&&resultCode==RESULT_OK){
+            initTags( data.getStringExtra("tags"));
+            bespekShopname.setText(data.getStringExtra("shopName"));
+            merchantId=data.getIntExtra("merchantId",0);
+        }
+    }
 
     final IWxCallback forwardCallBack = new IWxCallback() {
 

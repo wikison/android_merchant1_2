@@ -8,21 +8,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.umeng.fb.util.Res;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.search.SearchUserAdpater;
 import com.zemult.merchant.adapter.slash.TaMerchantChooseAdapter;
+import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.BounceScrollView;
 import com.zemult.merchant.view.FixedListView;
 
@@ -56,19 +62,21 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
     Button lhBtnRight;
     @Bind(R.id.lh_btn_rightiamge)
     Button lhBtnRightiamge;
-    @Bind(R.id.flv_can)
-    FixedListView flvCan;
-    @Bind(R.id.bsv_container)
-    BounceScrollView bsvContainer;
+    @Bind(R.id.flv)
+    FixedListView flv;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
 
     List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
+    List<M_Reservation> reservationList = new ArrayList<>();
 
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
-    TaMerchantChooseAdapter adapterCan;
+    TaMerchantChooseAdapter adapter;
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
+    String actionFrom;
 
     @Override
     public void setContentView() {
@@ -84,16 +92,30 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
     }
 
     private void initListener() {
-        adapterCan.setOnAllClickListener(new TaMerchantChooseAdapter.OnAllClickListener() {
+        adapter.setOnAllClickListener(new TaMerchantChooseAdapter.OnAllClickListener() {
             @Override
             public void onAllClick(int position) {
-                M_Merchant m_merchant= adapterCan.getItem(position);
-                Intent  intent = new Intent(mContext, CreateBespeakActivity.class);
-                intent.putExtra("serviceId",userId);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("m_merchant",m_merchant);
-                intent.putExtras(mBundle);
-                startActivity(intent);
+                M_Merchant m_merchant= adapter.getItem(position);
+                if(null!=actionFrom&&actionFrom.equals("CreateBespeakActivity")){
+                    Intent intent=new Intent();
+                    intent.putExtra("tags",m_merchant.tags);
+                    intent.putExtra("shopName",m_merchant.name);
+                    intent.putExtra("merchantId",m_merchant.merchantId);
+
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+                if(null!=actionFrom&&actionFrom.equals("UserDetailActivity")){
+                    Intent  intent = new Intent(mContext, CreateBespeakActivity.class);
+                    intent.putExtra("serviceId",userId);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable("m_merchant",m_merchant);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    finish();
+                }
+
+
             }
         });
     }
@@ -104,15 +126,13 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
 
     private void initData() {
         userId = getIntent().getIntExtra(UserDetailActivity.USER_ID, -1);
+        actionFrom=getIntent().getStringExtra("actionFrom");
         mContext = this;
         mActivity = this;
-        adapterCan = new TaMerchantChooseAdapter(mContext, merchantList);
-        flvCan.setAdapter(adapterCan);
+        adapter = new TaMerchantChooseAdapter(mContext, merchantList);
+        flv.setAdapter(adapter);
     }
 
-    /**
-     * 查看TA挂靠的商家
-     */
     private void getOtherMerchantList() {
         if (merchantOtherMerchantListRequest != null) {
             merchantOtherMerchantListRequest.cancel();
@@ -144,11 +164,14 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
         sendJsonRequest(merchantOtherMerchantListRequest);
     }
 
+
     // 填充数据
     private void fillAdapter(List<M_Merchant> list, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
+            rlNoData.setVisibility(View.VISIBLE);
         } else {
-            adapterCan.setData(list, isLoadMore);
+            rlNoData.setVisibility(View.GONE);
+            adapter.setData(list, isLoadMore);
         }
 
     }
