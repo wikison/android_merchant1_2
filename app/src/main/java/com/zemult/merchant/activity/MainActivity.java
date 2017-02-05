@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -103,7 +102,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     private TextView mineText;
     private TextView mUnread;
 
-    boolean hasOverlay=false;
+    boolean hasOverlay = false;
 
     //  private YWIMKit imkit;
     private FragmentTransaction transaction;
@@ -167,7 +166,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         initListeners();
 
 //登录IM
-        if(null!=SlashHelper.userManager().getUserinfo()){
+        if (null != SlashHelper.userManager().getUserinfo()) {
             loginHelper = LoginSampleHelper.getInstance();
             AppUtils.initIm(SlashHelper.userManager().getUserId() + "", LoginSampleHelper.APP_KEY);
             loginHelper.login_Sample(SlashHelper.userManager().getUserId() + "", SlashHelper.userManager().getUserinfo().getPassword(), LoginSampleHelper.APP_KEY, new IWxCallback() {
@@ -175,9 +174,11 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 public void onSuccess(Object... arg0) {
 //                    Log.d("MainActivity",arg0.toString());
                 }
+
                 @Override
                 public void onProgress(int arg0) {
                 }
+
                 @Override
                 public void onError(int errorCode, String errorMessage) {
                 }
@@ -482,11 +483,16 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onDisconnect(int code, String info) {
                 //没有修改密码被踢下线
-                if (code == YWLoginCode.LOGON_FAIL_KICKOFF && !SlashHelper.getSettingBoolean("isChangingPassWord")) {
+                if (code == YWLoginCode.LOGON_FAIL_KICKOFF) {
+                    if (!SlashHelper.getSettingBoolean("isChangingPassWord")) {
+                        ToastUtil.showMessage("请重新登录");
+                    } else {
+                        ToastUtil.showMessage("该账号在其他终端登录");
+                    }
+
+                } else {
                     ToastUtil.showMessage("请重新登录");
-                }else{
-                    //在其它终端登录，当前用户被踢下线
-                    ToastUtil.showMessage("该账号在其他终端登录");
+
                 }
                 setTabSelection(0);
                 SlashHelper.userManager().saveUserinfo(null);
@@ -696,7 +702,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
                 transaction.commitAllowingStateLoss();
             }
-        }else{
+        } else {
             if (conversationFragment == null) {
                 conversationFragment = mIMKit.getConversationFragment();//= new MainFriendFragment() new SfriendFragment();mIMKit.getConversationFragment()   conversationFragment
                 transaction.add(R.id.content, conversationFragment);

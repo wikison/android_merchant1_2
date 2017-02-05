@@ -11,7 +11,6 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.Convert;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,7 +126,7 @@ public class TaMerchantChooseAdapter extends BaseListAdapter<M_Merchant> {
         }
 
 
-        holder.tvPerPrice.setText("人均 " + Convert.getMoneyString(m.perMoney));
+        holder.tvPerPrice.setText("人均 " + (int)m.perMoney);
         if (!StringUtils.isEmpty(m.distance)) {
             if (m.distance.length() > 3) {
                 double d = Double.valueOf(m.distance);
