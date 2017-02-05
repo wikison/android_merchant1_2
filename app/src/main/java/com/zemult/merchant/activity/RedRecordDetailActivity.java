@@ -31,8 +31,6 @@ public class RedRecordDetailActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.rl_head)
-    RelativeLayout rlHead;
     @Bind(R.id.tv_state)
     TextView tvState;
     @Bind(R.id.tv_money)

@@ -572,16 +572,16 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     else if("MONEY".equals(customizeObject.getString("tasktype"))){
                         if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家
                             Intent intent =new Intent(fragment.getActivity(),ReceiveRedActivity.class);
-                            intent.putExtra("billId",customizeObject.getString("billId"));
+                            intent.putExtra("billId",customizeObject.getInt("billId"));
                             fragment.startActivity(intent);
                         }
                         else{
                             Intent intent =new Intent(fragment.getActivity(),SendAppreciateRedActivity.class);
-                            intent.putExtra("billId",customizeObject.getString("billId"));
+                            intent.putExtra("billId",customizeObject.getInt("billId"));
                             fragment.startActivity(intent);
 
                         }
-                        ToastUtil.showMessage(customizeObject.getString("billId"));
+//                        ToastUtil.showMessage(customizeObject.getString("billId"));
                     }
 
                 } catch (JSONException e) {
