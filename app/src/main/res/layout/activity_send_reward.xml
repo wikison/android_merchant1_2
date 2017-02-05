@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/ll_bottom"
+            android:layout_below="@+id/include_layout_head">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:text="觉得TA不错，就送TA个红包吧~"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_36px"/>
+
+            <com.zemult.merchant.view.FixedGridView
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:id="@+id/gv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="12dp"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:verticalSpacing="24dp" >
+
+            </com.zemult.merchant.view.FixedGridView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:text="赞赏红包是为表示鼓励"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:text="对服务管家线下优质服务的奖励和赠与"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px"/>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View style="@style/divider"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="支付金额:"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_36px"/>
+
+            <TextView
+                android:id="@+id/tv_pay_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:textColor="#d84e43"
+                android:textSize="@dimen/font_36px"/>
+
+            <TextView
+                android:id="@+id/tv_pay"
+                android:layout_width="90dp"
+                android:layout_height="match_parent"
+                android:background="@color/font_black_999"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_36px"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

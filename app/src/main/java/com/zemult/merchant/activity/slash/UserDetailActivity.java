@@ -21,6 +21,7 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
+import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
@@ -507,7 +508,8 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_gift:
                 if (noLogin(mContext))
                     return;
-                intent = new Intent(mContext, SendPresentActivity.class);
+//                intent = new Intent(mContext, SendPresentActivity.class);
+                intent = new Intent(mContext, SendRewardActivity.class);
                 intent.putExtra(USER_ID, userId);
                 intent.putExtra(USER_NAME, userName);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
