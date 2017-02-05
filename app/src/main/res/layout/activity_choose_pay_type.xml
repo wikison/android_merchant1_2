@@ -95,6 +95,7 @@
     <View style="@style/divider12dp"/>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:background="@color/white"

@@ -115,5 +115,8 @@ public class M_Bill {
     public double allPrice;//兑换总金额
     @Expose
     public List<M_Present> presentList;//兑换礼物清单
+    @Expose
+    public String replayNote;//回复
+
 
 }

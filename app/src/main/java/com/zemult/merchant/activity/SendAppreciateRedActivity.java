@@ -36,8 +36,6 @@ public class SendAppreciateRedActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.rl_head)
-    RelativeLayout rlHead;
     @Bind(R.id.head_iv)
     ImageView headIv;
     @Bind(R.id.sendto_tv)
@@ -63,7 +61,7 @@ public class SendAppreciateRedActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);
-        userPayId = getIntent().getIntExtra("userPayId", 0);
+        userPayId = getIntent().getIntExtra("billId", 0);
         if (userPayId > 0)
             user_pay_info();
 

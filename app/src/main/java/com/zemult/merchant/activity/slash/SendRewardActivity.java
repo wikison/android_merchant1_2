@@ -65,6 +65,7 @@ public class SendRewardActivity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("赞赏红包");
+        toUserId=getIntent().getIntExtra("userId",0);//管家ID
         showPd();
         common_reward();
     }

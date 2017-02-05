@@ -41,8 +41,6 @@ public class ReceiveRedActivity extends BaseActivity {
     Button lhBtnRight;
     @Bind(R.id.lh_btn_rightiamge)
     Button lhBtnRightiamge;
-    @Bind(R.id.rl_head)
-    RelativeLayout rlHead;
     @Bind(R.id.money_tv)
     TextView moneyTv;
     @Bind(R.id.redfrom_tv)
@@ -70,7 +68,7 @@ public class ReceiveRedActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);
-        userPayId = getIntent().getIntExtra("userPayId", 0);
+        userPayId = getIntent().getIntExtra("billId", 0);
         if (userPayId > 0)
             user_pay_info();
     }

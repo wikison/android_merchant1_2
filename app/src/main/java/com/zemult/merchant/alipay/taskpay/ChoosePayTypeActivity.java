@@ -24,6 +24,7 @@ import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.SendAppreciateRedActivity;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.mine.PayPasswordManagerActivity;
 import com.zemult.merchant.activity.slash.SendPresentActivity;
@@ -109,7 +110,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                         if(null!=m_present){
-                            sendPayGiftMsg();
+                            if("赞赏红包".equals(merchantName)){
+                                sendPayMoneyMsg();
+                            }
+                            else{
+                                sendPayGiftMsg();
+                            }
                         }
                         else{
                             Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
@@ -170,7 +176,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
             imageManager.loadCircleResImage(R.mipmap.chart_liwu_icon, ivHead);
         }
         else{
-            imageManager.loadCircleImage(merchantHead, ivHead);
+            if("赞赏红包".equals(merchantName)){
+                imageManager.loadCircleResImage(R.mipmap.chart_hongbao_icon, ivHead);
+            }
+           else {
+                imageManager.loadCircleImage(merchantHead, ivHead);
+            }
         }
 
 //        if (SlashHelper.userManager().getUserinfo().getMoney() >= truepaymoney) {
@@ -190,7 +201,6 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
     private void  sendPayGiftMsg(){
         YWCustomMessageBody messageBody = new YWCustomMessageBody();
-        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
         JSONObject object = new JSONObject();
         try {
             object.put("customizeMessageType", "Task");
@@ -216,6 +226,34 @@ public class ChoosePayTypeActivity extends BaseActivity {
         Intent intent = new Intent(ChoosePayTypeActivity.this, SendPresentSuccessActivity.class);
         intent.putExtra("giftName", m_present.name);
         intent.putExtra("giftPrice", m_present.price+"");
+        startActivity(intent);
+        finish();
+    }
+
+    private void  sendPayMoneyMsg(){
+        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+        JSONObject object = new JSONObject();
+        try {
+            object.put("customizeMessageType", "Task");
+            object.put("tasktype", "MONEY");//GIFT
+            object.put("taskTitle", "赞赏红包");//AppUtils.giftDescription(m_present.name)
+            object.put("billId", userPayId+"");
+            object.put("serviceId", toUserId+"");
+            object.put("userId", SlashHelper.userManager().getUserId()+"");
+        } catch (JSONException e) {
+
+        }
+        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+        messageBody.setSummary("[送红包]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+        YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+"", imKit.getIMCore().getAppKey());
+        imKit.getConversationService()
+                .forwardMsgToContact(appContact
+                        ,message,forwardCallBack);
+//        startActivity(imKit.getChattingActivityIntent(toUserId+""));
+        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
+        intent.putExtra("billId", userPayId);
         startActivity(intent);
         finish();
 
@@ -341,21 +379,27 @@ public class ChoosePayTypeActivity extends BaseActivity {
                         } else {
                             Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                             if(null!=m_present){
-                                sendPayGiftMsg();
+                                    sendPayGiftMsg();
                             }
                             else{
-                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
-                                intent.putExtra("userPayId", userPayId);
-                                intent.putExtra("payTime", ((CommonResult) response).payTime);
-                                intent.putExtra("paymoney", paymoney);
-                                intent.putExtra("managerhead", managerhead);
-                                intent.putExtra("managername", managername);
-                                intent.putExtra("merchantName", merchantName);
-                                startActivityForResult(intent, 1000);
-                                Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
-                                sendBroadcast(updateintent);
-                                setResult(RESULT_OK);
-                                finish();
+                                if("赞赏红包".equals(merchantName)){
+                                    sendPayMoneyMsg();
+                                }
+                                else{
+                                    Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                    intent.putExtra("userPayId", userPayId);
+                                    intent.putExtra("payTime", ((CommonResult) response).payTime);
+                                    intent.putExtra("paymoney", paymoney);
+                                    intent.putExtra("managerhead", managerhead);
+                                    intent.putExtra("managername", managername);
+                                    intent.putExtra("merchantName", merchantName);
+                                    startActivityForResult(intent, 1000);
+                                    Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
+                                    sendBroadcast(updateintent);
+                                    setResult(RESULT_OK);
+                                    finish();
+                                }
+
                             }
                         }
                     } else {

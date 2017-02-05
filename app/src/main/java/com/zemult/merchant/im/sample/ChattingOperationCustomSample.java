@@ -54,6 +54,8 @@ import com.alibaba.sdk.android.media.upload.UploadTask;
 import com.alibaba.sdk.android.media.utils.FailReason;
 import com.alibaba.wxlib.thread.WXThreadPoolMgr;
 import com.alibaba.wxlib.util.RequestPermissionUtil;
+import com.zemult.merchant.activity.ReceiveRedActivity;
+import com.zemult.merchant.activity.SendAppreciateRedActivity;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
@@ -64,6 +66,7 @@ import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.common.Constant;
 import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -565,6 +568,20 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                             fragment.startActivity(intent);
 
                         }
+                    }
+                    else if("MONEY".equals(customizeObject.getString("tasktype"))){
+                        if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家
+                            Intent intent =new Intent(fragment.getActivity(),ReceiveRedActivity.class);
+                            intent.putExtra("billId",customizeObject.getString("billId"));
+                            fragment.startActivity(intent);
+                        }
+                        else{
+                            Intent intent =new Intent(fragment.getActivity(),SendAppreciateRedActivity.class);
+                            intent.putExtra("billId",customizeObject.getString("billId"));
+                            fragment.startActivity(intent);
+
+                        }
+                        ToastUtil.showMessage(customizeObject.getString("billId"));
                     }
 
                 } catch (JSONException e) {
@@ -1143,8 +1160,12 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             if("ORDER".equals(tasktype)){//预约消息图标
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_yuyue_icon,null);
             }
-            else {//礼物消息图标
+            else if("GIFT".equals(tasktype)){
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_liwu_icon,null);
+            }
+            else {
+                headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_hongbao_icon,null);
+
             }
 
             return convertView;
