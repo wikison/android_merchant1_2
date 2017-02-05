@@ -96,7 +96,7 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(m.name))
             holder.tvName.setText(m.name);
         // 人均消费
-        holder.tvMoney.setText("人均￥" + Convert.getMoneyString(m.perMoney));
+        holder.tvMoney.setText("人均￥" + (int)(m.perMoney));
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(m.distance)) {
             if (m.distance.length() > 3) {
