@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.ToastUtil;
 
 import java.util.List;
 
@@ -85,7 +87,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
             holder.viewTop.setVisibility(View.VISIBLE);
         }
         M_Merchant entity = getItem(position);
-        initData(holder, entity);
+        initData(holder, entity, position);
 
         return convertView;
     }
@@ -96,7 +98,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
      * @param holder
      * @param entity
      */
-    private void initData(ViewHolder holder, M_Merchant entity) {
+    private void initData(ViewHolder holder, M_Merchant entity, final int position) {
         // 商家封面
         if (!TextUtils.isEmpty(entity.pic))
             mImageManager.loadUrlImageWithDefaultImg(entity.pic, holder.ivCover, "@450h", R.mipmap.merchant_default_cover);
@@ -135,11 +137,28 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         //设置适配器
         HomePeopleAdapter adapter = new HomePeopleAdapter(mContext, entity.saleUserHeads);
         holder.recyclerview.setAdapter(adapter);
+        holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(userClickListener!=null)
+                    userClickListener.onUserClick(position);
+                return true;
+            }
+        });
 
         if(entity.reviewstatus == 2)
             holder.ivQianyue.setVisibility(View.VISIBLE);
         else
             holder.ivQianyue.setVisibility(View.GONE);
+    }
+
+    public interface UserClickListener{
+        void onUserClick(int pos);
+    }
+    private UserClickListener userClickListener;
+
+    public void setUserClickListener(UserClickListener userClickListener) {
+        this.userClickListener = userClickListener;
     }
 
     static class ViewHolder {

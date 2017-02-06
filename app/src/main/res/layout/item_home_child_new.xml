@@ -202,6 +202,7 @@
 
 
         <android.support.v7.widget.RecyclerView
+            android:clickable="false"
             android:layout_alignParentLeft="true"
             android:id="@+id/recyclerview"
             android:layout_width="wrap_content"

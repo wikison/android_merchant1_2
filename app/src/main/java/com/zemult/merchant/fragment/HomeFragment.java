@@ -196,6 +196,14 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 startActivity(intent);
             }
         });
+        mAdapter.setUserClickListener(new HomeChildNewAdapter.UserClickListener() {
+            @Override
+            public void onUserClick(int position) {
+                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position).merchantId);
+                startActivity(intent);
+            }
+        });
         smoothListView.setOnScrollListener(new SmoothListView.OnSmoothScrollListener() {
             @Override
             public void onSmoothScrolling(View view) {

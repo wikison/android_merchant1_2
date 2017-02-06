@@ -529,7 +529,7 @@
         <activity android:name=".activity.mine.BusinessAccountDetailActivity" />
         <activity android:name=".activity.mine.message.PayCouponListActivity" />
         <activity android:name=".activity.role.RoleTaskActivity" />
-        <activity android:name=".activity.slash.MerchantDetailActivity" />
+        <activity android:name=".activity.slash.MerchantDetailActivity" android:launchMode="singleTop" />
         <activity android:name=".activity.slash.FindPayActivity" />
         <activity android:name=".activity.mine.ClassifyActivity" />
         <activity
