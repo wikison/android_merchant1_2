@@ -257,8 +257,6 @@ public class IamYuekeActivity extends BaseActivity {
             public void onResponse(Object response) {
                 dismissPd();
                 if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(IamYuekeActivity.this, "状态设置成功");
-
                 } else {
                     ToastUtils.show(IamYuekeActivity.this, ((CommonResult) response).info);
                 }
