@@ -34,6 +34,7 @@ import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -147,13 +148,14 @@ public class AppointmentDetailActivity extends BaseActivity {
             @Override
             public void onItemClick(int position) {
                 UMImage shareImage = new UMImage(AppointmentDetailActivity.this, R.mipmap.ic_launcher);
+
                 switch (position) {
                     case SharePopwindow.WECHAT:
                         new ShareAction(AppointmentDetailActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
                                 .withText(mReservation.merchantName + "预约成功")
-                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId=" + reservationId)
+                                .withTargetUrl(Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId)
                                 .withMedia(shareImage).withTitle("预约服务")
                                 .share();
                         break;
@@ -162,7 +164,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
                                 .withText(mReservation.merchantName + "预约成功")
-                                .withTargetUrl("http://server.54xiegang.com/dzyx/share_reservation_info.do?reservationId=" + reservationId)
+                                .withTargetUrl(Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId)
                                 .withMedia(shareImage).withTitle("预约服务")
                                 .share();
                         break;
