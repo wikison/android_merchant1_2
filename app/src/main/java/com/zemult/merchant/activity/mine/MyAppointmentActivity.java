@@ -154,7 +154,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
                                         }
-                                        holder.setText(R.id.servicer_tv,fromHome? mReservation.saleUserName : "服务管家:  " + mReservation.saleUserName);
+                                        holder.setText(R.id.servicer_tv,mReservation.saleUserName);
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
 
@@ -176,7 +176,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                             });
                                         }else {
                                             holder.setViewVisible(R.id.tv_state);
-                                            holder.setViewGone(R.id.tv_buy);
+                                            holder.setViewInvisible(R.id.tv_buy);
                                             //状态(1:预约成功,2:已支付,3:预约结束)
                                             if (mReservation.state == 1) {
                                                 //tv_state
