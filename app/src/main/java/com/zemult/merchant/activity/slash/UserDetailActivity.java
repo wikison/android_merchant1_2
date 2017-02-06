@@ -21,7 +21,6 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
-import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
@@ -114,6 +113,8 @@ public class UserDetailActivity extends BaseActivity {
     TextView tvLevel;
     @Bind(R.id.num_tv)
     TextView numTv;
+    @Bind(R.id.iv_phone)
+    ImageView ivPhone;
 
 
     private Context mContext;
@@ -266,12 +267,16 @@ public class UserDetailActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userInfo.getName()))
             tvName.setText(userInfo.getName());
         // 电话
-        tvPhone.setText(userInfo.getPhoneNum());
         if (!TextUtils.isEmpty(userInfo.getPhoneNum())) {
             if (userInfo.getIsOpen() == 1) {
-                llPhone.setVisibility(View.VISIBLE);
-            } else
-                llPhone.setVisibility(View.GONE);
+                ivPhone.setVisibility(View.VISIBLE);
+                tvPhone.setText(userInfo.getPhoneNum());
+                tvPhone.setTextColor(getResources().getColor(R.color.font_main));
+            } else {
+                ivPhone.setVisibility(View.GONE);
+                tvPhone.setText("未公开");
+                tvPhone.setTextColor(getResources().getColor(R.color.font_black_999));
+            }
         }
 
         tvLevel.setText(userInfo.getExperienceText());

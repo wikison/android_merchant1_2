@@ -135,8 +135,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:gravity="center_vertical">
+                    android:layout_height="46dp">
 
                     <TextView
                         style="@style/text_15_black_28"
@@ -145,16 +144,25 @@
                         android:layout_centerVertical="true"
                         android:text="电话号码"/>
 
+
+                    <ImageView
+                        android:id="@+id/iv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_6dp"
+                        android:layout_toLeftOf="@+id/tv_phone"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/dianhua_icon"/>
+
                     <TextView
                         android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:drawableLeft="@mipmap/dianhua_icon"
-                        android:drawablePadding="6dp"
-                        android:gravity="center"
-                        android:text="你好好好好电话"
+                        android:gravity="center_vertical"
+                        android:text=""
                         android:textColor="@color/font_main"
                         android:textSize="@dimen/font_30px"/>
 
