@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_no_data"
+    <RelativeLayout
+        android:id="@+id/rl_no_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:visibility="gone"
+        android:background="@color/white">
 
         <ImageView
-            android:id="@+id/iv_placeholder_image"
-            android:layout_width="100dp"
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/zanwushuju" />
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:src="@mipmap/shenmedoumeiyou_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="什么都没有..."
+            android:textColor="@color/font_black_666"
+            android:textSize="@dimen/font_32px"/>
+
+    </RelativeLayout>
 
     <com.zemult.merchant.view.SmoothListView.SmoothListView
         android:id="@+id/sml_task"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_f2"
         android:layout_marginTop="@dimen/margin_12dp"
+        android:background="@color/bg_f2"
         android:divider="@null"
-        android:scrollbars="none" />
+        android:scrollbars="none"/>
 
 </FrameLayout>
