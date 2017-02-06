@@ -192,6 +192,10 @@ public class SearchHotActivity extends BaseActivity {
     }
 
     private void goToSearch(String key) {
+        if(TextUtils.isEmpty(key.trim())){
+            ToastUtil.showMessage("请输入关键字");
+            return;
+        }
         changeListRecentTags(key);
 
         Intent intent = new Intent(mActivity, SearchActivity.class);
