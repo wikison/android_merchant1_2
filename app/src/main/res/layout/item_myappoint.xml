@@ -50,6 +50,7 @@
         android:layout_height="40dp" />
 
         <LinearLayout
+            android:layout_toLeftOf="@+id/tv_buy"
             android:layout_toRightOf="@+id/head_iv"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"
@@ -57,6 +58,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/servicer_tv"
                 android:layout_width="wrap_content"
                 android:textSize="14sp"
@@ -64,6 +67,8 @@
                 android:layout_height="wrap_content"
                 android:text="服务管家"/>
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:id="@+id/shop_tv"
                 android:layout_width="wrap_content"
                 android:textSize="14sp"
@@ -92,11 +97,11 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            app:rv_cornerRadius="8dp"
+            app:rv_cornerRadius="12dp"
             app:rv_backgroundColor="@color/bg_head"
             android:textColor="@color/white"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:gravity="center"
             />
     </RelativeLayout>
