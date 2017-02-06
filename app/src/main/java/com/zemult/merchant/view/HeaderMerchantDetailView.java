@@ -67,7 +67,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
         if (!TextUtils.isEmpty(merchantInfo.address))
             tvAddress.setText(merchantInfo.address);
         tvNum.setText(merchantInfo.payNum + "人找人服务");
-        tvMoney.setText((int)(merchantInfo.perMoney) + "元");
+        tvMoney.setText((int)(merchantInfo.perMoney) + "");
         ivCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
