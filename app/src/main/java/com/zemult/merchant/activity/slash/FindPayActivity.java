@@ -75,7 +75,7 @@ public class FindPayActivity extends BaseActivity {
     public static final String USER_INFO = "userInfo";
     public static final String MERCHANT_ID = "merchant_id";
     // 商户订单号
-    private String ORDER_SN = "", managerhead, managername,scanMoney;
+    private String ORDER_SN = "", managerhead, managername, scanMoney;
     private int userPayId = 0;
     double paymoney = 0, truepaymoney = 0;
 
@@ -119,7 +119,7 @@ public class FindPayActivity extends BaseActivity {
         btnPay.setEnabled(false);
         btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
         etPaymoney.addTextChangedListener(watcher);
-        if(!StringUtils.isEmpty(scanMoney)){
+        if (!StringUtils.isEmpty(scanMoney)) {
             etPaymoney.setText(scanMoney);
         }
     }
@@ -157,8 +157,10 @@ public class FindPayActivity extends BaseActivity {
             input.saleUserId = userSaleId;
             input.consumeMoney = truepaymoney;
             input.money = truepaymoney;
-            if(StringUtils.isEmpty(reservationIds)){
+            if (StringUtils.isEmpty(reservationIds)) {
                 input.reservationIds = "";
+            } else {
+                input.reservationIds = reservationIds;
             }
             input.convertJosn();
 
