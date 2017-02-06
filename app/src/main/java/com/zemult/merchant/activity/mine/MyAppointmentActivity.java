@@ -267,6 +267,10 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                             holder.setViewGone(R.id.v1);
                                         }
 
+                                        holder.setText(R.id.day_tv,mReservation.reservationTime.substring(5, 10));
+                                        holder.setText(R.id.time_tv,mReservation.reservationTime.substring(11, 16));
+
+
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.head);
                                         }
