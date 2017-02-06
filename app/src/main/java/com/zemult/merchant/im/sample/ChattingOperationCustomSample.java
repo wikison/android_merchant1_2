@@ -573,6 +573,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                         if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家
                             Intent intent =new Intent(fragment.getActivity(),ReceiveRedActivity.class);
                             intent.putExtra("billId",customizeObject.getInt("billId"));
+                            intent.putExtra("userId",customizeObject.getString("userId"));
                             fragment.startActivity(intent);
                         }
                         else{

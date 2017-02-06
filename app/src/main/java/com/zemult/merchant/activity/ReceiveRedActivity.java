@@ -6,16 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.GiftAboutDetailActivity;
+import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.Convert;
@@ -50,13 +60,19 @@ public class ReceiveRedActivity extends BaseActivity {
     TextView tvSeeMore;
     @Bind(R.id.head_iv)
     ImageView headIv;
+    @Bind(R.id.btn_tks)
+    Button btnTks;
+    @Bind(R.id.et_tks)
+    EditText etTks;
+
+
     UserPayInfoRequest userPayInfoRequest;
     M_Bill m;
     int userPayId;
     private Context mContext;
     private Activity mActivity;
     protected ImageManager mImageManager;
-
+    String userId;
 
 
     @Override
@@ -71,6 +87,7 @@ public class ReceiveRedActivity extends BaseActivity {
         mActivity = this;
         mImageManager = new ImageManager(mContext);
         userPayId = getIntent().getIntExtra("billId", 0);
+        userId= getIntent().getStringExtra("userId");
         if (userPayId > 0)
             user_pay_info();
     }
@@ -112,7 +129,7 @@ public class ReceiveRedActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_rightiamge, R.id.tv_seeMore})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_rightiamge, R.id.tv_seeMore,R.id.btn_tks})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -123,6 +140,23 @@ public class ReceiveRedActivity extends BaseActivity {
                 break;
             case R.id.lh_btn_rightiamge:
                 break;
+            case R.id.btn_tks:
+               String tksMsg="";
+                if("".equals(etTks.getText().toString())){
+                    tksMsg="谢谢土豪~祝你身体棒棒哒，事业顺顺哒~红包已收到，么么哒~";
+                }
+                else{
+                    tksMsg=etTks.getText().toString();
+                }
+                YWMessage message = YWMessageChannel.createTextMessage(tksMsg);
+                YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
+                IYWContact appContact = YWContactFactory.createAPPContact(userId, imKit.getIMCore().getAppKey());
+                imKit.getConversationService()
+                        .forwardMsgToContact(appContact
+                                ,message,forwardCallBack);
+
+                finish();
+                break;
             case R.id.tv_seeMore:
                 Intent it = new Intent(mContext,RedRecordDetailActivity.class);
                 it.putExtra(RedRecordDetailActivity.INTENT_INFO,m);
@@ -131,5 +165,22 @@ public class ReceiveRedActivity extends BaseActivity {
         }
     }
 
+    final IWxCallback forwardCallBack = new IWxCallback() {
 
+        @Override
+        public void onSuccess(Object... result) {
+            Notification.showToastMsg(ReceiveRedActivity.this,"forward succeed!");
+        }
+
+        @Override
+        public void onError(int code, String info) {
+            Notification.showToastMsg(ReceiveRedActivity.this,"forward fail!");
+
+        }
+
+        @Override
+        public void onProgress(int progress) {
+
+        }
+    };
 }
