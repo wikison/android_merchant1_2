@@ -71,7 +71,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
-                    android:text="交易约客"
+                    android:text="服务管家"
                     android:textSize="15sp"/>
 
                 <LinearLayout
@@ -93,7 +93,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
-                        android:text="交易约客"/>
+                        android:text="----"/>
                 </LinearLayout>
 
             </LinearLayout>

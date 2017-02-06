@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
@@ -50,8 +50,8 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
     protected WeakReference<View> mRootView;
     @Bind(R.id.sml_task)
     SmoothListView mSmoothListView;
-    @Bind(R.id.ll_no_data)
-    LinearLayout mLinearLayoutNoData;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout mLinearLayoutNoData;
 
     private Context mContext;
     private Activity mActivity;
