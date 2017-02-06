@@ -39,6 +39,7 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
@@ -385,7 +386,7 @@ public class AppointmentDetailActivity extends BaseActivity {
 
                 break;
             case R.id.btn_service:
-                replayNote = appresultcommitEt.getText().toString();
+                replayNote = AppUtils.replaceBlank(appresultcommitEt.getText().toString().trim());
                 if (StringUtils.isEmpty(replayNote)) {
                     ToastUtil.showMessage("请输入反馈信息");
                     return;

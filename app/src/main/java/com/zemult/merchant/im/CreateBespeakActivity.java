@@ -31,6 +31,7 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -251,7 +252,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 shopname=  bespekShopname.getText().toString();
                 ordertime=  bespekTime.getText().toString();
                 pmnvSelectDeadline.getText().toString();
-                note=etBespeak.getText().toString();
+                note= AppUtils.replaceBlank(etBespeak.getText().toString());
                 ordername=etCustomername.getText().toString();
                 orderphone=etCustomerphone.getText().toString();
                 if(StringUtils.isEmpty(shopname)){
