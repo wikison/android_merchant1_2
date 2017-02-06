@@ -177,7 +177,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
      */
     @Override
     public  boolean getPullToRefreshEnabled(){
-        return true;
+        return false;
     }
      /**
      * 返回默认的群头像
