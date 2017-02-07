@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.Convert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

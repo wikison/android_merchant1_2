@@ -287,6 +287,7 @@ public class Urls {
     //获取用户挂靠的商家列表(营销经理)
     public static String USER_SALE_MERCHANTLIST = "user_sale_merchantList.do";
 
+
     //用户的账户明细详情
     public static String USER_BILL_INFO = "user_bill_info.do";
     //用户的账户明细详情-交易类型 type=0

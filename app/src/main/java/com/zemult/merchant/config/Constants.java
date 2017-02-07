@@ -104,7 +104,7 @@ public class Constants {
 
     public static final String SP_CITY = "city";
     public static final String SP_CENTER = "center";
-    public static final double MIN_WITHDRAW = 50;
+    public static final double MIN_WITHDRAW = 100;
     public static final double MAX_WITHDRAW = 10000;
     public static String QR_PREFIX = "yogous";
     public static String QR_PAY_PREFIX = "pay://doScan?";
