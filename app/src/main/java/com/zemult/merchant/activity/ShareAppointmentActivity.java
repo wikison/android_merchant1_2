@@ -1,6 +1,5 @@
 package com.zemult.merchant.activity;
 
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -63,6 +62,15 @@ public class ShareAppointmentActivity extends BaseActivity {
                 UMImage shareImage = new UMImage(ShareAppointmentActivity.this, R.mipmap.icon_launcher);
 
                 switch (position) {
+                    case SharePopwindow.SINA:
+                        new ShareAction(ShareAppointmentActivity.this)
+                                .setPlatform(SHARE_MEDIA.SINA)
+                                .setCallback(umShareListener)
+                                .withText(sharecontent)
+                                .withTargetUrl(shareurl)
+                                .withMedia(shareImage).withTitle(sharetitle)
+                                .share();
+                        break;
                     case SharePopwindow.WECHAT:
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
@@ -75,6 +83,15 @@ public class ShareAppointmentActivity extends BaseActivity {
                     case SharePopwindow.WECHAT_FRIEND:
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText(sharecontent)
+                                .withTargetUrl(shareurl)
+                                .withMedia(shareImage).withTitle(sharetitle)
+                                .share();
+                        break;
+                    case SharePopwindow.QQ:
+                        new ShareAction(ShareAppointmentActivity.this)
+                                .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
                                 .withText(sharecontent)
                                 .withTargetUrl(shareurl)

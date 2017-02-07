@@ -60,6 +60,7 @@ public class UserDetailActivity extends BaseActivity {
      * 非必传
      */
     public static final String MERCHANT_INFO = "merchantInfo";
+    public static final String MERCHANT_ID = "merchantId";
     public static final String USER_NAME = "userName"; // 用户名
     public static final String USER_HEAD = "userHead"; // 用户头像
     public static final String USER_SEX = "userSex"; // 用户性别
@@ -127,9 +128,11 @@ public class UserDetailActivity extends BaseActivity {
     private M_Userinfo userInfo;
     private String userName, userHead;
     private M_Merchant merchant;
+    private int merchantId;
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
     int merchantNum = 0;
+    boolean isFromMerchant;
 
     @Override
     public void setContentView() {
@@ -152,6 +155,12 @@ public class UserDetailActivity extends BaseActivity {
     private void initData() {
         userId = getIntent().getIntExtra(USER_ID, -1);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
+        merchantId = getIntent().getIntExtra(MERCHANT_ID, -1);
+        if (merchantId > 0) {
+            isFromMerchant = true;
+        } else {
+            isFromMerchant = false;
+        }
         userName = getIntent().getStringExtra(USER_NAME);
         userHead = getIntent().getStringExtra(USER_HEAD);
 
@@ -473,9 +482,18 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_buy:
                 if (noLogin(mContext))
                     return;
-                intent = new Intent(mContext, ChoosePayMerchantActivity.class);
-                intent.putExtra(USER_ID, userId);
-                startActivity(intent);
+                if (isFromMerchant) {
+                    intent = new Intent(mContext, FindPayActivity.class);
+                    intent.putExtra("userSaleId", userId);
+                    intent.putExtra("merchantId", merchantId);
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(mContext, ChoosePayMerchantActivity.class);
+                    intent.putExtra(USER_ID, userId);
+                    startActivity(intent);
+
+                }
+
                 break;
             case R.id.btn_contact:
                 if (noLogin(mContext))

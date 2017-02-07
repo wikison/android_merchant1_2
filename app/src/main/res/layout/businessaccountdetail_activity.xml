@@ -68,9 +68,9 @@
                             android:id="@+id/tv1111"
                             style="@style/text_15_black_28"
                             android:layout_weight="1"
-                            android:text="交易约客"/>
-
+                            android:text="服务管家"/>
                         <ImageView
+
                             android:id="@+id/managerhead_iv"
                             android:layout_width="30dp"
                             android:layout_height="30dp"

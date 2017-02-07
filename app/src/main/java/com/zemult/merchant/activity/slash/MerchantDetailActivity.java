@@ -20,7 +20,6 @@ import com.zemult.merchant.aip.slash.MerchantSaleuserListFanRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
@@ -31,7 +30,6 @@ import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -170,7 +168,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 intent.putExtra(UserDetailActivity.USER_HEAD, mAdapter.getItem(position).getUserHead());
                 intent.putExtra(UserDetailActivity.USER_SEX, mAdapter.getItem(position).getSex());
                 merchantInfo.setTags(mAdapter.getItem(position).getTags());
-                intent.putExtra("merchantInfo", merchantInfo);
+                intent.putExtra(UserDetailActivity.MERCHANT_ID, merchantId);
 
                 startActivity(intent);
             }
