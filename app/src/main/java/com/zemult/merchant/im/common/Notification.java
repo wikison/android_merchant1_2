@@ -120,7 +120,7 @@ public class Notification {
 	public static void showNotification(Context context, YWMessage p2pMsg, YWMessage tribeMsg){
 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		android.app.Notification notification = new android.app.Notification(
-				R.mipmap.ic_launcher, "新消息", System.currentTimeMillis());
+				R.mipmap.icon_launcher, "新消息", System.currentTimeMillis());
 
 		// 3.设置notification的具体参数
 		notification.flags = android.app.Notification.FLAG_AUTO_CANCEL;

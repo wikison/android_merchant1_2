@@ -50,7 +50,7 @@ public class MyPushIntentService extends UmengMessageService {
 					.setOngoing(false)
 					.setAutoCancel(true)
 					.setDefaults(Notification.DEFAULT_VIBRATE)
-					.setSmallIcon(R.mipmap.ic_launcher);//设置通知小ICON
+					.setSmallIcon(R.mipmap.icon_launcher);//设置通知小ICON
 			// after_open 必填 值为"go_app", "go_url", "go_activity", "go_custom"
 			if (msg.after_open.equals("go_app")){
 				notifyId=1;

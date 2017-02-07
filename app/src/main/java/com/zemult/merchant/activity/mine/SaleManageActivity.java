@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.android.volley.VolleyError;
 import com.umeng.socialize.ShareAction;
@@ -18,6 +18,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.utils.Log;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.minefragment.SaleMerchantAdapter;
@@ -71,6 +72,8 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     Button lhBtnRightIamge;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
     private Context mContext;
     private Activity mActivity;
@@ -82,8 +85,8 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     int page = 1;
     private SharePopwindow sharePopWindow;
     private M_Merchant merchantItem;
-    public static int RECX=111;
-    public static String REFLASH="REFLASH";
+    public static int RECX = 111;
+    public static String REFLASH = "REFLASH";
 
     @Override
     public void setContentView() {
@@ -128,11 +131,11 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, TabManageActivity.class);
-                intent.putExtra(TabManageActivity.TAG,merchant.merchantId);
-                intent.putExtra(TabManageActivity.NAME,merchant.name);
-                intent.putExtra(TabManageActivity.TAGS,merchant.tags);
-                intent.putExtra(TabManageActivity.COMEFROM,2);
-                startActivityForResult(intent,RECX);
+                intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                intent.putExtra(TabManageActivity.NAME, merchant.name);
+                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+                intent.putExtra(TabManageActivity.COMEFROM, 2);
+                startActivityForResult(intent, RECX);
             }
         });
 
@@ -189,7 +192,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                 if (null != merchantItem.head && merchantItem.head.indexOf("xiegang.oss") != -1) {
                     shareImage = new UMImage(mContext, merchantItem.head);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.ic_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
                 }
                 switch (position) {
                     case SharePopwindow.SINA:
@@ -243,7 +246,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            Log.d("plat", "platform" + platform);
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
             } else {
@@ -312,12 +315,16 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
      * 设置数据
      */
     private void fillAdapter(final List<M_Merchant> list, int maxpage, boolean isLoadMore) {
-        if (list != null && !list.isEmpty()) {
+
+        if (list == null || list.size() == 0) {
+            rlNoData.setVisibility(View.VISIBLE);
+            smoothListView.setLoadMoreEnable(false);
+        } else {
+            rlNoData.setVisibility(View.GONE);
             smoothListView.setLoadMoreEnable(page < maxpage);
             saleMerchantAdapter.setData(list, isLoadMore);
         }
     }
-
 
 
     public void userSaleMerchantDel(final M_Merchant merchant) {
@@ -377,8 +384,9 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-   if (requestCode==RECX&&resultCode==RESULT_OK)
-        onRefresh();
+        if (requestCode == RECX && resultCode == RESULT_OK)
+            onRefresh();
 
     }
+
 }

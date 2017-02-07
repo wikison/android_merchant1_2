@@ -1,7 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Gravity;
@@ -30,12 +29,9 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
-import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
-import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -51,7 +47,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -147,7 +142,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         popwindow = new SharePopwindow(AppointmentDetailActivity.this, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(AppointmentDetailActivity.this, R.mipmap.ic_launcher);
+                UMImage shareImage = new UMImage(AppointmentDetailActivity.this, R.mipmap.icon_launcher);
 
                 switch (position) {
                     case SharePopwindow.WECHAT:

@@ -97,7 +97,7 @@ public class InviteFriendActivity extends BaseActivity {
         sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(mContext, R.mipmap.ic_launcher);
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
 
                 switch (position) {
                     case SharePopwindow.SINA:
