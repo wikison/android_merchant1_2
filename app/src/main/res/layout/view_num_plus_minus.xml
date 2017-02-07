@@ -13,14 +13,14 @@
         android:clickable="true"
         android:gravity="center"
         android:text="－"
-        android:textColor="@color/white"
+        android:textColor="@color/bg_head"
         android:textSize="@dimen/font_30px"
-        app:rv_backgroundColor="@color/bg_head"
+        app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="100dp"
         app:rv_isRadiusHalfHeight="true"
         app:rv_isRippleEnable="true"
         app:rv_strokeColor="@color/bg_head"
-        app:rv_strokePressColor="@color/white"
+        app:rv_strokePressColor="@color/bg_head"
         app:rv_strokeWidth="1dp" />
 
     <com.flyco.roundview.RoundRelativeLayout
@@ -56,14 +56,14 @@
         android:clickable="true"
         android:gravity="center"
         android:text="＋"
-        android:textColor="@color/white"
+        android:textColor="@color/bg_head"
         android:textSize="@dimen/font_30px"
-        app:rv_backgroundColor="@color/bg_head"
+        app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="100dp"
         app:rv_isRadiusHalfHeight="true"
         app:rv_isRippleEnable="true"
         app:rv_strokeColor="@color/bg_head"
-        app:rv_strokePressColor="@color/white"
+        app:rv_strokePressColor="@color/bg_head"
         app:rv_strokeWidth="1dp" />
 
 </LinearLayout>

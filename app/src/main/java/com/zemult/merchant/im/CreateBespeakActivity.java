@@ -263,7 +263,7 @@ public class CreateBespeakActivity extends BaseActivity {
                     return;
                 }
 
-                if(StringUtils.isEmpty(ordertime)){
+                if(StringUtils.isEmpty(ordertime)||"请选择预约时间".equals(ordertime)){
                     ToastUtil.showMessage("请选择预约时间");
                     return;
                 }

@@ -26,6 +26,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
@@ -98,8 +99,6 @@ public class AppointmentDetailActivity extends BaseActivity {
     LinearLayout othersLl;
     @Bind(R.id.appresultcommit_et)
     EditText appresultcommitEt;
-    private SharePopwindow popwindow;
-
 
     public static String INTENT_RESERVATIONID = "intent";
     public static String INTENT_TYPE = "type";
@@ -138,34 +137,6 @@ public class AppointmentDetailActivity extends BaseActivity {
         showPd();
         userReservationInfo();
 
-
-        popwindow = new SharePopwindow(AppointmentDetailActivity.this, new SharePopwindow.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(AppointmentDetailActivity.this, R.mipmap.icon_launcher);
-
-                switch (position) {
-                    case SharePopwindow.WECHAT:
-                        new ShareAction(AppointmentDetailActivity.this)
-                                .setPlatform(SHARE_MEDIA.WEIXIN)
-                                .setCallback(umShareListener)
-                                .withText(mReservation.merchantName + "预约成功")
-                                .withTargetUrl(Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId)
-                                .withMedia(shareImage).withTitle("预约服务")
-                                .share();
-                        break;
-                    case SharePopwindow.WECHAT_FRIEND:
-                        new ShareAction(AppointmentDetailActivity.this)
-                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                .setCallback(umShareListener)
-                                .withText(mReservation.merchantName + "预约成功")
-                                .withTargetUrl(Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId)
-                                .withMedia(shareImage).withTitle("预约服务")
-                                .share();
-                        break;
-                }
-            }
-        });
 
     }
 
@@ -367,10 +338,14 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
             case R.id.invite_btn:
                 //邀请好友
-                if (popwindow.isShowing())
-                    popwindow.dismiss();
-                else
-                    popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
+                Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
+                urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId);
+                urlintent.putExtra("sharetitle","您的好友【"+SlashHelper.userManager().getUserinfo().getName()+"】@您邀您赴约");
+                urlintent.putExtra("sharecontent","您的好友【"+SlashHelper.userManager().getUserinfo().getName()+"】刚刚预定了"+mReservation.reservationTime+mReservation.merchantName+
+                "，诚挚邀请，期待您的赴约。");
+                startActivity(urlintent);
+
+
                 break;
             case R.id.jiezhang_btn:
                 //快速结账
@@ -393,32 +368,6 @@ public class AppointmentDetailActivity extends BaseActivity {
         }
     }
 
-
-    UMShareListener umShareListener = new UMShareListener() {
-        @Override
-        public void onResult(SHARE_MEDIA platform) {
-
-            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
-            popwindow.dismiss();
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            popwindow.dismiss();
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(AppointmentDetailActivity.this, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
-            popwindow.dismiss();
-        }
-    };
 
 
 }
