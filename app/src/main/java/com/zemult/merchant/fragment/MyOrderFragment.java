@@ -154,6 +154,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                             GiftAboutDetailActivity.class, new Pair<String, Integer>("userPayId", m_bill.userPayId));
                 } else if (m_bill.type == 4) {
                     Intent it = new Intent(mContext, RedRecordDetailActivity.class);
+                    it.putExtra(RedRecordDetailActivity.INTENT_FLAG,1);
                     it.putExtra(RedRecordDetailActivity.INTENT_INFO, m_bill);
                     startActivity(it);
                 }
@@ -202,6 +203,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                 }else if (m_bill.type == 4) {
                     Intent it = new Intent(mContext, RedRecordDetailActivity.class);
                     it.putExtra(RedRecordDetailActivity.INTENT_INFO, m_bill);
+                    it.putExtra(RedRecordDetailActivity.INTENT_FLAG,1);
                     startActivity(it);
                 }
 

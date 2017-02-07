@@ -1,7 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.mine.UserUnsaleMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
@@ -122,6 +120,11 @@ public class MerchantAddActivity extends BaseActivity implements SmoothListView.
                 showPd();
                 name = text;
                 merchant_searchmerchantList(false);
+            }
+
+            @Override
+            public void onClear() {
+
             }
         });
     }

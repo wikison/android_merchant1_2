@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,9 +44,14 @@ public class RedRecordDetailActivity extends BaseActivity {
     TextView tvPayTime;
     @Bind(R.id.ll_present)
     LinearLayout llPresent;
-    public static String INTENT_INFO="intent";
+    public static String INTENT_INFO = "intent";
+    public static String INTENT_FLAG = "flag";
     M_Bill m;
+    int flag;
     protected ImageManager mImageManager;
+    @Bind(R.id.from_tv)
+    TextView fromTv;
+
 
     @Override
     public void setContentView() {
@@ -57,10 +64,26 @@ public class RedRecordDetailActivity extends BaseActivity {
     public void init() {
         lhTvTitle.setText("记录详情");
         mImageManager = new ImageManager(this);
-        m= (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
-        tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-        imageManager.loadCircleImage(m.userHead,ivUserHead);
-        tvUserName.setText(m.userName);
+        m = (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
+//        if (m.type==4||m.type==3) {
+//            tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+//        } else {
+//            tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+//        }
+        flag = getIntent().getIntExtra(INTENT_FLAG, 0);
+
+        if (flag == 1) {
+            //来自消费单
+            tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+            fromTv.setText("赠送对象");
+            imageManager.loadCircleImage(m.toUserHead, ivUserHead);
+            tvUserName.setText(m.toUserName);
+        } else {
+            tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+            fromTv.setText("来自");
+            imageManager.loadCircleImage(m.userHead, ivUserHead);
+            tvUserName.setText(m.userName);
+        }
         tvTradeNumber.setText(m.number);
         tvPayTime.setText(m.createtime);
     }
@@ -76,11 +99,18 @@ public class RedRecordDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_user_head:
                 Intent it = new Intent(this, UserDetailActivity.class);
-                it.putExtra(UserDetailActivity.USER_ID,m.userId);
-                it.putExtra(UserDetailActivity.USER_NAME,m.userName);
-                it.putExtra(UserDetailActivity.USER_HEAD,m.userHead);
+                it.putExtra(UserDetailActivity.USER_ID, m.userId);
+                it.putExtra(UserDetailActivity.USER_NAME, m.userName);
+                it.putExtra(UserDetailActivity.USER_HEAD, m.userHead);
                 startActivity(it);
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

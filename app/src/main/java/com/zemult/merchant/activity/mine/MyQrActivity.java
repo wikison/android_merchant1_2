@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.QrImageUtil;
 import com.zemult.merchant.util.SlashHelper;
@@ -24,6 +25,12 @@ import butterknife.OnClick;
  * Created by wikison on 2016/6/21.
  */
 public class MyQrActivity extends BaseActivity {
+
+    @Bind(R.id.money_tv)
+    TextView moneyTv;
+    @Bind(R.id.set_btn)
+    Button setBtn;
+    String price = "";
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -44,22 +51,24 @@ public class MyQrActivity extends BaseActivity {
     ImageView ivHead;
     @Bind(R.id.tv_name)
     TextView tvName;
-    @Bind(R.id.ll_name)
-    LinearLayout llName;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
+    @Bind(R.id.iv_merchant_head)
+    ImageView ivMerchantHead;
+    @Bind(R.id.tv_merchant_name)
+    TextView tvMerchantName;
+    @Bind(R.id.ll_merchant_head)
+    LinearLayout llMerchantHead;
     @Bind(R.id.iv_qr)
     ImageView ivQr;
+    @Bind(R.id.tv_hint)
+    TextView tvHint;
 
     int userSaleId, merchantId;
     String merchantHead, merchantName;
     Bitmap bitmap;
     String strFrom = "";
     String qrInfo;
-    @Bind(R.id.money_tv)
-    TextView moneyTv;
-    @Bind(R.id.set_btn)
-    Button setBtn;
-    String price = "";
-
 
     @Override
     public void setContentView() {
@@ -85,24 +94,26 @@ public class MyQrActivity extends BaseActivity {
     private void initView() {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
+        imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        tvName.setText(SlashHelper.userManager().getUserinfo().getName());
+        tvLevel.setText(Convert.getExperienceText(SlashHelper.userManager().getUserinfo().getExperience()));
         if ("MyInfoSet".equals(strFrom)) {
             lhTvTitle.setText("我的二维码");
-            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
-            tvName.setText(SlashHelper.userManager().getUserinfo().getName());
             qrInfo = "userId=" + SlashHelper.userManager().getUserId();
             bitmap = QrImageUtil.createQRImage(Constants.QR_USER_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));
+            tvHint.setVisibility(View.VISIBLE);
         } else if ("SaleManage".equals(strFrom)) {
+            llMerchantHead.setVisibility(View.VISIBLE);
             setBtn.setVisibility(View.VISIBLE);
             lhTvTitle.setText("找我买单");
-            imageManager.loadCircleImage(merchantHead, ivHead);
-            tvName.setText(merchantName);
+            moneyTv.setVisibility(View.VISIBLE);
+            tvMerchantName.setText(merchantName);
+            tvHint.setVisibility(View.GONE);
             qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + price;
-
             bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));
         }
-
         if (bitmap != null)
             ivQr.setImageBitmap(bitmap);
     }
@@ -119,9 +130,9 @@ public class MyQrActivity extends BaseActivity {
                 if (setBtn.getText().equals("设置金额")) {
                     Intent intent = new Intent(this, SettingMoneyActivity.class);
                     startActivityForResult(intent, 111);
-                }else{
+                } else {
                     moneyTv.setText("");
-                    price="0";
+                    price = "0";
                     qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + price;
                     bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                             DensityUtil.dip2px(this, 240));
@@ -149,5 +160,12 @@ public class MyQrActivity extends BaseActivity {
             setBtn.setText("清除金额");
 
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

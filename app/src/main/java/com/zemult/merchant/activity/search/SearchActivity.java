@@ -78,6 +78,11 @@ public class SearchActivity extends BaseActivity implements SearchView.SearchVie
     }
 
     @Override
+    public void onClear() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation

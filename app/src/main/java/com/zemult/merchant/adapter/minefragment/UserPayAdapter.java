@@ -99,8 +99,8 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                             holder.tvState.setText("待评价");
                             holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                         } else {
-                            holder.tvState.setText("");
-                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
+                            holder.tvState.setText("已完成");
+                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
                         }
                     } else {
                         holder.tvState.setText("待评价");

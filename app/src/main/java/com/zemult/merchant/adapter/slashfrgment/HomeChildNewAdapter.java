@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.Convert;
-import com.zemult.merchant.util.ToastUtil;
 
 import java.util.List;
 
@@ -119,7 +117,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         }
         // 人数
         if (TextUtils.isEmpty(entity.saleUserHeads))
-            holder.tvNum.setText("暂无服务管家");
+            holder.tvNum.setText("服务管家加盟中...");
         else
             holder.tvNum.setText("服务管家" + entity.saleuserNum + "人");
 

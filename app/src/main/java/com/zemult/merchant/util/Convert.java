@@ -12,6 +12,8 @@ import android.graphics.Color;
 import android.util.Log;
 import android.util.Pair;
 
+import com.zemult.merchant.R;
+
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -236,6 +238,40 @@ public abstract class Convert {
         double d1 = (double) (Math.round(a*10000)/10000.0000000000);
         DecimalFormat df = new DecimalFormat("0.00");
         String result = df.format(d1);
+        return result;
+    }
+
+    public static String getExperienceText(double experience) {
+        String result = "";
+        if (experience < 100) {
+            result = "新手";
+        } else if (experience >= 100 && experience < 10000) {
+            result = "铜牌";
+        } else if (experience >= 10000 && experience < 100000) {
+            result = "银牌";
+        } else if (experience >= 100000 && experience < 1000000) {
+            result = "金牌";
+        } else {
+            result = "钻石";
+        }
+
+        return result;
+    }
+
+    public static int getExperienceImg(double experience) {
+        int result = 0;
+        if (experience < 100) {
+            result = R.mipmap.xinshou_icon;
+        } else if (experience >= 100 && experience < 10000) {
+            result = R.mipmap.tong_icon2;
+        } else if (experience >= 10000 && experience < 100000) {
+            result = R.mipmap.yin_icon2;
+        } else if (experience >= 100000 && experience < 1000000) {
+            result = R.mipmap.jingpai_icon2;
+        } else {
+            result = R.mipmap.demon_icon2;
+        }
+
         return result;
     }
 }
