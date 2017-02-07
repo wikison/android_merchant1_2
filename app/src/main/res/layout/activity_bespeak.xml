@@ -226,8 +226,7 @@
             android:id="@+id/tv_my_service"
             style="@style/text_14_black_28"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:text="TA的服务"/>
 
         <com.zemult.merchant.view.FNRadioGroup
