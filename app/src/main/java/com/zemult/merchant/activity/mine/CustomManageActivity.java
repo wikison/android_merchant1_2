@@ -87,6 +87,11 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
                name = text;
                 onRefresh();
             }
+
+            @Override
+            public void onClear() {
+
+            }
         });
         searchview.setStrHint("搜索");
 

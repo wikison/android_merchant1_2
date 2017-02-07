@@ -26,6 +26,7 @@ import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
@@ -200,7 +201,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL+"wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -211,7 +212,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL+"wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -221,7 +222,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL+"wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -232,7 +233,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL+"wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();

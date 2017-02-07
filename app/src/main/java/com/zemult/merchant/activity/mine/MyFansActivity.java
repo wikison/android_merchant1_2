@@ -119,6 +119,11 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                 name = text;
                 onRefresh();
             }
+
+            @Override
+            public void onClear() {
+
+            }
         });
     }
 

@@ -26,7 +26,6 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.YWContactManager;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
-import com.alibaba.mobileim.ui.contact.util.RandomNameUtil;
 import com.alibaba.mobileim.utility.ToastHelper;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
