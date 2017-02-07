@@ -104,7 +104,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
     private void initView() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("商户管理");
+        lhTvTitle.setText("我加入的商户");
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
