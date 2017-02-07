@@ -179,8 +179,8 @@ public class UserDetailActivity extends BaseActivity {
         }
 
 
-        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
-        btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 86));
+        btnContact.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 51));
+        btnGift.setWidth(DensityUtil.getWindowWidth(this) / 2 - DensityUtil.dip2px(this, 51));
         taMerchantAdapter = new TaMerchantAdapter(mContext, listMerchant);
         flvMerchant.setAdapter(taMerchantAdapter);
 

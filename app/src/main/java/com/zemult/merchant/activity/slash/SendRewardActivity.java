@@ -100,7 +100,7 @@ public class SendRewardActivity extends BaseActivity {
                                 if (!tvPay.isEnabled()) {
                                     money = Double.valueOf(adapter.getItem(position));
                                     tvPay.setEnabled(true);
-                                    tvPay.setBackgroundColor(0xffe6bc7d);
+                                    tvPay.setBackgroundColor(getResources().getColor(R.color.bg_head_red));
                                 }
 
                             }
