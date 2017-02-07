@@ -124,11 +124,16 @@ public class SearchHotActivity extends BaseActivity {
             public void onSearch(String text) {
                 goToSearch(text);
             }
+
+            @Override
+            public void onClear() {
+
+            }
         });
         mSearchView.setOnThinkingClickListener(new SearchView.OnThinkingClickListener() {
             @Override
             public void onThinkingClick(String text) {
-                if(TextUtils.isEmpty(text.trim())){
+                if (TextUtils.isEmpty(text.trim())) {
                     lv.setVisibility(View.GONE);
                     return;
                 }
@@ -192,7 +197,7 @@ public class SearchHotActivity extends BaseActivity {
     }
 
     private void goToSearch(String key) {
-        if(TextUtils.isEmpty(key.trim())){
+        if (TextUtils.isEmpty(key.trim())) {
             ToastUtil.showMessage("请输入关键字");
             return;
         }
@@ -272,6 +277,7 @@ public class SearchHotActivity extends BaseActivity {
             adapter.setData(list);
         }
     }
+
     private void common_hot_search_list() {
         {
             if (commonHotSearchList != null) {

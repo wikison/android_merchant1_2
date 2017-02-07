@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,7 +24,6 @@ import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SearchView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
-import com.zemult.merchant.view.common.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +109,11 @@ public class MerchantFullNameActivity extends BaseActivity implements SmoothList
                 showPd();
                 name = text;
                 merchant_searchmerchantList(false);
+            }
+
+            @Override
+            public void onClear() {
+
             }
         });
     }

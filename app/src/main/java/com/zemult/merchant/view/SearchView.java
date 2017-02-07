@@ -180,6 +180,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
             case R.id.search_iv_delete:
                 etInput.setText("");
                 ivDelete.setVisibility(GONE);
+                if (mListener != null) {
+                    mListener.onClear();
+                }
                 break;
             case R.id.ll_back:
             case R.id.search_btn_back:
@@ -222,6 +225,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
          * @param text 传入输入框的文本
          */
         void onSearch(String text);
+        void onClear();
     }
 
     //设置控件的输入字符最大数

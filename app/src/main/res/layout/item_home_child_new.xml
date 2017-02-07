@@ -29,12 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#e6bb7c"
-                android:textSize="@dimen/font_32px"
+                android:textSize="@dimen/font_30px"
                 android:text="商户推荐"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                />
+                android:layout_marginRight="5dp"                />
 
             <View style="@style/divider"
                 android:layout_width="12dp"
@@ -188,7 +187,7 @@
             android:id="@+id/iv_shuren"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/shu"/>
+            android:src="@mipmap/shu_icon"/>
 
         <TextView
             android:layout_alignParentRight="true"
@@ -197,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="约客x位"
-            android:textSize="@dimen/font_32px"
+            android:textSize="@dimen/font_28px"
             android:textColor="@color/font_black_46"/>
 
 
