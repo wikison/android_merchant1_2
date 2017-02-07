@@ -179,6 +179,7 @@ public class ChoosePayMerchantActivity extends BaseActivity {
                         intent.putExtra(UserDetailActivity.USER_ID, userId);
                         intent.putExtra(FindPayActivity.MERCHANT_ID, merchant.merchantId);
                         intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, merchant.name);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(ChoosePayMerchantActivity.this, FindPayActivity.class);
