@@ -192,7 +192,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                 if (null != merchantItem.head && merchantItem.head.indexOf("xiegang.oss") != -1) {
                     shareImage = new UMImage(mContext, merchantItem.head);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.ic_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
                 }
                 switch (position) {
                     case SharePopwindow.SINA:
