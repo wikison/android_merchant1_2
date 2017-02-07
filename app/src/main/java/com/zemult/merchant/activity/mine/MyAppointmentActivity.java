@@ -83,14 +83,16 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         showPd();
 
         fromHome = getIntent().getBooleanExtra("fromHome", false);
-        if(fromHome)
-            lhTvTitle.setText("预约买单");
-        else
-            lhTvTitle.setText("我的预约");
         type = getIntent().getIntExtra(INTENT_TYPE, 0);
+        if (fromHome) {
+            lhTvTitle.setText("预约买单");
+        }
+
         if (type == 0) {
+            lhTvTitle.setText("我的预约");
             userReservationList();
-        }else if(type==1){
+        } else if (type == 1) {
+            lhTvTitle.setText("预约记录");
             userSaleReservation();
         }
 
@@ -99,8 +101,8 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
                 Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, ""+mReservation.reservationId);
-                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE,type);
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, "" + mReservation.reservationId);
+                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, type);
                 startActivity(intent);
             }
         });
@@ -115,7 +117,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         }
         UserReservationListRequest.Input input = new UserReservationListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-        input.state = fromHome? 1:-1;
+        input.state = fromHome ? 1 : -1;
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的行数
         input.convertJosn();
@@ -144,21 +146,20 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                     @Override
                                     public void convert(CommonViewHolder holder, final M_Reservation mReservation, final int position) {
 
-                                        if(position==0){
+                                        if (position == 0) {
                                             holder.setViewVisible(R.id.v1);
-                                        }
-                                        else if(position>0){
+                                        } else if (position > 0) {
                                             holder.setViewGone(R.id.v1);
                                         }
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
                                         }
-                                        holder.setText(R.id.servicer_tv,mReservation.saleUserName);
+                                        holder.setText(R.id.servicer_tv, mReservation.saleUserName);
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
 
-                                        if(fromHome){
+                                        if (fromHome) {
                                             holder.setViewVisible(R.id.tv_buy);
                                             holder.setViewGone(R.id.tv_state);
 
@@ -174,7 +175,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
                                                 }
                                             });
-                                        }else {
+                                        } else {
                                             holder.setViewVisible(R.id.tv_state);
                                             holder.setViewInvisible(R.id.tv_buy);
                                             //状态(1:预约成功,2:已支付,3:预约结束)
@@ -192,8 +193,8 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
                                         }
 
-                                        holder.setText(R.id.day_tv,mReservation.reservationTime.substring(5, 10));
-                                        holder.setText(R.id.time_tv,mReservation.reservationTime.substring(11, 16));
+                                        holder.setText(R.id.day_tv, mReservation.reservationTime.substring(5, 10));
+                                        holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
 
                                     }
 
@@ -260,15 +261,14 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Reservation mReservation, final int position) {
 
-                                        if(position==0){
+                                        if (position == 0) {
                                             holder.setViewVisible(R.id.v1);
-                                        }
-                                        else if(position>0){
+                                        } else if (position > 0) {
                                             holder.setViewGone(R.id.v1);
                                         }
 
-                                        holder.setText(R.id.day_tv,mReservation.reservationTime.substring(5, 10));
-                                        holder.setText(R.id.time_tv,mReservation.reservationTime.substring(11, 16));
+                                        holder.setText(R.id.day_tv, mReservation.reservationTime.substring(5, 10));
+                                        holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
 
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
@@ -334,7 +334,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         page = 1;
         if (type == 0) {
             userReservationList();
-        }else if(type==1){
+        } else if (type == 1) {
             userSaleReservation();
         }
 
@@ -344,7 +344,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     public void onLoadMore() {
         if (type == 0) {
             userReservationList();
-        }else if(type==1){
+        } else if (type == 1) {
             userSaleReservation();
         }
 
