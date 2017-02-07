@@ -63,7 +63,7 @@ public class GiftAboutDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("记录详情");
+        lhTvTitle.setText("消费单详情");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);

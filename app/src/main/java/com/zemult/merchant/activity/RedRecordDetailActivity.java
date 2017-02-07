@@ -62,7 +62,7 @@ public class RedRecordDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("记录详情");
+        lhTvTitle.setText("消费单详情");
         mImageManager = new ImageManager(this);
         m = (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
 //        if (m.type==4||m.type==3) {
