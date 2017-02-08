@@ -121,7 +121,7 @@ public class RegisterActivity extends BaseActivity {
         tvNotNow.setMovementMethod(LinkMovementMethod.getInstance());
         tvNotNow.setText(getClickableSpanString(getResources().getString(R.string.txt_register_notnow)));
         lhTvTitle.setText(getResources().getString(R.string.btn_register));
-
+        cbAgree.setChecked(true);
 
         btnNext.setEnabled(false);
         btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);

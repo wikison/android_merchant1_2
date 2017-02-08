@@ -151,6 +151,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         merchantId = getIntent().getIntExtra(TAG, -1);
         comefrom = getIntent().getIntExtra(COMEFROM, 1);
         tvProtocol.setText(Html.fromHtml("<u>《服务管家协议》</u>"));
+        cbAgree.setChecked(true);
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
