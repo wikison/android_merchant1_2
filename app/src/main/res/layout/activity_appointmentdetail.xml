@@ -236,6 +236,7 @@
                         android:id="@+id/appresultcommit_et"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:maxLength="100"
                         android:hint="请填入预约号或包厢信息"/>
 
                 </com.flyco.roundview.RoundRelativeLayout>

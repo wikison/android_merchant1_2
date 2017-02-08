@@ -141,6 +141,7 @@
             style="@style/text_15_black_28"
             android:hint="输入您的姓名"
             android:textColor="#666666"
+            android:maxLength="15"
             android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -200,6 +201,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入手机号"
             android:gravity="right"
+            android:inputType="phone"
             android:textColor="#666666"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
@@ -270,6 +272,7 @@
         android:padding="5dp"
         android:gravity="top"
         android:hint="请输入你的预定信息"
+        android:maxLength="100"
         style="@style/text_15_black_28"
         android:id="@+id/et_bespeak"
         android:layout_width="match_parent"
