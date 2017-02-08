@@ -23,6 +23,7 @@ import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -323,8 +324,7 @@ public class FindPayActivity extends BaseActivity {
                     etPaymoney.setHint("");
                     btnPay.setEnabled(true);
                     btnPay.setBackgroundResource(R.drawable.common_selector_btn);
-                    tvMoneyRealpay.setText("￥" + etPaymoney.getText().toString());
-                    tvFuhao.setVisibility(View.VISIBLE);
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(Double.parseDouble(etPaymoney.getText().toString())));
                 }
             } else {
                 etPaymoney.setHint("请输入支付金额");
