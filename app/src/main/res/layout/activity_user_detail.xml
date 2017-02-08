@@ -302,8 +302,9 @@
             app:rv_strokeColor="@color/font_main"
             app:rv_strokeWidth="1px"/>
 
-        <com.flyco.roundview.RoundTextView
+        <Button
             android:id="@+id/btn_buy"
+            style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_above="@+id/btn_service"
@@ -314,16 +315,12 @@
             android:gravity="center"
             android:text="找TA买单"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"
-            app:rv_backgroundColor="@color/font_main"
-            app:rv_backgroundPressColor="@color/bg_ce"
-            app:rv_cornerRadius="18dp"
-            app:rv_strokeColor="@color/divider_dc"
-            app:rv_strokeWidth="1px"/>
+            android:textSize="@dimen/font_36px"/>
 
 
-        <com.flyco.roundview.RoundTextView
+        <Button
             android:id="@+id/btn_service"
+            style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_alignParentBottom="true"
@@ -333,12 +330,7 @@
             android:gravity="center"
             android:text="预约服务"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"
-            app:rv_backgroundColor="@color/font_main"
-            app:rv_backgroundPressColor="@color/bg_ce"
-            app:rv_cornerRadius="18dp"
-            app:rv_strokeColor="@color/divider_dc"
-            app:rv_strokeWidth="1px"/>
+            android:textSize="@dimen/font_36px"/>
 
     </RelativeLayout>
 </LinearLayout>

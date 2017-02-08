@@ -10,14 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserSaleUserListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.util.SlashHelper;
@@ -76,6 +77,10 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         initListener();
     }
 
+    private YWIMKit getIMkit() {
+        YWIMKit imkit = LoginSampleHelper.getInstance().getIMKit();
+        return imkit;
+    }
 
     private void initView() {
         lhTvTitle.setText("客户管理");
@@ -109,11 +114,8 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CustomManageActivity.this, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position - 1).getUserId());
-                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position - 1).getUserName());
-                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position - 1).getUserHead());
-                startActivity(intent);
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", LoginSampleHelper.APP_KEY);
+                startActivity(IMkitintent);
             }
         });
 
