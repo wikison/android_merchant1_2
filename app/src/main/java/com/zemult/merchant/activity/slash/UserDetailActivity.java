@@ -107,9 +107,9 @@ public class UserDetailActivity extends BaseActivity {
     @Bind(R.id.btn_gift)
     RoundTextView btnGift;
     @Bind(R.id.btn_buy)
-    RoundTextView btnBuy;
+    Button btnBuy;
     @Bind(R.id.btn_service)
-    RoundTextView btnService;
+    Button btnService;
     @Bind(R.id.tv_level)
     TextView tvLevel;
     @Bind(R.id.num_tv)
@@ -298,7 +298,9 @@ public class UserDetailActivity extends BaseActivity {
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
             btnBuy.setEnabled(false);
+            btnBuy.setBackgroundResource(R.drawable.next_bg_btn_select);
             btnService.setEnabled(false);
+            btnService.setBackgroundResource(R.drawable.next_bg_btn_select);
             numTv.setText("");
         } else {
             numTv.setText("共在" + userInfo.saleUserNum + "家商户提供服务");

@@ -10,14 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserSaleUserListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.util.SlashHelper;
@@ -36,7 +37,7 @@ import zema.volley.network.ResponseListener;
  * Created by admin on 2016/12/26.
  */
 
-public class CustomManageActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener{
+public class CustomManageActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -57,7 +58,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
 
 
     private int page = 1;
-    String name ="";
+    String name = "";
 
 
     UserSaleUserListRequest userSaleUserListRequest;
@@ -69,13 +70,17 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
 
     @Override
     public void init() {
-        mContext=this;
+        mContext = this;
         showPd();
         userAttractLis();
         initView();
         initListener();
     }
 
+    private YWIMKit getIMkit() {
+        YWIMKit imkit = LoginSampleHelper.getInstance().getIMKit();
+        return imkit;
+    }
 
     private void initView() {
         lhTvTitle.setText("客户管理");
@@ -84,19 +89,21 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         searchview.setSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearch(String text) {
-               name = text;
+                name = text;
                 onRefresh();
             }
 
             @Override
             public void onClear() {
+                name = "";
+                page = 1;
                 onRefresh();
             }
         });
         searchview.setStrHint("搜索");
 
 
-    smoothListView.setRefreshEnable(true);
+        smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
 
@@ -107,11 +114,8 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CustomManageActivity.this, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).getUserId());
-                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position-1).getUserName());
-                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position-1).getUserHead());
-                startActivity(intent);
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", LoginSampleHelper.APP_KEY);
+                startActivity(IMkitintent);
             }
         });
 
@@ -125,7 +129,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         }
         UserSaleUserListRequest.Input input = new UserSaleUserListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-        input.name=name;
+        input.name = name;
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的页数
 

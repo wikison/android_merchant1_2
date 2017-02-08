@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
-
 import com.zemult.merchant.activity.city.entity.City;
 
 import java.io.File;
@@ -23,9 +22,12 @@ public class DBManager {
     private static final String ASSETS_NAME = "china_cities.db";
     private static final String DB_NAME = "china_cities.db";
     private static final String TABLE_NAME = "region";
-    private static final String NAME = "FShortName";
+    private static final String TABLE_NAME_RECENT = "recent";
+    private static final String SHORT_NAME = "FShortName";
+    private static final String NAME = "FName";
     private static final String FNO = "FNo";
     private static final String PINYIN = "FPinYin";
+    private static final String CREATE_TIME = "FCreateTime";
     private static final int BUFFER_SIZE = 1024;
     private String DB_PATH;
     private Context mContext;
@@ -77,7 +79,7 @@ public class DBManager {
         List<City> result = new ArrayList<>();
         City city;
         while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(NAME));
+            String name = cursor.getString(cursor.getColumnIndex(SHORT_NAME));
             String pinyin = cursor.getString(cursor.getColumnIndex(PINYIN));
             String no = cursor.getString(cursor.getColumnIndex(FNO));
             city = new City(name, pinyin, no);
@@ -102,10 +104,10 @@ public class DBManager {
         List<City> result = new ArrayList<>();
         City city;
         while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndex(NAME));
+            String name = cursor.getString(cursor.getColumnIndex(SHORT_NAME));
             String pinyin = cursor.getString(cursor.getColumnIndex(PINYIN));
             String no = cursor.getString(cursor.getColumnIndex(FNO));
-            if(pinyin!=null){
+            if (pinyin != null) {
                 city = new City(name, pinyin, no);
                 result.add(city);
             }
@@ -113,6 +115,41 @@ public class DBManager {
         cursor.close();
         db.close();
         Collections.sort(result, new CityComparator());
+        return result;
+    }
+
+    //插入最近选择的城市
+    public void insertCity(City city) {
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME_RECENT + " where FName = '"
+                + city.getName() + "'", null);
+        if (cursor.getCount() > 0) { //
+            db.delete(TABLE_NAME_RECENT, "FName = ?", new String[]{city.getName()});
+        }
+        db.execSQL("insert into recent(FName, FPinYin, FNo, FCreateTime) values('" + city.getName() + "', '" + city.getPinyin() + "', '" + city.getNo() + "',"
+                + System.currentTimeMillis() + ")");
+        db.close();
+    }
+
+    /**
+     * 读取所有城市
+     *
+     * @return
+     */
+    public List<City> getRecentCities() {
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME_RECENT + " ORDER BY FCreateTime DESC LIMIT 3 ", null);
+        List<City> result = new ArrayList<>();
+        City city;
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndex(NAME));
+            String pinyin = cursor.getString(cursor.getColumnIndex(PINYIN));
+            String no = cursor.getString(cursor.getColumnIndex(FNO));
+            city = new City(name, pinyin, no);
+            result.add(city);
+        }
+        cursor.close();
+        db.close();
         return result;
     }
 
@@ -127,4 +164,6 @@ public class DBManager {
             return a.compareTo(b);
         }
     }
+
+
 }
