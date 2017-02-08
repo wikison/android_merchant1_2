@@ -200,6 +200,6 @@
             android:id="@+id/btn_toorder"
             style="@style/common_btn_235"
             android:layout_marginTop="@dimen/margin_36dp"
-            android:text="查看订单"/>
+            android:text="查看详情"/>
     </LinearLayout>
 </LinearLayout>

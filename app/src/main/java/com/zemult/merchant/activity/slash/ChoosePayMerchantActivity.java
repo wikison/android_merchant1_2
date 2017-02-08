@@ -128,7 +128,7 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         }
         MerchantOtherMerchantListRequest.Input input = new MerchantOtherMerchantListRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
-        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
         input.userId = userId;
         input.page = 1;
         input.rows = Constants.ROWS;

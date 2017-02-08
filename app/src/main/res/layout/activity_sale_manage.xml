@@ -13,8 +13,8 @@
         android:id="@+id/rl_no_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv"
@@ -34,16 +34,19 @@
             android:textSize="@dimen/font_32px"/>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.zemult.merchant.view.SmoothListView.SmoothListView
             android:id="@+id/smoothListView"
-            android:background="@color/bg_f2"
             android:layout_width="match_parent"
-            android:divider="@color/bg_f2"
             android:layout_height="match_parent"
+            android:background="@color/bg_f2"
+            android:divider="@color/bg_f2"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="false"
             android:scrollbars="vertical"/>
     </RelativeLayout>
 </LinearLayout>
