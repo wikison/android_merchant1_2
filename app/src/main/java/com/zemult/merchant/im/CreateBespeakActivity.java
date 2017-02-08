@@ -34,6 +34,7 @@ import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
@@ -279,6 +280,11 @@ public class CreateBespeakActivity extends BaseActivity {
                     ToastUtil.showMessage("请填写预约人电话");
                     return;
                 }
+                if(!StringMatchUtils.isMobileNO(orderphone)){
+                    ToastUtil.showMessage("请填写正确的预约人电话");
+                    return;
+                }
+
 
                 user_reservation_add();
 
@@ -292,7 +298,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-                        this, bespekTime.getText().toString(), "截止时间必须大于当前时间", 2);
+                        this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
                 dateTimePicKDialog.dateTimePicKDialog(bespekTime);
                 break;
 
