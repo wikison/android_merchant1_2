@@ -26,26 +26,28 @@ import java.util.List;
  * author zaaach on 2016/1/26.
  */
 public class CityListAdapter extends BaseAdapter {
-    private static final int VIEW_TYPE_COUNT = 3;
+    private static final int VIEW_TYPE_COUNT = 4;
 
     private Context mContext;
     private LayoutInflater inflater;
-    private List<City> mCities;
+    private List<City> mCities, recentList;
     private HashMap<String, Integer> letterIndexes;
     private String[] sections;
     private OnCityClickListener onCityClickListener;
     private int locateState = LocateState.LOCATING;
     private City locatedCity;
 
-    public CityListAdapter(Context mContext, List<City> mCities) {
+    public CityListAdapter(Context mContext, List<City> mCities, List<City> recentList) {
         this.mContext = mContext;
         this.mCities = mCities;
+        this.recentList = recentList;
         this.inflater = LayoutInflater.from(mContext);
         if (mCities == null) {
             mCities = new ArrayList<>();
         }
         mCities.add(0, new City("定位", "0", ""));
-        mCities.add(1, new City("热门", "1", ""));
+        mCities.add(1, new City("最近", "1", ""));
+        mCities.add(2, new City("热门", "2", ""));
         int size = mCities.size();
         letterIndexes = new HashMap<>();
         sections = new String[size];
@@ -150,10 +152,39 @@ public class CityListAdapter extends BaseAdapter {
                     }
                 });
                 break;
-            case 1:     //热门
+            case 1:   //最近访问城市
                 view = inflater.inflate(R.layout.view_hot_city, parent, false);
+                TextView tvRecentCategory = (TextView) view.findViewById(R.id.llc_tv_label);
+                WrapHeightGridView wgvRecent = (WrapHeightGridView) view.findViewById(R.id.gridview_hot_city);
+                tvRecentCategory.setText("最近访问城市");
+                final HotCityGridAdapter hcgaRecent = new HotCityGridAdapter(mContext, recentList);
+                wgvRecent.setAdapter(hcgaRecent);
+                wgvRecent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        if (onCityClickListener != null) {
+                            onCityClickListener.onCityClick(hcgaRecent.getItem(position));
+                        }
+                    }
+                });
+                break;
+            case 2:     //热门
+                view = inflater.inflate(R.layout.view_hot_city, parent, false);
+                TextView tvHotCategory = (TextView) view.findViewById(R.id.llc_tv_label);
+                tvHotCategory.setText("热门城市");
+                List<City> hotList = new ArrayList<>();
+                hotList.add(new City("北京", "beijing", "010"));
+                hotList.add(new City("上海", "shanghai", "021"));
+                hotList.add(new City("广州", "shanghai", "020"));
+                hotList.add(new City("深圳", "shanghai", "0755"));
+                hotList.add(new City("杭州", "shanghai", "0571"));
+                hotList.add(new City("南京", "shanghai", "025"));
+                hotList.add(new City("天津", "shanghai", "022"));
+                hotList.add(new City("武汉", "shanghai", "027"));
+                hotList.add(new City("重庆", "shanghai", "023"));
+
                 WrapHeightGridView gridView = (WrapHeightGridView) view.findViewById(R.id.gridview_hot_city);
-                final HotCityGridAdapter hotCityGridAdapter = new HotCityGridAdapter(mContext);
+                final HotCityGridAdapter hotCityGridAdapter = new HotCityGridAdapter(mContext, hotList);
                 gridView.setAdapter(hotCityGridAdapter);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -164,7 +195,7 @@ public class CityListAdapter extends BaseAdapter {
                     }
                 });
                 break;
-            case 2:     //所有
+            case 3:     //所有
                 if (view == null) {
                     view = inflater.inflate(R.layout.layout_city_list_item, parent, false);
                     holder = new CityViewHolder();

@@ -61,7 +61,7 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
     private ViewGroup emptyView;
     private CityListAdapter mCityAdapter;
     private ResultListAdapter mResultAdapter;
-    private List<City> mAllCities;
+    private List<City> mAllCities, mRecentCities;
     private DBManager dbManager;
     private AMapLocationClient mLocationClient;
     private LinearLayout llBack;
@@ -99,7 +99,7 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
 
                         // 存储到SP中
 //                        SPUtils.put(CityPickerActivity.this, Constants.SP_CITY, city.getNo());
-                        SPUtils.put(CityPickerActivity.this, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude() );
+                        SPUtils.put(CityPickerActivity.this, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude());
 
                         Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
 
@@ -119,11 +119,13 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
         dbManager = new DBManager(this);
         dbManager.copyDBFile();
         mAllCities = dbManager.getAllCities();
-        mCityAdapter = new CityListAdapter(this, mAllCities);
+        mRecentCities = dbManager.getRecentCities();
+        mCityAdapter = new CityListAdapter(this, mAllCities, mRecentCities);
         mCityAdapter.setOnCityClickListener(new CityListAdapter.OnCityClickListener() {
             @Override
             public void onCityClick(City city) {
                 back(city);
+                dbManager.insertCity(city);
             }
 
             @Override
@@ -141,7 +143,7 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
         btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(this);
 
-        llBack = (LinearLayout)relativeLayoutHead.findViewById(R.id.ll_back);
+        llBack = (LinearLayout) relativeLayoutHead.findViewById(R.id.ll_back);
         llBack.setOnClickListener(this);
 
         btnRight = (Button) relativeLayoutHead.findViewById(R.id.lh_btn_right);

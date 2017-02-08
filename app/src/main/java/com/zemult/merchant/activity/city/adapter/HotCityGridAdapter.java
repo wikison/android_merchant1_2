@@ -10,7 +10,6 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.city.entity.City;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,18 +19,9 @@ public class HotCityGridAdapter extends BaseAdapter {
     private Context mContext;
     private List<City> mCities;
 
-    public HotCityGridAdapter(Context context) {
+    public HotCityGridAdapter(Context context, List<City> cityList) {
         this.mContext = context;
-        mCities = new ArrayList<>();
-        mCities.add(new City("北京", "beijing", "010"));
-        mCities.add(new City("上海", "shanghai", "021"));
-        mCities.add(new City("广州", "shanghai", "020"));
-        mCities.add(new City("深圳", "shanghai", "0755"));
-        mCities.add(new City("杭州", "shanghai", "0571"));
-        mCities.add(new City("南京", "shanghai", "025"));
-        mCities.add(new City("天津", "shanghai", "022"));
-        mCities.add(new City("武汉", "shanghai", "027"));
-        mCities.add(new City("重庆", "shanghai", "023"));
+        this.mCities=cityList;
     }
 
     @Override
