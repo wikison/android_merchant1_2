@@ -36,7 +36,7 @@ import zema.volley.network.ResponseListener;
  * Created by admin on 2016/12/26.
  */
 
-public class CustomManageActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener{
+public class CustomManageActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -57,7 +57,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
 
 
     private int page = 1;
-    String name ="";
+    String name = "";
 
 
     UserSaleUserListRequest userSaleUserListRequest;
@@ -69,7 +69,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
 
     @Override
     public void init() {
-        mContext=this;
+        mContext = this;
         showPd();
         userAttractLis();
         initView();
@@ -84,19 +84,21 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         searchview.setSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearch(String text) {
-               name = text;
+                name = text;
                 onRefresh();
             }
 
             @Override
             public void onClear() {
+                name = "";
+                page = 1;
                 onRefresh();
             }
         });
         searchview.setStrHint("搜索");
 
 
-    smoothListView.setRefreshEnable(true);
+        smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
 
@@ -108,9 +110,9 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CustomManageActivity.this, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).getUserId());
-                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position-1).getUserName());
-                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position-1).getUserHead());
+                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position - 1).getUserId());
+                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position - 1).getUserName());
+                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position - 1).getUserHead());
                 startActivity(intent);
             }
         });
@@ -125,7 +127,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         }
         UserSaleUserListRequest.Input input = new UserSaleUserListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-        input.name=name;
+        input.name = name;
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的页数
 
