@@ -152,6 +152,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
             case R.id.rel_filter_in:
                 typefilter = 0;
                 page = 1;
+                lhTvTitle.setText("收入");
                 ivFilterAll.setVisibility(View.INVISIBLE);
                 ivFilterIn.setVisibility(View.VISIBLE);
                 ivFilterOut.setVisibility(View.INVISIBLE);
@@ -160,6 +161,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                 break;
             case R.id.rel_filter_out:
                 typefilter = 1;
+                lhTvTitle.setText("支出");
                 page = 1;
                 ivFilterAll.setVisibility(View.INVISIBLE);
                 ivFilterIn.setVisibility(View.INVISIBLE);
@@ -168,6 +170,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                 onRefresh();
                 break;
             case R.id.rel_filter_all:
+                lhTvTitle.setText("全部");
                 typefilter = -1;
                 page = 1;
                 ivFilterAll.setVisibility(View.VISIBLE);
