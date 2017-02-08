@@ -76,7 +76,7 @@ public class BusinessAccountActivity extends BaseActivity implements SmoothListV
 
     @Override
     public void init() {
-        lhTvTitle.setText("商家账户");
+        lhTvTitle.setText("商户账户");
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, -1);
         lvBusinessBill.setRefreshEnable(true);
         lvBusinessBill.setLoadMoreEnable(false);
