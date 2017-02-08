@@ -117,7 +117,6 @@ public class UserDetailActivity extends BaseActivity {
     @Bind(R.id.iv_phone)
     ImageView ivPhone;
 
-
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
