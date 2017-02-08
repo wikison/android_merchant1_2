@@ -85,7 +85,7 @@ public class AppApplication extends MultiDexApplication {
         initialize();
 
         //微信 AppID：wxff28b23674780edc       AppSecret：6381fea488c0c05f2ec9604ef0fadb56
-        PlatformConfig.setWeixin("wx0e6067b5bc878112", "89264b9cb01bfccac537343271dde3b2");
+        PlatformConfig.setWeixin("wx0e6067b5bc878112", "9802020708ca2ee7fcfb7502761d4f7c");
         //新浪微博
         PlatformConfig.setSinaWeibo("4271231474", "58e53b10dad7c485e1db09553bd3356f");
         //QQ

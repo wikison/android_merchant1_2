@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,9 @@ public class MyQrActivity extends BaseActivity {
         imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         tvName.setText(SlashHelper.userManager().getUserinfo().getName());
         tvLevel.setText(Convert.getExperienceText(SlashHelper.userManager().getUserinfo().getExperience()));
+        Drawable drawable = getResources().getDrawable(Convert.getExperienceImg(SlashHelper.userManager().getUserinfo().getExperience()));
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tvLevel.setCompoundDrawables(drawable, null, null, null);
         if ("MyInfoSet".equals(strFrom)) {
             lhTvTitle.setText("我的二维码");
             qrInfo = "userId=" + SlashHelper.userManager().getUserId();

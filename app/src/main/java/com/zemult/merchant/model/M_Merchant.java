@@ -3,6 +3,7 @@ package com.zemult.merchant.model;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -22,6 +23,8 @@ public class M_Merchant implements Serializable {
     public String distance;    //	距中心点距离(米)
     @Expose
     public int personNum;    //	参与人数
+    @Expose
+    public List<M_Merchant> merchantList;
 
     public String getPic() {
         return pic;
