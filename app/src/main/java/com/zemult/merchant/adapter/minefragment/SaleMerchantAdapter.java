@@ -128,7 +128,7 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     private void initTags(ViewHolder holder, M_Merchant m) {
-        holder.fnMyService.setChildMargin(0, 0, 24, 0);
+        holder.fnMyService.setChildMargin(0, 6, 24, 0);
         holder.fnMyService.removeAllViews();
         if (!StringUtils.isBlank(m.tags)) {
             List<String> tagList = new ArrayList<String>(Arrays.asList(m.tags.split(",")));

@@ -19,5 +19,7 @@ public class APIM_MerchantList extends CommonResult {
     @Expose
     public List<M_Merchant> merchants;
     @Expose
+    public List<M_Merchant> industryList;
+    @Expose
     public int   maxpage;//当分页获取时，最大的页数
 }

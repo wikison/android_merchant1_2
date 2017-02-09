@@ -128,7 +128,7 @@ public class ChoosePayMerchantActivity extends BaseActivity {
         }
         MerchantOtherMerchantListRequest.Input input = new MerchantOtherMerchantListRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
-        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
         input.userId = userId;
         input.page = 1;
         input.rows = Constants.ROWS;
@@ -179,6 +179,7 @@ public class ChoosePayMerchantActivity extends BaseActivity {
                         intent.putExtra(UserDetailActivity.USER_ID, userId);
                         intent.putExtra(FindPayActivity.MERCHANT_ID, merchant.merchantId);
                         intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, merchant.name);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(ChoosePayMerchantActivity.this, FindPayActivity.class);

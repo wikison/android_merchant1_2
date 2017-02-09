@@ -196,8 +196,8 @@ public class ConversationListUICustomSample extends IMConversationListUI {
      */
     @Override
     public String getCustomTopConversationColor() {
-        return "#e1f5fe";
-    }
+        return "#ffffff";
+    }//#e1f5fe
 
     @Override
     public boolean enableSearchConversations(Fragment fragment){
@@ -382,6 +382,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                     headLoadHelper.setDefaultHeadView(holder.head);
                     imageManager.loadResImage( R.mipmap.msg_pinglun_icon,holder.head);
                     name = "通知消息";
+                    LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
                 }else{
                     headLoadHelper.setDefaultHeadView(holder.head);
                     name = "这是一个自定义会话";

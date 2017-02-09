@@ -154,7 +154,28 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
                     public void onClick(DialogInterface dialog, int whichButton) {
                         timePicker.clearFocus();
                         datePicker.clearFocus();
-                        inputDate.setText(dateTime);
+                        if (isDateAfter(datePicker, timePicker)) {
+                            if (mhaslimit == 1) {
+                                if (isIn7Days(datePicker, timePicker)) {
+                                    inputDate.setText(dateTime);
+                                } else {
+                                    ToastUtil.showMessage("请选择7天以内的时间");
+                                }
+
+                            } else if (mhaslimit == 2) {
+                                if (isIn180Days(datePicker, timePicker) && isOut30Days(datePicker, timePicker)) {
+                                    inputDate.setText(dateTime);
+                                } else {
+                                    ToastUtil.showMessage("请选择大于1个月小于6个月的时间");
+                                }
+                            } else {
+                                inputDate.setText(dateTime);
+                            }
+                        }
+                        else{
+                            ToastUtil.showMessage(tipInfo);
+                        }
+
 
                     }
                 })
@@ -232,7 +253,7 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
                     ToastUtil.showMessage("请选择7天以内的时间");
                 }
             }
-            if( mhaslimit==2){
+           else if( mhaslimit==2){
                 if (isIn180Days(datePicker, timePicker)&&isOut30Days(datePicker, timePicker)) {
                     Calendar calendar = Calendar.getInstance();
 

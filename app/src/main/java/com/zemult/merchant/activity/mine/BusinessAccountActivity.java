@@ -19,6 +19,7 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.apimodel.APIM_UserBillList;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.view.RiseNumberTextView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -74,9 +75,10 @@ public class BusinessAccountActivity extends BaseActivity implements SmoothListV
 
     }
 
+
     @Override
     public void init() {
-        lhTvTitle.setText("商家账户");
+        lhTvTitle.setText("商户账户");
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, -1);
         lvBusinessBill.setRefreshEnable(true);
         lvBusinessBill.setLoadMoreEnable(false);
@@ -130,8 +132,7 @@ public class BusinessAccountActivity extends BaseActivity implements SmoothListV
                 if (((APIM_UserBillList) response).status == 1) {
                     dismissPd();
                     merchantMoney = ((APIM_UserBillList) response).money;
-                    tvMoney.setText("" + ((APIM_UserBillList) response).money);
-
+                    tvMoney.setText("" + Convert.getMoneyString(((APIM_UserBillList) response).money));
                     if (page == 1) {
                         mbillList = ((APIM_UserBillList) response).billList;
 

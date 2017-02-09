@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="单次提现金额最低为50元，最高10000元" />
+                android:text="单次提现金额最低为100元，最高10000元" />
 
             <TextView
                 style="@style/text_14_black_999"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="自动扣除提现金额2%的手续费，" />
+                android:text="自动扣除提现金额20%的手续费，" />
 
             <TextView
                 style="@style/text_14_black_999"

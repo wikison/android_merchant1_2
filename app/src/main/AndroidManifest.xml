@@ -46,7 +46,7 @@
         android:name=".app.AppApplication"
         android:allowBackup="true"
         android:enabled="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -529,7 +529,9 @@
         <activity android:name=".activity.mine.BusinessAccountDetailActivity" />
         <activity android:name=".activity.mine.message.PayCouponListActivity" />
         <activity android:name=".activity.role.RoleTaskActivity" />
-        <activity android:name=".activity.slash.MerchantDetailActivity" android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.slash.MerchantDetailActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.slash.FindPayActivity" />
         <activity android:name=".activity.mine.ClassifyActivity" />
         <activity
@@ -575,11 +577,11 @@
         <activity android:name=".activity.slash.ChooseReservationMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentSuccessActivity" />
         <activity android:name=".activity.mine.SettingMoneyActivity" />
-        <activity android:name=".activity.slash.SendRewardActivity"></activity>
-        <activity android:name=".activity.SendAppreciateRedActivity"></activity>
-        <activity android:name=".activity.ReceiveRedActivity"></activity>
-        <activity android:name=".activity.RedRecordDetailActivity"></activity>
-
+        <activity android:name=".activity.slash.SendRewardActivity" />
+        <activity android:name=".activity.SendAppreciateRedActivity" />
+        <activity android:name=".activity.ReceiveRedActivity" />
+        <activity android:name=".activity.RedRecordDetailActivity" />
+        <activity android:name=".activity.ShareAppointmentActivity"></activity>
     </application>
 
 </manifest>

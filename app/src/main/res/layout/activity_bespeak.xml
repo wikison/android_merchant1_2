@@ -45,6 +45,7 @@
             android:id="@+id/bespek_shopname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:drawablePadding="10dp"
             android:drawableRight="@mipmap/right_btn"
             />
@@ -78,6 +79,8 @@
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:id="@+id/bespek_time"
+            android:textColor="#666666"
+            android:text="请选择预约时间"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
@@ -137,11 +140,15 @@
             android:id="@+id/et_customername"
             style="@style/text_15_black_28"
             android:hint="输入您的姓名"
+            android:textColor="#666666"
+            android:maxLength="15"
+            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"/>
 
         <RadioGroup
+            android:visibility="gone"
             android:id="@+id/rg_group"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -193,6 +200,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入手机号"
+            android:gravity="right"
+            android:inputType="phone"
+            android:textColor="#666666"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 
@@ -218,8 +228,7 @@
             android:id="@+id/tv_my_service"
             style="@style/text_14_black_28"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:text="TA的服务"/>
 
         <com.zemult.merchant.view.FNRadioGroup
@@ -263,6 +272,7 @@
         android:padding="5dp"
         android:gravity="top"
         android:hint="请输入你的预定信息"
+        android:maxLength="100"
         style="@style/text_15_black_28"
         android:id="@+id/et_bespeak"
         android:layout_width="match_parent"

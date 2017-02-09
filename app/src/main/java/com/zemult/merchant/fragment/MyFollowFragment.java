@@ -148,6 +148,12 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                 name = text;
                 onRefresh();
             }
+
+            @Override
+            public void onClear() {
+                name = "";
+                onRefresh();
+            }
         });
     }
 

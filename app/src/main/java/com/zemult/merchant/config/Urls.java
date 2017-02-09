@@ -4,8 +4,9 @@ package com.zemult.merchant.config;
  * Created by Wikison on 2016/3/31.
  */
 public class Urls {
-//    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
-    public static String BASIC_URL = "http://server.54xiegang.com/dzyx_test/inter_json/";
+    //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
+    public static String URL = "http://server.54xiegang.com/dzyx_test/";
+    public static String BASIC_URL = URL + "inter_json/";
 
     //验证码
     public static String COMMON_GETCODE = "common_getcode.do";
@@ -286,6 +287,7 @@ public class Urls {
     //获取用户挂靠的商家列表(营销经理)
     public static String USER_SALE_MERCHANTLIST = "user_sale_merchantList.do";
 
+
     //用户的账户明细详情
     public static String USER_BILL_INFO = "user_bill_info.do";
     //用户的账户明细详情-交易类型 type=0
@@ -494,55 +496,55 @@ public class Urls {
     //商家入驻
     public static String MERCHANT_ADDENTITY_1_1 = "merchant_addentity_1_1";
     //获取服务人员标签
-    public static String COMMON_SERVICETAGLIST_1_1="common_serviceTagList_1_1.do";
+    public static String COMMON_SERVICETAGLIST_1_1 = "common_serviceTagList_1_1.do";
     //编辑服务标签
-    public static String USER_SALE_MERCHANT_EDIT="user_sale_merchant_edit.do";
+    public static String USER_SALE_MERCHANT_EDIT = "user_sale_merchant_edit.do";
     //获取商家申请列表(待签约)
     public static String MERCHANT_REQUEST_LIST = "merchant_requestList";
     //客户列表
-    public static String USER_SALE_USERLIST="user_sale_userList.do";
+    public static String USER_SALE_USERLIST = "user_sale_userList.do";
     //服务记录列表
-    public static String USER_SALE_PAYLIST="user_sale_payList.do";
+    public static String USER_SALE_PAYLIST = "user_sale_payList.do";
 
     //用户的预约单列表
-    public static String USER_RESERVATION_LIST="user_reservation_list.do";
+    public static String USER_RESERVATION_LIST = "user_reservation_list.do";
     //约客的预约记录列表     (不包含待确认的)
-    public static String USER_SALE_RESERVATION_LIST="user_sale_reservation_list";
+    public static String USER_SALE_RESERVATION_LIST = "user_sale_reservation_list";
 
 
     //用户预约单详情
-     public static String USER_RESERVATION_INFO="user_reservation_info.do";
+    public static String USER_RESERVATION_INFO = "user_reservation_info.do";
 
 
     //约服  1.2
     //用户预约申请
-    public static String USER_RESERVATION_ADD="user_reservation_add.do";
+    public static String USER_RESERVATION_ADD = "user_reservation_add.do";
     //获取用户在某个约客下的某家商户下的预约单列表
-    public static String USER_RESERVATION_SALE_LIST="user_reservation_sale_list.do";
+    public static String USER_RESERVATION_SALE_LIST = "user_reservation_sale_list.do";
 
     //约客修改预约单(答复)
-    public static String USER_RESERVATION_EDIT="user_reservation_edit.do";
+    public static String USER_RESERVATION_EDIT = "user_reservation_edit.do";
 
     //用户的礼物列表
-    public static String USER_PRESENT_LIST="user_present_list";
+    public static String USER_PRESENT_LIST = "user_present_list";
     //用户兑换礼物
-    public static String USER_PRESENT_EXCHANGE="user_present_exchange";
+    public static String USER_PRESENT_EXCHANGE = "user_present_exchange";
     //用户赠送礼物-生成支付单
-    public static String USER_PRESENT_PAY_ADD="user_present_pay_add";
+    public static String USER_PRESENT_PAY_ADD = "user_present_pay_add";
 
     //获取系统的礼物列表
-    public static String COMMON_SYSPRESENTLIST="common_syspresentList";
+    public static String COMMON_SYSPRESENTLIST = "common_syspresentList";
     //获取用户挂靠的商家列表(服务管家)
-    public static String USER_SALE_MERCHANTLIST_1_2="user_sale_merchantList_1_2";
+    public static String USER_SALE_MERCHANTLIST_1_2 = "user_sale_merchantList_1_2";
 
     //修改用户状态(服务管家状态)
-    public static String USER_EDITSTATE="user_editstate";
+    public static String USER_EDITSTATE = "user_editstate";
 
     //服务管家等级
-    public static String SERVICELEVEL="http://server.54xiegang.com/html/dzyx_common/level.html";
-     //服务管家协议
+    public static String SERVICELEVEL = "http://server.54xiegang.com/html/dzyx_common/level.html";
+    //服务管家协议
 
-    public static String SERVICEXIEYI="http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
+    public static String SERVICEXIEYI = "http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
     // 通过预约单快捷生成支付买单(1)
     public static String USER_RESERVATION_PAY_ADD = "user_reservation_pay_add";
     // 用户打/赞赏-生成支付单（支付宝）

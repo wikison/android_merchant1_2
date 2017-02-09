@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.android.volley.VolleyError;
 import com.umeng.socialize.ShareAction;
@@ -18,17 +18,20 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.utils.Log;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
-import com.zemult.merchant.adapter.minefragment.SaleMerchantAdapter;
+import com.zemult.merchant.adapter.slash.MySaleMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantListRequest;
+import com.zemult.merchant.aip.mine.UserSaleMerchantList_1_2Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
-import com.zemult.merchant.util.DensityUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SharePopwindow;
@@ -45,7 +48,7 @@ import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 /**
- * 营销管理
+ * 我加入的商户
  *
  * @author djy
  * @time 2016/8/4 16:07
@@ -71,19 +74,23 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     Button lhBtnRightIamge;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
     private Context mContext;
     private Activity mActivity;
 
     private UserSaleMerchantListRequest userSaleMerchantListRequest;
+    private UserSaleMerchantList_1_2Request userSaleMerchantList_1_2Request;
     private UserSaleMerchantDelRequest userSaleMerchantDelRequest;
     private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
-    private SaleMerchantAdapter saleMerchantAdapter;
+    //private SaleMerchantAdapter saleMerchantAdapter;
+    private MySaleMerchantAdapter mySaleMerchantAdapter;
     int page = 1;
     private SharePopwindow sharePopWindow;
     private M_Merchant merchantItem;
-    public static int RECX=111;
-    public static String REFLASH="REFLASH";
+    public static int RECX = 111;
+    public static String REFLASH = "REFLASH";
 
     @Override
     public void setContentView() {
@@ -98,24 +105,24 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         initView();
         initListener();
 
-        getUserMerchantList(false);
+        getUserMerchantList();
 
     }
 
     private void initView() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("商户管理");
+        lhTvTitle.setText("我加入的商户");
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
-        smoothListView.setDividerHeight(DensityUtil.dp2px(mContext, 12));
-        smoothListView.setHeaderDividersEnabled(false);
-        saleMerchantAdapter = new SaleMerchantAdapter(this, merchantList);
-        smoothListView.setAdapter(saleMerchantAdapter);
+        //saleMerchantAdapter = new SaleMerchantAdapter(this, merchantList);
+        mySaleMerchantAdapter = new MySaleMerchantAdapter(this, merchantList);
+
+        smoothListView.setAdapter(mySaleMerchantAdapter);
     }
 
     private void initListener() {
-        saleMerchantAdapter.setOnItemMerchantClickListener(new SaleMerchantAdapter.ItemMerchantClickListener() {
+        mySaleMerchantAdapter.setOnItemMerchantClickListener(new MySaleMerchantAdapter.ItemMerchantClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, MerchantDetailActivity.class);
@@ -124,19 +131,19 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        saleMerchantAdapter.setOnItemServiceClickListener(new SaleMerchantAdapter.ItemServiceClickListener() {
+        mySaleMerchantAdapter.setOnItemServiceClickListener(new MySaleMerchantAdapter.ItemServiceClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, TabManageActivity.class);
-                intent.putExtra(TabManageActivity.TAG,merchant.merchantId);
-                intent.putExtra(TabManageActivity.NAME,merchant.name);
-                intent.putExtra(TabManageActivity.TAGS,merchant.tags);
-                intent.putExtra(TabManageActivity.COMEFROM,2);
-                startActivityForResult(intent,RECX);
+                intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                intent.putExtra(TabManageActivity.NAME, merchant.name);
+                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+                intent.putExtra(TabManageActivity.COMEFROM, 2);
+                startActivityForResult(intent, RECX);
             }
         });
 
-        saleMerchantAdapter.setOnItemQRClickListener(new SaleMerchantAdapter.ItemQRClickListener() {
+        mySaleMerchantAdapter.setOnItemQRClickListener(new MySaleMerchantAdapter.ItemQRClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, MyQrActivity.class);
@@ -150,7 +157,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        saleMerchantAdapter.setOnItemShareClickListener(new SaleMerchantAdapter.ItemShareClickListener() {
+        mySaleMerchantAdapter.setOnItemShareClickListener(new MySaleMerchantAdapter.ItemShareClickListener() {
             @Override
             public void onItemClick(final M_Merchant merchant) {
                 merchantItem = merchant;
@@ -162,7 +169,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        saleMerchantAdapter.setOnItemDeleteClickListener(new SaleMerchantAdapter.ItemDeleteClickListener() {
+        mySaleMerchantAdapter.setOnItemDeleteClickListener(new MySaleMerchantAdapter.ItemDeleteClickListener() {
             @Override
             public void onItemClick(final M_Merchant merchant) {
                 CommonDialog.showDialogListener(mContext, null, "否", "是", "是否删除商家", new View.OnClickListener() {
@@ -189,7 +196,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                 if (null != merchantItem.head && merchantItem.head.indexOf("xiegang.oss") != -1) {
                     shareImage = new UMImage(mContext, merchantItem.head);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.ic_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
                 }
                 switch (position) {
                     case SharePopwindow.SINA:
@@ -197,7 +204,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -208,7 +215,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -218,7 +225,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -229,7 +236,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
                                 .withText(merchantItem.name)
-                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, "http://server.54xiegang.com/dzyx/wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
+                                .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
                                 .withTitle("分享买单")
                                 .share();
@@ -243,7 +250,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            Log.d("plat", "platform" + platform);
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
             } else {
@@ -265,6 +272,37 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
         }
     };
+
+    // 获取挂靠的商家列表
+    private void getUserMerchantList() {
+        showPd();
+        if (userSaleMerchantList_1_2Request != null) {
+            userSaleMerchantList_1_2Request.cancel();
+        }
+
+        UserSaleMerchantList_1_2Request.Input input = new UserSaleMerchantList_1_2Request.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
+        input.convertJosn();
+
+        userSaleMerchantList_1_2Request = new UserSaleMerchantList_1_2Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                dismissPd();
+                if (((APIM_MerchantList) response).status == 1) {
+                    fillAdapter(((APIM_MerchantList) response).industryList);
+                } else {
+                    ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
+                }
+            }
+        });
+        sendJsonRequest(userSaleMerchantList_1_2Request);
+    }
 
 
     /**
@@ -291,9 +329,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    fillAdapter(((APIM_MerchantList) response).merchantList,
-                            ((APIM_MerchantList) response).maxpage,
-                            isLoadMore);
+                    fillAdapter(((APIM_MerchantList) response).merchantList);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
                 }
@@ -311,13 +347,17 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     /**
      * 设置数据
      */
-    private void fillAdapter(final List<M_Merchant> list, int maxpage, boolean isLoadMore) {
-        if (list != null && !list.isEmpty()) {
-            smoothListView.setLoadMoreEnable(page < maxpage);
-            saleMerchantAdapter.setData(list, isLoadMore);
+    private void fillAdapter(final List<M_Merchant> list) {
+
+        if (list == null || list.size() == 0) {
+            rlNoData.setVisibility(View.VISIBLE);
+            smoothListView.setLoadMoreEnable(false);
+        } else {
+            rlNoData.setVisibility(View.GONE);
+            smoothListView.setLoadMoreEnable(false);
+            mySaleMerchantAdapter.setData(list);
         }
     }
-
 
 
     public void userSaleMerchantDel(final M_Merchant merchant) {
@@ -341,9 +381,8 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    saleMerchantAdapter.removeOne(merchant);
                     EventBus.getDefault().post(REFLASH);
-
+                    onRefresh();
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -355,12 +394,12 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
     @Override
     public void onRefresh() {
-        getUserMerchantList(false);
+        getUserMerchantList();
     }
 
     @Override
     public void onLoadMore() {
-        getUserMerchantList(true);
+        getUserMerchantList();
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
@@ -377,8 +416,9 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-   if (requestCode==RECX&&resultCode==RESULT_OK)
-        onRefresh();
+        if (requestCode == RECX && resultCode == RESULT_OK)
+            onRefresh();
 
     }
+
 }

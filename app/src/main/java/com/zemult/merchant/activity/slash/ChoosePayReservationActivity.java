@@ -238,6 +238,7 @@ public class ChoosePayReservationActivity extends BaseActivity {
                 intent.putExtra("userSaleId", saleUserId);
                 intent.putExtra("merchantId", merchantId);
                 intent.putExtra("reservationIds", reservationIds);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 break;
         }

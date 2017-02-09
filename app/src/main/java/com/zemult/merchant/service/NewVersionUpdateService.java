@@ -116,7 +116,7 @@ public class NewVersionUpdateService extends Service {
 								.setContentTitle(appName)
 								.setContentText("下载成功，点击安装")
 								.setContentIntent(pendingIntent)
-								.setSmallIcon(R.mipmap.ic_launcher)
+								.setSmallIcon(R.mipmap.icon_launcher)
 								.setWhen(System.currentTimeMillis())
 								.setOngoing(true);
 						notification=builder.getNotification();
@@ -133,7 +133,7 @@ public class NewVersionUpdateService extends Service {
 							.setContentTitle(appName)
 							.setContentText("下载失败")
 							.setContentIntent(pendingIntent)
-							.setSmallIcon(R.mipmap.ic_launcher)
+							.setSmallIcon(R.mipmap.icon_launcher)
 							.setWhen(System.currentTimeMillis())
 							.setOngoing(true);
 					notification=builder.getNotification();

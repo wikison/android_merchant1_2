@@ -14,8 +14,10 @@ import com.zemult.merchant.adapter.minefragment.BusinessManAdapter;
 import com.zemult.merchant.aip.mine.MerchantRequestListRequest;
 import com.zemult.merchant.aip.mine.MerchantUserMerchantListRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -150,6 +152,7 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
         }
         MerchantUserMerchantListRequest.Input input = new MerchantUserMerchantListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
+        input.center= (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
         input.page = 1;
         input.rows = 1000;
 
