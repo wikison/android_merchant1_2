@@ -169,7 +169,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 intent.putExtra(UserDetailActivity.USER_SEX, mAdapter.getItem(position).getSex());
                 merchantInfo.setTags(mAdapter.getItem(position).getTags());
                 intent.putExtra(UserDetailActivity.MERCHANT_ID, merchantId);
-
+                intent.putExtra("merchantInfo", merchantInfo);
                 startActivity(intent);
             }
 

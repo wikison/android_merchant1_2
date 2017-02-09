@@ -210,7 +210,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                     }
 
                     shopTv.setText(mReservation.merchantName);
-                    pernumberTv.setText(mReservation.num + "");
+                    pernumberTv.setText(mReservation.num + "人");
                     tvTime.setText(mReservation.reservationTime);
                     tvExtra.setText(mReservation.note);
                     tvContacter.setText(mReservation.userName);

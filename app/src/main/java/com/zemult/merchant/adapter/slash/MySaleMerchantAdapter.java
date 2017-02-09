@@ -148,7 +148,7 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 holder.rb5.setStar(0);
             }
             holder.tvComment.setText(m.commentNumber + "人评价");
-            holder.tvService.setText("约服人次: " + m.saleNum);
+            holder.tvService.setText("服务" + m.saleNum+"人次");
             holder.tvSaleUserMoney.setText(String.format("%s", Convert.getMoneyString(m.saleMoney)));
             holder.tvSaleNum.setText(String.format("共计%s笔交易", m.saleNum));
             if (m.reviewstatus != 2) {
