@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="单次提现金额最低为100元，最高10000元" />
+                android:text="单次提现金额最低为100元，最高2000元" />
 
             <TextView
                 style="@style/text_14_black_999"

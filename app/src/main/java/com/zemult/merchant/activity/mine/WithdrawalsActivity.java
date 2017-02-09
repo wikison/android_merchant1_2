@@ -12,7 +12,6 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
 import com.zemult.merchant.aip.mine.UserCashWithdrawRequest;
-import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -80,6 +79,8 @@ public class WithdrawalsActivity extends BaseActivity {
             etMoney.setHint("提现余额不足");
             etMoney.setEnabled(false);
             tvMaxmoney.setText("当前账户余额 " + myMoney + " 元, 可提现金额 0 元");
+            btnWithdrawal.setEnabled(false);
+            btnWithdrawal.setBackgroundResource(R.drawable.next_bg_btn_select);
         }
     }
 
@@ -202,15 +203,10 @@ public class WithdrawalsActivity extends BaseActivity {
                     return;
                 }
                 if (!StringUtils.isEmpty(money)) {
-                    if (AppApplication.ISDEBUG) {
+                    if (Double.parseDouble(money) >= Constants.MIN_WITHDRAW && Double.parseDouble(money) <= myMoney) {
                         showInputPwdDialog(money);
                     } else {
-                        if (Double.parseDouble(money) >= Constants.MIN_WITHDRAW && Double.parseDouble(money) <= Constants.MAX_WITHDRAW) {
-                            showInputPwdDialog(money);
-                        } else {
-                            ToastUtil.showMessage("请输入正确的提现金额");
-                        }
-
+                        ToastUtil.showMessage("请输入正确的提现金额");
                     }
 
 
