@@ -14,6 +14,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.aip.slash.MerchantAddentity1_1Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
@@ -54,6 +55,9 @@ public class MerchantEnter2Activity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("商户入驻申请");
+        EditFilter.WordFilter(etName, 20);
+        EditFilter.WordFilter(etAddress, 30);
+        EditFilter.WordFilter(etPersonName, 5);
     }
 
     @Override
