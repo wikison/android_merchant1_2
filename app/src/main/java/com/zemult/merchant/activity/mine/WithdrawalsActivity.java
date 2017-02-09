@@ -209,7 +209,6 @@ public class WithdrawalsActivity extends BaseActivity {
                         ToastUtil.showMessage("请输入正确的提现金额");
                     }
 
-
                 } else {
                     ToastUtil.showMessage("请输入提现金额");
                 }

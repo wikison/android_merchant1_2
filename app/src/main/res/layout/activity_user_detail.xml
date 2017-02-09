@@ -214,8 +214,8 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text=""
-                    android:textColor="@color/font_black_28"
-                    android:textSize="14sp"/>
+                    android:textColor="@color/font_black_999"
+                    android:textSize="12sp"/>
 
 
                 <ImageView
