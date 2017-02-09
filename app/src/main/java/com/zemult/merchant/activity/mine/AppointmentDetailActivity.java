@@ -352,7 +352,9 @@ public class AppointmentDetailActivity extends BaseActivity {
                 Intent intent = new Intent(this, FindPayActivity.class);
                 intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
-                intent.putExtra("reservationId", reservationId);
+                if(!TextUtils.isEmpty(reservationId))
+                    intent.putExtra("reservationId",  Integer.valueOf(reservationId));
+
                 startActivity(intent);
 
 
