@@ -70,10 +70,10 @@ public class Constants {
     public static final String OSSENDPOINT = "http://xiegang.oss-cn-shanghai.aliyuncs.com/";
     public static final String BUCKET = "xiegang";
     public static final String STSSERVER = "http://server.54xiegang.com/yongyou/inter_json/oss_ossToken.do";
-    public static final String APP_DOWNLOAD_URL = Urls.URL + "html/appdownload/index.html";
+    public static final String APP_DOWNLOAD_URL = "http://server.54xiegang.com/dzyx/html/appdownload/index.html";
     public static final String PROTOCOL_REGISTER = "http://www.zemult.com/xyxz/userProtocal.html";
     public static final String PROTOCOL_MERCHANT = "http://www.zemult.com/xyxz/merchantProtocal.html";
-    public static final String URL_HELP = Urls.URL + "html/help.html";
+    public static final String URL_HELP = "http://server.54xiegang.com/dzyx/html/help.html";
 
     // APK
     public final static String APK_CACHE_DIR = APP_FILE_DIR + "apk"
