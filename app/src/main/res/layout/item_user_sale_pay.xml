@@ -90,8 +90,38 @@
             </LinearLayout>
         </LinearLayout>
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="visible">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:text="交易金额"/>
+
+            <TextView
+                android:id="@+id/tv_sale_money"
+                style="@style/text_15_black_999"
+                android:layout_width="0dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text=""
+                android:textColor="@color/font_main"/>
+        </LinearLayout>
+
         <View
             style="@style/divider_1px"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,18 +138,8 @@
                 android:layout_marginLeft="16dp"
                 android:text=""
                 android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/tv_sale_money"
-                style="@style/text_15_black_999"
-                android:layout_width="0dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="@dimen/margin_16dp"
-                android:layout_weight="1"
-                android:gravity="right|center_vertical"
-                android:text="消费金额"
-                android:textColor="@color/font_main"/>
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
