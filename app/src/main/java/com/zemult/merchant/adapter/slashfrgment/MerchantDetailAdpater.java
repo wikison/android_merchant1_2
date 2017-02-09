@@ -62,27 +62,31 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
     // 设置数据
     public void setData(List<M_Userinfo> listFan, List<M_Userinfo> listAll) {
+        List<M_Userinfo> data = new ArrayList<>();
         if (listFan == null || listFan.isEmpty()) {
-            M_Userinfo userinfo = new M_Userinfo();
-            userinfo.setUserId(-1);
-            listFan = new ArrayList<>();
-            listFan.add(userinfo);
+//            M_Userinfo userinfo = new M_Userinfo();
+//            userinfo.setUserId(-1);
+//            listFan = new ArrayList<>();
+//            listFan.add(userinfo);
+        }else {
+            noDividerPos = listFan.size() - 1;
+            listFan.get(0).showLatest = true;
+            data.addAll(listFan);
         }
-        noDividerPos = listFan.size() - 1;
-        listFan.get(0).showLatest = true;
 
         if (listAll == null || listAll.isEmpty()) {
-            M_Userinfo userinfo = new M_Userinfo();
-            userinfo.setUserId(-1);
-            listAll = new ArrayList<>();
-            listAll.add(userinfo);
+//            M_Userinfo userinfo = new M_Userinfo();
+//            userinfo.setUserId(-1);
+//            listAll = new ArrayList<>();
+//            listAll.add(userinfo);
+        }else {
+            listAll.get(0).showAll = true;
+            noDividerPos2 = listAll.size() - 1;
+            data.addAll(listAll);
         }
-        listAll.get(0).showAll = true;
-        listAll.addAll(0, listFan);
-        noDividerPos2 = listAll.size() - 1;
 
         clearAll();
-        addALL(listAll);
+        addALL(data);
         isNoData = false;
         notifyDataSetChanged();
     }
