@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -307,9 +307,7 @@
                 android:id="@+id/ll_withdraw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_12dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -319,6 +317,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -355,11 +354,11 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="12dp"
-                            android:text="手续费"
+                            android:text="到账金额"
                             android:textSize="15sp"/>
 
                         <TextView
-                            android:id="@+id/tv_service_money"
+                            android:id="@+id/tv_money_withdraw"
                             style="@style/text_15_black_999"
                             android:layout_width="0dp"
                             android:layout_marginLeft="12dp"
@@ -380,11 +379,11 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="12dp"
-                            android:text="出账金额"
+                            android:text="手续费"
                             android:textSize="15sp"/>
 
                         <TextView
-                            android:id="@+id/tv_money_withdraw"
+                            android:id="@+id/tv_service_money"
                             style="@style/text_15_black_999"
                             android:layout_width="0dp"
                             android:layout_marginLeft="12dp"
@@ -393,10 +392,16 @@
                             android:text="----"/>
                     </LinearLayout>
 
+
+
                     <View
                         style="@style/divider_1px"
                         android:layout_marginTop="@dimen/margin_8dp"/>
                 </LinearLayout>
+
+
+                <View style="@style/divider12dp"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -405,6 +410,28 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/text_15_black_28"
+                            android:layout_marginLeft="12dp"
+                            android:text="当前状态"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/tv_withdraw_state"
+                            style="@style/text_15_black_999"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:text="----"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -428,30 +455,9 @@
                             android:text="----"/>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-
-                        <TextView
-                            style="@style/text_15_black_28"
-                            android:layout_marginLeft="12dp"
-                            android:text="订单号"
-                            android:textSize="15sp"/>
-
-                        <TextView
-                            android:id="@+id/tv_num_withdraw"
-                            style="@style/text_15_black_999"
-                            android:layout_width="0dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_weight="1"
-                            android:gravity="right|center_vertical"
-                            android:text="----"/>
-                    </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -485,11 +491,35 @@
                             android:id="@+id/tv_text_time_withdraw"
                             style="@style/text_15_black_28"
                             android:layout_marginLeft="12dp"
-                            android:text="提现到账时间"
+                            android:text="实际到账时间"
                             android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/tv_time_withdraw"
+                            style="@style/text_15_black_999"
+                            android:layout_width="0dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_weight="1"
+                            android:gravity="right|center_vertical"
+                            android:text="----"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/text_15_black_28"
+                            android:layout_marginLeft="12dp"
+                            android:text="订单号码"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:id="@+id/tv_num_withdraw"
                             style="@style/text_15_black_999"
                             android:layout_width="0dp"
                             android:layout_marginLeft="12dp"
