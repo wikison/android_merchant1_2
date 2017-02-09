@@ -24,6 +24,7 @@ import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
@@ -100,6 +101,7 @@ public class PasswordActivity extends BaseActivity {
         }
     };
 
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_setpwd);
@@ -112,6 +114,7 @@ public class PasswordActivity extends BaseActivity {
         strPhone = intent.getStringExtra("RegisterPhone");
         etPhone.setText(strPhone);
         loginHelper = LoginSampleHelper.getInstance();
+        EditFilter.WordFilter(etNickname, 11);
         initViews();
     }
 
