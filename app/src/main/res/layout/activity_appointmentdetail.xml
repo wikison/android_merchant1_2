@@ -81,7 +81,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="商家"/>
+                    android:text="交易商户"/>
 
 
                 <TextView
