@@ -25,6 +25,7 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -155,7 +156,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                                             holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
                                         }
-                                        holder.setText(R.id.servicer_tv, "服务管家:  "+mReservation.saleUserName);
+                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
 
 
                                         holder.setText(R.id.shop_tv, mReservation.merchantName);
@@ -193,9 +194,20 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                             }
 
                                         }
+                                        long a = DateTimeUtil.getIntervalDays(mReservation.reservationTime.substring(0, 10), DateTimeUtil.getCurrentDate());
 
-                                        holder.setText(R.id.day_tv, mReservation.reservationTime.substring(5, 10));
-                                        holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        if (a < 1) {
+                                            holder.setText(R.id.day_tv, "今天");
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        } else if (a >= 1 && a < 2) {
+                                            holder.setText(R.id.day_tv, "昨天");
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        }  else {
+                                            holder.setText(R.id.day_tv, DateTimeUtil.getChinaDayofWeek(mReservation.reservationTime.substring(0, 10)));
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(5, 10));
+                                        }
+
+
 
                                     }
 
@@ -267,9 +279,21 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                         } else if (position > 0) {
                                             holder.setViewGone(R.id.v1);
                                         }
+                                        long diff = DateTimeUtil.getIntervalDays( mReservation.reservationTime.substring(0, 10), DateTimeUtil.getCurrentDate());
 
-                                        holder.setText(R.id.day_tv, mReservation.reservationTime.substring(5, 10));
-                                        holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        if (diff < 1) {
+                                            holder.setText(R.id.day_tv, "今天");
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        } else if (diff >= 1 && diff < 2) {
+                                            holder.setText(R.id.day_tv, "昨天");
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+                                        } else {
+                                            holder.setText(R.id.day_tv, DateTimeUtil.getChinaDayofWeek(mReservation.reservationTime.substring(0, 10)));
+                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(5, 10));
+                                        }
+
+//                                        holder.setText(R.id.day_tv, mReservation.reservationTime.substring(5, 10));
+
 
 
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
