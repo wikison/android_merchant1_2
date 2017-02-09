@@ -354,18 +354,14 @@ public class BillInfoActivity extends BaseActivity {
                     } else {
                         tvMoney.setText("-" + (m_bill.money == 0 ? "0.00" : Convert.getMoneyString(m_bill.money)));
                     }
-                    tvRealMoney.setText("" + (m_bill.realMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.realMoney)));
-                    tvServiceMoney.setText("" + (m_bill.serviceMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.serviceMoney)));
-                    tvMoneyWithdraw.setText("" + (m_bill.money == 0 ? "0.00" : Convert.getMoneyString(m_bill.money)));
-                    tvBankWithdraw.setText(m_bill.bankCard);
+                    tvRealMoney.setText("￥" + (m_bill.realMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.realMoney)));
+                    tvServiceMoney.setText("￥" + (m_bill.serviceMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.serviceMoney)));
+                    tvMoneyWithdraw.setText("￥" + (m_bill.money == 0 ? "0.00" : Convert.getMoneyString(m_bill.money)));
+                    tvBankWithdraw.setText("支付宝账号("+m_bill.bankCard+")");
                     if (m_bill.withdrawState == 0) {
-                        tvTextTimeWithdraw.setText("预计到账时间");
-                        tvState.setText("提现中");
-                        tvTimeWithdraw.setText(m_bill.expectTime);
+                        tvTimeWithdraw.setText("提现申请已提交");
                     } else if (m_bill.withdrawState == 1) {
-                        tvTextTimeWithdraw.setText("提现到账时间");
-                        tvState.setText("提现成功");
-                        tvTimeWithdraw.setText(m_bill.completeTime);
+                        tvTimeWithdraw.setText("提现已到账");
                     }
                     tvNumWithdraw.setText(m_bill.number);
                     tvCreateTimeWithdraw.setText(m_bill.createtime);

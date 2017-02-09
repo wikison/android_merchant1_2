@@ -23,19 +23,24 @@ import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
+import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.FixedListView;
 import com.zemult.merchant.view.common.MMAlert;
@@ -122,6 +127,7 @@ public class UserDetailActivity extends BaseActivity {
     private int userId;// 用户id(要查看的用户)
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
+    UserReservationSaleListRequest userReservationSaleListRequest; //判断是否有预约单
     private UserAttractAddRequest attractAddRequest; // 添加关注
     private UserAttractDelRequest attractDelRequest; // 取消关注
     private M_Userinfo userInfo;
@@ -130,6 +136,7 @@ public class UserDetailActivity extends BaseActivity {
     private int merchantId;
     TaMerchantAdapter taMerchantAdapter;
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+    List<M_Reservation> reservationList = new ArrayList<>();
     int merchantNum = 0;
     boolean isFromMerchant;
 
@@ -216,6 +223,50 @@ public class UserDetailActivity extends BaseActivity {
     private void getNetworkData() {
         showPd();
         getUserInfo();
+    }
+
+    private void getReservationSaleList() {
+        if (userReservationSaleListRequest != null) {
+            userReservationSaleListRequest.cancel();
+        }
+        UserReservationSaleListRequest.Input input = new UserReservationSaleListRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.saleUserId = userId;
+        input.merchantId = merchantId;
+        input.page = 1;
+        input.rows = Constants.ROWS;
+        input.convertJosn();
+        userReservationSaleListRequest = new UserReservationSaleListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserReservationList) response).status == 1) {
+                    reservationList = ((APIM_UserReservationList) response).reservationList;
+                    if (reservationList.size() > 0) {
+                        Intent intent = new Intent(mContext, ChoosePayReservationActivity.class);
+                        intent.putExtra(UserDetailActivity.USER_ID, userId);
+                        intent.putExtra(FindPayActivity.MERCHANT_ID, merchantId);
+                        intent.putExtra(ChoosePayReservationActivity.MERCHANT_NAME, merchant.name);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
+                        intent.putExtra("userSaleId", userId);
+                        intent.putExtra("merchantId", merchantId);
+                        intent.putExtra("reservationIds", "");
+                        startActivity(intent);
+                    }
+                } else {
+                    ToastUtil.showMessage(((APIM_UserReservationList) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userReservationSaleListRequest);
     }
 
 
@@ -484,10 +535,7 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
                 if (isFromMerchant) {
-                    intent = new Intent(mContext, FindPayActivity.class);
-                    intent.putExtra("userSaleId", userId);
-                    intent.putExtra("merchantId", merchantId);
-                    startActivity(intent);
+                    getReservationSaleList();
                 } else {
                     intent = new Intent(mContext, ChoosePayMerchantActivity.class);
                     intent.putExtra(USER_ID, userId);
