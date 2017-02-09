@@ -315,7 +315,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     return;
                 }
                 if (cbAccountpay.isChecked() && SlashHelper.userManager().getUserinfo().isSetPaypwd == 0) {
-                    ToastUtil.showMessage("请设置支付密码");
+                    ToastUtil.showMessage("请设置安全密码");
                     Intent intentpaypassword = new Intent(ChoosePayTypeActivity.this, PayPasswordManagerActivity.class);
                     startActivity(intentpaypassword);
                     return;
@@ -332,7 +332,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         }
     }
 
-    //显示输入支付密码对话框
+    //显示输入安全密码对话框
     private void showInputPwdDialog() {
 
         BalancePayAlertView payAlertView = new BalancePayAlertView(
@@ -346,7 +346,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     }
 
                     public void onValidateFailed() {
-                        ToastUtil.showMessage("支付密码验证失败");
+                        ToastUtil.showMessage("安全密码验证失败");
                     }
                 });
     }

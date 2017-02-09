@@ -502,7 +502,6 @@
         <activity
             android:name=".activity.mine.MerchantPhoneActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".alipay.PayBangDingAccountActivity" />
         <activity android:name=".activity.mine.MyInfoActivity" />
         <activity android:name=".activity.mine.RoleSetActivity" />
         <activity android:name=".activity.slash.GetTaskActivity" />

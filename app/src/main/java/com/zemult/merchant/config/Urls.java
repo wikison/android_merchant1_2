@@ -5,7 +5,7 @@ package com.zemult.merchant.config;
  */
 public class Urls {
     //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
-    public static String URL = "http://server.54xiegang.com/dzyx_test/";
+    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
     public static String BASIC_URL = URL + "inter_json/";
 
     //验证码
@@ -269,13 +269,13 @@ public class Urls {
     //用户查看和他人的共同好友列表
     public static String USER_FRIENDLIST_OTHER = "user_friendList_other.do";
 
-    //设置支付密码
+    //设置安全密码
     public static String USER_SETPAYPWD = "user_setpaypwd.do";
-    //验证用户原支付密码
+    //验证用户原安全密码
     public static String USER_CHECKPAYPWD = "user_checkpaypwd.do";
-    //修改支付密码-忘记密码(验证实名认证)
+    //修改安全密码-忘记密码(验证实名认证)
     public static String USER_CHECKIDNUM = "user_checkIDNum.do";
-    //修改支付密码
+    //修改安全密码
     public static String USER_EDITPAYPWD = "user_editpaypwd.do";
     //添加举报
     public static String COMMON_REPORT_ADD = "common_report_add.do";

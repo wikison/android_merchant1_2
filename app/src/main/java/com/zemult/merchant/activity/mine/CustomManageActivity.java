@@ -114,13 +114,13 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", LoginSampleHelper.APP_KEY);
-//                startActivity(IMkitintent);
-                Intent intent = new Intent(mContext, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).userId);
-                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position-1).name);
-                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position-1).head);
-                startActivity(intent);
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", LoginSampleHelper.APP_KEY);
+                startActivity(IMkitintent);
+//                Intent intent = new Intent(mContext, UserDetailActivity.class);
+//                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).userId);
+//                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position-1).name);
+//                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position-1).head);
+//                startActivity(intent);
             }
         });
 

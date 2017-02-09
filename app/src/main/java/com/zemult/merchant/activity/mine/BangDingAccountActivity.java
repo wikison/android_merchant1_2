@@ -1,23 +1,34 @@
 package com.zemult.merchant.activity.mine;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.common.CommonSignNumberRequest;
 import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
-import com.zemult.merchant.alipay.PayBangDingAccountActivity;
+import com.zemult.merchant.aip.mine.UserBandcardPayRequest;
+import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.common.CommonDialog;
+
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,6 +58,45 @@ public class BangDingAccountActivity extends BaseActivity {
     int isBanded;
     @Bind(R.id.account_tv)
     TextView accountTv;
+    UserBandcardPayRequest userBandcardPayRequest;
+    CommonSignNumberRequest commonSignNumberRequest;
+    private static final int SDK_PAY_FLAG = 1;
+    // 商户订单号
+    public String ORDER_SN = "";
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    String resultInfo = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Toast.makeText(BangDingAccountActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        user_bandcard_info();
+
+                    } else {
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(BangDingAccountActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                        } else if (TextUtils.equals(resultStatus, "4000")) {
+                            Toast.makeText(BangDingAccountActivity.this, "支付宝调用失败", Toast.LENGTH_SHORT).show();
+                        }else {
+
+                            Toast.makeText(BangDingAccountActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void setContentView() {
@@ -134,9 +184,11 @@ public class BangDingAccountActivity extends BaseActivity {
                             }, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent_pay = new Intent(BangDingAccountActivity.this, PayBangDingAccountActivity.class);
-                                    startActivity(intent_pay);
+//                                    Intent intent_pay = new Intent(BangDingAccountActivity.this, BangDingAccountActivity.class);
+//                                    startActivity(intent_pay);
+//                                    CommonDialog.DismissProgressDialog();
                                     CommonDialog.DismissProgressDialog();
+                                    user_bandcard_pay();
                                 }
                             });
                 }
@@ -144,5 +196,98 @@ public class BangDingAccountActivity extends BaseActivity {
         }
     }
 
+
+    /**
+     * call alipay sdk pay. 调用SDK支付
+     */
+    public void alipay(final String orderStr) {
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(BangDingAccountActivity.this);
+                Map<String, String> result = alipay.payV2(orderStr, true);
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+
+    private void commonSignNumber() {
+        try {
+            showPd();
+
+            if (commonSignNumberRequest != null) {
+                commonSignNumberRequest.cancel();
+            }
+            CommonSignNumberRequest.Input input = new CommonSignNumberRequest.Input();
+            input.number = ORDER_SN;
+
+            input.convertJosn();
+
+            commonSignNumberRequest = new CommonSignNumberRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dismissPd();
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        alipay(((CommonResult) response).orderStr);
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(commonSignNumberRequest);
+        } catch (Exception e) {
+            dismissPd();
+        }
+    }
+
+
+    private void user_bandcard_pay() {
+        try {
+            showPd();
+            if (userBandcardPayRequest != null) {
+                userBandcardPayRequest.cancel();
+            }
+            UserBandcardPayRequest.Input input = new UserBandcardPayRequest.Input();
+            input.userId = SlashHelper.userManager().getUserId();
+            input.money = 0.01;
+            input.convertJosn();
+
+            userBandcardPayRequest = new UserBandcardPayRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dismissPd();
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        dismissPd();
+                        ORDER_SN = ((CommonResult) response).number;
+                        commonSignNumber();
+                    }
+                }
+            });
+            sendJsonRequest(userBandcardPayRequest);
+        } catch (Exception e) {
+        }
+
+    }
 
 }

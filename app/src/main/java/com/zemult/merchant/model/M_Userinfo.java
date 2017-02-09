@@ -73,7 +73,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     public double money;//账户余额
     @Expose
-    public int isSetPaypwd;//是否设置过支付密码  0否  1是
+    public int isSetPaypwd;//是否设置过安全密码  0否  1是
 
     @Expose
     String audioTime, audio;//语音长度

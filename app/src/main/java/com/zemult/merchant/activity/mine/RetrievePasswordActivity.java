@@ -62,12 +62,12 @@ public class RetrievePasswordActivity extends MAppCompatActivity implements
         et_code = (EditText) findViewById(R.id.et_code);
         et_idnumber = (EditText) findViewById(R.id.et_idnumber);
         et_name = (EditText) findViewById(R.id.et_name);
-        tv_message.setText("正在为"+ AppUtils.getHiddenMobile(SlashHelper.userManager().getUserinfo().getPhoneNum())+"重置支付密码");
+        tv_message.setText("正在为"+ AppUtils.getHiddenMobile(SlashHelper.userManager().getUserinfo().getPhoneNum())+"重置安全密码");
         tv_sendcode.setOnClickListener(this);
         ll_back.setOnClickListener(this);
         lh_btn_back.setOnClickListener(this);
         btn_next.setOnClickListener(this);
-        lh_tv_title.setText("找回支付密码");
+        lh_tv_title.setText("找回安全密码");
         strPhone=SlashHelper.userManager().getUserinfo().getPhoneNum();
 
         tv_sendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
@@ -156,7 +156,7 @@ public class RetrievePasswordActivity extends MAppCompatActivity implements
 
     }
 
-    private void user_checkIDNum() {//修改支付密码-忘记密码(验证实名认证)
+    private void user_checkIDNum() {//修改安全密码-忘记密码(验证实名认证)
         try {
             if (userCheckIDNumRequest != null) {
                 userCheckIDNumRequest.cancel();

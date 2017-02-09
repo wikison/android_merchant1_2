@@ -16,7 +16,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="请设置支付密码,建议勿与银行卡取款密码相同"
+        android:text="请设置安全密码,建议勿与银行卡取款密码相同"
         android:textColor="#666"
         android:textSize="14sp" />
 
