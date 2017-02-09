@@ -155,7 +155,7 @@ public class MerchantWithdrawalsActivity extends BaseActivity {
     }
 
 
-    //显示输入支付密码对话框
+    //显示输入安全密码对话框
     private void showInputPwdDialog(final String paymoney) {
 
         BalancePayAlertView payAlertView = new BalancePayAlertView(MerchantWithdrawalsActivity.this);
@@ -168,7 +168,7 @@ public class MerchantWithdrawalsActivity extends BaseActivity {
                     }
 
                     public void onValidateFailed() {
-                        ToastUtil.showMessage("支付密码验证失败");
+                        ToastUtil.showMessage("安全密码验证失败");
                     }
                 });
     }

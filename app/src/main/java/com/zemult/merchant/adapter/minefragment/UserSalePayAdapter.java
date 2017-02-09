@@ -59,7 +59,7 @@ public class UserSalePayAdapter extends BaseListAdapter<M_Bill> {
         }
         holder.tvUserName.setText(m.userName);
         holder.tvMerchantName.setText(m.merchantName);
-        holder.tvCreateTime.setText(m.createtime.substring(0, 10));
+        holder.tvCreateTime.setText(m.createtime.substring(0, 16));
         holder.tvSaleMoney.setText(Convert.getMoneyString(m.payMoney));
 
         return convertView;
@@ -74,10 +74,10 @@ public class UserSalePayAdapter extends BaseListAdapter<M_Bill> {
         ImageView ivMerchantHead;
         @Bind(R.id.tv_merchant_name)
         TextView tvMerchantName;
-        @Bind(R.id.tv_create_time)
-        TextView tvCreateTime;
         @Bind(R.id.tv_sale_money)
         TextView tvSaleMoney;
+        @Bind(R.id.tv_create_time)
+        TextView tvCreateTime;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -11,12 +11,12 @@ import java.lang.reflect.Type;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
-//修改支付密码-忘记密码(验证实名认证)
+//修改安全密码-忘记密码(验证实名认证)
 public class UserCheckIDNumRequest extends PostStringRequest<Type>  {
 
     public static class Input {
         public int userId;       //用户id
-        public String name;       //支付密码(经过MD5加密过后的)
+        public String name;       //安全密码(经过MD5加密过后的)
         public String idNum;//身份证号
         public String code;//验证码
         public String ejson;

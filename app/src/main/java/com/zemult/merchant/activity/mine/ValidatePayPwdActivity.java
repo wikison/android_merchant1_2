@@ -136,8 +136,8 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
 
     void  updatePayPassword(String password1,String oldPassword,String smsCode){
         if(TextUtils.isEmpty(smsCode)){
-            if(TextUtils.isEmpty(oldPassword)) {//第一次设置新支付密码
-//                ToastUtil.showMessage("第一次设置新支付密码");
+            if(TextUtils.isEmpty(oldPassword)) {//第一次设置新安全密码
+//                ToastUtil.showMessage("第一次设置新安全密码");
                 user_setpaypwd(password1);
             }
             else{
@@ -152,7 +152,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     }
 
 
-    //验证用户原支付密码
+    //验证用户原安全密码
     private void user_checkpaypwd(String password) {
         showPd();
         if (userCheckpaypwdRequest != null) {
@@ -182,7 +182,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
                 finish();
                 } else {
 
-                    CommonDialog.showDialogListener(ValidatePayPwdActivity.this, null, "忘记密码", "确定", "支付密码错误,请重试", new View.OnClickListener() {
+                    CommonDialog.showDialogListener(ValidatePayPwdActivity.this, null, "忘记密码", "确定", "安全密码错误,请重试", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(
@@ -210,7 +210,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     }
 
 
-    //修改支付密码
+    //修改安全密码
     private void user_editpaypwd(String password) {
 
         if (userEditpaypwdRequest != null) {
@@ -244,7 +244,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     }
 
 
-    //设置支付密码
+    //设置安全密码
     private void user_setpaypwd(String password) {
 
         if (userSetpaypwdRequest != null) {

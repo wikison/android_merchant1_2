@@ -99,7 +99,7 @@ public class BalancePayAlertView {
 					onValidateSuccessed(DigestUtils.md5(pwd).toUpperCase());
 				} else {
 
-					CommonDialog.showDialogListener(activity, null, "忘记密码", "确定", "支付密码错误,请重试", new View.OnClickListener() {
+					CommonDialog.showDialogListener(activity, null, "忘记密码", "确定", "安全密码错误,请重试", new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							Intent intentpaypassword=new Intent(activity,PayPasswordManagerActivity.class);

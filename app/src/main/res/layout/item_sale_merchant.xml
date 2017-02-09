@@ -224,7 +224,7 @@
                 <TextView
                     style="@style/text_14_black_28"
                     android:layout_gravity="center_vertical"
-                    android:text="交易金额"/>
+                    android:text="我的交易额"/>
 
                 <TextView
                     android:id="@+id/tv_sale_user_money"
