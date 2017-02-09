@@ -199,6 +199,7 @@ public final class DateTimeUtil implements Serializable {
         return getFormatDateTime(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
 
+
     /**
      * 返回给定时间字符串。
      * <p/>
@@ -427,7 +428,7 @@ public final class DateTimeUtil implements Serializable {
      * @param date 格式为 yyyy/MM/dd 或者 yyyy-MM-dd
      * @return 返回当前日期是星期几
      */
-    public static String getChinaDayOfWeek(String date) {
+    public static String getChinaDayofWeek(String date) {
         String[] weeks = new String[]{"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
         int week = getDayOfWeek(date);
         return weeks[week - 1];
