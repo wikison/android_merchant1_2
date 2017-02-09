@@ -541,10 +541,10 @@ public class Urls {
     public static String USER_EDITSTATE = "user_editstate";
 
     //服务管家等级
-    public static String SERVICELEVEL = "http://server.54xiegang.com/html/dzyx_common/level.html";
+    public static String SERVICELEVEL = URL + "html/dzyx_common/level.html";
     //服务管家协议
 
-    public static String SERVICEXIEYI = "http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
+    public static String SERVICEXIEYI = URL + "html/dzyx_sale/xieyi.html";
     // 通过预约单快捷生成支付买单(1)
     public static String USER_RESERVATION_PAY_ADD = "user_reservation_pay_add";
     // 用户打/赞赏-生成支付单（支付宝）
