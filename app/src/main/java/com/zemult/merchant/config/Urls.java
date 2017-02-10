@@ -551,4 +551,9 @@ public class Urls {
     public static String USER_REWARD_PAY_ADD = "user_reward_pay_add";
     // 打赏种类
     public static String COMMON_REWARD = "common_reward";
+    // 根据金额算出用户提现手续费
+    public static String COMMON_WITHCASH_COUNT = "common_withcash_count";
+
+
+
 }

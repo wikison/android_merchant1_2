@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
@@ -90,7 +89,7 @@ public class UserDetailActivity extends BaseActivity {
     @Bind(R.id.btn_contact)
     RoundTextView btnContact;
     @Bind(R.id.ll_bottom)
-    RelativeLayout llBottom;
+    LinearLayout llBottom;
     @Bind(R.id.iv_head)
     ImageView ivHead;
     @Bind(R.id.tv_name)
@@ -162,7 +161,7 @@ public class UserDetailActivity extends BaseActivity {
         userId = getIntent().getIntExtra(USER_ID, -1);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         merchantId = getIntent().getIntExtra(MERCHANT_ID, -1);
-        if (merchantId > 0) {
+        if (merchant != null) {
             isFromMerchant = true;
         } else {
             isFromMerchant = false;
@@ -346,6 +345,11 @@ public class UserDetailActivity extends BaseActivity {
         }
 
         merchantNum = userInfo.saleUserNum;
+        if (isFromMerchant) {
+            if (merchant.reviewstatus != 2) {
+                btnBuy.setVisibility(View.GONE);
+            }
+        }
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
             btnBuy.setEnabled(false);

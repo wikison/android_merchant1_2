@@ -73,5 +73,8 @@ public class M_Reservation  implements Serializable {
     public int status;
     @Expose
     public String info;
+    @Expose
+    public int merchantReviewstatus;//商户审核状态(0未审核,1待审核,2审核通过)
+
 
 }
