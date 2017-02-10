@@ -55,6 +55,8 @@ public class AccountSafeActivity extends BaseActivity {
         super.onResume();
         if(null== SlashHelper.userManager().getUserinfo()){
             finish();
+            return;
+            //// TODO: 2017/2/10 去首页 ？？
         }
         isSetPaypwd=SlashHelper.userManager().getUserinfo().isSetPaypwd;
         isConfirm= SlashHelper.userManager().getUserinfo().isConfirm;//是否实名认证过(0:否1:是)
