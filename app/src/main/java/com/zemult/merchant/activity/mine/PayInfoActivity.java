@@ -17,6 +17,7 @@ import com.zemult.merchant.aip.mine.UserPayDelRequest;
 import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
+import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -29,6 +30,7 @@ import com.zemult.merchant.view.common.CommonDialog;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
+import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 public class PayInfoActivity extends BaseActivity {
@@ -193,6 +195,7 @@ public class PayInfoActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                EventBus.getDefault().post(TaskPayResultActivity.APPOINT_REFLASH);
                 finish();
                 break;
             case R.id.rtv_cancel:

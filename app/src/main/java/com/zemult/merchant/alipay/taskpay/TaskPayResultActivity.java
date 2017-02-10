@@ -27,6 +27,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
+import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 public class TaskPayResultActivity extends BaseActivity {
@@ -79,6 +80,7 @@ public class TaskPayResultActivity extends BaseActivity {
     int saleUserId = 0;
     String managerhead,managername,merchantName;
     double paymoney;
+    public static String APPOINT_REFLASH="appointreflash";
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_task_pay_result);
@@ -185,6 +187,8 @@ public class TaskPayResultActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                EventBus.getDefault().post(APPOINT_REFLASH);
+
                 onBackPressed();
                 break;
             case R.id.btn_topinjia:
@@ -201,6 +205,7 @@ public class TaskPayResultActivity extends BaseActivity {
                 intent2.putExtra("userPayId",userPayId);
                 startActivity(intent2);
                 onBackPressed();
+
                 break;
             case R.id.rtv_communicate:
                 if (saleUserId > 0) {

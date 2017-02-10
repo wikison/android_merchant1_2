@@ -21,6 +21,7 @@ import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.mine.UserSaleReservationList;
+import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Reservation;
@@ -37,6 +38,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
 /**
@@ -75,6 +79,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
     @Override
     public void init() {
+        EventBus.getDefault().register(this);
         mContext = this;
         imageManager = new ImageManager(this);
         myappointmentLv.setRefreshEnable(true);
@@ -355,6 +360,12 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
+
+    @Override
     public void onRefresh() {
         page = 1;
         if (type == 0) {
@@ -374,4 +385,19 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         }
 
     }
+
+    /**
+     * =================================================处理刷新请求===========================================================================
+     */
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void refreshEvent(String s) {
+        if (AppointmentDetailActivity.REFLASH_MYAPPOINT.equals(s))
+            if (type == 0) {
+                userReservationList();
+            } else if (type == 1) {
+                userSaleReservation();
+            }
+    }
+
+
 }
