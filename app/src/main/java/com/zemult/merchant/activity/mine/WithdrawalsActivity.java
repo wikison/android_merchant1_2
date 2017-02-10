@@ -16,6 +16,7 @@ import com.zemult.merchant.aip.mine.UserCashWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -75,7 +76,7 @@ public class WithdrawalsActivity extends BaseActivity {
             etMoney.setEnabled(true);
             etMoney.setHint("请输入提现金额");
             if (myMoney <= Constants.MAX_WITHDRAW) {
-                tvMaxmoney.setText("当前可提现金额 " + myMoney + " 元");
+                tvMaxmoney.setText("当前可提现金额 " + Convert.getMoneyString(myMoney) + " 元");
             } else {
                 tvMaxmoney.setText("当前可提现金额" + Constants.MAX_WITHDRAW + "元");
             }

@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.Convert;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zema.volley.network.ResponseListener;
 
@@ -110,6 +112,8 @@ public class BusinessAccountDetailActivity extends BaseActivity {
     MerchantBillInfoPayRequest merchantBillInfoPayRequest;
     MerchantBillInfoWithdrawRequest merchantBillInfoWithdrawRequest;
     int billId, type;
+    @Bind(R.id.tv_withdraw_state)
+    TextView tvWithdrawState;
 
     @Override
     public void setContentView() {
@@ -152,7 +156,7 @@ public class BusinessAccountDetailActivity extends BaseActivity {
                 dismissPd();
                 if (((APIM_UserBillInfo) response).status == 1) {
                     M_Bill m_bill = ((APIM_UserBillInfo) response).billInfo;
-                    tvType.setText("交易");
+                    tvType.setText("交易入账");
                     imageManager.loadCircleImage(m_bill.userHead, headIv);
                     objectTv.setText(m_bill.userName);
                     xiaofeiTv.setText("" + Convert.getMoneyString(m_bill.payMoney));
@@ -206,6 +210,18 @@ public class BusinessAccountDetailActivity extends BaseActivity {
                     tvNumWithdraw.setText(m_bill.number);
                     tvCreateTimeWithdraw.setText(m_bill.createtime);
                     tvTimeWithdraw.setText(m_bill.completeTime);
+                    switch (m_bill.state){
+                        case 0:
+                            tvWithdrawState.setText("提现中");
+                            break;
+                        case 1:
+                            tvWithdrawState.setText("提现成功");
+                            break;
+                        case 2:
+                            tvWithdrawState.setText("提现失败");
+                            break;
+                    }
+
                 }
             }
         });
@@ -223,4 +239,10 @@ public class BusinessAccountDetailActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

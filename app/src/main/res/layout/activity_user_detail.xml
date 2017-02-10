@@ -259,59 +259,65 @@
         style="@style/divider12dp"
         android:layout_height="12dp"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/btn_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_above="@+id/btn_buy"
-            android:layout_alignLeft="@+id/btn_buy"
-            android:layout_marginBottom="@dimen/margin_16dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="发消息"
-            android:textColor="@color/font_main"
-            android:textSize="@dimen/font_36px"
-            app:rv_backgroundColor="@color/white"
-            app:rv_backgroundPressColor="@color/bg_ce"
-            app:rv_cornerRadius="18dp"
-            app:rv_strokeColor="@color/font_main"
-            app:rv_strokeWidth="1px"/>
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/btn_gift"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_above="@+id/btn_buy"
-            android:layout_alignRight="@+id/btn_buy"
-            android:layout_marginBottom="@dimen/margin_16dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="赞赏红包"
-            android:textColor="@color/font_main"
-            android:textSize="@dimen/font_36px"
-            app:rv_backgroundColor="@color/white"
-            app:rv_backgroundPressColor="@color/bg_ce"
-            app:rv_cornerRadius="18dp"
-            app:rv_strokeColor="@color/font_main"
-            app:rv_strokeWidth="1px"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/btn_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:text="发消息"
+                android:layout_marginLeft="@dimen/j35dp"
+                android:textColor="@color/font_main"
+                android:textSize="@dimen/font_36px"
+                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundPressColor="@color/bg_ce"
+                app:rv_cornerRadius="18dp"
+                app:rv_strokeColor="@color/font_main"
+                app:rv_strokeWidth="1px"/>
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/btn_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="赞赏红包"
+                android:layout_marginRight="@dimen/j35dp"
+                android:textColor="@color/font_main"
+                android:textSize="@dimen/font_36px"
+                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundPressColor="@color/bg_ce"
+                app:rv_cornerRadius="18dp"
+                app:rv_strokeColor="@color/font_main"
+                app:rv_strokeWidth="1px"/>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_buy"
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_above="@+id/btn_service"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
             android:clickable="true"
+            android:visibility="visible"
             android:gravity="center"
             android:text="找TA买单"
             android:textColor="@color/white"
@@ -323,7 +329,6 @@
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
             android:clickable="true"
@@ -332,5 +337,5 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_36px"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

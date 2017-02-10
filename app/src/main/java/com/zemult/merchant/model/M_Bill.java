@@ -45,7 +45,7 @@ public class M_Bill implements Serializable {
     @Expose
     public String number;    //	订单号(类型0/1/2 时有值)
     @Expose
-    public int state;  //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
+    public int state;  //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))  提现状态(0:提现中,1:提现成功,2:提现失败)
     @Expose
     public int infoId;    //	任务ID
     @Expose
