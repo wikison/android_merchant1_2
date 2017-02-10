@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,7 +27,6 @@ import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.RiseNumberTextView;
 import com.zemult.merchant.view.common.CommonDialog;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -62,7 +60,7 @@ public class MyWalletActivity extends BaseActivity {
     Button btnDuihuan;
 
     boolean isfirstload = true;
-    int isSetPaypwd, isConfirm,isBanged;
+    int isSetPaypwd, isConfirm, isBanged;
     double mymoney, exchangeMoney;
     private Context mContext;
     UserBandcardInfoRequest userBandcardInfoRequest;
@@ -142,7 +140,6 @@ public class MyWalletActivity extends BaseActivity {
     }
 
 
-
     private void user_bandcard_info() {
         if (userBandcardInfoRequest != null) {
             userBandcardInfoRequest.cancel();
@@ -167,11 +164,15 @@ public class MyWalletActivity extends BaseActivity {
                     isBanged = ((CommonResult) response).isBand;
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
                         Intent intent = new Intent(MyWalletActivity.this, BangDingAccountActivity.class);
-                        intent.putExtra("actfrom","MyWalletActivity");
+                        intent.putExtra("actfrom", "MyWalletActivity");
                         startActivity(intent);
                     } else {
-                        Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
-                        startActivity(intentwithdrawals);
+                        if (mymoney < Constants.MIN_WITHDRAW) {
+                            ToastUtil.showMessage("您的余额不足" + Constants.MIN_WITHDRAW + "元，暂时无法提现");
+                        } else {
+                            Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
+                            startActivity(intentwithdrawals);
+                        }
                     }
 
                 } else {
@@ -223,7 +224,7 @@ public class MyWalletActivity extends BaseActivity {
 
     private void setPresent(List<M_Present> userPresentList) {
         for (M_Present p : userPresentList) {
-            exchangeMoney += p.num* p.exchangePrice;
+            exchangeMoney += p.num * p.exchangePrice;
         }
 
         GridLayoutManager manager = new GridLayoutManager(mContext, 2);

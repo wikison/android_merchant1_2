@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.zemult.merchant.activity.mine.WithdrawalsActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.zemult.merchant.activity.mine.WithdrawalsActivity">
 
     <include
         android:id="@+id/layout_head"
-        layout="@layout/layout_head" />
+        layout="@layout/layout_head"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/margin_12dp"
-                android:background="@mipmap/zhifu_icon" />
+                android:background="@mipmap/zhifu_icon"/>
 
             <TextView
                 android:id="@+id/tv_zhifubao"
@@ -41,7 +41,7 @@
                 android:layout_marginLeft="@dimen/margin_12dp"
                 android:layout_toRightOf="@+id/iv_zhifubao"
                 android:gravity="center_vertical"
-                android:text="支付宝账号" />
+                android:text="支付宝账号"/>
 
             <TextView
                 android:id="@+id/tv_account"
@@ -52,7 +52,7 @@
                 android:layout_below="@+id/tv_zhifubao"
                 android:layout_marginTop="6dp"
                 android:layout_toRightOf="@+id/iv_zhifubao"
-                android:text="未绑定" />
+                android:text="未绑定"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -63,13 +63,13 @@
 
             <TextView
                 android:id="@+id/tv_txlab"
-                style="@style/text_16_black_333"
+                style="@style/text_15_black_333"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/margin_12dp"
                 android:gravity="center_vertical"
-                android:text="提现金额（元）" />
+                android:text="提现金额（元）"/>
 
             <EditText
                 android:id="@+id/et_money"
@@ -81,29 +81,34 @@
                 android:gravity="center_vertical"
                 android:hint="请输入提现金额"
                 android:inputType="numberDecimal"
-                android:textSize="@dimen/font_36px" />
+                android:textSize="@dimen/font_32px"/>
 
 
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_maxmoney"
-        style="@style/text_14_black_999"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/j36dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_12dp"
-        android:text="当前可提现金额1000元" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:layout_marginLeft="@dimen/margin_12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_maxmoney"
+            style="@style/text_16_black_999"
+            android:text=""/>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_withdrawal"
         style="@style/btn_common_orange"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:text="确认提现" />
+        android:layout_marginTop="72dp"
+        android:text="确认提现"/>
 
 
     <RelativeLayout
@@ -125,7 +130,7 @@
                 android:gravity="center_horizontal"
                 android:text="提现规则"
                 android:textColor="@color/bg_head"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
 
             <TextView
@@ -134,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="单次提现金额最低为100元，最高2000元" />
+                android:text="单次提现金额最低为100元，单日最高2000元"/>
 
             <TextView
                 style="@style/text_14_black_999"
@@ -142,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="自动扣除提现金额20%的手续费，" />
+                android:text="自动扣除提现金额20%的手续费，"/>
 
             <TextView
                 style="@style/text_14_black_999"
@@ -150,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="3-10个工作日内到账" />
+                android:text="3-10个工作日内到账"/>
 
         </LinearLayout>
 

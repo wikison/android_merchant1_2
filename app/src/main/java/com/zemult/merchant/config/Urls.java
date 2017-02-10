@@ -5,6 +5,8 @@ package com.zemult.merchant.config;
  */
 public class Urls {
     //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
+
+    public static String MAIN_URL = "http://yovoll.54xiegang.com/";
     public static String URL = "http://test1.54xiegang.com/dzyx_test/";
     public static String BASIC_URL = URL + "inter_json/";
 
@@ -18,7 +20,6 @@ public class Urls {
     public static String COMMON_ISREALNAME = "user_realname_show.do";
     //搜索热词
     public static String COMMON_HOT_SEARCHLIST = "common_hot_searchList.do";
-
 
     //OSS移动应用直传服务
     public static String OSS_OSSTOKEN = "oss_ossToken.do";
@@ -46,7 +47,6 @@ public class Urls {
     public static String COMMON_GETCITYSBYPROVINCE = "common_getcitysbyprovince.do";
     //获取单市下面的区县
     public static String COMMON_GETAREASBYCITY = "common_getareasbycity.do";
-
 
     //搜索方案列表(角色/场景)
     public static String MANAGER_SEARCHNEWSLIST = "manager_searchnewsList.do";
@@ -178,6 +178,8 @@ public class Urls {
     public static String USER_REALNAME_INFO = "user_realname_info.do";
     //提现
     public static String USER_CASH_WITHDRAW = "user_cash_withdraw.do";
+    //获取用户的当天可取余额信息
+    public static final String USER_CASH_INFO = "user_cash_info";
     //获取通讯录中不是平台账户的手机号
     public static String USER_CHECK_BOOKLIST = "user_check_bookList.do";
     //获取通讯录中不是用户好友的手机号(是平台账号,发过好友申请的也不显示)
@@ -540,11 +542,6 @@ public class Urls {
     //修改用户状态(服务管家状态)
     public static String USER_EDITSTATE = "user_editstate";
 
-    //服务管家等级
-    public static String SERVICELEVEL = "http://server.54xiegang.com/html/dzyx_common/level.html";
-    //服务管家协议
-
-    public static String SERVICEXIEYI = "http://server.54xiegang.com/html/dzyx_sale/xieyi.html";
     // 通过预约单快捷生成支付买单(1)
     public static String USER_RESERVATION_PAY_ADD = "user_reservation_pay_add";
     // 用户打/赞赏-生成支付单（支付宝）

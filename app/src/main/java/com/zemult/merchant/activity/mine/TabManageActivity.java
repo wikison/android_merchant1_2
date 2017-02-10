@@ -31,7 +31,7 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.bean.ChannelManage;
 import com.zemult.merchant.bean.IndusPreferItem;
-import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
@@ -557,7 +557,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             case R.id.tv_protocol:
 
                 IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                        new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Urls.SERVICEXIEYI));
+                        new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Constants.SERVICEXIEYI));
                 break;
             case R.id.apply_btn:
                 if (comefrom == 1) {

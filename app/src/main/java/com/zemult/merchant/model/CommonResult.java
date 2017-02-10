@@ -87,10 +87,12 @@ public class CommonResult {
     @Expose
     public String commissionMoney;//总佣金数
 
-
     @Expose
     public String reservationId;//用户的预约单列表
     @Expose
     public String rewardMoney;//打赏金额（，隔开）
+
+    @Expose
+    public double cashMoney;//当天已经提现的金额
 
 }

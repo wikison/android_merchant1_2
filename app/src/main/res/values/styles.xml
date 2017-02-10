@@ -487,6 +487,8 @@
     </style>
 
     <style name="text_16_black_999">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/font_black_999</item>
         <item name="android:textSize">16sp</item>
     </style>

@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.CommonWithcashCountRequest;
 import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
+import com.zemult.merchant.aip.mine.UserCashInfoRequest;
 import com.zemult.merchant.aip.mine.UserCashWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -22,7 +24,6 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.BalancePayAlertView;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 import butterknife.Bind;
@@ -55,6 +56,7 @@ public class WithdrawalsActivity extends BaseActivity {
     @Bind(R.id.btn_withdrawal)
     Button btnWithdrawal;
     UserCashWithdrawRequest userCashWithdrawRequest;
+    UserCashInfoRequest userCashInfoRequest;
     UserBandcardInfoRequest userBandcardInfoRequest;
     CommonWithcashCountRequest commonWithcashCountRequest;
     int isBanged;
@@ -62,6 +64,7 @@ public class WithdrawalsActivity extends BaseActivity {
     String aliAccount = "";
     String money;
     double serviceMoney;
+    double cashMoney = 0;//日提现剩余额度
 
     @Override
     public void setContentView() {
@@ -73,23 +76,8 @@ public class WithdrawalsActivity extends BaseActivity {
         lhTvTitle.setText("提现");
         user_bandcard_info();
         myMoney = SlashHelper.userManager().getUserinfo().money;
-        EditFilter.CashFilter(etMoney, Constants.MAX_WITHDRAW);
 
-        if (myMoney >= Constants.MIN_WITHDRAW) {
-            etMoney.setEnabled(true);
-            etMoney.setHint("请输入提现金额");
-            if (myMoney <= Constants.MAX_WITHDRAW) {
-                tvMaxmoney.setText("当前可提现金额 " + Convert.getMoneyString(myMoney) + " 元");
-            } else {
-                tvMaxmoney.setText("当前可提现金额" + Convert.getMoneyString(Constants.MAX_WITHDRAW) + "元");
-            }
-        } else {
-            etMoney.setHint("提现余额不足");
-            etMoney.setEnabled(false);
-            tvMaxmoney.setText("当前账户余额 " + Convert.getMoneyString(myMoney) + " 元, 可提现金额 0 元");
-            btnWithdrawal.setEnabled(false);
-            btnWithdrawal.setBackgroundResource(R.drawable.next_bg_btn_select);
-        }
+        user_cash_info();
     }
 
     @Override
@@ -97,6 +85,54 @@ public class WithdrawalsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+    }
+
+    private void user_cash_info() {
+        if (userCashInfoRequest != null) {
+            userCashInfoRequest.cancel();
+        }
+        UserCashInfoRequest.Input input = new UserCashInfoRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.convertJosn();
+
+        userCashInfoRequest = new UserCashInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    //返回的cashMoney为日已提现金额
+                    String sHint = "";
+                    cashMoney = ((CommonResult) response).cashMoney;
+                    cashMoney = Constants.MAX_WITHDRAW - cashMoney;
+                    if (cashMoney < myMoney) {
+                        EditFilter.CashFilter(etMoney, cashMoney);
+                    } else {
+                        EditFilter.CashFilter(etMoney, myMoney);
+                    }
+                    if (cashMoney < Constants.MIN_WITHDRAW) {
+                        sHint = String.format("当前可提现金额<font color='#e6bb7c'>%s</font>元, 账户余额<font color='#e6bb7c'>%s</font>元", "0.00", Convert.getMoneyString(myMoney));
+                        etMoney.setEnabled(false);
+                        btnWithdrawal.setEnabled(false);
+                        btnWithdrawal.setBackgroundResource(R.drawable.next_bg_btn_select);
+                    } else {
+                        if (myMoney <= cashMoney) {
+                            sHint = String.format("当前可提现金额<font color='#e6bb7c'>%s</font>元, 账户余额<font color='#e6bb7c'>%s</font>元", Convert.getMoneyString(myMoney), Convert.getMoneyString(myMoney));
+                        } else {
+                            sHint = String.format("当前可提现金额<font color='#e6bb7c'>%s</font>元, 账户余额<font color='#e6bb7c'>%s</font>元", Convert.getMoneyString(cashMoney), Convert.getMoneyString(myMoney));
+                        }
+                    }
+                    tvMaxmoney.setText(Html.fromHtml(sHint));
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+
+
+            }
+        });
+        sendJsonRequest(userCashInfoRequest);
     }
 
 
@@ -243,17 +279,32 @@ public class WithdrawalsActivity extends BaseActivity {
                 break;
             case R.id.btn_withdrawal:
                 money = etMoney.getText().toString();
+                double toCashMoney = 0;
                 if (isBanged == 0) {
                     ToastUtil.showMessage("您还没有绑定支付宝账号");
                     return;
                 }
                 if (!StringUtils.isEmpty(money)) {
-                    if (Double.parseDouble(money) >= Constants.MIN_WITHDRAW && Double.parseDouble(money) <= myMoney) {
-                        commonWithcashCountRequest();
-
-                    } else {
-                        ToastUtil.showMessage("请输入正确的提现金额");
+                    toCashMoney = Double.parseDouble(money);
+                    if (toCashMoney < Constants.MIN_WITHDRAW) {
+                        ToastUtil.showMessage("最小提现额为" + Constants.MIN_WITHDRAW + "元，请重新输入");
+                        return;
                     }
+                    if (toCashMoney > Constants.MAX_WITHDRAW) {
+                        ToastUtil.showMessage("最大提现额为" + Constants.MAX_WITHDRAW + "元，请重新输入");
+                        return;
+                    }
+                    if (toCashMoney > cashMoney) {
+                        ToastUtil.showMessage("您输入的金额已超出当前可提现额度，请重新输入");
+                        return;
+                    }
+                    if (toCashMoney > myMoney) {
+                        ToastUtil.showMessage("您输入的金额已超出账户余额，请重新输入");
+                        return;
+                    }
+
+                    commonWithcashCountRequest();
+
 
                 } else {
                     ToastUtil.showMessage("请输入提现金额");

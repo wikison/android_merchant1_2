@@ -8,7 +8,7 @@
     <include layout="@layout/layout_head"/>
 
     <View style="@style/divider10dp"
-        android:background="@color/bg_e5"/>
+        android:background="@color/bg_f2"/>
 
     <RelativeLayout
         android:clickable="true"
@@ -32,7 +32,7 @@
 
     </RelativeLayout>
     <View style="@style/divider10dp"
-        android:background="@color/bg_e5"/>
+        android:background="@color/bg_f2"/>
 
     
     <RelativeLayout
@@ -180,7 +180,7 @@
     </RelativeLayout>
 
     <View style="@style/divider10dp"
-        android:background="@color/bg_e5"/>
+        android:background="@color/bg_f2"/>
 
     <RelativeLayout
         android:clickable="true"
@@ -215,6 +215,7 @@
         android:paddingLeft="12dp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:visibility="gone"
         android:background="@drawable/ripple_item_clicked2">
 
         <TextView
@@ -231,8 +232,7 @@
 
         <View
             style="@style/divider"
-            android:layout_alignParentBottom="true"
-            android:background="#b3b4b5"/>
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 
