@@ -37,6 +37,8 @@ import com.zemult.merchant.util.ImageManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.trinea.android.common.util.StringUtils;
+
 /**
  * 最近会话界面的定制点(根据需要实现相应的接口来达到自定义会话列表界面)，不设置则使用openIM默认的实现
  * 调用方设置的回调，必须继承BaseAdvice 根据不同的需求实现 不同的 开放的 Advice
@@ -391,7 +393,14 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 
             headLoadHelper.setHeadView(holder.head, conversation);
             holder.name.setText(name);
-            holder.content.setText(conversation.getLatestContent());
+            if(StringUtils.isEmpty(conversation.getLatestContent())){
+                holder.content.setVisibility(View.GONE);
+            }
+            else{
+                holder.content.setVisibility(View.VISIBLE);
+                holder.content.setText(conversation.getLatestContent());
+            }
+
             holder.time.setText(DateTimeUtil.getDescriptionTimeFromTimestamp(conversation.getLatestTimeInMillisecond()));
 
             holder.unread.setVisibility(View.GONE);
