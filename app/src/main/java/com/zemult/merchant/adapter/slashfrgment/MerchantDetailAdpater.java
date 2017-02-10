@@ -38,7 +38,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     Drawable drawable;
     private boolean isNoData;
     private int mHeight;
-    private int noDividerPos, noDividerPos2;
+    private int noDividerPos;
 
     public MerchantDetailAdpater(Context context, List<M_Userinfo> list) {
         super(context, list);
@@ -81,7 +81,6 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 //            listAll.add(userinfo);
         }else {
             listAll.get(0).showAll = true;
-            noDividerPos2 = listAll.size() - 1;
             data.addAll(listAll);
         }
 
@@ -116,7 +115,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
             convertView.setTag(R.string.app_name, holder);
         }
 
-        if (noDividerPos == position || noDividerPos2 == position)
+        if (noDividerPos == position)
             holder.divider.setVisibility(View.GONE);
         else
             holder.divider.setVisibility(View.VISIBLE);
