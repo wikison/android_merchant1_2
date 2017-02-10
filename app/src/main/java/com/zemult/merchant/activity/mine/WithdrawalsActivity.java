@@ -22,6 +22,9 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.BalancePayAlertView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -209,9 +212,15 @@ public class WithdrawalsActivity extends BaseActivity {
     private void showInputPwdDialog(final String paymoney, double serviceMoney) {
 
         BalancePayAlertView payAlertView = new BalancePayAlertView(WithdrawalsActivity.this);
-        payAlertView.setAmount(paymoney + "");
-        payAlertView.setTips("提现");
-        payAlertView.setTips2("额外扣除" + serviceMoney + "元手续费");//
+
+        try {
+            DecimalFormat df   = new DecimalFormat("######0.00");
+            payAlertView.setAmount( df.format(Double.parseDouble(paymoney)) + "");
+            payAlertView.setTips("提现");
+            payAlertView.setTips2("额外扣除" +  df.format(serviceMoney)+ "元手续费");//
+        }catch (Exception e){
+        }
+
 
         payAlertView
                 .setValidatePasswordListener(new BalancePayAlertView.OnValidatePasswordListener() {

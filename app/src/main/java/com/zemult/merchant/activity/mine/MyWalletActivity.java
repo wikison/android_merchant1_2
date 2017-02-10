@@ -28,6 +28,8 @@ import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.RiseNumberTextView;
 import com.zemult.merchant.view.common.CommonDialog;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.Bind;
@@ -97,7 +99,11 @@ public class MyWalletActivity extends BaseActivity {
             tvMoney.start();
             isfirstload = false;
         } else {
-            tvMoney.setText(mymoney + "");
+            try {
+                DecimalFormat df   = new DecimalFormat("######0.00");
+                tvMoney.setText(df.format(mymoney) + "");
+            }catch (Exception e){
+            }
         }
     }
 

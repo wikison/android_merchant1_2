@@ -20,6 +20,9 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.password.GridPasswordView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 import cn.trinea.android.common.util.DigestUtils;
 import zema.volley.network.ResponseListener;
 import zema.volley.network.VolleyUtil;
@@ -211,7 +214,11 @@ public class BalancePayAlertView {
 	}
 
 	public void setAmount(String amount) {
-		lblAmount.setText("¥:" + amount);
+		try {
+			DecimalFormat df   = new DecimalFormat("######0.00");
+		lblAmount.setText("¥" +df.format(Double.parseDouble(amount)));
+		 }catch (Exception e){
+		}
 	}
 
 	public void setTips(String tips) {

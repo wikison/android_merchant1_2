@@ -108,7 +108,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 return "自定义View展示的会话";
             }
             else if (body.getIdentity().equals(MainActivity.SYSTEM_SYSMESSAGE)) {
-                return "通知消息";
+                return "";
             }
         }
 

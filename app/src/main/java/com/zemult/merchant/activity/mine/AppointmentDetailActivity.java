@@ -198,7 +198,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                             jiezhangBtn.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
                         }
-
+                        merchantReviewstatus=mReservation.merchantReviewstatus;
                         if(merchantReviewstatus==2){//商户审核状态(0未审核,1待审核,2审核通过)
                             jiezhangBtn.setVisibility(View.VISIBLE);
                         }

@@ -225,7 +225,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         addConnectionListener();
 
 
-        initCustomConversation("系统消息", 0);
+        initCustomConversation("", 0);
     }
 
 
