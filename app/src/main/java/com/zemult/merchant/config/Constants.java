@@ -70,11 +70,14 @@ public class Constants {
     public static final String OSSENDPOINT = "http://xiegang.oss-cn-shanghai.aliyuncs.com/";
     public static final String BUCKET = "xiegang";
     public static final String STSSERVER = "http://server.54xiegang.com/yongyou/inter_json/oss_ossToken.do";
-    public static final String APP_DOWNLOAD_URL = "http://server.54xiegang.com/dzyx/html/appdownload/index.html";
-    public static final String PROTOCOL_REGISTER = "http://www.zemult.com/xyxz/userProtocal.html";
-    public static final String PROTOCOL_MERCHANT = "http://www.zemult.com/xyxz/merchantProtocal.html";
-    public static final String URL_HELP = "http://server.54xiegang.com/dzyx/html/help.html";
-
+    public static final String APP_DOWNLOAD_URL = Urls.MAIN_URL + "app_download/yogous/index.html";
+    public static final String PROTOCOL_REGISTER = Urls.MAIN_URL + "html/dzyx_common/userProtocal.html";
+    public static final String PROTOCOL_MERCHANT = Urls.MAIN_URL + "html/dzyx_common/merchantProtocal.html";
+    public static final String URL_HELP = Urls.MAIN_URL + "html/help.html";
+    //服务管家等级
+    public static String SERVICELEVEL = Urls.MAIN_URL + "html/dzyx_common/level.html";
+    //服务管家协议
+    public static String SERVICEXIEYI = Urls.MAIN_URL + "html/dzyx_sale/xieyi.html";
     // APK
     public final static String APK_CACHE_DIR = APP_FILE_DIR + "apk"
             + File.separatorChar;

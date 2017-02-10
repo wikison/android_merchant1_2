@@ -16,7 +16,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
-import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
@@ -196,7 +196,7 @@ public class IamYuekeActivity extends BaseActivity {
                 break;
             case R.id.read_tv:
                 IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                        new Pair<String, String>("titlename", "服务等级"), new Pair<String, String>("url", Urls.SERVICELEVEL));
+                        new Pair<String, String>("titlename", "服务等级"), new Pair<String, String>("url", Constants.SERVICELEVEL));
                 break;
             case R.id.zhanghu_tv:
                 //商户管理
