@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.PresentAdapter;
+import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
 import com.zemult.merchant.aip.mine.UserPresentExchangeRequest;
 import com.zemult.merchant.aip.mine.UserPresentRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -32,6 +33,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 /**
@@ -58,9 +60,10 @@ public class MyWalletActivity extends BaseActivity {
     Button btnDuihuan;
 
     boolean isfirstload = true;
-    int isSetPaypwd, isConfirm;
+    int isSetPaypwd, isConfirm,isBanged;
     double mymoney, exchangeMoney;
     private Context mContext;
+    UserBandcardInfoRequest userBandcardInfoRequest;
 
     @Override
     public void setContentView() {
@@ -111,8 +114,7 @@ public class MyWalletActivity extends BaseActivity {
                 startActivity(intentbill);
                 break;
             case R.id.btn_tixian:
-                Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
-                startActivity(intentwithdrawals);
+                user_bandcard_info();
                 break;
             case R.id.btn_duihuan:
                 CommonDialog.showDialogListener(mContext, null, "确认", "取消", "总计兑换" + Convert.getMoneyString(exchangeMoney) + "元，是否确认兑换？", new View.OnClickListener() {
@@ -132,6 +134,48 @@ public class MyWalletActivity extends BaseActivity {
                 break;
         }
     }
+
+
+
+    private void user_bandcard_info() {
+        if (userBandcardInfoRequest != null) {
+            userBandcardInfoRequest.cancel();
+        }
+
+
+        UserBandcardInfoRequest.Input input = new UserBandcardInfoRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+        }
+
+        input.convertJosn();
+        userBandcardInfoRequest = new UserBandcardInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    isBanged = ((CommonResult) response).isBand;
+                    if (isBanged == 0) {//是否已经绑定(0:否,1:是)
+                        Intent intent = new Intent(MyWalletActivity.this, BangDingAccountActivity.class);
+                        intent.putExtra("actfrom","MyWalletActivity");
+                        startActivity(intent);
+                    } else {
+                        Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
+                        startActivity(intentwithdrawals);
+                    }
+
+                } else {
+                    ToastUtils.show(MyWalletActivity.this, ((CommonResult) response).info);
+                }
+            }
+        });
+        sendJsonRequest(userBandcardInfoRequest);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

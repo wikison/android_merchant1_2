@@ -33,6 +33,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -62,7 +63,7 @@ public class BangDingAccountActivity extends BaseActivity {
     CommonSignNumberRequest commonSignNumberRequest;
     private static final int SDK_PAY_FLAG = 1;
     // 商户订单号
-    public String ORDER_SN = "";
+    public String ORDER_SN = "",actfrom;
 
 
     @SuppressLint("HandlerLeak")
@@ -76,8 +77,14 @@ public class BangDingAccountActivity extends BaseActivity {
                     String resultStatus = payResult.getResultStatus();
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(BangDingAccountActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        user_bandcard_info();
-
+                        if(!StringUtils.isEmpty(actfrom)&&actfrom.equals("MyWalletActivity")){
+                            Intent intentwithdrawals = new Intent(BangDingAccountActivity.this, WithdrawalsActivity.class);
+                            startActivity(intentwithdrawals);
+                            finish();
+                        }
+                        else{
+                            user_bandcard_info();
+                        }
                     } else {
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(BangDingAccountActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
@@ -106,6 +113,7 @@ public class BangDingAccountActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("支付宝绑定");
+        actfrom=getIntent().getStringExtra("actfrom");
     }
 
     @Override
