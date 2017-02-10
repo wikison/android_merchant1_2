@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
     Drawable drawable;
-    private boolean isNoData;
+    private boolean isNoData, halfScreen;
     private int mHeight;
     private int noDividerPos = -1;
 
@@ -58,6 +58,10 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
             mHeight = list.get(0).getHeight();
         }
         notifyDataSetChanged();
+    }
+
+    public void setHalfScreen(boolean halfScreen) {
+        this.halfScreen = halfScreen;
     }
 
     // 设置数据
@@ -99,7 +103,11 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // 暂无数据
         if (isNoData) {
-            convertView = mInflater.inflate(R.layout.item_no_data_layout, null);
+            if(halfScreen)
+                convertView = mInflater.inflate(R.layout.item_no_merchant_data_layout, null);
+            else
+                convertView = mInflater.inflate(R.layout.item_no_data_layout, null);
+
             AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mHeight);
             RelativeLayout rootView = ButterKnife.findById(convertView, R.id.rl_no_data);
             rootView.setLayoutParams(params);

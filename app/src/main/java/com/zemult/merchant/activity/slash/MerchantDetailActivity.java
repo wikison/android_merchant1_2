@@ -351,6 +351,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     private void setUserListAll(List<M_Userinfo> listAll, int maxpage, boolean isLoadMore) {
         if ((listAll == null || listAll.isEmpty()) && (listFan == null || listFan.isEmpty())) {
             int height = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, 48);
+            mAdapter.setHalfScreen(true);
             mAdapter.setData(ModelUtil.getNoDataUserEntity(height), false);
             lv.setLoadMoreEnable(false);
         } else {
