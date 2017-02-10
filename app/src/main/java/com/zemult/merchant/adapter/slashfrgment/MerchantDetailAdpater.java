@@ -38,7 +38,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     Drawable drawable;
     private boolean isNoData;
     private int mHeight;
-    private int noDividerPos;
+    private int noDividerPos = -1;
 
     public MerchantDetailAdpater(Context context, List<M_Userinfo> list) {
         super(context, list);
