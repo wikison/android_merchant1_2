@@ -18,6 +18,7 @@ import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DensityUtil;
+import com.zemult.merchant.util.ToastUtil;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // 正常数据
         final ViewHolder holder;
 
@@ -115,23 +116,32 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
             }
         });
 
-        holder.hsv.setOnTouchListener(new View.OnTouchListener() {
+//        holder.hsv.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_UP:
+//                        if (view != null) {
+//                            ViewHolder oldViewHolder = (ViewHolder) view.getTag();
+//                            if (oldViewHolder.llAction.getVisibility() == View.VISIBLE) {
+//                                oldViewHolder.hsv.smoothScrollTo(0, 0);
+//                            }
+//                        }
+//                        view = v;
+//                        break;
+//                }
+//
+//                return true;
+//            }
+//        });
+
+        holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        if (view != null) {
-                            ViewHolder oldViewHolder = (ViewHolder) view.getTag();
-                            if (oldViewHolder.llAction.getVisibility() == View.VISIBLE) {
-                                oldViewHolder.hsv.smoothScrollTo(0, 0);
-                            }
-                        }
-                        view = v;
-                }
-                return true;
+            public void onClick(View v) {
+                if(onItemClickListener!=null)
+                    onItemClickListener.onItemClick(position);
             }
         });
-
         return convertView;
     }
 
@@ -150,9 +160,6 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
     }
 
 
-    /**
-     * 买单点击接口
-     */
     private OnDelClickListener onDelClickListener;
 
     public void setOnDelClickListener(OnDelClickListener onDelClickListener) {
@@ -162,7 +169,15 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
     public interface OnDelClickListener {
         void onDelClick(int position);
     }
+    private OnItemClickListener onItemClickListener;
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
     static class ViewHolder {
         @Bind(R.id.iv_del)
@@ -183,6 +198,8 @@ public class MerchantManagerAdpater extends BaseListAdapter<M_Userinfo> {
         Button del;
         @Bind(R.id.ll_action)
         LinearLayout llAction;
+        @Bind(R.id.ll)
+        LinearLayout ll;
         @Bind(R.id.hsv)
         HorizontalScrollView hsv;
 

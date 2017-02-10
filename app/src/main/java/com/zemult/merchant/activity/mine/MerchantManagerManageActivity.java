@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.minefragment.MerchantManagerAdpater;
 import com.zemult.merchant.aip.mine.MerchantSaleuserDelRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
@@ -105,7 +107,23 @@ public class MerchantManagerManageActivity extends BaseActivity implements Smoot
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
 
-
+        smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastUtil.showMessage("heheheh" + position);
+            }
+        });
+        mAdapter.setOnItemClickListener(new MerchantManagerAdpater.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position).getUserId());
+                intent.putExtra(UserDetailActivity.USER_NAME, mAdapter.getItem(position).getUserName());
+                intent.putExtra(UserDetailActivity.USER_HEAD, mAdapter.getItem(position).getUserHead());
+                intent.putExtra(UserDetailActivity.USER_SEX, mAdapter.getItem(position).getSex());
+                startActivity(intent);
+            }
+        });
         mAdapter.setOnDelClickListener(new MerchantManagerAdpater.OnDelClickListener() {
             @Override
             public void onDelClick(int position) {
