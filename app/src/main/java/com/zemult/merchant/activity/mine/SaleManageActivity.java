@@ -275,7 +275,6 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
     // 获取挂靠的商家列表
     private void getUserMerchantList() {
-        showPd();
         if (userSaleMerchantList_1_2Request != null) {
             userSaleMerchantList_1_2Request.cancel();
         }
@@ -293,7 +292,6 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
             @Override
             public void onResponse(Object response) {
-                dismissPd();
                 if (((APIM_MerchantList) response).status == 1) {
                     fillAdapter(((APIM_MerchantList) response).industryList);
                 } else {
@@ -348,7 +346,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
      * 设置数据
      */
     private void fillAdapter(final List<M_Merchant> list) {
-
+        smoothListView.stopRefresh();
         if (list == null || list.size() == 0) {
             rlNoData.setVisibility(View.VISIBLE);
             smoothListView.setLoadMoreEnable(false);
@@ -375,7 +373,6 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         userSaleMerchantDelRequest = new UserSaleMerchantDelRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dismissPd();
             }
 
             @Override
@@ -386,7 +383,6 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
-                dismissPd();
             }
         });
         sendJsonRequest(userSaleMerchantDelRequest);
