@@ -70,12 +70,19 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/shenqing_icon"/>
             <ImageView
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="36dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="23dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/merchant_tip"/>
+                android:src="@mipmap/tishi"/>
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tishi2"
+                android:layout_marginBottom="60dp"/>
         </RelativeLayout>
 
     </FrameLayout>
