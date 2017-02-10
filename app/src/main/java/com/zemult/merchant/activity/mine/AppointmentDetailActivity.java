@@ -88,11 +88,8 @@ public class AppointmentDetailActivity extends BaseActivity {
     TextView appresultTv;
     @Bind(R.id.ordernum_tv)
     TextView ordernumTv;
-
     @Bind(R.id.invite_btn)
     Button inviteBtn;
-    @Bind(R.id.jiezhang_btn)
-    Button jiezhangBtn;
     @Bind(R.id.ordersuccess_btn_rl)
     RelativeLayout ordersuccessBtnRl;
     @Bind(R.id.others_ll)
@@ -114,12 +111,14 @@ public class AppointmentDetailActivity extends BaseActivity {
     LinearLayout llRoot;
     @Bind(R.id.lookorder_btn)
     Button lookorderBtn;
+    @Bind(R.id.jiezhang_btn)
+    Button jiezhangBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
     String reservationId="";
     int type;
     String replayNote;
-    int userPayId;
+    int userPayId,merchantReviewstatus;
     M_Reservation mReservation;
     UserReservationInfoRequest userReservationInfoRequest;
     UserReservationEditRequest userReservationEditRequest;
@@ -192,6 +191,13 @@ public class AppointmentDetailActivity extends BaseActivity {
                             inviteBtn.setVisibility(View.VISIBLE);
                             jiezhangBtn.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
+                        }
+
+                        if(merchantReviewstatus==2){//商户审核状态(0未审核,1待审核,2审核通过)
+                            jiezhangBtn.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            jiezhangBtn.setVisibility(View.GONE);
                         }
 
                     } else if (mReservation.state == 2) {

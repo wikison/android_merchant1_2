@@ -29,6 +29,8 @@ public class BalancePayAlertView {
 	private BaseActivity activity = null;
 	private AlertDialog alertDialog = null;
 	private TextView lblAmount = null;
+	private TextView lblTips = null;
+	private TextView lblTips2 = null;
 	private TextView lblClose = null;
 	private GridPasswordView passwordView = null;
 	private OnValidatePasswordListener validatePasswordListener = null;
@@ -59,6 +61,10 @@ public class BalancePayAlertView {
 		});
 		lblAmount = (TextView) window
 				.findViewById(R.id.balancePayAlertView_lblAmount);
+		lblTips = (TextView) window
+				.findViewById(R.id.balancePayAlertView_lblTips);
+		lblTips2 = (TextView) window
+				.findViewById(R.id.balancePayAlertView_lblTips2);
 		passwordView = (GridPasswordView) window
 				.findViewById(R.id.balancePayAlertView_passwordView);
 		passwordView
@@ -207,6 +213,17 @@ public class BalancePayAlertView {
 	public void setAmount(String amount) {
 		lblAmount.setText("¥:" + amount);
 	}
+
+	public void setTips(String tips) {
+		lblTips.setVisibility(View.VISIBLE);
+		lblTips.setText(tips);
+	}
+	public void setTips2(String tips2) {
+		lblTips2.setVisibility(View.VISIBLE);
+		lblTips2.setText(tips2);
+	}
+
+
 
 	public void setValidatePasswordListener(
 			OnValidatePasswordListener validatePasswordListener) {

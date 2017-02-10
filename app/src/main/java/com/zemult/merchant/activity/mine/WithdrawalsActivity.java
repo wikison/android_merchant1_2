@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.mine.CommonWithcashCountRequest;
 import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
 import com.zemult.merchant.aip.mine.UserCashWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -51,9 +52,12 @@ public class WithdrawalsActivity extends BaseActivity {
     Button btnWithdrawal;
     UserCashWithdrawRequest userCashWithdrawRequest;
     UserBandcardInfoRequest userBandcardInfoRequest;
+    CommonWithcashCountRequest commonWithcashCountRequest;
     int isBanged;
     double myMoney = 0;
     String aliAccount = "";
+    String money;
+    double serviceMoney;
 
     @Override
     public void setContentView() {
@@ -171,18 +175,49 @@ public class WithdrawalsActivity extends BaseActivity {
     }
 
 
+    private void commonWithcashCountRequest() {
+        if (commonWithcashCountRequest != null) {
+            commonWithcashCountRequest.cancel();
+        }
+
+
+        CommonWithcashCountRequest.Input input = new CommonWithcashCountRequest.Input();
+        input.money = money;
+        input.convertJosn();
+        commonWithcashCountRequest = new CommonWithcashCountRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    serviceMoney=((CommonResult) response).serviceMoney;
+                    showInputPwdDialog(money,serviceMoney);
+                } else {
+                    ToastUtils.show(WithdrawalsActivity.this, ((CommonResult) response).info);
+                }
+            }
+        });
+        sendJsonRequest(commonWithcashCountRequest);
+    }
+
+
+
     //显示输入安全密码对话框
-    private void showInputPwdDialog(final String paymoney) {
+    private void showInputPwdDialog(final String paymoney,double serviceMoney) {
 
         BalancePayAlertView payAlertView = new BalancePayAlertView(WithdrawalsActivity.this);
         payAlertView.setAmount(paymoney + "");
+        payAlertView.setTips("提现");
+        payAlertView.setTips2("额外扣除"+serviceMoney+"元手续费");//
 
         payAlertView
                 .setValidatePasswordListener(new BalancePayAlertView.OnValidatePasswordListener() {
                     public void onValidateSuccessed(String pwd) {
                         user_cash_withdraw(paymoney);
                     }
-
                     public void onValidateFailed() {
                         ToastUtil.showMessage("安全密码验证失败");
                     }
@@ -197,14 +232,15 @@ public class WithdrawalsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_withdrawal:
-                String money = etMoney.getText().toString();
+                 money = etMoney.getText().toString();
                 if (isBanged == 0) {
                     ToastUtil.showMessage("您还没有绑定支付宝账号");
                     return;
                 }
                 if (!StringUtils.isEmpty(money)) {
                     if (Double.parseDouble(money) >= Constants.MIN_WITHDRAW && Double.parseDouble(money) <= myMoney) {
-                        showInputPwdDialog(money);
+                        commonWithcashCountRequest();
+
                     } else {
                         ToastUtil.showMessage("请输入正确的提现金额");
                     }
