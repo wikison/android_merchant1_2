@@ -100,7 +100,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                             holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                         } else {
                             holder.tvState.setText("已完成");
-                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                         }
                     } else {
                         holder.tvState.setText("待评价");
@@ -110,13 +110,13 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                     holder.llToPay.setVisibility(View.GONE);
                     break;
                 case 2:
-                    holder.tvState.setText("订单失效");
+                    holder.tvState.setText("已失效");
                     holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
                     holder.llToPay.setVisibility(View.GONE);
                     break;
                 case 3:
                     holder.tvState.setText("已取消");
-                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                     holder.llToPay.setVisibility(View.GONE);
                     break;
             }
@@ -124,12 +124,14 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
         } else if (m.type == 3) {
             holder.tvSaleName.setText("赠送对象: " + m.toUserName);
             holder.tvState.setText("送礼物");
+            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
             if (!TextUtils.isEmpty(m.toUserHead)) {
                 //加载带外边框的
                 mImageManager.loadCircleHasBorderImage(m.toUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
             }
         }else if (m.type == 4) {
             holder.tvSaleName.setText("赠送对象: " + m.toUserName);
+            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
             holder.tvState.setText("送红包");
             if (!TextUtils.isEmpty(m.toUserHead)) {
                 //加载带外边框的
