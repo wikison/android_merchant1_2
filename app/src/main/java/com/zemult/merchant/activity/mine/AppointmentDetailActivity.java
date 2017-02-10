@@ -31,6 +31,7 @@ import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
+import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
@@ -51,6 +52,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
 /**
@@ -122,6 +126,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     M_Reservation mReservation;
     UserReservationInfoRequest userReservationInfoRequest;
     UserReservationEditRequest userReservationEditRequest;
+    public static String REFLASH_MYAPPOINT="reflash_myappoint";
 
     @Override
     public void setContentView() {
@@ -133,6 +138,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         lhTvTitle.setText("预约详情");
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         type=getIntent().getIntExtra(INTENT_TYPE,-1);
+        EventBus.getDefault().register(this);
         showPd();
         userReservationInfo();
 
@@ -326,6 +332,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                EventBus.getDefault().post(REFLASH_MYAPPOINT);
                 onBackPressed();
                 break;
             case R.id.head_iv:
@@ -375,6 +382,22 @@ public class AppointmentDetailActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * =================================================处理刷新请求===========================================================================
+     */
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void refreshEvent(String s) {
+        if (TaskPayResultActivity.APPOINT_REFLASH.equals(s))
+            userReservationInfo();
+    }
+
 
 
 
