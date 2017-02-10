@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="由支付宝收取，3-10个工作日内到账" />
+                android:text="3-10个工作日内到账" />
 
         </LinearLayout>
 
