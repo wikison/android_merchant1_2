@@ -183,9 +183,7 @@ public class MerchantManagerManageActivity extends BaseActivity implements Smoot
             delRequest.cancel();
         }
         MerchantSaleuserDelRequest.Input input = new MerchantSaleuserDelRequest.Input();
-        if (SlashHelper.userManager().getUserinfo() != null) {
-            input.saleUserId = SlashHelper.userManager().getUserId();
-        }
+        input.saleUserId = saleUserId;
         input.merchantId = merchantId;
 
         input.convertJosn();
