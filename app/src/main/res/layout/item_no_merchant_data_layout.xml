@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_36px"
         android:textColor="@color/font_black_999"
-        android:text="该商家下暂时没有服务管家"/>
+        android:text="该商户下暂时没有服务管家"/>
 
 </RelativeLayout>
