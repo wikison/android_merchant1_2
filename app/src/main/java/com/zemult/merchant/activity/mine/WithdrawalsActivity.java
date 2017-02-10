@@ -78,7 +78,7 @@ public class WithdrawalsActivity extends BaseActivity {
             if (myMoney <= Constants.MAX_WITHDRAW) {
                 tvMaxmoney.setText("当前可提现金额 " + Convert.getMoneyString(myMoney) + " 元");
             } else {
-                tvMaxmoney.setText("当前可提现金额" + Constants.MAX_WITHDRAW + "元");
+                tvMaxmoney.setText("当前可提现金额" + Convert.getMoneyString(Constants.MAX_WITHDRAW) + "元");
             }
         } else {
             etMoney.setHint("提现余额不足");
