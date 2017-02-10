@@ -114,6 +114,8 @@ public class Constants {
     // 定位失败默认值
     public static String CENTER = "119.971736,31.829737";
     public static String CITYID = "0519";
+    public static String CITY_NAME = "常州";
+    public static String CITY_PINYIN = "changzhou";
 
     //订单超时时间
     public static int ORDER_EXPIRE_MINUTE = 30;

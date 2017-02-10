@@ -110,7 +110,7 @@
         <TextView
             android:id="@+id/tv_protocol"
             style="@style/text_12_black_46"
-            android:text="《约购平台服务协议》"
+            android:text="《约服平台服务协议》"
             android:textColor="@color/font_main"/>
     </LinearLayout>
 

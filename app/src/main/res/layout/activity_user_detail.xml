@@ -332,6 +332,7 @@
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
             android:clickable="true"
+            android:visibility="visible"
             android:gravity="center"
             android:text="预约服务"
             android:textColor="@color/white"
