@@ -359,7 +359,6 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
 
     public void userSaleMerchantDel(final M_Merchant merchant) {
-        showPd();
         if (userSaleMerchantDelRequest != null) {
             userSaleMerchantDelRequest.cancel();
         }
