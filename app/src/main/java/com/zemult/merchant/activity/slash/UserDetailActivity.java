@@ -352,10 +352,8 @@ public class UserDetailActivity extends BaseActivity {
         }
         //是否有挂靠商家
         if (userInfo.saleUserNum == 0) {
-            btnBuy.setEnabled(false);
-            btnBuy.setBackgroundResource(R.drawable.next_bg_btn_select);
-            btnService.setEnabled(false);
-            btnService.setBackgroundResource(R.drawable.next_bg_btn_select);
+            btnBuy.setVisibility(View.GONE);
+            btnService.setVisibility(View.GONE);
             numTv.setText("");
         } else {
             numTv.setText("共在" + userInfo.saleUserNum + "家商户提供服务");

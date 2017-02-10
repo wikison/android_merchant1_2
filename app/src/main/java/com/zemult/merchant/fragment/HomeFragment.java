@@ -32,10 +32,10 @@ import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.CityPickerActivity;
 import com.zemult.merchant.activity.ScanQrActivity;
+import com.zemult.merchant.activity.city.db.DBManager;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
-import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
@@ -112,8 +112,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HomeChildNewAdapter mAdapter;
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
+    private DBManager dbManager;
     private int titleHeight = 44, bottomHeight = 50, noDataViewHeight, page = 1;
-    private float mTopViewHeight, fraction, headerTopMargin,headerTopHeight;
+    private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
 
     @OnClick({R.id.ll_city, R.id.rl_scan, R.id.rl_maidan})
     public void onClick(View view) {
@@ -167,6 +168,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private void initData() {
         mContext = getActivity();
         mActivity = getActivity();
+        dbManager = new DBManager(mContext);
+        dbManager.copyDBFile();
         homePresenter = new HomePresenter(listJsonRequest, this);
 
         noDataViewHeight = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, titleHeight + bottomHeight);
@@ -235,10 +238,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                             fraction = 1 - (mTopViewHeight - headerTopMargin) / mTopViewHeight;
                         else
                             fraction = 1f;
-                    else if (headerTopHeight+headerTopMargin <= mTopViewHeight) {
+                    else if (headerTopHeight + headerTopMargin <= mTopViewHeight) {
                         fraction = 1f;
                     } else
-                        fraction = 1 - ((headerTopHeight+headerTopMargin) /headerTopHeight);
+                        fraction = 1 - ((headerTopHeight + headerTopMargin) / headerTopHeight);
 
                     llTopbar.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.transparent, R.color.font_black_28));
                 }
@@ -286,6 +289,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         String name = StringUtils.extractLocation(location, district);
                         String no = aMapLocation.getCityCode();
                         City city = new City(name, "", no);
+                        dbManager.insertCity(city);
                         Log.e("onLocationChanged", "city: " + city);
                         Log.e("onLocationChanged", "district: " + district);
 
@@ -293,10 +297,11 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         SPUtils.put(mContext, Constants.SP_CITY, city.getNo());
                         SPUtils.put(mContext, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude());
 
-                        Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+                        Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
                         tvCity.setText(city.getName());
 
                     } else {
+                        dbManager.insertCity(new City(Constants.CITY_NAME, Constants.CITY_PINYIN, Constants.CITYID));
                         ToastUtil.showMessage("定位失败");
                     }
                 }

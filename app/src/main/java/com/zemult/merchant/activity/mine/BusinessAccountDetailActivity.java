@@ -202,8 +202,8 @@ public class BusinessAccountDetailActivity extends BaseActivity {
                     M_Bill m_bill = ((APIM_UserBillInfo) response).billInfo;
                     tvType.setText("提现");
                     tvRealMoney.setText(Convert.getMoneyString(m_bill.money));
-                    tvMoneyWithdraw.setText(Convert.getMoneyString(m_bill.money));
-                    tvServiceMoney.setText("" + 0.00f);
+                    tvMoneyWithdraw.setText(Convert.getMoneyString(m_bill.money - m_bill.serviceMoney));
+                    tvServiceMoney.setText(Convert.getMoneyString(m_bill.serviceMoney));
 
                     tvBankWithdraw.setText(m_bill.moneyType == 0 ? "银行卡" : "支付宝");
                     moneyTv.setText((m_bill.inCome == 0 ? "+" : "-") + Convert.getMoneyString(m_bill.money));
