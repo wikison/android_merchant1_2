@@ -49,9 +49,7 @@
 
     <RelativeLayout
         android:id="@+id/mis_name_layout"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:background="@drawable/ripple_item_clicked2">
+        style="@style/layout_item_click">
 
         <TextView
             android:id="@+id/textView1"
@@ -76,12 +74,7 @@
 
     <RelativeLayout
         android:id="@+id/mis_mqr_layout"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/white"
+        style="@style/layout_item_click"
         android:visibility="visible">
 
         <TextView
@@ -140,9 +133,7 @@
 
     <RelativeLayout
         android:id="@+id/rl_my_phone"
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:background="@drawable/ripple_item_clicked2">
+        style="@style/layout_item_click">
 
         <TextView
             android:id="@+id/textView66"
@@ -166,9 +157,7 @@
     <View style="@style/view1dp"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:background="@drawable/ripple_item_clicked2">
+        style="@style/layout_item">
 
         <TextView
             style="@style/text_15_black_28"
@@ -228,9 +217,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_item_clicked2"
         android:clickable="true"
-        android:visibility="gone"
         android:gravity="center_vertical"
-        android:padding="@dimen/margin_16dp">
+        android:padding="@dimen/margin_16dp"
+        android:visibility="gone">
 
         <TextView
             style="@style/text_15_black_28"
@@ -289,8 +278,7 @@
         android:id="@+id/mis_bt"
         style="@style/common_btn_235"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="94dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginBottom="60dp"
         android:onClick="click"
         android:text="退出账号"
         android:textColor="@color/white"

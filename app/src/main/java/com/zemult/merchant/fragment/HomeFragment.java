@@ -302,6 +302,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
                     } else {
                         dbManager.insertCity(new City(Constants.CITY_NAME, Constants.CITY_PINYIN, Constants.CITYID));
+                        tvCity.setText(Constants.CITY_NAME);
                         ToastUtil.showMessage("定位失败");
                     }
                 }
