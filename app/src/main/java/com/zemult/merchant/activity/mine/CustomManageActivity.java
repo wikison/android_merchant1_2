@@ -19,6 +19,7 @@ import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserSaleUserListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
@@ -114,7 +115,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", LoginSampleHelper.APP_KEY);
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(mDatas.get(position - 1).getUserId() + "", Urls.APP_KEY);
                 startActivity(IMkitintent);
 //                Intent intent = new Intent(mContext, UserDetailActivity.class);
 //                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).userId);

@@ -16,6 +16,7 @@ import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Merchant;
@@ -209,7 +210,7 @@ public class TaskPayResultActivity extends BaseActivity {
                 break;
             case R.id.rtv_communicate:
                 if (saleUserId > 0) {
-                    Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(saleUserId + "", LoginSampleHelper.APP_KEY);
+                    Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(saleUserId + "", Urls.APP_KEY);
                     startActivity(IMkitintent);
                 }
                 break;

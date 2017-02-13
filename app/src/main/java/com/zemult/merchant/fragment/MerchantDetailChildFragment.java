@@ -20,6 +20,7 @@ import com.zemult.merchant.aip.slash.MerchantSaleuserListLatestRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
@@ -149,7 +150,7 @@ public class MerchantDetailChildFragment extends BaseFragment implements SmoothL
                 if(mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
                     return;
 
-                Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mAdapter.getItem(position).getUserId() + "", LoginSampleHelper.APP_KEY);
+                Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mAdapter.getItem(position).getUserId() + "", Urls.APP_KEY);
                 startActivity(IMkitintent);
             }
         });

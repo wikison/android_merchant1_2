@@ -17,6 +17,7 @@ import com.zemult.merchant.adapter.friend.ContactsAdapter;
 import com.zemult.merchant.aip.friend.UserFriendDelRequest;
 import com.zemult.merchant.aip.friend.UserFriendListRequest;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Friend;
 import com.zemult.merchant.model.apimodel.APIM_UserFriendList;
@@ -187,7 +188,7 @@ public class SfriendFragment extends BaseFragment {
     public  List<IYWContact>  getSelectIYWContact( ) {
         List<IYWContact> list = new ArrayList<IYWContact>();
         for (String strid : selectidset) {
-            IYWContact contact = YWContactFactory.createAPPContact(strid, LoginSampleHelper.APP_KEY);
+            IYWContact contact = YWContactFactory.createAPPContact(strid, Urls.APP_KEY);
             list.add(contact);
         }
         return  list;

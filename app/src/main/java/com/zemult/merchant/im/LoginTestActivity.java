@@ -59,6 +59,7 @@ import com.alibaba.tcms.env.YWEnvManager;
 import com.alibaba.tcms.env.YWEnvType;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.AppApplication;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.demo.FragmentTabs;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -189,7 +190,7 @@ public class LoginTestActivity extends Activity {
                 imm.hideSoftInputFromWindow(userIdView.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(passwordView.getWindowToken(), 0);
                 if (TextUtils.isEmpty(appKey)){
-                    LoginSampleHelper.APP_KEY= YWConstants.YWSDKAppKey;
+                    Urls.APP_KEY= YWConstants.YWSDKAppKey;
                 }
                 init(userId.toString(), appKeyView.getText().toString());
                 progressBar.setVisibility(View.VISIBLE);
@@ -703,7 +704,7 @@ public class LoginTestActivity extends Activity {
                 passwordView.setText("taobao1234");
             }
             if (TextUtils.isEmpty(appKeyView.getText())){
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
+                appKeyView.setText(Urls.APP_KEY);
             }
         }else if(LoginSampleHelper.sEnvType == YWEnvType.TEST){
             if (TextUtils.isEmpty(userIdView.getText())){
@@ -726,7 +727,7 @@ public class LoginTestActivity extends Activity {
                 passwordView.setText("taobao1234");
             }
             if (TextUtils.isEmpty(appKeyView.getText())){
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
+                appKeyView.setText(Urls.APP_KEY);
             }
         }
     }

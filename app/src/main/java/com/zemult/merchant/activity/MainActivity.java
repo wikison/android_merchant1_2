@@ -44,6 +44,7 @@ import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.MAppCompatActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.fragment.HomeFragment;
 import com.zemult.merchant.fragment.MineFragment;
 import com.zemult.merchant.fragment.MyFollowFragment;
@@ -168,8 +169,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 //登录IM
         if (null != SlashHelper.userManager().getUserinfo()) {
             loginHelper = LoginSampleHelper.getInstance();
-            AppUtils.initIm(SlashHelper.userManager().getUserId() + "", LoginSampleHelper.APP_KEY);
-            loginHelper.login_Sample(SlashHelper.userManager().getUserId() + "", SlashHelper.userManager().getUserinfo().getPassword(), LoginSampleHelper.APP_KEY, new IWxCallback() {
+            AppUtils.initIm(SlashHelper.userManager().getUserId() + "", Urls.APP_KEY);
+            loginHelper.login_Sample(SlashHelper.userManager().getUserId() + "", SlashHelper.userManager().getUserinfo().getPassword(), Urls.APP_KEY, new IWxCallback() {
                 @Override
                 public void onSuccess(Object... arg0) {
 //                    Log.d("MainActivity",arg0.toString());
