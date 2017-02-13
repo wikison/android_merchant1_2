@@ -275,6 +275,7 @@ public class SearchHotActivity extends BaseActivity {
         } else {
             lv.setVisibility(View.VISIBLE);
             adapter.setData(list);
+            lv.setSelection(0);
         }
     }
 
