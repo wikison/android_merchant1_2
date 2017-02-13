@@ -34,13 +34,12 @@
 
             <RelativeLayout
                 android:id="@+id/rl_bangbankcard"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
+                style="@style/layout_item_click"
                 android:clickable="true">
 
                 <TextView
                     style="@style/my_mini_text"
+                    android:layout_centerVertical="true"
                     android:drawableLeft="@mipmap/zhanghao_icon"
                     android:text="账户绑定"/>
 
@@ -48,8 +47,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginRight="12dp"
+                    android:layout_centerVertical="true"
                     android:background="@mipmap/right_btn"/>
             </RelativeLayout>
 
@@ -57,14 +56,13 @@
 
             <RelativeLayout
                 android:id="@+id/rl_changephone"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
+                style="@style/layout_item_click"
                 android:clickable="true">
 
                 <TextView
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/shouji_icon"
+                    android:layout_centerVertical="true"
                     android:text="更换绑定手机号"/>
 
                 <ImageView
@@ -80,14 +78,13 @@
 
             <RelativeLayout
                 android:id="@+id/rl_authentication"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
+                style="@style/layout_item_click"
                 android:clickable="true">
 
                 <TextView
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/shiming_icon"
+                    android:layout_centerVertical="true"
                     android:text="实名认证"/>
 
                 <ImageView
@@ -103,14 +100,13 @@
 
             <RelativeLayout
                 android:id="@+id/rl_loginpassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
+                style="@style/layout_item_click"
                 android:clickable="true">
 
                 <TextView
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/home_icon"
+                    android:layout_centerVertical="true"
                     android:text="登录密码"/>
 
                 <ImageView
@@ -126,14 +122,13 @@
 
             <RelativeLayout
                 android:id="@+id/rl_paypassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_item_clicked2"
+                style="@style/layout_item_click"
                 android:clickable="true">
 
                 <TextView
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/zhifumima_icon"
+                    android:layout_centerVertical="true"
                     android:text="安全密码"/>
 
                 <ImageView
