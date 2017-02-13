@@ -98,9 +98,9 @@ public class MyWalletActivity extends BaseActivity {
             isfirstload = false;
         } else {
             try {
-                DecimalFormat df   = new DecimalFormat("######0.00");
+                DecimalFormat df = new DecimalFormat("######0.00");
                 tvMoney.setText(df.format(mymoney) + "");
-            }catch (Exception e){
+            } catch (Exception e) {
             }
         }
     }
@@ -168,7 +168,7 @@ public class MyWalletActivity extends BaseActivity {
                         startActivity(intent);
                     } else {
                         if (mymoney < Constants.MIN_WITHDRAW) {
-                            ToastUtil.showMessage("您的余额不足" + Constants.MIN_WITHDRAW + "元，暂时无法提现");
+                            ToastUtil.showMessage("您的余额不足" + Convert.getMoneyString(Constants.MIN_WITHDRAW) + "元，暂时无法提现");
                         } else {
                             Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
                             startActivity(intentwithdrawals);

@@ -382,7 +382,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 //                else
                   if(conversationId.equals(MainActivity.SYSTEM_SYSMESSAGE)){
                     headLoadHelper.setDefaultHeadView(holder.head);
-                    imageManager.loadResImage( R.mipmap.xitongxiaoxi_icon,holder.head);
+                    imageManager.loadResImage( R.mipmap.bell_icon,holder.head);
                     name = "系统消息";
                     LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
                 }else{
