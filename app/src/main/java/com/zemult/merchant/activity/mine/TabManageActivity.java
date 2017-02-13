@@ -180,7 +180,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (comefrom == 1) {
             userAdapter.setB(isFalse);
             isvisibily = 0;
-            myCategoryText.setText("选择您可以提供的服务");
+            name = getIntent().getStringExtra(NAME);
+            shopnameTv.setVisibility(View.GONE);
+            myCategoryText.setText("已提供的服务");
+            chooseYv.setText("选择您在  "+name+"  提供的服务");
             myCategoryTipText.setVisibility(View.VISIBLE);
             shopnameTv.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);

@@ -81,6 +81,7 @@
 
     <style name="divider" parent="view1dp">
         <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/divider_dc</item>
     </style>
 
     <style name="divider10dp" parent="view1dp">
@@ -729,4 +730,17 @@
         <attr name="childMarginTop" format="dimension"/>
         <attr name="childMarginBottom" format="dimension"/>
     </declare-styleable>
+
+    <style name="layout_item">
+        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+
+    </style>
+
+    <style name="layout_item_click">
+        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/ripple_item_clicked2</item>
+    </style>
 </resources>
