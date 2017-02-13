@@ -27,6 +27,7 @@ import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -549,7 +550,7 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_contact:
                 if (noLogin(mContext))
                     return;
-                Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", LoginSampleHelper.APP_KEY);
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
                 startActivity(IMkitintent);
                 break;
             case R.id.btn_focus:

@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.zemult.merchant.config.Urls.APP_KEY;
+
 /**
  * SDK 初始化和登录
  *
@@ -55,9 +57,6 @@ public class LoginSampleHelper {
     public static LoginSampleHelper getInstance() {
         return sInstance;
     }
-
-    // 应用APPKEY，这个APPKEY是申请应用时获取的
-    public static  String APP_KEY = "23521799";//23424222  23380008
 
     //以下两个内容是测试环境使用，开发无需关注
 //    public static final String APP_KEY_TEST = "4272";  //60026702

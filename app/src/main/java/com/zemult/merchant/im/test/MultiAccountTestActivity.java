@@ -26,6 +26,7 @@ import com.alibaba.mobileim.utility.YWTrackUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.LoginActivity;
 import com.zemult.merchant.app.AppApplication;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
 import java.util.List;
@@ -203,7 +204,7 @@ public class MultiAccountTestActivity extends Activity{
         testInit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YWTrackUtil.init(LoginSampleHelper.getInstance().getIMKit().getIMCore().getLoginUserId(), LoginSampleHelper.APP_KEY, null);
+                YWTrackUtil.init(LoginSampleHelper.getInstance().getIMKit().getIMCore().getLoginUserId(), Urls.APP_KEY, null);
             }
         });
 

@@ -37,6 +37,7 @@ import com.zemult.merchant.adapter.friend.FriendAdapter;
 import com.zemult.merchant.aip.friend.UserFriendDelRequest;
 import com.zemult.merchant.aip.friend.UserFriendListRequest;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.demo.TribeActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -167,7 +168,7 @@ public class MainFriendFragment extends BaseFragment {
                 final String friendId = adapter.getItem(position-1).getFriendId()+"";
                 final IYWContactService contactService = LoginSampleHelper.getInstance().getIMKit().getContactService();
                 final String[] items = new String[1];
-                boolean isBlocked = contactService.isBlackContact(friendId, LoginSampleHelper.APP_KEY);
+                boolean isBlocked = contactService.isBlackContact(friendId, Urls.APP_KEY);
                 if (isBlocked) {
                     items[0] = "移除黑名单";
                 } else {
@@ -183,7 +184,7 @@ public class MainFriendFragment extends BaseFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (items[which].equals("加入黑名单")) {
-                                    contactService.addBlackContact(friendId, LoginSampleHelper.APP_KEY, new IWxCallback() {
+                                    contactService.addBlackContact(friendId, Urls.APP_KEY, new IWxCallback() {
                                         @Override
                                         public void onSuccess(Object... result) {
                                             IYWContact iywContact = (IYWContact) result[0];
@@ -203,7 +204,7 @@ public class MainFriendFragment extends BaseFragment {
                                         }
                                     });
                                 } else if (items[which].equals("移除黑名单")) {
-                                    contactService.removeBlackContact(friendId, LoginSampleHelper.APP_KEY, new IWxCallback() {
+                                    contactService.removeBlackContact(friendId, Urls.APP_KEY, new IWxCallback() {
                                         @Override
                                         public void onSuccess(Object... result) {
                                             IYWContact iywContact = (IYWContact) result[0];

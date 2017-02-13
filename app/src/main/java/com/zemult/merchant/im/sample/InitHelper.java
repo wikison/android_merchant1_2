@@ -5,6 +5,7 @@ import android.app.Application;
 import com.alibaba.mobileim.FeedbackAPI;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.wxlib.util.SysUtil;
+import com.zemult.merchant.config.Urls;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +50,7 @@ public class InitHelper {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		FeedbackAPI.initFeedback(application, LoginSampleHelper.APP_KEY,  "反馈", null);
+		FeedbackAPI.initFeedback(application, Urls.APP_KEY,  "反馈", null);
 		FeedbackAPI.setAppExtInfo(jsonObject);
 
 		FeedbackAPI.setCustomContact("",false);

@@ -19,6 +19,7 @@ import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserRegisterRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -220,8 +221,8 @@ public class PasswordActivity extends BaseActivity {
             @Override
             public void onResponse(final Object response) {
                 if (((APIM_UserLogin) response).status == 1) {
-                    AppUtils.initIm(((APIM_UserLogin) response).userInfo.getUserId() + "", LoginSampleHelper.APP_KEY);
-                    loginHelper.login_Sample(((APIM_UserLogin) response).userInfo.getUserId() + "", DigestUtils.md5(strPwd).toUpperCase(), LoginSampleHelper.APP_KEY, new IWxCallback() {
+                    AppUtils.initIm(((APIM_UserLogin) response).userInfo.getUserId() + "", Urls.APP_KEY);
+                    loginHelper.login_Sample(((APIM_UserLogin) response).userInfo.getUserId() + "", DigestUtils.md5(strPwd).toUpperCase(), Urls.APP_KEY, new IWxCallback() {
                         @Override
                         public void onSuccess(Object... arg0) {
                             loadingDialog.dismiss();

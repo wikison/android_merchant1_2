@@ -32,6 +32,7 @@ import com.alibaba.mobileim.gingko.presenter.tribe.IYWTribeChangeListener;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMConstants;
 import com.zemult.merchant.R;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
@@ -470,7 +471,7 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String userId = mUserId.getText().toString();
-                        String appKey =LoginSampleHelper.APP_KEY ;//mAppKey.getText().toString()
+                        String appKey = Urls.APP_KEY ;//mAppKey.getText().toString()
                         if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(appKey)){
                             Notification.showToastMsg(TribeMembersActivity.this, "用户号不能为空！");
                             return;

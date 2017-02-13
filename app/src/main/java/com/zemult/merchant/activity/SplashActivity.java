@@ -122,7 +122,8 @@ public class SplashActivity extends BaseActivity {
                                     startActivity(i);
                                     SplashActivity.this.finish();
                                 } else {
-                                    ToastUtil.showMessage("此版本有重要更新，请更新以后再使用");
+                                    ToastUtil.showMessage("此版本有重要更新，新版本下载中，请稍后...");
+                                    showPd();
                                 }
                             }
 
