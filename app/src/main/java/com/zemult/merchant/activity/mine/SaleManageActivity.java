@@ -196,7 +196,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                 if (null != merchantItem.head && merchantItem.head.indexOf("xiegang.oss") != -1) {
                     shareImage = new UMImage(mContext, merchantItem.head);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_share);
                 }
                 switch (position) {
                     case SharePopwindow.SINA:
@@ -252,22 +252,23 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         public void onResult(SHARE_MEDIA platform) {
             Log.d("plat", "platform" + platform);
             if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 分享成功啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
             sharePopWindow.dismiss();
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 分享失败", Toast.LENGTH_SHORT).show();
             sharePopWindow.dismiss();
 
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(mContext, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
             sharePopWindow.dismiss();
 
         }

@@ -14,13 +14,13 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.utils.Log;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.QrImageUtil;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SharePopwindow;
 
 import butterknife.Bind;
@@ -97,17 +97,17 @@ public class InviteFriendActivity extends BaseActivity {
         sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
 
                 switch (position) {
                     case SharePopwindow.SINA:
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
-                                .withText("伙伴们我正在玩" + getString(R.string.app_name) + "！快来参与吧！")
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle(getString(R.string.app_name) + "App分享")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
 
@@ -115,20 +115,20 @@ public class InviteFriendActivity extends BaseActivity {
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText("伙伴们我正在玩" + getString(R.string.app_name) + "！快来参与吧！")
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle(getString(R.string.app_name) + "App分享")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
                     case SharePopwindow.WECHAT_FRIEND:
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText("伙伴们我正在玩" + getString(R.string.app_name) + "！快来参与吧！")
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle(getString(R.string.app_name) + "App分享")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
 
@@ -136,10 +136,10 @@ public class InviteFriendActivity extends BaseActivity {
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
-                                .withText("伙伴们我正在玩" + getString(R.string.app_name) + "！快来参与吧！")
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle(getString(R.string.app_name) + "App分享")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
                 }
@@ -177,22 +177,20 @@ public class InviteFriendActivity extends BaseActivity {
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-//                Toast.makeText(MySlashActivity.this,platform + " 收藏成功啦",Toast.LENGTH_SHORT).show();
-            } else {
-//                Toast.makeText(MySlashActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享成功");
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-//            Toast.makeText(MySlashActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享失败");
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-//            Toast.makeText(MySlashActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享取消");
         }
     };
 
