@@ -265,8 +265,7 @@ public class DeviceManager {
                                 }
                             }
 
-                            boolean e1 = false;
-                            return e1;
+                            return false;
                         } catch (Exception var10) {
                             var6 = false;
                             return var6;

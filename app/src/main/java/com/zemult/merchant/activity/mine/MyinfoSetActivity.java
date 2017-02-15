@@ -383,13 +383,11 @@ public class MyinfoSetActivity extends MAppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUESTCODE_CHANGENICKNAME && resultCode == RESULT_OK) {
-            String result = data.getExtras().getString("result");
-            nameString = result;
+            nameString = data.getExtras().getString("result");
             //修改用户资料信息
             user_editinfo();
         } else if (requestCode == Constants.REQUESTCODE_CHANGESEX && resultCode == RESULT_OK) {
-            int sex_result = data.getExtras().getInt("sex_result");
-            sexInt = sex_result;
+            sexInt = data.getExtras().getInt("sex_result");
             user_editinfo();
         } else if (requestCode == Constants.REQUESTCODE_MYINFO && resultCode == RESULT_OK) {
             note = data.getExtras().getString("note");

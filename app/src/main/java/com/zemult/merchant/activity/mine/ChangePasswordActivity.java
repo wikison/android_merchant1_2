@@ -11,14 +11,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.login.YWLoginState;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.FindPasswordActivity;
 import com.zemult.merchant.aip.common.UserEditpwdRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.SlashHelper;
@@ -210,7 +208,6 @@ public class ChangePasswordActivity extends BaseActivity {
                 if (status == 1) {
                     ToastUtil.showMessage("密码修改成功, 请重新登录");
                     SlashHelper.userManager().saveUserinfo(null);
-                    LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
                     Intent intent = new Intent(mContext, ChangePassSucActivity.class);
                     intent.putExtra("password", "change");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

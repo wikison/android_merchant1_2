@@ -75,9 +75,8 @@ public final class DateTimeUtil implements Serializable {
     public static String dateFormat(String sdate, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         java.sql.Date date = java.sql.Date.valueOf(sdate);
-        String dateString = formatter.format(date);
 
-        return dateString;
+        return formatter.format(date);
     }
 
     /**
