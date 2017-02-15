@@ -227,7 +227,7 @@
 
         <com.zemult.merchant.view.FixedGridView
             android:id="@+id/gv_pic"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginLeft="12dp"
             android:layout_weight="1"
@@ -269,10 +269,10 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/mis_bt"

@@ -966,7 +966,8 @@
                             android:id="@+id/tv_persent_name"
                             style="@style/text_15_black_28"
                             android:layout_weight="1"
-                            android:textSize="15sp"/>
+                            android:textSize="15sp"
+                            android:layout_width="0dp"/>
 
                         <TextView
                             android:id="@+id/tv_persent_price"

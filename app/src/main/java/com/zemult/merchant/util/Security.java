@@ -187,8 +187,7 @@ public class Security {
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = decryptByBase64_byte(sSrc);// 先用base64解密
             byte[] original = cipher.doFinal(encrypted1);
-            String originalString = new String(original, "utf-8");
-            return originalString;
+            return new String(original, "utf-8");
         } catch (Exception ex) {
             return null;
         }
@@ -204,8 +203,7 @@ public class Security {
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = decryptByBase64_byte(sSrc);
             byte[] original = cipher.doFinal(encrypted1);
-            String originalString = new String(original, "utf-8");
-            return originalString;
+            return new String(original, "utf-8");
         } catch (Exception ex) {
             return null;
         }

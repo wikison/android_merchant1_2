@@ -184,7 +184,8 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="8dp"
                     android:text="客户评价"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_width="0dp"/>
 
                 <com.hedgehog.ratingbar.RatingBar
                     android:id="@+id/ratingbar"

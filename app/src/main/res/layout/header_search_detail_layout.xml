@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/font_black_46"
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/tv_sub_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/font_black_999"
@@ -91,7 +91,7 @@
         android:paddingRight="12dp"
         android:id="@+id/tv_note"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:textColor="@color/font_black_46"
         android:textSize="@dimen/font_30px"

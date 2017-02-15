@@ -311,7 +311,7 @@
                     android:src="@mipmap/yonjin_icon"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/transparent"
@@ -401,7 +401,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="提现方式"
                     android:textColor="@color/font_black_333"

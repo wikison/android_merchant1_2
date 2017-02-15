@@ -31,8 +31,6 @@ public class OpenConversationSampleHelper {
 		//注意：如果使用Fragment的方式，请在对应的Activity中增加主题的设置(修改AndroidManifest.xml文件)：android:theme="@style/Aliwx_ConverationStyle_default"
 		//具体请参考：https://baichuan.taobao.com/portal/doc?articleId=538
 
-		Intent intent = imKit.getConversationActivityIntent();
-		
-		return intent;
+		return imKit.getConversationActivityIntent();
 	}
 }

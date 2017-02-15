@@ -483,17 +483,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         mConnectionListener = new IYWConnectionListener() {
             @Override
             public void onDisconnect(int code, String info) {
-                //没有修改密码被踢下线
                 if (code == YWLoginCode.LOGON_FAIL_KICKOFF) {
-                    if (!SlashHelper.getSettingBoolean("isChangingPassWord")) {
-                        ToastUtil.showMessage("请重新登录");
-                    } else {
-                        ToastUtil.showMessage("该账号在其他终端登录");
-                    }
-
-                } else {
                     ToastUtil.showMessage("请重新登录");
-
                 }
                 setTabSelection(0);
                 SlashHelper.userManager().saveUserinfo(null);

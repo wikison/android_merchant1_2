@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_withdraw_choose"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+              android:id="@+id/activity_withdraw_choose"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
     >
 
     <include layout="@layout/layout_head"/>
 
-    <View style="@style/divider"
+    <View
+        style="@style/divider"
         android:layout_marginTop="12dp"/>
 
     <LinearLayout
         android:id="@+id/ll1"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:background="@drawable/ripple_item_clicked2"
         android:layout_width="match_parent"
-        android:layout_height="46dp">
+        android:layout_height="46dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:clickable="true"
+        android:gravity="center_vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,16 +26,15 @@
             android:src="@mipmap/yinhangka_icon"/>
 
         <TextView
+            style="@style/text_15_black_28"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:textColor="@color/font_black_28"
-            android:textSize="@dimen/font_30px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="银行卡"/>
+
         <ImageView
-            android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
             android:src="@mipmap/right_btn"/>
     </LinearLayout>
 
@@ -42,11 +42,11 @@
 
     <LinearLayout
         android:id="@+id/ll2"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:background="@drawable/ripple_item_clicked2"
         android:layout_width="match_parent"
-        android:layout_height="46dp">
+        android:layout_height="46dp"
+        android:background="@drawable/ripple_item_clicked2"
+        android:clickable="true"
+        android:gravity="center_vertical">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -54,16 +54,17 @@
             android:src="@mipmap/zfb_icon"/>
 
         <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="支付宝"
             android:textColor="@color/font_black_28"
-            android:textSize="@dimen/font_30px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="支付宝"/>
+            android:textSize="@dimen/font_30px"/>
+
         <ImageView
-            android:layout_marginRight="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
             android:src="@mipmap/right_btn"/>
     </LinearLayout>
 
