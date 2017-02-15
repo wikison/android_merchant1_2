@@ -10,14 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.mine.UserEditinfoRequest;
 import com.zemult.merchant.app.base.MBaseActivity;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.ToastUtils;
+import zema.volley.network.ResponseListener;
 
 public class NicknameActivity extends MBaseActivity {
 
@@ -32,7 +37,7 @@ public class NicknameActivity extends MBaseActivity {
     @Bind(R.id.ll_back)
     LinearLayout llBack;
 
-
+    UserEditinfoRequest userEditinfoRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,48 @@ public class NicknameActivity extends MBaseActivity {
     }
 
 
+    //修改用户资料信息
+    private void user_editinfo() {
+        showPd();
+        if (userEditinfoRequest != null) {
+            userEditinfoRequest.cancel();
+        }
+        UserEditinfoRequest.Input input = new UserEditinfoRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+            input.name = ninameEt.getText().toString();
+            input.convertJosn();
+        }
+
+        userEditinfoRequest = new UserEditinfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    SlashHelper.userManager().getUserinfo().setName(ninameEt.getText().toString());
+                    Intent intent = new Intent();
+                    //把返回数据存入Intent
+                    intent.putExtra("result", ninameEt.getText().toString());
+                    //设置返回数据
+                    NicknameActivity.this.setResult(RESULT_OK, intent);
+//                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
+                    NicknameActivity.this.finish();
+                } else {
+                    ToastUtils.show(NicknameActivity.this, ((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userEditinfoRequest);
+    }
+
+
+
+
     @OnClick({R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_back})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -67,16 +114,8 @@ public class NicknameActivity extends MBaseActivity {
                 if (TextUtils.isEmpty(ninameEt.getText().toString())) {
                     Toast.makeText(NicknameActivity.this, "请输入您的昵称", Toast.LENGTH_SHORT).show();
                 } else {
+                    user_editinfo();
 
-                    SlashHelper.userManager().getUserinfo().setName(ninameEt.getText().toString());
-
-                    Intent intent = new Intent();
-                    //把返回数据存入Intent
-                    intent.putExtra("result", ninameEt.getText().toString());
-                    //设置返回数据
-                    NicknameActivity.this.setResult(RESULT_OK, intent);
-//                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
-                    NicknameActivity.this.finish();
                 }
                 break;
         }

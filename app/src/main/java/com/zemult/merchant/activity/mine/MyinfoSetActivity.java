@@ -108,6 +108,7 @@ public class MyinfoSetActivity extends MAppCompatActivity {
     @Bind(R.id.mis_bt)
     Button misBt;
 
+
     UserEditinfoRequest userEditinfoRequest;
     String nameString, headString, accountString, companyString, positionString, provinceString, cityString, picString;//areaString
     int sexInt, isOpenInt;
