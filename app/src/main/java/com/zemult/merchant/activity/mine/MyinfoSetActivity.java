@@ -323,7 +323,7 @@ public class MyinfoSetActivity extends MAppCompatActivity {
         UserEditinfoRequest.Input input = new UserEditinfoRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
-            input.name = nameString;
+           // input.name = nameString;
             input.head = headString;
             input.account = accountString;
             input.sex = sexInt;

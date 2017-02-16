@@ -82,11 +82,12 @@ public class NicknameActivity extends MBaseActivity {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     SlashHelper.userManager().getUserinfo().setName(ninameEt.getText().toString());
-                    Intent intent = new Intent();
-                    //把返回数据存入Intent
-                    intent.putExtra("result", ninameEt.getText().toString());
-                    //设置返回数据
-                    NicknameActivity.this.setResult(RESULT_OK, intent);
+                    SlashHelper.userManager().saveUserinfo(SlashHelper.userManager().getUserinfo());
+//                    Intent intent = new Intent();
+//                    //把返回数据存入Intent
+//                    intent.putExtra("result", ninameEt.getText().toString());
+//                    //设置返回数据
+//                    NicknameActivity.this.setResult(RESULT_OK, intent);
 //                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
                     NicknameActivity.this.finish();
                 } else {
