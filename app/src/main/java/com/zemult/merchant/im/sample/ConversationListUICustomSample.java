@@ -356,16 +356,18 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                 holder = new ViewHolder1();
                 convertView = inflater.inflate(R.layout.demo_custom_conversation_item_1, parent, false);
 
-                holder.relparent = (RelativeLayout) convertView.findViewById(R.id.rel_parent);
                 holder.head = (ImageView) convertView.findViewById(R.id.head);
                 holder.name = (TextView) convertView.findViewById(R.id.name);
                 holder.unread = (TextView) convertView.findViewById(R.id.unread);
-                holder.content = (TextView) convertView.findViewById(R.id.description);
-                holder.time = (TextView) convertView.findViewById(R.id.time);
 
                 convertView.setTag(holder);
             } else {
-                holder = (ViewHolder1) convertView.getTag();
+                try{
+                    holder = (ViewHolder1) convertView.getTag();
+                }catch (Exception e){
+
+                }
+
             }
 
             String name = "";
@@ -393,15 +395,6 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 
             headLoadHelper.setHeadView(holder.head, conversation);
             holder.name.setText(name);
-            if(StringUtils.isEmpty(conversation.getLatestContent())){
-                holder.content.setVisibility(View.GONE);
-            }
-            else{
-                holder.content.setVisibility(View.VISIBLE);
-                holder.content.setText(conversation.getLatestContent());
-            }
-
-            holder.time.setText(DateTimeUtil.getDescriptionTimeFromTimestamp(conversation.getLatestTimeInMillisecond()));
 
             holder.unread.setVisibility(View.GONE);
             int unreadCount = conversation.getUnreadCount();
@@ -469,9 +462,6 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         ImageView head;
         TextView name;
         TextView unread;
-        RelativeLayout  relparent;
-        TextView time;
-        TextView content;
     }
 
     public class ViewHolder2{

@@ -12,23 +12,21 @@
         android:layout_margin="@dimen/aliwx_column_up_unit_margin"
         android:gravity="center"
         android:textColor="@color/aliwx_common_text_color"
-        android:text="创建群"/>
+        android:text="群组"/>
 
     <View
-        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/more_line_color" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/create_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/aliwx_column_up_unit_margin"
         android:gravity="center"
         android:textColor="@color/aliwx_common_text_color"
-        android:text="搜索群ID"/>
+        android:text="讨论组"/>
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"

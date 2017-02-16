@@ -2,18 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#f2f2f2"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/aliwx_search_layout"
         android:layout_width="fill_parent"
-        android:layout_height="27dip"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
+        android:descendantFocusability="beforeDescendants"
         android:orientation="horizontal"
         android:background="@drawable/aliwx_btn_search_bar">
 
@@ -23,11 +20,12 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
-            android:text="搜索"
-            android:textSize="14sp"
+            android:gravity="center"
+            android:text="@string/aliwx_search"
+            android:textSize="@dimen/aliwx_search_text_size"
             android:drawableLeft="@drawable/aliwx_search_icon"
-            android:textColor="@color/aliwx_color_gray_02"
-            android:drawablePadding="5dp"/>
+            android:textColor="@color/aliwx_color_gray_search"
+            android:drawablePadding="7dp"/>
         <!--
         <TextView
             android:id="@+id/aliwx_friends_search_text"
@@ -35,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:gravity="center_vertical"
-            android:hint="@string/aliwx_search"
+            android:hint="@string/aliwx_btn_search_bar"
             android:textColor="@color/aliwx_third_text_color"
             android:textSize="@dimen/aliwx_common_text_size"
             />

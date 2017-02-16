@@ -8,7 +8,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#FFA726"
+        android:background="#00b4ff"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="5dp"
-            android:drawableLeft="@mipmap/demo_common_back_btn_white"
+            android:drawableLeft="@drawable/demo_common_back_btn_white"
             android:gravity="center"
             android:text="返回"
             android:textColor="#FFFFFF"

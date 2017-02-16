@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/aliwx_white">
+    android:background="@color/aliwx_white"
+    tools:context="com.taobao.openimui.tribe.TribeSystemMessageActivity">
 
     <include
         android:id="@+id/title_self_state"

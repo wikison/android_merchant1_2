@@ -24,7 +24,7 @@ import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWDBContact;
 import com.alibaba.mobileim.conversation.EServiceContact;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
-import com.alibaba.mobileim.utility.ToastHelper;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.zemult.merchant.R;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
@@ -185,7 +185,7 @@ public  class ContactProfileFragment extends Fragment implements OnClickListener
 	}
 
 	private void initHelper() {
-		mHelper = new YWContactHeadLoadHelper(this.getActivity(), null);
+		mHelper  = new YWContactHeadLoadHelper(this.getActivity(), null, getIMkit().getUserContext());
 	}
 
 
@@ -247,7 +247,7 @@ public  class ContactProfileFragment extends Fragment implements OnClickListener
 
 
 		if(lmYWProfileInfo==null||TextUtils.isEmpty(lmYWProfileInfo.userId)){
-			ToastHelper.showToastMsg(ContactProfileFragment.this.getActivity(), "服务开小差，建议您重试搜索");
+			IMNotificationUtils.getInstance().showToast(ContactProfileFragment.this.getActivity(), "服务开小差，建议您重试搜索");
 			return;
 		}
 
@@ -285,7 +285,7 @@ public  class ContactProfileFragment extends Fragment implements OnClickListener
 
 	private void sendMessage(YWProfileInfo mYWProfileInfo) {
 		if(mYWProfileInfo.userId.equals(LoginSampleHelper.getInstance().getIMKit().getIMCore().getLoginUserId())) {
-			ToastHelper.showToastMsg(this.getActivity(), "这是您自己，无法发送消息");
+			IMNotificationUtils.getInstance().showToast(this.getActivity(), "这是您自己，无法发送消息");
 			return;
 		}
 		if (APPKEY.equals(YWConstants.YWSDKAppKey)) {
@@ -308,7 +308,7 @@ public  class ContactProfileFragment extends Fragment implements OnClickListener
 
 		if(mYWProfileInfo.userId.equals(LoginSampleHelper.getInstance().getIMKit().getIMCore().getLoginUserId())){
 			mBottomLayout.setVisibility(View.GONE);
-			ToastHelper.showToastMsg(this.getActivity(), "这是您自己");
+			IMNotificationUtils.getInstance().showToast(this.getActivity(), "这是您自己");
 			return;
 		}else if(hasContactAlready){
 			mBottomLayout.setVisibility(View.VISIBLE);
@@ -320,7 +320,7 @@ public  class ContactProfileFragment extends Fragment implements OnClickListener
 					R.dimen.aliwx_friend_info_btn_width);
 			layoutParams.weight = 0;
 			mSendMessageBtn.setLayoutParams(layoutParams);
-//			ToastHelper.showToastMsg(this.getActivity(), "已有该联系人");
+//			IMNotificationUtils.getInstance().showToast(this.getActivity(), "已有该联系人");
 		}else {
 			mBottomLayout.setVisibility(View.VISIBLE);
 			LinearLayout.LayoutParams bLayoutParams = (LinearLayout.LayoutParams) mBottomButton

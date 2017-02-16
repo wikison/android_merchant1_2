@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.conversation.YWMessage;
@@ -15,6 +17,7 @@ import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.kit.contact.ContactHeadLoadHelper;
 import com.alibaba.mobileim.lib.model.message.YWSystemMessage;
+import com.alibaba.mobileim.utility.UserContext;
 import com.zemult.merchant.R;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
@@ -27,13 +30,16 @@ public class ContactSystemMessageAdapter extends YWAsyncBaseAdapter {
     private List<YWMessage> mMessageList;
     private ContactHeadLoadHelper mContactHeadLoadHelper;
     private String mAppKey;
+    private UserContext userContext;
 
     public ContactSystemMessageAdapter(Context context, List<YWMessage> messages) {
         mContext = context;
+        this.userContext = userContext;
         mMessageList = messages;
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContactHeadLoadHelper = new ContactHeadLoadHelper((Activity)context, null);
+        final YWIMKit ywimKit = YWAPI.getIMKitInstance(userContext.getShortUserId(), userContext.getAppkey());
+        mContactHeadLoadHelper = new ContactHeadLoadHelper((Activity)context, null, ywimKit.getUserContext());
         mAppKey = LoginSampleHelper.getInstance().getIMKit().getIMCore().getAppKey();
     }
 
@@ -89,7 +95,7 @@ public class ContactSystemMessageAdapter extends YWAsyncBaseAdapter {
             final YWMessage msg = mMessageList.get(position);
             final YWSystemMessage message = (YWSystemMessage) msg;
             String authorUserId = message.getAuthorUserId();
-            IYWContact contact = IMUtility.getContactProfileInfo(message.getAuthorUserId(), message.getAuthorAppkey());
+            IYWContact contact = IMUtility.getContactProfileInfo(userContext, message.getAuthorUserId(), message.getAuthorAppkey());
             if(contact != null) {
                 holder.showName.setText(contact.getShowName() + " 申请加你为好友");
             } else {

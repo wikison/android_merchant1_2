@@ -140,7 +140,7 @@ public class ContactSettingActivity extends MBaseActivity {
 
         @Override
         public void onError(int code, String info) {
-            IMNotificationUtils.showToast("onError:"+ " code: " + code + "info:" + info, ContactSettingActivity.this);
+            IMNotificationUtils.getInstance().showToast("onError:"+ " code: " + code + "info:" + info, ContactSettingActivity.this);
         }
 
         @Override
@@ -184,7 +184,7 @@ public class ContactSettingActivity extends MBaseActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 conversation.getMessageLoader().deleteAllMessage();
-                                IMNotificationUtils.showToast("记录已清空",
+                                IMNotificationUtils.getInstance().showToast("记录已清空",
                                         ContactSettingActivity.this);
                             }
                         })

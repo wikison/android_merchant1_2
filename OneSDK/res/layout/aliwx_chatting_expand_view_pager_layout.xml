@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="240dp"
     android:background="@color/aliwx_white"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <com.alibaba.mobileim.kit.widget.WrapContentHeightViewPager
         android:id="@+id/reply_bar_expand_viewpager"
@@ -14,7 +15,7 @@
 
     <com.alibaba.mobileim.kit.chat.view.CirclePageIndicator
         android:id="@+id/reply_bar_expand_viewpager_indicator"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="3dp"/>

@@ -97,10 +97,10 @@ public class MultiAccountTestActivity extends Activity{
     AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String userId = parent.getItemAtPosition(position).toString();
-                mIMKit.switchAccount(userId);
-                mIMKit = YWAPI.getIMKitInstance(userId);
-                LoginSampleHelper.getInstance().setIMKit(mIMKit);
+//            String userId = parent.getItemAtPosition(position).toString();
+//                mIMKit.switchAccount(userId);
+//                mIMKit = YWAPI.getIMKitInstance(userId);
+//                LoginSampleHelper.getInstance().setIMKit(mIMKit);
         }
 
         @Override
@@ -186,16 +186,16 @@ public class MultiAccountTestActivity extends Activity{
         String account = YWAPI.getCurrentUser();
         int count = mAdapter.getCount();
         mSpinner.setAdapter(mAdapter);
-        for (int i = 0; i < count; ++i) {
-            if (account.equals(mAdapter.getItem(i).toString())) {
-                YWLog.e("MultiAccountTestActivity", "itemCount = " + mSpinner.getCount());
-                mSpinner.setSelection(i);
-                mIMKit.switchAccount(account);
-                mIMKit = YWAPI.getIMKitInstance(account);
-                LoginSampleHelper.getInstance().setIMKit(mIMKit);
-                break;
-            }
-        }
+//        for (int i = 0; i < count; ++i) {
+//            if (account.equals(mAdapter.getItem(i).toString())) {
+//                YWLog.e("MultiAccountTestActivity", "itemCount = " + mSpinner.getCount());
+//                mSpinner.setSelection(i);
+//                mIMKit.switchAccount(account);
+//                mIMKit = YWAPI.getIMKitInstance(account);
+//                LoginSampleHelper.getInstance().setIMKit(mIMKit);
+//                break;
+//            }
+//        }
     }
 
     private void initTest(){

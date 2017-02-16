@@ -60,7 +60,6 @@
             android:text="还没有@消息"
             android:layout_centerHorizontal="true"
             />
-
     </RelativeLayout>
 
 </RelativeLayout>

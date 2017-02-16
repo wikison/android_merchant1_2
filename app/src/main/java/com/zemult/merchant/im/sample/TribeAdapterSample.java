@@ -26,7 +26,8 @@ public class TribeAdapterSample extends YWAsyncBaseAdapter {
     public TribeAdapterSample(Activity context, TribeAndRoomList list) {
         this.context = context;
         this.mList = list;
-        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this);
+        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this,
+                LoginSampleHelper.getInstance().getIMKit().getUserContext());
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

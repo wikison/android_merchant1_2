@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/aliwx_common_bg_color" >
+    android:background="@color/aliwx_color_n1_4" >
 
     <include
         android:id="@+id/title_self_state"
@@ -24,7 +24,6 @@
         android:id="@+id/aliwx_search_contacts_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/aliwx_halftransparent"
         android:orientation="vertical"
         android:visibility="gone">
 

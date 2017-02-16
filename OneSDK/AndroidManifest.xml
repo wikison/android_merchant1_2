@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
 
+
     <!-- ShortcutBadger -->
     <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
@@ -36,13 +37,7 @@
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
     <!-- ShortcutBadger -->
 
-    <!--悬浮框权限-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-
-    <application
-        android:allowBackup="true"
-        tools:replace="android:allowBackup">
+    <application>
 
     <!--android:icon="@drawable/aliwx_head_default"-->
         <!--android:label="@string/aliwx_app_name" >-->
@@ -50,6 +45,14 @@
         <!--聊天窗口-->
         <activity
             android:name="com.alibaba.mobileim.ui.WxChattingActvity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:theme="@style/Aliwx_ChattingDetailStyle_default"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name="com.alibaba.mobileim.ui.WxViewMergedForwardMsgActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
@@ -86,7 +89,10 @@
              android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
               android:theme="@style/Aliwx_ConverationStyle_default"  />
-
+        <activity android:name="com.alibaba.mobileim.ui.selectfriend.SelectFriendsActivity"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Aliwx_ConverationStyle_default"  />
         <!--反馈窗口-->
         <activity
             android:name="com.alibaba.mobileim.ui.FeedbackActvity"
@@ -108,9 +114,9 @@
             android:exported="true"
             android:process=":TcmsService" >
         </service>
-
         <service
-            android:name="com.alibaba.tcms.service.WXKernalService">
+            android:name="com.alibaba.tcms.service.TCMSService$TCMSKernalService"
+            android:process=":TcmsService">
         </service>
 
         <!-- 用于接收从TCMSService发送的命令 -->
@@ -140,7 +146,7 @@
         <activity
             android:name="com.alibaba.mobileim.ui.atmessage.SendAtMessageDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Aliwx_ConverationStyle_default"/>
 
@@ -157,7 +163,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
 
         <activity
             android:name="com.alibaba.tcms.service.MonitorActivity"
@@ -187,7 +192,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.alibaba.mobileim.ui.web.CustomHybridActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Aliwx_ContentOverlay_default"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity android:name="com.alibaba.mobileim.appmonitor.floatview.FloatViewActivity"/>
     </application>
+
+
 
 </manifest>

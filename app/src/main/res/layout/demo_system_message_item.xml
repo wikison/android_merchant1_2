@@ -53,6 +53,7 @@
         android:background="@color/more_line_color" />
 
     <RelativeLayout
+        android:id="@+id/result_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line1"

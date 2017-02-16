@@ -528,7 +528,7 @@ public class LoginTestActivity extends Activity {
 
                                     EnvManager.getInstance().resetEnvType(AppApplication.getContext(), tcmsEnvType);
                                     YWEnvManager.prepare(AppApplication.getContext(), envType);
-                                    IMNotificationUtils.showToast("切换环境，程序退出，请再次启动", LoginTestActivity.this);
+                                    IMNotificationUtils.getInstance().showToast("切换环境，程序退出，请再次启动", LoginTestActivity.this);
                                     ServiceChooseHelper.exitService(LoginTestActivity.this);//xianzhen: service must restart too.
 
                                     AccountInfoTools.saveAnnoyAccount("", "");

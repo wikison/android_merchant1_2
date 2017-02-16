@@ -148,7 +148,7 @@ public class ChattingUICustomSample extends IMChattingPageUI {
     public int getChattingBackgroundResId() {
         //聊天窗口背景，默认不显示
         return 0;
-        // return R.drawable.demo_chatting_bg;
+//         return R.drawable.customer_chatting_bg;
     }
 
     /**
@@ -393,7 +393,7 @@ public class ChattingUICustomSample extends IMChattingPageUI {
      */
     @Override
     public boolean isNeedRoundRectHead() {
-        return true;
+        return false;
     }
 
     /**

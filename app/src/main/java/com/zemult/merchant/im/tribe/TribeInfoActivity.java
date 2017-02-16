@@ -203,7 +203,7 @@ public class TribeInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (mMsgRecFlag != YWProfileSettingsConstants.TRIBE_MSG_REJ) {
-                    IMNotificationUtils.showToast("接收群消息时不能屏蔽群@消息哦!", TribeInfoActivity.this);
+                    IMNotificationUtils.getInstance().showToast("接收群消息时不能屏蔽群@消息哦!", TribeInfoActivity.this);
                 } else {
                     if (mAtMsgRecFlag == YWProfileSettingsConstants.TRIBE_AT_MSG_REC) {
                         setMsgRecType(YWProfileSettingsConstants.TRIBE_MSG_REJ);
@@ -742,7 +742,7 @@ public class TribeInfoActivity extends Activity {
             uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    IMNotificationUtils.showToast("设置失败: code:" + code + " info:" + info, TribeInfoActivity.this);
+                    IMNotificationUtils.getInstance().showToast("设置失败: code:" + code + " info:" + info, TribeInfoActivity.this);
                 }
             });
         }
@@ -760,7 +760,7 @@ public class TribeInfoActivity extends Activity {
                 @Override
                 public void run() {
                     initMsgRecFlags();
-                    IMNotificationUtils.showToast("设置成功: atFlag:" + mTribe.getAtFlag() + " flag:" + mTribe.getMsgRecType(), TribeInfoActivity.this);
+                    IMNotificationUtils.getInstance().showToast("设置成功: atFlag:" + mTribe.getAtFlag() + " flag:" + mTribe.getMsgRecType(), TribeInfoActivity.this);
                 }
             });
         }
@@ -779,7 +779,7 @@ public class TribeInfoActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 conversation.getMessageLoader().deleteAllMessage();
-                                IMNotificationUtils.showToast("记录已清空",
+                                IMNotificationUtils.getInstance().showToast("记录已清空",
                                         TribeInfoActivity.this);
                             }
                         })
