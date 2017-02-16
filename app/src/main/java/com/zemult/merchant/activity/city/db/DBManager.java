@@ -132,7 +132,7 @@ public class DBManager {
     }
 
     /**
-     * 读取所有城市
+     * 读取最近访问的城市
      *
      * @return
      */
