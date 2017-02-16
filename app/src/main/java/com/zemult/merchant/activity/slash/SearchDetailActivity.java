@@ -239,7 +239,7 @@ public class SearchDetailActivity extends BaseActivity implements ICompleteTaskV
                 if (null != intent_task.pic && intent_task.pic.indexOf(",") != -1) {
                     shareImage = new UMImage(mContext, intent_task.pic.split(",")[0]);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_share);
                 }
                 switch (position) {
                     case SharePopwindow.WECHAT:

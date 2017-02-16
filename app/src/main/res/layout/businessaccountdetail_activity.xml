@@ -68,7 +68,8 @@
                             android:id="@+id/tv1111"
                             style="@style/text_15_black_28"
                             android:layout_weight="1"
-                            android:text="服务管家"/>
+                            android:text="服务管家"
+                            android:layout_width="0dp"/>
                         <ImageView
 
                             android:id="@+id/managerhead_iv"
@@ -97,7 +98,8 @@
                             android:id="@+id/tv11"
                             style="@style/text_15_black_28"
                             android:layout_weight="1"
-                            android:text="交易客户"/>
+                            android:text="交易客户"
+                            android:layout_width="0dp"/>
 
                         <ImageView
                             android:id="@+id/head_iv"
@@ -261,7 +263,8 @@
                             style="@style/text_15_black_28"
                             android:layout_marginTop="3dp"
                             android:layout_weight="1"
-                            android:text="交易时间"/>
+                            android:text="交易时间"
+                            android:layout_width="0dp"/>
 
                         <TextView
                             android:id="@+id/jytime_tv"
@@ -283,7 +286,8 @@
                             style="@style/text_15_black_28"
                             android:layout_below="@+id/t_tv"
                             android:layout_weight="1"
-                            android:text="订单号码"/>
+                            android:text="订单号码"
+                            android:layout_width="0dp"/>
 
                         <TextView
                             android:id="@+id/dingdan_tv"

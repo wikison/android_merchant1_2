@@ -327,7 +327,7 @@ public class MoodDetailActivity extends BaseActivity implements IMoodDetailView,
                 if (null != intent_news.pic && intent_news.pic.indexOf(",") != -1) {
                     shareImage = new UMImage(mContext, intent_news.pic.split(",")[0]);
                 } else {
-                    shareImage = new UMImage(mContext, R.mipmap.icon_launcher);
+                    shareImage = new UMImage(mContext, R.mipmap.icon_share);
                 }
                 switch (position) {
                     case SharePopwindow.WECHAT:

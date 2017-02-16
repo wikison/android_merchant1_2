@@ -23,6 +23,8 @@ public class PinyinUtils {
         } else if ("0".equals(c)) {
             return "定位";
         } else if ("1".equals(c)) {
+            return "最近";
+        } else if ("2".equals(c)) {
             return "热门";
         }
         return "定位";

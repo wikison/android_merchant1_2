@@ -116,8 +116,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     }
 
     public String getText() {
-        String num = etNum.getText().toString();
-        return num;
+        return etNum.getText().toString();
     }
 
     public void setFilter(){
@@ -178,8 +177,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     public void afterTextChanged(Editable s) {
         int resultNum = 0;
         if (!StringUtils.isBlank(etNum.getText().toString())) {
-            int curNum1 = Integer.parseInt(etNum.getText().toString());
-            resultNum = curNum1;
+            resultNum = Integer.parseInt(etNum.getText().toString());
         } else {
             resultNum = defaultNum;
         }

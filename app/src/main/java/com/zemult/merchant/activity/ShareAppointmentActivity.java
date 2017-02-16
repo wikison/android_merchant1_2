@@ -59,7 +59,7 @@ public class ShareAppointmentActivity extends BaseActivity {
         popwindow = new SharePopwindow(ShareAppointmentActivity.this, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(ShareAppointmentActivity.this, R.mipmap.icon_launcher);
+                UMImage shareImage = new UMImage(ShareAppointmentActivity.this, R.mipmap.icon_share);
 
                 switch (position) {
                     case SharePopwindow.SINA:
@@ -140,16 +140,16 @@ public class ShareAppointmentActivity extends BaseActivity {
 
             com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
             if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功啦", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
             popwindow.dismiss();
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败", Toast.LENGTH_SHORT).show();
             popwindow.dismiss();
         }
 

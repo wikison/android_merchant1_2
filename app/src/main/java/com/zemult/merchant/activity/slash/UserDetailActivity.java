@@ -146,8 +146,7 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private YWIMKit getIMkit() {
-        YWIMKit imkit = LoginSampleHelper.getInstance().getIMKit();
-        return imkit;
+        return LoginSampleHelper.getInstance().getIMKit();
     }
 
     @Override

@@ -79,6 +79,8 @@
                 <TextView
                     android:id="@+id/my_category_text"
                     style="@style/subscribe_my_tip_text"
+                    android:textSize="15sp"
+                    android:textColor="#211d2e"
                     android:text="我的服务" />
 
                 <TextView
@@ -86,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12.0dip"
-                    android:text="拖拽可以排序"
+                    android:text="(拖拽可以排序)"
                     android:visibility="invisible"
                     android:textColor="@color/font_black_999"
                     android:textSize="12sp" />
@@ -113,7 +115,7 @@
             <TextView
 
                 android:layout_marginTop="12dp"
-                android:textColor="@color/font_black_46"
+                android:textColor="#211d2e"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
@@ -154,14 +156,15 @@
             style="@style/MyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我确定同意"
+            android:text="我已阅读并接受"
+            android:textColor="@color/font_black_999"
             android:textSize="@dimen/font_24px"/>
 
         <TextView
             android:id="@+id/tv_protocol"
             style="@style/text_12_black_46"
             android:text="《服务管家协议》"
-            android:textColor="@color/font_main"/>
+            android:textColor="@color/font_black_999"/>
     </LinearLayout>
 
 
