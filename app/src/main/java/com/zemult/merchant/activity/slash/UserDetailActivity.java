@@ -561,20 +561,12 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
 
-                if (merchant != null) {
                     Intent merchantintent = new Intent(mContext, CreateBespeakActivity.class);
                     merchantintent.putExtra("serviceId", userId);
                     Bundle mBundle = new Bundle();
                     mBundle.putSerializable("m_merchant", merchant);
                     merchantintent.putExtras(mBundle);
                     startActivity(merchantintent);
-                } else {
-                    intent = new Intent(mContext, ChooseReservationMerchantActivity.class);
-                    intent.putExtra("actionFrom", "UserDetailActivity");// 管家id
-                    intent.putExtra("userId", userId);
-                    startActivity(intent);
-                }
-
 
                 break;
             case R.id.btn_gift:
