@@ -82,9 +82,20 @@
 
             </com.flyco.roundview.RoundLinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_scan"
+                android:layout_width="40dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/saomiao_white_icon" />
+            </RelativeLayout>
+
 
             <RelativeLayout
-                android:layout_marginLeft="8dp"
                 android:id="@+id/rl_maidan"
                 android:layout_width="40dp"
                 android:layout_height="match_parent">
@@ -99,23 +110,12 @@
                 <ImageView
                     android:layout_alignTop="@+id/iv_maidan"
                     android:id="@+id/iv_red_dot"
+                    android:visibility="invisible"
                     android:layout_marginLeft="26dp"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/tixing_icon" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_scan"
-                android:layout_width="40dp"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/saomiao_white_icon" />
             </RelativeLayout>
 
 
