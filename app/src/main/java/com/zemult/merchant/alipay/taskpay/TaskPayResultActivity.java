@@ -21,7 +21,6 @@ import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
-import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
@@ -79,9 +78,10 @@ public class TaskPayResultActivity extends BaseActivity {
     String merchantTel;
     String payTime;
     int saleUserId = 0;
-    String managerhead,managername,merchantName;
+    String managerhead, managername, merchantName;
     double paymoney;
-    public static String APPOINT_REFLASH="appointreflash";
+    public static String APPOINT_REFLASH = "appointreflash";
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_task_pay_result);
@@ -93,17 +93,16 @@ public class TaskPayResultActivity extends BaseActivity {
         payTime = getIntent().getStringExtra("payTime");
         userPayId = getIntent().getIntExtra("userPayId", 0);
         managerhead = getIntent().getStringExtra("managerhead");
-        managername= getIntent().getStringExtra("managername");
-        merchantName= getIntent().getStringExtra("merchantName");
+        managername = getIntent().getStringExtra("managername");
+        merchantName = getIntent().getStringExtra("merchantName");
         paymoney = getIntent().getDoubleExtra("paymoney", 0);
 //        if (userPayId > 0)
 //            user_pay_info();
         merchant_info(userPayId);
 
-        if(paymoney<99){
+        if (paymoney < 50) {
             btnTopinjia.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             btnTopinjia.setVisibility(View.VISIBLE);
         }
 
@@ -183,7 +182,7 @@ public class TaskPayResultActivity extends BaseActivity {
         sendJsonRequest(merchantInfoRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_topinjia,R.id.btn_toorder, R.id.rtv_communicate, R.id.iv_callphone})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_topinjia, R.id.btn_toorder, R.id.rtv_communicate, R.id.iv_callphone})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -194,7 +193,7 @@ public class TaskPayResultActivity extends BaseActivity {
                 break;
             case R.id.btn_topinjia:
                 Intent intent3 = new Intent(TaskPayResultActivity.this, AssessmentActivity.class);
-                intent3.putExtra("userPayId",userPayId);
+                intent3.putExtra("userPayId", userPayId);
                 intent3.putExtra("managerhead", managerhead);
                 intent3.putExtra("managername", managername);
                 intent3.putExtra("merchantName", merchantName);
@@ -203,7 +202,7 @@ public class TaskPayResultActivity extends BaseActivity {
                 break;
             case R.id.btn_toorder:
                 Intent intent2 = new Intent(TaskPayResultActivity.this, PayInfoActivity.class);
-                intent2.putExtra("userPayId",userPayId);
+                intent2.putExtra("userPayId", userPayId);
                 startActivity(intent2);
                 onBackPressed();
 

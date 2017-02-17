@@ -86,6 +86,7 @@ public class CreateBespeakActivity extends BaseActivity {
     int merchantId;
     M_Merchant m_merchant;
     int CHOOSEMERCHANT = 100;
+    boolean isFromMerchant;
 
 
     @Override
@@ -98,10 +99,16 @@ public class CreateBespeakActivity extends BaseActivity {
     public void init() {
         serviceId = getIntent().getIntExtra("serviceId", 0);
         m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
-        shopname = m_merchant.getName();
-        merchantId = m_merchant.getMerchantId();
-        initTags(m_merchant.tags);
-        bespekShopname.setText(shopname);
+        isFromMerchant = m_merchant == null ? false : true;
+        if (isFromMerchant) {
+            shopname = m_merchant.getName();
+            merchantId = m_merchant.getMerchantId();
+            initTags(m_merchant.tags);
+            bespekShopname.setText(shopname);
+            bespekShopname.setCompoundDrawables(null, null, null, null);
+        } else {
+            bespekShopname.setText("请选择商户");
+        }
 
         etCustomername.setText(SlashHelper.userManager().getUserinfo().getName());
         etCustomerphone.setText(SlashHelper.userManager().getUserinfo().getPhoneNum());
@@ -109,6 +116,7 @@ public class CreateBespeakActivity extends BaseActivity {
         pmnvSelectDeadline.setMaxNum(99);
         pmnvSelectDeadline.setDefaultNum(1);
         pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());
+        orderpeople = "" + pmnvSelectDeadline.getDefaultNum();
         pmnvSelectDeadline.setFilter();
 
 
@@ -269,10 +277,6 @@ public class CreateBespeakActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择预约时间");
                     return;
                 }
-                if (StringUtils.isEmpty(orderpeople + "")) {
-                    ToastUtil.showMessage("请选择预预定人数");
-                    return;
-                }
                 if (StringUtils.isEmpty(ordername)) {
                     ToastUtil.showMessage("请填写预约人姓名");
                     return;
@@ -292,10 +296,13 @@ public class CreateBespeakActivity extends BaseActivity {
                 break;
 
             case R.id.rl_ordershopname:
-                Intent intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
-                intent.putExtra("userId", serviceId);// 管家id
-                intent.putExtra("actionFrom", "CreateBespeakActivity");
-                startActivityForResult(intent, CHOOSEMERCHANT);
+                if (!isFromMerchant) {
+                    Intent intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
+                    intent.putExtra("userId", serviceId);// 管家id
+                    intent.putExtra("actionFrom", "CreateBespeakActivity");
+                    startActivityForResult(intent, CHOOSEMERCHANT);
+                }
+
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
