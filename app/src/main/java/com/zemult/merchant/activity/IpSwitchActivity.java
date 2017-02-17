@@ -22,7 +22,6 @@ import butterknife.OnClick;
  */
 public class IpSwitchActivity extends MAppCompatActivity {
 
-
     @Bind(R.id.urlTv)
     TextView urlTv;
     @Bind(R.id.ip_switch_sp)

@@ -184,14 +184,14 @@ public class HeadManageActivity extends BaseActivity {
             input.userId = SlashHelper.userManager().getUserId();
             input.name = SlashHelper.userManager().getUserinfo().getName();
             input.head = headString;
-            input.account = SlashHelper.userManager().getUserinfo().getAccount();
-            input.sex = SlashHelper.userManager().getUserinfo().getSex();
-            input.company = SlashHelper.userManager().getUserinfo().getCompany();
-            input.position = SlashHelper.userManager().getUserinfo().getPosition();
-            input.isOpen = SlashHelper.userManager().getUserinfo().getIsOpen();
-            input.province = SlashHelper.userManager().getUserinfo().getProvince();
-            input.city = SlashHelper.userManager().getUserinfo().getCity();
-            input.note = SlashHelper.userManager().getUserinfo().getNote();
+//            input.account = SlashHelper.userManager().getUserinfo().getAccount();
+//            input.sex = SlashHelper.userManager().getUserinfo().getSex();
+//            input.company = SlashHelper.userManager().getUserinfo().getCompany();
+//            input.position = SlashHelper.userManager().getUserinfo().getPosition();
+//            input.isOpen = SlashHelper.userManager().getUserinfo().getIsOpen();
+//            input.province = SlashHelper.userManager().getUserinfo().getProvince();
+//            input.city = SlashHelper.userManager().getUserinfo().getCity();
+//            input.note = SlashHelper.userManager().getUserinfo().getNote();
             input.convertJosn();
         }
 
