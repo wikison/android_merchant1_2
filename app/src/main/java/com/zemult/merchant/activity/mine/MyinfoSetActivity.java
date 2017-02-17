@@ -323,19 +323,10 @@ public class MyinfoSetActivity extends MAppCompatActivity {
         UserEditinfoRequest.Input input = new UserEditinfoRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
-           // input.name = nameString;
+            input.name = nameString;
             input.head = headString;
-            input.account = accountString;
             input.sex = sexInt;
-            input.company = companyString;
-            input.position = positionString;
             input.isOpen = isOpenInt;
-            input.province = provinceString;
-            input.city = cityString;
-            input.note = note;
-            input.audio = audio;
-            input.audioTime = audioTime;
-//            input.area = areaString;
             input.convertJosn();
         }
 
@@ -383,9 +374,10 @@ public class MyinfoSetActivity extends MAppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUESTCODE_CHANGENICKNAME && resultCode == RESULT_OK) {
-            nameString = data.getExtras().getString("result");
+            nameString = SlashHelper.userManager().getUserinfo().getName();
             //修改用户资料信息
-            user_editinfo();
+            tvName.setText(SlashHelper.userManager().getUserinfo().getName());
+           user_editinfo();
         } else if (requestCode == Constants.REQUESTCODE_CHANGESEX && resultCode == RESULT_OK) {
             sexInt = data.getExtras().getInt("sex_result");
             user_editinfo();

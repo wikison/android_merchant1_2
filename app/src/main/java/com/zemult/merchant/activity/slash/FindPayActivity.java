@@ -91,7 +91,7 @@ public class FindPayActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("找TA买单");
+        lhTvTitle.setText("结账服务");
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
         scanMoney = getIntent().getStringExtra("scanMoney");
