@@ -6,6 +6,7 @@ def releaseTime() {
 
 
 android {
+    useLibrary 'org.apache.http.legacy'
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
 
@@ -103,6 +104,22 @@ android {
     }
 }
 
+//应用 Bugtags 插件
+apply plugin: 'com.bugtags.library.plugin'
+
+//Bugtags 插件配置
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "6679467463a300e215edf11b22698c14"  //这里是你的 appKey
+    appSecret "bc5b2171acf9fd6900ea69e83bd0c463"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled true
+}
+
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
@@ -150,4 +167,5 @@ dependencies {
     compile 'com.yanzhenjie:permission:1.0.4'
     compile files('libs/alipaySingle-20161009.jar')
     compile 'com.hedgehog.ratingbar:app:1.1.2'
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 }

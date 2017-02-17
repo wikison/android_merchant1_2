@@ -14,6 +14,7 @@ import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
 import com.alibaba.sdk.android.media.MediaService;
 import com.alibaba.wxlib.util.SysUtil;
+import com.bugtags.library.Bugtags;
 import com.umeng.fb.push.FeedbackPush;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -78,7 +79,7 @@ public class AppApplication extends MultiDexApplication {
         super.onCreate();
         mContext = this;
         mAppApplication = this;
-
+        Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventBubble);
         initUmeng();
 
         handler = new Handler();
