@@ -80,12 +80,12 @@ public class CreateBespeakActivity extends BaseActivity {
 
 
     UserReservationAddRequest userReservationAddRequest;
-    int userSex=0;
+    int userSex = 0;
     int serviceId;
-    String shopname="",ordertime="",ordername="",orderphone="",orderpeople, note;
+    String shopname = "", ordertime = "", ordername = "", orderphone = "", orderpeople, note;
     int merchantId;
     M_Merchant m_merchant;
-    int CHOOSEMERCHANT=100;
+    int CHOOSEMERCHANT = 100;
 
 
     @Override
@@ -96,10 +96,10 @@ public class CreateBespeakActivity extends BaseActivity {
 
     @Override
     public void init() {
-        serviceId=getIntent().getIntExtra("serviceId",0);
-        m_merchant=(M_Merchant)getIntent().getExtras().getSerializable("m_merchant");
-        shopname=m_merchant.getName();
-        merchantId=m_merchant.getMerchantId();
+        serviceId = getIntent().getIntExtra("serviceId", 0);
+        m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
+        shopname = m_merchant.getName();
+        merchantId = m_merchant.getMerchantId();
         initTags(m_merchant.tags);
         bespekShopname.setText(shopname);
 
@@ -107,14 +107,15 @@ public class CreateBespeakActivity extends BaseActivity {
         etCustomerphone.setText(SlashHelper.userManager().getUserinfo().getPhoneNum());
         pmnvSelectDeadline.setMinNum(1);
         pmnvSelectDeadline.setMaxNum(99);
-        pmnvSelectDeadline.setDefaultNum(0);
+        pmnvSelectDeadline.setDefaultNum(1);
+        pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());
         pmnvSelectDeadline.setFilter();
 
 
         pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
             @Override
             public void onNumChanged(int num) {
-                orderpeople = num+"";
+                orderpeople = num + "";
                 pmnvSelectDeadline.setDefaultNum(num);
             }
         });
@@ -122,11 +123,10 @@ public class CreateBespeakActivity extends BaseActivity {
         rgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId==R.id.rb_nvshi){
-                    userSex=1;
-                }
-                else{
-                    userSex=0;
+                if (checkedId == R.id.rb_nvshi) {
+                    userSex = 1;
+                } else {
+                    userSex = 0;
                 }
             }
         });
@@ -146,7 +146,7 @@ public class CreateBespeakActivity extends BaseActivity {
             UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
             input.merchantId = merchantId;
             input.saleUserId = serviceId;
-            input.reservationTime = ordertime+":00";
+            input.reservationTime = ordertime + ":00";
             input.num = orderpeople;
             input.userName = ordername;
             input.userPhone = orderphone;
@@ -160,30 +160,31 @@ public class CreateBespeakActivity extends BaseActivity {
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
                 }
+
                 @Override
                 public void onResponse(Object response) {
-                    if (((CommonResult) response).status==1) {
+                    if (((CommonResult) response).status == 1) {
                         YWCustomMessageBody messageBody = new YWCustomMessageBody();
                         //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
                         JSONObject object = new JSONObject();
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[预约-待确认] 预约时间:"+ordertime+"预约地址:"+shopname);
-                            object.put("serviceId", serviceId+"");
-                            object.put("reservationId",((CommonResult) response).reservationId);
+                            object.put("taskTitle", "[预约-待确认] 预约时间:" + ordertime + "预约地址:" + shopname);
+                            object.put("serviceId", serviceId + "");
+                            object.put("reservationId", ((CommonResult) response).reservationId);
                         } catch (JSONException e) {
 
                         }
                         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
                         messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-                        YWIMKit  imKit= LoginSampleHelper.getInstance().getIMKit();
-                        IYWContact appContact = YWContactFactory.createAPPContact(serviceId+"", imKit.getIMCore().getAppKey());
+                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(serviceId + "", imKit.getIMCore().getAppKey());
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
-                                        ,message,forwardCallBack);
-                        startActivity(imKit.getChattingActivityIntent(serviceId+""));
+                                        , message, forwardCallBack);
+                        startActivity(imKit.getChattingActivityIntent(serviceId + ""));
                         finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -240,7 +241,7 @@ public class CreateBespeakActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit,R.id.rl_ordershopname,R.id.rl_ordertime})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -250,37 +251,37 @@ public class CreateBespeakActivity extends BaseActivity {
             case R.id.btn_bespeak_commit:
                 if (noLogin(CreateBespeakActivity.this))
                     return;
-                shopname=  bespekShopname.getText().toString();
-                ordertime=  bespekTime.getText().toString();
+                shopname = bespekShopname.getText().toString();
+                ordertime = bespekTime.getText().toString();
                 pmnvSelectDeadline.getText().toString();
-                note= AppUtils.replaceBlank(etBespeak.getText().toString());
-                ordername=etCustomername.getText().toString();
-                orderphone=etCustomerphone.getText().toString();
-                if(StringUtils.isEmpty(shopname)){
+                note = AppUtils.replaceBlank(etBespeak.getText().toString());
+                ordername = etCustomername.getText().toString();
+                orderphone = etCustomerphone.getText().toString();
+                if (StringUtils.isEmpty(shopname)) {
                     return;
                 }
-                if(StringUtils.isEmpty(orderpeople)){
+                if (StringUtils.isEmpty(orderpeople)) {
                     ToastUtil.showMessage("请选择预约人数");
                     return;
                 }
 
-                if(StringUtils.isEmpty(ordertime)||"请选择预约时间".equals(ordertime)){
+                if (StringUtils.isEmpty(ordertime) || "请选择预约时间".equals(ordertime)) {
                     ToastUtil.showMessage("请选择预约时间");
                     return;
                 }
-                if(StringUtils.isEmpty(orderpeople+"")){
+                if (StringUtils.isEmpty(orderpeople + "")) {
                     ToastUtil.showMessage("请选择预预定人数");
                     return;
                 }
-                if(StringUtils.isEmpty(ordername)){
+                if (StringUtils.isEmpty(ordername)) {
                     ToastUtil.showMessage("请填写预约人姓名");
                     return;
                 }
-                if(StringUtils.isEmpty(orderphone)){
+                if (StringUtils.isEmpty(orderphone)) {
                     ToastUtil.showMessage("请填写预约人电话");
                     return;
                 }
-                if(!StringMatchUtils.isMobileNO(orderphone)){
+                if (!StringMatchUtils.isMobileNO(orderphone)) {
                     ToastUtil.showMessage("请填写正确的预约人电话");
                     return;
                 }
@@ -291,10 +292,10 @@ public class CreateBespeakActivity extends BaseActivity {
                 break;
 
             case R.id.rl_ordershopname:
-                Intent  intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
+                Intent intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
                 intent.putExtra("userId", serviceId);// 管家id
                 intent.putExtra("actionFrom", "CreateBespeakActivity");
-                startActivityForResult(intent,CHOOSEMERCHANT);
+                startActivityForResult(intent, CHOOSEMERCHANT);
                 break;
             case R.id.rl_ordertime:
                 DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
@@ -308,10 +309,10 @@ public class CreateBespeakActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==CHOOSEMERCHANT&&resultCode==RESULT_OK){
-            initTags( data.getStringExtra("tags"));
+        if (requestCode == CHOOSEMERCHANT && resultCode == RESULT_OK) {
+            initTags(data.getStringExtra("tags"));
             bespekShopname.setText(data.getStringExtra("shopName"));
-            merchantId=data.getIntExtra("merchantId",0);
+            merchantId = data.getIntExtra("merchantId", 0);
         }
     }
 
@@ -319,12 +320,12 @@ public class CreateBespeakActivity extends BaseActivity {
 
         @Override
         public void onSuccess(Object... result) {
-            Notification.showToastMsg(CreateBespeakActivity.this,"forward succeed!");
+            Notification.showToastMsg(CreateBespeakActivity.this, "forward succeed!");
         }
 
         @Override
         public void onError(int code, String info) {
-            Notification.showToastMsg(CreateBespeakActivity.this,"forward fail!");
+            Notification.showToastMsg(CreateBespeakActivity.this, "forward fail!");
 
         }
 

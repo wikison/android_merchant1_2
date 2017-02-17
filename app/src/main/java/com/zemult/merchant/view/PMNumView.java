@@ -27,7 +27,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     private RoundTextView decrease;
     private RoundTextView plus;
     private EditText etNum;
-    private int defaultNum, minNum, maxNum;
+    private int defaultNum = -1, minNum, maxNum;
 
     //数字变化监听器
     private NumChangeListener numChangeListener;
@@ -119,7 +119,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         return etNum.getText().toString();
     }
 
-    public void setFilter(){
+    public void setFilter() {
         EditFilter.IntegerFilter(etNum, maxNum);
     }
 
