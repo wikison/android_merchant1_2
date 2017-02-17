@@ -20,7 +20,7 @@ import com.alibaba.mobileim.channel.cloud.contact.YWProfileInfo;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.contact.IYWContactService;
-import com.alibaba.mobileim.utility.ToastHelper;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.zemult.merchant.R;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
@@ -115,7 +115,7 @@ public  class AddContactFragment extends Fragment implements OnClickListener {
             @Override
             public void onSuccess(Object... result) {
                 YWLog.i(TAG, "好友申请已发送成功,  id = " + mUserId + ", appkey = " + mAppKey+ ", mMsg = " + mMsg);
-                ToastHelper.showToastMsg(getActivity(), "好友申请已发送成功,  id = " + mUserId + ", appkey = " + mAppKey);
+                IMNotificationUtils.getInstance().showToast(getActivity(), "好友申请已发送成功,  id = " + mUserId + ", appkey = " + mAppKey);
                 cancelProgress();
                 getSuperParent().finish(false);
             }
@@ -123,7 +123,7 @@ public  class AddContactFragment extends Fragment implements OnClickListener {
             @Override
             public void onError(int code, String info) {
                 YWLog.i(TAG, "好友申请失败，code = " + code + ", info = " + info);
-                ToastHelper.showToastMsg(getActivity(), "好友申请失败，code = " + code + ", info = " + info);
+                IMNotificationUtils.getInstance().showToast(getActivity(), "好友申请失败，code = " + code + ", info = " + info);
                 cancelProgress();
             }
 

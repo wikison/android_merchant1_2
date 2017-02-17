@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.WXAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.tribe.IYWTribeService;
@@ -49,7 +48,7 @@ public class EditMyTribeProfileActivity extends Activity {
     private void init() {
         mIMKit = LoginSampleHelper.getInstance().getIMKit();
         mTribeService = mIMKit.getTribeService();
-        userId = WXAPI.getInstance().getLongLoginUserId();
+        userId = mIMKit.getUserContext().getLongUserId();
     }
 
     private void initViews() {
@@ -92,7 +91,7 @@ public class EditMyTribeProfileActivity extends Activity {
         mTribeService.modifyTribeUserNick(tribeId, mIMKit.getIMCore().getAppKey(), userId, userNick, new IWxCallback() {
             @Override
             public void onSuccess(Object... result) {
-                IMNotificationUtils.showToast("修改成功", EditMyTribeProfileActivity.this);
+                IMNotificationUtils.getInstance().showToast("修改成功", EditMyTribeProfileActivity.this);
                 Intent intent = new Intent();
                 intent.putExtra(TribeConstants.TRIBE_NICK, userNick);
                 setResult(Activity.RESULT_OK, intent);
@@ -101,7 +100,7 @@ public class EditMyTribeProfileActivity extends Activity {
 
             @Override
             public void onError(int code, String info) {
-                IMNotificationUtils.showToast("修改失败",EditMyTribeProfileActivity.this);
+                IMNotificationUtils.getInstance().showToast("修改失败",EditMyTribeProfileActivity.this);
             }
 
             @Override

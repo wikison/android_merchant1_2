@@ -25,7 +25,15 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
-
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/aliwx_my_progress"
+        android:visibility="gone" />
+    
     <com.alibaba.mobileim.fundamental.widget.refreshlist.PullToRefreshDummyHeadListView
         android:id="@+id/aliwx_listview"
         android:layout_width="fill_parent"
@@ -126,20 +134,35 @@
         android:background="@color/aliwx_halftransparent"
         android:layout_above="@+id/aliwx_switcherLayout"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone"
+        >
 
         <include
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             layout="@layout/aliwx_search_text" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/aliwx_search_contacts_listview"
-            style="@style/aliwx_dividedListStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000"
-            android:fadingEdge="none" />
+            <ProgressBar
+                android:id="@+id/aliwx_search_progress"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/aliwx_my_progress"
+                android:visibility="gone"
+                />
+            <ListView
+                android:id="@+id/aliwx_search_contacts_listview"
+                style="@style/aliwx_dividedListStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:fadingEdge="none" />
+        </RelativeLayout>
+
     </LinearLayout>
 
     <include layout="@layout/aliwx_title_bar_shadow" />

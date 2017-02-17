@@ -19,6 +19,7 @@ import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
 import com.zemult.merchant.R;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class TribeMembersAdapterSample extends YWAsyncBaseAdapter {
     public TribeMembersAdapterSample(Activity context, List<YWTribeMember> list) {
         this.context = context;
         this.mList = list;
-        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this);
+        mContactHeadLoadHelper = new YWContactHeadLoadHelper(context, this,
+                LoginSampleHelper.getInstance().getIMKit().getUserContext());
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

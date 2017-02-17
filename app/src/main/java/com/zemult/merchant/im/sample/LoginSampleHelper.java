@@ -27,6 +27,7 @@ import com.alibaba.mobileim.login.YWLoginState;
 import com.alibaba.mobileim.login.YWPwdType;
 import com.alibaba.mobileim.ui.chat.widget.YWSmilyMgr;
 import com.alibaba.mobileim.utility.IMAutoLoginInfoStoreUtil;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.alibaba.tcms.env.EnvManager;
 import com.alibaba.tcms.env.TcmsEnvType;
 import com.alibaba.tcms.env.YWEnvManager;
@@ -140,7 +141,7 @@ public class LoginSampleHelper {
 //                SmilyCustomSample.addDefaultSmiley();
                 //如果开发者想修改顺序（把sdk默认的放在自己添加的表情后面），可以先hide默认的然后再最后添加默认的
                 SmilyCustomSample.addNewEmojiSmiley();
-                SmilyCustomSample.addNewImageSmiley();
+//                SmilyCustomSample.addNewImageSmiley();
                 SmilyCustomSample.setSmileySize(YWIMSmiley.SMILEY_TYPE_IMAGE, 60);
                 //最后要清空通知，防止memory leak
                 YWSmilyMgr.setSmilyInitNotify(null);
@@ -235,29 +236,30 @@ public class LoginSampleHelper {
 
         }
     }
-
     private IYWP2PPushListener mP2PListener = new IYWP2PPushListener() {
         @Override
-        public void onPushMessage(IYWContact contact, YWMessage message) {
-            if (message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_P2P_CUS){
-                if (message.getMessageBody() instanceof YWCustomMessageBody) {
-                    YWCustomMessageBody messageBody = (YWCustomMessageBody) message.getMessageBody();
-                    if (messageBody.getTransparentFlag() == 1) {
-                        String content = messageBody.getContent();
-                        try {
-                            JSONObject object = new JSONObject(content);
-                            if (object.has("text")){
-                                String text = object.getString("text");
-                                Notification.showToastMsgLong(AppApplication.getContext(), "透传消息，content = " + text);
-                            } else if (object.has("customizeMessageType")){
-                                String customType = object.getString("customizeMessageType");
-                                if (!TextUtils.isEmpty(customType) && customType.equals(ChattingOperationCustomSample.CustomMessageType.READ_STATUS)){
-                                    YWConversation conversation = mIMKit.getConversationService().getConversationByConversationId(message.getConversationId());
-                                    long msgId = Long.parseLong(object.getString("PrivateImageRecvReadMessageId"));
-                                    conversation.updateMessageReadStatus(conversation, msgId);
+        public void onPushMessage(IYWContact contact, List<YWMessage> messages) {
+            for (YWMessage message : messages) {
+                if (message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_P2P_CUS) {
+                    if (message.getMessageBody() instanceof YWCustomMessageBody) {
+                        YWCustomMessageBody messageBody = (YWCustomMessageBody) message.getMessageBody();
+                        if (messageBody.getTransparentFlag() == 1) {
+                            String content = messageBody.getContent();
+                            try {
+                                JSONObject object = new JSONObject(content);
+                                if (object.has("text")) {
+                                    String text = object.getString("text");
+                                    IMNotificationUtils.getInstance().showToast(AppApplication.getContext(), "透传消息，content = " + text);
+                                } else if (object.has("customizeMessageType")) {
+                                    String customType = object.getString("customizeMessageType");
+                                    if (!TextUtils.isEmpty(customType) && customType.equals(ChattingOperationCustomSample.CustomMessageType.READ_STATUS)) {
+                                        YWConversation conversation = mIMKit.getConversationService().getConversationByConversationId(message.getConversationId());
+                                        long msgId = Long.parseLong(object.getString("PrivateImageRecvReadMessageId"));
+                                        conversation.updateMessageReadStatus(conversation, msgId);
+                                    }
                                 }
+                            } catch (JSONException e) {
                             }
-                        } catch (JSONException e){
                         }
                     }
                 }
@@ -267,11 +269,11 @@ public class LoginSampleHelper {
 
     private IYWTribePushListener mTribeListener = new IYWTribePushListener() {
         @Override
-        public void onPushMessage(YWTribe tribe, YWMessage message) {
+        public void onPushMessage(YWTribe tribe, List<YWMessage> messages) {
             //TODO 收到群消息
         }
-    };
 
+    };
     /**
      * 登出
      */

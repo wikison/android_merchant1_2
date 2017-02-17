@@ -15,19 +15,36 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/aliwx_first_new_msg_notify"
-        android:textColor="@color/aliwx_color_gray_02"
+        android:textColor="@color/aliwx_color_gray_03"
         android:textSize="@dimen/aliwx_font_third_grade"
         android:visibility="gone"/>
 
     <include layout="@layout/aliwx_chatting_detail_item_time"/>
     <!-- left -->
 
+    <CheckBox
+        android:id="@+id/menu_more_selected"
+        android:layout_width="@dimen/aliwx_common_checkbox_size_20"
+        android:layout_height="wrap_content"
+        android:button="@drawable/aliwx_common_check_bg_2"
+        android:clickable="false"
+        android:background="@null"
+        android:layout_marginRight="15dp"
+        android:layout_alignTop="@+id/left_head"
+        android:layout_alignBottom="@+id/left_head"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        />
     <com.alibaba.mobileim.fundamental.widget.WXNetworkImageView
         android:id="@+id/left_head"
         android:layout_width="@dimen/aliwx_chatting_head_size"
         android:layout_height="@dimen/aliwx_chatting_head_size"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/menu_more_selected"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_below="@+id/show_time"
+        android:layout_marginTop="@dimen/aliwx_topMargin_between_head_and_name"
         android:visibility="gone"
         tools:background="#FF0000"
         tools:visibility="visible"
@@ -47,7 +64,6 @@
         style="@style/aliwx_chatting_detail_text_left_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/left_head"
         android:layout_below="@id/show_time"
         android:layout_marginBottom="@dimen/aliwx_chatting_left_name_margin_bottom"
         android:layout_marginLeft="@dimen/aliwx_chatting_left_name_margin_left"
@@ -56,18 +72,18 @@
         android:ellipsize="middle"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:textColor="#8A8A8A"
+        android:textColor="@color/aliwx_color_n2_2"
         android:textColorHighlight="@android:color/transparent"
         android:textSize="@dimen/aliwx_chatting_left_name_text_size"
         android:visibility="gone"
         tools:text="别人家hous：小美"
-        tools:visibility="gone"
-        />
+        tools:visibility="visible"/>
 
     <RelativeLayout
         android:id="@+id/left_content_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="@dimen/aliwx_chatting_content_min_height"
         android:layout_below="@+id/left_name"
         android:layout_marginLeft="@dimen/aliwx_chatting_left_content_margin_left"
         android:layout_marginRight="@dimen/aliwx_chatting_left_content_margin_right"
@@ -78,29 +94,7 @@
         tools:visibility="visible"
         >
 
-        <com.alibaba.mobileim.fundamental.widget.PatchedTextView
-            android:id="@+id/left_text"
-            style="@style/aliwx_chatting_detail_text_left_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoLink="web|email"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/aliwx_audio_height"
-            android:paddingBottom="3dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="3dp"
-            android:singleLine="false"
-            android:textColor="@color/aliwx_text_color_black"
-            android:textColorHighlight="@android:color/transparent"
-            android:textColorLink="#1A92ED"
-            android:textSize="@dimen/aliwx_common_text_size"
-            tools:text="别人家hous：别人家hous别人家hous别人家hous别人家hous别人家hous别人家hous"
-            />
-
-        <ViewStub
+        <!--     <ViewStub
             android:id="@+id/left_gif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,6 +102,24 @@
             android:inflatedId="@+id/left_gif_stub"
             android:layout="@layout/aliwx_chatting_detail_gif"
             android:src="@drawable/aliwx_default_photo"/>
+-->
+
+        <ViewStub
+            android:id="@+id/left_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inflatedId="@+id/left_gif_stub"
+            android:layout="@layout/aliwx_chatting_detail_image_left"
+            android:src="@drawable/aliwx_default_photo"/>
+
+        <ViewStub
+            android:id="@+id/left_geo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/left_geo_stub"
+            android:layout="@layout/aliwx_chatting_detail_geo"/>
+
 
         <ViewStub
             android:id="@+id/left_iv_size_layout_stub"
@@ -163,7 +175,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout="@layout/aliwx_chatting_detail_custom_msg"/>
+
+        <com.alibaba.mobileim.fundamental.widget.PatchedTextView
+            android:id="@+id/left_text"
+            style="@style/aliwx_chatting_detail_text_left_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web|email"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/aliwx_audio_height"
+            android:paddingBottom="3dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="3dp"
+            android:singleLine="false"
+            android:textColor="@color/aliwx_color_n2_4"
+            android:textColorHighlight="@android:color/transparent"
+            android:textColorLink="#1A92ED"
+            android:textSize="@dimen/aliwx_common_text_size"
+            android:maxWidth="250dp"
+            tools:text="别人家hous：别人家hous别人家hous别人家hous别人家hous别人家hous别人家hous"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
     </RelativeLayout>
+
+    <ViewStub
+        android:id="@+id/left_msg_time_layout_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/left_msg_time_inflated"
+        android:layout_alignBottom="@+id/left_content_layout"
+        android:layout_toRightOf="@+id/left_content_layout"
+        android:layout_marginLeft="-30dip"
+        android:gravity="bottom"
+        android:layout="@layout/aliwx_msg_time_layout"/>
+
+<!--
+    <ViewStub
+        android:id="@+id/left_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/left_name"
+        android:layout_marginRight="36dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/left_head"
+        android:inflatedId="@+id/left_gif_stub"
+        android:layout="@layout/aliwx_chatting_detail_image_left"
+        android:src="@drawable/aliwx_default_photo"/>
+-->
 
     <!--<ViewStub-->
     <!--android:id="@+id/left_from"-->
@@ -181,6 +243,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/show_time"
+        android:layout_marginTop="@dimen/aliwx_topMargin_between_head_and_name"
         android:layout_centerHorizontal="true"
         android:background="@drawable/aliwx_sysmsgbg"
         android:visibility="gone">
@@ -207,6 +270,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/show_time"
+        android:layout_marginTop="@dimen/aliwx_topMargin_between_head_and_name"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal">
 
@@ -217,7 +281,6 @@
             android:layout_marginRight="5dp"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:text="@string/aliwx_at_msg_unread_count"
             android:textColor="@color/aliwx_color_blue"
             android:textSize="@dimen/aliwx_font_third_grade"
             android:visibility="gone"/>
@@ -239,6 +302,7 @@
         android:layout_alignBottom="@id/left_content_layout"
         android:layout_alignTop="@id/left_content_layout"
         android:layout_marginLeft="-26dip"
+        android:inflatedId="@+id/audio_unread_inflated"
         android:layout_toRightOf="@id/left_content_layout"
         android:layout="@layout/aliwx_chatting_detail_audio_unread"/>
 
@@ -262,23 +326,45 @@
         android:layout_height="@dimen/aliwx_chatting_head_size"
         android:layout_alignParentRight="true"
         android:layout_below="@id/show_time"
-        android:visibility="gone"/>
+        android:layout_marginTop="@dimen/aliwx_topMargin_between_head_and_name"
+        />
+
+    <TextView
+        android:id="@+id/right_name"
+        style="@style/aliwx_chatting_detail_text_left_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/show_time"
+        android:layout_marginBottom="@dimen/aliwx_chatting_right_name_margin_bottom"
+        android:layout_marginLeft="@dimen/aliwx_chatting_right_name_margin_left"
+        android:layout_marginRight="@dimen/aliwx_chatting_right_name_margin_right"
+        android:layout_toLeftOf="@id/right_head"
+        android:ellipsize="middle"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/aliwx_color_n2_2"
+        android:textColorHighlight="@android:color/transparent"
+        android:textSize="@dimen/aliwx_chatting_right_name_text_size"
+        tools:text="别人家hous：小美"
+        />
+
 
     <!-- right -->
     <RelativeLayout
         android:id="@+id/right_content_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/right_head"
-        android:layout_below="@id/show_time"
+        android:minHeight="@dimen/aliwx_chatting_content_min_height"
+        android:layout_below="@id/right_name"
         android:layout_marginLeft="@dimen/aliwx_chatting_right_content_margin_left"
         android:layout_marginRight="@dimen/aliwx_chatting_right_content_margin_right"
         android:layout_toLeftOf="@id/right_head"
         android:background="@drawable/aliwx_comment_r_bg"
+        android:visibility="gone"
         android:gravity="center"
-        android:visibility="gone">
+        tools:visibility="visible">
 
-        <ViewStub
+     <!--   <ViewStub
             android:id="@+id/right_gif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -286,6 +372,23 @@
             android:inflatedId="@+id/right_gif_stub"
             android:layout="@layout/aliwx_chatting_detail_gif"
             android:src="@drawable/aliwx_default_photo_right"/>
+-->
+        <ViewStub
+            android:id="@+id/right_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inflatedId="@+id/right_gif_stub"
+            android:layout="@layout/aliwx_chatting_detail_image_right"
+            android:src="@drawable/aliwx_default_photo_right"/>
+
+        <ViewStub
+            android:id="@+id/right_geo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/right_geo_stub"
+            android:layout="@layout/aliwx_chatting_detail_geo"/>
+
 
         <ViewStub
             android:id="@+id/right_iv_size_layout_stub"
@@ -313,16 +416,6 @@
             android:layout="@layout/aliwx_chatting_detail_download_video_progress"/>
 
         <ViewStub
-            android:id="@+id/right_video_upload_init_progress_stub"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:inflatedId="@+id/upload_video_init_progress"
-            android:layout="@layout/aliwx_chatting_detail_download_video_init"
-            android:visibility="gone"/>
-
-        <ViewStub
             android:id="@+id/right_video_download_progress_stub"
             android:layout_width="31dp"
             android:layout_height="31dp"
@@ -348,6 +441,7 @@
             android:autoLink="web|email"
             android:gravity="center_vertical"
             android:minHeight="@dimen/aliwx_audio_height"
+            android:maxWidth="250dp"
             android:paddingBottom="2dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
@@ -369,6 +463,16 @@
         <!--layout="@layout/aliwx_audio_flipper_to"/>-->
 
         <ViewStub
+            android:id="@+id/right_video_upload_init_progress_stub"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:inflatedId="@+id/upload_video_init_progress"
+            android:layout="@layout/aliwx_chatting_detail_download_video_init"
+            android:visibility="gone"/>
+
+        <ViewStub
             android:id="@+id/right_audio_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -388,6 +492,20 @@
             android:layout="@layout/aliwx_chatting_detail_custom_msg"/>
 
     </RelativeLayout>
+<!--
+    <ViewStub
+        android:id="@+id/right_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/show_time"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/right_head"
+        android:layout_alignTop="@id/right_head"
+        android:inflatedId="@+id/right_gif_stub"
+        android:layout="@layout/aliwx_chatting_detail_image_right"
+        android:src="@drawable/aliwx_default_photo_right"/>
+-->
 
     <!--<TextView-->
     <!--android:id="@+id/right_from"-->
@@ -404,8 +522,8 @@
     <!-- 发送状态 -->
     <ViewStub
         android:id="@+id/send_state"
-        android:layout_width="15dip"
-        android:layout_height="15dip"
+        android:layout_width="18dip"
+        android:layout_height="18dip"
         android:layout_alignBottom="@id/right_content_layout"
         android:layout_alignTop="@id/right_content_layout"
         android:layout_centerVertical="true"
@@ -446,21 +564,33 @@
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/right_content_layout"
         android:layout_alignTop="@+id/right_content_layout"
-        android:layout_marginRight="-35dip"
+        android:layout_marginRight="-30dip"
         android:layout_toLeftOf="@+id/right_content_layout"
-        android:gravity="center">
+        android:gravity="bottom"
+        android:id="@+id/msg_unread_layout"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/msg_unread_count"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/aliwx_at_msg_unread_count"
+            android:gravity="bottom|center_horizontal"
             android:textColor="@color/aliwx_color_blue"
             android:textSize="@dimen/aliwx_font_third_grade">
 
         </TextView>
     </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/right_msg_time_layout_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/right_msg_time_inflated"
+        android:layout_alignBottom="@+id/right_content_layout"
+        android:layout_toLeftOf="@+id/right_content_layout"
+        android:layout_marginRight="-30dip"
+        android:gravity="bottom"
+        android:layout="@layout/aliwx_msg_time_layout"/>
 
 
 </RelativeLayout>

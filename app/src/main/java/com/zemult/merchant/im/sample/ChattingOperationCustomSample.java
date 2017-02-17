@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.WXAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMChattingPageOperateion;
@@ -751,7 +750,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             String userId = contact.getUserId();
             String appkey = contact.getAppKey();
             conversationName = userId;
-            IYWCrossContactProfileCallback callback = WXAPI.getInstance().getCrossContactProfileCallback();
+            IYWCrossContactProfileCallback callback = mIMKit.getCrossProfileCallback();
             if (callback != null) {
                 IYWContact iContact = callback.onFetchContactInfo(userId, appkey);
                 if (iContact != null && !TextUtils.isEmpty(iContact.getShowName())) {
@@ -759,7 +758,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     return conversationName;
                 }
             } else {
-                IYWContactProfileCallback profileCallback = WXAPI.getInstance().getContactProfileCallback();
+                IYWContactProfileCallback profileCallback = mIMKit.getProfileCallback();
                 if (profileCallback != null) {
                     IYWContact iContact = profileCallback.onFetchContactInfo(userId);
                     if (iContact != null && !TextUtils.isEmpty(iContact.getShowName())) {
@@ -768,7 +767,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     }
                 }
             }
-            IYWContact iContact = WXAPI.getInstance().getWXIMContact(userId);
+            IYWContact iContact =mIMKit.getIMCore().getContactManager().getWXIMContact(userId);
             if (iContact != null && !TextUtils.isEmpty(iContact.getShowName())) {
                 conversationName = iContact.getShowName();
             }

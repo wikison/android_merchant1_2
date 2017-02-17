@@ -15,7 +15,7 @@
             android:layout_width="65dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="用户号："/>
+            android:text="userId："/>
 
         <EditText
             android:id="@+id/userid"
@@ -23,12 +23,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text=""/>
+            android:text="testpro11"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
         android:orientation="horizontal"

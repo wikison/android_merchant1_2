@@ -28,7 +28,7 @@
 
     <View
         android:id="@+id/divider_line"
-        android:layout_width="1dp"
+        android:layout_width="1px"
         android:layout_height="@dimen/aliwx_chatting_reply_bar_height"
         android:layout_toRightOf="@+id/selfhelp_bar_keyboard_layout"
         android:background="@color/aliwx_divider_color"/>

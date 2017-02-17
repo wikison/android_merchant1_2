@@ -1,10 +1,18 @@
 package com.zemult.merchant.im.sample;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
+import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListOperation;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.EServiceContact;
+import com.alibaba.mobileim.conversation.IYWConversationService;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
@@ -12,6 +20,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.mine.message.SystemMessageActivity;
 import com.zemult.merchant.app.AppApplication;
+import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.contact.ContactSystemMessageActivity;
 import com.zemult.merchant.im.demo.FragmentTabs;
 import com.zemult.merchant.im.tribe.TribeSystemMessageActivity;
@@ -165,18 +174,39 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
      * @return true: 使用用户自定义的长按事件  false：使用SDK默认的长按事件
      */
     @Override
-    public boolean onConversationItemLongClick(Fragment fragment, YWConversation conversation) {
-//        YWConversationType type = conversation.getConversationType();
-//        if (type == YWConversationType.P2P){
-//            //TODO 单聊会话长按事件
-//            return true;
-//        } else if (type == YWConversationType.Tribe){
+    public boolean onConversationItemLongClick(Fragment fragment, final YWConversation conversation) {
+        YWConversationType type = conversation.getConversationType();
+        boolean retVal=false;
+        if (type == YWConversationType.P2P){
+            AlertDialog ad = new AlertDialog.Builder(fragment.getContext())
+                    .setTitle("删除会话")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            IYWConversationService conversationService =  LoginSampleHelper.getInstance().getIMKit().getConversationService();
+                            conversationService.deleteConversation(conversation);
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create();
+            if (!ad.isShowing()){
+                ad.show();
+            }
+            retVal= true;
+        }
+//        else if (type == YWConversationType.Tribe){
 //            //TODO 群会话长按事件
 //            return true;
-//        } else if (type == YWConversationType.Custom){
-//            //TODO 自定义会话长按事件
-//            return true;
 //        }
-        return false;
+        else if (type == YWConversationType.Custom){
+            //TODO 自定义会话长按事件
+            retVal= true;
+        }
+        return retVal;
     }
 }

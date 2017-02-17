@@ -12,7 +12,7 @@
 
     <com.alibaba.mobileim.kit.chat.view.CirclePageIndicator
         android:id="@+id/inner_pager_indicator"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="3dp"
         android:layout_gravity="center_horizontal"/>

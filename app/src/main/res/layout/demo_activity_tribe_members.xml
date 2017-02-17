@@ -21,7 +21,6 @@
         android:text="添加群成员" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/invite_tribe_members"
         android:layout_width="match_parent"
         android:layout_height="50dp"

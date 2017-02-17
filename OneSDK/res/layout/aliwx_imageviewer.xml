@@ -4,6 +4,13 @@
     android:layout_height="fill_parent"
     android:background="@android:drawable/screen_background_dark">
 
+    <com.alibaba.mobileim.fundamental.widget.TouchImageView
+        android:id="@+id/image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/aliwx_app_name" />
+
     <FrameLayout
         android:id="@+id/title"
         style="@style/aliwx_common_title_style"
@@ -39,27 +46,10 @@
                 android:text="@string/aliwx_send"
                 android:textColor="@color/aliwx_color_blue"
                 android:textSize="@dimen/aliwx_font_first_grade"/>
-
         </RelativeLayout>
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/imageLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/title"
-        android:layout_above="@+id/bottom_original_image_layout"
-        android:gravity="center" >
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:scaleType="centerInside" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/movieLayout"
@@ -77,13 +67,6 @@
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:gravity="center" />
-        <!--
-              <com.alibaba.mobileim.view.MovieView
-            android:id="@+id/movieView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-        -->
     </LinearLayout>
 
     <ZoomControls
@@ -98,7 +81,7 @@
     <RelativeLayout
         android:id="@+id/bottom_original_image_layout"
         android:layout_width="fill_parent"
-        android:layout_height="50dip"
+        android:layout_height="@dimen/aliwx_bottom_bar_height"
         android:layout_alignParentBottom="true"
         android:background="@color/aliwx_color_blue_dark">
 

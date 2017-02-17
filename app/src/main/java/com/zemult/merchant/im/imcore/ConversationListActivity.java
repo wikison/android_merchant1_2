@@ -98,7 +98,7 @@ public class ConversationListActivity extends Activity {
             public void onProgress(int progress) {
 
             }
-        });
+        }, 20);
     }
 
     IYWConversationListener mConversationListener = new IYWConversationListener() {

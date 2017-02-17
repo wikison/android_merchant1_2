@@ -32,10 +32,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/aliwx_common_unit_margin"
             android:layout_toLeftOf="@id/aliwx_search_btn"
-            android:background="@drawable/aliwx_common_white_btn_bg"
+            android:background="@android:color/transparent"
             android:gravity="center"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/aliwx_white"
+            android:textColor="@color/aliwx_color_gray_01"
+            android:layout_centerVertical="true"
             android:text="@string/aliwx_cancel"/>
 
         <view
@@ -44,7 +44,7 @@
             android:layout_height="@dimen/aliwx_search_text_view_height"
             android:layout_toLeftOf="@id/aliwx_cancel_search"
             class="com.alibaba.mobileim.fundamental.widget.WxEditText"
-            android:background="@drawable/aliwx_search_text_bg"
+            android:background="@drawable/aliwx_btn_search_bar"
             android:drawableLeft="@drawable/aliwx_search_icon"
             android:drawablePadding="@dimen/aliwx_common_unit_margin"
             android:drawableRight="@drawable/aliwx_search_icon_delete_bg"
@@ -57,7 +57,8 @@
             android:paddingRight="10dip"
             android:singleLine="true"
             android:textColor="@color/aliwx_black"
-            android:textSize="@dimen/aliwx_font_second_grade" />
+            android:textSize="@dimen/aliwx_font_second_grade"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -30,7 +30,7 @@ import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWDBContact;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
-import com.alibaba.mobileim.utility.ToastHelper;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.zemult.merchant.R;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 
@@ -186,7 +186,7 @@ public  class FindContactFragment extends Fragment implements OnClickListener {
 
 	private void searchContent(String keyword) {
 		if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
-            ToastHelper.showToastMsg(this.getActivity(), this.getResources().getString(R.string.aliwx_net_null));
+            IMNotificationUtils.getInstance().showToast(this.getActivity(), this.getResources().getString(R.string.aliwx_net_null));
         } else {
             String key = keyword.replace(" ", "");
             String userId = key;
@@ -314,7 +314,7 @@ public  class FindContactFragment extends Fragment implements OnClickListener {
 			@Override
 			public void run() {
 				if (lmYWProfileInfo == null || TextUtils.isEmpty(lmYWProfileInfo.userId)) {
-					ToastHelper.showToastMsg(FindContactFragment.this.getActivity(), "服务开小差，建议您重试搜索");
+					IMNotificationUtils.getInstance().showToast(FindContactFragment.this.getActivity(), "服务开小差，建议您重试搜索");
 					return;
 				}
 				IParent superParent = getSuperParent();

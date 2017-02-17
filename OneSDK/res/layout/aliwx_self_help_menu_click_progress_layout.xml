@@ -6,7 +6,7 @@
     android:gravity="center"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
-    android:background="@drawable/aliwx_sysmsgbg">
+    android:background="@drawable/aliwx_progress_bg">
 
     <ProgressBar
         android:layout_width="18dp"

@@ -14,9 +14,9 @@
         android:singleLine="true"
         android:textSize="12sp"
         android:textColor="#8A8A8A"
-        android:layout_marginLeft="@dimen/aliwx_common_unit_margin"
         android:ellipsize="middle"
         android:layout_below="@id/show_time"
+        android:layout_marginLeft="@dimen/aliwx_chatting_left_name_margin_left"
         android:layout_toRightOf="@id/left_head"
         android:maxEms="6"
         android:textColorHighlight="@android:color/transparent" />

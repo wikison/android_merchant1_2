@@ -8,13 +8,12 @@
 
     <TextView
         android:id="@+id/back"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dip"
         android:layout_centerVertical="true"
         android:drawableLeft="@drawable/aliwx_common_back_btn_bg"
         android:gravity="left"
-        android:text="  "
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
@@ -26,7 +25,7 @@
         android:maxWidth="200dp"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="20sp"/>
 
     <ImageView
@@ -36,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/aliwx_column_up_unit_margin"
         android:scaleType="center"
-        android:src="@mipmap/ellipsisicon" />
+        android:src="@mipmap/demo_tribe_info_icon" />
 
     <RelativeLayout
         android:id="@+id/aliwx_at_content"

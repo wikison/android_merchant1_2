@@ -26,7 +26,7 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.YWContactManager;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
-import com.alibaba.mobileim.utility.ToastHelper;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendsActivity;
@@ -189,13 +189,13 @@ public class MainFriendFragment extends BaseFragment {
                                         public void onSuccess(Object... result) {
                                             IYWContact iywContact = (IYWContact) result[0];
                                             YWLog.i("MainFriendFragment", "加入黑名单成功, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                            ToastHelper.showToastMsg(getActivity(), "加入黑名单成功");//, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey()
+                                            IMNotificationUtils.getInstance().showToast(getActivity(), "加入黑名单成功");//, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey()
                                         }
 
                                         @Override
                                         public void onError(int code, String info) {
                                             YWLog.i("MainFriendFragment", "加入黑名单失败，code = " + code + ", info = " + info);
-                                            ToastHelper.showToastMsg(getActivity(), "加入黑名单失败");//，code = " + code + ", info = " + info
+                                            IMNotificationUtils.getInstance().showToast(getActivity(), "加入黑名单失败");//，code = " + code + ", info = " + info
                                         }
 
                                         @Override
@@ -209,13 +209,13 @@ public class MainFriendFragment extends BaseFragment {
                                         public void onSuccess(Object... result) {
                                             IYWContact iywContact = (IYWContact) result[0];
                                             YWLog.i("MainFriendFragment", "移除黑名单成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                            ToastHelper.showToastMsg(getActivity(), "移除黑名单成功");//,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey()
+                                            IMNotificationUtils.getInstance().showToast(getActivity(), "移除黑名单成功");//,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey()
                                         }
 
                                         @Override
                                         public void onError(int code, String info) {
                                             YWLog.i("MainFriendFragment", "移除黑名单失败，code = " + code + ", info = " + info);
-                                            ToastHelper.showToastMsg(getActivity(), "移除黑名单失败");//，code = " + code + ", info = " + info
+                                            IMNotificationUtils.getInstance().showToast(getActivity(), "移除黑名单失败");//，code = " + code + ", info = " + info
                                         }
 
                                         @Override

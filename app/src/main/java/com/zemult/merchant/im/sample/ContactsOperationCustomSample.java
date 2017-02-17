@@ -17,7 +17,7 @@ import com.alibaba.mobileim.contact.YWContactManager;
 import com.alibaba.mobileim.conversation.EServiceContact;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.ui.contact.util.RandomNameUtil;
-import com.alibaba.mobileim.utility.ToastHelper;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
 
 /**
  * 联系人界面业务的定制点(根据需要实现相应的接口来达到定制联系人界面的业务)，不设置则使用云旺默认的实现
@@ -107,13 +107,13 @@ public class ContactsOperationCustomSample extends IMContactsOperation {
                                 public void onSuccess(Object... result) {
                                     IYWContact iywContact = (IYWContact) result[0];
                                     YWLog.i(TAG, "加入黑名单成功, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                    ToastHelper.showToastMsg(mContext, "加入黑名单成功, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
+                                    IMNotificationUtils.getInstance().showToast(mContext, "加入黑名单成功, id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
                                 }
 
                                 @Override
                                 public void onError(int code, String info) {
                                     YWLog.i(TAG, "加入黑名单失败，code = " + code + ", info = " + info);
-                                    ToastHelper.showToastMsg(mContext, "加入黑名单失败，code = " + code + ", info = " + info);
+                                    IMNotificationUtils.getInstance().showToast(mContext, "加入黑名单失败，code = " + code + ", info = " + info);
                                 }
 
                                 @Override
@@ -127,13 +127,13 @@ public class ContactsOperationCustomSample extends IMContactsOperation {
                                 public void onSuccess(Object... result) {
                                     IYWContact iywContact = (IYWContact) result[0];
                                     YWLog.i(TAG, "移除黑名单成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                    ToastHelper.showToastMsg(mContext, "移除黑名单成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
+                                    IMNotificationUtils.getInstance().showToast(mContext, "移除黑名单成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
                                 }
 
                                 @Override
                                 public void onError(int code, String info) {
                                     YWLog.i(TAG, "移除黑名单失败，code = " + code + ", info = " + info);
-                                    ToastHelper.showToastMsg(mContext, "移除黑名单失败，code = " + code + ", info = " + info);
+                                    IMNotificationUtils.getInstance().showToast(mContext, "移除黑名单失败，code = " + code + ", info = " + info);
                                 }
 
                                 @Override
@@ -147,13 +147,13 @@ public class ContactsOperationCustomSample extends IMContactsOperation {
                                 public void onSuccess(Object... result) {
                                     IYWContact iywContact = (IYWContact) result[0];
                                     YWLog.i(TAG, "删除好友成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                    ToastHelper.showToastMsg(mContext, "删除好友成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
+                                    IMNotificationUtils.getInstance().showToast(mContext, "删除好友成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
                                 }
 
                                 @Override
                                 public void onError(int code, String info) {
                                     YWLog.i(TAG, "删除好友失败，code = " + code + ", info = " + info);
-                                    ToastHelper.showToastMsg(mContext, "删除好友失败，code = " + code + ", info = " + info);
+                                    IMNotificationUtils.getInstance().showToast(mContext, "删除好友失败，code = " + code + ", info = " + info);
                                 }
 
                                 @Override
@@ -168,13 +168,13 @@ public class ContactsOperationCustomSample extends IMContactsOperation {
                                 public void onSuccess(Object... result) {
                                     IYWContact iywContact = (IYWContact) contact;
                                     YWLog.i(TAG, "修改备注成功,  id = " + iywContact.getUserId() + ", appkey = " + iywContact.getAppKey());
-                                    ToastHelper.showToastMsg(mContext, "修改备注成功,  id = " + iywContact.getUserId() + " , appkey = " + iywContact.getAppKey()+" , 备注名 ＝ "+lRandomName);
+                                    IMNotificationUtils.getInstance().showToast(mContext, "修改备注成功,  id = " + iywContact.getUserId() + " , appkey = " + iywContact.getAppKey()+" , 备注名 ＝ "+lRandomName);
                                 }
 
                                 @Override
                                 public void onError(int code, String info) {
                                     YWLog.i(TAG, "修改备注失败，code = " + code + ", info = " + info);
-                                    ToastHelper.showToastMsg(mContext, "修改备注失败，code = " + code + ", info = " + info);
+                                    IMNotificationUtils.getInstance().showToast(mContext, "修改备注失败，code = " + code + ", info = " + info);
                                 }
 
                                 @Override

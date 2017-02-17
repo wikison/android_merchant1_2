@@ -3,10 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:measureWithLargestChild="true"
-    android:visibility="gone"
     android:orientation="vertical" >
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/Lin"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -16,7 +14,6 @@
         android:measureWithLargestChild="false" >
 
         <View
-            android:visibility="gone"
             android:id="@+id/floatball"
             android:layout_width="35dp"
             android:layout_height="35dp"

@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="#FFA726"
+        android:background="#00b4ff"
         android:text="@string/clear_log"
         android:textColor="#ffffff"
         android:visibility="gone"/>
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/aliwx_common_two_unit_margin"
         android:padding="8dp"
-        android:background="#FFA726"
+        android:background="#00b4ff"
         android:text="@string/upload_log"
         android:textColor="#ffffff"/>
 

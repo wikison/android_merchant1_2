@@ -1,7 +1,5 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="font_36px">18sp</dimen>
     <dimen name="font_34px">17sp</dimen>
@@ -316,6 +314,8 @@
     <dimen name="ls_main_act_subitem_height_without_recommend">1dp</dimen>
     <dimen name="ls_listview_head_height">35dip</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="ls_sliding_width">250dp</dimen>
     <dimen name="ls_self_info_pop_up_height_three_choice">270dp</dimen>
@@ -330,8 +330,7 @@
     <dimen name="ls_detail_tag_size">12dp</dimen>
     <dimen name="ls_chat_group_width_minus">85dp</dimen>
     <dimen name="ls_BANNER_HEIGHT_IN_DP">150dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="border_width_1px">1px</dimen>
-    <dimen name="border_width_2px">2px</dimen>
+    <dimen name="demo_at_msg_list_empty_view_image_top_margin">200dp</dimen>
+    <dimen name="demo_at_msg_list_empty_view_image_text_margin">280dp</dimen>
 </resources>

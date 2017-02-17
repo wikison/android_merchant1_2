@@ -131,7 +131,7 @@ public class ChattingUICustomSample2 extends IMChattingPageUI {
     public int getChattingBackgroundResId() {
         //聊天窗口背景，默认不显示
         return 0;
-        // return R.drawable.demo_chatting_bg;
+//         return R.color.white;
     }
 
     /**
