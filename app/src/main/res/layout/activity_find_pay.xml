@@ -119,6 +119,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
+            android:text="￥0.00"
             android:textColor="@color/bg_head"/>
     </LinearLayout>
 
