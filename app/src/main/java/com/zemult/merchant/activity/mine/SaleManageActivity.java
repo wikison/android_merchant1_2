@@ -203,10 +203,10 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
-                                .withText(merchantItem.name)
+                                .withText("我是" + merchantItem.name + "的服务管家【" + SlashHelper.userManager().getUserinfo().getName() + "】, 我为您提供更快捷的结账服务...")
                                 .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
-                                .withTitle("分享买单")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
 
@@ -214,20 +214,20 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText(merchantItem.name)
+                                .withText("我是" + merchantItem.name + "的服务管家【" + SlashHelper.userManager().getUserinfo().getName() + "】, 我为您提供更快捷的结账服务...")
                                 .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
-                                .withTitle("分享买单")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
                     case SharePopwindow.WECHAT_FRIEND:
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText(merchantItem.name)
+                                .withText("我是" + merchantItem.name + "的服务管家【" + SlashHelper.userManager().getUserinfo().getName() + "】, 我为您提供更快捷的结账服务...")
                                 .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
-                                .withTitle("分享买单")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
 
@@ -235,10 +235,10 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
-                                .withText(merchantItem.name)
+                                .withText("我是" + merchantItem.name + "的服务管家【" + SlashHelper.userManager().getUserinfo().getName() + "】, 我为您提供更快捷的结账服务...")
                                 .withTargetUrl(SlashHelper.getSettingString(SlashHelper.APP.Key.URL_SHARE_COMMISSION, Urls.URL + "wappay/wappay_index.do?merchantId=" + merchantItem.merchantId + "&saleUserId=" + SlashHelper.userManager().getUserId()))
                                 .withMedia(shareImage)
-                                .withTitle("分享买单")
+                                .withTitle("约服-找个喜欢的人来服务")
                                 .share();
                         break;
                 }
