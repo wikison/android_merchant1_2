@@ -88,6 +88,7 @@ public class Constants {
     public static final int PHOTO_COMPASS_SUCCESS = 4;// 图片压缩
     public static final int CHOOSE_SINGLE_PHOTO_SUCCESS = 5;// 单张图片选择成功
     public static final int EDIT_PHOTOS = 6;// 相册选择
+    public static final int PHOTO_CROP = 7;// 图片裁剪
     // 添加图片时默认图片最大张数
     public final static int DEFAULT_IMAGE_MAX_SIZE = 9;
     // 图片详情

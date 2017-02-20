@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.ImageHelper;
 import com.zemult.merchant.util.PermissionTest;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -33,6 +36,12 @@ import com.zemult.merchant.util.oss.OssHelper;
 import com.zemult.merchant.util.oss.OssService;
 import com.zemult.merchant.view.common.MMAlert;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -164,8 +173,25 @@ public class HeadManageActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // 拍照
-            if (resultCode == RESULT_OK && requestCode == Constants.TACKPHOTO)
+            if (resultCode == RESULT_OK && requestCode == Constants.TACKPHOTO){
                 AppUtils.tackPickResult(tackPhotoName, chooseImgHandler);
+            }
+            // 裁剪
+            else if(resultCode == RESULT_OK && requestCode == Constants.PHOTO_CROP){
+                Bitmap bitmap = data.getParcelableExtra("data");
+                // 保存图片
+                String filename = new SimpleDateFormat("yyMMddHHmmss")
+                        .format(new Date()) + ".jpg";
+                System.out.println("保存图片" + filename);
+                String path = Constants.SAVE_IMAGE_PATH_IMGS + filename;
+                ImageHelper.saveBitmap(Constants.SAVE_IMAGE_PATH_IMGS, filename,
+                        bitmap, true);
+                path = AppUtils.removeFileHeader(ImageHelper.saveRotateCompressBitmap(new File(path)));
+                if (bitmap != null && bitmap.isRecycled()) {
+                    bitmap.recycle();
+                }
+                uploadImg(path);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,12 +260,12 @@ public class HeadManageActivity extends BaseActivity {
                     case Constants.CHOOSE_PHOTOS:
                         // 取消广播监听
                         HeadManageActivity.this.unregisterReceiver(choosePicRec);
-                        uploadImg(((List<String>) msg.obj).get(0));
+                        crop(((List<String>) msg.obj).get(0));
                         break;
                     case Constants.PHOTO_COMPASS_SUCCESS:
                         // 拍照并 压缩照片成功
                         try {
-                            uploadImg(msg.obj.toString());
+                            crop(msg.obj.toString());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -263,6 +289,21 @@ public class HeadManageActivity extends BaseActivity {
             Log.d(getClass().getName(), ossImgname);
         }
         dismissPd();
+    }
+
+    private void crop(String path){
+        Intent intent = new Intent();
+
+        intent.setAction("com.android.camera.action.CROP");
+        intent.setDataAndType(Uri.fromFile(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);// 裁剪框比例
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 350);// 输出图片大小
+        intent.putExtra("outputY", 350);
+        intent.putExtra("return-data", true);
+
+        HeadManageActivity.this.startActivityForResult(intent, Constants.PHOTO_CROP);
     }
 
 }
