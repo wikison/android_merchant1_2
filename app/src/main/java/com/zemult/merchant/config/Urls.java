@@ -7,12 +7,12 @@ public class Urls {
     //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
 
     public static String MAIN_URL = "http://yovoll.54xiegang.com/";
-//    public static String URL = "http://test1.54xiegang.com/dzyx_test/";//测试
-    public static String URL = "http://yovoll.54xiegang.com/dzyx/";//正式
+    public static String URL = "http://test1.54xiegang.com/dzyx_test/";//测试
+//    public static String URL = "http://yovoll.54xiegang.com/dzyx/";//正式
 
 
     // 应用APPKEY，这个APPKEY是申请应用时获取的
-    public static  String APP_KEY = "23630707";// 测试  23521799  正式 23630707
+    public static  String APP_KEY = "23521799";// 测试  23521799  正式 23630707
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -563,6 +563,7 @@ public class Urls {
     public static String COMMON_FIND_BANKNAME = "common_findBankName";
     //绑定银行卡
     public static String USER_BAND_CARD_DO = "user_bandcard_do";
-
+    //获取银行卡绑定信息
+    public static String USER_BANDCARDINFO_1_2_1 = "user_bandcard_info_1_2_1";
 
 }

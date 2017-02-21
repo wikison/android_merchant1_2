@@ -169,6 +169,14 @@ public final class MMAlert {
 
 		return dlg;
 	}
+
+
+
+
+
+
+
+
 	/**
 	 * 清除缓存
 	 */
@@ -276,6 +284,82 @@ public final class MMAlert {
 
 		return dlg;
 	}
+
+	/**
+	 * 全部评论--回复、举报
+	 */
+	public interface ChooseCallback {
+		void onfirstChoose();
+		void onsecondChoose();
+		void onthirdChoose();
+	}
+	public static Dialog showChooseStateDialog( Context context,
+											final ChooseCallback callback) {
+		final Dialog dlg = new Dialog(context, R.style.MMTheme_DataSheet);
+		dlg.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+						| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layout = (LinearLayout) inflater.inflate(
+				R.layout.alert_dialog_statechoose_layout, null);
+		final int cFullFillWidth = 10000;
+		layout.setMinimumWidth(cFullFillWidth);
+		TextView tvfirst = (TextView) layout.findViewById(R.id.tv_kongxian);
+		TextView tvsecond = (TextView) layout.findViewById(R.id.tv_xiuxi);
+		TextView tvthird = (TextView) layout.findViewById(R.id.tv_manglu);
+		TextView tvCancel = (TextView) layout.findViewById(R.id.tv_cancle);
+		tvfirst.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dlg.dismiss();
+				callback.onfirstChoose();
+
+			}
+		});
+		tvsecond.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dlg.dismiss();
+				callback.onsecondChoose();
+			}
+		});
+		tvthird.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dlg.dismiss();
+				callback.onthirdChoose();
+			}
+		});
+
+		tvCancel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				dlg.dismiss();
+			}
+		});
+		// set a large value put it in bottom
+		Window w = dlg.getWindow();
+		WindowManager.LayoutParams lp = w.getAttributes();
+		lp.x = 0;
+		final int cMakeBottom = -1000;
+		lp.y = cMakeBottom;
+		lp.gravity = Gravity.BOTTOM;
+		dlg.onWindowAttributesChanged(lp);
+		dlg.setCanceledOnTouchOutside(true);
+		dlg.setContentView(layout);
+		dlg.show();
+		return dlg;
+	}
+
+
+
+
+
 
 	/**
 	 * 角色设置--删除角色

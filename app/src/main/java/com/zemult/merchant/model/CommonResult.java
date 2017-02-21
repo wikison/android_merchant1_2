@@ -97,5 +97,5 @@ public class CommonResult {
     @Expose
     public String bankName;//银行卡名称(status=1时有值)
     @Expose
-    public String bankNumber;//银行卡号
+    public String bankNumber;//银行卡号码
 }

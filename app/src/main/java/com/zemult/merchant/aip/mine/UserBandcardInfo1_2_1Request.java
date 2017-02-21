@@ -1,10 +1,9 @@
-package com.zemult.merchant.aip.common;
+package com.zemult.merchant.aip.mine;
 import android.util.Pair;
 
 import com.google.gson.reflect.TypeToken;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
 import com.zemult.merchant.util.Convert;
 
 import java.lang.reflect.Type;
@@ -12,23 +11,25 @@ import java.lang.reflect.Type;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
-//根据银行卡号获取银行卡名称
-public class CommonFindBankNameRequest extends PostStringRequest<Type>  {
+//获取银行卡绑定信息
+public class UserBandcardInfo1_2_1Request extends PostStringRequest<Type>  {
 
     public static class Input {
-        public String number;       //卡号
+        public int	userId				;	//	用户id
+
+
         public String ejson;
 
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("number", number)));
+                    new Pair<String, String>("userId", userId+"")));
         }
 
     }
 
-    public CommonFindBankNameRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.COMMON_FIND_BANKNAME,input.ejson , new TypeToken<CommonResult>() {
+    public UserBandcardInfo1_2_1Request(Input input, ResponseListener listener) {
+        super(Urls.BASIC_URL+Urls.USER_BANDCARDINFO_1_2_1,input.ejson , new TypeToken<CommonResult>() {
         }.getType() , listener);
 
     }
