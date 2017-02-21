@@ -1,9 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f5f5f5">
+    android:background="@color/bg_f2">
 
     <include layout="@layout/layout_head" />
     <LinearLayout
@@ -11,34 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include layout="@layout/inclue_binding_card_head_2_layout" />
-
-            <include layout="@layout/inclue_binding_card_head_3_layout" />
-
-            <include layout="@layout/inclue_binding_card_head_1_layout" />
-        </FrameLayout>
+        <include layout="@layout/inclue_binding_card_head_layout" />
 
         <TextView
-            android:id="@+id/tv_tixing"
-            android:padding="10dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:layout_marginTop="14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#ededed"
-            android:text="请用本人的银行卡，绑卡后会实名认证，认证后无法修改身份信息!"
-            android:textColor="#ffa726"
+            android:text="请用本人的银行卡"
+            android:textColor="@color/bg_head"
+            android:textSize="@dimen/font_22px" />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="绑卡后会实名认证，认证后无法修改身份信息!"
+            android:textColor="@color/bg_head"
             android:textSize="@dimen/font_22px" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="19dp"/>
+            android:layout_height="20dp"/>
     </LinearLayout>
 
     <FrameLayout

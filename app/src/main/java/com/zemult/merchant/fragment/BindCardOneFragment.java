@@ -14,13 +14,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
+import com.zemult.merchant.aip.common.CommonFindBankNameRequest;
+import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
+import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import zema.volley.network.ResponseListener;
 
 /**
  * 绑定银行卡1 输入卡号
@@ -78,9 +85,9 @@ public class BindCardOneFragment extends BaseFragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (s.toString().length() > 10) {
+            if (s.toString().length() > 15) {
                 btNext.setEnabled(true);
-                btNext.setBackgroundResource(R.drawable.commit);
+                btNext.setBackgroundResource(R.drawable.common_selector_btn);
             } else {
                 btNext.setEnabled(false);
                 btNext.setBackgroundResource(R.drawable.next_bg_btn_select);
@@ -111,10 +118,38 @@ public class BindCardOneFragment extends BaseFragment {
             return;
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.XIN_YONG_KA);
-        bundle.putString(BindCardTwoFragment.BANK_NAME, "工商银行");
-        fragmentCallBack.showTwo(bundle);
 
+    }
+
+    private CommonFindBankNameRequest request;
+    private void common_findBankName() {
+        showUncanclePd();
+        if (request != null) {
+            request.cancel();
+        }
+        CommonFindBankNameRequest.Input input = new CommonFindBankNameRequest.Input();
+        input.number = etBankcard.getText().toString();
+        input.convertJosn();
+
+        request = new CommonFindBankNameRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if(((APIM_CommonAppVersion) response).status == 1){
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.JIE_JI_KA);
+                    bundle.putString(BindCardTwoFragment.BANK_NAME, ((APIM_CommonAppVersion) response).bankName);
+                    fragmentCallBack.showTwo(bundle);
+                }else
+                    ToastUtil.showMessage(((APIM_CommonAppVersion) response).info);
+
+                dismissPd();
+            }
+        });
+        sendJsonRequest(request);
     }
 }

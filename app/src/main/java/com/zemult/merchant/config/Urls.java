@@ -557,7 +557,8 @@ public class Urls {
     public static String COMMON_REWARD = "common_reward";
     // 根据金额算出用户提现手续费
     public static String COMMON_WITHCASH_COUNT = "common_withcash_count";
-
+    //根据银行卡号获取银行卡名称
+    public static String COMMON_FIND_BANKNAME = "common_findBankName";
 
 
 }

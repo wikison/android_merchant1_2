@@ -94,5 +94,6 @@ public class CommonResult {
 
     @Expose
     public double cashMoney;//当天已经提现的金额
-
+    @Expose
+    public String bankName;//银行卡名称(status=1时有值)
 }

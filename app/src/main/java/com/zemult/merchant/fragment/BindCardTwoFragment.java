@@ -164,6 +164,6 @@ public class BindCardTwoFragment extends BaseFragment {
             etPhone.setError("请输入正确的手机号");
             return;
         }
-        fragmentCallBack.showThree();
+        fragmentCallBack.showSuccess();
     }
 }

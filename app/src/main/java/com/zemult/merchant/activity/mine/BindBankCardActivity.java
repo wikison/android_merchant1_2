@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.zemult.merchant.fragment.BindCardThreeFragment;
 import com.zemult.merchant.fragment.BindCardTwoFragment;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -31,28 +33,26 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.lh_btn_right)
-    Button lhBtnRight;
-    @Bind(R.id.ll_head2)
-    LinearLayout llHead2;
-    @Bind(R.id.ll_head3)
-    LinearLayout llHead3;
-    @Bind(R.id.ll_head1)
-    LinearLayout llHead1;
+    @Bind(R.id.iv1)
+    ImageView iv1;
+    @Bind(R.id.iv2)
+    ImageView iv2;
+    @Bind(R.id.iv3)
+    ImageView iv3;
+    @Bind(R.id.ll_head)
+    LinearLayout llHead;
     @Bind(R.id.tv_tixing)
     TextView tvTixing;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
     @Bind(R.id.content)
     FrameLayout content;
-    @Bind(R.id.lh_btn_rightiamge)
-    Button lhBtnRightiamge;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
     private BindCardOneFragment oneFragment;
     private BindCardTwoFragment twoFragment;
-    private BindCardThreeFragment threeFragment;
+//    private BindCardThreeFragment threeFragment;
     private BindCardSuccessFragment successFragment;
 
     @Override
@@ -69,15 +69,11 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
         transaction = fragmentManager.beginTransaction();
         oneFragment = new BindCardOneFragment();
         twoFragment = new BindCardTwoFragment();
-        threeFragment = new BindCardThreeFragment();
+//        threeFragment = new BindCardThreeFragment();
         successFragment = new BindCardSuccessFragment();
 
         transaction.replace(R.id.content, oneFragment);
         transaction.commit();
-
-        llHead1.setVisibility(View.VISIBLE);
-        llHead2.setVisibility(View.GONE);
-        llHead3.setVisibility(View.GONE);
     }
 
 
@@ -89,20 +85,16 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content, twoFragment);
         transaction.commit();
-        llHead1.setVisibility(View.GONE);
-        llHead2.setVisibility(View.VISIBLE);
-        llHead3.setVisibility(View.GONE);
+
+        iv2.setImageResource(R.mipmap.two_icon_yes);
     }
 
-    @Override
-    public void showThree() {
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.content, threeFragment);
-        transaction.commit();
-        llHead1.setVisibility(View.GONE);
-        llHead2.setVisibility(View.GONE);
-        llHead3.setVisibility(View.VISIBLE);
-    }
+//    @Override
+//    public void showThree() {
+//        transaction = fragmentManager.beginTransaction();
+//        transaction.replace(R.id.content, threeFragment);
+//        transaction.commit();
+//    }
 
     @Override
     public void showSuccess() {
@@ -123,11 +115,16 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
-                onBackPressed();
-                break;
             case R.id.ll_back:
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

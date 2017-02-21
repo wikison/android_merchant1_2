@@ -180,14 +180,14 @@
         <item name="android:layout_marginLeft">60dp</item>
         <item name="android:textSize">@dimen/font_30px</item>
         <item name="android:background">@null</item>
-        <item name="android:textColorHint">#bfbfbf</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColorHint">@color/font_black_999</item>
+        <item name="android:textColor">@color/font_black_28</item>
     </style>
 
     <style name="binding_text">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">@color/font_black_28</item>
         <item name="android:textSize">@dimen/font_30px</item>
         <item name="android:layout_marginLeft">12dp</item>
     </style>

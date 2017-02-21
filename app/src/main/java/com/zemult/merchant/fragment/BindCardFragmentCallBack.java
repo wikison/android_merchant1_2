@@ -8,7 +8,7 @@ import android.os.Bundle;
 public interface BindCardFragmentCallBack {
     void showTwo(Bundle bundle);
 
-    void showThree();
+//    void showThree();
 
     void showSuccess();
 

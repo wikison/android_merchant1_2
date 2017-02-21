@@ -3,34 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:weightSum="3"
-    android:id="@+id/ll_head1">
+    android:id="@+id/ll_head">
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv1"
+        <ImageView
+            android:id="@+id/iv1"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/xml_circle_orange_bg"
-            android:text="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_28px"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:src="@mipmap/one_icon_yes"/>
 
         <View
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv1"
+            android:layout_toRightOf="@+id/iv1"
             android:layout_width="match_parent"
             android:layout_height="4px"
             android:background="#969696"/>
         <TextView
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv1"
+            android:layout_below="@+id/iv1"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +36,6 @@
             android:textSize="@dimen/font_22px"/>
 
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -53,31 +49,29 @@
             android:layout_width="match_parent"
             android:layout_height="4px"
             android:background="#969696"/>
-        <TextView
-            android:id="@+id/tv2"
+        <ImageView
+            android:id="@+id/iv2"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/xml_circle_grey_bg"
-            android:text="2"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_28px"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/two_icon_no"/>
+
 
         <View
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv2"
+            android:layout_toRightOf="@+id/iv2"
             android:layout_width="match_parent"
             android:layout_height="4px"
             android:background="#969696"/>
         <TextView
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv2"
+            android:layout_below="@+id/iv2"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="银行验证信息"
+            android:text="信息验证"
             android:textColor="#969696"
             android:textSize="@dimen/font_22px"/>
 
@@ -96,25 +90,22 @@
             android:layout_width="match_parent"
             android:layout_height="4px"
             android:background="#969696"/>
-        <TextView
-            android:id="@+id/tv3"
+        <ImageView
+            android:id="@+id/iv3"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/xml_circle_grey_bg"
-            android:text="3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_28px"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/three_icon_no"/>
 
         <TextView
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tv3"
+            android:layout_below="@+id/iv3"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="验证码"
+            android:text="绑定成功"
             android:textColor="#969696"
             android:textSize="@dimen/font_22px"/>
 
