@@ -19,6 +19,7 @@
            android:src="@mipmap/one_icon_yes"/>
 
         <View
+            android:id="@+id/divider1"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv1"
             android:layout_width="match_parent"
@@ -44,6 +45,7 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/divider2"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv2"
             android:layout_width="match_parent"

@@ -46,6 +46,10 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
     FrameLayout content;
     @Bind(R.id.tv2)
     TextView tv2;
+    @Bind(R.id.divider1)
+    View divider1;
+    @Bind(R.id.divider2)
+    View divider2;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
@@ -87,6 +91,8 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
 
         iv2.setImageResource(R.mipmap.two_icon_yes);
         tv2.setTextColor(getResources().getColor(R.color.bg_head));
+        divider1.setBackgroundColor(getResources().getColor(R.color.bg_head));
+        divider2.setBackgroundColor(getResources().getColor(R.color.bg_head));
     }
 
 //    @Override

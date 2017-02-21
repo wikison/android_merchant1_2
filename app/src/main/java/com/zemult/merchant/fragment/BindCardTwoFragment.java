@@ -205,12 +205,17 @@ public class BindCardTwoFragment extends BaseFragment {
 
     @OnClick(R.id.bt_next)
     public void onClick() {
-        // TODO: 2017/2/21 身份证
+        if (!StringMatchUtils.isIdCard(etIdentification.getText().toString())) {
+            tvError.setText("请输入正确的身份证号码");
+            etIdentification.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+            return;
+        }
         if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
             tvError.setText("请输入正确的手机号");
             etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
             return;
         }
+
         user_bandcard_do();
     }
 

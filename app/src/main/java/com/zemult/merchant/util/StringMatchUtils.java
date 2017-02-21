@@ -31,6 +31,18 @@ public class StringMatchUtils {
 
 	}
 
+	// 判别用户身份证号的正则表达式
+	public static boolean isIdCard(String num){
+		//定义判别用户身份证号的正则表达式（要么是15位，要么是18位，最后一位可以为字母）
+		Pattern p = Pattern.compile("(\\d{14}[0-9a-zA-Z])|(\\d{17}[0-9a-zA-Z])");
+
+		Matcher m = p.matcher(num);
+
+		System.out.println(m.matches() + "---");
+
+		return m.matches();
+	}
+
 	public static boolean isAllNum(String pwd){
 
 		Pattern p = Pattern.compile("[0-9]*");
