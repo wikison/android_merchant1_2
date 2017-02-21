@@ -287,6 +287,7 @@ public class BindCardTwoFragment extends BaseFragment {
 
     private UserBandcardDoRequest bandcardDoRequest;
     private void user_bandcard_do() {
+        showUncanclePd();
         try {
             if (bandcardDoRequest != null) {
                 bandcardDoRequest.cancel();
@@ -305,6 +306,7 @@ public class BindCardTwoFragment extends BaseFragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
+                    dismissPd();
                 }
 
                 @Override
@@ -315,8 +317,12 @@ public class BindCardTwoFragment extends BaseFragment {
                         bundle.putString(BindCardSuccessFragment.BANK_NAME,bundle.getString(BANK_NAME));
                         bundle.putString(BindCardSuccessFragment.CARD_NUM, bundle.getString(CARD_NUM));
                         fragmentCallBack.showSuccess(bundle);
-                    }else
+                    }else{
                         tvError.setText(((CommonResult) response).info);
+                        if(((CommonResult) response).info.contains("验证码错误"))
+                            etCode.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+                    }
+                    dismissPd();
                 }
             });
             sendJsonRequest(bandcardDoRequest);
