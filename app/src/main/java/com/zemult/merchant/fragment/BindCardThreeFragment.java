@@ -123,7 +123,7 @@ public class BindCardThreeFragment extends BaseFragment {
                     etPhone.setError("请输入正确的手机号");
                     return;
                 }
-                fragmentCallBack.showSuccess();
+//                fragmentCallBack.showSuccess();
                 break;
         }
     }

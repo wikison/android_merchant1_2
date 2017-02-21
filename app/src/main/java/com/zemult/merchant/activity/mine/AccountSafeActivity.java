@@ -74,7 +74,7 @@ public class AccountSafeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_bangbankcard:
-                Intent intentcar=new Intent(AccountSafeActivity.this,BangDingAccountActivity.class);
+                Intent intentcar=new Intent(AccountSafeActivity.this,BindBankCardActivity.class);
                 startActivity(intentcar);
                 break;
             case R.id.rl_changephone:

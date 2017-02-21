@@ -21,12 +21,6 @@ public class BindCardSuccessFragment extends BaseFragment {
     public static final String BANK_NAME = "cardName";
     public static final String CARD_NUM = "cardNum";
 
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.tv_id)
-    TextView tvId;
-    @Bind(R.id.bt_ok)
-    Button btOk;
     private Context mContext;
     private Activity mActivity;
     BindCardFragmentCallBack fragmentCallBack = null;
@@ -71,8 +65,4 @@ public class BindCardSuccessFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick(R.id.bt_ok)
-    public void onClick() {
-        fragmentCallBack.finishAll();
-    }
 }

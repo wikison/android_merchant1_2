@@ -15,7 +15,6 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.fragment.BindCardFragmentCallBack;
 import com.zemult.merchant.fragment.BindCardOneFragment;
 import com.zemult.merchant.fragment.BindCardSuccessFragment;
-import com.zemult.merchant.fragment.BindCardThreeFragment;
 import com.zemult.merchant.fragment.BindCardTwoFragment;
 
 import butterknife.Bind;
@@ -45,12 +44,14 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
     LinearLayout llRoot;
     @Bind(R.id.content)
     FrameLayout content;
+    @Bind(R.id.tv2)
+    TextView tv2;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
 
     private BindCardOneFragment oneFragment;
     private BindCardTwoFragment twoFragment;
-//    private BindCardThreeFragment threeFragment;
+    //    private BindCardThreeFragment threeFragment;
     private BindCardSuccessFragment successFragment;
 
     @Override
@@ -85,6 +86,7 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
         transaction.commit();
 
         iv2.setImageResource(R.mipmap.two_icon_yes);
+        tv2.setTextColor(getResources().getColor(R.color.bg_head));
     }
 
 //    @Override

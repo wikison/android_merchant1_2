@@ -148,7 +148,7 @@ public class BindCardTwoFragment extends BaseFragment {
                             && etPhone.getText().toString().length() > 0
                             && etCode.getText().toString().length() > 0) {
                         btNext.setEnabled(true);
-                        btNext.setBackgroundResource(R.drawable.commit);
+                        btNext.setBackgroundResource(R.drawable.common_selector_btn);
                     }
                 } else if (cardType == XIN_YONG_KA) {
                     if (etOwnername.getText().length() > 0
@@ -165,6 +165,9 @@ public class BindCardTwoFragment extends BaseFragment {
                 btNext.setEnabled(false);
                 btNext.setBackgroundResource(R.drawable.next_bg_btn_select);
             }
+
+            etPhone.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
+            etIdentification.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
         }
 
         @Override
@@ -193,15 +196,21 @@ public class BindCardTwoFragment extends BaseFragment {
         } else {
             if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
                 tvError.setText("请输入正确的手机号");
+                etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
                 return;
             }
-
             getCode();
         }
     }
 
     @OnClick(R.id.bt_next)
     public void onClick() {
+        // TODO: 2017/2/21 身份证
+        if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
+            tvError.setText("请输入正确的手机号");
+            etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+            return;
+        }
         user_bandcard_do();
     }
 

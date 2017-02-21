@@ -219,7 +219,7 @@
                 style="@style/common_btn_235"
                 android:id="@+id/bt_next"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="74dp"
                 android:text="下一步"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_30px" />
