@@ -20,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.mobileim.IYWPushListener;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.IYWConversationService;
 import com.alibaba.mobileim.conversation.IYWConversationUnreadChangeListener;
 import com.alibaba.mobileim.conversation.IYWMessageLifeCycleListener;
@@ -30,6 +32,7 @@ import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alibaba.mobileim.conversation.YWMessageType;
+import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.login.IYWConnectionListener;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.alibaba.mobileim.login.YWLoginState;
@@ -600,6 +603,26 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             }
         };
         mConversationService.addTotalUnreadChangeListener(mConversationUnreadChangeListener);
+
+            //新消息通知的回调
+        IYWPushListener msgPushListener = new IYWPushListener() {
+            @Override
+            public void onPushMessage(IYWContact iywContact, YWMessage ywMessage) {
+                ywMessage.getContent();
+
+            }
+
+            @Override
+            public void onPushMessage(YWTribe ywTribe, YWMessage ywMessage) {
+
+            }
+        };
+            IYWConversationService conversationService = mIMKit.getConversationService();
+//如果之前add过，请清除
+            conversationService.removePushListener(msgPushListener);
+//增加新消息到达的通知
+            conversationService.addPushListener(msgPushListener);
+
     }
 
     UserInfoOwnerRequest userInfoOwnerRequest;
