@@ -6,11 +6,12 @@
 
     <include layout="@layout/layout_head" />
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <include layout="@layout/inclue_binding_card_head_layout" />
+        <include layout="@layout/inclue_binding_card_head_layout"/>
 
         <TextView
             android:gravity="center"

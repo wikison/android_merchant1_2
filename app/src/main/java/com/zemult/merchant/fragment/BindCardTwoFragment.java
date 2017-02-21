@@ -2,6 +2,7 @@ package com.zemult.merchant.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,10 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.PasswordActivity;
+import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
+import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.mine.UserBandcardDoRequest;
 import com.zemult.merchant.app.BaseFragment;
@@ -215,8 +219,7 @@ public class BindCardTwoFragment extends BaseFragment {
             etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
             return;
         }
-
-        user_bandcard_do();
+        checkCode();
     }
 
     private CommonGetCodeRequest request_common_getcode;
@@ -252,6 +255,45 @@ public class BindCardTwoFragment extends BaseFragment {
         } catch (Exception e) {
             Log.e("COMMON_GETCODE", e.toString());
         }
+    }
+
+    private CommonCheckcodeRequest request_common_checkcode;
+    private void checkCode() {//发送验证码校验
+        showUncanclePd();
+        try {
+            if (request_common_checkcode != null) {
+                request_common_checkcode.cancel();
+            }
+            final CommonCheckcodeRequest.Input input = new CommonCheckcodeRequest.Input();
+            input.phone = etPhone.getText().toString();
+            input.code = etCode.getText().toString();
+            input.convertJosn();
+
+            request_common_checkcode = new CommonCheckcodeRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                    dismissPd();
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        user_bandcard_do();
+                    } else {
+                        tvError.setText(((CommonResult) response).info);
+                        etCode.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+                    }
+
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(request_common_checkcode);
+        } catch (Exception e) {
+            Log.e("COMMON_CHECKCODE", e.toString());
+        }
+
     }
 
     // 倒计时60s
@@ -318,14 +360,15 @@ public class BindCardTwoFragment extends BaseFragment {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(BindCardSuccessFragment.BANK_NAME,bundle.getString(BANK_NAME));
-                        bundle.putString(BindCardSuccessFragment.CARD_NUM, bundle.getString(CARD_NUM));
-                        fragmentCallBack.showSuccess(bundle);
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(BindCardSuccessFragment.BANK_NAME, bundle.getString(BANK_NAME));
+                        bundle1.putString(BindCardSuccessFragment.CARD_NUM, bundle.getString(CARD_NUM));
+                        fragmentCallBack.showSuccess(bundle1);
                     }else{
                         tvError.setText(((CommonResult) response).info);
-                        if(((CommonResult) response).info.contains("验证码错误"))
-                            etCode.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+                        etIdentification.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+                        etOwnername.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+                        etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
                     }
                     dismissPd();
                 }

@@ -23,6 +23,7 @@ import com.zemult.merchant.aip.common.CommonFindBankNameRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
 import com.zemult.merchant.util.IntentUtil;
 
@@ -148,14 +149,14 @@ public class BindCardOneFragment extends BaseFragment {
 
             @Override
             public void onResponse(final Object response) {
-                if (((APIM_CommonAppVersion) response).status == 1) {
+                if (((CommonResult) response).status == 1) {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.JIE_JI_KA);
-                    bundle.putString(BindCardTwoFragment.BANK_NAME, ((APIM_CommonAppVersion) response).bankName);
+                    bundle.putString(BindCardTwoFragment.BANK_NAME, ((CommonResult) response).bankName);
                     bundle.putString(BindCardTwoFragment.CARD_NUM, etBankcard.getText().toString());
                     fragmentCallBack.showTwo(bundle);
                 } else
-                    tvError.setText(((APIM_CommonAppVersion) response).info);
+                    tvError.setText(((CommonResult) response).info);
 
                 dismissPd();
             }

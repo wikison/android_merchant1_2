@@ -31,4 +31,55 @@
             android:textSize="@dimen/font_22px" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@mipmap/bank_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_margin="16dp"
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/b_icon"/>
+
+
+        <TextView
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/iv"
+            android:id="@+id/tv_name"
+            android:gravity="top"
+            android:text="xxxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_30px" />
+        <TextView
+           android:layout_below="@+id/tv_name"
+            android:layout_toRightOf="@+id/iv"
+            android:gravity="bottom"
+            android:layout_marginTop="4dp"
+            android:text="银行卡"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_26px" />
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:padding="16dp"
+            android:text="**** **** **** 0059"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_34px"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
 </RelativeLayout>

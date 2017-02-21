@@ -10,16 +10,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.common.CommonFindBankNameRequest;
+import com.zemult.merchant.aip.mine.UserBandcardInfo1_2_1Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.fragment.BindCardFragmentCallBack;
 import com.zemult.merchant.fragment.BindCardOneFragment;
 import com.zemult.merchant.fragment.BindCardSuccessFragment;
 import com.zemult.merchant.fragment.BindCardTwoFragment;
+import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
+import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import zema.volley.network.ResponseListener;
 
 /**
  * 绑定银行卡主页面
@@ -75,8 +83,7 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
 //        threeFragment = new BindCardThreeFragment();
         successFragment = new BindCardSuccessFragment();
 
-        transaction.replace(R.id.content, oneFragment);
-        transaction.commit();
+        user_bandcard_info_1_2_1();
     }
 
 
@@ -104,6 +111,7 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
 
     @Override
     public void showSuccess(Bundle bundle) {
+        successFragment.setArguments(bundle);
         llRoot.setVisibility(View.GONE);
 
         transaction = fragmentManager.beginTransaction();
@@ -132,5 +140,44 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    private UserBandcardInfo1_2_1Request request;
+
+    private void user_bandcard_info_1_2_1() {
+        showUncanclePd();
+        if (request != null) {
+            request.cancel();
+        }
+        UserBandcardInfo1_2_1Request.Input input = new UserBandcardInfo1_2_1Request.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.convertJosn();
+
+        request = new UserBandcardInfo1_2_1Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    if(((CommonResult) response).isBand == 1){
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putString(BindCardSuccessFragment.BANK_NAME, ((CommonResult) response).bankName);
+                        bundle1.putString(BindCardSuccessFragment.CARD_NUM, ((CommonResult) response).bankNumber);
+                        showSuccess(bundle1);
+                    }else {
+                        llRoot.setVisibility(View.VISIBLE);
+                        transaction.replace(R.id.content, oneFragment);
+                        transaction.commit();
+                    }
+                } else
+                    ToastUtil.showMessage(((CommonResult) response).info);
+
+                dismissPd();
+            }
+        });
+        sendJsonRequest(request);
     }
 }
