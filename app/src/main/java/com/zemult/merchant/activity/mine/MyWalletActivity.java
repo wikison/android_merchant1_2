@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.PresentAdapter;
-import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
+import com.zemult.merchant.aip.mine.UserBandcardInfo_1_2_1Request;
 import com.zemult.merchant.aip.mine.UserPresentExchangeRequest;
 import com.zemult.merchant.aip.mine.UserPresentRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -63,7 +63,7 @@ public class MyWalletActivity extends BaseActivity {
     int isSetPaypwd, isConfirm, isBanged;
     double mymoney, exchangeMoney;
     private Context mContext;
-    UserBandcardInfoRequest userBandcardInfoRequest;
+    UserBandcardInfo_1_2_1Request userBandcardInfoRequest;
 
     @Override
     public void setContentView() {
@@ -146,13 +146,13 @@ public class MyWalletActivity extends BaseActivity {
         }
 
 
-        UserBandcardInfoRequest.Input input = new UserBandcardInfoRequest.Input();
+        UserBandcardInfo_1_2_1Request.Input input = new UserBandcardInfo_1_2_1Request.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
         }
 
         input.convertJosn();
-        userBandcardInfoRequest = new UserBandcardInfoRequest(input, new ResponseListener() {
+        userBandcardInfoRequest = new UserBandcardInfo_1_2_1Request(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -163,7 +163,7 @@ public class MyWalletActivity extends BaseActivity {
                 if (((CommonResult) response).status == 1) {
                     isBanged = ((CommonResult) response).isBand;
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
-                        Intent intent = new Intent(MyWalletActivity.this, BangDingAccountActivity.class);
+                        Intent intent = new Intent(MyWalletActivity.this, BindBankCardActivity.class);
                         intent.putExtra("actfrom", "MyWalletActivity");
                         startActivity(intent);
                     } else {
