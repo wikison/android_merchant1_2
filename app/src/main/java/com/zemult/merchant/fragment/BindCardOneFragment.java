@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,14 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.aip.common.CommonFindBankNameRequest;
-import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
-import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.util.IntentUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,14 +38,16 @@ public class BindCardOneFragment extends BaseFragment {
 
     @Bind(R.id.et_bankcard)
     EditText etBankcard;
-    @Bind(R.id.checkbox)
-    CheckBox checkbox;
+    @Bind(R.id.cb_agree)
+    CheckBox cbAgree;
     @Bind(R.id.tv_readandconsent)
     TextView tvReadandconsent;
     @Bind(R.id.tv_agreement)
     TextView tvAgreement;
     @Bind(R.id.bt_next)
     Button btNext;
+    @Bind(R.id.tv_error)
+    TextView tvError;
 
 
     private Context mContext;
@@ -62,7 +66,7 @@ public class BindCardOneFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentCallBack = (BindBankCardActivity)context;
+        fragmentCallBack = (BindBankCardActivity) context;
     }
 
     @Override
@@ -113,15 +117,20 @@ public class BindCardOneFragment extends BaseFragment {
 
     @OnClick(R.id.bt_next)
     public void onClick() {
-        if(!checkbox.isChecked()){
+        if (!cbAgree.isChecked()) {
             Toast.makeText(mContext, "请先阅读并同意《用户协议》", Toast.LENGTH_SHORT).show();
             return;
         }
+        common_findBankName();
+    }
 
-
+    @OnClick(R.id.tv_agreement)
+    public void onAgreementClick() {
+        IntentUtil.start_activity(mActivity, BaseWebViewActivity.class, new Pair<String, String>("titlename", getString(R.string.app_name) + "服务协议"), new Pair<String, String>("url", Constants.PROTOCOL_REGISTER));
     }
 
     private CommonFindBankNameRequest request;
+
     private void common_findBankName() {
         showUncanclePd();
         if (request != null) {
@@ -139,13 +148,14 @@ public class BindCardOneFragment extends BaseFragment {
 
             @Override
             public void onResponse(final Object response) {
-                if(((APIM_CommonAppVersion) response).status == 1){
+                if (((APIM_CommonAppVersion) response).status == 1) {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.JIE_JI_KA);
                     bundle.putString(BindCardTwoFragment.BANK_NAME, ((APIM_CommonAppVersion) response).bankName);
+                    bundle.putString(BindCardTwoFragment.CARD_NUM, etBankcard.getText().toString());
                     fragmentCallBack.showTwo(bundle);
-                }else
-                    ToastUtil.showMessage(((APIM_CommonAppVersion) response).info);
+                } else
+                    tvError.setText(((APIM_CommonAppVersion) response).info);
 
                 dismissPd();
             }

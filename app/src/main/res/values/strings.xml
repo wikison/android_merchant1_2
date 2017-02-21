@@ -86,7 +86,7 @@
     <string name="title_all_record">全部记录</string>
     <string name="title_business">我是商户</string>
     <string name="title_invite_friend">邀请好友使用</string>
-    <string name="title_bind_card">绑定认证</string>
+    <string name="title_bind_card">绑定银行卡</string>
 
     <string name="search_no_result_hint">没有找到合适的东东, 搜搜别的呢?</string>
     <string name="search_hot">热门搜索</string>

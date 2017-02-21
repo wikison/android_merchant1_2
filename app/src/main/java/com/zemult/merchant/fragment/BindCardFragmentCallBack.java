@@ -10,7 +10,7 @@ public interface BindCardFragmentCallBack {
 
 //    void showThree();
 
-    void showSuccess();
+    void showSuccess(Bundle bundle);
 
     void finishAll();
 }

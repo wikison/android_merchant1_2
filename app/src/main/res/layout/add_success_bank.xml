@@ -1,105 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/bg_f2">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginBottom="28dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="48dp"
-        android:drawableLeft="@mipmap/check_btn_yes3"
-        android:drawablePadding="13dp"
-        android:gravity="center"
-        android:text="已认证"
-        android:textColor="#bfbfbf"
-        android:textSize="@dimen/font_30px" />
-
-    <View
-        android:layout_marginLeft="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="50dp"
-        android:background="#f5f5f5" />
-
-    <RelativeLayout
-        android:layout_marginLeft="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="姓名:"
-            android:textColor="#000000"
-            android:textSize="@dimen/font_30px" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:gravity="center_vertical"
-            android:text="*华敏"
-            android:textSize="16dp"
-            android:textColor="#bfbfbf" />
-
-        <View
-            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginTop="14dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f5f5f5" />
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:layout_marginLeft="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="44dp">
-
+            android:layout_height="wrap_content"
+            android:text="如需换绑银行卡或解绑银行卡"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_22px" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="身份证号:"
-            android:textColor="#000000"
-            android:textSize="@dimen/font_30px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:gravity="center_vertical"
-            android:text="3208************1234"
-            android:textSize="@dimen/font_30px"
-            android:textColor="#bfbfbf"
-            android:id="@+id/tv_id" />
-
-        <View
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f5f5f5" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:text="请拨打客服电话0519-85526100进行申诉"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_22px" />
 
-
-    <Button
-        android:id="@+id/bt_ok"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/commit"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_30px" />
-
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -559,6 +559,8 @@ public class Urls {
     public static String COMMON_WITHCASH_COUNT = "common_withcash_count";
     //根据银行卡号获取银行卡名称
     public static String COMMON_FIND_BANKNAME = "common_findBankName";
+    //绑定银行卡
+    public static String USER_BAND_CARD_DO = "user_bandcard_do";
 
 
 }

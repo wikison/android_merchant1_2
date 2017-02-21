@@ -18,6 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BindCardSuccessFragment extends BaseFragment {
+    public static final String BANK_NAME = "cardName";
+    public static final String CARD_NUM = "cardNum";
+
     @Bind(R.id.tv_name)
     TextView tvName;
     @Bind(R.id.tv_id)

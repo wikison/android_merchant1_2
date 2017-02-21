@@ -189,7 +189,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/font_black_28</item>
         <item name="android:textSize">@dimen/font_30px</item>
-        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
     </style>
 
     <style name="divider_1px">

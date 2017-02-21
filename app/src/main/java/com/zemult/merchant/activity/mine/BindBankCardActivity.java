@@ -41,8 +41,6 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
     ImageView iv3;
     @Bind(R.id.ll_head)
     LinearLayout llHead;
-    @Bind(R.id.tv_tixing)
-    TextView tvTixing;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
     @Bind(R.id.content)
@@ -97,7 +95,7 @@ public class BindBankCardActivity extends BaseActivity implements BindCardFragme
 //    }
 
     @Override
-    public void showSuccess() {
+    public void showSuccess(Bundle bundle) {
         llRoot.setVisibility(View.GONE);
 
         transaction = fragmentManager.beginTransaction();
