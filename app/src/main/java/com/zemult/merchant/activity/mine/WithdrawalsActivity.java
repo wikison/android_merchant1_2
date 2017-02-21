@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.CommonWithcashCountRequest;
-import com.zemult.merchant.aip.mine.UserBandcardInfoRequest;
+import com.zemult.merchant.aip.mine.UserBandcardInfo_1_2_1Request;
 import com.zemult.merchant.aip.mine.UserCashInfoRequest;
 import com.zemult.merchant.aip.mine.UserCashWithdrawRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -57,7 +57,7 @@ public class WithdrawalsActivity extends BaseActivity {
     Button btnWithdrawal;
     UserCashWithdrawRequest userCashWithdrawRequest;
     UserCashInfoRequest userCashInfoRequest;
-    UserBandcardInfoRequest userBandcardInfoRequest;
+    UserBandcardInfo_1_2_1Request userBandcardInfoRequest;
     CommonWithcashCountRequest commonWithcashCountRequest;
     int isBanged;
     double myMoney = 0;
@@ -183,13 +183,13 @@ public class WithdrawalsActivity extends BaseActivity {
         }
 
 
-        UserBandcardInfoRequest.Input input = new UserBandcardInfoRequest.Input();
+        UserBandcardInfo_1_2_1Request.Input input = new UserBandcardInfo_1_2_1Request.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
         }
 
         input.convertJosn();
-        userBandcardInfoRequest = new UserBandcardInfoRequest(input, new ResponseListener() {
+        userBandcardInfoRequest = new UserBandcardInfo_1_2_1Request(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -202,8 +202,8 @@ public class WithdrawalsActivity extends BaseActivity {
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
                         tvAccount.setText("未绑定");
                     } else {
-                        tvAccount.setText(((CommonResult) response).alipayNumber);
-                        aliAccount = ((CommonResult) response).alipayNumber;
+                        tvAccount.setText(((CommonResult) response).bankNumber);
+                        aliAccount = ((CommonResult) response).bankNumber;
                     }
 
                 } else {
@@ -281,7 +281,7 @@ public class WithdrawalsActivity extends BaseActivity {
                 money = etMoney.getText().toString();
                 double toCashMoney = 0;
                 if (isBanged == 0) {
-                    ToastUtil.showMessage("您还没有绑定支付宝账号");
+                    ToastUtil.showMessage("您还没有绑定银行卡");
                     return;
                 }
                 if (!StringUtils.isEmpty(money)) {

@@ -179,6 +179,8 @@ public class Urls {
     public static String USER_FAVORITE_DELETE_NEWS = "user_favorite_news_delete.do";
     //用户获取账号绑定信息
     public static String USER_BANDCARDINFO = "user_bandcard_info.do";
+    //获取银行卡绑定信息
+    public static String USER_BANDCARD_INFO_1_2_1 = "user_bandcard_info_1_2_1.do";
     //用户进行实名认证
     public static String USER_REALNAME_ATTESTATION = "user_realname_attestation.do";
     //获取用户实名认证信息
