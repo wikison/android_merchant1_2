@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,14 +25,18 @@ import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.MyinfoSetActivity;
 import com.zemult.merchant.activity.mine.SafeSettingActivity;
+import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.search.LabelHomeActivity;
+import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.UserManager;
+import com.zemult.merchant.view.common.MMAlert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -95,8 +100,25 @@ public class MineFragment extends BaseFragment {
     @Bind(R.id.level_tv)
     TextView levelTv;
     double experience;
+    @Bind(R.id.iv1)
+    ImageView iv1;
+    @Bind(R.id.state_iv)
+    ImageView stateIv;
+    @Bind(R.id.tv_state)
+    TextView tvState;
+    @Bind(R.id.state_rl)
+    RelativeLayout stateRl;
+    @Bind(R.id.incomeaccount)
+    TextView incomeaccount;
+    @Bind(R.id.servicerecord)
+    TextView servicerecord;
+    @Bind(R.id.applyfor_tv)
+    TextView applyforTv;
+    @Bind(R.id.fuwuguanjia_ll)
+    LinearLayout fuwuguanjiaLl;
 
     private boolean hasStarted = false;
+    int state;
 
     @Override
     public void onResume() {
@@ -135,7 +157,7 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.rl_record, R.id.mtag_layout,
             R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
             R.id.mshop_layout, R.id.iv_set, R.id.msafe_layout,
-            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift})
+            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.state_rl, R.id.incomeaccount, R.id.servicerecord})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -209,6 +231,37 @@ public class MineFragment extends BaseFragment {
             case R.id.rl_my_gift:
                 //我的礼物箱
                 break;
+            case R.id.state_rl:
+                MMAlert.showChooseStateDialog(getActivity(), new MMAlert.ChooseCallback() {
+                    @Override
+                    public void onfirstChoose() {
+                        state = 0;
+                        userEditState();
+                    }
+
+                    @Override
+                    public void onsecondChoose() {
+                        state = 1;
+                        userEditState();
+                    }
+
+                    @Override
+                    public void onthirdChoose() {
+                        state = 2;
+                        userEditState();
+                    }
+                });
+
+                break;
+            case R.id.incomeaccount:
+                //收益账户
+                startActivity(new Intent(getActivity(), MyWalletActivity.class));
+
+                break;
+            case R.id.servicerecord:
+                //服务记录
+                startActivity(new Intent(getActivity(), ServiceHistoryActivity.class));
+                break;
 
         }
     }
@@ -262,7 +315,7 @@ public class MineFragment extends BaseFragment {
                         mymoney = ((APIM_UserLogin) response).userInfo.money;
                         tvMyAccount.setText(mymoney + "元");
 
-                        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText()+"服务管家");
+                        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText() + "服务管家");
                         experience = SlashHelper.userManager().getUserinfo().getExperience();
                         if (experience < 100) {
                             levelIv.setBackgroundResource(R.mipmap.xinshou_iconsj);
@@ -275,11 +328,8 @@ public class MineFragment extends BaseFragment {
                         } else {
                             levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
                         }
-
-
-
-
-                        
+                        state = ((APIM_UserLogin) response).userInfo.state;
+                        ondeal(state);
                         SlashHelper.setSettingString(((APIM_UserLogin) response).userInfo.getPhoneNum(), ((APIM_UserLogin) response).userInfo.getHead());
                     }
                 } else {
@@ -289,6 +339,56 @@ public class MineFragment extends BaseFragment {
         });
         sendJsonRequest(userInfoOwnerRequest);
     }
+
+
+    UserEditStateRequest userEditStateRequest;
+
+    private void userEditState() {
+        if (userEditStateRequest != null) {
+            userEditStateRequest.cancel();
+        }
+        showPd();
+        UserEditStateRequest.Input input = new UserEditStateRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.state = state;
+        input.convertJosn();
+        userEditStateRequest = new UserEditStateRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    ondeal(state);
+                } else {
+                    ToastUtils.show(getActivity(), ((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userEditStateRequest);
+    }
+
+    //处理状态
+    private void ondeal(int state) {
+        if (state == 0) {
+            stateIv.setBackgroundResource(R.mipmap.kongxian_icon);
+            tvState.setText("空闲");
+            tvState.setTextColor(getResources().getColor(R.color.font_idle));
+        } else if (state == 1) {
+            stateIv.setBackgroundResource(R.mipmap.xiuxi_icon);
+            tvState.setText("休息");
+            tvState.setTextColor(getResources().getColor(R.color.font_black_999));
+        } else if (state == 2) {
+            stateIv.setBackgroundResource(R.mipmap.manglu_icon);
+            tvState.setText("忙碌");
+            tvState.setTextColor(getResources().getColor(R.color.font_busy));
+        }
+
+    }
+
 
     @Override
     protected void lazyLoad() {

@@ -359,7 +359,6 @@ public class UserDetailActivity extends BaseActivity {
             numTv.setText("共在" + userInfo.saleUserNum + "家商户提供服务");
         }
 
-
         switch (userInfo.getState()) {
             case 0:
                 drawable = getResources().getDrawable(R.mipmap.kongxian_icon);

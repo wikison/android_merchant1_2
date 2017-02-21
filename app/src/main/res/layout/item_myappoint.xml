@@ -92,7 +92,7 @@
             android:id="@+id/tv_buy"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:text="快捷买单"
+            android:text="快速结账"
             android:textSize="@dimen/font_24px"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"

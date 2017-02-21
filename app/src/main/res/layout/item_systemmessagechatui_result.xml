@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+    android:background="@color/bg_f0"
+     >
+
+	<TextView
+		android:textColor="@color/font_black_46"
+		android:textSize="16sp"
+		android:gravity="center"
+		android:layout_marginTop="10dp"
+		android:id="@+id/tv_messagedate"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="2016-6-20"
+		/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<ImageView
+			android:id="@+id/head"
+			android:layout_width="38dip"
+			android:layout_height="38dip"
+			android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true"
+			android:layout_marginLeft="@dimen/aliwx_column_up_unit_margin"
+			android:layout_gravity="center_vertical"
+			android:src="@mipmap/bell_icon"/>
+
+		<LinearLayout
+			android:layout_toRightOf="@+id/head"
+			android:background="@color/white"
+			android:id="@+id/ll_hongbao"
+			android:layout_margin="10dp"
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<ImageView
+				android:layout_margin="10dp"
+				android:clickable="false"
+				android:scaleType="centerCrop"
+				android:layout_width="match_parent"
+				android:layout_height="100dp"
+				android:src="@mipmap/hongbao"/>
+			<TextView
+				android:clickable="false"
+				android:layout_marginLeft="10dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingRight="5dp"
+				android:textColor="@color/font_black_28"
+				android:text="您收到了红包" />
+
+			<TextView
+				android:clickable="false"
+				android:paddingLeft="10dp"
+				android:gravity="center_vertical|left"
+				android:text="查看更多"
+				android:textColor="@color/normal_tab"
+				android:textSize="14sp"
+				android:drawableRight="@mipmap/back_right_btn_mini"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+
+		</LinearLayout>
+
+
+
+
+		<LinearLayout
+			android:visibility="gone"
+			android:id="@+id/ll_tuiguang"
+			android:background="@color/white"
+			android:layout_margin="10dp"
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+
+			<ImageView
+				android:layout_margin="10dp"
+				android:clickable="false"
+				android:scaleType="centerCrop"
+				android:id="@+id/iv_news_icon"
+				android:layout_width="match_parent"
+				android:layout_height="100dp"/>
+
+			<TextView
+				android:clickable="false"
+				android:layout_marginLeft="10dp"
+				android:id="@+id/tv_messagecontent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingRight="5dp"
+				android:textColor="@color/font_black_28"
+				android:text="移动互联网时代，为什么大家关注创新设计比关注科技技术更多" />
+
+
+			<TextView
+				android:id="@+id/iv_more_icon"
+				android:clickable="false"
+				android:paddingLeft="10dp"
+				android:gravity="center_vertical|left"
+				android:text="查看更多"
+				android:textColor="@color/normal_tab"
+				android:textSize="14sp"
+				android:drawableRight="@mipmap/back_right_btn_mini"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+		</LinearLayout>
+
+
+	</RelativeLayout>
+
+
+</LinearLayout>
