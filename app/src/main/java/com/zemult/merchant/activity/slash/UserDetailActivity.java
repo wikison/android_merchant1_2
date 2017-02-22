@@ -536,7 +536,11 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
                 if (isFromMerchant) {
-                    getReservationSaleList();
+                    intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
+                    intent.putExtra("userSaleId", userId);
+                    intent.putExtra("merchantId", merchantId);
+                    intent.putExtra("reservationIds", "");
+                    startActivity(intent);
                 } else {
                     intent = new Intent(mContext, ChoosePayMerchantActivity.class);
                     intent.putExtra(USER_ID, userId);

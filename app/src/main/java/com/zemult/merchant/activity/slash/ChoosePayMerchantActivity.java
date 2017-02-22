@@ -96,7 +96,11 @@ public class ChoosePayMerchantActivity extends BaseActivity {
             @Override
             public void onAllClick(int position) {
                 if (adapter.getItem(position).reviewstatus == 2) {
-                    getReservationSaleList(adapter.getItem(position));
+                    Intent intent = new Intent(ChoosePayMerchantActivity.this, FindPayActivity.class);
+                    intent.putExtra("userSaleId", userId);
+                    intent.putExtra("merchantId", adapter.getItem(position).merchantId);
+                    intent.putExtra("reservationIds", "");
+                    startActivity(intent);
 
                 } else {
                     ToastUtil.showMessage("该商户暂不支持买单");

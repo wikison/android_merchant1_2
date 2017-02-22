@@ -26,6 +26,7 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.RiseNumberTextView;
 import com.zemult.merchant.view.common.CommonDialog;
+import com.zemult.merchant.view.common.MMAlert;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -163,9 +164,14 @@ public class MyWalletActivity extends BaseActivity {
                 if (((CommonResult) response).status == 1) {
                     isBanged = ((CommonResult) response).isBand;
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
-                        Intent intent = new Intent(MyWalletActivity.this, BindBankCardActivity.class);
-                        intent.putExtra("actfrom", "MyWalletActivity");
-                        startActivity(intent);
+                        MMAlert.showOneOperateDialog(mContext, "提现需要先绑定银行卡", "前往绑定", new MMAlert.OneOperateCallback() {
+                            @Override
+                            public void onOneOperate() {
+                                Intent intent = new Intent(MyWalletActivity.this, BindBankCardActivity.class);
+                                intent.putExtra("actfrom", "MyWalletActivity");
+                                startActivity(intent);
+                            }
+                        });
                     } else {
                         if (mymoney < Constants.MIN_WITHDRAW) {
                             ToastUtil.showMessage("您的余额不足" + Convert.getMoneyString(Constants.MIN_WITHDRAW) + "元，暂时无法提现");
