@@ -28,7 +28,7 @@
         android:padding="10dp"
         android:textSize="@dimen/font_32px"
         android:textStyle="bold"
-        android:text="请输入旧密码以确认身份" />
+        android:text="请输入旧的密码" />
 
     <com.zemult.merchant.view.password.GridPasswordView
         android:id="@+id/password_view"

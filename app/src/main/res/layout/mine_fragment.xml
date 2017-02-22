@@ -150,6 +150,7 @@
 
         <LinearLayout
             android:id="@+id/fuwuguanjia_ll"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
@@ -406,7 +407,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="申请商户入驻" />
+                android:text="------------------" />
 
             <ImageView
                 android:layout_width="wrap_content"
