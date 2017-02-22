@@ -291,7 +291,7 @@ public class MineFragment extends BaseFragment {
         if (userInfoOwnerRequest != null) {
             userInfoOwnerRequest.cancel();
         }
-
+          showPd();
         UserInfoOwnerRequest.Input input = new UserInfoOwnerRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId() + "";
@@ -301,6 +301,7 @@ public class MineFragment extends BaseFragment {
         userInfoOwnerRequest = new UserInfoOwnerRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dismissPd();
             }
 
             @Override
@@ -337,6 +338,8 @@ public class MineFragment extends BaseFragment {
 
                         if(((APIM_UserLogin) response).userInfo.getSaleUserNum()>0){
                             fuwuguanjiaLl.setVisibility(View.VISIBLE);
+                        }else{
+                            fuwuguanjiaLl.setVisibility(View.GONE);
                         }
                         if(((APIM_UserLogin) response).userInfo.getManagerUserNum()==0){
                             applyforTv.setText("申请商户入驻");
@@ -351,6 +354,7 @@ public class MineFragment extends BaseFragment {
                 } else {
                     ToastUtils.show(getActivity(), ((APIM_UserLogin) response).info);
                 }
+                dismissPd();
             }
         });
         sendJsonRequest(userInfoOwnerRequest);
