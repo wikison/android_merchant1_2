@@ -604,25 +604,25 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         };
         mConversationService.addTotalUnreadChangeListener(mConversationUnreadChangeListener);
 
-            //新消息通知的回调
-        IYWPushListener msgPushListener = new IYWPushListener() {
-            @Override
-            public void onPushMessage(IYWContact iywContact, YWMessage ywMessage) {
-                ywMessage.getContent();
-
-            }
-
-            @Override
-            public void onPushMessage(YWTribe ywTribe, YWMessage ywMessage) {
-
-            }
-        };
-            IYWConversationService conversationService = mIMKit.getConversationService();
-//如果之前add过，请清除
-            conversationService.removePushListener(msgPushListener);
-//增加新消息到达的通知
-            conversationService.addPushListener(msgPushListener);
-
+//            //新消息通知的回调
+//        IYWPushListener msgPushListener = new IYWPushListener() {
+//            @Override
+//            public void onPushMessage(IYWContact iywContact, YWMessage ywMessage) {
+//                ywMessage.getContent();
+//
+//            }
+//
+//            @Override
+//            public void onPushMessage(YWTribe ywTribe, YWMessage ywMessage) {
+//
+//            }
+//        };
+//            IYWConversationService conversationService = mIMKit.getConversationService();
+////如果之前add过，请清除
+//            conversationService.removePushListener(msgPushListener);
+////增加新消息到达的通知
+//            conversationService.addPushListener(msgPushListener);
+//
     }
 
     UserInfoOwnerRequest userInfoOwnerRequest;
