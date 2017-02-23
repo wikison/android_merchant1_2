@@ -41,7 +41,7 @@ public class AppApplication extends MultiDexApplication {
     private static AppApplication _instance;
     private PushAgent mPushAgent;
     private SQLHelper sqlHelper;
-    public static  Boolean ISDEBUG=false;
+    public static  Boolean ISDEBUG=true;
     public AppApplication() {
         _instance = this;
     }
@@ -79,7 +79,16 @@ public class AppApplication extends MultiDexApplication {
         super.onCreate();
         mContext = this;
         mAppApplication = this;
-        Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventBubble);
+        //BTGInvocationEventBubble(悬浮小球)、
+        //BTGInvocationEventShake(摇一摇)、
+        //BTGInvocationEventNone(静默)
+        if(ISDEBUG){
+            Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventBubble);
+        }
+        else{
+            Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventNone);
+        }
+
         initUmeng();
 
         handler = new Handler();
