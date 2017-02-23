@@ -319,6 +319,7 @@
         <activity android:name=".activity.mine.MyPhoneSecretActivity"/>
         <activity android:name=".activity.ScanQrActivity"/>
         <activity android:name=".activity.mine.message.SystemMessageActivity"/>
+        <activity android:name=".activity.mine.message.SystemMessageChatUIActivity"/>
         <activity android:name=".activity.mine.message.NoticeMessageActivity"/>
         <activity android:name=".activity.mine.MyAreaChildActivity"/>
         <activity android:name=".activity.mine.MyAreaSubChildActivity"/>
