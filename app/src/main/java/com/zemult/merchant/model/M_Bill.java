@@ -119,5 +119,8 @@ public class M_Bill implements Serializable {
     @Expose
     public String replayNote;//回复
 
+    @Expose
+    public double rewardmoney;//打赏金额
+
 
 }

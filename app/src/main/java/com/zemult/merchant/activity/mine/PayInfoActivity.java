@@ -3,6 +3,7 @@ package com.zemult.merchant.activity.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
@@ -81,6 +83,12 @@ public class PayInfoActivity extends BaseActivity {
     LinearLayout llPay;
     @Bind(R.id.ll_pay_type)
     LinearLayout llPayType;
+    @Bind(R.id.tv_realpay)
+    TextView tvRealpay;
+    @Bind(R.id.tv_redmoney)
+    TextView tvRedmoney;
+    @Bind(R.id.havered_ll)
+    LinearLayout haveredLl;
 
     private Context mContext;
     private Activity mActivity;
@@ -134,7 +142,15 @@ public class PayInfoActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+
+                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                    if (m.rewardmoney == 0) {
+                        haveredLl.setVisibility(View.GONE);
+                    } else {
+                        haveredLl.setVisibility(View.VISIBLE);
+                        tvRealpay.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                        tvRedmoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.rewardmoney)));
+                    }
                     switch (m.state) {
                         case 0:
                             tvState.setText("待付款");
@@ -292,4 +308,10 @@ public class PayInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
