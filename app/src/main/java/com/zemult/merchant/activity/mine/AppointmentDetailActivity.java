@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -138,6 +139,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         type = getIntent().getIntExtra(INTENT_TYPE, -1);
         EventBus.getDefault().register(this);
+        hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错,给个赞赏红包吧</u>"));
         showPd();
         userReservationInfo();
 
