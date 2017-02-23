@@ -1,11 +1,19 @@
 package com.zemult.merchant.activity.slash;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.adapter.slash.ChooseReservationAdapter;
+import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
+import com.zemult.merchant.aip.common.CommonRewardRequest;
 import com.zemult.merchant.aip.mine.UserMerchantPayAddRequest;
 import com.zemult.merchant.aip.mine.UserReservationPayAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
@@ -36,9 +46,11 @@ import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.BounceScrollView;
+import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.FixedListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -87,31 +99,44 @@ public class FindPayActivity extends BaseActivity {
     FixedListView flv;
     @Bind(R.id.bsv_container)
     BounceScrollView bsvContainer;
-
+    @Bind(R.id.cb_reward)
+    CheckBox cbReward;
+    @Bind(R.id.iv_reward)
+    ImageView ivReward;
     private M_Merchant merchant;
+
     private M_Userinfo userinfo;
     int merchantId, userSaleId, reservationId;
     String reservationIds;
-
     public static final String MERCHANT_INFO = "merchantInfo";
+
     public static final String USER_INFO = "userInfo";
     public static final String MERCHANT_ID = "merchant_id";
+    public static final String M_RESERVATION = "M_RESERVATION";
     // 商户订单号
     private String ORDER_SN = "", managerhead, managername, scanMoney;
     private int userPayId = 0;
-    double paymoney = 0, truepaymoney = 0;
-
+    double money = 0, rewardMoney = 0;
     MerchantInfoRequest merchantInfoRequest;
+
     UserInfoRequest userInfoRequest;
     UserMerchantPayAddRequest userMerchantPayAddRequest;
     UserReservationSaleListRequest userReservationSaleListRequest;
-
+    CommonRewardRequest commonRewardRequest;
     List<M_Reservation> reservationList = new ArrayList<>();
+
     ChooseReservationAdapter adapter;
+    private SendRewardAdapter adapterReward;
     M_Reservation mReservation;
 
+    Dialog alertDialog;
+    String rewardMoneys = "";
+    List<String> moneyList = new ArrayList<>();
 
     private Context mContext;
+
+    private int selectPosition = 2; //选中的赞赏红包, 默认2, 金额6.66
+    private String strRewardMoney = "";
 
     @Override
     public void setContentView() {
@@ -132,13 +157,13 @@ public class FindPayActivity extends BaseActivity {
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
         scanMoney = getIntent().getStringExtra("scanMoney");
-        mReservation = (M_Reservation) getIntent().getSerializableExtra("M_RESERVATION");
+        mReservation = (M_Reservation) getIntent().getSerializableExtra(M_RESERVATION);
         reservationId = getIntent().getIntExtra("reservationId", 0);
         reservationIds = getIntent().getStringExtra("reservationIds");
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         userinfo = (M_Userinfo) getIntent().getSerializableExtra(USER_INFO);
 
-        adapter = new ChooseReservationAdapter(mContext, reservationList);
+        adapter = new ChooseReservationAdapter(mContext, reservationList, mReservation != null);
         flv.setAdapter(adapter);
 
         if (merchant == null) {
@@ -169,6 +194,8 @@ public class FindPayActivity extends BaseActivity {
             etPaymoney.setText(scanMoney);
         }
 
+        alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
+
     }
 
     private void initListener() {
@@ -185,14 +212,90 @@ public class FindPayActivity extends BaseActivity {
 
     private void getNetworkData() {
         if (mReservation != null) {
-            reservationList.clear();
-            reservationList.add(mReservation);
-            fillAdapter(reservationList, false);
+            List<M_Reservation> reservation = new ArrayList<>();
+            reservation.add(mReservation);
+            fillAdapter(reservation, false);
         } else {
             getReservationSaleList();
         }
+
+        common_reward();
     }
 
+    private void common_reward() {
+        if (commonRewardRequest != null) {
+            commonRewardRequest.cancel();
+        }
+        commonRewardRequest = new CommonRewardRequest(new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+                if (((CommonResult) response).status == 1) {
+                    rewardMoneys = ((CommonResult) response).rewardMoney;
+                    if (!TextUtils.isEmpty(rewardMoneys)) {
+                        moneyList = Arrays.asList(rewardMoneys.split(","));
+                        strRewardMoney = moneyList.get(selectPosition);
+                        rewardMoney = Double.parseDouble(strRewardMoney);
+                        cbReward.setText(String.format("赞赏红包%s元", moneyList.get(selectPosition)));
+                    }
+                } else {
+                    ToastUtils.show(mContext, ((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+
+        sendJsonRequest(commonRewardRequest);
+    }
+
+    private void showDialog() {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_reward, null);
+        FixedGridView gv = (FixedGridView) view.findViewById(R.id.gv);
+        TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        adapterReward = new SendRewardAdapter(mContext, moneyList);
+        gv.setAdapter(adapterReward);
+
+        if (cbReward.isChecked()) {
+            adapterReward.setSelected(selectPosition);
+        }
+
+        alertDialog.setContentView(view);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cbReward.setText(String.format("赞赏红包%s元", adapterReward.getItem(position)));
+                selectPosition = position;
+                strRewardMoney = moneyList.get(selectPosition);
+                rewardMoney = Double.parseDouble(strRewardMoney);
+                cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                cbReward.setChecked(true);
+                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
+                adapterReward.setSelected(position);
+                alertDialog.dismiss();
+            }
+        });
+
+        Window dialogWindow = alertDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialog_style);
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT; // 高度
+        dialogWindow.setAttributes(lp);
+        alertDialog.show();
+    }
 
     private void userTaskPayRequest() {
         try {
@@ -205,13 +308,14 @@ public class FindPayActivity extends BaseActivity {
             input.userId = SlashHelper.userManager().getUserId();
             input.merchantId = merchantId;
             input.saleUserId = userSaleId;
-            input.consumeMoney = truepaymoney;
-            input.money = truepaymoney;
-            if (StringUtils.isEmpty(reservationIds)) {
+            input.consumeMoney = money + (cbReward.isChecked() ? rewardMoney : 0);
+            input.money = money;
+            if (StringUtils.isEmpty(selectReservations())) {
                 input.reservationIds = "";
             } else {
-                input.reservationIds = reservationIds;
+                input.reservationIds = selectReservations();
             }
+            input.rewardMoney = cbReward.isChecked() ? rewardMoney : 0;
             input.convertJosn();
 
             userMerchantPayAddRequest = new UserMerchantPayAddRequest(input, new ResponseListener() {
@@ -228,7 +332,7 @@ public class FindPayActivity extends BaseActivity {
                         ORDER_SN = ((CommonResult) response).number;
                         userPayId = ((CommonResult) response).userPayId;
                         Intent intent = new Intent(FindPayActivity.this, ChoosePayTypeActivity.class);
-                        intent.putExtra("consumeMoney", truepaymoney);
+                        intent.putExtra("consumeMoney", money + (cbReward.isChecked() ? rewardMoney : 0));
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("merchantName", merchant.name);
@@ -260,8 +364,9 @@ public class FindPayActivity extends BaseActivity {
             UserReservationPayAddRequest.Input input = new UserReservationPayAddRequest.Input();
             input.userId = SlashHelper.userManager().getUserId();
             input.reservationId = mReservation.reservationId;
-            input.consumeMoney = truepaymoney;
-            input.money = truepaymoney;
+            input.consumeMoney = money + (cbReward.isChecked() ? rewardMoney : 0);
+            input.money = money;
+            input.rewardMoney = rewardMoney;
             input.convertJosn();
 
             reservationPayAddRequest = new UserReservationPayAddRequest(input, new ResponseListener() {
@@ -278,7 +383,7 @@ public class FindPayActivity extends BaseActivity {
                         ORDER_SN = ((CommonResult) response).number;
                         userPayId = ((CommonResult) response).userPayId;
                         Intent intent = new Intent(FindPayActivity.this, ChoosePayTypeActivity.class);
-                        intent.putExtra("consumeMoney", truepaymoney);
+                        intent.putExtra("consumeMoney", money + (cbReward.isChecked() ? rewardMoney : 0));
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("merchantName", merchant.name);
@@ -420,15 +525,17 @@ public class FindPayActivity extends BaseActivity {
                 if (etPaymoney.getText().toString().length() > 0) {
                     etPaymoney.setHint("");
                     btnPay.setEnabled(true);
-                    btnPay.setBackgroundResource(R.drawable.common_selector_btn);
-                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(Double.parseDouble(etPaymoney.getText().toString())));
+                    if(getMoney()>0){
+                        btnPay.setBackgroundResource(R.drawable.common_selector_btn);
+                    }
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + (cbReward.isChecked() ? rewardMoney : 0)));
                 }
             } else {
                 etPaymoney.setHint("请输入支付金额");
                 tvFuhao.setVisibility(View.GONE);
                 btnPay.setEnabled(false);
                 btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
-                tvMoneyRealpay.setText("");
+                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(cbReward.isChecked() ? rewardMoney : 0));
             }
         }
 
@@ -438,24 +545,61 @@ public class FindPayActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_pay})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_pay, R.id.iv_reward, R.id.cb_reward})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
                 break;
+            case R.id.iv_reward:
+                showDialog();
+                break;
+            case R.id.cb_reward:
+                if (cbReward.isChecked()) {
+                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
+                } else {
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
+                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                }
+                break;
             case R.id.btn_pay:
-                truepaymoney = Double.parseDouble(etPaymoney.getText().toString());
-                if (truepaymoney > 0) {
-                    if (mReservation != null)
-                        user_reservation_pay_add();
-                    else
-                        userTaskPayRequest();
+                money = getMoney();
+                if (money > 0) {
+                    userTaskPayRequest();
                 }
 
                 break;
         }
+    }
+
+    private String selectReservations() {
+        String reservationIds = "";
+        if (mReservation != null) {
+            reservationIds = mReservation.reservationId + "";
+        } else {
+            for (int i = 0; i < flv.getChildCount(); i++) {
+                LinearLayout ll = (LinearLayout) flv.getChildAt(i);// 获得子级
+                CheckBox cb = (CheckBox) ll.findViewById(R.id.cb);// 从子级中获得控件
+                if (cb.isChecked()) {
+                    reservationIds = reservationIds + adapter.getItem(i).reservationId + ",";
+                }
+            }
+            if (reservationIds.length() > 0) {
+                reservationIds = reservationIds.substring(0, reservationIds.length() - 1);
+            }
+        }
+
+        return reservationIds;
+    }
+
+    private double getMoney() {
+        double result = 0;
+        if (!StringUtils.isBlank(etPaymoney.getText().toString())) {
+            result = Double.parseDouble(etPaymoney.getText().toString());
+        }
+        return result;
     }
 
     @Override

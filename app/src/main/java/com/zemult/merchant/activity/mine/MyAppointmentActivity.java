@@ -2,7 +2,6 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +14,11 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.mine.UserSaleReservationList;
-import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Reservation;
@@ -35,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
@@ -177,6 +173,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                                 public void onClick(View v) {
                                                     Intent intent = new Intent(mContext, FindPayActivity.class);
                                                     // 预约单id
+                                                    intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
                                                     intent.putExtra("reservationId", Integer.valueOf(mReservation.reservationId));
                                                     intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                                                     intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));

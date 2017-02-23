@@ -153,6 +153,14 @@
         <item name="android:button">@drawable/checkbox</item>
     </style>
 
+    <style name="CheckboxReservation" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkboxreservation</item>
+    </style>
+
+    <style name="CheckboxReward" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkboxreward</item>
+    </style>
+
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/font_main</item>
         <item name="colorControlActivated">@color/font_black_999</item>
@@ -406,6 +414,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="text_12_black_999">
         <item name="android:textColor">@color/font_black_999</item>
         <item name="android:textSize">12sp</item>
@@ -449,6 +458,7 @@
         <item name="android:textColor">@color/font_black_46</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="text_15_black_46">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -665,12 +675,12 @@
 
     </style>
 
-<style name="servicehistoryitem">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:textSize">15sp</item>
-    <item name="android:textColor">@color/font_black_999</item>
-</style>
+    <style name="servicehistoryitem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/font_black_999</item>
+    </style>
 
     <style name="recorddetailleft">
         <item name="android:layout_width">wrap_content</item>
@@ -687,7 +697,7 @@
         <item name="android:textColor">@color/e6bb7c</item>
     </style>
 
-    
+
     <style name="levelranktop">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -721,8 +731,7 @@
         <item name="android:textColor">@color/font_black_28</item>
     </style>
 
-    
-    
+
     <declare-styleable name="FNRadioGroup">
         <attr name="checkedButton" format="integer"/>
         <attr name="childMarginLeft" format="dimension"/>
@@ -742,5 +751,17 @@
         <item name="android:layout_height">58dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@drawable/ripple_item_clicked2</item>
+    </style>
+
+    <style name="dialog_bottom">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="dialog_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
 </resources>

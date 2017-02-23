@@ -364,13 +364,13 @@ public class AppointmentDetailActivity extends BaseActivity {
             case R.id.jiezhang_btn:
                 //快速结账
                 Intent intent = new Intent(this, FindPayActivity.class);
+                intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
                 intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
                 if (!TextUtils.isEmpty(reservationId))
                     intent.putExtra("reservationId", Integer.valueOf(reservationId));
 
                 startActivity(intent);
-
 
                 break;
             case R.id.hongbao_tv:
