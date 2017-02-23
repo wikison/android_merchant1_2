@@ -1,7 +1,9 @@
 package com.zemult.merchant.activity;
 
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,7 +20,11 @@ import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.ShareText;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SharePopwindow;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -36,7 +42,7 @@ public class ShareAppointmentActivity extends BaseActivity {
     @Bind(R.id.ll_root)
     RelativeLayout llRoot;
     private SharePopwindow popwindow;
-    String shareurl,sharecontent,sharetitle;
+    String shareurl,sharecontent,sharetitle,sharename="";
 
     @Override
     public void setContentView() {
@@ -48,11 +54,13 @@ public class ShareAppointmentActivity extends BaseActivity {
         lhTvTitle.setText("生成邀请函");
 
         WebSettings wSet = webview.getSettings();
+        wSet.setJavaScriptCanOpenWindowsAutomatically(true);
         wSet.setJavaScriptEnabled(true);
         webview.setWebViewClient(new MyWebViewClient());
         shareurl=getIntent().getStringExtra("shareurl");
         sharecontent=getIntent().getStringExtra("sharecontent");
         sharetitle=getIntent().getStringExtra("sharetitle");
+        webview.setWebChromeClient(new WebChromeClient());
         webview.loadUrl(shareurl);
 
 
@@ -108,7 +116,29 @@ public class ShareAppointmentActivity extends BaseActivity {
     class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-             view.loadUrl(url);
+            if (url.contains("doShare")) {//   js://doShare?name=
+                Uri uri = Uri.parse(url);
+//                try {
+//                    sharename= URLDecoder.decode(uri.getQueryParameter("name"),"UTF-8");
+                    sharename=uri.getQueryParameter("name");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+                String oldname="【" + SlashHelper.userManager().getUserinfo().getName() + "】";
+                sharecontent=sharecontent.replace(oldname,"【" + sharename + "】");
+                sharetitle=sharetitle.replace(oldname,"【" + sharename + "】");
+
+
+                if (popwindow.isShowing())
+                    popwindow.dismiss();
+                else
+                    popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
+
+
+            }else{
+                view.loadUrl(url);
+            }
+
             return true;
         }
 
@@ -123,10 +153,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_share:
-                if (popwindow.isShowing())
-                    popwindow.dismiss();
-                else
-                    popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
+
                 break;
         }
     }
