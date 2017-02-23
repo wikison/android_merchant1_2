@@ -13,14 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
         <ImageView
-            android:layout_marginLeft="6dp"
             android:id="@+id/iv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/tianjiapengyou_icon"/>
 
         <TextView
-            android:gravity="center"
+            android:gravity="left"
             android:id="@+id/tv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,14 +34,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
         <ImageView
-            android:layout_marginLeft="6dp"
             android:id="@+id/iv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/haoyouliebiao_icon"/>
 
         <TextView
-            android:gravity="center"
+            android:gravity="left"
             android:id="@+id/tv2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
