@@ -117,7 +117,24 @@ public class M_Userinfo implements Serializable {
     public String merchantpics;//商家图片(多个用","分隔，最多显示3个)
     @Expose
     public String pics;//相册图片(多个用","分隔，最多显示5个)
+    @Expose
+    public int managerUserNum;//管理商家数(管理的商家)
 
+    public int getManagerUserNum() {
+        return managerUserNum;
+    }
+
+    public void setManagerUserNum(int managerUserNum) {
+        this.managerUserNum = managerUserNum;
+    }
+
+    public int getSaleUserNum() {
+        return saleUserNum;
+    }
+
+    public void setSaleUserNum(int saleUserNum) {
+        this.saleUserNum = saleUserNum;
+    }
 
     public String getPassword() {
         return password;

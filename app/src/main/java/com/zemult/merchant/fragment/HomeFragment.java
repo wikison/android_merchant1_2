@@ -42,12 +42,14 @@ import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
+import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.slash.CommonFirstpageIndustryListRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetadvertList;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.mvp.presenter.HomePresenter;
 import com.zemult.merchant.mvp.view.IHomeView;
 import com.zemult.merchant.util.ColorUtil;
@@ -55,6 +57,7 @@ import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderHomeView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -138,7 +141,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 intent = new Intent(mContext, MyAppointmentActivity.class);
                 intent.putExtra("fromHome", true);
                 startActivity(intent);
-                ivRedDot.setVisibility(View.GONE);
                 break;
         }
     }
@@ -377,6 +379,44 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             }
         });
         sendJsonRequest(industryListRequest);
+    }
+
+
+    private UserReservationListRequest userReservationListRequest;
+    private void userReservationList() {
+
+        if (userReservationListRequest != null) {
+            userReservationListRequest.cancel();
+        }
+        UserReservationListRequest.Input input = new UserReservationListRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.state = 1;
+        input.page = page;
+        input.rows = Constants.ROWS;     //每页显示的行数
+        input.convertJosn();
+        userReservationListRequest = new UserReservationListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserReservationList) response).status == 1) {
+                    if(((APIM_UserReservationList) response).reservationList != null
+                            && !((APIM_UserReservationList) response).reservationList.isEmpty())
+                        ivRedDot.setVisibility(View.VISIBLE);
+                    else
+                        ivRedDot.setVisibility(View.GONE);
+                }
+            }
+        });
+        sendJsonRequest(userReservationListRequest);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userReservationList();
     }
 
     @Override

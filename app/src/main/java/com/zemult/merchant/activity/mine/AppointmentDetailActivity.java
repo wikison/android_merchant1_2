@@ -1,9 +1,10 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -21,13 +21,10 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
+import com.zemult.merchant.activity.slash.SendRewardActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
@@ -40,15 +37,14 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
-import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -119,14 +115,18 @@ public class AppointmentDetailActivity extends BaseActivity {
     Button jiezhangBtn;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
-    String reservationId="";
+    String reservationId = "";
     int type;
     String replayNote;
-    int userPayId,merchantReviewstatus;
+    int userPayId, merchantReviewstatus;
     M_Reservation mReservation;
     UserReservationInfoRequest userReservationInfoRequest;
     UserReservationEditRequest userReservationEditRequest;
-    public static String REFLASH_MYAPPOINT="reflash_myappoint";
+    public static String REFLASH_MYAPPOINT = "reflash_myappoint";
+    @Bind(R.id.hongbao_tv)
+    TextView hongbaoTv;
+    int userId;
+    String userName="";
 
     @Override
     public void setContentView() {
@@ -137,8 +137,9 @@ public class AppointmentDetailActivity extends BaseActivity {
     public void init() {
         lhTvTitle.setText("预约详情");
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
-        type=getIntent().getIntExtra(INTENT_TYPE,-1);
+        type = getIntent().getIntExtra(INTENT_TYPE, -1);
         EventBus.getDefault().register(this);
+        hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错,给个赞赏红包吧</u>"));
         showPd();
         userReservationInfo();
 
@@ -164,12 +165,13 @@ public class AppointmentDetailActivity extends BaseActivity {
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
                     userPayId = mReservation.userPayId;
+                    userId=mReservation.saleUserId;
+                    userName=mReservation.saleUserName;
 
-                    if(mReservation.saleUserId==SlashHelper.userManager().getUserId()){
-                        type=1;
-                    }
-                    else{
-                        type=0;
+                    if (mReservation.saleUserId == SlashHelper.userManager().getUserId()) {
+                        type = 1;
+                    } else {
+                        type = 0;
                     }
 
                     if (type == 1) {
@@ -198,11 +200,10 @@ public class AppointmentDetailActivity extends BaseActivity {
                             jiezhangBtn.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
                         }
-                        merchantReviewstatus=mReservation.merchantReviewstatus;
-                        if(merchantReviewstatus==2){//商户审核状态(0未审核,1待审核,2审核通过)
+                        merchantReviewstatus = mReservation.merchantReviewstatus;
+                        if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                             jiezhangBtn.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             jiezhangBtn.setVisibility(View.GONE);
                         }
 
@@ -281,8 +282,8 @@ public class AppointmentDetailActivity extends BaseActivity {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
                             object.put("taskTitle", "[预约-已确认] 预约时间:" + mReservation.reservationTime + "预约地址:" + mReservation.merchantName);
-                            object.put("serviceId", mReservation.saleUserId+"");
-                            object.put("reservationId", reservationId+"");
+                            object.put("serviceId", mReservation.saleUserId + "");
+                            object.put("reservationId", reservationId + "");
                         } catch (JSONException e) {
 
                         }
@@ -327,7 +328,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_service})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_service,R.id.hongbao_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -352,10 +353,10 @@ public class AppointmentDetailActivity extends BaseActivity {
             case R.id.invite_btn:
                 //邀请好友
                 Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
-                urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json","app")+"share_reservation_info.do?reservationId=" + reservationId);
-                urlintent.putExtra("sharetitle","您的好友【"+SlashHelper.userManager().getUserinfo().getName()+"】邀您赴约");
-                urlintent.putExtra("sharecontent","您的好友【"+SlashHelper.userManager().getUserinfo().getName()+"】刚刚预定了"+mReservation.reservationTime+mReservation.merchantName+
-                "，诚挚邀请，期待您的赴约。");
+                urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                        "，诚挚邀请，期待您的赴约。");
                 startActivity(urlintent);
 
 
@@ -365,12 +366,19 @@ public class AppointmentDetailActivity extends BaseActivity {
                 Intent intent = new Intent(this, FindPayActivity.class);
                 intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
-                if(!TextUtils.isEmpty(reservationId))
-                    intent.putExtra("reservationId",  Integer.valueOf(reservationId));
+                if (!TextUtils.isEmpty(reservationId))
+                    intent.putExtra("reservationId", Integer.valueOf(reservationId));
 
                 startActivity(intent);
 
 
+                break;
+            case R.id.hongbao_tv:
+                Intent it = new Intent(this, SendRewardActivity.class);
+                it.putExtra(UserDetailActivity.USER_ID, userId);
+                it.putExtra(UserDetailActivity.USER_NAME, userName);
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(it);
                 break;
             case R.id.btn_service:
                 replayNote = AppUtils.replaceBlank(appresultcommitEt.getText().toString().trim());
@@ -399,6 +407,11 @@ public class AppointmentDetailActivity extends BaseActivity {
     }
 
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 
 }

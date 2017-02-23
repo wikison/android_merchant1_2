@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.slash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,25 +9,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
+import com.zemult.merchant.adapter.slash.ChooseReservationAdapter;
 import com.zemult.merchant.aip.mine.UserMerchantPayAddRequest;
 import com.zemult.merchant.aip.mine.UserReservationPayAddRequest;
+import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
+import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.BounceScrollView;
+import com.zemult.merchant.view.FixedListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -66,6 +79,14 @@ public class FindPayActivity extends BaseActivity {
     Button btnPay;
     @Bind(R.id.tv_fuhao)
     TextView tvFuhao;
+    @Bind(R.id.tv_title_name)
+    TextView tvTitleName;
+    @Bind(R.id.tv_title_merchant)
+    TextView tvTitleMerchant;
+    @Bind(R.id.flv)
+    FixedListView flv;
+    @Bind(R.id.bsv_container)
+    BounceScrollView bsvContainer;
 
     private M_Merchant merchant;
     private M_Userinfo userinfo;
@@ -83,6 +104,14 @@ public class FindPayActivity extends BaseActivity {
     MerchantInfoRequest merchantInfoRequest;
     UserInfoRequest userInfoRequest;
     UserMerchantPayAddRequest userMerchantPayAddRequest;
+    UserReservationSaleListRequest userReservationSaleListRequest;
+
+    List<M_Reservation> reservationList = new ArrayList<>();
+    ChooseReservationAdapter adapter;
+    M_Reservation mReservation;
+
+
+    private Context mContext;
 
     @Override
     public void setContentView() {
@@ -91,16 +120,27 @@ public class FindPayActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("结账服务");
+        initData();
+        initView();
+        initListener();
+        getNetworkData();
+    }
+
+    private void initData() {
+        mContext = this;
+
         merchantId = getIntent().getIntExtra("merchantId", 0);
         userSaleId = getIntent().getIntExtra("userSaleId", 0);
         scanMoney = getIntent().getStringExtra("scanMoney");
+        mReservation = (M_Reservation) getIntent().getSerializableExtra("M_RESERVATION");
         reservationId = getIntent().getIntExtra("reservationId", 0);
         reservationIds = getIntent().getStringExtra("reservationIds");
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         userinfo = (M_Userinfo) getIntent().getSerializableExtra(USER_INFO);
 
-        showPd();
+        adapter = new ChooseReservationAdapter(mContext, reservationList);
+        flv.setAdapter(adapter);
+
         if (merchant == null) {
             merchant_info(merchantId);
         } else {
@@ -116,6 +156,11 @@ public class FindPayActivity extends BaseActivity {
             imageManager.loadCircleImage(userinfo.getHead(), ivHead);
         }
 
+    }
+
+    private void initView() {
+        lhTvTitle.setText("结账服务");
+
         EditFilter.CashFilter(etPaymoney, 10000);
         btnPay.setEnabled(false);
         btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
@@ -123,27 +168,31 @@ public class FindPayActivity extends BaseActivity {
         if (!StringUtils.isEmpty(scanMoney)) {
             etPaymoney.setText(scanMoney);
         }
+
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_pay})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.lh_btn_back:
-            case R.id.ll_back:
-                onBackPressed();
-                break;
-            case R.id.btn_pay:
-                truepaymoney = Double.parseDouble(etPaymoney.getText().toString());
-                if (truepaymoney > 0) {
-                    if (reservationId > 0)
-                        user_reservation_pay_add();
-                    else
-                        userTaskPayRequest();
-                }
+    private void initListener() {
+        adapter.setOnAllClickListener(new ChooseReservationAdapter.OnAllClickListener() {
+            @Override
+            public void onAllClick(int position) {
+                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
+                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, 0);
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
+                startActivity(intent);
+            }
+        });
+    }
 
-                break;
+    private void getNetworkData() {
+        if (mReservation != null) {
+            reservationList.clear();
+            reservationList.add(mReservation);
+            fillAdapter(reservationList, false);
+        } else {
+            getReservationSaleList();
         }
     }
+
 
     private void userTaskPayRequest() {
         try {
@@ -210,7 +259,7 @@ public class FindPayActivity extends BaseActivity {
             }
             UserReservationPayAddRequest.Input input = new UserReservationPayAddRequest.Input();
             input.userId = SlashHelper.userManager().getUserId();
-            input.reservationId = reservationId;
+            input.reservationId = mReservation.reservationId;
             input.consumeMoney = truepaymoney;
             input.money = truepaymoney;
             input.convertJosn();
@@ -271,7 +320,7 @@ public class FindPayActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((APIM_MerchantGetinfo) response).status == 1) {
                     merchant = ((APIM_MerchantGetinfo) response).merchant;
-                    tvMerchant.setText("消费商户:  " + merchant.name);
+                    tvMerchant.setText("" + merchant.name);
                 } else {
                     ToastUtils.show(FindPayActivity.this, ((APIM_MerchantGetinfo) response).info);
                 }
@@ -312,6 +361,54 @@ public class FindPayActivity extends BaseActivity {
         sendJsonRequest(userInfoRequest);
     }
 
+    private void getReservationSaleList() {
+        if (userReservationSaleListRequest != null) {
+            userReservationSaleListRequest.cancel();
+        }
+        UserReservationSaleListRequest.Input input = new UserReservationSaleListRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.saleUserId = userSaleId;
+        input.merchantId = merchantId;
+        input.page = 1;
+        input.rows = Constants.ROWS;
+        input.convertJosn();
+        userReservationSaleListRequest = new UserReservationSaleListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserReservationList) response).status == 1) {
+                    reservationList = ((APIM_UserReservationList) response).reservationList;
+
+                    fillAdapter(reservationList, false);
+                } else {
+                    ToastUtil.showMessage(((APIM_UserReservationList) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userReservationSaleListRequest);
+    }
+
+    // 填充数据
+    private void fillAdapter(List<M_Reservation> list, boolean isLoadMore) {
+        if (list == null || list.size() == 0) {
+
+        } else {
+            adapter.setData(list, isLoadMore);
+        }
+        bsvContainer.post(new Runnable() {
+            @Override
+            public void run() {
+
+                bsvContainer.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+    }
+
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -341,6 +438,26 @@ public class FindPayActivity extends BaseActivity {
         }
     };
 
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_pay})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lh_btn_back:
+            case R.id.ll_back:
+                onBackPressed();
+                break;
+            case R.id.btn_pay:
+                truepaymoney = Double.parseDouble(etPaymoney.getText().toString());
+                if (truepaymoney > 0) {
+                    if (mReservation != null)
+                        user_reservation_pay_add();
+                    else
+                        userTaskPayRequest();
+                }
+
+                break;
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -349,5 +466,4 @@ public class FindPayActivity extends BaseActivity {
             onBackPressed();
         }
     }
-
 }

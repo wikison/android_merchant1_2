@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.BusinessManActivity;
 import com.zemult.merchant.activity.mine.IamYuekeActivity;
+import com.zemult.merchant.activity.mine.MerchantEnter2Activity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyCardsActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
@@ -198,7 +199,12 @@ public class MineFragment extends BaseFragment {
 //                break;
             case R.id.mshop_layout:
                 //我是商家
-                startActivity(new Intent(getActivity(), BusinessManActivity.class));
+                if(SlashHelper.userManager().getUserinfo().getManagerUserNum()==0){
+                    startActivity(new Intent(getActivity(), MerchantEnter2Activity.class));
+                }else{
+                    startActivity(new Intent(getActivity(), BusinessManActivity.class));
+                }
+
                 break;
             case R.id.iv_set:
                 startActivity(new Intent(getActivity(), MySettingActivity.class));
@@ -285,7 +291,7 @@ public class MineFragment extends BaseFragment {
         if (userInfoOwnerRequest != null) {
             userInfoOwnerRequest.cancel();
         }
-
+          showPd();
         UserInfoOwnerRequest.Input input = new UserInfoOwnerRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId() + "";
@@ -295,6 +301,7 @@ public class MineFragment extends BaseFragment {
         userInfoOwnerRequest = new UserInfoOwnerRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dismissPd();
             }
 
             @Override
@@ -328,6 +335,18 @@ public class MineFragment extends BaseFragment {
                         } else {
                             levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
                         }
+
+                        if(((APIM_UserLogin) response).userInfo.getSaleUserNum()>0){
+                            fuwuguanjiaLl.setVisibility(View.VISIBLE);
+                        }else{
+                            fuwuguanjiaLl.setVisibility(View.GONE);
+                        }
+                        if(((APIM_UserLogin) response).userInfo.getManagerUserNum()==0){
+                            applyforTv.setText("申请商户入驻");
+                        }else{
+                            applyforTv.setText("我是商户");
+                        }
+
                         state = ((APIM_UserLogin) response).userInfo.state;
                         ondeal(state);
                         SlashHelper.setSettingString(((APIM_UserLogin) response).userInfo.getPhoneNum(), ((APIM_UserLogin) response).userInfo.getHead());
@@ -335,6 +354,7 @@ public class MineFragment extends BaseFragment {
                 } else {
                     ToastUtils.show(getActivity(), ((APIM_UserLogin) response).info);
                 }
+                dismissPd();
             }
         });
         sendJsonRequest(userInfoOwnerRequest);

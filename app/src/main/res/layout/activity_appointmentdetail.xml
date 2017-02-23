@@ -340,9 +340,10 @@
                     android:id="@+id/ordersuccess_btn_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
-                    android:visibility="gone">
+                    >
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -370,6 +371,17 @@
                             android:padding="8dp"
                             android:text="快速结账"
                             android:textColor="#e6bb7c"/>
+
+                        <TextView
+                            android:id="@+id/hongbao_tv"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/red"
+                            android:layout_marginTop="20dp"
+                            android:layout_below="@+id/jiezhang_btn"
+                            android:text="觉得服务不错,给个赞赏红包吧"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
                     </RelativeLayout>
 
                 </RelativeLayout>
