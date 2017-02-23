@@ -23,7 +23,7 @@
             android:textSize="20sp"
             android:id="@+id/tv"
             android:textStyle="bold"
-            android:text="cc">
+            android:text="">
 
 
         </TextView>

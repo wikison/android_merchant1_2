@@ -565,5 +565,6 @@ public class Urls {
     public static String USER_BAND_CARD_DO = "user_bandcard_do";
     //获取银行卡绑定信息
     public static String USER_BANDCARDINFO_1_2_1 = "user_bandcard_info_1_2_1";
-
+    //设置备注名
+    public static String USER_ATTRACT_EDIT = "user_attract_edit";
 }

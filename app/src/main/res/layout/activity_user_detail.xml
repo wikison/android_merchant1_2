@@ -91,13 +91,12 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_buy_num"
+                        android:id="@+id/tv_rname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_6dp"
-                        android:drawableLeft="@mipmap/xiuxi_icon"
-                        android:drawablePadding="@dimen/margin_6dp"
-                        android:text="休息"
+                        android:text="备注名"
+                        android:visibility="gone"
                         android:textColor="@color/font_black_46"
                         android:textSize="@dimen/font_24px"/>
 
@@ -121,6 +120,18 @@
                     app:rv_strokeWidth="1px"/>
 
             </RelativeLayout>
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:id="@+id/tv_buy_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_6dp"
+                android:drawableLeft="@mipmap/xiuxi_icon"
+                android:drawablePadding="@dimen/margin_6dp"
+                android:text="休息"
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_24px"/>
 
             <LinearLayout
                 android:id="@+id/ll_phone"

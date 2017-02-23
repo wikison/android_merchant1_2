@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.zemult.merchant">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zemult.merchant">
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="23"
         tools:ignore="OldTargetApi"
-        tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest,com.taobao.taorecorder,com.taobao.taorecorde_sdk"/>
+        tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest,com.taobao.taorecorder,com.taobao.taorecorde_sdk" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!-- renren sso Permission for Unit Test -->
     <!-- QQ、QQ空间所需权限 -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".app.AppApplication"
@@ -53,160 +53,160 @@
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="281f98c9ecdfde9631e6e74981c49e75"/>
+            android:value="281f98c9ecdfde9631e6e74981c49e75" />
 
-        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name="com.amap.api.location.APSService" />
         <!-- 下载服务 -->
-        <service android:name=".service.NewVersionUpdateService"/>
+        <service android:name=".service.NewVersionUpdateService" />
 
         <activity android:name=".activity.guide.GuideActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".im.contact.ContactSystemMessageActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.mine.message.TopicMessageActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.mine.message.CoastMessageActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SoundTaskRecordActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.mine.MyWalletActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.mine.PayPasswordManagerActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.mine.ValidatePayPwdActivity"/>
-        <activity android:name=".activity.mine.RetrievePasswordActivity"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.mine.ValidatePayPwdActivity" />
+        <activity android:name=".activity.mine.RetrievePasswordActivity" />
         <activity
             android:name=".activity.SfriendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".activity.message.RecogizePeopleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.message.InviteContactsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.slash.dotask.DoTaskVoiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.slash.dotask.NewDoTaskVoiceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.slash.dotask.DoTaskPayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.slash.dotask.DoTaskVoteActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activity.slash.dotask.NewDoTaskFinishActivity"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.slash.dotask.NewDoTaskFinishActivity" />
         <!-- IM -->
         <activity
             android:name=".im.LoginTestActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.contact.FindContactActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.sample.SelectContactToSendCardActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.privateimage.PictureActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.demo.TribeActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.SearchTribeActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.EditTribeInfoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.TribeInfoActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.TribeMembersActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.EditMyTribeProfileActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.sample.TribeMsgRecTypeSetActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.InviteTribeMemberActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.tribe.TribeSystemMessageActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".im.sample.ContactSettingActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.IpSwitchActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Dialog" />
 
         <!-- IM -->
         <activity
@@ -214,79 +214,79 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/MainActivityTheme"/>
+            android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.CityPickerActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activity.RegisterActivity"/>
-        <activity android:name=".activity.PasswordActivity"/>
-        <activity android:name=".activity.mine.MySlashActivity"/>
-        <activity android:name=".activity.slash.MyTaskActivity"/>
-        <activity android:name=".activity.slash.SlashRecommendActivity"/>
-        <activity android:name=".activity.slash.dotask.DoTaskPicActivity"/>
-        <activity android:name=".activity.slash.MyPublishTaskActivity"/>
-        <activity android:name=".activity.slash.MyPublishTaskDetailActivity"/>
-        <activity android:name=".activity.slash.dotask.NewDoTaskPicActivity"/>
-        <activity android:name=".activity.slash.dotask.NewDoTaskVoteActivity"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.PasswordActivity" />
+        <activity android:name=".activity.mine.MySlashActivity" />
+        <activity android:name=".activity.slash.MyTaskActivity" />
+        <activity android:name=".activity.slash.SlashRecommendActivity" />
+        <activity android:name=".activity.slash.dotask.DoTaskPicActivity" />
+        <activity android:name=".activity.slash.MyPublishTaskActivity" />
+        <activity android:name=".activity.slash.MyPublishTaskDetailActivity" />
+        <activity android:name=".activity.slash.dotask.NewDoTaskPicActivity" />
+        <activity android:name=".activity.slash.dotask.NewDoTaskVoteActivity" />
         <activity
             android:name=".activity.slash.PublishTaskActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
-        <activity android:name=".activity.slash.IndustryRoleActivity"/>
-        <activity android:name=".activity.slash.PublishTaskTypeActivity"/>
-        <activity android:name=".activity.slash.PublishTaskVoteActivity"/>
-        <activity android:name=".activity.slash.PublishTaskPersonTypeActivity"/>
-        <activity android:name=".activity.slash.PublishTaskFriendActivity"/>
-        <activity android:name=".activity.slash.ChooseLabelSendFriendActivity"/>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity android:name=".activity.slash.IndustryRoleActivity" />
+        <activity android:name=".activity.slash.PublishTaskTypeActivity" />
+        <activity android:name=".activity.slash.PublishTaskVoteActivity" />
+        <activity android:name=".activity.slash.PublishTaskPersonTypeActivity" />
+        <activity android:name=".activity.slash.PublishTaskFriendActivity" />
+        <activity android:name=".activity.slash.ChooseLabelSendFriendActivity" />
         <activity
             android:name=".activity.slash.PublishTaskBonusesActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.slash.PublishTaskPayActivity"/>
-        <activity android:name=".activity.slash.MerchantTaskTypeActivity"/>
-        <activity android:name=".activity.slash.PublishTaskRewardActivity"/>
-        <activity android:name=".activity.slash.PublishTaskRewardTypeActivity"/>
-        <activity android:name=".activity.mine.RoleDetailActivity"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.slash.PublishTaskPayActivity" />
+        <activity android:name=".activity.slash.MerchantTaskTypeActivity" />
+        <activity android:name=".activity.slash.PublishTaskRewardActivity" />
+        <activity android:name=".activity.slash.PublishTaskRewardTypeActivity" />
+        <activity android:name=".activity.mine.RoleDetailActivity" />
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance" />
         <activity
             android:name=".activity.slash.MerchantEnterActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activity.AboutUsActivity"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.AboutUsActivity" />
         // 方案详情
         <activity
             android:name=".activity.slash.MoodDetailActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         // 斜杠页 --> 美食等
-        <activity android:name=".activity.slash.SingleKindPlanListActivity"/>
+        <activity android:name=".activity.slash.SingleKindPlanListActivity" />
         // 斜杠页 --> 全部分类
-        <activity android:name=".activity.slash.AllCategoryActivity"/>
+        <activity android:name=".activity.slash.AllCategoryActivity" />
         // 用户详情
-        <activity android:name=".activity.slash.UserDetailActivity"/>
+        <activity android:name=".activity.slash.UserDetailActivity" />
         // 用户详情 --> 全部场景
         <activity
             android:name=".activity.slash.AllChangjingActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         // 用户详情 --> 全部斜杠
-        <activity android:name=".activity.slash.AllSlashActivity"/>
+        <activity android:name=".activity.slash.AllSlashActivity" />
         // 用户详情 --> 全部记录
-        <activity android:name=".activity.slash.AllRecordActivity"/>
+        <activity android:name=".activity.slash.AllRecordActivity" />
         <activity
             android:name=".activity.SearRoleActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activity.mine.MyinfoSetActivity"/>
-        <activity android:name=".activity.slash.JoinRolesActivity"/>
-        <activity android:name=".activity.mine.NicknameActivity"/>
-        <activity android:name=".activity.mine.MySexActivity"/>
-        <activity android:name=".activity.mine.WorkExperActivity"/>
-        <activity android:name=".activity.mine.MyAreaActivity"/>
-        <activity android:name=".activity.HeadManageActivity"/>
-        <activity android:name=".activity.mine.MyFollowActivity"/>
-        <activity android:name=".activity.FindPasswordActivity"/>
-        <activity android:name=".activity.mine.MyFansActivity"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activity.mine.MyinfoSetActivity" />
+        <activity android:name=".activity.slash.JoinRolesActivity" />
+        <activity android:name=".activity.mine.NicknameActivity" />
+        <activity android:name=".activity.mine.MySexActivity" />
+        <activity android:name=".activity.mine.WorkExperActivity" />
+        <activity android:name=".activity.mine.MyAreaActivity" />
+        <activity android:name=".activity.HeadManageActivity" />
+        <activity android:name=".activity.mine.MyFollowActivity" />
+        <activity android:name=".activity.FindPasswordActivity" />
+        <activity android:name=".activity.mine.MyFansActivity" />
         <activity android:name=".activity.RecordLifeActivity">
 
             <!-- <intent-filter> -->
@@ -296,54 +296,54 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".util.imagepicker.SelectPictureActivity"/>
-        <activity android:name=".util.imagepicker.ImageAlbumActivity"/>
-        <activity android:name=".util.imagepicker.ImageBrowserActivity"/>
-        <activity android:name=".util.imagepicker.ImageGridActivity"/>
-        <activity android:name=".activity.mine.InviteFriendActivity"/>
-        <activity android:name=".activity.SelectRoleActivity"/>
-        <activity android:name=".app.base.BaseWebViewActivity"/>
-        <activity android:name=".activity.slash.UploadCredentialsActivity"/>
+        <activity android:name=".util.imagepicker.SelectPictureActivity" />
+        <activity android:name=".util.imagepicker.ImageAlbumActivity" />
+        <activity android:name=".util.imagepicker.ImageBrowserActivity" />
+        <activity android:name=".util.imagepicker.ImageGridActivity" />
+        <activity android:name=".activity.mine.InviteFriendActivity" />
+        <activity android:name=".activity.SelectRoleActivity" />
+        <activity android:name=".app.base.BaseWebViewActivity" />
+        <activity android:name=".activity.slash.UploadCredentialsActivity" />
         // 我的 --> 安全设置 --> 实名认证
-        <activity android:name=".activity.mine.BindBankCardActivity"/>
-        <activity android:name=".activity.mine.ChangePasswordActivity"/>
-        <activity android:name=".activity.mine.ChangePassSucActivity"/>
-        <activity android:name=".activity.mine.RsettingPasswordActivity"/>
-        <activity android:name=".activity.slash.NewroleActivity"/>
-        <activity android:name=".activity.slash.SlashRoleActivity"/>
-        <activity android:name=".activity.slash.ShopDetailActivity"/>
-        <activity android:name=".activity.mine.BusinessManActivity"/>
-        <activity android:name=".activity.mine.MySettingActivity"/>
-        <activity android:name=".activity.mine.SafeSettingActivity"/>
-        <activity android:name=".activity.mine.MyQrActivity"/>
-        <activity android:name=".activity.mine.MyPhoneSecretActivity"/>
-        <activity android:name=".activity.ScanQrActivity"/>
-        <activity android:name=".activity.mine.message.SystemMessageActivity"/>
-        <activity android:name=".activity.mine.message.SystemMessageChatUIActivity"/>
-        <activity android:name=".activity.mine.message.NoticeMessageActivity"/>
-        <activity android:name=".activity.mine.MyAreaChildActivity"/>
-        <activity android:name=".activity.mine.MyAreaSubChildActivity"/>
-        <activity android:name=".activity.AddFriendNoteActivity"/>
+        <activity android:name=".activity.mine.BindBankCardActivity" />
+        <activity android:name=".activity.mine.ChangePasswordActivity" />
+        <activity android:name=".activity.mine.ChangePassSucActivity" />
+        <activity android:name=".activity.mine.RsettingPasswordActivity" />
+        <activity android:name=".activity.slash.NewroleActivity" />
+        <activity android:name=".activity.slash.SlashRoleActivity" />
+        <activity android:name=".activity.slash.ShopDetailActivity" />
+        <activity android:name=".activity.mine.BusinessManActivity" />
+        <activity android:name=".activity.mine.MySettingActivity" />
+        <activity android:name=".activity.mine.SafeSettingActivity" />
+        <activity android:name=".activity.mine.MyQrActivity" />
+        <activity android:name=".activity.mine.MyPhoneSecretActivity" />
+        <activity android:name=".activity.ScanQrActivity" />
+        <activity android:name=".activity.mine.message.SystemMessageActivity" />
+        <activity android:name=".activity.mine.message.SystemMessageChatUIActivity" />
+        <activity android:name=".activity.mine.message.NoticeMessageActivity" />
+        <activity android:name=".activity.mine.MyAreaChildActivity" />
+        <activity android:name=".activity.mine.MyAreaSubChildActivity" />
+        <activity android:name=".activity.AddFriendNoteActivity" />
         <!-- </activity> -->
-        <activity android:name=".activity.AddFriendsActivity"/>
-        <activity android:name=".activity.NewFriendActivity"/>
-        <activity android:name=".activity.mine.MyCardsActivity"/>
+        <activity android:name=".activity.AddFriendsActivity" />
+        <activity android:name=".activity.NewFriendActivity" />
+        <activity android:name=".activity.mine.MyCardsActivity" />
         <activity
             android:name=".activity.search.SearchActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activity.mine.MySlashMerchantActivity"/>
-        <activity android:name=".activity.mine.MyCollectionActivity"/>
-        <activity android:name=".activity.mine.MyBillActivity"/>
-        <activity android:name=".activity.mine.SaleManageActivity"/>
-        <activity android:name=".activity.mine.MyOrderActivity"/>
-        <activity android:name=".activity.mine.PayInfoActivity"/>
-        <activity android:name=".activity.role.CoastBillActivity"/>
-        <activity android:name=".activity.mine.TrueNameActivity"/>
-        <activity android:name=".activity.mine.LevelRankingActivity"/>
-        <activity android:name=".activity.mine.MyLevelActivity"/>
-        <activity android:name=".activity.mine.TestResultActivity"/>
-        <activity android:name=".activity.role.CreatPartyActivity"/>
-        <activity android:name=".activity.role.ModifyPartyActivity"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activity.mine.MySlashMerchantActivity" />
+        <activity android:name=".activity.mine.MyCollectionActivity" />
+        <activity android:name=".activity.mine.MyBillActivity" />
+        <activity android:name=".activity.mine.SaleManageActivity" />
+        <activity android:name=".activity.mine.MyOrderActivity" />
+        <activity android:name=".activity.mine.PayInfoActivity" />
+        <activity android:name=".activity.role.CoastBillActivity" />
+        <activity android:name=".activity.mine.TrueNameActivity" />
+        <activity android:name=".activity.mine.LevelRankingActivity" />
+        <activity android:name=".activity.mine.MyLevelActivity" />
+        <activity android:name=".activity.mine.TestResultActivity" />
+        <activity android:name=".activity.role.CreatPartyActivity" />
+        <activity android:name=".activity.role.ModifyPartyActivity" />
 
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -351,7 +351,7 @@
         -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <!-- 友盟 -->
         <!-- ###################注册SDK使用的Activity###################### -->
@@ -362,16 +362,16 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- wechat callback -->
         <activity
@@ -379,211 +379,212 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468"/>
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- -友盟意见反馈 -->
         <activity
             android:name="com.umeng.fb.ConversationActivity"
             android:label="@string/umeng_fb_title"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <!-- -友盟意见反馈 -->
 
         <uses-library
             android:name="com.google.android.maps"
-            android:required="false"/>
-        <uses-library android:name="android.test.runner"/>
+            android:required="false" />
+        <uses-library android:name="android.test.runner" />
 
         <!-- ############## Debug Version ################### -->
         <meta-data
             android:name="DEBUG_VERSION"
-            android:value="${DEBUG_VERSION_VALUE}"/>
+            android:value="${DEBUG_VERSION_VALUE}" />
         <meta-data
             android:name="RELEASE_VERSION"
-            android:value="${RELEASE_VERSION_VALUE}"/>
+            android:value="${RELEASE_VERSION_VALUE}" />
 
         <!-- 推送 -->
         <service
             android:name=".push.MyPushIntentService"
-            android:process=":push"/>
-        <service android:name=".push.NotificationService"/>
+            android:process=":push" />
+        <service android:name=".push.NotificationService" />
 
         <!-- IM -->
 
         <service
             android:name="com.alibaba.tcms.service.TCMSService"
             android:exported="true"
-            android:process=":TcmsService"/>
+            android:process=":TcmsService" />
         <!-- 用于接收从TCMSService发送的命令 -->
         <service
             android:name="com.alibaba.tcms.service.ListenerService"
-            android:exported="true"/>
+            android:exported="true" />
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="582c1b5df29d985f87001532"/>
+            android:value="582c1b5df29d985f87001532" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="179fab7d702de33b8e484a3b0744a036"/>
+            android:value="179fab7d702de33b8e484a3b0744a036" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}"/>
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <service
             android:name=".app.MapService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <!-- 推送 -->
         <service
             android:name=".push.MyPushIntentService"
-            android:process=":push"/>
-        <service android:name=".push.NotificationService"/>
+            android:process=":push" />
+        <service android:name=".push.NotificationService" />
 
         <meta-data
             android:name="com.zemult.merchant.view.common.MGlideMoudle"
-            android:value="GlideModule"/>
+            android:value="GlideModule" />
 
-        <activity android:name=".activity.mine.WithdrawalsActivity"/>
-        <activity android:name=".activity.mine.WithdrawDetailActivity"/>
+        <activity android:name=".activity.mine.WithdrawalsActivity" />
+        <activity android:name=".activity.mine.WithdrawDetailActivity" />
         <activity
             android:name=".activity.slash.AllCommentActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".activity.slash.AllTaskCompleteActivity"/>
-        <activity android:name=".im.tribe.TribeInviteActivity"/>
-        <activity android:name=".activity.mine.BangDingAccountActivity"/>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activity.slash.AllTaskCompleteActivity" />
+        <activity android:name=".im.tribe.TribeInviteActivity" />
+        <activity android:name=".activity.mine.BangDingAccountActivity" />
         <activity
             android:name=".activity.slash.TaskDetailActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name=".activity.mine.TrueNameResultActivity"/>
-        <activity android:name=".activity.mine.pwdsetting.OldPhoneAuthActivity"/>
-        <activity android:name=".activity.mine.pwdsetting.NewPhoneAuthActivity"/>
-        <activity android:name=".activity.mine.pwdsetting.IdnoAuthActivity"/>
-        <activity android:name=".activity.mine.TestCardsActivity"/>
-        <activity android:name=".activity.mine.CardsHistoryActivity"/>
-        <activity android:name=".activity.mine.EnterCardsActivity"/>
-        <activity android:name=".activity.slash.UserLevelActivity"/>
-        <activity android:name=".activity.mine.MerchantBillInfoActivity"/>
-        <activity android:name=".activity.slash.CommonFriendActivity"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".activity.mine.TrueNameResultActivity" />
+        <activity android:name=".activity.mine.pwdsetting.OldPhoneAuthActivity" />
+        <activity android:name=".activity.mine.pwdsetting.NewPhoneAuthActivity" />
+        <activity android:name=".activity.mine.pwdsetting.IdnoAuthActivity" />
+        <activity android:name=".activity.mine.TestCardsActivity" />
+        <activity android:name=".activity.mine.CardsHistoryActivity" />
+        <activity android:name=".activity.mine.EnterCardsActivity" />
+        <activity android:name=".activity.slash.UserLevelActivity" />
+        <activity android:name=".activity.mine.MerchantBillInfoActivity" />
+        <activity android:name=".activity.slash.CommonFriendActivity" />
         <activity
             android:name=".activity.search.SearchHotActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".activity.ReportActivity"/>
-        <activity android:name=".activity.mine.pwdsetting.GotoTurenameActivity"/>
-        <activity android:name=".activity.mine.BillInfoActivity"/>
-        <activity android:name=".alipay.taskpay.TaskPayInfoActivity"/>
-        <activity android:name=".alipay.taskpay.ChoosePayTypeActivity"/>
-        <activity android:name=".alipay.taskpay.TaskPayResultActivity"/>
-        <activity android:name=".activity.mine.MerchantFullNameActivity"/>
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".activity.ReportActivity" />
+        <activity android:name=".activity.mine.pwdsetting.GotoTurenameActivity" />
+        <activity android:name=".activity.mine.BillInfoActivity" />
+        <activity android:name=".alipay.taskpay.TaskPayInfoActivity" />
+        <activity android:name=".alipay.taskpay.ChoosePayTypeActivity" />
+        <activity android:name=".alipay.taskpay.TaskPayResultActivity" />
+        <activity android:name=".activity.mine.MerchantFullNameActivity" />
         <activity
             android:name=".activity.mine.MerchantManageActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activity.mine.MerchantDescribeActivity"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.mine.MerchantDescribeActivity" />
         <activity
             android:name=".activity.mine.MerchantPhoneActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.mine.MyInfoActivity"/>
-        <activity android:name=".activity.mine.RoleSetActivity"/>
-        <activity android:name=".activity.slash.GetTaskActivity"/>
-        <activity android:name=".activity.slash.OverdueTaskDetailActivity"/>
-        <activity android:name=".activity.slash.DiscoverRecommendActivity"/>
-        <activity android:name=".activity.slash.HotDiscoverActivity"/>
-        <activity android:name=".activity.search.LabelHomeActivity"/>
-        <activity android:name=".activity.search.LabelListActivity"/>
-        <activity android:name=".activity.search.MyLabelActivity"/>
-        <activity android:name=".activity.search.SendLabelActivity"/>
-        <activity android:name=".activity.mine.message.PushMessageActivity"/>
-        <activity android:name=".activity.mine.message.AtMeListActivity"/>
-        <activity android:name=".activity.mine.message.ZanListActivity"/>
-        <activity android:name=".activity.mine.message.CommentListActivity"/>
-        <activity android:name=".activity.mine.message.ReplyCommentActivity"/>
-        <activity android:name=".activity.slash.SearchDetailActivity"/>
-        <activity android:name=".activity.ConversationFragmentActivity"/>
-        <activity android:name=".activity.slash.MoreDiscoverActivity"/>
-        <activity android:name=".activity.role.RoleHomeActivity"/>
-        <activity android:name=".activity.mine.message.PayBusinessActivity"/>
-        <activity android:name=".activity.role.PartyHomeActivity"/>
-        <activity android:name=".activity.mine.BusinessAccountActivity"/>
-        <activity android:name=".activity.mine.MerchantWithdrawalsActivity"/>
-        <activity android:name=".activity.mine.BusinessAccountDetailActivity"/>
-        <activity android:name=".activity.mine.message.PayCouponListActivity"/>
-        <activity android:name=".activity.role.RoleTaskActivity"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.mine.MyInfoActivity" />
+        <activity android:name=".activity.mine.RoleSetActivity" />
+        <activity android:name=".activity.slash.GetTaskActivity" />
+        <activity android:name=".activity.slash.OverdueTaskDetailActivity" />
+        <activity android:name=".activity.slash.DiscoverRecommendActivity" />
+        <activity android:name=".activity.slash.HotDiscoverActivity" />
+        <activity android:name=".activity.search.LabelHomeActivity" />
+        <activity android:name=".activity.search.LabelListActivity" />
+        <activity android:name=".activity.search.MyLabelActivity" />
+        <activity android:name=".activity.search.SendLabelActivity" />
+        <activity android:name=".activity.mine.message.PushMessageActivity" />
+        <activity android:name=".activity.mine.message.AtMeListActivity" />
+        <activity android:name=".activity.mine.message.ZanListActivity" />
+        <activity android:name=".activity.mine.message.CommentListActivity" />
+        <activity android:name=".activity.mine.message.ReplyCommentActivity" />
+        <activity android:name=".activity.slash.SearchDetailActivity" />
+        <activity android:name=".activity.ConversationFragmentActivity" />
+        <activity android:name=".activity.slash.MoreDiscoverActivity" />
+        <activity android:name=".activity.role.RoleHomeActivity" />
+        <activity android:name=".activity.mine.message.PayBusinessActivity" />
+        <activity android:name=".activity.role.PartyHomeActivity" />
+        <activity android:name=".activity.mine.BusinessAccountActivity" />
+        <activity android:name=".activity.mine.MerchantWithdrawalsActivity" />
+        <activity android:name=".activity.mine.BusinessAccountDetailActivity" />
+        <activity android:name=".activity.mine.message.PayCouponListActivity" />
+        <activity android:name=".activity.role.RoleTaskActivity" />
         <activity
             android:name=".activity.slash.MerchantDetailActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.slash.FindPayActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".activity.mine.ClassifyActivity"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.mine.ClassifyActivity" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name=".activity.mine.MerchantManagerManageActivity"/>
-        <activity android:name=".activity.mine.MerchantAddActivity"/>
-        <activity android:name=".activity.mine.BlackListActivity"/>
-        <activity android:name=".activity.slash.HomeAdActivity"/>
-        <activity android:name=".activity.mine.AlbumActivity"/>
-        <activity android:name=".util.imagepicker.ImageBrowserNewActivity"/>
-        <activity android:name=".activity.mine.MerchantPassActivity"/>
-        <activity android:name=".activity.mine.WithdrawChooseActivity"/>
-        <activity android:name=".activity.mine.BindZfbActivity"/>
-        <activity android:name=".activity.mine.ShowBankActivity"/>
-        <activity android:name=".activity.mine.IamYuekeActivity"/>
-        <activity android:name=".activity.mine.ServiceHistoryActivity"/>
-        <activity android:name=".activity.mine.RecordDetailsActivity"/>
-        <activity android:name=".activity.mine.MyJoinedMerchantActivity"/>
-        <activity android:name=".activity.mine.TabManageActivity"/>
-        <activity android:name=".activity.mine.CustomManageActivity"/>
-        <activity android:name=".im.CreateBespeakActivity"/>
-        <activity android:name=".activity.mine.MerchantEnter2Activity"/>
-        <activity android:name=".alipay.taskpay.AssessmentActivity"/>
-        <activity android:name=".activity.mine.ServiceHistoryDetailActivity"/>
-        <activity android:name=".activity.mine.AccountSafeActivity"/>
-        <activity android:name=".activity.mine.MyAppointmentActivity"/>
-        <activity android:name=".activity.slash.TAMerchantListActivity"/>
-        <activity android:name=".activity.mine.AppointmentDetailActivity"/>
-        <activity android:name=".activity.slash.ChoosePayMerchantActivity"/>
-        <activity android:name=".activity.slash.SendPresentActivity"/>
-        <activity android:name=".activity.slash.ChoosePayReservationActivity"/>
-        <activity android:name=".activity.mine.GiftAboutDetailActivity"/>
-        <activity android:name=".activity.slash.ChooseReservationMerchantActivity"/>
-        <activity android:name=".activity.slash.SendPresentSuccessActivity"/>
-        <activity android:name=".activity.mine.SettingMoneyActivity"/>
-        <activity android:name=".activity.slash.SendRewardActivity"/>
-        <activity android:name=".activity.SendAppreciateRedActivity"/>
-        <activity android:name=".activity.ReceiveRedActivity"/>
-        <activity android:name=".activity.RedRecordDetailActivity"/>
-        <activity android:name=".activity.ShareAppointmentActivity"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".activity.mine.MerchantManagerManageActivity" />
+        <activity android:name=".activity.mine.MerchantAddActivity" />
+        <activity android:name=".activity.mine.BlackListActivity" />
+        <activity android:name=".activity.slash.HomeAdActivity" />
+        <activity android:name=".activity.mine.AlbumActivity" />
+        <activity android:name=".util.imagepicker.ImageBrowserNewActivity" />
+        <activity android:name=".activity.mine.MerchantPassActivity" />
+        <activity android:name=".activity.mine.WithdrawChooseActivity" />
+        <activity android:name=".activity.mine.BindZfbActivity" />
+        <activity android:name=".activity.mine.ShowBankActivity" />
+        <activity android:name=".activity.mine.IamYuekeActivity" />
+        <activity android:name=".activity.mine.ServiceHistoryActivity" />
+        <activity android:name=".activity.mine.RecordDetailsActivity" />
+        <activity android:name=".activity.mine.MyJoinedMerchantActivity" />
+        <activity android:name=".activity.mine.TabManageActivity" />
+        <activity android:name=".activity.mine.CustomManageActivity" />
+        <activity android:name=".im.CreateBespeakActivity" />
+        <activity android:name=".activity.mine.MerchantEnter2Activity" />
+        <activity android:name=".alipay.taskpay.AssessmentActivity" />
+        <activity android:name=".activity.mine.ServiceHistoryDetailActivity" />
+        <activity android:name=".activity.mine.AccountSafeActivity" />
+        <activity android:name=".activity.mine.MyAppointmentActivity" />
+        <activity android:name=".activity.slash.TAMerchantListActivity" />
+        <activity android:name=".activity.mine.AppointmentDetailActivity" />
+        <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
+        <activity android:name=".activity.slash.SendPresentActivity" />
+        <activity android:name=".activity.slash.ChoosePayReservationActivity" />
+        <activity android:name=".activity.mine.GiftAboutDetailActivity" />
+        <activity android:name=".activity.slash.ChooseReservationMerchantActivity" />
+        <activity android:name=".activity.slash.SendPresentSuccessActivity" />
+        <activity android:name=".activity.mine.SettingMoneyActivity" />
+        <activity android:name=".activity.slash.SendRewardActivity" />
+        <activity android:name=".activity.SendAppreciateRedActivity" />
+        <activity android:name=".activity.ReceiveRedActivity" />
+        <activity android:name=".activity.RedRecordDetailActivity" />
+        <activity android:name=".activity.ShareAppointmentActivity" />
+        <activity android:name=".activity.mine.RemarkNameActivity"></activity>
     </application>
 
 </manifest>

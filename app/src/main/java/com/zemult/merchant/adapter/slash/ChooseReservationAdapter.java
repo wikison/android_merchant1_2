@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 
 public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
     Context mContext;
+    boolean isQuick;
 
     public String getSelectId() {
         return selectId;
@@ -33,9 +34,10 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
 
     String selectId;
 
-    public ChooseReservationAdapter(Context context, List<M_Reservation> list) {
+    public ChooseReservationAdapter(Context context, List<M_Reservation> list, boolean isQuick) {
         super(context, list);
         mContext = context;
+        this.isQuick= isQuick;
     }
 
     // 设置数据 任务
@@ -58,6 +60,10 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
             convertView = mInflater.inflate(R.layout.item_choose_reservation, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(R.string.app_name, holder);
+        }
+        if(isQuick){
+            holder.cb.setChecked(true);
+            holder.cb.setEnabled(false);
         }
         initData(holder, entity);
         initListener(holder, position);

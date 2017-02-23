@@ -109,7 +109,7 @@ public class ChoosePayReservationActivity extends BaseActivity {
         merchantId = getIntent().getIntExtra(FindPayActivity.MERCHANT_ID, -1);
         merchantName = getIntent().getStringExtra(MERCHANT_NAME);
 
-        adapter = new ChooseReservationAdapter(mContext, reservationList);
+        adapter = new ChooseReservationAdapter(mContext, reservationList, false);
         flv.setAdapter(adapter);
     }
 
@@ -125,7 +125,7 @@ public class ChoosePayReservationActivity extends BaseActivity {
             public void onAllClick(int position) {
                 Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
                 intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, 0);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId+"");
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
                 startActivity(intent);
             }
         });

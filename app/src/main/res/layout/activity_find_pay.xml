@@ -128,6 +128,8 @@
                     android:gravity="center_vertical|right"
                     android:hint="输入实际的消费金额"
                     android:inputType="numberDecimal"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text=""
                     android:textColor="@color/font_main"
                     android:textSize="@dimen/font_30px"/>
 
@@ -138,16 +140,20 @@
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical"
                 android:orientation="horizontal"
-                android:paddingRight="@dimen/margin_16dp">
+                android:paddingRight="@dimen/margin_12dp">
 
                 <CheckBox
+                    android:id="@+id/cb_reward"
                     style="@style/text_12_black_999"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/checkboxreward"
+                    android:drawablePadding="5dp"
                     android:text="赞赏红包6.66元"/>
 
                 <ImageView
+                    android:id="@+id/iv_reward"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="@dimen/margin_16dp"
                     android:scaleType="center"
                     android:src="@mipmap/down_btn"/>
             </LinearLayout>

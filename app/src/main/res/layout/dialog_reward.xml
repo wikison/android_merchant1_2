@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/text_18_black_28"
+        android:layout_gravity="right"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/cancel"/>
+
+    <com.zemult.merchant.view.FixedGridView
+        android:id="@+id/gv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="16dp"
+        android:horizontalSpacing="12dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="24dp">
+
+    </com.zemult.merchant.view.FixedGridView>
+
+
+</LinearLayout>

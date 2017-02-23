@@ -3,15 +3,19 @@ package com.zemult.merchant.activity.slash;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
@@ -19,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
+import com.zemult.merchant.activity.mine.NicknameActivity;
+import com.zemult.merchant.activity.mine.RemarkNameActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
@@ -49,6 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -71,6 +78,9 @@ public class UserDetailActivity extends BaseActivity {
     public static final String USER_SEX = "userSex"; // 用户性别
 
     private static final int REQ_ALBUM = 0x110;
+    private static final int REQ_REMARK_NAME = 0x120;
+
+    public static final String TAG = UserDetailActivity.class.getSimpleName();
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -121,6 +131,8 @@ public class UserDetailActivity extends BaseActivity {
     TextView numTv;
     @Bind(R.id.iv_phone)
     ImageView ivPhone;
+    @Bind(R.id.tv_rname)
+    TextView tvRname;
 
     private Context mContext;
     private Activity mActivity;
@@ -189,7 +201,7 @@ public class UserDetailActivity extends BaseActivity {
             llBottom.setVisibility(View.GONE);
         } else {
             llRight.setVisibility(View.VISIBLE);
-            ivRight.setImageResource(R.mipmap.jubao_white_icon);
+            ivRight.setImageResource(R.mipmap.gengduo_icon);
         }
 
 
@@ -395,10 +407,15 @@ public class UserDetailActivity extends BaseActivity {
 //            gvPic.setAdapter(adapter);
 //        }
         // 是否已经关注(0:未关注1:已关注)
+        tvRname.setVisibility(View.GONE);
         if (userInfo.getIsFan() == 0) {
             btnFocus.setText(R.string.add_focus_yogouser);
         } else {
             btnFocus.setText(R.string.has_focus);
+            if(!TextUtils.isEmpty(userInfo.remarkName)){
+                tvRname.setVisibility(View.VISIBLE);
+                tvRname.setText("备注名：" +userInfo.remarkName);
+            }
         }
 
         this.userInfo = userInfo;
@@ -491,22 +508,14 @@ public class UserDetailActivity extends BaseActivity {
                 if (((CommonResult) response).status == 1) {
                     // 显示关注约客
                     btnFocus.setText(R.string.add_focus_yogouser);
+                    tvRname.setVisibility(View.GONE);
+                    userInfo.remarkName = "";
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
             }
         });
         sendJsonRequest(attractDelRequest);
-    }
-
-    private void doReport() {
-        if (noLogin(mContext))
-            return;
-        IntentUtil.intStart_activity(mActivity,
-                ReportActivity.class,
-                new Pair<String, Integer>(ReportActivity.INTENT_INFO_ID, userId),
-                new Pair<String, Integer>(ReportActivity.INTENT_INFO_TYPE, 2));
-
     }
 
     @OnClick({R.id.lh_btn_back, R.id.btn_buy, R.id.btn_service, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.tv_phone, R.id.ll_photo, R.id.btn_contact, R.id.btn_focus, R.id.btn_gift})
@@ -519,7 +528,7 @@ public class UserDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_right:
             case R.id.ll_right:
-                doReport();
+                showPopupWindow(mContext, ivRight);
                 break;
             case R.id.ll_photo:
                 if (merchantNum > 0) {
@@ -564,12 +573,12 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
 
-                    Intent merchantintent = new Intent(mContext, CreateBespeakActivity.class);
-                    merchantintent.putExtra("serviceId", userId);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable("m_merchant", merchant);
-                    merchantintent.putExtras(mBundle);
-                    startActivity(merchantintent);
+                Intent merchantintent = new Intent(mContext, CreateBespeakActivity.class);
+                merchantintent.putExtra("serviceId", userId);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("m_merchant", merchant);
+                merchantintent.putExtras(mBundle);
+                startActivity(merchantintent);
 
                 break;
             case R.id.btn_gift:
@@ -586,14 +595,86 @@ public class UserDetailActivity extends BaseActivity {
         }
     }
 
+
+    private void showPopupWindow(final Context context, View rightButton) {
+        //设置contentView
+        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_conversationhead, null);
+        final PopupWindow mPopWindow = new PopupWindow(contentView,
+                DensityUtil.dip2px(context, 120), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopWindow.setContentView(contentView);
+        mPopWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        mPopWindow.setOutsideTouchable(true);
+
+        TextView tv1 = (TextView) contentView.findViewById(R.id.tv1);
+        TextView tv2 = (TextView) contentView.findViewById(R.id.tv2);
+        ImageView iv1 = (ImageView) contentView.findViewById(R.id.iv1);
+        ImageView iv2 = (ImageView) contentView.findViewById(R.id.iv2);
+        LinearLayout l1 = (LinearLayout) contentView.findViewById(R.id.l1);
+        LinearLayout l2 = (LinearLayout) contentView.findViewById(R.id.l2);
+
+        tv1.setText("投诉举报");
+        tv2.setText("设置备注名");
+        iv1.setImageResource(R.mipmap.bianji_icon);
+        iv2.setImageResource(R.mipmap.jubao_icon);
+        l1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doReport();
+                mPopWindow.dismiss();
+            }
+        });
+        l2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doEdit();
+                mPopWindow.dismiss();
+            }
+        });
+        //显示PopupWindow
+        mPopWindow.showAsDropDown(rightButton, -155, -26);
+    }
+
+    private void doReport() {
+        if (noLogin(mContext))
+            return;
+        IntentUtil.intStart_activity(mActivity,
+                ReportActivity.class,
+                new Pair<String, Integer>(ReportActivity.INTENT_INFO_ID, userId),
+                new Pair<String, Integer>(ReportActivity.INTENT_INFO_TYPE, 2));
+
+    }
+
+    private void doEdit() {
+        if (noLogin(mContext))
+            return;
+        if (btnFocus.getText().toString().contains("＋")) {
+            ToastUtil.showMessage("请先＋熟人");
+            return;
+        }
+        Intent intent = new Intent(mContext, RemarkNameActivity.class);
+        intent.putExtra("name", userInfo.remarkName);
+        intent.putExtra("attractId", userId);
+        startActivityForResult(intent, REQ_REMARK_NAME);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQ_ALBUM
                 && userId == SlashHelper.userManager().getUserId()) {
             getUserInfo();
+        }else if(resultCode == RESULT_OK && requestCode == REQ_REMARK_NAME) {
+            tvRname.setVisibility(View.VISIBLE);
+            tvRname.setText("备注名：" +data.getStringExtra("name"));
+            userInfo.remarkName = data.getStringExtra("name");
         }
 
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
