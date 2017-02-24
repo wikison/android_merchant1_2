@@ -209,7 +209,7 @@ public class ImageHelper {
     }
 
     /**
-     * 创建800*480分辨率的图片
+     * 创建1280*768分辨率的图片
      *
      * @param filePath
      * @return
@@ -220,7 +220,7 @@ public class ImageHelper {
         opts.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, opts);
 
-        opts.inSampleSize = computeSampleSize(opts, -1, 800 * 480);
+        opts.inSampleSize = computeSampleSize(opts, -1, 1280 * 768);
         opts.inJustDecodeBounds = false;
 
         try {

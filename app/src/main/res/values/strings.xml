@@ -342,5 +342,6 @@
     <string name="set_tribe_pwd">设置群密码</string>
     <string name="set_tribe_pwd_desc">密码必须由6-20个英文字母或数字(0-9)组成，区分大小写</string>
     <string name="input_tribe_pwd">请输入密码</string>
+    <string name="filter_vcode">0123456789X</string>
 
 </resources>

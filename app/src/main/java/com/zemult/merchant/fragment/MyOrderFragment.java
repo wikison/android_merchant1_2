@@ -177,7 +177,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
             @Override
             public void onItemClick(final M_Bill m_bill) {
                 Intent intent = new Intent(mActivity, ChoosePayTypeActivity.class);
-                intent.putExtra("consumeMoney", m_bill.payMoney);
+                intent.putExtra("consumeMoney", m_bill.allMoney);
                 intent.putExtra("order_sn", m_bill.number);
                 intent.putExtra("userPayId", m_bill.userPayId);
                 intent.putExtra("merchantName", m_bill.merchantName);

@@ -531,6 +531,6 @@ public class M_Userinfo implements Serializable {
 
         return result;
     }
-
+    @Expose
     public String remarkName; // 备注名
 }

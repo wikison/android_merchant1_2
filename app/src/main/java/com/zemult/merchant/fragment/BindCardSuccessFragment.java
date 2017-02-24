@@ -52,8 +52,8 @@ public class BindCardSuccessFragment extends BaseFragment {
     private void init() {
         tvName.setText(getArguments().getString(BANK_NAME));
         tvNum.setText("**** **** **** " + getArguments().getString(CARD_NUM).substring(
-                getArguments().getString(CARD_NUM).length() - 5,
-                getArguments().getString(CARD_NUM).length() - 1));
+                getArguments().getString(CARD_NUM).length() - 4,
+                getArguments().getString(CARD_NUM).length()));
     }
 
     @Override

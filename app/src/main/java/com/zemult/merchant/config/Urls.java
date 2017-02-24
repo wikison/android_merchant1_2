@@ -9,7 +9,7 @@ public class Urls {
     public static String MAIN_URL = "http://yovoll.54xiegang.com/";
 
     public static String URL = "http://test1.54xiegang.com/dzyx_test/";//测试
-//    public static String URL = "http://yovoll.54xiegang.com/dzyx/";//正式
+//    public static String URL = "http://server.yovoll.com/dzyx/";//正式
 
 
     // 应用APPKEY，这个APPKEY是申请应用时获取的
