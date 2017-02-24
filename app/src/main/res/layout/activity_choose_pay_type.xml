@@ -42,7 +42,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd"
+                android:text=""
                 android:textColor="@color/font_black_28"
                 android:textSize="@dimen/font_32px"/>
 
@@ -189,7 +189,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/check_box_style"
+            android:background="@drawable/checkboxreservation"
             android:button="@null"/>
 
     </RelativeLayout>

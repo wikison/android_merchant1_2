@@ -204,60 +204,19 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                                         if (!TextUtils.isEmpty(mfollow.head)) {
                                             holder.setCircleImage(R.id.iv_follow_head, mfollow.head);
                                         }
-                                        // 性别
-//                                        if (mfollow.sex == 0)
-//                                            holder.setResImage(R.id.iv_sex, R.mipmap.man_icon);
-//                                        else
-//                                            holder.setResImage(R.id.iv_sex, R.mipmap.girl_icon);
-//
-//                                        holder.setOnclickListener(R.id.iv_follow_head, new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(mContext, UserDetailActivity.class);
-//                                                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position).userId);
-//                                                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position).name);
-//                                                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position).head);
-//                                                startActivity(intent);
-//                                            }
-//                                        });
-
                                         holder.setImageResource(R.id.iv_sex, mfollow.getExperienceImg());
                                         holder.setText(R.id.tv_describe, mfollow.getExperienceText());
-//                                        if (!TextUtils.isEmpty(mfollow.note))
-//                                            holder.setText(R.id.tv_describe, mfollow.note);
-                                        switch (mfollow.state){
-                                            case 0:
-                                                holder.setImageResource(R.id.iv_status, R.mipmap.kongxian_icon);
-                                                holder.setText(R.id.tv_status, "空闲");
-                                                holder.setTextColor(R.id.tv_status, 0xff5eb31b);
-                                                break;
-                                            case 1:
-                                                holder.setImageResource(R.id.iv_status, R.mipmap.xiuxi_icon);
-                                                holder.setText(R.id.tv_status, "休息");
-                                                holder.setTextColor(R.id.tv_status, 0xff999999);
-                                                break;
-                                            case 2:
-                                                holder.setImageResource(R.id.iv_status, R.mipmap.manglu_icon);
-                                                holder.setText(R.id.tv_status, "忙碌");
-                                                holder.setTextColor(R.id.tv_status, 0xffeb4f38);
-                                                break;
-                                        }
-
+                                        holder.setImageResource(R.id.iv_status, mfollow.getStatusImg(mfollow.state));
+                                        holder.setText(R.id.tv_status, mfollow.getStatusText(mfollow.state));
+                                        holder.setTextColor(R.id.tv_status, mfollow.getStatusTextColor(mfollow.state));
                                         holder.setText(R.id.tv_follow_name, mfollow.name);
                                         holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);
 
-//                                        holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-//                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-//
-//                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
-//                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
-//
-//                                                }
-//                                            }
-//                                        });
+                                        if(!TextUtils.isEmpty(mfollow.note)){
+                                            holder.setViewVisible(R.id.tv_rname);
+                                            holder.setText(R.id.tv_rname, "备注名:" + mfollow.note);
+                                        }else
+                                            holder.setViewGone(R.id.tv_rname);
                                     }
                                 });
 

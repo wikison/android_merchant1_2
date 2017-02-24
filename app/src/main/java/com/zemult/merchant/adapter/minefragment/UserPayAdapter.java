@@ -140,7 +140,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
         }
 
 
-        holder.tvMoney.setText("-" + Convert.getMoneyString(m.payMoney));
+        holder.tvMoney.setText("-" + Convert.getMoneyString(m.allMoney));
         holder.tvDate.setText(m.createtime.substring(5, 10));
         holder.tvTime.setText(m.createtime.substring(11, 16));
 

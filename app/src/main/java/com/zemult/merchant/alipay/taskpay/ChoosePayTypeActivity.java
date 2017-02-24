@@ -25,7 +25,6 @@ import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.SendAppreciateRedActivity;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.mine.PayPasswordManagerActivity;
 import com.zemult.merchant.activity.slash.SendPresentActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
@@ -173,7 +172,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         lhTvTitle.setText("支付订单");
         tvName.setText(""+merchantName);
         tvNum.setText(ORDER_SN);
-        if(StringUtils.isEmpty(managerhead)){
+        if(StringUtils.isEmpty(merchantHead)){
             imageManager.loadCircleResImage(R.mipmap.chart_liwu_icon, ivHead);
         }
         else{

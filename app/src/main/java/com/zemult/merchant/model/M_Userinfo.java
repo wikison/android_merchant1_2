@@ -531,6 +531,51 @@ public class M_Userinfo implements Serializable {
 
         return result;
     }
+    public String getStatusText(int userState) {
+        String result = "";
+        switch (userState){
+            case 0:
+                result = "空闲";
+                break;
+            case 1:
+                result = "休息";
+                break;
+            case 2:
+                result = "忙碌";
+                break;
+        }
+        return result;
+    }
+    public int getStatusImg(int userState) {
+        int result = 0;
+        switch (userState){
+            case 0:
+                result = R.mipmap.kongxian_icon;
+                break;
+            case 1:
+                result = R.mipmap.xiuxi_icon;
+                break;
+            case 2:
+                result = R.mipmap.manglu_icon;
+                break;
+        }
+        return result;
+    }
+    public int getStatusTextColor(int userState) {
+        int result = 0;
+        switch (userState){
+            case 0:
+                result = 0xff5eb31b;
+                break;
+            case 1:
+                result = 0xff999999;
+                break;
+            case 2:
+                result = 0xffeb4f38;
+                break;
+        }
+        return result;
+    }
     @Expose
     public String remarkName; // 备注名
 }
