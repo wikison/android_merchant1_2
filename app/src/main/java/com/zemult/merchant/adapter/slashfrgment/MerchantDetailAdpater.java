@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
  */
 public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
-    Drawable drawable;
     private boolean isNoData, halfScreen;
     private int mHeight;
     private int noDividerPos = -1;
@@ -72,7 +71,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 //            userinfo.setUserId(-1);
 //            listFan = new ArrayList<>();
 //            listFan.add(userinfo);
-        }else {
+        } else {
             noDividerPos = listFan.size() - 1;
             listFan.get(0).showLatest = true;
             data.addAll(listFan);
@@ -83,7 +82,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 //            userinfo.setUserId(-1);
 //            listAll = new ArrayList<>();
 //            listAll.add(userinfo);
-        }else {
+        } else {
             listAll.get(0).showAll = true;
             data.addAll(listAll);
         }
@@ -103,7 +102,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // 暂无数据
         if (isNoData) {
-            if(halfScreen)
+            if (halfScreen)
                 convertView = mInflater.inflate(R.layout.item_no_merchant_data_layout, null);
             else
                 convertView = mInflater.inflate(R.layout.item_no_data_layout, null);
@@ -175,34 +174,9 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
         holder.ivService.setImageResource(entity.getExperienceImg());
         holder.tvService.setText(entity.getExperienceText());
-
-
-        switch (entity.getUserState()) {
-            case 0:
-                drawable = mContext.getResources().getDrawable(R.mipmap.kongxian_icon);
-                // 这一步必须要做,否则不会显示.
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_idle));
-                holder.tvBuyNum.setText("空闲");
-                break;
-            case 1:
-                drawable = mContext.getResources().getDrawable(R.mipmap.xiuxi_icon);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
-                holder.tvBuyNum.setText("休息");
-                break;
-            case 2:
-                drawable = mContext.getResources().getDrawable(R.mipmap.manglu_icon);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                holder.tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                holder.tvBuyNum.setTextColor(mContext.getResources().getColor(R.color.font_busy));
-                holder.tvBuyNum.setText("忙碌");
-                break;
-        }
-
-
+        holder.ivStatus.setImageResource(entity.getStatusImg(entity.getUserState()));
+        holder.tvStatus.setTextColor(entity.getStatusTextColor(entity.getUserState()));
+        holder.tvStatus.setText(entity.getStatusText(entity.getUserState()));
     }
 
     /**
@@ -286,21 +260,22 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         ImageView ivService;
         @Bind(R.id.tv_service)
         TextView tvService;
+        @Bind(R.id.iv_status)
+        ImageView ivStatus;
+        @Bind(R.id.tv_status)
+        TextView tvStatus;
         @Bind(R.id.ratingbar)
         RatingBar ratingbar;
         @Bind(R.id.tv_comment)
         TextView tvComment;
         @Bind(R.id.tv_num)
         TextView tvNum;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
         @Bind(R.id.ll_user)
         LinearLayout llUser;
         @Bind(R.id.divider)
         View divider;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
-
-        @Bind(R.id.tv_buy_num)
-        TextView tvBuyNum;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
