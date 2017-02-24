@@ -122,7 +122,7 @@ public class RedRecordDetailActivity extends BaseActivity {
                 intent.putExtra("consumeMoney", m.payMoney);
                 intent.putExtra("order_sn", m.number);
                 intent.putExtra("userPayId", userPayId);
-                intent.putExtra("merchantName", m.merchantName);
+                intent.putExtra("merchantName","赞赏红包");
                 intent.putExtra("merchantHead", m.merchantHead);
                 startActivityForResult(intent, 1000);
                 break;
