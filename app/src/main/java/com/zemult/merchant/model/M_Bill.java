@@ -120,7 +120,7 @@ public class M_Bill implements Serializable {
     public String replayNote;//回复
 
     @Expose
-    public double rewardmoney;//打赏金额
+    public double rewardMoney;//打赏金额
 
 
 }
