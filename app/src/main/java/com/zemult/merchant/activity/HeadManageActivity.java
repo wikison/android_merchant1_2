@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -65,7 +67,8 @@ public class HeadManageActivity extends BaseActivity {
     LinearLayout llRight;
 
     private Context mContext;
-    private String headString = "", tackPhotoName = "";
+    private String headString = "", tackPhotoName = "", imageUrl;
+    private Uri imageUri;
 
     @Override
     public void setContentView() {
@@ -178,23 +181,35 @@ public class HeadManageActivity extends BaseActivity {
             }
             // 裁剪
             else if(resultCode == RESULT_OK && requestCode == Constants.PHOTO_CROP){
-                Bitmap bitmap = data.getParcelableExtra("data");
-                // 保存图片
-                String filename = new SimpleDateFormat("yyMMddHHmmss")
-                        .format(new Date()) + ".jpg";
-                System.out.println("保存图片" + filename);
-                String path = Constants.SAVE_IMAGE_PATH_IMGS + filename;
-                ImageHelper.saveBitmap(Constants.SAVE_IMAGE_PATH_IMGS, filename,
-                        bitmap, true);
-                path = AppUtils.removeFileHeader(ImageHelper.saveRotateCompressBitmap(new File(path)));
-                if (bitmap != null && bitmap.isRecycled()) {
-                    bitmap.recycle();
+                if (data != null) {
+                    if (imageUri != null) {
+                        Bitmap bitmap = decodeUriAsBitmap(imageUri);
+                        String path = AppUtils.removeFileHeader(ImageHelper.saveRotateCompressBitmap(new File(imageUrl)));
+                        if (bitmap != null && bitmap.isRecycled()) {
+                            bitmap.recycle();
+                        }
+                        uploadImg(path);
+                    }
+
                 }
-                uploadImg(path);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private Bitmap decodeUriAsBitmap(Uri uri) {
+        Bitmap bitmap = null;
+        try {
+            // 先通过getContentResolver方法获得一个ContentResolver实例，
+            // 调用openInputStream(Uri)方法获得uri关联的数据流stream
+            // 把上一步获得的数据流解析成为bitmap
+            bitmap = BitmapFactory.decodeStream(mContext.getContentResolver().openInputStream(uri));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return bitmap;
     }
 
     UserEditinfoRequest userEditinfoRequest;
@@ -292,16 +307,23 @@ public class HeadManageActivity extends BaseActivity {
     }
 
     private void crop(String path){
+        imageUrl = Constants.SAVE_IMAGE_PATH_IMGS + new SimpleDateFormat("yyMMddHHmmss")
+                .format(new Date()) + ".jpg";
+        imageUri = Uri.fromFile(new File(imageUrl));
+
         Intent intent = new Intent();
 
         intent.setAction("com.android.camera.action.CROP");
         intent.setDataAndType(Uri.fromFile(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 500);// 裁剪框比例
-        intent.putExtra("aspectY", 500);
-        intent.putExtra("outputX", 350);// 输出图片大小
-        intent.putExtra("outputY", 350);
-        intent.putExtra("return-data", true);
+        intent.putExtra("aspectX", 400);// 裁剪框比例
+        intent.putExtra("aspectY", 400);
+        intent.putExtra("outputX", 400);// 输出图片大小
+        intent.putExtra("outputY", 400);
+//        intent.putExtra("return-data", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
         HeadManageActivity.this.startActivityForResult(intent, Constants.PHOTO_CROP);
     }
