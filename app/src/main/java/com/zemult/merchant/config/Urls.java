@@ -7,6 +7,7 @@ public class Urls {
     //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
 
     public static String MAIN_URL = "http://yovoll.54xiegang.com/";
+
     public static String URL = "http://test1.54xiegang.com/dzyx_test/";//测试
 //    public static String URL = "http://yovoll.54xiegang.com/dzyx/";//正式
 
