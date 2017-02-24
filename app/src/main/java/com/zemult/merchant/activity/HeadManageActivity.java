@@ -297,8 +297,8 @@ public class HeadManageActivity extends BaseActivity {
         intent.setAction("com.android.camera.action.CROP");
         intent.setDataAndType(Uri.fromFile(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);// 裁剪框比例
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 500);// 裁剪框比例
+        intent.putExtra("aspectY", 500);
         intent.putExtra("outputX", 350);// 输出图片大小
         intent.putExtra("outputY", 350);
         intent.putExtra("return-data", true);
