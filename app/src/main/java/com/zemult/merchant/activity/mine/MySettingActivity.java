@@ -23,6 +23,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AboutUsActivity;
+import com.zemult.merchant.activity.FeedBackActivity;
 import com.zemult.merchant.activity.IpSwitchActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
@@ -267,8 +268,9 @@ public class MySettingActivity extends BaseActivity {
                 });
                 break;
             case R.id.ll_fankui:
-                FeedbackAgent feedbackAgent = new FeedbackAgent(MySettingActivity.this);
-                feedbackAgent.startFeedbackActivity();
+//                FeedbackAgent feedbackAgent = new FeedbackAgent(MySettingActivity.this);
+//                feedbackAgent.startFeedbackActivity();
+                IntentUtil.start_activity(MySettingActivity.this, FeedBackActivity.class);
                 break;
             case R.id.ll_help:
                 IntentUtil.start_activity(MySettingActivity.this, BaseWebViewActivity.class, new Pair<String, String>("titlename", getString(R.string.help)), new Pair<String, String>("url", Constants.URL_HELP));
