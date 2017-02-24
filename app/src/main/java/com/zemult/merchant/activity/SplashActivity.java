@@ -169,9 +169,9 @@ public class SplashActivity extends BaseActivity {
             String version = appInfo.metaData.getString("DEBUG_VERSION");
             releaseVersion = appInfo.metaData.getString("RELEASE_VERSION").replace("v", "");
             commonAppVersion();
-            if (!AppApplication.ISDEBUG) {
-                return;
-            }
+//            if (!AppApplication.ISDEBUG) {
+//                return;
+//            }
 
         } catch (Exception e) {
             Log.e("获取Debug版本号失败");
