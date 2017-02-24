@@ -142,7 +142,6 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
 
 
     private void initListener() {
-
         userPayAdapter.setOnItemRootClickListener(new UserPayAdapter.ItemRootClickListener() {
             @Override
             public void onItemClick(final M_Bill m_bill) {
@@ -156,6 +155,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                     Intent it = new Intent(mContext, RedRecordDetailActivity.class);
                     it.putExtra(RedRecordDetailActivity.INTENT_FLAG,1);
                     it.putExtra(RedRecordDetailActivity.INTENT_INFO, m_bill);
+                    it.putExtra("userPayId", m_bill.userPayId);
                     startActivity(it);
                 }
             }
@@ -204,6 +204,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                     Intent it = new Intent(mContext, RedRecordDetailActivity.class);
                     it.putExtra(RedRecordDetailActivity.INTENT_INFO, m_bill);
                     it.putExtra(RedRecordDetailActivity.INTENT_FLAG,1);
+                    it.putExtra("userPayId", m_bill.userPayId);
                     startActivity(it);
                 }
 
