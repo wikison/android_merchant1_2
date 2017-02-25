@@ -36,6 +36,7 @@ import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -127,6 +128,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     TextView hongbaoTv;
     int userId;
     String userName="";
+    ImageManager mimageManager;
 
     @Override
     public void setContentView() {
@@ -142,8 +144,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错,给个赞赏红包吧</u>"));
         showPd();
         userReservationInfo();
-
-
+        mimageManager = new ImageManager(getApplicationContext());
     }
 
     private void userReservationInfo() {
@@ -232,13 +233,13 @@ public class AppointmentDetailActivity extends BaseActivity {
                     if (type == 0) {
                         //服务管家的头像和姓名
                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
-                            imageManager.loadCircleImage(mReservation.saleUserHead, headIv);
+                            mimageManager.loadCircleImage(mReservation.saleUserHead, headIv);
                         }
                         nameTv.setText(mReservation.saleUserName);
                     } else if (type == 1) {
                         //客户的头像和姓名
                         if (!TextUtils.isEmpty(mReservation.head)) {
-                            imageManager.loadCircleImage(mReservation.head, headIv);
+                            mimageManager.loadCircleImage(mReservation.head, headIv);
                         }
                         nameTv.setText(mReservation.name);
                     }
