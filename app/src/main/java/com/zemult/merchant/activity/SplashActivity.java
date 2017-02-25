@@ -65,7 +65,9 @@ public class SplashActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             iTime++;
             if (iTime > 5) {
-                mTimer.cancel();
+                if(null!=mTimer){
+                    mTimer.cancel();
+                }
                 mTimer = null;
                 if (null != SlashHelper.userManager().getUserinfo()) {
                     get_user_login_request();

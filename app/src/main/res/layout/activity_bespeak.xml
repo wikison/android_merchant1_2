@@ -190,7 +190,7 @@
             style="@style/text_15_black_28"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="电话"/>
+            android:text="手机号"/>
 
         <EditText
             android:background="@null"

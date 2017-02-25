@@ -6,7 +6,7 @@
     
     <TextView
         android:id="@+id/content"
-        android:layout_width="@dimen/aliwx_geo_width"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:background="@drawable/demo_location_msg_bg"
         android:text="地理位置"/>
