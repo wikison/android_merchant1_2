@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity {
 
         btnRight.setText(getResources().getString(R.string.btn_register));
         btnRight.setVisibility(View.VISIBLE);
-        btnRight.setTextColor(getResources().getColor(R.color.bg_head));
+        btnRight.setTextColor(getResources().getColor(R.color.white));
         btnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         lhTvTitle.setText("登录");
 
