@@ -237,7 +237,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:maxLength="100"
-                        android:hint="请填入预约号或包厢信息"/>
+                        android:textSize="13sp"
+                        android:gravity="left|top"
+                        android:hint="约客填入的包厢号和预约信息"/>
 
                 </com.flyco.roundview.RoundRelativeLayout>
 
