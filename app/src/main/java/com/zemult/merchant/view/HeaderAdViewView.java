@@ -186,11 +186,11 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     // 添加指示图标
     private void addIndicatorImageViews(int size) {
         // 只有一张图片时不显示指示器
-        if (size == 1) {
-            llIndexContainer.setVisibility(View.GONE);
-            tvPicNum.setVisibility(View.GONE);
-            return;
-        }
+//        if (size == 1) {
+//            llIndexContainer.setVisibility(View.GONE);
+//            tvPicNum.setVisibility(View.GONE);
+//            return;
+//        }
         if (indicator_type == TYPE_INDICATOR_DOT) {
             llIndexContainer.setVisibility(View.VISIBLE);
             tvPicNum.setVisibility(View.GONE);
@@ -218,16 +218,6 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     public void setNum(int currentNum) {
         tvPicNum.setText(currentNum + "/" + ivList.size());
-//        llIndexContainerNum.removeAllViews();
-//        TextView tv = new TextView(mContext);
-//        tv.setPadding(DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2), DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2));
-//        tv.setTextColor(0xffffffff);
-//        if (ivList.size() == 1) {
-//            tv.setText("1");
-//        } else {
-//            tv.
-//        }
-//        tv.setBackgroundResource(R.drawable.xml_oval_half_transparent_bg);
     }
 
     // 为ViewPager设置监听器

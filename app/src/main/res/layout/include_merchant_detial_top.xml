@@ -51,7 +51,7 @@
 
             <com.flyco.roundview.RoundTextView
                 android:gravity="center"
-                android:layout_marginRight="13dp"
+                android:layout_marginRight="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:id="@+id/tv_pic_num"
@@ -70,6 +70,7 @@
         </RelativeLayout>
     </FrameLayout>
 
+    <View style="@style/divider"/>
 
 
     <LinearLayout
