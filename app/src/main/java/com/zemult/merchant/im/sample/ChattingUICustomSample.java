@@ -308,7 +308,7 @@ public class ChattingUICustomSample extends IMChattingPageUI {
                     context.startActivity(intent);
                 }
             });
-            btn.setVisibility(View.VISIBLE);
+            btn.setVisibility(View.GONE);
 
             String feedbackAccount = IMPrefsTools.getStringPrefs(IMChannel.getApplication(), IMPrefsTools.FEEDBACK_ACCOUNT, "");
             if (!TextUtils.isEmpty(feedbackAccount) && feedbackAccount.equals(AccountUtils.getShortUserID(conversation.getConversationId()))) {

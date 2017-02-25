@@ -20,6 +20,7 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.YWContactManager;
 import com.alibaba.mobileim.conversation.IYWConversationService;
 import com.alibaba.mobileim.conversation.YWConversation;
+import com.alibaba.mobileim.fundamental.widget.WXNetworkImageView;
 import com.alibaba.mobileim.fundamental.widget.WxAlertDialog;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
 import com.zemult.merchant.R;
@@ -27,7 +28,7 @@ import com.zemult.merchant.app.base.MBaseActivity;
 
 public class ContactSettingActivity extends MBaseActivity {
 
-    private ImageView contactHead;
+    private WXNetworkImageView contactHead;
     private TextView contactShowName;
     private ImageView msgRemindSwitch;
     private RelativeLayout clearMsgRecordLayout;
@@ -72,8 +73,9 @@ public class ContactSettingActivity extends MBaseActivity {
     }
 
     private void initViews() {
-        contactHead = (ImageView) findViewById(R.id.head);
-        imageManager.loadCircleImage(contact.getAvatarPath(), contactHead);
+        contactHead = (WXNetworkImageView) findViewById(R.id.head);
+        contactHead.setImageUrl(contact.getAvatarPath());
+//        imageManager.loadCircleImage(, contactHead);
 
         contactShowName = (TextView) findViewById(R.id.contact_show_name);
         if (contact != null){

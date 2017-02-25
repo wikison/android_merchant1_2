@@ -73,16 +73,15 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
         concernLv.setLoadMoreEnable(false);
         concernLv.setSmoothListViewListener(this);
         user_messageList_sys_1_2(true);
-        concernLv.setAdapter( commonAdapter=new CommonAdapter<M_Message>(SystemMessageActivity.this, R.layout.item_systemmessage_result, mDatas) {
+        concernLv.setAdapter( commonAdapter=new CommonAdapter<M_Message>(SystemMessageActivity.this, R.layout.item_systemmessagechatui_result, mDatas) {
             @Override
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
                 holder.setText(R.id.tv_messagedate, message.createtime);
-                if(message.messageType==-1){//消息类型(-1:系统广告，0:红包)
-                    holder.setViewVisible(R.id.ll_tuiguang);
-                    holder.setViewGone(R.id.ll_hongbao);
-                    holder.setImage(R.id.iv_news_icon,message.pic);
-                    holder.setText(R.id.tv_messagecontent,message.title);
-                    holder.setOnclickListener(R.id.ll_tuiguang, new View.OnClickListener() {
+                if(message.messageType==-1){//消息类型(-1:系统广告，0:激励红包，1:注册欢迎，2:升级,3:被举报警告)
+                    holder.setText(R.id.tv_messagetitle,message.title);
+                    holder.setText(R.id.tv_messagecontent,message.note);
+                    holder.setCircleImage(R.id.iv_icon,message.pic);
+                    holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
@@ -90,19 +89,38 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                         }
                     });
                 }
-                else{//红包
-                        holder.setViewVisible(R.id.ll_hongbao);
-                        holder.setViewGone(R.id.ll_tuiguang);
-                        holder.setImage(R.id.iv_news_icon,message.pic);
-                        holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                IntentUtil.intStart_activity( SystemMessageActivity.this,
-                                        BillInfoActivity.class, new Pair<String, Integer>("type",6),
-                                        new Pair<String, Integer>("billId", message.billId));
-                            }
-                        });
-                    }
+                else  if(message.messageType==0) {//红包
+                    holder.setViewGone(R.id.tv_messagecontent);
+                    holder.setText(R.id.tv_messagetitle,message.note);
+                    holder.setImageResource(R.id.iv_icon,R.mipmap.chart_hongbao_icon);
+                    holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            IntentUtil.intStart_activity( SystemMessageActivity.this,
+                                    BillInfoActivity.class, new Pair<String, Integer>("type",6),
+                                    new Pair<String, Integer>("billId", message.billId));
+                        }
+                    });
+                }
+                else  if(message.messageType==2) {//升级
+                    holder.setImageResource(R.id.iv_icon,R.mipmap.chat_xiaoxi_icon);
+                    holder.setText(R.id.tv_messagetitle,message.note);
+                    holder.setViewGone(R.id.tv_messagecontent);
+                }
+                else  if(message.messageType==3) {//被举报警告
+                    holder.setImageResource(R.id.iv_icon,R.mipmap.chat_xiaoxi_icon);
+                    holder.setText(R.id.tv_messagetitle,message.note);
+                    holder.setViewGone(R.id.tv_messagecontent);
+
+                }
+                else   {//1:注册欢迎
+                    holder.setViewGone(R.id.tv_messagetitle);
+                    holder.setViewGone(R.id.tv_messagecontent);
+                    holder.setViewGone(R.id.iv_icon);
+                    holder.setViewVisible(R.id.tv_messageother);
+                    holder.setText(R.id.tv_messageother,message.note);
+
+                }
             }
         });
 

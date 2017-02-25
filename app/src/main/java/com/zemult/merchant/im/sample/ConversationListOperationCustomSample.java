@@ -158,7 +158,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 return true;
             }
             else if (conversationId.startsWith(MainActivity.SYSTEM_SYSMESSAGE)) {
-                Intent message_it = new Intent(AppApplication.getContext(), SystemMessageChatUIActivity.class);//  PushMessageActivity
+                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;
             }
