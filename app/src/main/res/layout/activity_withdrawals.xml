@@ -31,17 +31,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/margin_12dp"
-                android:background="@mipmap/zhifu_icon"/>
+                android:background="@mipmap/bank_icon"/>
 
             <TextView
                 android:id="@+id/tv_zhifubao"
                 style="@style/text_14_black"
+                android:textColor="@color/font_black_28"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_12dp"
                 android:layout_toRightOf="@+id/iv_zhifubao"
                 android:gravity="center_vertical"
-                android:text="支付宝账号"/>
+                android:text="到账银行卡"/>
 
             <TextView
                 android:id="@+id/tv_account"
@@ -64,6 +65,7 @@
             <TextView
                 android:id="@+id/tv_txlab"
                 style="@style/text_15_black_333"
+                android:textColor="@color/font_black_28"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -81,7 +83,9 @@
                 android:gravity="center_vertical"
                 android:hint="请输入提现金额"
                 android:inputType="numberDecimal"
-                android:textSize="@dimen/font_32px"/>
+                android:textColor="@color/font_black_28"
+                android:textColorHint="@color/font_black_999"
+                android:textSize="@dimen/font_26px"/>
 
 
         </RelativeLayout>
@@ -128,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:gravity="center_horizontal"
-                android:text="提现规则"
+                android:text="温馨提示"
                 android:textColor="@color/bg_head"
                 android:textSize="14sp"/>
 
@@ -155,7 +159,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="3-10个工作日内到账"/>
+                android:text="3-15个工作日内到账"/>
+
 
         </LinearLayout>
 
