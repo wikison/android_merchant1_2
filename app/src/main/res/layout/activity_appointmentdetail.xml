@@ -377,7 +377,7 @@
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/red"
                             android:layout_marginTop="20dp"
-                            android:layout_below="@+id/jiezhang_btn"
+                            android:layout_below="@+id/invite_btn"
                             android:text="觉得服务不错,给个赞赏红包吧"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
