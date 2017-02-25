@@ -99,6 +99,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/ll_black"
                 style="@style/layout_item_click"
                 android:clickable="true"

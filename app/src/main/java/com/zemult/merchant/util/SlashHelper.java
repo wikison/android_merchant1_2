@@ -148,6 +148,7 @@ public class SlashHelper {
             public static final String AREA = "AREA";//省市
             public static final String COUNTRY = "COUNTRY";//区
             public static final String UMENMGPUSH = "UMENMGPUSH";//友盟推送
+            public static final String BUGTAGS = "BUGTAGS";//BUGTAGS 开关
             public static final String IMAGESIZE = "IMAGESIZE";//大图小图切换
             public static final String URL_SHARE_NEWS = "URL_SHARE_NEWS";//分享方案的链接地址
             public static final String URL_SHARE_TASK = "URL_SHARE_TASK";//分享任务记录

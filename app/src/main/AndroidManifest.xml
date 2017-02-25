@@ -584,7 +584,8 @@
         <activity android:name=".activity.ReceiveRedActivity" />
         <activity android:name=".activity.RedRecordDetailActivity" />
         <activity android:name=".activity.ShareAppointmentActivity" />
-        <activity android:name=".activity.mine.RemarkNameActivity"></activity>
+        <activity android:name=".activity.mine.RemarkNameActivity" />
+        <activity android:name=".activity.FeedBackActivity"></activity>
     </application>
 
 </manifest>
