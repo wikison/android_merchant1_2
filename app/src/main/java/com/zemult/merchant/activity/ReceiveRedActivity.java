@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,6 +89,7 @@ public class ReceiveRedActivity extends BaseActivity {
         mImageManager = new ImageManager(mContext);
         userPayId = getIntent().getIntExtra("billId", 0);
         userId= getIntent().getStringExtra("userId");
+        tvSeeMore.setText(Html.fromHtml("<u>查看详情</u>"));
         if (userPayId > 0)
             user_pay_info();
     }
