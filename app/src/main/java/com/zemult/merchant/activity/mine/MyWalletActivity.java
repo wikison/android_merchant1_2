@@ -163,6 +163,10 @@ public class MyWalletActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     isBanged = ((CommonResult) response).isBand;
+                    if (mymoney < Constants.MIN_WITHDRAW) {
+                        ToastUtil.showMessage("您的余额不足" + Convert.getMoneyString(Constants.MIN_WITHDRAW) + "元，暂时无法提现");
+                        return;
+                    }
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
                         MMAlert.showOneOperateDialog(mContext, "提现需要先绑定银行卡", "前往绑定", new MMAlert.OneOperateCallback() {
                             @Override
@@ -172,15 +176,11 @@ public class MyWalletActivity extends BaseActivity {
                                 startActivity(intent);
                             }
                         });
-                    } else {
-                        if (mymoney < Constants.MIN_WITHDRAW) {
-                            ToastUtil.showMessage("您的余额不足" + Convert.getMoneyString(Constants.MIN_WITHDRAW) + "元，暂时无法提现");
-                        } else {
-                            Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
-                            startActivity(intentwithdrawals);
-                        }
+                        return;
                     }
 
+                    Intent intentwithdrawals = new Intent(MyWalletActivity.this, WithdrawalsActivity.class);
+                    startActivity(intentwithdrawals);
                 } else {
                     ToastUtils.show(MyWalletActivity.this, ((CommonResult) response).info);
                 }
