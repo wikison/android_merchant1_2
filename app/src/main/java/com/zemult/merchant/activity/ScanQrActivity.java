@@ -136,6 +136,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
                     Intent intent = new Intent(ScanQrActivity.this, UserDetailActivity.class);
                     intent.putExtra(UserDetailActivity.USER_ID, Integer.valueOf(userId));
                     startActivity(intent);
+                    finish();
 
 
                 } catch (Exception e) {
