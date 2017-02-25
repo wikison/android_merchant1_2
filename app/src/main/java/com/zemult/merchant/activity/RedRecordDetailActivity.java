@@ -8,9 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
+import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
@@ -51,7 +54,9 @@ public class RedRecordDetailActivity extends BaseActivity {
     protected ImageManager mImageManager;
     @Bind(R.id.from_tv)
     TextView fromTv;
-
+    @Bind(R.id.rtv_to_pay)
+    RoundTextView rtvToPay;
+    int userPayId;
 
     @Override
     public void setContentView() {
@@ -59,11 +64,11 @@ public class RedRecordDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_redrecorddetail);
     }
 
-
     @Override
     public void init() {
         lhTvTitle.setText("消费单详情");
         mImageManager = new ImageManager(this);
+        userPayId = getIntent().getIntExtra("userPayId", 0);
         m = (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);
 //        if (m.type==4||m.type==3) {
 //            tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
@@ -78,6 +83,14 @@ public class RedRecordDetailActivity extends BaseActivity {
             fromTv.setText("赠送对象");
             imageManager.loadCircleImage(m.toUserHead, ivUserHead);
             tvUserName.setText(m.toUserName);
+            if(m.state==0){
+                rtvToPay.setVisibility(View.VISIBLE);
+                rtvToPay.setText("立即付款");
+            }else{
+                rtvToPay.setVisibility(View.GONE);
+            }
+
+
         } else {
             tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
             fromTv.setText("来自");
@@ -89,7 +102,7 @@ public class RedRecordDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head,R.id.rtv_to_pay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -104,6 +117,15 @@ public class RedRecordDetailActivity extends BaseActivity {
                 it.putExtra(UserDetailActivity.USER_HEAD, m.userHead);
                 startActivity(it);
                 break;
+            case R.id.rtv_to_pay:
+                Intent intent = new Intent(this, ChoosePayTypeActivity.class);
+                intent.putExtra("consumeMoney", m.payMoney);
+                intent.putExtra("order_sn", m.number);
+                intent.putExtra("userPayId", userPayId);
+                intent.putExtra("merchantName","赞赏红包");
+                intent.putExtra("merchantHead", m.merchantHead);
+                startActivityForResult(intent, 1000);
+                break;
         }
     }
 
@@ -113,4 +135,17 @@ public class RedRecordDetailActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1000) {
+                setResult(RESULT_OK);
+                onBackPressed();
+            }
+        }
+    }
+
 }

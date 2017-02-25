@@ -219,6 +219,23 @@
                     style="@style/divider_1px"
                     android:layout_marginTop="@dimen/margin_8dp"/>
             </LinearLayout>
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtv_to_pay"
+                android:visibility="gone"
+                style="@style/text_16_black_28"
+                android:layout_width="@dimen/common_btn_width_235"
+                android:layout_height="@dimen/common_btn_height_35"
+               android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:text="@string/go_pay"
+                android:textColor="@color/white"
+                app:rv_backgroundColor="@color/font_main"
+                app:rv_backgroundPressColor="@color/orange"
+                app:rv_cornerRadius="35dp"/>
+
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

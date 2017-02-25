@@ -92,7 +92,7 @@
             android:id="@+id/btn_tks"
             style="@style/common_btn_235"
             android:layout_marginBottom="@dimen/j15dp"
-            android:text="感谢TA"/>
+            android:text="谢谢TA"/>
     </LinearLayout>
 
 

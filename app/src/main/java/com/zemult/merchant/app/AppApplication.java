@@ -94,7 +94,7 @@ public class AppApplication extends MultiDexApplication {
         //新浪微博
         PlatformConfig.setSinaWeibo("4271231474", "58e53b10dad7c485e1db09553bd3356f");
         //QQ
-        PlatformConfig.setQQZone("1105763403", "Oje10TRr3kwK8Tpf");
+        PlatformConfig.setQQZone("1106006502", "Pn8yLHqoyLlMVBtA");
 
         //友盟IM
         if(mustRunFirstInsideApplicationOnCreate()){

@@ -114,7 +114,7 @@ public class ReceiveRedActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    moneyTv.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+"元"));
+                    moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+"元"));
                     imageManager.loadCircleImage(m.userHead,headIv);
                     redfromTv.setText(m.userName+"的红包");
                 } else {
