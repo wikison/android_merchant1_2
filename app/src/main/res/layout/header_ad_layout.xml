@@ -20,9 +20,10 @@
         android:paddingTop="5dp"/>
 
     <com.flyco.roundview.RoundTextView
+        android:gravity="center"
         android:layout_marginRight="13dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:id="@+id/tv_pic_num"
         app:rv_backgroundColor="@color/half_transparent"
         app:rv_cornerRadius="12dp"
@@ -30,8 +31,6 @@
         android:text="0张"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         android:textSize="@dimen/font_24px"
         android:background="@color/half_transparent"
         android:layout_alignParentBottom="true"
