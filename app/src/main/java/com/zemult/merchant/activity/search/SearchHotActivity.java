@@ -212,12 +212,11 @@ public class SearchHotActivity extends BaseActivity {
     private void changeListRecentTags(String key) {
         if (!listRecentTags.contains(key)) {
             if (listRecentTags.size() == Constants.RECENT_SEARCH_ROWS) {
-                //元素循环向前移动一位 删除最后一位
-                Collections.rotate(listRecentTags, 1);
+                //删除最后一位
                 listRecentTags.remove(Constants.RECENT_SEARCH_ROWS - 1);
             }
-            //向最后一位添加元素
-            listRecentTags.add(key);
+            //向第一位添加元素
+            listRecentTags.add(0, key);
             SlashHelper.setSettingString("home_search_history", listToString(listRecentTags));
         }
 
