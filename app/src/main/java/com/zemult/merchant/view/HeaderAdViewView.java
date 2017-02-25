@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.HomeAdActivity;
 import com.zemult.merchant.adapter.slashfrgment.HeaderAdAdapter;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.model.M_Ad;
@@ -35,8 +35,9 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     ViewPager vpAd;
     @Bind(R.id.ll_index_container)
     LinearLayout llIndexContainer;
-    @Bind(R.id.ll_index_container_num)
-    LinearLayout llIndexContainerNum;
+    @Bind(R.id.tv_pic_num)
+    RoundTextView tvPicNum;
+
     private static final int TYPE_CHANGE_AD = 0;
 
     public static final int TYPE_INDICATOR_DOT = 110;
@@ -46,13 +47,15 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     private Thread mThread;
     private List<ImageView> ivList;
-    private List<String> ivurlList= new ArrayList<String>();;
+    private List<String> ivurlList = new ArrayList<String>();
+    ;
     private boolean isStopThread = false;
     private ImageManager mImageManager;
     private int height;
     private HeaderAdAdapter photoAdapter;
 
-    private int showType = 1;  //0  没有操作，1  网页  2   跳转到图片展示
+    private int showType = 1;  //0  无操作，1  网页  2   跳转到图片展示  3 自定义
+    private boolean rotate = true;
 
 
     private Handler mHandler = new Handler() {
@@ -78,12 +81,16 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         this.height = height;
     }
 
-    public void showNum(){
+    public void showNum() {
         indicator_type = TYPE_INDICATOR_NUM;
     }
 
-    public void setShowType(int showType){
+    public void setShowType(int showType) {
         this.showType = showType;
+    }
+
+    public void setRotate(boolean rotate) {
+        this.rotate = rotate;
     }
 
     @Override
@@ -116,47 +123,60 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         ivurlList.clear();
         int size = list.size();
         for (int i = 0; i < size; i++) {
-            ivList.add(createImageView(list.get(i),i));
+            ivList.add(createImageView(list.get(i), i));
             ivurlList.add(list.get(i).getImg());
         }
         photoAdapter = new HeaderAdAdapter(mContext, ivList);
         vpAd.setAdapter(photoAdapter);
         addIndicatorImageViews(size);
         setViewPagerChangeListener(size);
-        startADRotate();
+        if (rotate)
+            startADRotate();
+
     }
 
     public void setData(List<M_Ad> list) {
-        stopADRotate();
+        if (rotate)
+            stopADRotate();
+
         dealWithTheView(list);
     }
 
     // 创建要显示的ImageView
-    private ImageView createImageView(final M_Ad mAd,final int postion) {
+    private ImageView createImageView(final M_Ad mAd, final int postion) {
         ImageView imageView = new ImageView(mContext);
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(params);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        if(showType==1){//网页
+        if (showType == 1) {//网页
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.start_activity(mContext,BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename",mAd.name),new Pair<String, String>("url",mAd.getUrl()));
+                    IntentUtil.start_activity(mContext, BaseWebViewActivity.class,
+                            new Pair<String, String>("titlename", mAd.name), new Pair<String, String>("url", mAd.getUrl()));
 //                    IntentUtil.start_activity(mContext,HomeAdActivity.class,
 //                            new Pair<String, String>("titlename",mAd.name),new Pair<String, String>("url",mAd.getUrl()));
+                }
+            });
         }
-    });
-        }
-        if(showType==2) {//打开图片展示
+        else if (showType == 2) {//打开图片展示
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppUtils.toImageDetial(mContext, postion,ivurlList,false);
+                    AppUtils.toImageDetial(mContext, postion, ivurlList, false);
                 }
             });
 
+        }
+        else if(showType == 3){
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(imageOnClick != null)
+                        imageOnClick.imageOnclick();
+                }
+            });
         }
 
         mImageManager.loadUrlImage(mAd.getImg(), imageView, "@500h");
@@ -166,14 +186,14 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     // 添加指示图标
     private void addIndicatorImageViews(int size) {
         // 只有一张图片时不显示指示器
-        if (size == 1){
+        if (size == 1) {
             llIndexContainer.setVisibility(View.GONE);
-            llIndexContainerNum.setVisibility(View.GONE);
+            tvPicNum.setVisibility(View.GONE);
             return;
         }
         if (indicator_type == TYPE_INDICATOR_DOT) {
             llIndexContainer.setVisibility(View.VISIBLE);
-            llIndexContainerNum.setVisibility(View.GONE);
+            tvPicNum.setVisibility(View.GONE);
             llIndexContainer.removeAllViews();
             for (int i = 0; i < size; i++) {
                 ImageView iv = new ImageView(mContext);
@@ -191,23 +211,23 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
             }
         } else if (indicator_type == TYPE_INDICATOR_NUM) {
             llIndexContainer.setVisibility(View.GONE);
-            llIndexContainerNum.setVisibility(View.VISIBLE);
+            tvPicNum.setVisibility(View.VISIBLE);
             setNum(1);
         }
     }
 
     public void setNum(int currentNum) {
-        llIndexContainerNum.removeAllViews();
-        TextView tv = new TextView(mContext);
-        tv.setPadding(DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2), DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2));
-        tv.setTextColor(0xffffffff);
-        if(ivList.size() == 1){
-            tv.setText("1");
-        }else {
-            tv.setText(currentNum + "/" + ivList.size());
-        }
-        tv.setBackgroundResource(R.drawable.xml_oval_half_transparent_bg);
-        llIndexContainerNum.addView(tv);
+        tvPicNum.setText(currentNum + "/" + ivList.size());
+//        llIndexContainerNum.removeAllViews();
+//        TextView tv = new TextView(mContext);
+//        tv.setPadding(DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2), DensityUtil.dip2px(mContext, 10), DensityUtil.dip2px(mContext, 2));
+//        tv.setTextColor(0xffffffff);
+//        if (ivList.size() == 1) {
+//            tv.setText("1");
+//        } else {
+//            tv.
+//        }
+//        tv.setBackgroundResource(R.drawable.xml_oval_half_transparent_bg);
     }
 
     // 为ViewPager设置监听器
@@ -218,14 +238,14 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
                 if (ivList != null && ivList.size() > 0) {
                     int newPosition = position % size;
 
-                    if(indicator_type == TYPE_INDICATOR_DOT){
+                    if (indicator_type == TYPE_INDICATOR_DOT) {
                         for (int i = 0; i < size; i++) {
                             llIndexContainer.getChildAt(i).setEnabled(false);
                             if (i == newPosition) {
                                 llIndexContainer.getChildAt(i).setEnabled(true);
                             }
                         }
-                    }else if(indicator_type == TYPE_INDICATOR_NUM) {
+                    } else if (indicator_type == TYPE_INDICATOR_NUM) {
                         setNum(newPosition + 1);
                     }
 
@@ -272,6 +292,15 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         if (mHandler != null && mHandler.hasMessages(TYPE_CHANGE_AD)) {
             mHandler.removeMessages(TYPE_CHANGE_AD);
         }
+    }
+
+    public interface ImageOnClick{
+        void imageOnclick();
+    }
+    private ImageOnClick imageOnClick;
+
+    public void setImageOnClick(ImageOnClick imageOnClick) {
+        this.imageOnClick = imageOnClick;
     }
 }
 
