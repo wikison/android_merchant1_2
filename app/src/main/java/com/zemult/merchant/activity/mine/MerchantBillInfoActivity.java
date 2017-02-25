@@ -75,37 +75,6 @@ public class MerchantBillInfoActivity extends BaseActivity {
     }
 
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_merchantbillinfo);
-//        lhTvTitle.setVisibility(View.VISIBLE);
-//        lhTvTitle.setText("账单详情");
-//        billId = getIntent().getIntExtra(INTENT_BILLID, 0);
-//        Log.i("sunjian","billid"+billId);
-//        type = getIntent().getIntExtra(INTENT_TYPE, 0);
-//        Log.i("sunjian","type为"+type);
-//
-//        if (type == 1) {
-//            relDeal.setVisibility(View.GONE);
-//            relOrdernumber.setVisibility(View.GONE);
-//            tvLable3.setText("时间");
-//        }
-//        showPd();
-//        merchantBillInfo();
-//    }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_merchantbillinfo);
-//        ButterKnife.bind(this);
-//        lhTvTitle.setVisibility(View.VISIBLE);
-//        lhTvTitle.setText("账单详情");
-//        init();
-//    }
-
-
     private void merchantBillInfo() {
 
         if (merchantBillInfoRequest != null) {

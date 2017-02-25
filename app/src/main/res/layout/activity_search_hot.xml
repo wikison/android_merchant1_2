@@ -70,7 +70,7 @@
                         app:container_background_color="@color/bg_f2"
                         app:container_border_color="@color/bg_f2"
                         app:container_border_radius="0dp"
-                        app:container_enable_drag="true"
+                        app:container_enable_drag="false"
                         app:container_gravity="left"
                         app:horizontal_interval="10dp"
                         app:tag_background_color="@color/white"

@@ -74,7 +74,7 @@ public class WithdrawalsActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("提现");
-        user_bandcard_info();
+        user_bandcard_info_1_2_1();
         myMoney = SlashHelper.userManager().getUserinfo().money;
 
         user_cash_info();
@@ -177,7 +177,7 @@ public class WithdrawalsActivity extends BaseActivity {
         sendJsonRequest(userCashWithdrawRequest);
     }
 
-    private void user_bandcard_info() {
+    private void user_bandcard_info_1_2_1() {
         if (userBandcardInfoRequest != null) {
             userBandcardInfoRequest.cancel();
         }
@@ -202,7 +202,12 @@ public class WithdrawalsActivity extends BaseActivity {
                     if (isBanged == 0) {//是否已经绑定(0:否,1:是)
                         tvAccount.setText("未绑定");
                     } else {
-                        tvAccount.setText(((CommonResult) response).bankNumber);
+                        tvAccount.setText(((CommonResult) response).bankName + "(尾号"
+                        + ((CommonResult) response).bankNumber.substring(
+                                ((CommonResult) response).bankNumber.length()-4,
+                                ((CommonResult) response).bankNumber.length()
+                        )
+                        + ")");
                         aliAccount = ((CommonResult) response).bankNumber;
                     }
 

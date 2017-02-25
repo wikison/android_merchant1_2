@@ -83,7 +83,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                 ad.setImg(s);
                 advertList.add(ad);
             }
-            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 220));
+            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
             headerAdViewView.showNum();
             headerAdViewView.setShowType(3);
             headerAdViewView.setRotate(false);

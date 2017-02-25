@@ -20,6 +20,7 @@
             android:layout_height="58dp">
 
             <TextView
+                android:id="@+id/tv1"
                 android:layout_centerVertical="true"
                 android:text="商户名称"
                 android:textColor="#211d2e"
@@ -28,6 +29,8 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/tv1"
                 android:gravity="right|center_vertical"
                 android:id="@+id/et_name"
                 android:background="@color/transparent"
@@ -36,7 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="输入商户名称"
-                android:maxLength="15"
+                android:inputType="text"
+                android:maxLength="20"
+                android:maxLines="1"
                 android:textColor="#211d2e"
                 android:textSize="@dimen/font_30px"
                 android:textColorHint="@color/font_black_999"/>
@@ -51,6 +56,7 @@
             android:layout_height="58dp">
 
             <TextView
+                android:id="@+id/tv2"
                 android:layout_centerVertical="true"
                 android:text="地址"
                 android:textColor="#211d2e"
@@ -59,6 +65,8 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/tv2"
                 android:gravity="right|center_vertical"
                 android:id="@+id/et_address"
                 android:background="@color/transparent"
@@ -68,9 +76,11 @@
                 android:textColor="#211d2e"
                 android:textSize="@dimen/font_30px"
                 android:textColorHint="@color/font_black_999"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_centerVertical="true"
+                android:inputType="text"
+                android:maxLines="1"
+                android:maxLength="30"/>
         </RelativeLayout>
 
         <View style="@style/divider"/>
@@ -100,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="输入联系人姓名"
-                android:maxLength="4"
+                android:maxLength="5"
                 android:textColor="#211d2e"
                 android:textSize="@dimen/font_30px"
                 android:textColorHint="@color/font_black_999"/>
