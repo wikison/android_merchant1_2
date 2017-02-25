@@ -14,6 +14,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.HomeIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
+import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
 
     public void setAd(List<M_Ad> advertList){
         // 设置广告数据 加入到smoothListView的headerView
-        headerAdViewView = new HeaderAdViewView(mContext);
+        headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 213));
         headerAdViewView.fillView(advertList, llAdContainer);
     }
 

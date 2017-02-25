@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
+import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.util.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +45,8 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     RoundTextView tvPicNum;
     @Bind(R.id.tv_qianyue)
     RoundTextView tvQianyue;
+    @Bind(R.id.ll_ad_container)
+    LinearLayout llAdContainer;
 
 
     public HeaderMerchantDetailView(Activity context) {
@@ -52,13 +61,41 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     }
 
     public void dealWithTheView(final M_Merchant merchantInfo) {
-        // 封面
-        if (!TextUtils.isEmpty(merchantInfo.pic))
-            mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@320h", R.mipmap.merchant_default_cover);
-        else
-            ivCover.setImageResource(R.mipmap.merchant_default_cover);
-
-        tvPicNum.setText(merchantInfo.picNum + "张");
+        if(merchantInfo.picNum == 0){
+            ivCover.setVisibility(View.VISIBLE);
+            tvPicNum.setVisibility(View.VISIBLE);
+            llAdContainer.setVisibility(View.GONE);
+            tvPicNum.setText(merchantInfo.picNum + "张");
+            // 封面
+            if (!TextUtils.isEmpty(merchantInfo.pic))
+                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@320h", R.mipmap.merchant_default_cover);
+            else
+                ivCover.setImageResource(R.mipmap.merchant_default_cover);
+        }else {
+            ivCover.setVisibility(View.GONE);
+            tvPicNum.setVisibility(View.GONE);
+            llAdContainer.setVisibility(View.VISIBLE);
+            // 设置广告数据 加入到smoothListView的headerView
+            List<M_Ad> advertList = new ArrayList<>();
+            String[] array = merchantInfo.pics.split(",");
+            for(String s : array){
+                M_Ad ad = new M_Ad();
+                ad.setImg(s);
+                advertList.add(ad);
+            }
+            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 220));
+            headerAdViewView.showNum();
+            headerAdViewView.setShowType(3);
+            headerAdViewView.setRotate(false);
+            headerAdViewView.fillView(advertList, llAdContainer);
+            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
+                @Override
+                public void imageOnclick() {
+                    if (headerClickListener != null)
+                        headerClickListener.onCoverClick();
+                }
+            });
+        }
         // 名字
         if (!TextUtils.isEmpty(merchantInfo.name))
             tvName.setText(merchantInfo.name);
@@ -66,7 +103,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
         if (!TextUtils.isEmpty(merchantInfo.address))
             tvAddress.setText(merchantInfo.address);
         tvNum.setText(merchantInfo.payNum + "人找人服务");
-        tvMoney.setText((int)(merchantInfo.perMoney) + "");
+        tvMoney.setText((int) (merchantInfo.perMoney) + "");
         ivCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +111,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                     headerClickListener.onCoverClick();
             }
         });
-        if(merchantInfo.reviewstatus == 2)
+        if (merchantInfo.reviewstatus == 2)
             tvQianyue.setVisibility(View.VISIBLE);
     }
 

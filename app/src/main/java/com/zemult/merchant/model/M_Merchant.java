@@ -37,7 +37,7 @@ public class M_Merchant implements Serializable {
     @Expose
     public String pic;    //	封面
     @Expose
-    public String pics;    //	封面
+    public String pics;    //	相册前10图片(","分隔)
     @Expose
     public int industryId;    //	行业(场景分类)id
     @Expose

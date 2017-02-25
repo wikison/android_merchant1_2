@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="213dp">
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_ad"
@@ -19,19 +19,28 @@
         android:paddingBottom="5dp"
         android:paddingTop="5dp"/>
 
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_index_container_num"
-        android:layout_width="match_parent"
+    <com.flyco.roundview.RoundTextView
+        android:layout_marginRight="13dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="right"
-        android:orientation="horizontal"
-        android:paddingBottom="12dp"
+        android:id="@+id/tv_pic_num"
+        app:rv_backgroundColor="@color/half_transparent"
+        app:rv_cornerRadius="12dp"
+        android:textColor="@color/white"
+        android:text="0张"
+        android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="5dp"/>
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="@dimen/font_24px"
+        android:background="@color/half_transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="8dp" />
 
     <View
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
