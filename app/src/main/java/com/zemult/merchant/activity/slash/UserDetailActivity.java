@@ -612,18 +612,18 @@ public class UserDetailActivity extends BaseActivity {
         LinearLayout l1 = (LinearLayout) contentView.findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout) contentView.findViewById(R.id.l2);
 
-        tv1.setText("投诉举报");
-        tv2.setText("设置备注名");
-        iv1.setImageResource(R.mipmap.bianji_icon);
-        iv2.setImageResource(R.mipmap.jubao_icon);
-        l1.setOnClickListener(new View.OnClickListener() {
+        tv2.setText("投诉举报");
+        tv1.setText("设置备注名");
+        iv2.setImageResource(R.mipmap.bianji_icon);
+        iv1.setImageResource(R.mipmap.jubao_icon);
+        l2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doReport();
                 mPopWindow.dismiss();
             }
         });
-        l2.setOnClickListener(new View.OnClickListener() {
+        l1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doEdit();
