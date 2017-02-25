@@ -44,6 +44,7 @@ import com.umeng.message.common.UmLog;
 import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
+import com.zemult.merchant.aip.mine.UserMessageAllNumUnread_1_2Request;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.MAppCompatActivity;
 import com.zemult.merchant.config.Constants;
@@ -54,6 +55,7 @@ import com.zemult.merchant.fragment.MyFollowFragment;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.CustomConversationHelper;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.push.MyPushIntentService;
 import com.zemult.merchant.util.AppUtils;
@@ -122,7 +124,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     private FragmentManager fragmentManager;
     private PushAgent mPushAgent;
     private LoginSampleHelper loginHelper;
-
+    UserMessageAllNumUnread_1_2Request userMessageAllNumUnread_1_2Request;
     public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
 
         @Override
@@ -674,6 +676,35 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         });
         sendJsonRequest(userInfoOwnerRequest);
     }
+
+
+    private void UserMessageAllNumUnread_1_2Request() {
+        if (userMessageAllNumUnread_1_2Request != null) {
+            userMessageAllNumUnread_1_2Request.cancel();
+        }
+
+        UserMessageAllNumUnread_1_2Request.Input input = new UserMessageAllNumUnread_1_2Request.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+            input.convertJosn();
+        }
+
+        userMessageAllNumUnread_1_2Request = new UserMessageAllNumUnread_1_2Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    initCustomConversation("da", ((CommonResult) response).num);
+//                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
+                }
+            }
+        });
+        sendJsonRequest(userMessageAllNumUnread_1_2Request);
+    }
+
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {

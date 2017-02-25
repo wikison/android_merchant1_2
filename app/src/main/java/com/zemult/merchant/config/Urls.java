@@ -398,7 +398,7 @@ public class Urls {
 
 
     //获取 我的消息中未读的所有数量
-    public static String USER_MESSAGE_ALLNUM_UNREAD_1_2 = "user_message_allNum_unread_1_2";
+    public static String USER_MESSAGE_ALLNUM_UNREAD_1_2 = "user_message_allNum_unread";
     //获取 我的消息列表
     public static String USER_MESSAGELIST_1_2 = "user_messageList_1_2";
     //获取 @我的 消息列表

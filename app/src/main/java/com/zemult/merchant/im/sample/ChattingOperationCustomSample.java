@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -59,11 +60,15 @@ import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.common.Constant;
 import com.zemult.merchant.model.M_Present;
+import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -481,10 +486,18 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
     /**
      * 发送单聊地理位置消息
      */
-    public static void sendGeoMessage(YWConversation conversation) {
-        conversation.getMessageSender().sendMessage(
-                YWMessageChannel.createGeoMessage(30.2743790000,
-                        120.1422530000, "浙江省杭州市西湖区"), 120, null);
+    public static void sendGeoMessage(Context context,YWConversation conversation) {
+        try {
+            String poiName= SPUtils.get(context, Constants.SP_POI, "常州市").toString();
+            double latitude =Double.parseDouble(SPUtils.get(context, Constants.SP_CENTER,"119.971736,31.829737" ).toString().split(",")[1]) ;
+            double longtitude=Double.parseDouble(SPUtils.get(context, Constants.SP_CENTER,"119.971736,31.829737" ).toString().split(",")[0]);
+            conversation.getMessageSender().sendMessage(
+                    YWMessageChannel.createGeoMessage(latitude,
+                            longtitude, poiName+"附近"), 120, null);
+        }catch (Exception e){
+            ToastUtil.showMessage("获取位置失败");
+        }
+
     }
 
     /**
@@ -499,7 +512,12 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 //            Notification.showToastMsg(fragment.getActivity(), "你点击了文本消息");
 //            return true;
         } else if (message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_GEO){
-            Notification.showToastMsg(fragment.getActivity(), "你点击了地理位置消息");
+            YWGeoMessageBody messageBody = (YWGeoMessageBody) message.getMessageBody();
+            IntentUtil.start_activity(fragment.getActivity(), BaseWebViewActivity.class,
+                    new Pair<String, String>("titlename", "我的位置"), new Pair<String, String>("url",
+                          "http://m.amap.com/navi/?dest="+messageBody.getLongitude()+","+messageBody.getLatitude()+
+                                  "&destName="+messageBody.getAddress()+"&hideRouteIcon=1&key=f08bb8feeee865ada7c7828f1ec14a61"
+                            ));
             return true;
         } else if (message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_P2P_CUS || message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_TRIBE_CUS){
             String msgType = null;
@@ -1339,18 +1357,18 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             replyBarItems.add(replyBarItem);
         }
         if (conversation.getConversationType() == YWConversationType.P2P) {
-//            ReplyBarItem replyBarItem = new ReplyBarItem();
-//            replyBarItem.setItemId(ITEM_ID_1);
-//            replyBarItem.setItemImageRes(R.mipmap.demo_reply_bar_location);
-//            replyBarItem.setItemLabel("位置");
-//            replyBarItem.setOnClicklistener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    sendGeoMessage(conversation);
-//                }
-//            });
+            ReplyBarItem replyBarItem = new ReplyBarItem();
+            replyBarItem.setItemId(ITEM_ID_1);
+            replyBarItem.setItemImageRes(R.mipmap.demo_reply_bar_location);
+            replyBarItem.setItemLabel("位置");
+            replyBarItem.setOnClicklistener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    sendGeoMessage(pointcut.getActivity(),conversation);
+                }
+            });
 //            replyBarItems.add(0,replyBarItem);
-
+            replyBarItems.add(replyBarItem);
             /**
              * 名片
              */

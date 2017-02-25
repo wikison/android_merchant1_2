@@ -107,6 +107,7 @@ public class Constants {
     public static final int RECENT_SEARCH_ROWS = 8;
 
     public static final String SP_CITY = "city";
+    public static final String SP_POI = "poi";
     public static final String SP_CENTER = "center";
     public static final double MIN_WITHDRAW = 100;
     public static final double MAX_WITHDRAW = 2000;

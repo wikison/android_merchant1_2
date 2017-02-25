@@ -298,6 +298,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
                         // 存储到SP中
                         SPUtils.put(mContext, Constants.SP_CITY, city.getNo());
+                        SPUtils.put(mContext, Constants.SP_POI, aMapLocation.getPoiName());
                         SPUtils.put(mContext, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude());
 
                         Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
