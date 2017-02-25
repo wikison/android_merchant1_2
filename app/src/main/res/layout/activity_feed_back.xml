@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_feed_back"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.activity.FeedBackActivity">
+
+    <include layout="@layout/layout_head"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="12dp"
+        style="@style/layout_item"
+        android:paddingLeft="12dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            style="@style/text_15_black_28"
+            android:text="摇一摇意见反馈"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sc_yjfk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:checked="true"/>
+
+    </RelativeLayout>
+
+
+    <TextView
+        style="@style/text_12_999999"
+        android:layout_margin="12dp"
+        android:text="打开开关摇一摇进入bug反馈界面（无需登录），我们会认真考虑您反馈的意见，感谢您的配合"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
