@@ -66,6 +66,7 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
     private AMapLocationClient mLocationClient;
     private LinearLayout llBack;
     private Context mContext;
+    private City city;
 
 
     @Override
@@ -93,7 +94,7 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
                         String district = aMapLocation.getDistrict();
                         String name = StringUtils.extractLocation(location, district);
                         String no = aMapLocation.getCityCode();
-                        City city = new City(name, "", no);
+                        city = new City(name, "", no);
                         Log.e("onLocationChanged", "city: " + city);
                         Log.e("onLocationChanged", "district: " + district);
 
@@ -239,26 +240,17 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
                 mResultListView.setVisibility(View.GONE);
                 break;
             case R.id.ll_back:
-                setResult(RESULT_OK);
             case R.id.lh_btn_back:
-                if (mLocationClient == null) {
+                if (city == null) {
                     back(new City("常州", "changzhou", "0519"));
                 } else {
-                    Intent data = new Intent();
-                    data.putExtra("city_name", "");
-                    setResult(RESULT_OK, data);
-                    finish();
+                    if(getIntent().getStringExtra("cityName").contains("定位"))
+                        back(city);
+                    else
+                        finish();
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent data = new Intent();
-        data.putExtra("city_name", "");
-        setResult(RESULT_OK, data);
-        finish();
     }
 
     @Override
