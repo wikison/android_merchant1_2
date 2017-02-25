@@ -286,6 +286,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                setResult(RESULT_OK);
                 finish();
                 break;
             case R.id.cb_accountpay:

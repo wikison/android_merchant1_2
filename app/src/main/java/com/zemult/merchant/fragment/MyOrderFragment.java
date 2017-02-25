@@ -140,7 +140,6 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
         mActivity = getActivity();
     }
 
-
     private void initListener() {
         userPayAdapter.setOnItemRootClickListener(new UserPayAdapter.ItemRootClickListener() {
             @Override

@@ -2,25 +2,32 @@ package com.zemult.merchant.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
+import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Bill;
+import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.ToastUtils;
+import zema.volley.network.ResponseListener;
 
 /**
  * Created by admin on 2017/2/5.
@@ -79,17 +86,8 @@ public class RedRecordDetailActivity extends BaseActivity {
 
         if (flag == 1) {
             //来自消费单
-            tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-            fromTv.setText("赠送对象");
-            imageManager.loadCircleImage(m.toUserHead, ivUserHead);
-            tvUserName.setText(m.toUserName);
-            if(m.state==0){
-                rtvToPay.setVisibility(View.VISIBLE);
-                rtvToPay.setText("立即付款");
-            }else{
-                rtvToPay.setVisibility(View.GONE);
-            }
-
+            if (userPayId > 0)
+                user_pay_info();
 
         } else {
             tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
@@ -101,6 +99,62 @@ public class RedRecordDetailActivity extends BaseActivity {
         tvPayTime.setText(m.createtime);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (flag == 1) {
+            //来自消费单
+            if (userPayId > 0)
+                user_pay_info();
+
+        }
+    }
+
+    UserPayInfoRequest userPayInfoRequest;
+
+    //订单详情
+    private void user_pay_info() {
+        showPd();
+        if (userPayInfoRequest != null) {
+            userPayInfoRequest.cancel();
+        }
+
+        UserPayInfoRequest.Input input = new UserPayInfoRequest.Input();
+        input.userPayId = userPayId;
+
+        input.convertJosn();
+        userPayInfoRequest = new UserPayInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserBillInfo) response).status == 1) {
+                    m = ((APIM_UserBillInfo) response).userPayInfo;
+                    //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
+                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                    fromTv.setText("赠送对象");
+                    imageManager.loadCircleImage(m.toUserHead, ivUserHead);
+                    tvUserName.setText(m.toUserName);
+                    if(m.state==0){
+                        rtvToPay.setVisibility(View.VISIBLE);
+                        rtvToPay.setText("立即付款");
+                    }else{
+                        rtvToPay.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    ToastUtils.show(RedRecordDetailActivity.this, ((APIM_UserBillInfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userPayInfoRequest);
+    }
+
+
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head,R.id.rtv_to_pay})
     public void onClick(View view) {
@@ -111,11 +165,11 @@ public class RedRecordDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.iv_user_head:
-                Intent it = new Intent(this, UserDetailActivity.class);
-                it.putExtra(UserDetailActivity.USER_ID, m.userId);
-                it.putExtra(UserDetailActivity.USER_NAME, m.userName);
-                it.putExtra(UserDetailActivity.USER_HEAD, m.userHead);
-                startActivity(it);
+//                Intent it = new Intent(this, UserDetailActivity.class);
+//                it.putExtra(UserDetailActivity.USER_ID, m.userId);
+//                it.putExtra(UserDetailActivity.USER_NAME, m.userName);
+//                it.putExtra(UserDetailActivity.USER_HEAD, m.userHead);
+//                startActivity(it);
                 break;
             case R.id.rtv_to_pay:
                 Intent intent = new Intent(this, ChoosePayTypeActivity.class);
@@ -141,10 +195,12 @@ public class RedRecordDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1000) {
                 setResult(RESULT_OK);
-                onBackPressed();
-            }
+                user_pay_info();
+                Intent intent = new Intent(Constants.BROCAST_REFRESH_ORDER);
+                intent.putExtra("userPayId", userPayId);
+                setResult(RESULT_OK, intent);
+                sendBroadcast(intent);
         }
     }
 

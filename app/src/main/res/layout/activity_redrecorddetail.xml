@@ -186,6 +186,7 @@
         android:gravity="center"
         android:layout_marginTop="60dp"
         android:text="@string/go_pay"
+        android:visibility="gone"
         android:textColor="@color/white"
         app:rv_backgroundColor="@color/font_main"
         app:rv_backgroundPressColor="@color/orange"
