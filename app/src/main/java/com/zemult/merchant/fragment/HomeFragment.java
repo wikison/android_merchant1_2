@@ -125,6 +125,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         switch (view.getId()) {
             case R.id.ll_city:
                 intent = new Intent(mContext, CityPickerActivity.class);
+                intent.putExtra("cityName", tvCity.getText().toString());
                 startActivityForResult(intent, REQ_CITY);
                 break;
             case R.id.rl_scan:
