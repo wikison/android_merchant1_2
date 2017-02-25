@@ -155,7 +155,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
-            chooseYv.setText("选择您在  "+name+"  提供的服务");
+            chooseYv.setText("选择您在  " + name + "  提供的服务");
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();
             myCategoryTipText.setVisibility(View.VISIBLE);
@@ -183,7 +183,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
             myCategoryText.setText("已提供的服务");
-            chooseYv.setText("选择您在  "+name+"  提供的服务");
+            chooseYv.setText("选择您在  " + name + "  提供的服务");
             myCategoryTipText.setVisibility(View.VISIBLE);
             shopnameTv.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
@@ -564,13 +564,22 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 break;
             case R.id.apply_btn:
                 if (comefrom == 1) {
-                    if (cbAgree.isChecked()) {
-                        user_add_saleuser();
+                    if (userChannelList.size() == 0) {
+                        ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-                        ToastUtils.show(this, "请勾选同意本平台协议");
+                        if (cbAgree.isChecked()) {
+                            user_add_saleuser();
+                        } else {
+                            ToastUtils.show(this, "请勾选同意本平台协议");
+                        }
+
                     }
                 } else if (comefrom == 2) {
-                    userSaleMerchantEdit();
+                    if (userChannelList.size() == 0) {
+                        ToastUtils.show(this, "服务标签不能为空");
+                    } else {
+                        userSaleMerchantEdit();
+                    }
                 }
                 break;
         }
