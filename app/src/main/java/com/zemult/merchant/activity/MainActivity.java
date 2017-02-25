@@ -200,6 +200,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
             initIM();
+            exitRefresh("relogin");
         }
         if (Constants.BROCAST_CLOSE_ACTIVITY_FORLABEL.equals(intent.getAction())) {
             mSlashMenuWindow.dismiss();
@@ -250,6 +251,18 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             transaction.hide(mineFragment).show(slashFragment).commitAllowingStateLoss();
 
             IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+        }
+        if ("relogin".equals(s)) {
+            if(conversationFragment!=null){
+                transaction = fragmentManager.beginTransaction();
+                slashImage.setImageResource(R.mipmap.shouye_icon);
+                slashText.setTextColor(getResources().getColor(R.color.sel_color));
+                transaction.remove(conversationFragment);
+                conversationFragment = mIMKit.getConversationFragment();
+                transaction.add(R.id.content, conversationFragment);
+                transaction.hide(conversationFragment).show(slashFragment).commitAllowingStateLoss();
+            }
+
         }
     }
 

@@ -16,7 +16,7 @@
         android:padding="20dp"
         android:background="@mipmap/demo_tribe_header">
 
-        <com.alibaba.mobileim.fundamental.widget.WXNetworkImageView
+        <ImageView
             android:id="@+id/head"
             android:layout_width="65dp"
             android:layout_height="65dp"

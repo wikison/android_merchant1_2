@@ -14,6 +14,7 @@ public class Urls {
 
     // 应用APPKEY，这个APPKEY是申请应用时获取的
     public static  String APP_KEY = "23521799";// 测试  23521799  正式 23630707
+//    public static  String APP_KEY = "23630707";// 测试  23521799  正式
 
 
     public static String BASIC_URL = URL + "inter_json/";

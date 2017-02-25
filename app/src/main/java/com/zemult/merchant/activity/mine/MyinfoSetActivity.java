@@ -16,12 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.HeadManageActivity;
+import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.adapter.slashfrgment.PhotoFix3Adapter;
 import com.zemult.merchant.aip.common.UserLogoutRequest;
 import com.zemult.merchant.aip.mine.UserEditinfoRequest;
@@ -279,7 +281,7 @@ public class MyinfoSetActivity extends MAppCompatActivity {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    SlashHelper.userManager().getUserinfo();
+//                    SlashHelper.userManager().getUserinfo();
                     SlashHelper.userManager().saveUserinfo(null);
                     ImLogout();
                     ToastUtils.show(MyinfoSetActivity.this, "退出成功");
@@ -294,11 +296,15 @@ public class MyinfoSetActivity extends MAppCompatActivity {
     public void ImLogout() {
         // openIM SDK提供的登录服务
         IYWLoginService mLoginService = mIMKit.getLoginService();
+
         mLoginService.logout(new IWxCallback() {
             //此时logout已关闭所有基于IMBaseActivity的OpenIM相关Actiivity，s
             @Override
             public void onSuccess(Object... arg0) {
                 YWLog.i("------IM_LOGOUT---------", "退出成功");
+                String account = YWAPI.getCurrentUser();
+                mIMKit = YWAPI.getIMKitInstance(account);
+                LoginSampleHelper.getInstance().setIMKit(mIMKit);
             }
 
             @Override
