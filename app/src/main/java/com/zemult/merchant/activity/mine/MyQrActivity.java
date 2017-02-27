@@ -3,7 +3,6 @@ package com.zemult.merchant.activity.mine;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import com.zemult.merchant.util.QrImageUtil;
 import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -31,7 +29,6 @@ public class MyQrActivity extends BaseActivity {
     TextView moneyTv;
     @Bind(R.id.set_btn)
     Button setBtn;
-    String price = "";
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -64,12 +61,13 @@ public class MyQrActivity extends BaseActivity {
     ImageView ivQr;
     @Bind(R.id.tv_hint)
     TextView tvHint;
-
     int userSaleId, merchantId;
+
     String merchantHead, merchantName;
     Bitmap bitmap;
     String strFrom = "";
     String qrInfo;
+    String price = "";
 
     @Override
     public void setContentView() {
@@ -165,10 +163,4 @@ public class MyQrActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

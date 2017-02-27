@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.HeadManageActivity;
 import com.zemult.merchant.activity.LoginActivity;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageManager;
@@ -195,6 +197,26 @@ public abstract class BaseActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
                     startActivity(new Intent(context, LoginActivity.class));
+                }
+            });
+            return true;
+        }
+        return false;
+    }
+    public boolean noHead(final Context context) {
+        // 没有设置头像跳转到设置头像界面
+        if (TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
+            CommonDialog.showDialogListener(context, null, "取消", "去设置", "您目前还没有设置过头像，要成为优秀的服务管家请先设置头像哦", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonDialog.DismissProgressDialog();
+
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonDialog.DismissProgressDialog();
+                    startActivity(new Intent(context, HeadManageActivity.class));
                 }
             });
             return true;

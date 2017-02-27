@@ -186,7 +186,7 @@ public class FindPayActivity extends BaseActivity {
     private void initView() {
         lhTvTitle.setText("结账服务");
 
-        EditFilter.CashFilter(etPaymoney, 10000);
+        EditFilter.CashFilter(etPaymoney, Constants.MAX_PAY);
         btnPay.setEnabled(false);
         btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
         etPaymoney.addTextChangedListener(watcher);
