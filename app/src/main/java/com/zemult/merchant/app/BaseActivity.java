@@ -205,7 +205,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     public boolean noHead(final Context context) {
         // 没有设置头像跳转到设置头像界面
-        if (SlashHelper.userManager().getUserinfo().defaultHead.equals(SlashHelper.userManager().getUserinfo().getHead())) {
+        if (SlashHelper.userManager().getUserinfo().getHead().equals(SlashHelper.userManager().getUserinfo().defaultHead)) {
             CommonDialog.showDialogListener(context, null, "取消", "去设置", "您目前还没有设置过头像，要成为优秀的服务管家请先设置头像哦", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
