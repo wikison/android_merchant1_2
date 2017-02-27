@@ -56,6 +56,7 @@ public class ShareAppointmentActivity extends BaseActivity {
         WebSettings wSet = webview.getSettings();
         wSet.setJavaScriptCanOpenWindowsAutomatically(true);
         wSet.setJavaScriptEnabled(true);
+        wSet.setDomStorageEnabled(true);
         webview.setWebViewClient(new MyWebViewClient());
         shareurl=getIntent().getStringExtra("shareurl");
         sharecontent=getIntent().getStringExtra("sharecontent");
@@ -75,7 +76,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
                                 .withText(sharecontent)
-                                .withTargetUrl(shareurl)
+                                .withTargetUrl(shareurl+"&type=1")
                                 .withMedia(shareImage).withTitle(sharetitle)
                                 .share();
                         break;
@@ -84,7 +85,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
                                 .withText(sharecontent)
-                                .withTargetUrl(shareurl)
+                                .withTargetUrl(shareurl+"&type=1")
                                 .withMedia(shareImage).withTitle(sharetitle)
                                 .share();
                         break;
@@ -93,7 +94,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
                                 .withText(sharecontent)
-                                .withTargetUrl(shareurl)
+                                .withTargetUrl(shareurl+"&type=1")
                                 .withMedia(shareImage).withTitle(sharetitle)
                                 .share();
                         break;
@@ -102,7 +103,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
                                 .withText(sharecontent)
-                                .withTargetUrl(shareurl)
+                                .withTargetUrl(shareurl+"&type=1")
                                 .withMedia(shareImage).withTitle(sharetitle)
                                 .share();
                         break;
@@ -135,7 +136,10 @@ public class ShareAppointmentActivity extends BaseActivity {
                     popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
 
 
-            }else{
+            }
+            if (url.contains("baidumap://map/?")){
+            }
+            else{
                 view.loadUrl(url);
             }
 

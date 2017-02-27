@@ -107,25 +107,25 @@ public class AppApplication extends MultiDexApplication {
        //初始化反馈功能(未使用反馈功能的用户无需调用该初始化)
 //        InitHelper.initFeedBack(this);
         //初始化多媒体SDK，小视频和阅后即焚功能需要使用多媒体SDK
-        AlibabaSDK.asyncInit(this, new InitResultCallback() {
-            @Override
-            public void onSuccess() {
-                Log.e(TAG, "-----initTaeSDK----onSuccess()-------" );
-                try {
-                    MediaService mediaService = AlibabaSDK.getService(MediaService.class);
-                    mediaService.enableHttpDNS(); //如果用户为了避免域名劫持，可以启用HttpDNS
-//                    mediaService.enableLog(); //在调试时，可以打印日志。正式上线前可以关闭
-                }catch (Exception e){
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                Log.e(TAG, "-------onFailure----msg:" + msg + "  code:" + code);
-            }
-        });
+//        AlibabaSDK.asyncInit(this, new InitResultCallback() {
+//            @Override
+//            public void onSuccess() {
+//                Log.e(TAG, "-----initTaeSDK----onSuccess()-------" );
+//                try {
+//                    MediaService mediaService = AlibabaSDK.getService(MediaService.class);
+//                    mediaService.enableHttpDNS(); //如果用户为了避免域名劫持，可以启用HttpDNS
+////                    mediaService.enableLog(); //在调试时，可以打印日志。正式上线前可以关闭
+//                }catch (Exception e){
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int code, String msg) {
+//                Log.e(TAG, "-------onFailure----msg:" + msg + "  code:" + code);
+//            }
+//        });
     }
 
     private boolean mustRunFirstInsideApplicationOnCreate() {

@@ -15,7 +15,6 @@ import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.CreateBespeakActivity;
@@ -29,6 +28,7 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by Wikison on 2017/1/22.
@@ -112,7 +112,7 @@ public class SendPresentSuccessActivity extends BaseActivity {
             }
         }
 
-        if(!StringUtil.isEmpty(serviceId)){
+        if(!StringUtils.isEmpty(serviceId)){
             llTks.setVisibility(View.VISIBLE);
             llComf.setVisibility(View.GONE);
             tvTitle.setText("哇塞，没见过这么豪的土豪，快来收礼物吧~");

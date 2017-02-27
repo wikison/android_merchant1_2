@@ -29,7 +29,6 @@ import com.zemult.merchant.util.ContactsDao;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
-import com.taobao.av.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,7 +237,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
                 holder.tv_add_state.setVisibility(View.VISIBLE);
                 holder.btn_add_state.setVisibility(View.INVISIBLE);
             }
-            imageManager.loadCircleImage(StringUtil.isEmpty(role.getUserHead())?"":role.getUserHead(), holder.iv_friend_head);
+            imageManager.loadCircleImage(StringUtils.isEmpty(role.getUserHead())?"":role.getUserHead(), holder.iv_friend_head);
             holder.initView(role);
             return convertView;
         }

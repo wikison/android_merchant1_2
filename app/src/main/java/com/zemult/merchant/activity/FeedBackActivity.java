@@ -38,7 +38,7 @@ public class FeedBackActivity extends BaseActivity {
     public void init() {
 
         lhTvTitle.setText("意见反馈");
-        if (SlashHelper.getSettingBoolean(SlashHelper.APP.Key.UMENMGPUSH, false)) {
+        if (SlashHelper.getSettingBoolean(SlashHelper.APP.Key.BUGTAGS, false)) {
             scYjfk.setChecked(true);
         } else {
             scYjfk.setChecked(false);
@@ -47,8 +47,10 @@ public class FeedBackActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    SlashHelper.setSettingBoolean(SlashHelper.APP.Key.BUGTAGS, true);
                     Bugtags.setInvocationEvent(Bugtags.BTGInvocationEventShake);
                 } else {
+                    SlashHelper.setSettingBoolean(SlashHelper.APP.Key.BUGTAGS, false);
                     Bugtags.setInvocationEvent(Bugtags.BTGInvocationEventNone);
                 }
             }

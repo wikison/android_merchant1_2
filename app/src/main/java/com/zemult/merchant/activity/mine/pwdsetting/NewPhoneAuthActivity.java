@@ -17,7 +17,6 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
@@ -102,7 +101,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
             case R.id.btn_bangding:
                 strPhone = etphone.getText().toString();
                 strCode = etCode.getText().toString();
-                if (StringUtil.isEmpty(strPhone)) {
+                if (StringUtils.isEmpty(strPhone)) {
                     etphone.setError("请输入您的手机号码");
                     return;
                 }
@@ -110,7 +109,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
                     etphone.setError("请输入新的手机号码");
                     return;
                 }
-                if (StringUtil.isEmpty(strCode)) {
+                if (StringUtils.isEmpty(strCode)) {
                     etCode.setError("请输入验证码");
                     return;
                 }

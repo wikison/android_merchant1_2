@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundRelativeLayout;
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.task.TaskRecordInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
@@ -30,6 +29,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -209,7 +209,7 @@ public class PayBusinessActivity extends BaseActivity {
 
                 break;
             case R.id.btn_taskpay:
-                if (StringUtil.isEmpty(etPaymoney.getText().toString())) {
+                if (StringUtils.isEmpty(etPaymoney.getText().toString())) {
                     etPaymoney.setError("请输入金额");
                     return;
                 }

@@ -24,6 +24,7 @@ import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.password.GridPasswordView;
 
 import cn.trinea.android.common.util.DigestUtils;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class ValidatePayPwdActivity extends MAppCompatActivity implements View.OnClickListener {
@@ -103,25 +104,30 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_step_btn:
-                if (operation == REQUEST_OLD_PASSWORD) {
-                    user_checkpaypwd(passwordView.getPassWord());
-                } else if (operation == REQUEST_CONFIRM_PASSWORD) {
+                if(StringUtils.isEmpty(passwordView.getPassWord())){
+                    ToastUtil.showMessage("请输入6位安全密码");
+                }
+                else {
+                    if (operation == REQUEST_OLD_PASSWORD) {
+                        user_checkpaypwd(passwordView.getPassWord());
+                    } else if (operation == REQUEST_CONFIRM_PASSWORD) {
 
-                    String password1 = passwordView.getPassWord();
-                    String password2 = getIntent().getStringExtra(PASSWORD);
-                    String smsCode = getIntent().getStringExtra(SMS_CODE);
-                    String oldPassword =getIntent().getStringExtra(OLD_PASSWORD);
+                        String password1 = passwordView.getPassWord();
+                        String password2 = getIntent().getStringExtra(PASSWORD);
+                        String smsCode = getIntent().getStringExtra(SMS_CODE);
+                        String oldPassword = getIntent().getStringExtra(OLD_PASSWORD);
 
-                    if (password1.equals(password2)) {
-                        updatePayPassword(password1,oldPassword,smsCode);
+                        if (password1.equals(password2)) {
+                            updatePayPassword(password1, oldPassword, smsCode);
+                        } else {
+                            ToastUtil.showMessage("两次输入密码不一致");
+                        }
                     } else {
-                        ToastUtil.showMessage("两次输入密码不一致");
+                        Intent data = new Intent();
+                        data.putExtra(PASSWORD, passwordView.getPassWord());
+                        setResult(RESULT_OK, data);
+                        this.finish();
                     }
-                } else {
-                    Intent data = new Intent();
-                    data.putExtra(PASSWORD, passwordView.getPassWord());
-                    setResult(RESULT_OK, data);
-                    this.finish();
                 }
                 break;
             case R.id.ll_back:

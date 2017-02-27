@@ -36,7 +36,6 @@ import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.oss.OssFileService;
 import com.zemult.merchant.util.oss.OssHelper;
 import com.zemult.merchant.util.sound.HttpOperateUtil;
-import com.taobao.av.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -193,7 +192,7 @@ public class NewDoTaskVoiceActivity extends BaseActivity {
         }
         taskIndustryId = mTask.taskIndustryId;
 
-        if(!StringUtil.isEmpty(mTask.audio)&&!StringUtils.isEmpty(mTask.audioTime)){
+        if(!StringUtils.isEmpty(mTask.audio)&&!StringUtils.isEmpty(mTask.audioTime)){
             fileUrl=mTask.audio;
             tvLength.setText(mTask.audioTime+ "s");
             progressBar.setMax(Integer.parseInt(mTask.audioTime));

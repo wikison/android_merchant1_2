@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
@@ -25,6 +24,7 @@ import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class OldPhoneAuthActivity extends BaseActivity {
@@ -204,7 +204,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
                 break;
             case R.id.btn_bangding:
                 strCode = etCode.getText().toString();
-                if (StringUtil.isEmpty(strCode)) {
+                if (StringUtils.isEmpty(strCode)) {
                     etCode.setError("请输入验证码");
                     return;
                 }

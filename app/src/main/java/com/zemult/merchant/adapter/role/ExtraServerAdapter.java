@@ -9,7 +9,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.role.CoastBillActivity;
 import com.zemult.merchant.activity.role.PartyHomeActivity;
@@ -18,6 +17,8 @@ import com.zemult.merchant.app.base.TBaseAdapter;
 import com.zemult.merchant.bean.ExtraServerModel;
 
 import java.util.List;
+
+import cn.trinea.android.common.util.StringUtils;
 
 
 public class ExtraServerAdapter extends TBaseAdapter<ExtraServerModel>
@@ -58,7 +59,7 @@ public class ExtraServerAdapter extends TBaseAdapter<ExtraServerModel>
             viewHolder.iconImageView.setImageResource(bean.getIcon());
         }
 
-        if (!StringUtil.isEmpty(bean.getTip())) {
+        if (!StringUtils.isEmpty(bean.getTip())) {
             viewHolder.tipTextView.setText(bean.getTip());
             viewHolder.tipTextView.setVisibility(View.VISIBLE);
         } else {

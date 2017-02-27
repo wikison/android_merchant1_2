@@ -57,7 +57,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
                 onForgetPasswordClick();
             }
         }
-        lhTvTitle.setText("支付密码");
+        lhTvTitle.setText("安全密码");
 
 
     }
@@ -98,7 +98,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
         Intent intent = new Intent(this, ValidatePayPwdActivity.class);
         intent.putExtra(ValidatePayPwdActivity.OPERATION,
                 ValidatePayPwdActivity.REQUEST_OLD_PASSWORD);
-        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改支付密码");
+        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
         intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请输入旧的密码");
         intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "下一步");
@@ -170,7 +170,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
         Intent intent = new Intent(this, ValidatePayPwdActivity.class);
         intent.putExtra(ValidatePayPwdActivity.OPERATION,
                 ValidatePayPwdActivity.REQUEST_NEW_PASSWORD);
-        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改支付密码");
+        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
         intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请输入新的密码");
         intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "下一步");
@@ -182,7 +182,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
         Intent intent = new Intent(this, ValidatePayPwdActivity.class);
         intent.putExtra(ValidatePayPwdActivity.OPERATION,
                 ValidatePayPwdActivity.REQUEST_CONFIRM_PASSWORD);
-        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改支付密码");
+        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
         intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请再次输入新的密码");
         intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "下一步");

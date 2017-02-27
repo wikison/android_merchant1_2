@@ -130,7 +130,7 @@
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/zhifumima_icon"
                     android:layout_centerVertical="true"
-                    android:text="支付密码"/>
+                    android:text="安全密码"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

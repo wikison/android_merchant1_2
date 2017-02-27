@@ -34,7 +34,7 @@
     <color name="default_text">#ff454545</color>
     <color name="normal_tab">#999999</color>
     <color name="imagechoosebg">#22282c</color>
-
+    <color name="imrecorder_yellowpressed">#998326</color>
     <color name="white">#FFFFFF</color>
     <!--白色 -->
     <color name="ivory">#FFFFF0</color>

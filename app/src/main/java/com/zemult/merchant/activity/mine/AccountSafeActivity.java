@@ -97,7 +97,7 @@ public class AccountSafeActivity extends BaseActivity {
                 startActivity(intentpwd);
                 break;
             case R.id.rl_paypassword:
-                //支付密码
+                //安全密码
                 Intent intentpaypassword=new Intent(AccountSafeActivity.this,PayPasswordManagerActivity.class);
                 startActivity(intentpaypassword);
                 break;

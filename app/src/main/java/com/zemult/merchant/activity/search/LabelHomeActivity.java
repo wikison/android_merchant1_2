@@ -33,7 +33,6 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
-import com.taobao.av.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +184,7 @@ public class LabelHomeActivity extends BaseActivity implements SmoothListView.IS
 //                                    holder.setText(R.id.tv_fromwho, "获得来自"+mlabel.fromUserName+"的标签");
 //                                }
                                 holder.setText(R.id.tv_fromwho, "获得标签");
-                                if(!StringUtil.isEmpty(mlabel.labelName)&&mlabel.labelName.length()>10){
+                                if(!StringUtils.isEmpty(mlabel.labelName)&&mlabel.labelName.length()>10){
                                     holder.setText(R.id.tv_labname, mlabel.labelName.substring(0,10)+"...",drawable);
                                 }
                                 else{

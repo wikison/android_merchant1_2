@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="ips">
-        <item>http://server.54xiegang.com/yongyou/inter_json/</item>
-        <item>http://192.168.0.151:8080/yongyou/inter_json/</item>
+        <item>http://test1.54xiegang.com/dzyx_test/,23521799</item>
+        <item>http://server.yovoll.com/dzyx/,23630707</item>
     </string-array>
 
 </resources>

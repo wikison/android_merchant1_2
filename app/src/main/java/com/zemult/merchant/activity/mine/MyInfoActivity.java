@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundRelativeLayout;
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.EditFilter;
@@ -21,6 +20,7 @@ import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 //个人介绍
 public class MyInfoActivity extends BaseActivity {
@@ -68,7 +68,7 @@ public class MyInfoActivity extends BaseActivity {
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("完成");
 
-        if (!StringUtil.isEmpty(SlashHelper.userManager().getUserinfo().getNote())) {
+        if (!StringUtils.isEmpty(SlashHelper.userManager().getUserinfo().getNote())) {
             etTaskDescribe.setText(SlashHelper.userManager().getUserinfo().getNote());
             infoNot = SlashHelper.userManager().getUserinfo().getNote();
         }

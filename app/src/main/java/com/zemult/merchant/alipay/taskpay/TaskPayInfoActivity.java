@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.EditFilter;
-import com.taobao.av.util.StringUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 public class TaskPayInfoActivity extends BaseActivity {
 
@@ -68,7 +68,7 @@ public class TaskPayInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_taskpay:
-                if (StringUtil.isEmpty(etPaymoney.getText().toString())) {
+                if (StringUtils.isEmpty(etPaymoney.getText().toString())) {
                     etPaymoney.setError("请输入金额");
                     return;
                 }

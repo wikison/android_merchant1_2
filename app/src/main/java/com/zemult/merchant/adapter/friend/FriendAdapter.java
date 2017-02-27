@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.taobao.av.util.StringUtil;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Friend;
 import com.zemult.merchant.model.M_UserRole;
@@ -35,6 +34,8 @@ import com.zemult.merchant.view.swipelistview.SwipeItemLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.trinea.android.common.util.StringUtils;
 
 public class FriendAdapter extends ArrayAdapter<M_Friend> implements
 		SectionIndexer {
@@ -138,7 +139,7 @@ public class FriendAdapter extends ArrayAdapter<M_Friend> implements
 					&& !TextUtils.isEmpty(userRole.industryLevel))
 				industryName += "Lv" + userRole.industryLevel + " " + userRole.industryName + "/";
 		}
-		if (!StringUtil.isEmpty(industryName)&&(industryName.lastIndexOf("/") == industryName.length() - 1))
+		if (!StringUtils.isEmpty(industryName)&&(industryName.lastIndexOf("/") == industryName.length() - 1))
 			industryName = industryName.substring(0, industryName.length() - 1);
 		if(friend.userIndustryNum==0){
 			holder.ll_friend_work.setVisibility(View.GONE);
@@ -154,7 +155,7 @@ public class FriendAdapter extends ArrayAdapter<M_Friend> implements
 
 
 
-		if(StringUtil.isEmpty(friend.userLevel+"")){
+		if(StringUtils.isEmpty(friend.userLevel+"")){
 			holder.tv_friend_roles.setVisibility(View.GONE);
 		}
 		else {

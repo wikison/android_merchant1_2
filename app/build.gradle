@@ -158,7 +158,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
     compile project(':Pushlib')
-    compile project(':YunWangVideoSDK')
+//    compile project(':YunWangVideoSDK')
     compile project(':OneSDK')
     compile project(':volley')
     compile project(':library')

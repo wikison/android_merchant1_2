@@ -17,10 +17,10 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.ToastUtil;
-import com.taobao.av.util.StringUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by Wikison on 2016/8/8.
@@ -290,8 +290,8 @@ public class PublishTaskBonusesActivity extends BaseActivity {
     }
 
     private void getEditString() {
-        strBonuses = StringUtil.isEmpty(etBonusesMoney.getText().toString())?"0":etBonusesMoney.getText().toString();
-        strBonusesNum =StringUtil.isEmpty(etBonusesNumber.getText().toString())?"0":etBonusesNumber.getText().toString();
+        strBonuses = StringUtils.isEmpty(etBonusesMoney.getText().toString())?"0":etBonusesMoney.getText().toString();
+        strBonusesNum =StringUtils.isEmpty(etBonusesNumber.getText().toString())?"0":etBonusesNumber.getText().toString();
     }
 
     private void checkBonuses() {
