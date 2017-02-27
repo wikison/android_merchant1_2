@@ -397,7 +397,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 
             headLoadHelper.setHeadView(holder.head, conversation);
             holder.name.setText(name);
-            if(conversation.getLatestContent().indexOf("z.m")!=-1){
+            if(!StringUtils.isEmpty(conversation.getLatestContent())&&conversation.getLatestContent().indexOf("z.m")!=-1){
                 holder.description.setText(conversation.getLatestContent().split("z.m")[1]);
                 holder.time.setText(DateTimeUtil.strPubDiffTime(conversation.getLatestContent().split("z.m")[0]));
             }
