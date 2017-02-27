@@ -24,6 +24,7 @@ import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.password.GridPasswordView;
 
 import cn.trinea.android.common.util.DigestUtils;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class ValidatePayPwdActivity extends MAppCompatActivity implements View.OnClickListener {

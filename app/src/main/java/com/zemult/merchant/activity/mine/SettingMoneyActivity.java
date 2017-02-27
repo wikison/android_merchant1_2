@@ -1,21 +1,20 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,6 +41,7 @@ public class SettingMoneyActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("设置金额");
+        EditFilter.CashFilter(ninameEt, Constants.MAX_PAY);
 
     }
 

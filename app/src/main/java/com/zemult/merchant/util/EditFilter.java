@@ -91,7 +91,7 @@ public final class EditFilter {
 
                 if (s.toString().length() >= 1 && !s.toString().endsWith(".") && Double.valueOf(s.toString()) > 0) {
                     if (Double.valueOf(s.toString()) > MAX_VALUE) {
-                        editText.setError("最大值不能超过" + MAX_VALUE);
+                        editText.setError("最大值不能超过" + Convert.getMoneyString(MAX_VALUE));
                         s = s.toString().subSequence(0, s.toString().length() - 1);
                         editText.setText(s);
                         editText.setSelection(s.length());
@@ -128,7 +128,7 @@ public final class EditFilter {
                         editText.setText("");
                         return;
                     } else if (Integer.valueOf(s.toString()) > MAX_VALUE) {
-                        editText.setError("最大值不能超过" + MAX_VALUE);
+                        editText.setError("最大值不能超过" + Convert.getMoneyString(MAX_VALUE));
                         s = s.toString().subSequence(0, s.toString().length() - 1);
                         editText.setText(s);
                         editText.setSelection(s.length());
