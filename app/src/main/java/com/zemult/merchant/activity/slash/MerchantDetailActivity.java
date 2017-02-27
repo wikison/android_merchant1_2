@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -232,6 +233,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 break;
             case R.id.iv_more:
                 if (noLogin(mContext))
+                    return;
+                if(noHead(mContext))
                     return;
                 if (merchantInfo != null && merchantInfo.isCommission == 1) {
                     Intent intent = new Intent(mActivity, TabManageActivity.class);
