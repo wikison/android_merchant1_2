@@ -130,19 +130,18 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
             // userInfo://userId=11111
             else if (text.startsWith(Constants.QR_USER_PREFIX)) {
                 String info = text.substring(Constants.QR_USER_PREFIX.length());
-                userId = info.substring(userIdPrefix.length());
-                try {
-                    qrvView.getCameraManager().stopPreview();
-                    Intent intent = new Intent(ScanQrActivity.this, UserDetailActivity.class);
-                    intent.putExtra(UserDetailActivity.USER_ID, Integer.valueOf(userId));
-                    startActivity(intent);
-                    finish();
-
-
-                } catch (Exception e) {
-                    System.out.println(TAG + "----->" + e.getMessage());
+                if(!userId.equals(info.substring(userIdPrefix.length()))){
+                    userId = info.substring(userIdPrefix.length());
+                    try {
+                        qrvView.getCameraManager().stopPreview();
+                        Intent intent = new Intent(ScanQrActivity.this, UserDetailActivity.class);
+                        intent.putExtra(UserDetailActivity.USER_ID, Integer.valueOf(userId));
+                        startActivity(intent);
+                        this.finish();
+                    } catch (Exception e) {
+                        System.out.println(TAG + "----->" + e.getMessage());
+                    }
                 }
-
             } else
                 ToastUtil.showMessage("期待您使用" + Constants.APPNAME + "APP");
         }
