@@ -120,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp"
                 android:id="@+id/choose_yv"
+                android:textStyle="normal"
                 style="@style/subscribe_more_tip_text"
                 android:text="选择服务" />
 
