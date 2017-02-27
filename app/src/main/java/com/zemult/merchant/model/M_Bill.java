@@ -59,6 +59,8 @@ public class M_Bill implements Serializable {
     @Expose
     public double serviceMoney;//手续费
     @Expose
+    public String bankName;//商户银行账号
+    @Expose
     public String bankCard;//商户银行账号
 
     @Expose
