@@ -208,7 +208,7 @@ public class WithdrawalsActivity extends BaseActivity {
                                 ((CommonResult) response).bankNumber.length()
                         )
                         + ")");
-                        aliAccount = ((CommonResult) response).bankNumber;
+                        aliAccount = tvAccount.getText().toString();
                     }
 
                 } else {

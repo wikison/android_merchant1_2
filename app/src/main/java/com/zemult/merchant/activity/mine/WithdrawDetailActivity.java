@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.util.Convert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,9 +44,9 @@ public class WithdrawDetailActivity extends BaseActivity {
         lhTvTitle.setVisibility(View.VISIBLE);
         lhTvTitle.setText("提现详情");
 
-        tvMoney.setText("￥"+getIntent().getStringExtra("money"));//金额
-        othersTv.setText("￥"+getIntent().getDoubleExtra("other",0));//手续费
-        tvAccount.setText(getIntent().getStringExtra("aliAccount"));//支付宝账号
+        tvMoney.setText("￥" + Convert.getMoneyString(Double.parseDouble(getIntent().getStringExtra("money"))));//金额
+        othersTv.setText("￥" + Convert.getMoneyString(getIntent().getDoubleExtra("other",0)));//手续费
+        tvAccount.setText(getIntent().getStringExtra("aliAccount"));//账号
     }
 
 
