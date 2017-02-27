@@ -150,7 +150,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
 
     @Override
     public void cameraNotFound() {
-        ToastUtil.showMessage("没摄像头怎么美美的自拍~~~~");
+        ToastUtil.showMessage("未找到摄像头!");
     }
 
     @Override
