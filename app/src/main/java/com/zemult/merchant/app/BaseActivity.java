@@ -61,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView();
         ButterKnife.bind(this);
         checkStoragePermission();
-        imageManager = new ImageManager(this);
+        imageManager = new ImageManager(getApplicationContext());
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setMessageText("数据加载...");
         init();
@@ -203,6 +203,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
     public boolean noHead(final Context context) {
         // 没有设置头像跳转到设置头像界面
         if (SlashHelper.userManager().getUserinfo().getHead().equals(SlashHelper.userManager().getUserinfo().defaultHead)) {
