@@ -98,4 +98,6 @@ public class CommonResult {
     public String bankName;//银行卡名称(status=1时有值)
     @Expose
     public String bankNumber;//银行卡号码
+    @Expose
+    public String defaultHead;//默认头像
 }

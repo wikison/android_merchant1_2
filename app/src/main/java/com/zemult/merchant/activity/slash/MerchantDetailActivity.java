@@ -234,7 +234,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             case R.id.iv_more:
                 if (noLogin(mContext))
                     return;
-                if(noHead(mContext))
+                if (noHead(mContext))
                     return;
                 if (merchantInfo != null && merchantInfo.isCommission == 1) {
                     Intent intent = new Intent(mActivity, TabManageActivity.class);
