@@ -578,4 +578,6 @@ public class M_Userinfo implements Serializable {
     }
     @Expose
     public String remarkName; // 备注名
+    @Expose
+    public String defaultHead; // 默认头像
 }
