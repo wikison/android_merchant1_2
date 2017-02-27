@@ -22,10 +22,10 @@ import zema.volley.network.VolleyUtil;
 /**
  * Created by zhangkai on 2016/6/14.
  */
+
 /**
  * 初始化广播接收器
  */
-
 
 
 public class MAppCompatActivity extends AppCompatActivity {
@@ -41,7 +41,7 @@ public class MAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         loadingDialog = new LoadingDialog(this);
-        imageManager=new ImageManager(this);
+        imageManager = new ImageManager(getApplicationContext());
         loadingDialog.setMessageText("数据加载...");
     }
 
@@ -79,7 +79,7 @@ public class MAppCompatActivity extends AppCompatActivity {
         }
         WeakReference<Request> ref = new WeakReference<Request>(request);
         listJsonRequest.add(ref);
-        VolleyUtil.getRequestQueue().add(request) ;
+        VolleyUtil.getRequestQueue().add(request);
     }
 
     protected final void registerReceiver(String[] actionArray) {

@@ -61,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView();
         ButterKnife.bind(this);
         checkStoragePermission();
-        imageManager = new ImageManager(this);
+        imageManager = new ImageManager(getApplicationContext());
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setMessageText("数据加载...");
         init();
@@ -203,9 +203,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
     public boolean noHead(final Context context) {
         // 没有设置头像跳转到设置头像界面
-        if (TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
+        if (SlashHelper.userManager().getUserinfo().getHead().equals(SlashHelper.userManager().getUserinfo().defaultHead)) {
             CommonDialog.showDialogListener(context, null, "取消", "去设置", "您目前还没有设置过头像，要成为优秀的服务管家请先设置头像哦", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -99,6 +99,8 @@ public class CommonResult {
     @Expose
     public String bankNumber;//银行卡号码
     @Expose
+    public String defaultHead;//默认头像
+    @Expose
     public String note;//内容（zuixin）
     @Expose
     public String createtime;//创建时间(格式"yyyy-MM-dd HH:mm:ss")
