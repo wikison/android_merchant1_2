@@ -23,7 +23,6 @@ public class CustomConversationHelper {
         mCustomConversation.setIdentity(conversationID);
         mCustomConversation.setContent(content);
         mCustomConversation.setUnreadCount(unreadCount);
-//        mCustomConversation.setLastestTime(new Date().getTime());
 
         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
         IYWConversationService conversationService = imKit.getConversationService();

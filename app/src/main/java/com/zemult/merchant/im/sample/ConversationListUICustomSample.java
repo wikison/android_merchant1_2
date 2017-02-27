@@ -360,6 +360,8 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                 holder.name = (TextView) convertView.findViewById(R.id.name);
                 holder.unread = (TextView) convertView.findViewById(R.id.unread);
 
+                holder.description = (TextView) convertView.findViewById(R.id.description);
+                holder.time = (TextView) convertView.findViewById(R.id.time);
                 convertView.setTag(holder);
             } else {
                 try{
@@ -395,6 +397,11 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 
             headLoadHelper.setHeadView(holder.head, conversation);
             holder.name.setText(name);
+            if(conversation.getLatestContent().indexOf("z.m")!=-1){
+                holder.description.setText(conversation.getLatestContent().split("z.m")[1]);
+                holder.time.setText(DateTimeUtil.strPubDiffTime(conversation.getLatestContent().split("z.m")[0]));
+            }
+
 
             holder.unread.setVisibility(View.GONE);
             int unreadCount = conversation.getUnreadCount();
@@ -462,6 +469,9 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         ImageView head;
         TextView name;
         TextView unread;
+        TextView description;
+        TextView time;
+
     }
 
     public class ViewHolder2{
