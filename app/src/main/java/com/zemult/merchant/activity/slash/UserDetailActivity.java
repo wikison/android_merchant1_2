@@ -611,11 +611,10 @@ public class UserDetailActivity extends BaseActivity {
         ImageView iv2 = (ImageView) contentView.findViewById(R.id.iv2);
         LinearLayout l1 = (LinearLayout) contentView.findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout) contentView.findViewById(R.id.l2);
-
-        tv2.setText("投诉举报");
         tv1.setText("设置备注名");
-        iv2.setImageResource(R.mipmap.bianji_icon);
-        iv1.setImageResource(R.mipmap.jubao_icon);
+        tv2.setText("投诉举报");
+        iv1.setImageResource(R.mipmap.bianji_icon);
+        iv2.setImageResource(R.mipmap.jubao_icon);
         l2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
