@@ -208,6 +208,13 @@ public class FindPayActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        adapter.setOnCheckClickListener(new ChooseReservationAdapter.OnCheckClickListener() {
+            @Override
+            public void onCheckClick(int position) {
+                adapter.setSelected(position);
+            }
+        });
     }
 
     private void getNetworkData() {
@@ -525,13 +532,12 @@ public class FindPayActivity extends BaseActivity {
                 if (etPaymoney.getText().toString().length() > 0) {
                     etPaymoney.setHint("");
                     btnPay.setEnabled(true);
-                    if(getMoney()>0){
+                    if (getMoney() > 0) {
                         btnPay.setBackgroundResource(R.drawable.common_selector_btn);
                     }
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + (cbReward.isChecked() ? rewardMoney : 0)));
                 }
             } else {
-                etPaymoney.setHint("请输入支付金额");
                 tvFuhao.setVisibility(View.GONE);
                 btnPay.setEnabled(false);
                 btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
