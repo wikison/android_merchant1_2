@@ -154,6 +154,7 @@
 
 
                 <TextView
+                    android:layout_toRightOf="@+id/tv_beizhu"
                     android:id="@+id/tv_extra"
                     style="@style/detail_right"
                     android:text="------"/>
@@ -365,7 +366,7 @@
                             android:drawableLeft="@mipmap/fenxiang"
                             android:padding="8dp"
                             android:layout_marginBottom="@dimen/margin_12dp"
-                            android:text="邀请好友"/>
+                            android:text="生成邀请函"/>
 
                         <Button
                             android:id="@+id/jiezhang_btn"
