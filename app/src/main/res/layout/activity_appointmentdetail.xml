@@ -81,7 +81,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="交易商户"/>
+                    android:text="商户"/>
 
 
                 <TextView
@@ -154,10 +154,8 @@
 
 
                 <TextView
-                    android:layout_toRightOf="@+id/tv_beizhu"
                     android:id="@+id/tv_extra"
                     style="@style/detail_right"
-                    android:layout_centerVertical="true"
                     android:text="------"/>
             </RelativeLayout>
 
@@ -195,7 +193,7 @@
 
                 <TextView
                     style="@style/detail_left"
-                    android:text="电话"/>
+                    android:text="手机号码"/>
 
 
                 <TextView
@@ -291,7 +289,6 @@
                         android:text="预约结果"/>
 
                     <TextView
-                        android:layout_toRightOf="@+id/tv_result"
                         android:id="@+id/appresult_tv"
                         style="@style/detail_right"
                         android:layout_centerVertical="true"

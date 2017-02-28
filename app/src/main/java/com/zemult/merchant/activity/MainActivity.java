@@ -560,17 +560,17 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
                 //根据消息类型对消息进行修改，切记这里只是示例，具体怎样对消息进行修改开发者可以根据自己的需求进行处理
                 if (message.getSubType() == YWMessage.SUB_MSG_TYPE.IM_TEXT) {
-                    String content = message.getContent();
-                    if (content.equals("55")) {
-                        message.setContent("我修改了消息内容, 原始内容：55");
-                        return message;
-                    } else if (content.equals("66")) {
-                        YWMessage newMsg = YWMessageChannel.createTextMessage("我创建了一条新消息, 原始消息内容：66");
-                        return newMsg;
-                    } else if (content.equals("77")) {
-                        Notification.showToastMsg(MainActivity.this, "不发送该消息，消息内容为：77");
-                        return null;
-                    }
+//                    String content = message.getContent();
+//                    if (content.equals("55")) {
+//                        message.setContent("我修改了消息内容, 原始内容：55");
+//                        return message;
+//                    } else if (content.equals("66")) {
+//                        YWMessage newMsg = YWMessageChannel.createTextMessage("我创建了一条新消息, 原始消息内容：66");
+//                        return newMsg;
+//                    } else if (content.equals("77")) {
+//                        Notification.showToastMsg(MainActivity.this, "不发送该消息，消息内容为：77");
+//                        return null;
+//                    }
                 }
                 return message;
             }
