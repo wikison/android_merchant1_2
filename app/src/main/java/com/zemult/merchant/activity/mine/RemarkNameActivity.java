@@ -18,6 +18,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserAttractEditRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -52,6 +53,8 @@ public class RemarkNameActivity extends BaseActivity {
         lhTvTitle.setText("设置备注名");
         tvRight.setVisibility(View.VISIBLE);
         tvRight.setText("保存");
+        EditFilter.WordFilter(etName, 6);
+
         if (!TextUtils.isEmpty(getIntent().getStringExtra("name")))
             etName.setText(getIntent().getStringExtra("name"));
 

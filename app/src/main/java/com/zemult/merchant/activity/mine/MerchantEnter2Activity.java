@@ -56,9 +56,9 @@ public class MerchantEnter2Activity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("商户入驻申请");
-//        EditFilter.WordFilter(etName, 20);
-//        EditFilter.WordFilter(etAddress, 30);
-//        EditFilter.WordFilter(etPersonName, 5);
+        EditFilter.WordFilter(etName, 20);
+        EditFilter.WordFilter(etAddress, 30);
+        EditFilter.WordFilter(etPersonName, 5);
     }
 
     @Override
