@@ -21,6 +21,7 @@ import com.zemult.merchant.util.SlashHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -113,7 +114,7 @@ public class NicknameActivity extends MBaseActivity {
                 break;
             case R.id.lh_btn_right:   //点击保存按钮
 
-                if (TextUtils.isEmpty(ninameEt.getText().toString())) {
+                if (StringUtils.isBlank(ninameEt.getText().toString())) {
                     Toast.makeText(NicknameActivity.this, "请输入您的昵称", Toast.LENGTH_SHORT).show();
                 } else {
                     user_editinfo();
