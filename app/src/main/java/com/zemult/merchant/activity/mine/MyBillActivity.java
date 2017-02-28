@@ -246,7 +246,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
 
                                 }
                                 if (mbill.type == 6) {
-                                    holder.setText(R.id.tv_mybill_name, "红包");
+                                    holder.setText(R.id.tv_mybill_name, "平台红包");
                                     holder.setViewInvisible(R.id.tv_state);
                                 }
                                 if (mbill.type == 7) {

@@ -239,18 +239,28 @@ public final class EditFilter {
 
         editText.addTextChangedListener(textWatcher);
 
-        //设置不能输入emoji
+        //设置只能输入中英文数字
         InputFilter[] filters = new InputFilter[1];
         filters[0] = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (isHasEmoji(source)) {
+                if (!isChineseA1(source)) {
                     return "";
                 }
                 return source;
             }
         };
         editText.setFilters(filters);
+    }
+
+    private  static boolean isChineseA1(CharSequence source){
+            Pattern p = Pattern.compile("^[a-zA-Z0-9\u4E00-\u9FA5]+$");
+            Matcher matcher = p.matcher(source);
+            if (matcher.find()) {
+                return true;
+            }
+            return false;
+
     }
 
     //过滤emoji
@@ -284,7 +294,7 @@ public final class EditFilter {
 
     private static boolean isEmojiCharacter(char codePoint) {
         return (codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA) ||
-                (codePoint == 0xD) || ((codePoint >= 0x20) && (codePoint <= 0xD7FF)&&(codePoint!=0x263a)) ||
+                (codePoint == 0xD) || ((codePoint >= 0x20) && (codePoint <= 0xD7FF)) ||
                 ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000)
                 && (codePoint <= 0x10FFFF));
     }

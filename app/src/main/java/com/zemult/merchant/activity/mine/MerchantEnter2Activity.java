@@ -22,6 +22,7 @@ import com.zemult.merchant.util.ToastUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class MerchantEnter2Activity extends BaseActivity {
@@ -55,9 +56,9 @@ public class MerchantEnter2Activity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("商户入驻申请");
-//        EditFilter.WordFilter(etName, 20);
-//        EditFilter.WordFilter(etAddress, 30);
-//        EditFilter.WordFilter(etPersonName, 5);
+        EditFilter.WordFilter(etName, 20);
+        EditFilter.WordFilter(etAddress, 30);
+        EditFilter.WordFilter(etPersonName, 5);
     }
 
     @Override
@@ -75,19 +76,19 @@ public class MerchantEnter2Activity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_commit:
-                if (TextUtils.isEmpty(etName.getText().toString())) {
+                if (StringUtils.isBlank(etName.getText().toString())) {
                     etName.setError("请填写");
                     return;
                 }
-                if (TextUtils.isEmpty(etAddress.getText().toString())) {
+                if (StringUtils.isBlank(etAddress.getText().toString())) {
                     etAddress.setError("请填写");
                     return;
                 }
-                if (TextUtils.isEmpty(etPersonName.getText().toString())) {
+                if (StringUtils.isBlank(etPersonName.getText().toString())) {
                     etPersonName.setError("请填写");
                     return;
                 }
-                if (TextUtils.isEmpty(etPersonPhone.getText().toString())) {
+                if (StringUtils.isBlank(etPersonPhone.getText().toString())) {
                     etPersonPhone.setError("请填写");
                     return;
                 }

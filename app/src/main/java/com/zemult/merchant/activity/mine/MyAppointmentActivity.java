@@ -193,7 +193,15 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                                 holder.setText(R.id.tv_state, "已支付");
                                                 holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
                                             } else if (mReservation.state == 3) {
-                                                holder.setText(R.id.tv_state, "预约结束");
+                                                holder.setText(R.id.tv_state, "预约失效");
+                                                holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+                                            }
+                                            else if(mReservation.state == 0){
+                                                holder.setText(R.id.tv_state, "待确认");
+                                                holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                            }
+                                            else if(mReservation.state == 4){
+                                                holder.setText(R.id.tv_state, "预约未支付");
                                                 holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
                                             }
 
@@ -313,9 +321,18 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
                                             holder.setText(R.id.tv_state, "已支付");
                                             holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
                                         } else if (mReservation.state == 3) {
-                                            holder.setText(R.id.tv_state, "预约结束");
+                                            holder.setText(R.id.tv_state, "预约失效");
                                             holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
                                         }
+                                        else if(mReservation.state == 0){
+                                            holder.setText(R.id.tv_state, "待确认");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.e6bb7c));
+                                        }
+                                        else if(mReservation.state == 4){
+                                            holder.setText(R.id.tv_state, "预约未支付");
+                                            holder.setTextColor(R.id.tv_state, mContext.getResources().getColor(R.color.font_black_999));
+                                        }
+
                                     }
 
                                 });
@@ -389,11 +406,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void refreshEvent(String s) {
         if (AppointmentDetailActivity.REFLASH_MYAPPOINT.equals(s))
-            if (type == 0) {
-                userReservationList();
-            } else if (type == 1) {
-                userSaleReservation();
-            }
+            onRefresh();
     }
 
 

@@ -24,7 +24,6 @@ import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.password.GridPasswordView;
 
 import cn.trinea.android.common.util.DigestUtils;
-import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class ValidatePayPwdActivity extends MAppCompatActivity implements View.OnClickListener {
@@ -39,14 +38,14 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     public static final String CONTENT_TV_TEXT = "content";
     public static final String CONFIRM_BTN_TEXT = "confirm";
     public static final String SMS_CODE = "smscode";
-    public static final String OLD_PASSWORD="oldPassWord";
+    public static final String OLD_PASSWORD = "oldPassWord";
     private GridPasswordView passwordView;
     private TextView tipTv;
     private TextView titleTv;
-    private Button confirmBtn,lh_btn_back;
+    private Button confirmBtn, lh_btn_back;
     private int operation = 0;
     TextView lh_tv_title;
-    LinearLayout  ll_back;
+    LinearLayout ll_back;
     UserSetpaypwdRequest userSetpaypwdRequest;
     UserEditpaypwdRequest userEditpaypwdRequest;
     UserCheckpaypwdRequest userCheckpaypwdRequest;
@@ -69,7 +68,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
         String content = getIntent().getStringExtra(CONTENT_TV_TEXT);
         String tip = getIntent().getStringExtra(TIP_TV_TEXT);
         String confirm = getIntent().getStringExtra(CONFIRM_BTN_TEXT);
-        String titletext=getIntent().getStringExtra(TITLE_TV_TEXT);
+        String titletext = getIntent().getStringExtra(TITLE_TV_TEXT);
 
         lh_tv_title = (TextView) findViewById(R.id.lh_tv_title);
         lh_btn_back = (Button) findViewById(R.id.lh_btn_back);
@@ -104,10 +103,11 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.next_step_btn:
-                if(StringUtils.isEmpty(passwordView.getPassWord())){
+                String pwd = passwordView.getPassWord();
+                System.out.println(pwd);
+                if (passwordView.getPassWord().length() < 6) {
                     ToastUtil.showMessage("请输入6位安全密码");
-                }
-                else {
+                } else {
                     if (operation == REQUEST_OLD_PASSWORD) {
                         user_checkpaypwd(passwordView.getPassWord());
                     } else if (operation == REQUEST_CONFIRM_PASSWORD) {
@@ -140,18 +140,16 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     }
 
 
-    void  updatePayPassword(String password1,String oldPassword,String smsCode){
-        if(TextUtils.isEmpty(smsCode)){
-            if(TextUtils.isEmpty(oldPassword)) {//第一次设置新安全密码
+    void updatePayPassword(String password1, String oldPassword, String smsCode) {
+        if (TextUtils.isEmpty(smsCode)) {
+            if (TextUtils.isEmpty(oldPassword)) {//第一次设置新安全密码
 //                ToastUtil.showMessage("第一次设置新安全密码");
                 user_setpaypwd(password1);
-            }
-            else{
+            } else {
 //                ToastUtil.showMessage("修改密码");
                 user_editpaypwd(password1);
             }
-        }
-        else{//忘记密码
+        } else {//忘记密码
 //            ToastUtil.showMessage("忘记密码");
             user_setpaypwd(password1);
         }
@@ -183,21 +181,21 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     Intent intent = new Intent();
-                intent.putExtra("oldPassWord", passwordView.getPassWord());
-                setResult(RESULT_OK,intent);
-                finish();
+                    intent.putExtra("oldPassWord", passwordView.getPassWord());
+                    setResult(RESULT_OK, intent);
+                    finish();
                 } else {
 
                     CommonDialog.showDialogListener(ValidatePayPwdActivity.this, null, "忘记密码", "确定", "安全密码错误,请重试", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(
-                                        ValidatePayPwdActivity.this,
-                                        RetrievePasswordActivity.class);
-                                intent.putExtra("validatePayPassword", true);
-                                startActivityForResult(
-                                        intent,
-                                        RetrievePasswordActivity.REQUEST_VALIDATE_SMS);
+                                    ValidatePayPwdActivity.this,
+                                    RetrievePasswordActivity.class);
+                            intent.putExtra("validatePayPassword", true);
+                            startActivityForResult(
+                                    intent,
+                                    RetrievePasswordActivity.REQUEST_VALIDATE_SMS);
                             CommonDialog.DismissProgressDialog();
                         }
                     }, new View.OnClickListener() {
@@ -273,12 +271,12 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    Intent intent=new Intent(Constants.BROCAST_UPDATEMYINFO);
+                    Intent intent = new Intent(Constants.BROCAST_UPDATEMYINFO);
                     sendBroadcast(intent);
                     setResult(RESULT_OK);
-                     finish();
+                    finish();
                 } else {
-               ToastUtil.showMessage(((CommonResult) response).info);
+                    ToastUtil.showMessage(((CommonResult) response).info);
                 }
             }
         });
@@ -286,15 +284,14 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 验证旧密码成功
         if (requestCode == RetrievePasswordActivity.REQUEST_VALIDATE_SMS
                 && resultCode == RESULT_OK) {
-            setResult(RESULT_OK,data);
+            setResult(RESULT_OK, data);
             finish();
-        }}
+        }
+    }
 
 }
