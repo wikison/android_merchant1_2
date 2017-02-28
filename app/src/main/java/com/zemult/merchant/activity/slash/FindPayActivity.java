@@ -538,6 +538,7 @@ public class FindPayActivity extends BaseActivity {
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + (cbReward.isChecked() ? rewardMoney : 0)));
                 }
             } else {
+                etPaymoney.setHint("输入实际的消费金额");
                 tvFuhao.setVisibility(View.GONE);
                 btnPay.setEnabled(false);
                 btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
