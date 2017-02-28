@@ -50,7 +50,7 @@ public class NicknameActivity extends MBaseActivity {
 
         lhBtnRight.setText("保存");
         lhBtnRight.setTextSize(16);
-        lhBtnRight.setTextColor(getResources().getColor(R.color.font_black_999));
+        lhBtnRight.setTextColor(getResources().getColor(R.color.white));
         lhBtnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         ninameEt.setText(SlashHelper.userManager().getUserinfo().getName());
 
