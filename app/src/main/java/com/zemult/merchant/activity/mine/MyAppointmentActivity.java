@@ -406,11 +406,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void refreshEvent(String s) {
         if (AppointmentDetailActivity.REFLASH_MYAPPOINT.equals(s))
-            if (type == 0) {
-                userReservationList();
-            } else if (type == 1) {
-                userSaleReservation();
-            }
+            onRefresh();
     }
 
 
