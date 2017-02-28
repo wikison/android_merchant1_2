@@ -24,6 +24,7 @@ import com.zemult.merchant.util.ToastUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class RemarkNameActivity extends BaseActivity {
@@ -91,7 +92,7 @@ public class RemarkNameActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.tv_right:
-                if(TextUtils.isEmpty(etName.getText().toString())){
+                if(StringUtils.isBlank(etName.getText().toString())){
                     ToastUtil.showMessage("请输入备注名");
                     return;
                 }
