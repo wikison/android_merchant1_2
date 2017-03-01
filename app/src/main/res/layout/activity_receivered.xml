@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#d75847"
-        android:elevation="1px">
+        >
 
         <LinearLayout
             android:id="@+id/ll_back"
@@ -75,7 +75,7 @@
     android:layout_height="70dp" />
     </RelativeLayout>
 
-<TextView
+    <TextView
     android:id="@+id/redfrom_tv"
     android:layout_gravity="center_horizontal"
     android:textSize="24sp"
