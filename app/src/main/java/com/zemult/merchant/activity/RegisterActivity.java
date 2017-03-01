@@ -199,7 +199,7 @@ public class RegisterActivity extends BaseActivity {
                     if (status == 1) {
                         getCode();
                     } else {
-                        ToastUtil.showMessage("手机号码已注册");
+                        ToastUtil.showMessage(((CommonResult) response).info);
                     }
                 }
             });
