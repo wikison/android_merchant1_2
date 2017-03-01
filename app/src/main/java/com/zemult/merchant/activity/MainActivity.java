@@ -503,16 +503,16 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 if (code == YWLoginCode.LOGON_FAIL_KICKOFF) {
                     if (mApp.iPasswordState == 0) {
                         ToastUtil.showMessage("您的账号在另一个设备上登录");
-
+                        setTabSelection(0);
+                        SlashHelper.userManager().saveUserinfo(null);
+                        LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
+                        Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        AppApplication.getContext().startActivity(intent);
                     } else {
                         mApp.iPasswordState = 0;
                     }
-                    setTabSelection(0);
-                    SlashHelper.userManager().saveUserinfo(null);
-                    LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
-                    Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    AppApplication.getContext().startActivity(intent);
+
                 }
             }
 
