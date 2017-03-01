@@ -510,6 +510,7 @@ public class FindPayActivity extends BaseActivity {
         if (list == null || list.size() == 0) {
 
         } else {
+            list.get(0).setChecked(true);
             adapter.setData(list, isLoadMore);
         }
         bsvContainer.post(new Runnable() {

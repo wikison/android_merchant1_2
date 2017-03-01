@@ -63,7 +63,8 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
         } else {
             //操作预约单
             if (selectedPos == position) {
-            } else {
+
+            }else{
                 holder.cb.setChecked(false);
             }
         }
@@ -101,6 +102,7 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
     private void initData(ViewHolder holder, M_Reservation m) {
         holder.tvNo.setText("预约单号: " + m.number);
         holder.tvTime.setText("预约时间: " + m.reservationTime.substring(0, 16));
+
     }
 
     /**

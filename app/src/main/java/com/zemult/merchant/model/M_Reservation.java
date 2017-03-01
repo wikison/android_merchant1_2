@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by admin on 2017/1/20.
  */
 
-public class M_Reservation  implements Serializable {
+public class M_Reservation implements Serializable {
     @Expose
     public int reservationId;//预约单id
 
@@ -43,7 +43,7 @@ public class M_Reservation  implements Serializable {
     public int num;//人数
 
     @Expose
-    public  String userName;//联系人名称
+    public String userName;//联系人名称
 
     @Expose
     public String userPhone;//联系人电话
@@ -64,10 +64,10 @@ public class M_Reservation  implements Serializable {
     public String number;//预约单号
 
     @Expose
-    public int userPayId ;//订单id
+    public int userPayId;//订单id
 
     @Expose
-    public  String userPayNumber;//订单号
+    public String userPayNumber;//订单号
 
     @Expose
     public int status;
@@ -75,6 +75,14 @@ public class M_Reservation  implements Serializable {
     public String info;
     @Expose
     public int merchantReviewstatus;//商户审核状态(0未审核,1待审核,2审核通过)
+    @Expose
+    public boolean isChecked;//是否选中
 
+    public boolean isChecked() {
+        return isChecked;
+    }
 
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }
