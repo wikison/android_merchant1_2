@@ -668,7 +668,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                     if (((APIM_UserLogin) response).userInfo != null) {
                         ((APIM_UserLogin) response).userInfo.setUserId(SlashHelper.userManager().getUserId());
                         ((APIM_UserLogin) response).userInfo.setPassword(SlashHelper.userManager().getUserinfo().getPassword());
-                        ((APIM_UserLogin) response).userInfo.setDefaultHead(SlashHelper.userManager().getUserinfo().getDefaultHead());
                         UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                         SlashHelper.setSettingString(((APIM_UserLogin) response).userInfo.getPhoneNum(), ((APIM_UserLogin) response).userInfo.getHead());
                     }

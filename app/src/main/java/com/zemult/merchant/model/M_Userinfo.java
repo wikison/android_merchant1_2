@@ -27,7 +27,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     public String name, userName;    //	用户昵称
     @Expose
-    public String head, userHead, defaultHead;    //	用户头像
+    public String head, userHead;    //	用户头像
     @Expose
     public String note;    //	用户签名
     @Expose
@@ -578,12 +578,4 @@ public class M_Userinfo implements Serializable {
     }
     @Expose
     public String remarkName; // 备注名
-
-    public String getDefaultHead() {
-        return defaultHead;
-    }
-
-    public void setDefaultHead(String defaultHead) {
-        this.defaultHead = defaultHead;
-    }
 }

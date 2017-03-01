@@ -156,7 +156,7 @@ public class RegisterActivity extends BaseActivity {
             etPhone.setError("请输入手机号码");
         } else {
             if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
-                etPhone.setError("请输入正确的手机号");
+                etPhone.setError("请输入正确的手机号码");
                 return;
             }
 
@@ -199,7 +199,7 @@ public class RegisterActivity extends BaseActivity {
                     if (status == 1) {
                         getCode();
                     } else {
-                        ToastUtil.showMessage("手机号已注册");
+                        ToastUtil.showMessage("手机号码已注册");
                     }
                 }
             });
@@ -231,7 +231,7 @@ public class RegisterActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
-                        tvSendcode.setText("重新发送(" + 60 + "s)");
+                        tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
@@ -290,10 +290,10 @@ public class RegisterActivity extends BaseActivity {
 
             public void handleMessage(Message msg) {
                 i--;
-                tvSendcode.setText("重新发送(" + i + "s)");
+                tvSendcode.setText("重新获取(" + i + "s)");
                 if (i == 0) {
                     isWait = false;
-                    tvSendcode.setText("重新发送");
+                    tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
                     tvSendcode.setTextColor(0xffe6bb7c);
                     i = 60;
