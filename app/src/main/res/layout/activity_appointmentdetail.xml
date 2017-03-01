@@ -280,7 +280,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 >
 
                 <RelativeLayout
@@ -290,6 +289,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/ripple_item_clicked2"
                     android:paddingBottom="12dp"
+                    android:visibility="gone"
                     android:paddingTop="12dp">
 
                     <TextView
