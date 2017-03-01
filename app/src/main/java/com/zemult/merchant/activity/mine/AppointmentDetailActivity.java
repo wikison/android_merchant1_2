@@ -103,7 +103,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     @Bind(R.id.v1)
     View v1;
     @Bind(R.id.yuyueresult_rl)
-    LinearLayout yuyueresultRl;
+    RelativeLayout yuyueresultRl;
     @Bind(R.id.ordernum_rl)
     RelativeLayout ordernumRl;
     @Bind(R.id.yuyueresultcommit_rl)
@@ -218,12 +218,9 @@ public class AppointmentDetailActivity extends BaseActivity {
                         //订单号
                         ordernumTv.setText(mReservation.userPayNumber);
                     } else if (mReservation.state == 3||mReservation.state == 4) {
-                        tvState.setText("预约失效");
+                        tvState.setText("已结束");
                         yuyueresultRl.setVisibility(View.VISIBLE);
                         appresultTv.setText(mReservation.replayNote);
-                        if(mReservation.state == 4){
-                            tvState.setText("预约未支付");
-                        }
                     }
 
                     shopTv.setText(mReservation.merchantName);
