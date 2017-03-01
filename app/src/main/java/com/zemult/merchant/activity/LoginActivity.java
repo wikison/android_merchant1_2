@@ -210,7 +210,7 @@ public class LoginActivity extends BaseActivity {
                             public void onSuccess(Object... arg0) {
                                 loadingDialog.dismiss();
                                 ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(strPwd).toUpperCase());
-                                ((APIM_UserLogin) response).userInfo.defaultHead = ((APIM_UserLogin) response).defaultHead;
+                                ((APIM_UserLogin) response).userInfo.setDefaultHead(((APIM_UserLogin) response).defaultHead);
                                 UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                                 SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
                                 setResult(RESULT_OK);
