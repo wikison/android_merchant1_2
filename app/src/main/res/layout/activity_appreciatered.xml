@@ -4,8 +4,41 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:orientation="vertical">
-    <include layout="@layout/layout_head"
-        ></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#d75847"
+        android:elevation="1px">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center_vertical">
+
+            <Button
+
+                android:id="@+id/lh_btn_back"
+                android:layout_width="@dimen/j44dp"
+                android:layout_height="@dimen/j44dp"
+                android:background="@mipmap/back_btn"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lh_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@mipmap/hongbao2"
