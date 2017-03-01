@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#d75847"
-        android:elevation="1px">
+        >
 
         <LinearLayout
             android:id="@+id/ll_back"
