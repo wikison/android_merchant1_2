@@ -115,7 +115,7 @@ public class PasswordActivity extends BaseActivity {
         strPhone = intent.getStringExtra("RegisterPhone");
         etPhone.setText(strPhone);
         loginHelper = LoginSampleHelper.getInstance();
-        EditFilter.WordFilter(etNickname, 11);
+        EditFilter.WordFilter(etNickname, 6);
         initViews();
     }
 
@@ -149,11 +149,11 @@ public class PasswordActivity extends BaseActivity {
             etPwdAgain.setError("密码不同, 请重新设置");
         } else {
             if (strPwd.length() < 6) {
-                etPwdAgain.setError("密码长度设置不正确");
+                etPwdAgain.setError("密码格式错误");
                 return;
             }
             if (StringMatchUtils.isAllNum(strPwd)) {
-                etPwdAgain.setError("密码不能全为数字");
+                etPwdAgain.setError("密码格式错误");
                 return;
             }
                 userRegister();

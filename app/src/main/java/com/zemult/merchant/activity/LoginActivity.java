@@ -43,6 +43,7 @@ import zema.volley.network.ResponseListener;
  */
 public class LoginActivity extends BaseActivity {
 
+    private static final int REQ_FIND_PWD = 0x110;
     @Bind(R.id.al_et_name)
     EditText etName;
     @Bind(R.id.al_et_pwd)
@@ -68,6 +69,18 @@ public class LoginActivity extends BaseActivity {
     UserLoginRequest user_login_request;
 
     private LoginSampleHelper loginHelper;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQ_FIND_PWD){
+                etName.setText(data.getStringExtra("phone"));
+                etPwd.setText(data.getStringExtra("password"));
+                login();
+            }
+        }
+    }
 
     @Override
     public void setContentView() {
@@ -139,8 +152,7 @@ public class LoginActivity extends BaseActivity {
                         break;
                     case R.id.al_tv_forget:
                         Intent intent= new Intent(LoginActivity.this, FindPasswordActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
+                        startActivityForResult(intent, REQ_FIND_PWD);
                         break;
                 }
 
@@ -157,6 +169,10 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.al_btn_login)
     public void onBtnLoginClick() {
+        login();
+    }
+
+    private void login() {
         strUserName = etName.getText().toString();
         strPwd = etPwd.getText().toString();
         if (StringUtils.isBlank(strUserName)) {
@@ -167,8 +183,6 @@ public class LoginActivity extends BaseActivity {
         }
         if (!StringUtils.isBlank(strUserName) && !StringUtils.isBlank(strPwd))
             get_user_login_request();
-
-
     }
 
     //用户登录
