@@ -105,6 +105,7 @@ public class SplashActivity extends BaseActivity {
                 if (status == 1) {
                     if (!releaseVersion.equals(((APIM_CommonAppVersion) response).appInfo.version)) {
                         NewVersionDialog newVersionDialog = new NewVersionDialog();
+                        newVersionDialog.setCancelable(false);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("appinfo", ((APIM_CommonAppVersion) response).appInfo);
                         newVersionDialog.setArguments(bundle);
