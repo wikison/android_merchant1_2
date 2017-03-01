@@ -139,6 +139,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 }
                 break;
             case R.id.rl_maidan:
+                if(noLogin(mContext))
+                    return;
                 intent = new Intent(mContext, MyAppointmentActivity.class);
                 intent.putExtra("fromHome", true);
                 startActivity(intent);
