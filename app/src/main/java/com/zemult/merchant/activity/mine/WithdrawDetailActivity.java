@@ -44,7 +44,7 @@ public class WithdrawDetailActivity extends BaseActivity {
         lhTvTitle.setVisibility(View.VISIBLE);
         lhTvTitle.setText("提现详情");
 
-        tvMoney.setText("￥" + Convert.getMoneyString(Double.parseDouble(getIntent().getStringExtra("money"))));//金额
+        tvMoney.setText("￥" + Convert.getMoneyString(getIntent().getDoubleExtra("money",0)));//金额
         othersTv.setText("￥" + Convert.getMoneyString(getIntent().getDoubleExtra("other",0)));//手续费
         tvAccount.setText(getIntent().getStringExtra("aliAccount"));//账号
     }

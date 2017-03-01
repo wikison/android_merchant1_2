@@ -164,7 +164,7 @@ public class WithdrawalsActivity extends BaseActivity {
                     sendBroadcast(updateintent);
 
                     Intent intent = new Intent(WithdrawalsActivity.this, WithdrawDetailActivity.class);
-                    intent.putExtra("money", money);
+                    intent.putExtra("money", Double.parseDouble(money) - ((CommonResult) response).serviceMoney);
                     intent.putExtra("aliAccount", aliAccount);
                     intent.putExtra("other", ((CommonResult) response).serviceMoney);
                     startActivity(intent);
