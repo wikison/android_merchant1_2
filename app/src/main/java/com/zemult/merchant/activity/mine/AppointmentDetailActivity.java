@@ -103,7 +103,7 @@ public class AppointmentDetailActivity extends BaseActivity {
     @Bind(R.id.v1)
     View v1;
     @Bind(R.id.yuyueresult_rl)
-    RelativeLayout yuyueresultRl;
+    LinearLayout yuyueresultRl;
     @Bind(R.id.ordernum_rl)
     RelativeLayout ordernumRl;
     @Bind(R.id.yuyueresultcommit_rl)
