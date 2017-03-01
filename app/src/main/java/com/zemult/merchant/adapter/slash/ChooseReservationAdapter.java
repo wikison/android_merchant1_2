@@ -23,24 +23,20 @@ import butterknife.ButterKnife;
 public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
     Context mContext;
     boolean isQuick;
-
-    public String getSelectId() {
-        return selectId;
-    }
-
-    public void setSelectId(String selectId) {
-        this.selectId = selectId;
-    }
-
-    String selectId;
+    private int selectedPos = 0;
 
     public ChooseReservationAdapter(Context context, List<M_Reservation> list, boolean isQuick) {
         super(context, list);
         mContext = context;
-        this.isQuick= isQuick;
+        this.isQuick = isQuick;
     }
 
-    // 设置数据 任务
+    public void setSelected(int pos) {
+        selectedPos = pos;
+        notifyDataSetChanged();
+    }
+
+    // 设置数据
     public void setData(List<M_Reservation> list, boolean isLoadMore) {
         if (!isLoadMore) {
             clearAll();
@@ -51,7 +47,7 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         M_Reservation entity = getItem(position);
         if (convertView != null && convertView instanceof LinearLayout) {
@@ -61,9 +57,17 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
             holder = new ViewHolder(convertView);
             convertView.setTag(R.string.app_name, holder);
         }
-        if(isQuick){
+        if (isQuick) {
             holder.cb.setChecked(true);
             holder.cb.setEnabled(false);
+        } else {
+            if (selectedPos == position) {
+                if (holder.cb.isChecked() == false) {
+                    holder.cb.setChecked(true);
+                }
+            } else {
+                holder.cb.setChecked(false);
+            }
         }
         initData(holder, entity);
         initListener(holder, position);
@@ -78,6 +82,16 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
                     onAllClickListener.onAllClick(position);
             }
         });
+
+        holder.cb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onCheckClickListener != null) {
+                    onCheckClickListener.onCheckClick(position);
+                }
+            }
+
+        });
     }
 
     /**
@@ -87,22 +101,33 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
      * @param m
      */
     private void initData(ViewHolder holder, M_Reservation m) {
-        holder.tvNo.setText("预约单号: "+m.number);
-        holder.tvTime.setText("订单时间: "+m.reservationTime.substring(0, 16));
+        holder.tvNo.setText("预约单号: " + m.number);
+        holder.tvTime.setText("预约时间: " + m.reservationTime.substring(0, 16));
     }
 
     /**
      * 点击Item
      */
     private OnAllClickListener onAllClickListener;
+    private OnCheckClickListener onCheckClickListener;
 
     public void setOnAllClickListener(OnAllClickListener onAllClickListener) {
         this.onAllClickListener = onAllClickListener;
     }
 
+    public void setOnCheckClickListener(OnCheckClickListener onCheckClickListener) {
+        this.onCheckClickListener = onCheckClickListener;
+    }
+
     public interface OnAllClickListener {
         void onAllClick(int position);
     }
+
+
+    public interface OnCheckClickListener {
+        void onCheckClick(int position);
+    }
+
 
     static class ViewHolder {
         @Bind(R.id.ll_root)

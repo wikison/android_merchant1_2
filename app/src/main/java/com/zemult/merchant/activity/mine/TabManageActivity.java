@@ -155,7 +155,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
-            chooseYv.setText("选择您在  " + Html.fromHtml(" <b>"+name+"</b>" )+ "  提供的服务");
+            chooseYv.setText("选择您在  " + Html.fromHtml("<b>"+name+"</b>" )+ "  提供的服务");
 
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();

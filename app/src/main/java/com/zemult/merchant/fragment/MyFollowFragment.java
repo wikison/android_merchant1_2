@@ -163,6 +163,9 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
             userAttractListRequest.cancel();
         }
         UserAttractListRequest.Input input = new UserAttractListRequest.Input();
+        if(null==SlashHelper.userManager().getUserinfo()){
+            return;
+        }
         input.userId = SlashHelper.userManager().getUserId();
         input.name = name;
         input.page = page;
