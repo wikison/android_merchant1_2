@@ -66,6 +66,7 @@ public class AllChangjingActivity extends BaseActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fl, merchantFragment);
         transaction.commit();
+        searchView.setStrHint("搜索你想要的...");
     }
 
     private void initListener() {
