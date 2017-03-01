@@ -61,10 +61,6 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
             holder.cb.setChecked(true);
             holder.cb.setEnabled(false);
         } else {
-            //默认选中第一条预约单
-            if (position == 0) {
-                holder.cb.setChecked(true);
-            }
             //操作预约单
             if (selectedPos == position) {
             } else {
@@ -125,11 +121,9 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
         void onAllClick(int position);
     }
 
-
     public interface OnCheckClickListener {
         void onCheckClick(int position);
     }
-
 
     static class ViewHolder {
         @Bind(R.id.ll_root)

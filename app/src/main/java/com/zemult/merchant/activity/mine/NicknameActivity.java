@@ -55,7 +55,7 @@ public class NicknameActivity extends MBaseActivity {
         lhBtnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         ninameEt.setText(SlashHelper.userManager().getUserinfo().getName());
 
-        EditFilter.WordFilter(ninameEt, 11);
+        EditFilter.WordFilter(ninameEt, 6);
 
     }
 

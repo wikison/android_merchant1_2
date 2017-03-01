@@ -61,6 +61,8 @@ public class MyQrActivity extends BaseActivity {
     ImageView ivQr;
     @Bind(R.id.tv_hint)
     TextView tvHint;
+    @Bind(R.id.view)
+    View view;
     int userSaleId, merchantId;
 
     String merchantHead, merchantName;
@@ -105,6 +107,7 @@ public class MyQrActivity extends BaseActivity {
             bitmap = QrImageUtil.createQRImage(Constants.QR_USER_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));
             tvHint.setVisibility(View.VISIBLE);
+            view.setVisibility(View.VISIBLE);
         } else if ("SaleManage".equals(strFrom)) {
             llMerchantHead.setVisibility(View.VISIBLE);
             setBtn.setVisibility(View.VISIBLE);
@@ -112,6 +115,8 @@ public class MyQrActivity extends BaseActivity {
             moneyTv.setVisibility(View.VISIBLE);
             tvMerchantName.setText(merchantName);
             tvHint.setVisibility(View.GONE);
+            view.setVisibility(View.GONE);
+
             qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + price;
             bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));

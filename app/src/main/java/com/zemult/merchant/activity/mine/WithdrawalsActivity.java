@@ -66,6 +66,8 @@ public class WithdrawalsActivity extends BaseActivity {
     double serviceMoney;
     double cashMoney = 0;//日提现剩余额度
 
+    private long firstTime = 0; //记录第一次点击的时间
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_withdrawals);
@@ -203,11 +205,11 @@ public class WithdrawalsActivity extends BaseActivity {
                         tvAccount.setText("未绑定");
                     } else {
                         tvAccount.setText(((CommonResult) response).bankName + "(尾号"
-                        + ((CommonResult) response).bankNumber.substring(
-                                ((CommonResult) response).bankNumber.length()-4,
+                                + ((CommonResult) response).bankNumber.substring(
+                                ((CommonResult) response).bankNumber.length() - 4,
                                 ((CommonResult) response).bankNumber.length()
                         )
-                        + ")");
+                                + ")");
                         aliAccount = tvAccount.getText().toString();
                     }
 
@@ -224,7 +226,6 @@ public class WithdrawalsActivity extends BaseActivity {
         if (commonWithcashCountRequest != null) {
             commonWithcashCountRequest.cancel();
         }
-
 
         CommonWithcashCountRequest.Input input = new CommonWithcashCountRequest.Input();
         input.money = money;
@@ -255,11 +256,11 @@ public class WithdrawalsActivity extends BaseActivity {
         BalancePayAlertView payAlertView = new BalancePayAlertView(WithdrawalsActivity.this);
 
         try {
-            DecimalFormat df   = new DecimalFormat("######0.00");
-            payAlertView.setAmount( df.format(Double.parseDouble(paymoney)) + "");
+            DecimalFormat df = new DecimalFormat("######0.00");
+            payAlertView.setAmount(df.format(Double.parseDouble(paymoney)) + "");
             payAlertView.setTips("提现");
-            payAlertView.setTips2("额外扣除" +  df.format(serviceMoney)+ "元手续费");//
-        }catch (Exception e){
+            payAlertView.setTips2("额外扣除" + df.format(serviceMoney) + "元手续费");//
+        } catch (Exception e) {
         }
 
 
@@ -283,6 +284,12 @@ public class WithdrawalsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_withdrawal:
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime < 1000) {
+                    firstTime = secondTime;
+                    return;
+                }
+                firstTime = secondTime;
                 money = etMoney.getText().toString();
                 double toCashMoney = 0;
                 if (isBanged == 0) {

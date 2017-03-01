@@ -7,11 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.login.YWLoginState;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -40,6 +39,7 @@ public class ChangePassSucActivity extends BaseActivity {
     TextView tvRemark;
 
     String pwdType;
+    AppApplication mApp = null;
 
     @Override
     public void setContentView() {
@@ -48,13 +48,13 @@ public class ChangePassSucActivity extends BaseActivity {
 
     @Override
     public void init() {
+        mApp = (AppApplication) getApplication();
         lhTvTitle.setVisibility(View.VISIBLE);
         pwdType = getIntent().getStringExtra("password");
         if (pwdType.equals("change")) {
             lhTvTitle.setText("修改密码");
             tvRemark.setText("密码修改成功");
-        }
-        else if (pwdType.equals("forget")) {
+        } else if (pwdType.equals("forget")) {
             lhTvTitle.setText("找回密码");
             tvRemark.setText("密码找回成功");
         }
@@ -73,7 +73,7 @@ public class ChangePassSucActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
+        mApp.iPasswordState = 1;
         Intent intent = new Intent(ChangePassSucActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
