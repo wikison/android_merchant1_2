@@ -41,6 +41,8 @@
             android:imeOptions="actionNext"
             android:paddingLeft="108dp"
             android:textColor="@color/black"
+            android:maxLength="11"
+            android:inputType="number"
             android:textColorHint="@color/hint_text_color"
             android:textSize="@dimen/font_30px" />
     </RelativeLayout>
@@ -61,7 +63,7 @@
             android:hint="@string/txt_register_code"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLength="11"
+            android:maxLength="6"
             android:paddingLeft="108dp"
             android:textColorHint="@color/hint_text_color"
             android:textSize="@dimen/font_30px" />

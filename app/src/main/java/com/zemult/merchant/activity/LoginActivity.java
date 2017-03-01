@@ -70,6 +70,7 @@ public class LoginActivity extends BaseActivity {
 
     private LoginSampleHelper loginHelper;
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -91,6 +92,7 @@ public class LoginActivity extends BaseActivity {
     public void init() {
         initViews();
         loginHelper = LoginSampleHelper.getInstance();
+
     }
 
     private void initViews() {
@@ -105,6 +107,8 @@ public class LoginActivity extends BaseActivity {
         btnRight.setTextColor(getResources().getColor(R.color.white));
         btnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         lhTvTitle.setText("登录");
+        btnLogin.setEnabled(false);
+        btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
 
         String strLoginPhone = SlashHelper.getSettingString("last_login_phone", "");
         if (!StringUtils.isBlank(strLoginPhone)&& strLoginPhone.length()==11){
@@ -115,6 +119,9 @@ public class LoginActivity extends BaseActivity {
         etName.clearFocus();
 
         etName.addTextChangedListener(watcher);
+        etName.addTextChangedListener(watcher2);
+        etPwd.addTextChangedListener(watcher2);
+
     }
 
 
@@ -137,7 +144,31 @@ public class LoginActivity extends BaseActivity {
 
         }
     };
+    private TextWatcher watcher2 = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etName.getText().toString().length() > 0
+                        && etPwd.getText().toString().length() > 0) {
+                    btnLogin.setEnabled(true);
+                    btnLogin.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+
+            } else {
+                btnLogin.setEnabled(false);
+                btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     //设置超链接文字
     public SpannableString setLinkText(String spanStr) {
