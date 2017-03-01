@@ -80,9 +80,9 @@ public class CommonDialog {
 		TextView tvtitle = (TextView) v.findViewById(R.id.tv_title);
 		ImageView ivtitle = (ImageView) v.findViewById(R.id.iv_title);
 
-		if(null!=tvtitle&&!tvtitle.equals("")){
+		if(!TextUtils.isEmpty(title)){
 			tvtitle.setText(title);
-			ivtitle.setVisibility(View.VISIBLE);
+			tvtitle.setVisibility(View.VISIBLE);
 		}
 		msg.setText(message);
 		leftbtn.setText(leftmsg);

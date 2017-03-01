@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:orientation="vertical"
         app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="@dimen/radius_16px">
@@ -22,14 +22,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="28dp"
                 android:id="@+id/tv_title"
-                style="@style/text_14_black"
+                style="@style/text_16_black"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="标题"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                />
 
             <ImageView
                 android:id="@+id/iv_title"
@@ -44,12 +45,13 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingBottom="28.0dip"
-                android:layout_marginLeft="15.0dip"
-                android:layout_marginRight="15.0dip"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:paddingTop="28.0dip">
 
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/laytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

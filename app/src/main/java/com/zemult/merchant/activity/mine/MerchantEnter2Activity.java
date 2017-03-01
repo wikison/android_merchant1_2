@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.SfriendActivity;
 import com.zemult.merchant.aip.slash.MerchantAddentity1_1Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
@@ -18,6 +19,8 @@ import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.common.CommonDialog;
+import com.zemult.merchant.view.common.MMAlert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,10 +58,18 @@ public class MerchantEnter2Activity extends BaseActivity {
     @Override
     public void init() {
         mContext = this;
-        lhTvTitle.setText("商户入驻申请");
+        lhTvTitle.setText("商户入驻");
         EditFilter.WordFilter(etName, 20);
         EditFilter.WordFilter(etAddress, 30);
         EditFilter.WordFilter(etPersonName, 5);
+
+        MMAlert.showConfirmDialog(mContext, "恭喜您提交成功", "将有平台专员在24小时与您联系\n请耐心等待", "确定", new MMAlert.OneOperateCallback() {
+            @Override
+            public void onOneOperate() {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -128,9 +139,14 @@ public class MerchantEnter2Activity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    ToastUtil.showMessage("申请成功");
-                    setResult(RESULT_OK);
-                    finish();
+
+                    MMAlert.showConfirmDialog(mContext, "恭喜您提交成功", "将有平台专员在24小时与您联系\n请耐心等待", "确定", new MMAlert.OneOperateCallback() {
+                        @Override
+                        public void onOneOperate() {
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
