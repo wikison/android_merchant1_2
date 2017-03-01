@@ -92,7 +92,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
             if (fromHome) {
                 lhTvTitle.setText("待结账预约单");
             } else {
-                lhTvTitle.setText("我的预约");
+                lhTvTitle.setText("我的预约单");
             }
             userReservationList();
         } else if (type == 1) {
