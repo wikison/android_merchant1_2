@@ -6,13 +6,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.callback.InitResultCallback;
-import com.alibaba.sdk.android.media.MediaService;
 import com.alibaba.wxlib.util.SysUtil;
 import com.bugtags.library.Bugtags;
 import com.umeng.fb.push.FeedbackPush;
@@ -41,13 +37,17 @@ public class AppApplication extends MultiDexApplication {
     private static AppApplication _instance;
     private PushAgent mPushAgent;
     private SQLHelper sqlHelper;
-    public static  Boolean ISDEBUG=false;
+    public static Boolean ISDEBUG = false;
+    public int iPasswordState = 0;
+
     public AppApplication() {
         _instance = this;
     }
+
     private static final String TAG = "AppApplication";
     public static final String NAMESPACE = "openimdemo";
     public static final String UPDATE_STATUS_ACTION = "com.zemult.merchant.action.UPDATE_STATUS";
+
     public static Context getContext() {
         return mContext;
     }
@@ -82,7 +82,7 @@ public class AppApplication extends MultiDexApplication {
         //BTGInvocationEventBubble(悬浮小球)、
         //BTGInvocationEventShake(摇一摇)、
         //BTGInvocationEventNone(静默)
-            Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventNone);
+        Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventNone);
 
         initUmeng();
 
@@ -97,14 +97,14 @@ public class AppApplication extends MultiDexApplication {
         PlatformConfig.setQQZone("1106006502", "Pn8yLHqoyLlMVBtA");
 
         //友盟IM
-        if(mustRunFirstInsideApplicationOnCreate()){
+        if (mustRunFirstInsideApplicationOnCreate()) {
             //todo 如果在":TCMSSevice"进程中，无需进行openIM和app业务的初始化，以节省内存
             return;
         }
 
         //初始化云旺SDK
         InitHelper.initYWSDK(this);
-       //初始化反馈功能(未使用反馈功能的用户无需调用该初始化)
+        //初始化反馈功能(未使用反馈功能的用户无需调用该初始化)
 //        InitHelper.initFeedBack(this);
         //初始化多媒体SDK，小视频和阅后即焚功能需要使用多媒体SDK
 //        AlibabaSDK.asyncInit(this, new InitResultCallback() {
@@ -136,7 +136,6 @@ public class AppApplication extends MultiDexApplication {
     }
 
 
-
     private void initialize() {
         initRequestQueue();
     }
@@ -156,12 +155,12 @@ public class AppApplication extends MultiDexApplication {
     }
 
 
-    void initUmeng(){
+    void initUmeng() {
         FeedbackPush.getInstance(this).init(false);
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDebugMode(true);
 
-        UmengMessageHandler messageHandler = new UmengMessageHandler(){
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
                 new Handler().post(new Runnable() {
@@ -170,7 +169,7 @@ public class AppApplication extends MultiDexApplication {
                     public void run() {
                         // 对自定义消息的处理方式，点击或者忽略
                         boolean isClickOrDismissed = true;
-                        if(isClickOrDismissed) {
+                        if (isClickOrDismissed) {
                             //自定义消息的点击统计
                             UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
                         } else {
@@ -214,10 +213,10 @@ public class AppApplication extends MultiDexApplication {
         /**
          * 该Handler是在BroadcastReceiver中被调用，故
          * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
-                * 参考集成文档的1.6.2
-                * http://dev.umeng.com/push/android/integration#1_6_2
-        * */
-        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+         * 参考集成文档的1.6.2
+         * http://dev.umeng.com/push/android/integration#1_6_2
+         * */
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
                 Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
@@ -237,7 +236,7 @@ public class AppApplication extends MultiDexApplication {
 
             @Override
             public void onFailure(String s, String s1) {
-                UmLog.i(TAG, "register failed: " + s + " " +s1);
+                UmLog.i(TAG, "register failed: " + s + " " + s1);
                 sendBroadcast(new Intent(UPDATE_STATUS_ACTION));
             }
         });

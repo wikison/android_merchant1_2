@@ -207,7 +207,6 @@ public class ChangePasswordActivity extends BaseActivity {
                 int status = ((CommonResult) response).status;
                 if (status == 1) {
                     ToastUtil.showMessage("密码修改成功, 请重新登录");
-                    SlashHelper.userManager().saveUserinfo(null);
                     Intent intent = new Intent(mContext, ChangePassSucActivity.class);
                     intent.putExtra("password", "change");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

@@ -282,7 +282,7 @@ public class PayInfoActivity extends BaseActivity {
 
     private void goPay() {
         Intent intent = new Intent(mActivity, ChoosePayTypeActivity.class);
-        intent.putExtra("consumeMoney", m.payMoney);
+        intent.putExtra("consumeMoney", m.allMoney);
         intent.putExtra("order_sn", m.number);
         intent.putExtra("userPayId", userPayId);
         intent.putExtra("merchantName", m.merchantName);

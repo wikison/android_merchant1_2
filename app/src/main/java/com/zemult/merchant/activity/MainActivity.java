@@ -20,19 +20,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.mobileim.IYWPushListener;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.IYWConversationService;
 import com.alibaba.mobileim.conversation.IYWConversationUnreadChangeListener;
 import com.alibaba.mobileim.conversation.IYWMessageLifeCycleListener;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alibaba.mobileim.conversation.YWMessageType;
-import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.login.IYWConnectionListener;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.alibaba.mobileim.login.YWLoginState;
@@ -52,7 +48,6 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.fragment.HomeFragment;
 import com.zemult.merchant.fragment.MineFragment;
 import com.zemult.merchant.fragment.MyFollowFragment;
-import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.CustomConversationHelper;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -140,12 +135,15 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         }
     };
 
+    AppApplication mApp;
+
     private long firstTime = 0; //记录第一次点击的时间
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mApp = (AppApplication) getApplication();
         // 初始化布局元素
         initViews();
         fragmentManager = getSupportFragmentManager();
@@ -255,7 +253,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
         }
         if ("relogin".equals(s)) {
-            if(conversationFragment!=null){
+            if (conversationFragment != null) {
                 transaction = fragmentManager.beginTransaction();
                 slashImage.setImageResource(R.mipmap.shouye_icon);
                 slashText.setTextColor(getResources().getColor(R.color.sel_color));
@@ -503,14 +501,19 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onDisconnect(int code, String info) {
                 if (code == YWLoginCode.LOGON_FAIL_KICKOFF) {
-                    ToastUtil.showMessage("请重新登录");
+                    if (mApp.iPasswordState == 0) {
+                        ToastUtil.showMessage("您的账号在另一个设备上登录");
+
+                    } else {
+                        mApp.iPasswordState = 0;
+                    }
+                    setTabSelection(0);
+                    SlashHelper.userManager().saveUserinfo(null);
+                    LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
+                    Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    AppApplication.getContext().startActivity(intent);
                 }
-                setTabSelection(0);
-                SlashHelper.userManager().saveUserinfo(null);
-                LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
-                Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                AppApplication.getContext().startActivity(intent);
             }
 
             @Override
@@ -679,7 +682,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     }
 
 
-
     private void UserMessageAllNumUnread_1_2Request() {
         if (userMessageAllNumUnread_1_2Request != null) {
             userMessageAllNumUnread_1_2Request.cancel();
@@ -699,7 +701,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    initCustomConversation(((CommonResult) response).createtime+"z.m"+((CommonResult) response).note, ((CommonResult) response).num);
+                    initCustomConversation(((CommonResult) response).createtime + "z.m" + ((CommonResult) response).note, ((CommonResult) response).num);
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
                 }
             }

@@ -13,26 +13,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.login.YWLoginState;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.ChangePassSucActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
-import com.zemult.merchant.aip.common.UserFindpwdRequest;
-import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.util.UserManager;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.DigestUtils;
 import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
