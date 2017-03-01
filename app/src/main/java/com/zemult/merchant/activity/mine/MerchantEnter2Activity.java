@@ -62,14 +62,6 @@ public class MerchantEnter2Activity extends BaseActivity {
         EditFilter.WordFilter(etName, 20);
         EditFilter.WordFilter(etAddress, 30);
         EditFilter.WordFilter(etPersonName, 5);
-
-        MMAlert.showConfirmDialog(mContext, "恭喜您提交成功", "将有平台专员在24小时与您联系\n请耐心等待", "确定", new MMAlert.OneOperateCallback() {
-            @Override
-            public void onOneOperate() {
-                setResult(RESULT_OK);
-                finish();
-            }
-        });
     }
 
     @Override
