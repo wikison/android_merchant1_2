@@ -185,7 +185,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                         tvState.setText("待确认");
                         appresultTv.setText("暂无");
                         if (type == 0) {//我是客户的状态下
-                            yuyueresultRl.setVisibility(View.VISIBLE);
+                            yuyueresultRl.setVisibility(View.GONE);
                         } else if (type == 1) {//我是管家的情况下
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
                         }
