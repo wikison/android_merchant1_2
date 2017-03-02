@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
+import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.SlashHelper;
@@ -121,7 +122,7 @@ public class FindPasswordActivity extends BaseActivity {
             etPhone.setError("请输入正确的手机号码");
             return;
         }
-        getCode();
+        isRegister();
     }
 
     @OnClick(R.id.afp_btn_submit)
@@ -131,6 +132,39 @@ public class FindPasswordActivity extends BaseActivity {
 
         //验证码校验
         checkCode();
+    }
+
+    private UserIsRegisterRequest request_user_is_register;
+    private void isRegister() {
+        try {
+            if (request_user_is_register != null) {
+                request_user_is_register.cancel();
+            }
+            UserIsRegisterRequest.Input input = new UserIsRegisterRequest.Input();
+            input.phone = strPhone;
+            input.convertJosn();
+
+            request_user_is_register = new UserIsRegisterRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    // 返回结果状态值,值为0或1.(0表示不能注册--已经有该手机号；1表示可以注册)
+                    if (status == 1)
+                        ToastUtil.showMessage("该手机号码还未注册，赶快去注册吧！");
+                    else
+                        getCode();
+                }
+            });
+            sendJsonRequest(request_user_is_register);
+        } catch (Exception e) {
+            Log.e("USER_IS_REGISTER", e.toString());
+        }
+
     }
 
     //获取验证码
@@ -205,42 +239,6 @@ public class FindPasswordActivity extends BaseActivity {
         mThread.start();
     }
 
-
-
-//    //用户登录
-//    private void getUserLoginRequest() {
-//        loadingDialog.show();
-//        if (userLoginRequest != null) {
-//            userLoginRequest.cancel();
-//        }
-//        UserLoginRequest.Input input = new UserLoginRequest.Input();
-//        input.account = strPhone;
-//        input.password = DigestUtils.md5(strPwd).toUpperCase();
-//        input.device_token = SlashHelper.deviceManager().getUmengDeviceToken();
-//        input.convertJosn();
-//
-//        userLoginRequest = new UserLoginRequest(input, new ResponseListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                loadingDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onResponse(Object response) {
-//                loadingDialog.dismiss();
-//                if (((APIM_UserLogin) response).status == 1) {
-//                    ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(strPwd).toUpperCase());
-//                    UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
-//                    setResult(RESULT_OK);
-//                    finish();
-//                } else {
-//                    ToastUtil.showMessage(((APIM_UserLogin) response).info);
-//                }
-//
-//            }
-//        });
-//        sendJsonRequest(userLoginRequest);
-//    }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
