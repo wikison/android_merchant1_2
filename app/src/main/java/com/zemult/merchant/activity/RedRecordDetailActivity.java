@@ -92,7 +92,9 @@ public class RedRecordDetailActivity extends BaseActivity {
         } else {
             tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
             fromTv.setText("来自");
-            imageManager.loadCircleImage(m.userHead, ivUserHead);
+            if (!TextUtils.isEmpty(m.userHead)) {
+                imageManager.loadCircleImage(m.userHead, ivUserHead);
+            }
             tvUserName.setText(m.userName);
         }
         tvTradeNumber.setText(m.number);
@@ -136,12 +138,14 @@ public class RedRecordDetailActivity extends BaseActivity {
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
                     tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                     fromTv.setText("赠送对象");
-                    imageManager.loadCircleImage(m.toUserHead, ivUserHead);
+                    if (!TextUtils.isEmpty(m.toUserHead)) {
+                        imageManager.loadCircleImage(m.toUserHead, ivUserHead);
+                    }
                     tvUserName.setText(m.toUserName);
-                    if(m.state==0){
+                    if (m.state == 0) {
                         rtvToPay.setVisibility(View.VISIBLE);
                         rtvToPay.setText("立即付款");
-                    }else{
+                    } else {
                         rtvToPay.setVisibility(View.GONE);
                     }
 
@@ -155,8 +159,7 @@ public class RedRecordDetailActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head,R.id.rtv_to_pay})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_user_head, R.id.rtv_to_pay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -176,7 +179,7 @@ public class RedRecordDetailActivity extends BaseActivity {
                 intent.putExtra("consumeMoney", m.payMoney);
                 intent.putExtra("order_sn", m.number);
                 intent.putExtra("userPayId", userPayId);
-                intent.putExtra("merchantName","赞赏红包");
+                intent.putExtra("merchantName", "赞赏红包");
                 intent.putExtra("merchantHead", m.merchantHead);
                 startActivityForResult(intent, 1000);
                 break;
@@ -195,12 +198,12 @@ public class RedRecordDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK);
-                user_pay_info();
-                Intent intent = new Intent(Constants.BROCAST_REFRESH_ORDER);
-                intent.putExtra("userPayId", userPayId);
-                setResult(RESULT_OK, intent);
-                sendBroadcast(intent);
+            setResult(RESULT_OK);
+            user_pay_info();
+            Intent intent = new Intent(Constants.BROCAST_REFRESH_ORDER);
+            intent.putExtra("userPayId", userPayId);
+            setResult(RESULT_OK, intent);
+            sendBroadcast(intent);
         }
     }
 

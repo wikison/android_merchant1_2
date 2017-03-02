@@ -122,7 +122,7 @@
     android:layout_width="70dp"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="-35dp"
-    android:background="@drawable/xml_circle_grey_bg"
+    android:background="@mipmap/user_icon"
     android:layout_centerHorizontal="true"
     android:layout_height="70dp" />
     </RelativeLayout>
