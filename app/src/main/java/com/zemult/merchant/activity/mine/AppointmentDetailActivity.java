@@ -147,6 +147,12 @@ public class AppointmentDetailActivity extends BaseActivity {
         mimageManager = new ImageManager(getApplicationContext());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userReservationInfo();
+    }
+
     private void userReservationInfo() {
         if (userReservationInfoRequest != null) {
             userReservationInfoRequest.cancel();
