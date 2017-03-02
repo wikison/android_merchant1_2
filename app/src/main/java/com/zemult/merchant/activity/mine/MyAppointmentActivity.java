@@ -66,7 +66,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
     UserSaleReservationList userSaleReservationList;//服务管家的预约列表
     int type;
     private boolean fromHome;
-
+    int selectPosition;
     //此处item使用item_myappoint
     @Override
     public void setContentView() {
@@ -405,8 +405,8 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
      */
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void refreshEvent(String s) {
-        if (AppointmentDetailActivity.REFLASH_MYAPPOINT.equals(s))
-            onRefresh();
+//        if (AppointmentDetailActivity.REFLASH_MYAPPOINT.equals(s))
+//            onRefresh();
     }
 
 

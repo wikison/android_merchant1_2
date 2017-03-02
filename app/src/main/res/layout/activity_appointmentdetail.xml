@@ -366,7 +366,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    >
 
                     <RelativeLayout
                         android:id="@+id/rltwo"
@@ -392,7 +393,7 @@
                             android:layout_toRightOf="@+id/invite_btn"
                             android:background="@drawable/detail_btn"
                             android:drawableLeft="@mipmap/complete"
-                            android:padding="8dp"
+                            android:paddingLeft="10dp"
                             android:text="快速结账"
                             android:textColor="#e6bb7c" />
                     </RelativeLayout>

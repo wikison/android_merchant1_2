@@ -315,8 +315,12 @@ public class MineFragment extends BaseFragment {
                         UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                         mynameTv.setText(((APIM_UserLogin) response).userInfo.getName());
                         mgradeTv.setText(((APIM_UserLogin) response).userInfo.getProvinceName() + "    " + ((APIM_UserLogin) response).userInfo.getCityName());//用户省份+城市
-                        if(!StringUtils.isBlank(((APIM_UserLogin) response).userInfo.getHead()))
+                        if(!StringUtils.isBlank(((APIM_UserLogin) response).userInfo.getHead())){
                             mImageManager.loadCircleImage(((APIM_UserLogin) response).userInfo.getHead(), mheadIv);
+                        }else{
+                            mImageManager.loadCircleResImage(R.mipmap.user_icon, mheadIv);
+                        }
+
                         isConfirm = ((APIM_UserLogin) response).userInfo.isConfirm;
                         myname = ((APIM_UserLogin) response).userInfo.getName();
                         head = ((APIM_UserLogin) response).userInfo.getHead();
