@@ -17,18 +17,25 @@ public class CustomConversationHelper {
     private static YWCustomConversationUpdateModel mCustomConversation;
     private static YWCustomConversationUpdateModel mCustomViewConversation;
 
-    public static void addCustomConversation(String conversationID, String content,int unreadCount) {
+    public static void addCustomConversation(String conversationID, String content,long datetime,int unreadCount) {
 
         mCustomConversation = new YWCustomConversationUpdateModel();
         mCustomConversation.setIdentity(conversationID);
         mCustomConversation.setContent(content);
         mCustomConversation.setUnreadCount(unreadCount);
+        mCustomConversation.setLastestTime(datetime);
+        mCustomConversation.setSubType(1);
+        mCustomConversation.setExtraData("extraData");
+        mCustomConversation.setExtraData1("extraData_1");
+        mCustomConversation.setExtraData2("extraData_2");
+
 
         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
         IYWConversationService conversationService = imKit.getConversationService();
         YWConversation conversation = conversationService.getCustomConversationByConversationId(conversationID);
         if (conversation != null){
             conversation.getUnreadCount();
+            LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
         }
 
 //        if (conversationService.getCustomConversationByConversationId(conversationID) == null) {

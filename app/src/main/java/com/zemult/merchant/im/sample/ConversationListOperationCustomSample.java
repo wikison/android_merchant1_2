@@ -82,11 +82,16 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
         if (conversation.getConversationType() == YWConversationType.Custom) {
             YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
             String conversationId = body.getIdentity();
-            if (conversationId.equals(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)) {
-                return R.drawable.aliwx_tribe_head_default;
-            } else if (conversationId.equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
-                return R.drawable.aliwx_head_default;
-            } else {
+//            if (conversationId.equals(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)) {
+//                return R.drawable.aliwx_tribe_head_default;
+//            } else if (conversationId.equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
+//                return R.drawable.aliwx_head_default;
+//            }
+//            else
+            if (conversationId.equals(MainActivity.SYSTEM_SYSMESSAGE)) {
+                return R.drawable.drawable_bell_icon;
+            }
+            else {
                 return R.drawable.aliwx_head_default;
             }
         }
@@ -119,7 +124,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 return "自定义View展示的会话";
             }
             else if (body.getIdentity().equals(MainActivity.SYSTEM_SYSMESSAGE)) {
-                return "";
+                return "系统消息";
             }
         }
 
