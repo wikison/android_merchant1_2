@@ -210,7 +210,11 @@ public class WithdrawalsActivity extends BaseActivity {
                                 ((CommonResult) response).bankNumber.length()
                         )
                                 + ")");
-                        aliAccount = tvAccount.getText().toString();
+                        aliAccount = "************"
+                                + ((CommonResult) response).bankNumber.substring(
+                                        ((CommonResult) response).bankNumber.length() - 4,
+                                        ((CommonResult) response).bankNumber.length()
+                                );
                     }
 
                 } else {
