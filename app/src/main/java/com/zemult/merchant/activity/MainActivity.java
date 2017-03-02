@@ -507,6 +507,13 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         setTabSelection(0);
                         SlashHelper.userManager().saveUserinfo(null);
                         LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
+
+
+                        Intent mainintent = new Intent(AppApplication.getContext(), MainActivity.class);
+                        mainintent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(mainintent);
+
+
                         Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         AppApplication.getContext().startActivity(intent);

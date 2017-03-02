@@ -213,7 +213,14 @@ public class FindPayActivity extends BaseActivity {
         adapter.setOnCheckClickListener(new ChooseReservationAdapter.OnCheckClickListener() {
             @Override
             public void onCheckClick(int position) {
-                adapter.setSelected(position);
+                for (int i = 0; i < reservationList.size(); i++) {
+                    if (i != position) {
+                        reservationList.get(i).setChecked(false);
+                    }else {
+                        reservationList.get(position).setChecked(!reservationList.get(position).isChecked());
+                    }
+                }
+                adapter.setData(reservationList, false);
 
             }
         });
