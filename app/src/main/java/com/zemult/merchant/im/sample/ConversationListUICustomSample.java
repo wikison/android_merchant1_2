@@ -203,7 +203,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 
     @Override
     public boolean enableSearchConversations(Fragment fragment){
-        return true;
+        return false;
     }
 
     /**
