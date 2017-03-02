@@ -33,6 +33,7 @@ import com.zemult.merchant.aip.mine.UserMerchantPayRequest;
 import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -251,10 +252,10 @@ public class ChoosePayTypeActivity extends BaseActivity {
         imKit.getConversationService()
                 .forwardMsgToContact(appContact
                         ,message,forwardCallBack);
-//        startActivity(imKit.getChattingActivityIntent(toUserId+""));
-        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
-        intent.putExtra("billId", userPayId);
-        startActivity(intent);
+        startActivity(imKit.getChattingActivityIntent(toUserId+"", Urls.APP_KEY));
+//        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
+//        intent.putExtra("billId", userPayId);
+//        startActivity(intent);
         finish();
 
 

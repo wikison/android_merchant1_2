@@ -29,6 +29,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 
@@ -211,6 +212,10 @@ public class LoginActivity extends BaseActivity {
         }
         if (StringUtils.isBlank(strPwd)) {
             etPwd.setError("密码不能为空");
+        }
+        if (!StringMatchUtils.isMobileNO(strUserName)) {
+            etName.setError("请输入正确的手机号码");
+            return;
         }
         if (!StringUtils.isBlank(strUserName) && !StringUtils.isBlank(strPwd))
             get_user_login_request();
