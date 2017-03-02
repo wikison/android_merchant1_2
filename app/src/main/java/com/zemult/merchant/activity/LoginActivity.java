@@ -214,7 +214,7 @@ public class LoginActivity extends BaseActivity {
             etPwd.setError("密码不能为空");
         }
         if (!StringMatchUtils.isMobileNO(strUserName)) {
-            etName.setError("请输入正确的手机号码");
+            ToastUtil.showMessage("请输入正确的手机号码");
             return;
         }
         if (!StringUtils.isBlank(strUserName) && !StringUtils.isBlank(strPwd))

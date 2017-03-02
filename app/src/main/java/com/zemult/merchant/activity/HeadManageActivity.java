@@ -48,6 +48,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -82,7 +83,9 @@ public class HeadManageActivity extends BaseActivity {
         registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADIMAGE});
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.gengduo_icon);
-        imageManager.loadUrlImage(SlashHelper.userManager().getUserinfo().getHead(), ivBg);
+        if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
+            imageManager.loadUrlImage(SlashHelper.userManager().getUserinfo().getHead(), ivBg);
+
         headString = SlashHelper.userManager().getUserinfo().getHead();
     }
 

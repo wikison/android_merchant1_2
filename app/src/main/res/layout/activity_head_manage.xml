@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"
-        android:background="@color/transparent"/>
+        android:background="@color/transparent"
+        android:src="@mipmap/user_icon"/>
 
 
 </LinearLayout>
