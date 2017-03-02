@@ -18,7 +18,7 @@ public class UserEditinfoRequest extends PostStringRequest<Type> {
     public static class Input {
         public int userId;    //	用户id
         public String name;    //	名字
-        public String head;    //	头像
+        public String head="";    //	头像
     //    public String account;    //	斜杠号
         public int sex;    //	性别(0男,1女)
     //    public String company;    //	公司名称
@@ -39,7 +39,7 @@ public class UserEditinfoRequest extends PostStringRequest<Type> {
             ejson = Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("userId", userId + ""),
                     new Pair<String, String>("name", name),
-                    new Pair<String, String>("head", head),
+                    new Pair<String, String>("head", head == null ? "":head),
                     new Pair<String, String>("sex", sex + ""),
                     new Pair<String, String>("isOpen", isOpen + "")
 

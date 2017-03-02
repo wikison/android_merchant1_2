@@ -42,6 +42,7 @@ import com.zemult.merchant.view.common.MMAlert;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -314,7 +315,8 @@ public class MineFragment extends BaseFragment {
                         UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                         mynameTv.setText(((APIM_UserLogin) response).userInfo.getName());
                         mgradeTv.setText(((APIM_UserLogin) response).userInfo.getProvinceName() + "    " + ((APIM_UserLogin) response).userInfo.getCityName());//用户省份+城市
-                        mImageManager.loadCircleImage(((APIM_UserLogin) response).userInfo.getHead(), mheadIv);
+                        if(!StringUtils.isBlank(((APIM_UserLogin) response).userInfo.getHead()))
+                            mImageManager.loadCircleImage(((APIM_UserLogin) response).userInfo.getHead(), mheadIv);
                         isConfirm = ((APIM_UserLogin) response).userInfo.isConfirm;
                         myname = ((APIM_UserLogin) response).userInfo.getName();
                         head = ((APIM_UserLogin) response).userInfo.getHead();
@@ -336,7 +338,7 @@ public class MineFragment extends BaseFragment {
                             levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
                         }
 
-                        if(((APIM_UserLogin) response).userInfo.getSaleUserNum()>0){
+                        if(((APIM_UserLogin) response).userInfo.getIsSaleUser()>0){
                             fuwuguanjiaLl.setVisibility(View.VISIBLE);
                         }else{
                             fuwuguanjiaLl.setVisibility(View.GONE);

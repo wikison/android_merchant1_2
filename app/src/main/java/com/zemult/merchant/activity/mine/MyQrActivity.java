@@ -19,6 +19,7 @@ import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by wikison on 2016/6/21.
@@ -95,7 +96,9 @@ public class MyQrActivity extends BaseActivity {
     private void initView() {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
-        imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
+            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+
         tvName.setText(SlashHelper.userManager().getUserinfo().getName());
         tvLevel.setText(Convert.getExperienceText(SlashHelper.userManager().getUserinfo().getExperience()));
         Drawable drawable = getResources().getDrawable(Convert.getExperienceImg(SlashHelper.userManager().getUserinfo().getExperience()));
