@@ -10,6 +10,8 @@ import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.view.GlideCircleBorderTransform;
 import com.zemult.merchant.view.GlideCircleTransform;
 
+import cn.trinea.android.common.util.StringUtils;
+
 /**
  * Created by admin on 2016/6/3.
  */
@@ -229,4 +231,29 @@ public class ImageManager {
     }
 
 
+    // 加载圆型头像
+    public void loadCircleHead(String url, ImageView imageView) {
+        if(StringUtils.isBlank(url)){
+            imageView.setImageResource(R.mipmap.user_icon);
+        }else {
+            if (null!=url&&url.indexOf("xiegang.oss") != -1) {
+                url = url.replace("xiegang.oss", "xiegang.img");
+                Glide.with(mContext)
+                        .load(url + getImageSize())
+                        .placeholder(R.drawable.xml_circle_grey_bg)
+                        .error(R.mipmap.tupiansilie_circle_icon)
+                        .crossFade()
+                        .transform(new GlideCircleTransform(mContext))
+                        .into(imageView);
+            } else {
+                Glide.with(mContext)
+                        .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                        .placeholder(R.drawable.xml_circle_grey_bg)
+                        .error(R.mipmap.tupiansilie_circle_icon)
+                        .crossFade()
+                        .transform(new GlideCircleTransform(mContext))
+                        .into(imageView);
+            }
+        }
+    }
 }
