@@ -265,7 +265,12 @@ public class CreateBespeakActivity extends BaseActivity {
                 note = AppUtils.replaceBlank(etBespeak.getText().toString());
                 ordername = etCustomername.getText().toString();
                 orderphone = etCustomerphone.getText().toString();
-                if (StringUtils.isEmpty(shopname)) {
+                if ("请选择商户".equals(shopname)) {
+                    ToastUtil.showMessage("请选择商户");
+                    return;
+                }
+                if (merchantId==0) {
+                    ToastUtil.showMessage("请选择商户");
                     return;
                 }
                 if (StringUtils.isEmpty(orderpeople)) {
@@ -282,11 +287,11 @@ public class CreateBespeakActivity extends BaseActivity {
                     return;
                 }
                 if (StringUtils.isEmpty(orderphone)) {
-                    ToastUtil.showMessage("请填写预约人电话");
+                    ToastUtil.showMessage("请输入手机号码");
                     return;
                 }
                 if (!StringMatchUtils.isMobileNO(orderphone)) {
-                    ToastUtil.showMessage("请填写正确的预约人电话");
+                    ToastUtil.showMessage("请输入正确的手机号码");
                     return;
                 }
 
