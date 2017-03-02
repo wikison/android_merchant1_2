@@ -137,7 +137,7 @@ public class ShareAppointmentActivity extends BaseActivity {
 
 
             }
-            if (url.contains("baidumap://map/?")){
+           else  if (url.contains("baidumap://map/?")){
             }
             else{
                 view.loadUrl(url);
