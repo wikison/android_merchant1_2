@@ -356,14 +356,13 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/right_btn" />
+
+            <View style="@style/divider_1px"
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
 
 
-        <include
-            layout="@layout/include_devider10dp_layout"
-            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/msafe_layout"
@@ -384,24 +383,26 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/right_btn" />
+            <View style="@style/divider_1px"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+
 
         <View style="@style/divider12dp"></View>
 
-        <View style="@style/divider_1px" />
+
 
         <RelativeLayout
             android:id="@+id/mshop_layout"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-
             android:background="@drawable/ripple_item_clicked2"
             android:clickable="true"
             android:visibility="visible">
-
+            <View style="@style/divider_1px"
+                android:layout_alignParentTop="true"/>
             <TextView
                 android:id="@+id/applyfor_tv"
                 style="@style/text_15_black_28"
@@ -417,13 +418,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/right_btn" />
+
+            <View style="@style/divider_1px"
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
-
-
-        <include
-            layout="@layout/include_devider1dp_layout"
-            android:visibility="gone" />
-
 
     </LinearLayout>
 
