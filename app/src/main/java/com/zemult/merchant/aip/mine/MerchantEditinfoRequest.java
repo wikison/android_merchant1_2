@@ -17,10 +17,10 @@ public class MerchantEditinfoRequest extends PostStringRequest<Type>  {
 
     public static class Input {
         public int	merchantId				;	//是  	商家(场景)的id
-        public String	head				;	//否  	商家头像
+//        public String	head				;	//否  	商家头像
         public String	pic				;	//否	  商家封面
-        public double	commissionDiscount				;	//否	  佣金
-        public String	tel				;	//  否	联系电话--店里的
+//        public double	commissionDiscount				;	//否	  佣金
+//        public String	tel				;	//  否	联系电话--店里的
 //        public String	detail				;	//  否	商家简介
 
 
@@ -31,9 +31,9 @@ public class MerchantEditinfoRequest extends PostStringRequest<Type>  {
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("merchantId", merchantId+""),
-                    new Pair<String, String>("head", head),
-                    new Pair<String, String>("commissionDiscount", commissionDiscount + ""),
-                    new Pair<String, String>("tel", tel),
+//                    new Pair<String, String>("head", head),
+//                    new Pair<String, String>("commissionDiscount", commissionDiscount + ""),
+//                    new Pair<String, String>("tel", tel),
                     new Pair<String, String>("pic", pic)));
         }
 

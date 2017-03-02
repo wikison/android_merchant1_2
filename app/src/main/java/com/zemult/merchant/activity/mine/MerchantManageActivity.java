@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.mine.MerchantEditinfoRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 /**
@@ -168,20 +171,77 @@ public class MerchantManageActivity extends BaseActivity {
         sendJsonRequest(merchantGetinfoRequest);
     }
 
+//    /**
+//     * 获取商户(场景)信息-- 相册
+//     */
+//    private void merchant_getinfo2() {
+//        showPd();
+//        if (merchantGetinfoRequest != null) {
+//            merchantGetinfoRequest.cancel();
+//        }
+//
+//        MerchantInfoRequest.Input input = new MerchantInfoRequest.Input();
+//        input.merchantId = merchantId;
+//
+//        input.convertJosn();
+//        merchantGetinfoRequest = new MerchantInfoRequest(input, new ResponseListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                dismissPd();
+//            }
+//
+//            @Override
+//            public void onResponse(Object response) {
+//                if (((APIM_MerchantGetinfo) response).status == 1) {
+//                    M_Merchant mMerchant = ((APIM_MerchantGetinfo) response).merchant;
+//                    if (!TextUtils.isEmpty(mMerchant.pics)) {
+//                        if (mMerchant.pics.contains(",")) {
+//                            String[] photosarray = mMerchant.pics.split(",");
+//                            switch (photosarray.length) {
+//                                case 2:
+//                                    iv1.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[0], iv1);
+//                                    iv2.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[1], iv2);
+//                                    break;
+//                                case 3:
+//                                    iv1.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[0], iv1);
+//                                    iv2.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[1], iv2);
+//                                    iv3.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[2], iv3);
+//                                    break;
+//                            }
+//                        } else {
+//                            iv1.setVisibility(View.VISIBLE);
+//                            imageManager.loadUrlImage(mMerchant.pics, iv1);
+//                        }
+//                    }
+//                } else {
+//                    ToastUtil.showMessage(((APIM_MerchantGetinfo) response).info);
+//                }
+//                dismissPd();
+//            }
+//        });
+//        sendJsonRequest(merchantGetinfoRequest);
+//    }
     /**
-     * 获取商户(场景)信息-- 相册
+     * 修改商家(场景)信息
      */
-    private void merchant_getinfo2() {
+    private MerchantEditinfoRequest editinfoRequest;
+    private void merchant_editinfo(String coverPic) {
         showPd();
-        if (merchantGetinfoRequest != null) {
-            merchantGetinfoRequest.cancel();
+        if (editinfoRequest != null) {
+            editinfoRequest.cancel();
         }
 
-        MerchantInfoRequest.Input input = new MerchantInfoRequest.Input();
+        MerchantEditinfoRequest.Input input = new MerchantEditinfoRequest.Input();
         input.merchantId = merchantId;
+        input.pic = coverPic;
 
         input.convertJosn();
-        merchantGetinfoRequest = new MerchantInfoRequest(input, new ResponseListener() {
+        editinfoRequest = new MerchantEditinfoRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -189,39 +249,14 @@ public class MerchantManageActivity extends BaseActivity {
 
             @Override
             public void onResponse(Object response) {
-                if (((APIM_MerchantGetinfo) response).status == 1) {
-                    M_Merchant mMerchant = ((APIM_MerchantGetinfo) response).merchant;
-                    if (!TextUtils.isEmpty(mMerchant.pics)) {
-                        if (mMerchant.pics.contains(",")) {
-                            String[] photosarray = mMerchant.pics.split(",");
-                            switch (photosarray.length) {
-                                case 2:
-                                    iv1.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[0], iv1);
-                                    iv2.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[1], iv2);
-                                    break;
-                                case 3:
-                                    iv1.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[0], iv1);
-                                    iv2.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[1], iv2);
-                                    iv3.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[2], iv3);
-                                    break;
-                            }
-                        } else {
-                            iv1.setVisibility(View.VISIBLE);
-                            imageManager.loadUrlImage(mMerchant.pics, iv1);
-                        }
-                    }
+                if (((CommonResult) response).status == 1) {
                 } else {
                     ToastUtil.showMessage(((APIM_MerchantGetinfo) response).info);
                 }
                 dismissPd();
             }
         });
-        sendJsonRequest(merchantGetinfoRequest);
+        sendJsonRequest(editinfoRequest);
     }
 
     /**
@@ -231,9 +266,12 @@ public class MerchantManageActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
             if (resultCode == RESULT_OK && requestCode == REQ_ALBUM) {
-                merchant_getinfo2();
-            }
+                merchant_getinfo();
+                String coverPic = data.getStringExtra("coverPic");
+                if(!StringUtils.isBlank(coverPic))
+                    merchant_editinfo(coverPic);
 
+            }
     }
 
 }
