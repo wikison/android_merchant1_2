@@ -137,10 +137,12 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
 
     private void initData(ViewHolder holder, M_Userinfo entity) {
         // 用户头像
-        if (!TextUtils.isEmpty(entity.getUserHead()))
-            mImageManager.loadCircleImage(entity.getUserHead(), holder.ivHead, "@120w_120h_1e");
-        else
-            holder.ivHead.setImageResource(R.mipmap.user_icon);
+//        if (!TextUtils.isEmpty(entity.getUserHead()))
+//            mImageManager.loadCircleImage(entity.getUserHead(), holder.ivHead, "@120w_120h_1e");
+//        else
+//            holder.ivHead.setImageResource(R.mipmap.user_icon);
+        mImageManager.loadCircleHead(entity.getUserHead(), holder.ivHead, "@120w_120h_1e");
+
         // 用户名
         if (!TextUtils.isEmpty(entity.getUserName()))
             holder.tvUserName.setText(entity.getUserName());
