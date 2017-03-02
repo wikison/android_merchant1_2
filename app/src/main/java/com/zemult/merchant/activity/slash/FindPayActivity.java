@@ -138,6 +138,7 @@ public class FindPayActivity extends BaseActivity {
     private int selectPosition = 2; //选中的赞赏红包, 默认2, 金额6.66
     private String strRewardMoney = "";
 
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_find_pay);
@@ -212,7 +213,15 @@ public class FindPayActivity extends BaseActivity {
         adapter.setOnCheckClickListener(new ChooseReservationAdapter.OnCheckClickListener() {
             @Override
             public void onCheckClick(int position) {
-                adapter.setSelected(position);
+                for (int i = 0; i < reservationList.size(); i++) {
+                    if (i != position) {
+                        reservationList.get(i).setChecked(false);
+                    }else {
+                        reservationList.get(position).setChecked(!reservationList.get(position).isChecked());
+                    }
+                }
+                adapter.setData(reservationList, false);
+
             }
         });
     }
@@ -508,7 +517,6 @@ public class FindPayActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Reservation> list, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
-
         } else {
             list.get(0).setChecked(true);
             adapter.setData(list, isLoadMore);

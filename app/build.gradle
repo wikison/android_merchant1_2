@@ -18,8 +18,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 3
-        versionName "1.2.0"
-        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel", RELEASE_VERSION_VALUE:"v1.2.0",DEBUG_VERSION_VALUE:"测试版本号:Android_${releaseTime()}"]
+        versionName "1.2.1"
+        manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel", RELEASE_VERSION_VALUE:"v1.2.1",DEBUG_VERSION_VALUE:"测试版本号:Android_${releaseTime()}"]
     }
 
 

@@ -13,6 +13,7 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.conversation.EServiceContact;
 import com.alibaba.mobileim.conversation.IYWConversationService;
+import com.alibaba.mobileim.conversation.IYWConversationUnreadChangeListener;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
@@ -158,6 +159,11 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 return true;
             }
             else if (conversationId.startsWith(MainActivity.SYSTEM_SYSMESSAGE)) {
+                // 获取会话管理类
+                YWIMKit  mIMKit = LoginSampleHelper.getInstance().getIMKit();
+                IYWConversationService conversationService = mIMKit.getConversationService();
+                // 将某一条会话标记为已读
+                 conversationService.markReaded(conversation);
                 Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;
