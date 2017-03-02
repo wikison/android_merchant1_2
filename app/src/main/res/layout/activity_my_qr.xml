@@ -30,7 +30,8 @@
                 android:id="@+id/iv_head"
                 android:layout_width="@dimen/j40dp"
                 android:layout_height="@dimen/j40dp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:src="@mipmap/user_icon"/>
 
             <TextView
                 android:id="@+id/tv_name"

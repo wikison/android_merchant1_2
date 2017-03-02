@@ -30,7 +30,8 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/imageView"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon"/>
 
 
         <ImageView

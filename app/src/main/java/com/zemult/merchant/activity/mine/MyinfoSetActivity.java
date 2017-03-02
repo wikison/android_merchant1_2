@@ -41,6 +41,7 @@ import com.zemult.merchant.view.common.CommonDialog;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
@@ -146,7 +147,10 @@ public class MyinfoSetActivity extends MAppCompatActivity {
         } else {
             tvArea.setText(SlashHelper.userManager().getUserinfo().getProvinceName() + " " + SlashHelper.userManager().getUserinfo().getCityName());
         }
-        imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+
+        if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
+            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+
         nameString = SlashHelper.userManager().getUserinfo().getName();
         headString = SlashHelper.userManager().getUserinfo().getHead();
         accountString = SlashHelper.userManager().getUserinfo().getAccount();
