@@ -141,13 +141,15 @@ public class MerchantManageActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(mMerchant.pics)) {
                         if (mMerchant.pics.contains(",")) {
                             String[] photos = mMerchant.pics.split(",");
-                            String[] photosarray = new String[3];
+                            String[] photosarray;
 
                             if (photos.length > 3) {
+                                photosarray = new String[3];
                                 for (int i = 0; i < 3; i++) {
                                     photosarray[i] = photos[i];
                                 }
                             } else {
+                                photosarray = new String[photos.length];
                                 for (int i = 0; i < photos.length; i++) {
                                     photosarray[i] = photos[i];
                                 }
@@ -158,6 +160,7 @@ public class MerchantManageActivity extends BaseActivity {
                                     imageManager.loadUrlImage(photosarray[0], iv1);
                                     iv2.setVisibility(View.VISIBLE);
                                     imageManager.loadUrlImage(photosarray[1], iv2);
+                                    iv3.setVisibility(View.GONE);
                                     break;
                                 case 3:
                                     iv1.setVisibility(View.VISIBLE);
@@ -171,7 +174,13 @@ public class MerchantManageActivity extends BaseActivity {
                         } else {
                             iv1.setVisibility(View.VISIBLE);
                             imageManager.loadUrlImage(mMerchant.pics, iv1);
+                            iv2.setVisibility(View.GONE);
+                            iv3.setVisibility(View.GONE);
                         }
+                    }else {
+                        iv1.setVisibility(View.GONE);
+                        iv2.setVisibility(View.GONE);
+                        iv3.setVisibility(View.GONE);
                     }
                 } else {
                     ToastUtil.showMessage(((APIM_MerchantGetinfo) response).info);
