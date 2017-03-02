@@ -168,6 +168,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         }
         mConversationService = mIMKit.getConversationService();
         initListeners();
+        getUndreadMsgCount ();
 
 //登录IM
         if (null != SlashHelper.userManager().getUserinfo()) {
@@ -604,7 +605,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         final YWIMKit imKit = loginHelper.getIMKit();
                         mConversationService = imKit.getConversationService();
                         //获取当前登录用户的所有未读数
-                        int unReadCount = mConversationService.getAllUnreadCount();
+                         int unReadCount = mConversationService.getAllUnreadCount();
                         //设置桌面角标的未读数
                         mIMKit.setShortcutBadger(unReadCount);
                         if (unReadCount > 0) {
@@ -642,6 +643,22 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 ////增加新消息到达的通知
 //            conversationService.addPushListener(msgPushListener);
 //
+    }
+
+    private void getUndreadMsgCount (){
+        IYWConversationService conversationService = mIMKit.getConversationService();
+       int  unReadCount=conversationService.getAllUnreadCount();
+        if (unReadCount > 0) {
+            mUnread.setVisibility(View.VISIBLE);
+            if (unReadCount < 100) {
+                mUnread.setText(unReadCount + "");
+            } else {
+                mUnread.setText("99+");
+            }
+        } else {
+            mUnread.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     UserInfoOwnerRequest userInfoOwnerRequest;
