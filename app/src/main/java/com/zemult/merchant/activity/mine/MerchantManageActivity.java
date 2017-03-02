@@ -148,7 +148,7 @@ public class MerchantManageActivity extends BaseActivity {
                                     photosarray[i] = photos[i];
                                 }
                             } else {
-                                for (int i = 0; i < photosarray.length; i++) {
+                                for (int i = 0; i < photos.length; i++) {
                                     photosarray[i] = photos[i];
                                 }
                             }
