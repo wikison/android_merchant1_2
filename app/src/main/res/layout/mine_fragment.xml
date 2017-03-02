@@ -383,10 +383,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/right_btn" />
+            <View style="@style/divider_1px"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+
 
         <View style="@style/divider12dp"></View>
 
@@ -418,7 +420,7 @@
                 android:background="@mipmap/right_btn" />
 
             <View style="@style/divider_1px"
-                android:layout_alignParentBottom="false"/>
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
     </LinearLayout>
