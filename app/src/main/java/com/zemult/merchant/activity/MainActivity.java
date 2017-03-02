@@ -60,6 +60,9 @@ import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 import com.zemult.merchant.view.SlashMenuWindow;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
@@ -231,7 +234,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         addConnectionListener();
 
 
-        initCustomConversation("", 0);
+        initCustomConversation("系统消息",0,new Date().getTime());
     }
 
 
@@ -491,8 +494,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
      */
     public static final String SYSTEM_SYSMESSAGE = "sysMessage";
 
-    private void initCustomConversation(String message, int unReadCounr) {
-        CustomConversationHelper.addCustomConversation(SYSTEM_SYSMESSAGE, message, unReadCounr);
+    private void initCustomConversation(String message, int unReadCounr,long datatime) {
+        CustomConversationHelper.addCustomConversation(SYSTEM_SYSMESSAGE, message,datatime ,unReadCounr);
     }
 
 
@@ -725,7 +728,18 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    initCustomConversation(((CommonResult) response).createtime + "z.m" + ((CommonResult) response).note, ((CommonResult) response).num);
+                    long datetime=new Date().getTime();
+                    try{
+                        String sDt =  ((CommonResult) response).createtime ;
+                        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date dt2 = sdf.parse(sDt);
+                        //继续转换得到秒数的long型
+                        datetime= dt2.getTime();
+                    }catch (Exception e){
+
+                    }
+
+                    initCustomConversation( ((CommonResult) response).note, ((CommonResult) response).num,datetime);
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
                 }
             }

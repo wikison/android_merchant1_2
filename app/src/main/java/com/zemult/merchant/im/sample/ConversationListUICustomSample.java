@@ -179,7 +179,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
      */
     @Override
     public  boolean getPullToRefreshEnabled(){
-        return true;
+        return false;
     }
      /**
      * 返回默认的群头像
@@ -326,7 +326,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         //todo 若修改 YWConversationType.Tribe为自己type，SDK认为您要在｛@link #getCustomItemView｝中完全自定义，针对群的自定义，如getTribeConversationHead会失效。
         //todo 该原则同样适用于 YWConversationType.P2P等其它内部类型，请知晓！
         if (conversation.getConversationType() == YWConversationType.Custom) {
-            return viewTypeArray[0];
+//            return viewTypeArray[0];
         }
 //        else if (conversation.getConversationType() == YWConversationType.P2P){
 //            return viewTypeArray[1];
@@ -388,7 +388,6 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                     headLoadHelper.setDefaultHeadView(holder.head);
                     imageManager.loadResImage( R.mipmap.bell_icon,holder.head);
                     name = "系统消息";
-                    LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
                 }else{
                     headLoadHelper.setDefaultHeadView(holder.head);
                     name = "这是一个自定义会话";

@@ -89,7 +89,8 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
         tvRight.setVisibility(View.VISIBLE);
 
         lhTvTitle.setText(getResources().getString(R.string.title_business));
-        tvRight.setText("入驻申请");
+//        tvRight.setText("入驻申请");
+        tvRight.setText("");
 
         mAdapter = new BusinessManAdapter(mContext, new ArrayList<M_Merchant>());
         smoothListView.setAdapter(mAdapter);
@@ -171,7 +172,9 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
                             && !((APIM_MerchantList) response).merchantList.isEmpty())
                         datas.addAll(((APIM_MerchantList) response).merchantList);
 
-                    getUserMerchantReqList();
+                    //getUserMerchantReqList();
+
+                    fillAdapter();
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
                 }
