@@ -21,6 +21,7 @@ public class Urls {
 
     //验证码
     public static String COMMON_GETCODE = "common_getcode.do";
+    public static String COMMON_GETCODE_BANK = "common_getcode_bank";
     public static String COMMON_CHECKCODE = "common_checkcode.do";
     //获取最新版本的app软件
     public static String COMMON_APP_VERSION = "common_app_version.do";

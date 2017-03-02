@@ -25,6 +25,7 @@ import com.zemult.merchant.activity.PasswordActivity;
 import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
+import com.zemult.merchant.aip.common.CommonGetCodeBankRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.mine.UserBandcardDoRequest;
 import com.zemult.merchant.app.BaseFragment;
@@ -222,17 +223,17 @@ public class BindCardTwoFragment extends BaseFragment {
         checkCode();
     }
 
-    private CommonGetCodeRequest request_common_getcode;
+    private CommonGetCodeBankRequest request_common_getcode;
     private void getCode() {
         try {
             if (request_common_getcode != null) {
                 request_common_getcode.cancel();
             }
-            CommonGetCodeRequest.Input input = new CommonGetCodeRequest.Input();
+            CommonGetCodeBankRequest.Input input = new CommonGetCodeBankRequest.Input();
             input.phone = etPhone.getText().toString();
             input.convertJosn();
 
-            request_common_getcode = new CommonGetCodeRequest(input, new ResponseListener() {
+            request_common_getcode = new CommonGetCodeBankRequest(input, new ResponseListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
