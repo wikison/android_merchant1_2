@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserSaleUserListRequest;
@@ -32,6 +31,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -167,7 +167,7 @@ public class CustomManageActivity extends BaseActivity implements SmoothListView
                                 smoothListView.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(mContext, R.layout.item_custommanage, mDatas) {
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
-                                        if (!TextUtils.isEmpty(mfollow.userHead)) {
+                                        if (!StringUtils.isBlank(mfollow.userHead)) {
                                             holder.setCircleImage(R.id.head_iv, mfollow.userHead);
                                         }
                                         if (!TextUtils.isEmpty(mfollow.userName))

@@ -23,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
-import com.zemult.merchant.activity.mine.NicknameActivity;
 import com.zemult.merchant.activity.mine.RemarkNameActivity;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
@@ -189,9 +188,10 @@ public class UserDetailActivity extends BaseActivity {
         lhTvTitle.setText("个人详情");
 
         // 用户头像
-        if (!TextUtils.isEmpty(userHead)) {
-            imageManager.loadCircleImage(userHead, ivHead);
-        }
+//        if (!TextUtils.isEmpty(userHead)) {
+//            imageManager.loadCircleImage(userHead, ivHead);
+//        }
+        imageManager.loadCircleHead(userHead, ivHead);
         // 用户名
         if (!TextUtils.isEmpty(userName))
             tvName.setText(userName);
