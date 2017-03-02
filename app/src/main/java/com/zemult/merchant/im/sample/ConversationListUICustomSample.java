@@ -201,6 +201,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         return "#ffffff";
     }//#e1f5fe
 
+    //隐藏消息搜索框
     @Override
     public boolean enableSearchConversations(Fragment fragment){
         return false;
