@@ -490,6 +490,17 @@ public class M_Userinfo implements Serializable {
     @Expose
     public double experience;//经验值
 
+    public int getIsSaleUser() {
+        return isSaleUser;
+    }
+
+    public void setIsSaleUser(int isSaleUser) {
+        this.isSaleUser = isSaleUser;
+    }
+
+    @Expose
+    public int isSaleUser;//是否是服务管家
+
     public double getExperience() {
         return experience;
     }

@@ -336,7 +336,7 @@ public class MineFragment extends BaseFragment {
                             levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
                         }
 
-                        if(((APIM_UserLogin) response).userInfo.getSaleUserNum()>0){
+                        if(((APIM_UserLogin) response).userInfo.getIsSaleUser()>0){
                             fuwuguanjiaLl.setVisibility(View.VISIBLE);
                         }else{
                             fuwuguanjiaLl.setVisibility(View.GONE);
