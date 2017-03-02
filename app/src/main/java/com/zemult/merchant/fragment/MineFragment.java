@@ -344,9 +344,9 @@ public class MineFragment extends BaseFragment {
                             fuwuguanjiaLl.setVisibility(View.GONE);
                         }
                         if(((APIM_UserLogin) response).userInfo.getManagerUserNum()==0){
-                            //applyforTv.setVisibility(View.GONE);
-                            //applyforTv.setText("申请商户入驻");
-                            mshopLayout.setVisibility(View.GONE);
+
+                            applyforTv.setText("申请商户入驻");
+                            //mshopLayout.setVisibility(View.GONE);
                         }else{
                             applyforTv.setText("我是商户");
                         }
