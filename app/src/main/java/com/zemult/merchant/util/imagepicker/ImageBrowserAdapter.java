@@ -16,6 +16,7 @@ import com.zemult.merchant.util.ImageManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.trinea.android.common.util.StringUtils;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -63,7 +64,9 @@ public class ImageBrowserAdapter extends PagerAdapter {
 //	    photoView.setDisplayMatrix(matrix);
 //	    photoView.setRotationTo(90);
 //	    photoView.setRotationBy(90);Rotate
-        if(mPhotos.get(position).indexOf("http://")==-1){
+        if(StringUtils.isBlank(mPhotos.get(position)))
+            photoView.setImageResource(R.mipmap.user_icon);
+        else if(mPhotos.get(position).indexOf("http://")==-1){
 //        	 ImageLoader.getInstance().displayImage("file://"+mPhotos.get(position), photoView);
             imageManager.loadLocalImage(mPhotos.get(position), photoView);
         }
