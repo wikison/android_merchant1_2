@@ -97,7 +97,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
-                        tvSendcode.setText("重新发送(" + 60 + "s)");
+                        tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
@@ -134,7 +134,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         isWait = false;
-                        tvSendcode.setText("重新发送");
+                        tvSendcode.setText("重新获取");
                         tvSendcode.setClickable(true);
                         tvSendcode.setTextColor(0xffe6bb7c);
                         Intent intent = new Intent(OldPhoneAuthActivity.this, IdnoAuthActivity.class);
@@ -159,10 +159,10 @@ public class OldPhoneAuthActivity extends BaseActivity {
 
             public void handleMessage(Message msg) {
                 i--;
-                tvSendcode.setText("重新发送(" + i + "s)");
+                tvSendcode.setText("重新获取(" + i + "s)");
                 if (i == 0) {
                     isWait = false;
-                    tvSendcode.setText("重新发送");
+                    tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
                     tvSendcode.setTextColor(0xffe6bb7c);
                     i = 60;
@@ -212,7 +212,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
                 break;
             case R.id.tv_unusephone:
                 isWait = false;
-                tvSendcode.setText("重新发送");
+                tvSendcode.setText("获取验证码");
                 tvSendcode.setClickable(true);
                 tvSendcode.setTextColor(0xffe6bb7c);
                 if (isConfirm == 0) {
