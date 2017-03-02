@@ -285,11 +285,11 @@ public class LoginActivity extends BaseActivity {
                         });
 //                        }
                     }
+
                 } else {
-                    loadingDialog.dismiss();
                     ToastUtil.showMessage(((APIM_UserLogin) response).info);
                 }
-
+                loadingDialog.dismiss();
             }
         });
         sendJsonRequest(user_login_request);
