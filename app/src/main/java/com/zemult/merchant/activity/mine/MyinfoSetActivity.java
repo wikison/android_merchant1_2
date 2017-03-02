@@ -396,7 +396,8 @@ public class MyinfoSetActivity extends MAppCompatActivity {
             user_editinfo();
         } else if (requestCode == 110 && resultCode == RESULT_OK) {
             headString = SlashHelper.userManager().getUserinfo().getHead();
-            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+            if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
+                imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         }
 
     }
