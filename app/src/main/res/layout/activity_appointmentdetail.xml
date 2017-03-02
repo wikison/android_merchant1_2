@@ -58,7 +58,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:layout_toLeftOf="@+id/name_tv"
-                    android:src="@drawable/xml_circle_grey_bg" />
+                    android:src="@mipmap/user_icon" />
 
                 <TextView
                     android:id="@+id/name_tv"
