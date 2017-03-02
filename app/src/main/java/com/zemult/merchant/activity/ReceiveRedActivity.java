@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,7 +89,7 @@ public class ReceiveRedActivity extends BaseActivity {
         mActivity = this;
         mImageManager = new ImageManager(mContext);
         userPayId = getIntent().getIntExtra("billId", 0);
-        userId= getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra("userId");
         tvSeeMore.setText(Html.fromHtml("<u>查看详情</u>"));
         if (userPayId > 0)
             user_pay_info();
@@ -116,9 +117,11 @@ public class ReceiveRedActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+"元"));
-                    imageManager.loadCircleImage(m.userHead,headIv);
-                    redfromTv.setText(m.userName+"的红包");
+                    moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney) + "元"));
+                    if (!TextUtils.isEmpty(m.userHead)) {
+                        imageManager.loadCircleImage(m.userHead, headIv);
+                    }
+                    redfromTv.setText(m.userName + "的红包");
                 } else {
                     ToastUtils.show(mActivity, ((APIM_UserBillInfo) response).info);
                 }
@@ -129,9 +132,7 @@ public class ReceiveRedActivity extends BaseActivity {
     }
 
 
-
-
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_rightiamge, R.id.tv_seeMore,R.id.btn_tks})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_rightiamge, R.id.tv_seeMore, R.id.btn_tks})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -143,25 +144,24 @@ public class ReceiveRedActivity extends BaseActivity {
             case R.id.lh_btn_rightiamge:
                 break;
             case R.id.btn_tks:
-               String tksMsg="";
-                if("".equals(etTks.getText().toString())){
-                    tksMsg="谢谢土豪~祝你身体棒棒哒，事业顺顺哒~红包已收到，么么哒~";
-                }
-                else{
-                    tksMsg=etTks.getText().toString();
+                String tksMsg = "";
+                if ("".equals(etTks.getText().toString())) {
+                    tksMsg = "谢谢土豪~祝你身体棒棒哒，事业顺顺哒~红包已收到，么么哒~";
+                } else {
+                    tksMsg = etTks.getText().toString();
                 }
                 YWMessage message = YWMessageChannel.createTextMessage(tksMsg);
-                YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
+                YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
                 IYWContact appContact = YWContactFactory.createAPPContact(userId, imKit.getIMCore().getAppKey());
                 imKit.getConversationService()
                         .forwardMsgToContact(appContact
-                                ,message,forwardCallBack);
+                                , message, forwardCallBack);
 
                 finish();
                 break;
             case R.id.tv_seeMore:
-                Intent it = new Intent(mContext,RedRecordDetailActivity.class);
-                it.putExtra(RedRecordDetailActivity.INTENT_INFO,m);
+                Intent it = new Intent(mContext, RedRecordDetailActivity.class);
+                it.putExtra(RedRecordDetailActivity.INTENT_INFO, m);
                 startActivity(it);
                 break;
         }
@@ -171,12 +171,12 @@ public class ReceiveRedActivity extends BaseActivity {
 
         @Override
         public void onSuccess(Object... result) {
-            Notification.showToastMsg(ReceiveRedActivity.this,"forward succeed!");
+            Notification.showToastMsg(ReceiveRedActivity.this, "forward succeed!");
         }
 
         @Override
         public void onError(int code, String info) {
-            Notification.showToastMsg(ReceiveRedActivity.this,"forward fail!");
+            Notification.showToastMsg(ReceiveRedActivity.this, "forward fail!");
 
         }
 

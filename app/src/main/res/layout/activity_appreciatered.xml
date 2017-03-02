@@ -46,7 +46,7 @@
 
     <ImageView
         android:id="@+id/head_iv"
-        android:src="@drawable/xml_circle_grey_bg"
+        android:src="@mipmap/user_icon"
         android:layout_centerHorizontal="true"
         android:layout_width="70dp"
         android:layout_marginBottom="-35dp"

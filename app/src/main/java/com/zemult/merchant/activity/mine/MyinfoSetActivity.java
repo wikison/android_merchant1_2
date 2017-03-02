@@ -148,8 +148,7 @@ public class MyinfoSetActivity extends MAppCompatActivity {
             tvArea.setText(SlashHelper.userManager().getUserinfo().getProvinceName() + " " + SlashHelper.userManager().getUserinfo().getCityName());
         }
 
-        if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
-            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
 
         nameString = SlashHelper.userManager().getUserinfo().getName();
         headString = SlashHelper.userManager().getUserinfo().getHead();
@@ -396,8 +395,7 @@ public class MyinfoSetActivity extends MAppCompatActivity {
             user_editinfo();
         } else if (requestCode == 110 && resultCode == RESULT_OK) {
             headString = SlashHelper.userManager().getUserinfo().getHead();
-            if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
-                imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+            imageManager.loadCircleHead(headString, ivHead);
         }
 
     }

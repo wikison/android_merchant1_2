@@ -3,6 +3,7 @@ package com.zemult.merchant.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -91,8 +92,10 @@ public class SendAppreciateRedActivity extends BaseActivity {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
                     moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-                    imageManager.loadCircleImage(m.toUserHead,headIv);
-                    sendtoTv.setText("已向"+m.toUserName+"发送红包");
+                    if (!TextUtils.isEmpty(m.toUserHead)) {
+                        imageManager.loadCircleImage(m.toUserHead, headIv);
+                    }
+                    sendtoTv.setText("已向" + m.toUserName + "发送红包");
                 } else {
                     ToastUtils.show(mActivity, ((APIM_UserBillInfo) response).info);
                 }

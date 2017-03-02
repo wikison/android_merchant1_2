@@ -179,7 +179,9 @@ public class FindPayActivity extends BaseActivity {
             managerhead = userinfo.getHead();
             managername = userinfo.getName();
             tvName.setText(userinfo.getName());
-            imageManager.loadCircleImage(userinfo.getHead(), ivHead);
+            if(!StringUtils.isBlank((userinfo.getHead()))){
+                imageManager.loadCircleImage(userinfo.getHead(), ivHead);
+            }
         }
 
     }
@@ -470,7 +472,9 @@ public class FindPayActivity extends BaseActivity {
                 if (((APIM_UserLogin) response).status == 1) {
                     userinfo = ((APIM_UserLogin) response).UserInfo;
                     tvName.setText(userinfo.getName());
-                    imageManager.loadCircleImage(userinfo.getHead(), ivHead);
+                    if(!StringUtils.isBlank(userinfo.getHead())){
+                        imageManager.loadCircleImage(userinfo.getHead(), ivHead);
+                    }
                     managerhead = userinfo.getHead();
                     managername = userinfo.getName();
                 } else {
