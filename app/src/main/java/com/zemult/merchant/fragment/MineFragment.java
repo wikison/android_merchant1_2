@@ -346,8 +346,9 @@ public class MineFragment extends BaseFragment {
                         if(((APIM_UserLogin) response).userInfo.getManagerUserNum()==0){
 
                             applyforTv.setText("申请商户入驻");
-                            //mshopLayout.setVisibility(View.GONE);
+                            mshopLayout.setVisibility(View.GONE);
                         }else{
+                            mshopLayout.setVisibility(View.VISIBLE);
                             applyforTv.setText("我是商户");
                         }
 
