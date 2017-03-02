@@ -8,7 +8,7 @@ public class Urls {
 
     public static String MAIN_URL = "http://yovoll.54xiegang.com/";
 //正式
-//    public static String URL = "http://server.yovoll.com/dzyx/";
+//    public static String URL = "http://www.yovoll.com/dzyx/";
 //    public static  String APP_KEY = "23630707";
 
 //测试

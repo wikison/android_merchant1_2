@@ -61,15 +61,15 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
             holder.cb.setChecked(true);
             holder.cb.setEnabled(false);
         } else {
-            if (position == 0) {
-                holder.cb.setChecked(entity.isChecked);
-            }
-            //操作预约单
-            if (selectedPos == position) {
-                holder.cb.setChecked(holder.cb.isChecked());
-            } else {
-                holder.cb.setChecked(false);
-            }
+//            if (position == 0) {
+//                holder.cb.setChecked(entity.isChecked);
+//            }
+//            //操作预约单
+//            if (selectedPos == position) {
+//                holder.cb.setChecked(holder.cb.isChecked());
+//            } else {
+//                holder.cb.setChecked(false);
+//            }
         }
         initData(holder, entity);
         initListener(holder, position);
@@ -105,6 +105,10 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
     private void initData(ViewHolder holder, M_Reservation m) {
         holder.tvNo.setText("预约单号: " + m.number);
         holder.tvTime.setText("预约时间: " + m.reservationTime.substring(0, 16));
+        if (!isQuick) {
+            holder.cb.setChecked(m.isChecked());
+        }
+
     }
 
     /**
