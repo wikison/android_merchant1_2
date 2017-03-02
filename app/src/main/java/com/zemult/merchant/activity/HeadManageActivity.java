@@ -187,7 +187,7 @@ public class HeadManageActivity extends BaseActivity {
                 if (data != null) {
                     if (imageUri != null) {
                         Bitmap bitmap = decodeUriAsBitmap(imageUri);
-                        String path = AppUtils.removeFileHeader(ImageHelper.saveRotateCompressBitmap(new File(imageUrl)));
+                        String path = AppUtils.removeFileHeader(ImageHelper.saveRotateNoCompressBitmap(new File(imageUrl)));
                         if (bitmap != null && bitmap.isRecycled()) {
                             bitmap.recycle();
                         }

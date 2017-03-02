@@ -110,7 +110,46 @@ public class ImageHelper {
         System.gc();
         return mediaFile.getPath();
 }
-    
+    public static String  saveRotateNoCompressBitmap(File file) {
+       return saveBitmap4Upload(file.getAbsolutePath());
+    }
+
+    /**
+     * 上传图片,不压缩
+     *
+     * @return string 保存图片的新路径
+     */
+    public static String saveBitmap4Upload(String  filepath) {
+         try {
+             filepath= "file:///"+saveNoCompressImg( createImage(AppUtils.removeFileHeader(filepath)), AppUtils.getFileName(filepath));
+
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+       return filepath;
+    }
+
+
+    public static String saveNoCompressImg(Bitmap b, String name) throws Exception {
+        String path = Constants.SAVE_IMAGE_PATH_IMGS;
+        File mediaFile = new File(path + File.separator + name);
+        if (mediaFile.exists()) {
+                deleteDir(mediaFile);
+        }
+        if (!new File(path).exists()) {
+                new File(path).mkdirs();
+        }
+        mediaFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(mediaFile);
+        b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        fos.flush();
+        fos.close();
+        b.recycle();
+        b = null;
+        System.gc();
+        return mediaFile.getPath();
+}
+
     
     /**
      * 递归删除目录下的所有文件及子目录下所有文件
