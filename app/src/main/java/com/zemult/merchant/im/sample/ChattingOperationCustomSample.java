@@ -1344,15 +1344,16 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             }else if(replyBarItem.getItemId()== YWChattingPlugin.ReplyBarItem.ID_SHORT_VIDEO){
 
                 //检查是否集成了短视频SDK，短视频SDK集成文档请访问网页http://open.taobao.com/doc2/detail?&docType=1&articleId=104689
-                if(!haveShortVideoLibrary()){
-                    //是否隐藏ReplyBarItem中的短视频选项
-                    replyBarItem.setNeedHide(true);
-                }else{
-                    //默认配置是群聊时隐藏短视频按钮。这里是为了设置显示群聊短视频item
-                    if (conversation.getConversationType() == YWConversationType.Tribe){
-                        replyBarItem.setNeedHide(false);
-                    }
-                }
+                replyBarItem.setNeedHide(true);
+//                if(!haveShortVideoLibrary()){
+//                    //是否隐藏ReplyBarItem中的短视频选项
+//                    replyBarItem.setNeedHide(true);
+//                }else{
+//                    //默认配置是群聊时隐藏短视频按钮。这里是为了设置显示群聊短视频item
+//                    if (conversation.getConversationType() == YWConversationType.Tribe){
+//                        replyBarItem.setNeedHide(false);
+//                    }
+//                }
             }
             replyBarItems.add(replyBarItem);
         }
