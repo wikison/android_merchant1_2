@@ -28,12 +28,8 @@ import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.mine.UserSearchUserPhoneRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.M_Userinfo;
-import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
-import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -106,7 +102,8 @@ public class AddFriendsActivity extends BaseActivity {
     LinearLayout mainSearchFriends_ll;
     @Bind(R.id.main_search_keywords)
     TextView mainSearchKeywords;
-
+    @Bind(R.id.tv_none)
+    TextView tvNone;
     private UserAttractAddRequest attractAddRequest; // 添加关注
     private UserAttractDelRequest attractDelRequest; // 取消关注
 
@@ -164,6 +161,9 @@ public class AddFriendsActivity extends BaseActivity {
                 int isVisible = text.length() > 0 ? View.VISIBLE : View.GONE;
                 mainSearchFriends_ll.setVisibility(isVisible);
                 mainSearchKeywords.setText(text.toString().trim());
+                if (text.toString().length() != 11) {
+                    tvNone.setText("");
+                }
             }
 
             @Override
@@ -255,37 +255,39 @@ public class AddFriendsActivity extends BaseActivity {
                 loadingDialog.dismiss();
                 int status = ((CommonResult) response).status;
                 if (status == 1) {
-                    if(((CommonResult) response).userId != 0 ){
+                    if (((CommonResult) response).userId != 0) {
+                        tvNone.setText("");
                         Intent intent = new Intent(AddFriendsActivity.this, UserDetailActivity.class);
                         intent.putExtra(UserDetailActivity.USER_ID, ((CommonResult) response).userId);
                         startActivity(intent);
-                    }
-                    else{
-                        iTime = 2;
-                        tvNoResult.setVisibility(View.VISIBLE);
-                        timer = new Timer();
-                        timer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                Message message = new Message();
-                                message.what = 1;
-                                handler.sendMessage(message);
-                            }
-                        }, 0, 1000);
+                    } else {
+//                        iTime = 2;
+//                        tvNoResult.setVisibility(View.VISIBLE);
+//                        timer = new Timer();
+//                        timer.schedule(new TimerTask() {
+//                            @Override
+//                            public void run() {
+//                                Message message = new Message();
+//                                message.what = 1;
+//                                handler.sendMessage(message);
+//                            }
+//                        }, 0, 1000);
+                        tvNone.setText("该用户不存在");
                     }
                     smoothListView.setLoadMoreEnable(false);
                 } else {
-                    iTime = 2;
-                    tvNoResult.setVisibility(View.VISIBLE);
-                    timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            Message message = new Message();
-                            message.what = 1;
-                            handler.sendMessage(message);
-                        }
-                    }, 0, 1000);
+//                    iTime = 2;
+//                    tvNoResult.setVisibility(View.VISIBLE);
+//                    timer = new Timer();
+//                    timer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            Message message = new Message();
+//                            message.what = 1;
+//                            handler.sendMessage(message);
+//                        }
+//                    }, 0, 1000);
+                    tvNone.setText("该用户不存在");
                 }
             }
         });
@@ -359,7 +361,7 @@ public class AddFriendsActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.main_search_friends_ll})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.main_search_friends_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
