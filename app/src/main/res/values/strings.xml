@@ -17,7 +17,7 @@
     <string name="txt_register_notnow">先去看看</string>
     <string name="txt_86">+86</string>
     <string name="txt_register_getcode">获取验证码</string>
-    <string name="txt_register_phone">请填写您的手机号码</string>
+    <string name="txt_register_phone">请输入您的手机号码</string>
     <string name="txt_register_code">请输入您的手机验证码</string>
     <string name="btn_login">登录</string>
     <string name="txt_pwd">密码</string>
