@@ -3,6 +3,8 @@ package com.zemult.merchant.activity.mine.pwdsetting;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +63,32 @@ public class NewPhoneAuthActivity extends BaseActivity {
     String strPhone, strCode, strIdNo;
     UserEditphoneBandRequest userEditphoneBandRequest;
 
+
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etCode.getText().toString().length() > 0
+                        && etphone.getText().toString().length() > 0) {
+                    btnBangding.setEnabled(true);
+                    btnBangding.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+            } else {
+                btnBangding.setEnabled(false);
+                btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_new_phone_auth);
@@ -71,11 +99,16 @@ public class NewPhoneAuthActivity extends BaseActivity {
         strIdNo = getIntent().getStringExtra("strIdNo");
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
-        lhTvTitle.setText("绑定手机号码");
+        lhTvTitle.setText("更换绑定手机号码");
         mIMKit = LoginSampleHelper.getInstance().getIMKit();
         if (mIMKit == null) {
             return;
         }
+
+        btnBangding.setEnabled(false);
+        btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+        etCode.addTextChangedListener(watcher);
+        etphone.addTextChangedListener(watcher);
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bangding, R.id.tv_sendcode})
@@ -101,16 +134,8 @@ public class NewPhoneAuthActivity extends BaseActivity {
             case R.id.btn_bangding:
                 strPhone = etphone.getText().toString();
                 strCode = etCode.getText().toString();
-                if (StringUtils.isEmpty(strPhone)) {
-                    etphone.setError("请输入您的手机号码");
-                    return;
-                }
                 if (SlashHelper.userManager().getUserinfo().getPhoneNum().equals(strPhone)) {
                     etphone.setError("请输入新的手机号码");
-                    return;
-                }
-                if (StringUtils.isEmpty(strCode)) {
-                    etCode.setError("请输入验证码");
                     return;
                 }
                 checkCode();
@@ -126,7 +151,6 @@ public class NewPhoneAuthActivity extends BaseActivity {
         UserEditphoneBandRequest.Input input = new UserEditphoneBandRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();    //	用户id
         input.phone = strPhone;
-        input.idCard = strIdNo;
         input.convertJosn();
 
         userEditphoneBandRequest = new UserEditphoneBandRequest(input, new ResponseListener() {
@@ -197,7 +221,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
-                        tvSendcode.setText("重新发送(" + 60 + "s)");
+                        tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
@@ -254,10 +278,10 @@ public class NewPhoneAuthActivity extends BaseActivity {
 
             public void handleMessage(Message msg) {
                 i--;
-                tvSendcode.setText("重新发送(" + i + "s)");
+                tvSendcode.setText("重新获取(" + i + "s)");
                 if (i == 0) {
                     isWait = false;
-                    tvSendcode.setText("重新发送");
+                    tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
                     tvSendcode.setTextColor(0xffe6bb7c);
                     i = 60;

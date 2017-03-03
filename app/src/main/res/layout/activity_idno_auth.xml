@@ -19,7 +19,7 @@
         android:drawablePadding="27dp"
         android:drawableTop="@mipmap/sheild_icon"
         android:gravity="center"
-        android:text="请验证您真实认证信息"/>
+        android:text="请验证您的实名信息"/>
 
     <LinearLayout
         style="@style/binding_linearLayout"
