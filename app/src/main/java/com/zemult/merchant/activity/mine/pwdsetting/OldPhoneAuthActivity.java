@@ -32,6 +32,7 @@ import zema.volley.network.ResponseListener;
 public class OldPhoneAuthActivity extends BaseActivity {
 
     private static final int WAIT = 0x001;
+    private static final int REQ_NEW_PHONE = 0x110;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -172,7 +173,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
 //                        startActivity(intent);
 
                         Intent intent = new Intent(OldPhoneAuthActivity.this, NewPhoneAuthActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, REQ_NEW_PHONE);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -258,5 +259,12 @@ public class OldPhoneAuthActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQ_NEW_PHONE)
+            onBackPressed();
     }
 }
