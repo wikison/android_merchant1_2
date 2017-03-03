@@ -13,15 +13,16 @@ import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.StringMatchUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import de.greenrobot.event.EventBus;
 
 public class BindNewPhoneSucessActivity extends BaseActivity {
@@ -52,7 +53,7 @@ public class BindNewPhoneSucessActivity extends BaseActivity {
             return;
         }
         String phone = SlashHelper.userManager().getUserinfo().getPhoneNum();
-        if(!TextUtils.isEmpty(phone.trim()))
+        if(!StringUtils.isBlank(phone))
             tvPhone.setText("手机号  " + phone.substring(0,3) + "*****" + phone.substring(phone.length()-3,phone.length()));
     }
 
