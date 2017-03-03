@@ -165,7 +165,7 @@
             android:id="@+id/tv_protocol"
             style="@style/text_12_black_46"
             android:text="《服务管家协议》"
-            android:textColor="@color/font_black_999"/>
+            android:textColor="@color/e6bb7c"/>
     </LinearLayout>
 
 
