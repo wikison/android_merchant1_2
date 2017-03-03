@@ -63,7 +63,7 @@
                     style="@style/my_mini_text"
                     android:drawableLeft="@mipmap/shouji_icon"
                     android:layout_centerVertical="true"
-                    android:text="更换绑定手机号"/>
+                    android:text="更换绑定手机号码"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

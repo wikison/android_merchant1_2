@@ -5,6 +5,8 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +55,31 @@ public class OldPhoneAuthActivity extends BaseActivity {
     String strPhone, strCode;
     int isConfirm;
 
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etCode.getText().toString().length() > 0) {
+                    btnBangding.setEnabled(true);
+                    btnBangding.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+
+            } else {
+                btnBangding.setEnabled(false);
+                btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_old_phone_auth);
@@ -60,7 +87,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("更换绑定");
+        lhTvTitle.setText("更换绑定手机号码");
         tvUnusephone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvUnusephone.getPaint().setAntiAlias(true);
         strPhone = SlashHelper.userManager().getUserinfo().getPhoneNum();
@@ -68,6 +95,10 @@ public class OldPhoneAuthActivity extends BaseActivity {
         tvPhone.setText(strPhone);
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
+
+        btnBangding.setEnabled(false);
+        btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+        etCode.addTextChangedListener(watcher);
     }
 
     @Override
@@ -137,7 +168,10 @@ public class OldPhoneAuthActivity extends BaseActivity {
                         tvSendcode.setText("重新获取");
                         tvSendcode.setClickable(true);
                         tvSendcode.setTextColor(0xffe6bb7c);
-                        Intent intent = new Intent(OldPhoneAuthActivity.this, IdnoAuthActivity.class);
+//                        Intent intent = new Intent(OldPhoneAuthActivity.this, IdnoAuthActivity.class);
+//                        startActivity(intent);
+
+                        Intent intent = new Intent(OldPhoneAuthActivity.this, NewPhoneAuthActivity.class);
                         startActivity(intent);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
