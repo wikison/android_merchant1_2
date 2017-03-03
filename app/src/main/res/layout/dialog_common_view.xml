@@ -97,8 +97,8 @@
                 android:gravity="center"
                 android:singleLine="false"
                 android:text="取消"
-                android:textColor="@color/blue"
-                android:textSize="14.0sp"/>
+                android:textColor="@color/font_black_46"
+                android:textSize="@dimen/font_32px"/>
 
             <View
                 android:layout_width="1.0px"
@@ -116,8 +116,9 @@
                 android:gravity="center"
                 android:singleLine="false"
                 android:text="确定"
-                android:textColor="@color/blue"
-                android:textSize="14.0sp"/>
+                android:textStyle="bold"
+                android:textColor="#007aff"
+                android:textSize="@dimen/font_32px"/>
         </LinearLayout>
     </com.flyco.roundview.RoundLinearLayout>
 
