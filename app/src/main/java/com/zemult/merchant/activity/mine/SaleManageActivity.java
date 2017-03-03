@@ -111,7 +111,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
     private void initView() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("我加入的商户");
+        lhTvTitle.setText("商户管理");
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
@@ -172,7 +172,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         mySaleMerchantAdapter.setOnItemDeleteClickListener(new MySaleMerchantAdapter.ItemDeleteClickListener() {
             @Override
             public void onItemClick(final M_Merchant merchant) {
-                CommonDialog.showDialogListener(mContext, null, "否", "是", "是否删除商家", new View.OnClickListener() {
+                CommonDialog.showDialogListener(mContext, null, "取消", "确定", "确定退出商户", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         CommonDialog.DismissProgressDialog();

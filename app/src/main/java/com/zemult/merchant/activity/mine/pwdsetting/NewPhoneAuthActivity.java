@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine.pwdsetting;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +39,7 @@ import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 public class NewPhoneAuthActivity extends BaseActivity {
-
+    private static final int REQ_SUCESS = 0x110;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -54,8 +55,6 @@ public class NewPhoneAuthActivity extends BaseActivity {
     @Bind(R.id.tv_sendcode)
     TextView tvSendcode;
     private static final int WAIT = 0x001;
-
-    private YWIMKit mIMKit;
 
     private boolean isWait = false;
     private Thread mThread = null;
@@ -100,10 +99,6 @@ public class NewPhoneAuthActivity extends BaseActivity {
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
         lhTvTitle.setText("更换绑定手机号码");
-        mIMKit = LoginSampleHelper.getInstance().getIMKit();
-        if (mIMKit == null) {
-            return;
-        }
 
         btnBangding.setEnabled(false);
         btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
@@ -163,14 +158,12 @@ public class NewPhoneAuthActivity extends BaseActivity {
             public void onResponse(Object response) {
                 loadingDialog.dismiss();
                 if (((CommonResult) response).status == 1) {
-                    ToastUtil.showMessage("绑定成功");
+
                     SlashHelper.userManager().getUserinfo().setPhoneNum(strPhone);
-                    ImLogout();
                     SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
-                    SlashHelper.userManager().getUserinfo();
-                    SlashHelper.userManager().saveUserinfo(null);
-                    EventBus.getDefault().post("exit");
-                    finish();
+
+                    Intent intent = new Intent(NewPhoneAuthActivity.this, BindNewPhoneSucessActivity.class);
+                    startActivityForResult(intent, REQ_SUCESS);
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
@@ -179,27 +172,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
         sendJsonRequest(userEditphoneBandRequest);
     }
 
-    public void ImLogout() {
-        // openIM SDK提供的登录服务
-        IYWLoginService mLoginService = mIMKit.getLoginService();
-        mLoginService.logout(new IWxCallback() {
-            //此时logout已关闭所有基于IMBaseActivity的OpenIM相关Actiivity，s
-            @Override
-            public void onSuccess(Object... arg0) {
-                YWLog.i("------IM_LOGOUT---------", "退出成功");
-            }
 
-            @Override
-            public void onProgress(int arg0) {
-
-            }
-
-            @Override
-            public void onError(int arg0, String arg1) {
-                Toast.makeText(AppApplication.getContext(), "请重新登录", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void getCode() {
         try {
@@ -309,5 +282,14 @@ public class NewPhoneAuthActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         isWait = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQ_SUCESS){
+            setResult(RESULT_OK);
+            onBackPressed();
+        }
     }
 }
