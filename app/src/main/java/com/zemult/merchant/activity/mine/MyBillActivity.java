@@ -262,7 +262,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                                     holder.setViewInvisible(R.id.tv_state);
                                 }
 
-                                holder.setText(R.id.tv_mybill_date, mbill.createtime);
+                                holder.setText(R.id.tv_mybill_date, mbill.createtime.substring(0,10));
                                 if (mbill.inCome == 0) {  //收入
                                     holder.setText(R.id.tv_mybill_money, "+" + Convert.getMoneyString(mbill.money));
                                 } else if (mbill.inCome == 1) {  //支出
@@ -339,7 +339,7 @@ public class MyBillActivity extends BaseActivity implements SmoothListView.ISmoo
                                 if (mbill.type == 6) {
                                     holder.setText(R.id.tv_mybill_name, "红包");
                                 }
-                                holder.setText(R.id.tv_mybill_date, mbill.createtime);
+                                holder.setText(R.id.tv_mybill_date, mbill.createtime.substring(0,10));
 
                                 if (mbill.inCome == 0) {  //收入
                                     holder.setText(R.id.tv_mybill_money, "+" + Convert.getMoneyString(mbill.money));
