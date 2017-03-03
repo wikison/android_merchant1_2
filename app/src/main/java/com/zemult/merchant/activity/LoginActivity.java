@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity {
 
         String strLoginPhone = SlashHelper.getSettingString("last_login_phone", "");
         if (!StringUtils.isBlank(strLoginPhone)&& strLoginPhone.length()==11){
-            imageManager.loadCircleImage(SlashHelper.getSettingString(strLoginPhone, ""), userIcon);
+            imageManager.loadCircleHead(SlashHelper.getSettingString(strLoginPhone, ""), userIcon);
             etPwd.requestFocus();
         }
         etName.setText(strLoginPhone);
@@ -285,11 +285,11 @@ public class LoginActivity extends BaseActivity {
                         });
 //                        }
                     }
+
                 } else {
-                    loadingDialog.dismiss();
                     ToastUtil.showMessage(((APIM_UserLogin) response).info);
                 }
-
+                loadingDialog.dismiss();
             }
         });
         sendJsonRequest(user_login_request);

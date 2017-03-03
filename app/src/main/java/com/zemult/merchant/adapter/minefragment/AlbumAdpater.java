@@ -94,7 +94,7 @@ public class AlbumAdpater extends BaseListAdapter<M_Pic> {
         if(position == 0 && !unshowAdd)
             mImageManager.loadResImage(R.mipmap.xiangji_icon, holder.ivPic);
         else if(!TextUtils.isEmpty(entity.picPath))
-            mImageManager.loadUrlImage(entity.picPath, holder.ivPic);
+            mImageManager.loadUrlImage(entity.picPath, holder.ivPic, "@200h");
 
         if (showCheckbox && position != 0){
             holder.checkbox.setVisibility(View.VISIBLE);

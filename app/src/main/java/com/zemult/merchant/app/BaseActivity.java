@@ -187,7 +187,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean noLogin(final Context context) {
         // 没有登录跳转到登录界面
         if (SlashHelper.userManager().getUserinfo() == null) {
-            CommonDialog.showDialogListener(context, null, "否", "是", getResources().getString(R.string.not_login_tip), new View.OnClickListener() {
+            CommonDialog.showDialogListener(context, null, "取消", "去登录", getResources().getString(R.string.not_login_tip), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
