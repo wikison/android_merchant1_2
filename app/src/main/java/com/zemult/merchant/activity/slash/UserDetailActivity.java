@@ -191,7 +191,7 @@ public class UserDetailActivity extends BaseActivity {
 //        if (!TextUtils.isEmpty(userHead)) {
 //            imageManager.loadCircleImage(userHead, ivHead);
 //        }
-        imageManager.loadCircleHead(userHead, ivHead);
+        imageManager.loadCircleHead(userHead, ivHead,  "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName))
             tvName.setText(userName);
@@ -331,7 +331,7 @@ public class UserDetailActivity extends BaseActivity {
         Drawable drawable;
         // 头像
         if (!TextUtils.isEmpty(userInfo.getHead())) {
-            imageManager.loadCircleImage(userInfo.getHead(), ivHead, "@120w_120h");
+            imageManager.loadCircleHead(userInfo.getHead(), ivHead, "@120w_120h");
         }
         // 用户名
         if (!TextUtils.isEmpty(userInfo.getName()))

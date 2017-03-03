@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/include_layout_head"
         layout="@layout/layout_head"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp"/>
 
     <ImageView
         android:id="@+id/user_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="@dimen/margin_36dp"
-        android:background="@mipmap/user_icon" />
+        android:background="@mipmap/user_icon"
+        android:scaleType="centerCrop"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:paddingLeft="20dp"
-            android:src="@mipmap/dianhua3_icon" />
+            android:src="@mipmap/dianhua3_icon"/>
 
         <EditText
             android:id="@+id/al_et_name"
@@ -43,18 +44,18 @@
             android:layout_marginTop="60dp"
             android:background="@null"
             android:digits="0123456789"
-            android:inputType="phone"
             android:drawableBottom="@drawable/selector_drawable_line"
             android:hint="@string/ht_username"
             android:imeOptions="actionNext"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:maxLines="1"
             android:paddingLeft="90dp"
             android:paddingStart="135dp"
-            android:maxLines="1"
-            android:maxLength="11"
             android:text=""
             android:textColor="#333"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -70,7 +71,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:paddingLeft="20dp"
-            android:src="@mipmap/password_icon" />
+            android:src="@mipmap/password_icon"/>
 
         <EditText
             android:id="@+id/al_et_pwd"
@@ -90,7 +91,7 @@
             android:text=""
             android:textColor="#333"
             android:textColorHint="@color/hint_text_color"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -106,17 +107,17 @@
             android:background="@drawable/common_selector_btn"
             android:text="@string/btn_login"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/al_tv_forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/al_btn_login"
-            android:layout_marginTop="@dimen/margin_16dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/txt_login_forget_password"
-            android:textColorLink="@drawable/selector_color_forget_pwd" />
+            android:textColorLink="@drawable/selector_color_forget_pwd"/>
 
         <TextView
             android:id="@+id/al_tv_notnow"
@@ -128,7 +129,7 @@
             android:background="@android:color/transparent"
             android:text="@string/txt_register_notnow"
             android:textColorLink="@drawable/selector_color_notnow"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
     </RelativeLayout>
 
 
