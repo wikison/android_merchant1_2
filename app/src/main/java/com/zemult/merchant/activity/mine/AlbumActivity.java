@@ -326,9 +326,9 @@ public class AlbumActivity extends BaseActivity implements AlbumAdpater.ChoosePi
             if (requestCode == Constants.TACKPHOTO)
                 AppUtils.tackPickResult(tackPhotoName, chooseImgHandler);
             if (resultCode == RESULT_OK && requestCode == Constants.IMAGEDITAL) {
-                if (merchantId != -1)
+                if (from == FROM.MERCHANT)
                     picPresenter.merchant_picList(merchantId);
-                else
+                else if(from == FROM.ME)
                     picPresenter.user_picList(userId);
 
                 coverPic = data.getStringExtra("coverPic");
