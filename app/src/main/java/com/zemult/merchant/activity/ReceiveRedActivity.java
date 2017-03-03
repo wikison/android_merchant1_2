@@ -161,6 +161,7 @@ public class ReceiveRedActivity extends BaseActivity {
                 break;
             case R.id.tv_seeMore:
                 Intent it = new Intent(mContext, RedRecordDetailActivity.class);
+                it.putExtra(RedRecordDetailActivity.COMEFROM,3);
                 it.putExtra(RedRecordDetailActivity.INTENT_INFO, m);
                 startActivity(it);
                 break;
