@@ -253,7 +253,6 @@ public class WithdrawalsActivity extends BaseActivity {
         sendJsonRequest(commonWithcashCountRequest);
     }
 
-
     //显示输入安全密码对话框
     private void showInputPwdDialog(final String paymoney, double serviceMoney) {
 
@@ -319,6 +318,12 @@ public class WithdrawalsActivity extends BaseActivity {
                         return;
                     }
 
+                    if (SlashHelper.userManager().getUserinfo().isSetPaypwd == 0) {
+                        ToastUtil.showMessage("请设置安全密码");
+                        Intent intentpaypassword = new Intent(WithdrawalsActivity.this, PayPasswordManagerActivity.class);
+                        startActivity(intentpaypassword);
+                        return;
+                    }
                     commonWithcashCountRequest();
 
 
