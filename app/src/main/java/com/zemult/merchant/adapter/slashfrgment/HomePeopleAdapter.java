@@ -30,6 +30,7 @@ public class HomePeopleAdapter extends
     private LayoutInflater mInflater;
     private List<String> mDatas;
     private ImageManager imageManager;
+    private boolean noPeople;
 
 
     public HomePeopleAdapter(Context context, String heads)
@@ -43,6 +44,7 @@ public class HomePeopleAdapter extends
         mDatas = new ArrayList<>();
         if(TextUtils.isEmpty(pic)){
             mDatas.add("");
+            noPeople = true;
             return;
         }
 
@@ -92,9 +94,9 @@ public class HomePeopleAdapter extends
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if(!TextUtils.isEmpty(mDatas.get(position)))
-            imageManager.loadCircleImage(mDatas.get(position), holder.iv, "@70w_70h_1e");
-        else
+        if(noPeople)
             holder.iv.setImageResource(R.mipmap.yueke_icon);
+        else
+            imageManager.loadCircleHead(mDatas.get(position), holder.iv, "@70w_70h_1e");
     }
 }
