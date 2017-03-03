@@ -207,7 +207,7 @@ public class BillInfoActivity extends BaseActivity {
         }
 
         if (type == 6) {
-            tvBillName.setText("红包");
+            tvBillName.setText("平台红包");
             tvState.setText("");
             llCommission.setVisibility(View.VISIBLE);
             user_bill_info_commission();
