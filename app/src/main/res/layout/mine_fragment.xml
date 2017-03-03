@@ -23,6 +23,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/user_icon"/>
 
             <LinearLayout
