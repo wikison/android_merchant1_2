@@ -38,7 +38,7 @@ public class GotoTurenameActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lhTvTitle.setText("更换绑定");
+        lhTvTitle.setText("更换绑定手机号码");
 
     }
 

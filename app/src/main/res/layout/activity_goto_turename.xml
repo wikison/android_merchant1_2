@@ -11,15 +11,15 @@
         layout="@layout/layout_head" />
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_marginTop="45dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
         >
 
         <ImageView
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/tv_lab1"
             android:background="@mipmap/iphone_icon_auth"
             android:layout_width="52dp"
             android:layout_height="78dp" />
@@ -28,20 +28,17 @@
             android:layout_marginTop="10dp"
             style="@style/text_16_black_666"
             android:id="@+id/tv_lab1"
-            android:layout_centerHorizontal="true"
-            android:text="手机号码不再使用了"
+            android:text="手机号码不再使用?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:layout_marginTop="15dp"
-            android:layout_below="@+id/tv_lab1"
             style="@style/text_16_black_666"
-            android:layout_centerHorizontal="true"
-            android:text="通过实名认证更换手机号"
+            android:text="通过实名认证更换手机号码"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_gotoauth"
