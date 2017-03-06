@@ -195,8 +195,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             textView.setVisibility(View.GONE);
             //   xieyiLl.setVisibility(View.VISIBLE);
             applyBtn.setVisibility(View.VISIBLE);
-//            applyBtn.setEnabled(false);
-//            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+            applyBtn.setEnabled(false);
+            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
 
         }
         if (comefrom == 2) {
@@ -295,13 +295,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                             }, 50L);
                         }
                     }
-//                    if(userAdapter.getCount()>0){
-//                        applyBtn.setEnabled(true);
-//                        applyBtn.setBackgroundResource(R.drawable.common_selector_btn);
-//                    }else{
-//                        applyBtn.setEnabled(false);
-//                        applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
-//                    }
+
                     break;
                 case R.id.otherGridView:
                     final ImageView moveImageView = getView(view);
@@ -386,6 +380,16 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     otherAdapter.remove();
                 }
                 isMove = false;
+
+
+                if (userAdapter.getCount() > 0) {
+                    applyBtn.setEnabled(true);
+                    applyBtn.setBackgroundResource(R.drawable.common_selector_btn);
+                } else {
+                    applyBtn.setEnabled(false);
+                    applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+                }
+
             }
         });
     }
