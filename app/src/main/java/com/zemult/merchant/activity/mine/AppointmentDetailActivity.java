@@ -141,7 +141,7 @@ public class AppointmentDetailActivity extends BaseActivity {
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         type = getIntent().getIntExtra(INTENT_TYPE, -1);
         EventBus.getDefault().register(this);
-        hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错,给个赞赏红包吧</u>"));
+        hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错给个赞赏红包吧</u>"));
         showPd();
         userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
