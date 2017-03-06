@@ -95,7 +95,7 @@ public class SendAppreciateRedActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(m.toUserHead)) {
                         imageManager.loadCircleImage(m.toUserHead, headIv);
                     }
-                    sendtoTv.setText("已向" + m.toUserName + "发送红包");
+                    sendtoTv.setText("已向" + m.toUserName + "发送赞赏红包");
                 } else {
                     ToastUtils.show(mActivity, ((APIM_UserBillInfo) response).info);
                 }

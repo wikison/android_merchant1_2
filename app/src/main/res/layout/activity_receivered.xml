@@ -166,6 +166,7 @@
             android:background="@color/white"
             android:layout_margin="30dp"
             android:padding="10dp"
+            android:gravity="top|left"
             android:hint="谢谢土豪~祝你身体棒棒哒，事业顺顺哒~红包已收到，么么哒~"
             style="@style/text_15_black_28"
             android:id="@+id/et_tks"
