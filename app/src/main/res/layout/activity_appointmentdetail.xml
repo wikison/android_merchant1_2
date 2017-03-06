@@ -406,7 +406,7 @@
                         android:layout_below="@+id/rltwo"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
-                        android:text="觉得服务不错,给个赞赏红包吧"
+                        android:text="觉得服务不错给个赞赏红包吧"
                         android:textColor="@color/font_black_999" />
 
                 </RelativeLayout>

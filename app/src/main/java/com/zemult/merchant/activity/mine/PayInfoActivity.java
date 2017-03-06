@@ -159,7 +159,7 @@ public class PayInfoActivity extends BaseActivity {
                             rtvToPay.setText("立即付款");
                             break;
                         case 1:
-                            tvState.setText("交易成功");
+                            tvState.setText("已完成");
                             llPayType.setVisibility(View.VISIBLE);
                             if (m.isComment == 0 & m.payMoney >= 100) {
                                 llPay.setVisibility(View.VISIBLE);
@@ -169,12 +169,12 @@ public class PayInfoActivity extends BaseActivity {
                             }
                             break;
                         case 2:
-                            tvState.setText("交易失效");
+                            tvState.setText("已失效");
                             llPayType.setVisibility(View.GONE);
                             llPay.setVisibility(View.GONE);
                             break;
                         case 3:
-                            tvState.setText("订单取消");
+                            tvState.setText("已取消");
                             llPayType.setVisibility(View.GONE);
                             llPay.setVisibility(View.GONE);
                             break;
