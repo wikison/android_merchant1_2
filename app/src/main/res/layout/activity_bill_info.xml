@@ -132,7 +132,7 @@
                         android:orientation="horizontal"
                         android:padding="8dp">
 
-                        <TextVie
+                        <TextView
                             style="@style/text_15_black_28"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
