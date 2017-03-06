@@ -8,8 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.activity.mine.TrueNameActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,9 +52,18 @@ public class GotoTurenameActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_gotoauth:
-                Intent intent =new Intent(GotoTurenameActivity.this,TrueNameActivity.class);
-                startActivity(intent);
+                Intent intent =new Intent(GotoTurenameActivity.this,BindBankCardActivity.class);
+                startActivityForResult(intent, 0x110);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 0x110 && SlashHelper.userManager().getUserinfo().getIsConfirm() == 1){
+            Intent intent = new Intent(GotoTurenameActivity.this, IdnoAuthActivity.class);
+            startActivity(intent);
         }
     }
 }
