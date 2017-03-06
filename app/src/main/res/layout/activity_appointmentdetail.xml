@@ -246,7 +246,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:gravity="left|top"
-                        android:hint="约客填入的包厢号和预约信息"
+                        android:hint="由服务管家填入预约成功后的相关信息"
                         android:maxLength="100"
                         android:textSize="13sp" />
 
