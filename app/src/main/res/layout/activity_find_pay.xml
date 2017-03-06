@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="center_vertical|right"
-                    android:hint="输入实际的消费金额"
+                    android:hint="输入实际消费的金额"
                     android:inputType="numberDecimal"
                     android:paddingRight="@dimen/margin_16dp"
                     android:text=""

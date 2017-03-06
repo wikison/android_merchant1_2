@@ -542,7 +542,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     @PermissionNo(101)
     private void getLocationNo() {
         //定位失败, 设置为常州
-        Toast.makeText(getContext(), "定位失败", Toast.LENGTH_SHORT).show();
         City c = new City("常州", "changzhou", "0519");
         SPUtils.put(mContext, Constants.SP_CITY, c.getNo());
         Constants.CITYID = (String) SPUtils.get(mContext, Constants.SP_CITY, "0519");
