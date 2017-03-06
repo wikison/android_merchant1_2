@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -34,123 +34,142 @@
             android:gravity="center"
             android:text="成为服务管家"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/channel_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@drawable/head_right_text_color"
-            android:textSize="15sp"
-            android:layout_marginRight="17dp"
             android:layout_centerVertical="true"
-            android:text="编辑" />
+            android:layout_marginRight="17dp"
+            android:text="编辑"
+            android:textColor="@drawable/head_right_text_color"
+            android:textSize="15sp" />
 
 
     </RelativeLayout>
 
 
     <LinearLayout
-            android:id="@+id/subscribe_main_layout"
+        android:id="@+id/subscribe_main_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="14.0dip">
+
+        <TextView
+            android:id="@+id/shopname_tv"
+            style="@style/subscribe_my_tip_text"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:text="------" />
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:paddingBottom="14.0dip">
+            android:layout_marginTop="6dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="12dp">
 
             <TextView
-                android:id="@+id/shopname_tv"
-                android:layout_marginTop="15dp"
+                android:id="@+id/my_category_text"
                 style="@style/subscribe_my_tip_text"
-                android:layout_marginLeft="12dp"
-                android:text="------"
-                 />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:padding="12dp"
-                android:gravity="bottom"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/my_category_text"
-                    style="@style/subscribe_my_tip_text"
-                    android:textSize="15sp"
-                    android:textColor="#211d2e"
-                    android:text="我的服务" />
-
-                <TextView
-                    android:id="@+id/my_category_tip_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12.0dip"
-                    android:text="(拖拽可以排序)"
-                    android:visibility="invisible"
-                    android:textColor="@color/font_black_999"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-
-
-            <com.zemult.merchant.view.DragGrid
-                android:id="@+id/userGridView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:gravity="center"
-                android:horizontalSpacing="5dp"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="4"
-                android:scrollbars="vertical"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp" />
-
+                android:text="我的服务"
+                android:textColor="#211d2e"
+                android:textSize="15sp" />
 
             <TextView
-
-                android:layout_marginTop="12dp"
-                android:textColor="#211d2e"
-                android:layout_width="match_parent"
+                android:id="@+id/my_category_tip_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:id="@+id/choose_yv"
-                android:textStyle="normal"
-                style="@style/subscribe_more_tip_text"
-                android:text="选择服务" />
-
-            <com.zemult.merchant.view.OtherGridView
-                android:id="@+id/otherGridView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:gravity="center"
-                android:horizontalSpacing="5dp"
-                android:listSelector="@android:color/transparent"
-                android:numColumns="4"
-                android:scrollbars="vertical"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="5dp" />
-
-
-
+                android:layout_marginLeft="12.0dip"
+                android:text="(拖拽可以排序)"
+                android:textColor="@color/font_black_999"
+                android:textSize="12sp"
+                android:visibility="invisible" />
         </LinearLayout>
 
+
+        <com.zemult.merchant.view.DragGrid
+
+            android:id="@+id/userGridView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:scrollbars="vertical"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/choose_yv"
+                style="@style/subscribe_more_tip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="选择您在"
+                android:textColor="@color/font_black_28"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/shop_name_tv"
+                style="@style/subscribe_more_tip_text"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold"
+                android:text="------"
+                android:textColor="@color/font_black_28"
+                android:layout_toRightOf="@+id/choose_yv"/>
+            <TextView
+                android:text="提供的服务"
+                android:layout_marginLeft="15dp"
+                android:textStyle="normal"
+                android:textColor="@color/font_black_28"
+                android:layout_toRightOf="@+id/shop_name_tv"
+                style="@style/subscribe_more_tip_text" />
+
+
+        </RelativeLayout>
+
+        <com.zemult.merchant.view.OtherGridView
+            android:id="@+id/otherGridView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:scrollbars="vertical"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp" />
+
+
+    </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/xieyi_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:id="@+id/xieyi_ll"
-        android:visibility="gone"
         android:orientation="horizontal"
-        android:padding="@dimen/margin_6dp">
+        android:padding="@dimen/margin_6dp"
+        android:visibility="gone">
 
         <CheckBox
             android:id="@+id/cb_agree"
@@ -159,13 +178,13 @@
             android:layout_height="wrap_content"
             android:text="我已阅读并接受"
             android:textColor="@color/font_black_999"
-            android:textSize="@dimen/font_24px"/>
+            android:textSize="@dimen/font_24px" />
 
         <TextView
             android:id="@+id/tv_protocol"
             style="@style/text_12_black_46"
             android:text="《服务管家协议》"
-            android:textColor="@color/e6bb7c"/>
+            android:textColor="@color/e6bb7c" />
     </LinearLayout>
 
 
@@ -173,10 +192,10 @@
         android:id="@+id/apply_btn"
         style="@style/common_btn_235"
         android:layout_gravity="center_horizontal"
-        android:text="成为服务管家"
         android:layout_marginBottom="40dp"
+        android:text="成为服务管家"
         android:textColor="@color/white"
-        android:visibility="invisible"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:visibility="invisible" />
 
 </LinearLayout>

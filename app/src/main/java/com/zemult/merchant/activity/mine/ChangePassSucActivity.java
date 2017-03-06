@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.login.YWLoginState;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.LoginActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
@@ -78,7 +76,6 @@ public class ChangePassSucActivity extends BaseActivity {
     public void onBackPressed() {
         mApp.iPasswordState = 1;
         SlashHelper.userManager().saveUserinfo(null);
-        LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
         Intent intent = new Intent(ChangePassSucActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

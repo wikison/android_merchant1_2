@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

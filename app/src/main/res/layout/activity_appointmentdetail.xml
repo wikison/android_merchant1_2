@@ -356,7 +356,7 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="订好咯,好友约起来~"
-                    android:textColor="#e6bb7c"
+                    android:textColor="@color/font_black_999"
                     android:textSize="15sp"
                     android:visibility="gone" />
 
@@ -407,7 +407,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:text="觉得服务不错,给个赞赏红包吧"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/font_black_999" />
 
                 </RelativeLayout>
 
