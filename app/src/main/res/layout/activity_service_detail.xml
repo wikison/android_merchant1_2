@@ -86,6 +86,7 @@
                     <ImageView
                         android:id="@+id/iv_user_head"
                         android:layout_width="@dimen/j30dp"
+                        android:src="@mipmap/user_icon"
                         android:layout_height="@dimen/j30dp"/>
 
                     <TextView
@@ -111,7 +112,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:text="交易商户"
+                    android:text="商       户"
                     android:textSize="15sp"/>
 
                 <LinearLayout
@@ -202,28 +203,7 @@
                     app:starImagePadding="3dp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp">
 
-                <TextView
-                    style="@style/text_15_black_28"
-                    android:layout_marginLeft="8dp"
-                    android:text="订单号码"
-                    android:textSize="15sp"/>
-
-                <TextView
-                    android:id="@+id/tv_pay_num"
-                    style="@style/text_15_black_999"
-                    android:layout_width="0dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="订单号"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -246,6 +226,30 @@
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:text="交易时间"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="8dp"
+                    android:text="订单号码"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_pay_num"
+                    style="@style/text_15_black_999"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="订单号"/>
             </LinearLayout>
         </LinearLayout>
 
