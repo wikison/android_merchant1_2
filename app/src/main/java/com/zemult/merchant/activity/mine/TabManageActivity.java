@@ -88,6 +88,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     LinearLayout xieyiLl;
     @Bind(R.id.choose_yv)
     TextView chooseYv;
+    @Bind(R.id.shop_name_tv)
+    TextView shopNameTv;
 
 
     private List<M_Industry> sysdatalist = new ArrayList<M_Industry>();
@@ -150,14 +152,14 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         textView = (TextView) findViewById(R.id.channel_edit);
         merchantId = getIntent().getIntExtra(TAG, -1);
         comefrom = getIntent().getIntExtra(COMEFROM, 1);
-        tvProtocol.setText("服务管家协议");
-        cbAgree.setChecked(true);
+        //tvProtocol.setText("<<服务管家协议>>");
+        //  cbAgree.setChecked(true);
 
 
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
-            chooseYv.setText("选择您在  " + Html.fromHtml("<b>"+name+"</b>" )+ "  提供的服务");
+            shopNameTv.setText( name );
 
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();
@@ -186,15 +188,15 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
             myCategoryText.setText("已提供的服务");
-           // chooseYv.setText("选择您在  " + name + "  提供的服务");
-            chooseYv.setText("选择您在  " + Html.fromHtml(" <b>"+name+"</b>" )+ "  提供的服务");
+            // chooseYv.setText("选择您在  " + name + "  提供的服务");
+            shopNameTv.setText( name );
             myCategoryTipText.setVisibility(View.VISIBLE);
             shopnameTv.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
-            xieyiLl.setVisibility(View.VISIBLE);
+            //   xieyiLl.setVisibility(View.VISIBLE);
             applyBtn.setVisibility(View.VISIBLE);
-//            applyBtn.setEnabled(false);
-//            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+            applyBtn.setEnabled(false);
+            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
 
         }
         if (comefrom == 2) {
@@ -293,13 +295,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                             }, 50L);
                         }
                     }
-//                    if(userAdapter.getCount()>0){
-//                        applyBtn.setEnabled(true);
-//                        applyBtn.setBackgroundResource(R.drawable.common_selector_btn);
-//                    }else{
-//                        applyBtn.setEnabled(false);
-//                        applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
-//                    }
+
                     break;
                 case R.id.otherGridView:
                     final ImageView moveImageView = getView(view);
@@ -384,6 +380,16 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     otherAdapter.remove();
                 }
                 isMove = false;
+
+
+                if (userAdapter.getCount() > 0) {
+                    applyBtn.setEnabled(true);
+                    applyBtn.setBackgroundResource(R.drawable.common_selector_btn);
+                } else {
+                    applyBtn.setEnabled(false);
+                    applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+                }
+
             }
         });
     }
@@ -582,11 +588,11 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-                        if (cbAgree.isChecked()) {
-                            user_add_saleuser();
-                        } else {
-                            ToastUtils.show(this, "请勾选同意本平台协议");
-                        }
+//                        if (cbAgree.isChecked()) {
+                        user_add_saleuser();
+//                        } else {
+//                            ToastUtils.show(this, "请勾选同意本平台协议");
+//                        }
 
                     }
                 } else if (comefrom == 2) {

@@ -33,6 +33,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
@@ -77,7 +78,8 @@ public class CreateBespeakActivity extends BaseActivity {
     RadioGroup rgGroup;
     @Bind(R.id.fn_my_service)
     FNRadioGroup fnMyService;
-
+    @Bind(R.id.editnum)
+    TextView tvNumber;
 
     UserReservationAddRequest userReservationAddRequest;
     int userSex = 0;
@@ -95,6 +97,9 @@ public class CreateBespeakActivity extends BaseActivity {
 
     }
 
+    private void initListener() {
+        EditFilter.WordFilter(etBespeak, 100, tvNumber);
+    }
     @Override
     public void init() {
         serviceId = getIntent().getIntExtra("serviceId", 0);
@@ -138,6 +143,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 }
             }
         });
+        initListener();
     }
 
     @Override

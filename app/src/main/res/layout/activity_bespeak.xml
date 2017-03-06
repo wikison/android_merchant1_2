@@ -17,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <LinearLayout
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -45,7 +47,7 @@
             android:id="@+id/bespek_shopname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#666666"
+            android:textColor="#282828"
             android:text="请选择商户"
             android:drawablePadding="10dp"
             android:drawableRight="@mipmap/right_btn"
@@ -80,7 +82,7 @@
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:id="@+id/bespek_time"
-            android:textColor="#666666"
+            android:textColor="#999999"
             android:text="请选择预约时间"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,6 +144,7 @@
             style="@style/text_15_black_28"
             android:hint="输入您的姓名"
             android:textColor="#666666"
+            android:textColorHint="#999999"
             android:maxLength="15"
             android:gravity="right"
             android:layout_width="match_parent"
@@ -201,6 +204,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入手机号码"
+            android:textColorHint="#999999"
             android:gravity="right"
             android:inputType="phone"
             android:textColor="#666666"
@@ -265,19 +269,29 @@
         app:rv_strokeColor="#e1e1e1"
         app:rv_strokeWidth="1px"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
 
     <EditText
         android:background="@color/white"
-        android:layout_margin="8dp"
+        android:layout_margin="5dp"
         android:padding="5dp"
         android:gravity="top"
-        android:hint="请输入你的预定信息"
-        android:maxLength="100"
+        android:hint="请输入您的其他需求"
         style="@style/text_15_black_28"
         android:id="@+id/et_bespeak"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="120dp" />
+
+
+        <TextView
+            android:id="@+id/editnum"
+            style="@style/text_10_black_999"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/et_task_title"
+            android:paddingBottom="@dimen/margin_6dp"
+            android:paddingRight="@dimen/margin_6dp"
+            android:text="100" />
 </com.flyco.roundview.RoundRelativeLayout>
 
 
