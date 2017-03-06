@@ -56,6 +56,7 @@ public class RedRecordDetailActivity extends BaseActivity {
     LinearLayout llPresent;
     public static String INTENT_INFO = "intent";
     public static String INTENT_FLAG = "flag";
+    public static String COMEFROM = "comefrom";
     M_Bill m;
     int flag;
     protected ImageManager mImageManager;
@@ -64,6 +65,7 @@ public class RedRecordDetailActivity extends BaseActivity {
     @Bind(R.id.rtv_to_pay)
     RoundTextView rtvToPay;
     int userPayId;
+    int comefrom;
 
     @Override
     public void setContentView() {
@@ -73,7 +75,12 @@ public class RedRecordDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("消费单详情");
+        comefrom = getIntent().getIntExtra(COMEFROM, 0);
+        if (comefrom == 3) {
+            lhTvTitle.setText("账单详情");
+        } else {
+            lhTvTitle.setText("消费单详情");
+        }
         mImageManager = new ImageManager(this);
         userPayId = getIntent().getIntExtra("userPayId", 0);
         m = (M_Bill) getIntent().getSerializableExtra(INTENT_INFO);

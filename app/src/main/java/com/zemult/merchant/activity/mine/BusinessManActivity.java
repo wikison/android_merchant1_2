@@ -40,8 +40,6 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
     Button lhBtnBack;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
-    @Bind(R.id.tv_right)
-    TextView tvRight;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
     @Bind(R.id.smoothListView)
@@ -86,11 +84,7 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
 
     private void initView() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        tvRight.setVisibility(View.VISIBLE);
-
         lhTvTitle.setText(getResources().getString(R.string.title_business));
-//        tvRight.setText("入驻申请");
-        tvRight.setText("");
 
         mAdapter = new BusinessManAdapter(mContext, new ArrayList<M_Merchant>());
         smoothListView.setAdapter(mAdapter);
@@ -135,10 +129,6 @@ public class BusinessManActivity extends BaseActivity implements SmoothListView.
             case R.id.ll_back:
             case R.id.lh_btn_back:
                 onBackPressed();
-                break;
-            case R.id.tv_right:
-                Intent it = new Intent(mContext, MerchantEnter2Activity.class);
-                startActivityForResult(it, MERCHANT_ADD_REQ);
                 break;
         }
     }

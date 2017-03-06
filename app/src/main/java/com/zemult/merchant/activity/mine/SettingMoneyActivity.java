@@ -1,7 +1,9 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * Created by admin on 2017/1/24.
@@ -41,8 +44,46 @@ public class SettingMoneyActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("设置金额");
+        okBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
         EditFilter.CashFilter(ninameEt, Constants.MAX_PAY);
+        ninameEt.addTextChangedListener(watcher);
 
+    }
+
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (ninameEt.getText().toString().length() > 0) {
+                    ninameEt.setHint("");
+                    okBtn.setEnabled(true);
+                    if (getMoney() > 0) {
+                        okBtn.setBackgroundResource(R.drawable.common_selector_btn);
+                    }
+                }
+            } else {
+                ninameEt.setHint("请填写收款金额");
+                okBtn.setEnabled(false);
+                okBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private double getMoney() {
+        double result = 0;
+        if (!StringUtils.isBlank(ninameEt.getText().toString())) {
+            result = Double.parseDouble(ninameEt.getText().toString());
+        }
+        return result;
     }
 
 

@@ -114,7 +114,7 @@ public class MyQrActivity extends BaseActivity {
         } else if ("SaleManage".equals(strFrom)) {
             llMerchantHead.setVisibility(View.VISIBLE);
             setBtn.setVisibility(View.VISIBLE);
-            lhTvTitle.setText("找我买单");
+            lhTvTitle.setText("交易二维码");
             moneyTv.setVisibility(View.VISIBLE);
             tvMerchantName.setText(merchantName);
             tvHint.setVisibility(View.GONE);

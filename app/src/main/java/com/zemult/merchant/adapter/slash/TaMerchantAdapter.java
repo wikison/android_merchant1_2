@@ -19,7 +19,6 @@ import com.hedgehog.ratingbar.RatingBar;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.view.FNRadioGroup;
 
 import java.util.ArrayList;
@@ -94,7 +93,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 rbTitle.setPadding(0, 0, 8, 0);
                 rbTitle.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
                 rbTitle.setTextColor(0xff282828);
-                rbTitle.setText("TA的服务");
+                rbTitle.setText("服务项目");
                 holder.rgTaService.addView(rbTitle);
 
                 for (int i = 0; i < iShowSize; i++) {
@@ -139,7 +138,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(entity.name))
             holder.tvName.setText(entity.name);
         // 人均消费
-        holder.tvMoney.setText("人均￥" + (int)(entity.perMoney));
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(entity.distance)) {
             if (entity.distance.length() > 3) {
@@ -155,7 +154,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
             holder.rb5.setStar(0);
         }
         holder.tvComment.setText(entity.commentNumber + "人评价");
-        holder.tvService.setText("约服人次: " + entity.saleNum);
+        holder.tvService.setText("服务" + entity.saleNum + "人次");
         if (!StringUtils.isBlank(entity.createTime)) {
             holder.tvAddTime.setText("于" + entity.createTime.substring(0, 10) + "加入");
         } else {

@@ -150,8 +150,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         textView = (TextView) findViewById(R.id.channel_edit);
         merchantId = getIntent().getIntExtra(TAG, -1);
         comefrom = getIntent().getIntExtra(COMEFROM, 1);
-        tvProtocol.setText(Html.fromHtml("<u>《服务管家协议》</u>"));
+        tvProtocol.setText("服务管家协议");
         cbAgree.setChecked(true);
+
+
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
@@ -191,6 +193,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             textView.setVisibility(View.GONE);
             xieyiLl.setVisibility(View.VISIBLE);
             applyBtn.setVisibility(View.VISIBLE);
+//            applyBtn.setEnabled(false);
+//            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
 
         }
         if (comefrom == 2) {
@@ -273,6 +277,8 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                             otherAdapter.setVisible(false);
                             //添加到最后一个
                             otherAdapter.addItem(channel);
+
+
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
                                     try {
@@ -287,6 +293,13 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                             }, 50L);
                         }
                     }
+//                    if(userAdapter.getCount()>0){
+//                        applyBtn.setEnabled(true);
+//                        applyBtn.setBackgroundResource(R.drawable.common_selector_btn);
+//                    }else{
+//                        applyBtn.setEnabled(false);
+//                        applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+//                    }
                     break;
                 case R.id.otherGridView:
                     final ImageView moveImageView = getView(view);

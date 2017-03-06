@@ -17,13 +17,11 @@ public class UserEditphoneBandRequest extends PostStringRequest<Type>  {
     public static class Input {
         public int	userId				;	//	用户id
         public String	phone				;	//	新的手机号
-        public String	idCard;// 身份证号
         public String ejson;
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("userId", userId+""), new Pair<String, String>("phone", phone+""),
-                    new Pair<String, String>("idCard", idCard+"")));
+                    new Pair<String, String>("userId", userId+""), new Pair<String, String>("phone", phone+"")));
         }
 
     }

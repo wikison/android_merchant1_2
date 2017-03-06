@@ -1,8 +1,11 @@
 package com.zemult.merchant.activity.mine.pwdsetting;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +39,7 @@ import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 public class NewPhoneAuthActivity extends BaseActivity {
-
+    private static final int REQ_SUCESS = 0x110;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -53,13 +56,37 @@ public class NewPhoneAuthActivity extends BaseActivity {
     TextView tvSendcode;
     private static final int WAIT = 0x001;
 
-    private YWIMKit mIMKit;
-
     private boolean isWait = false;
     private Thread mThread = null;
     Request request_common_getcode, request_common_checkcode;
     String strPhone, strCode, strIdNo;
     UserEditphoneBandRequest userEditphoneBandRequest;
+
+
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etCode.getText().toString().length() > 0
+                        && etphone.getText().toString().length() > 0) {
+                    btnBangding.setEnabled(true);
+                    btnBangding.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+            } else {
+                btnBangding.setEnabled(false);
+                btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     public void setContentView() {
@@ -71,11 +98,12 @@ public class NewPhoneAuthActivity extends BaseActivity {
         strIdNo = getIntent().getStringExtra("strIdNo");
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
-        lhTvTitle.setText("绑定手机号码");
-        mIMKit = LoginSampleHelper.getInstance().getIMKit();
-        if (mIMKit == null) {
-            return;
-        }
+        lhTvTitle.setText("更换绑定手机号码");
+
+        btnBangding.setEnabled(false);
+        btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+        etCode.addTextChangedListener(watcher);
+        etphone.addTextChangedListener(watcher);
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bangding, R.id.tv_sendcode})
@@ -101,16 +129,8 @@ public class NewPhoneAuthActivity extends BaseActivity {
             case R.id.btn_bangding:
                 strPhone = etphone.getText().toString();
                 strCode = etCode.getText().toString();
-                if (StringUtils.isEmpty(strPhone)) {
-                    etphone.setError("请输入您的手机号码");
-                    return;
-                }
                 if (SlashHelper.userManager().getUserinfo().getPhoneNum().equals(strPhone)) {
                     etphone.setError("请输入新的手机号码");
-                    return;
-                }
-                if (StringUtils.isEmpty(strCode)) {
-                    etCode.setError("请输入验证码");
                     return;
                 }
                 checkCode();
@@ -126,7 +146,6 @@ public class NewPhoneAuthActivity extends BaseActivity {
         UserEditphoneBandRequest.Input input = new UserEditphoneBandRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();    //	用户id
         input.phone = strPhone;
-        input.idCard = strIdNo;
         input.convertJosn();
 
         userEditphoneBandRequest = new UserEditphoneBandRequest(input, new ResponseListener() {
@@ -139,14 +158,12 @@ public class NewPhoneAuthActivity extends BaseActivity {
             public void onResponse(Object response) {
                 loadingDialog.dismiss();
                 if (((CommonResult) response).status == 1) {
-                    ToastUtil.showMessage("绑定成功");
+
                     SlashHelper.userManager().getUserinfo().setPhoneNum(strPhone);
-                    ImLogout();
                     SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
-                    SlashHelper.userManager().getUserinfo();
-                    SlashHelper.userManager().saveUserinfo(null);
-                    EventBus.getDefault().post("exit");
-                    finish();
+
+                    Intent intent = new Intent(NewPhoneAuthActivity.this, BindNewPhoneSucessActivity.class);
+                    startActivityForResult(intent, REQ_SUCESS);
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
@@ -155,27 +172,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
         sendJsonRequest(userEditphoneBandRequest);
     }
 
-    public void ImLogout() {
-        // openIM SDK提供的登录服务
-        IYWLoginService mLoginService = mIMKit.getLoginService();
-        mLoginService.logout(new IWxCallback() {
-            //此时logout已关闭所有基于IMBaseActivity的OpenIM相关Actiivity，s
-            @Override
-            public void onSuccess(Object... arg0) {
-                YWLog.i("------IM_LOGOUT---------", "退出成功");
-            }
 
-            @Override
-            public void onProgress(int arg0) {
-
-            }
-
-            @Override
-            public void onError(int arg0, String arg1) {
-                Toast.makeText(AppApplication.getContext(), "请重新登录", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void getCode() {
         try {
@@ -197,7 +194,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
-                        tvSendcode.setText("重新发送(" + 60 + "s)");
+                        tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
@@ -254,10 +251,10 @@ public class NewPhoneAuthActivity extends BaseActivity {
 
             public void handleMessage(Message msg) {
                 i--;
-                tvSendcode.setText("重新发送(" + i + "s)");
+                tvSendcode.setText("重新获取(" + i + "s)");
                 if (i == 0) {
                     isWait = false;
-                    tvSendcode.setText("重新发送");
+                    tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
                     tvSendcode.setTextColor(0xffe6bb7c);
                     i = 60;
@@ -285,5 +282,14 @@ public class NewPhoneAuthActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         isWait = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQ_SUCESS){
+            setResult(RESULT_OK);
+            onBackPressed();
+        }
     }
 }

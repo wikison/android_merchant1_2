@@ -2,6 +2,8 @@ package com.zemult.merchant.activity.mine.pwdsetting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +40,31 @@ public class IdnoAuthActivity extends BaseActivity {
 
     UserRealnameInfoRequest userRealnameInfoRequest;
 
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() == 8) {
+                if (etIdno.getText().toString().length() == 8) {
+                    btnBangding.setEnabled(true);
+                    btnBangding.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+
+            } else {
+                btnBangding.setEnabled(false);
+                btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_idno_auth);
@@ -45,12 +72,15 @@ public class IdnoAuthActivity extends BaseActivity {
 
     @Override
     public void init() {
+        lhTvTitle.setText("更换绑定手机号码");
+        btnBangding.setEnabled(false);
+        btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
+        etIdno.addTextChangedListener(watcher);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lhTvTitle.setText("更换绑定");
         ButterKnife.bind(this);
     }
 
@@ -99,10 +129,10 @@ public class IdnoAuthActivity extends BaseActivity {
                                 intent.putExtra("strIdNo", strIdNo);
                                 startActivity(intent);
                             } else {
-                                ToastUtil.showMessage("身份证号验证错误");
+                                ToastUtil.showMessage("输入信息有误");
                             }
                         } else {
-                            ToastUtil.showMessage("实名认证身份证号错误, 请联系管理员");
+                            ToastUtil.showMessage("输入信息有误");
                         }
 
 
