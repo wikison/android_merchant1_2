@@ -120,7 +120,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
                         if (password1.equals(password2)) {
                             updatePayPassword(password1, oldPassword, smsCode);
                         } else {
-                            ToastUtil.showMessage("两次输入密码不一致");
+                            ToastUtil.showMessage("密码不同请重新设置");
                         }
                     } else {
                         Intent data = new Intent();
@@ -186,7 +186,7 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
                     finish();
                 } else {
 
-                    CommonDialog.showDialogListener(ValidatePayPwdActivity.this, null, "忘记密码", "确定", "安全密码错误,请重试", new View.OnClickListener() {
+                    CommonDialog.showDialogListener(ValidatePayPwdActivity.this, null, "忘记密码", "确定", "输入信息有误", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(
