@@ -131,12 +131,12 @@ public class ChangePasswordActivity extends BaseActivity {
         strNewPwd = etNewpassword.getText().toString();
         strNewPwd2 = etRenewpassword.getText().toString();
         if (!StringUtils.isEquals(strNewPwd, strNewPwd2)) {
-            etRenewpassword.setError("密码不同, 请重新设置");
+            ToastUtil.showMessage("密码不同, 请重新设置");
             return;
         } else {
             boolean b = StringMatchUtils.isAllNum(strNewPwd);
             if (b) {
-                etRenewpassword.setError("密码不能纯数字");
+                ToastUtil.showMessage("密码格式错误");
                 return;
             } else {
                 //先验证原密码
@@ -169,7 +169,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 if (((APIM_UserLogin) response).status == 1) {
                     user_editpwd();
                 } else {
-                    etOldpassword.setError(((APIM_UserLogin) response).info);
+                    ToastUtil.showMessage("输入信息有误");
                 }
 
             }
