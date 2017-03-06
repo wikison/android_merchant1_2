@@ -37,6 +37,7 @@
                 <ImageView
                     android:id="@+id/iv_user_head"
                     android:layout_width="@dimen/j30dp"
+                    android:src="@mipmap/user_icon"
                     android:layout_height="@dimen/j30dp"/>
 
                 <TextView
@@ -63,7 +64,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="交易商户"
+                android:text="商       户"
                 android:textSize="15sp"/>
 
             <LinearLayout
