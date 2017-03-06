@@ -200,7 +200,7 @@ public class BindCardTwoFragment extends BaseFragment {
             tvError.setText("请输入手机号码");
         } else {
             if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
-                tvError.setText("请输入正确的手机号");
+                tvError.setText("请输入正确的手机号码");
                 etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
                 return;
             }
@@ -216,7 +216,7 @@ public class BindCardTwoFragment extends BaseFragment {
             return;
         }
         if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
-            tvError.setText("请输入正确的手机号");
+            tvError.setText("请输入正确的手机号码");
             etPhone.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
             return;
         }
@@ -361,6 +361,7 @@ public class BindCardTwoFragment extends BaseFragment {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
+                        SlashHelper.userManager().getUserinfo().setIsConfirm(1);
                         Bundle bundle1 = new Bundle();
                         bundle1.putString(BindCardSuccessFragment.BANK_NAME, bundle.getString(BANK_NAME));
                         bundle1.putString(BindCardSuccessFragment.CARD_NUM, bundle.getString(CARD_NUM));
