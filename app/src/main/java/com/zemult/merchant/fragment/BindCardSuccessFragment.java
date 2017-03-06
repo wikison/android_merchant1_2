@@ -55,7 +55,6 @@ public class BindCardSuccessFragment extends BaseFragment {
         tvNum.setText("**** **** **** " + getArguments().getString(CARD_NUM).substring(
                 getArguments().getString(CARD_NUM).length() - 4,
                 getArguments().getString(CARD_NUM).length()));
-        SlashHelper.userManager().getUserinfo().setIsConfirm(1);
     }
 
     @Override
