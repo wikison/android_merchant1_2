@@ -80,7 +80,7 @@
                     android:layout_marginLeft="12dp"
                     android:id="@+id/et_identification"
                     style="@style/binding_edittext"
-                    android:hint="输入身份证号"
+                    android:hint="请输入身份证号码"
                     android:maxLength="18"
                     android:inputType="number"
                     android:digits="@string/filter_vcode"/>
@@ -160,34 +160,29 @@
                     android:layout_marginLeft="12dp"
                     android:id="@+id/et_phone"
                     style="@style/binding_edittext"
-                    android:hint="输入银行预留手机号"
+                    android:hint="请输入银行预留手机号码"
                     android:inputType="phone"
                     android:maxLength="11"/>
             </LinearLayout>
             <LinearLayout style="@style/binding_linearLayout">
 
                 <TextView
-
                     style="@style/binding_text"
-                    android:text="验证码" />
+                    android:id="@+id/tv_sendcode"
+                    android:gravity="center_vertical"
+                    android:text="获取验证码"
+                    android:textColor="@color/bg_head"
+                    android:textSize="@dimen/font_30px"/>
 
                 <EditText
                     android:layout_weight="1"
                     android:layout_marginLeft="12dp"
                     android:id="@+id/et_code"
                     style="@style/binding_edittext"
-                    android:hint="请输入验证码"
+                    android:hint="请输入您的手机验证码"
                     android:inputType="number"
                     android:maxLength="6"/>
-                <TextView
-                    android:layout_marginRight="12dp"
-                    android:id="@+id/tv_sendcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="获取验证码"
-                    android:textColor="@color/bg_head"
-                    android:textSize="@dimen/font_30px"/>
+
 
             </LinearLayout>
 
@@ -204,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="12dp"
-                android:text="身份信息严格加密，仅用于银行认证"
+                android:text="身份信息严格保密，仅用于银行认证"
                 android:textColor="#999"
                 android:textSize="@dimen/font_24px" />
             <TextView
@@ -222,7 +217,7 @@
                 android:id="@+id/bt_next"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="74dp"
-                android:text="下一步"
+                android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_30px" />
         </RelativeLayout>
