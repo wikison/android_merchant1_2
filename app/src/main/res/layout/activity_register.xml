@@ -107,6 +107,7 @@
             style="@style/MyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/font_black_999"
             android:text="我确定同意"
             android:textSize="@dimen/font_24px"/>
 

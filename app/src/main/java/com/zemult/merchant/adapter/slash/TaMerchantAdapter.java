@@ -131,7 +131,7 @@ public class TaMerchantAdapter extends BaseListAdapter<M_Merchant> {
     private void initData(ViewHolder holder, M_Merchant entity) {
         // 商家封面
         if (!TextUtils.isEmpty(entity.head))
-            mImageManager.loadUrlImage(entity.pic, holder.ivCover, "@320h");
+            mImageManager.loadUrlImage(entity.head, holder.ivCover, "@320h");
         else
             holder.ivCover.setImageResource(R.mipmap.user_icon);
         // 商家名称
