@@ -2,7 +2,9 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,35 @@ public class MerchantEnter2Activity extends BaseActivity {
     LinearLayout activityMerchantEnter2;
     private Context mContext;
 
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etName.getText().toString().length() > 0
+                        && etAddress.getText().toString().length() > 0
+                        && etPersonName.getText().toString().length() > 0
+                        && etPersonPhone.getText().toString().length() > 0
+                        ) {
+                    btnCommit.setEnabled(true);
+                    btnCommit.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+
+            } else {
+                btnCommit.setEnabled(false);
+                btnCommit.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_merchant_enter2);
@@ -62,6 +93,14 @@ public class MerchantEnter2Activity extends BaseActivity {
         EditFilter.WordFilter(etName, 20);
         EditFilter.WordFilter(etAddress, 30);
         EditFilter.WordFilter(etPersonName, 5);
+
+        etName.addTextChangedListener(watcher);
+        etAddress.addTextChangedListener(watcher);
+        etPersonName.addTextChangedListener(watcher);
+        etPersonPhone.addTextChangedListener(watcher);
+
+        btnCommit.setEnabled(false);
+        btnCommit.setBackgroundResource(R.drawable.next_bg_btn_select);
     }
 
     @Override
@@ -79,24 +118,8 @@ public class MerchantEnter2Activity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_commit:
-                if (StringUtils.isBlank(etName.getText().toString())) {
-                    etName.setError("请填写");
-                    return;
-                }
-                if (StringUtils.isBlank(etAddress.getText().toString())) {
-                    etAddress.setError("请填写");
-                    return;
-                }
-                if (StringUtils.isBlank(etPersonName.getText().toString())) {
-                    etPersonName.setError("请填写");
-                    return;
-                }
-                if (StringUtils.isBlank(etPersonPhone.getText().toString())) {
-                    etPersonPhone.setError("请填写");
-                    return;
-                }
                 if(!StringMatchUtils.isMobileNO(etPersonPhone.getText().toString())){
-                    etPersonPhone.setError("格式不正确");
+                    etPersonPhone.setError("手机号码格式不正确");
                     return;
                 }
 
