@@ -23,6 +23,7 @@ import com.umeng.socialize.PlatformConfig;
 import com.zemult.merchant.R;
 import com.zemult.merchant.database.SQLHelper;
 import com.zemult.merchant.im.sample.InitHelper;
+import com.zemult.merchant.util.SlashHelper;
 
 import zema.volley.network.VolleyUtil;
 
@@ -82,7 +83,12 @@ public class AppApplication extends MultiDexApplication {
         //BTGInvocationEventBubble(悬浮小球)、
         //BTGInvocationEventShake(摇一摇)、
         //BTGInvocationEventNone(静默)
-        Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventNone);
+        if (SlashHelper.getSettingBoolean(SlashHelper.APP.Key.BUGTAGS, false)) {
+            Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventShake);
+        } else {
+            Bugtags.start("6679467463a300e215edf11b22698c14", this, Bugtags.BTGInvocationEventNone);
+        }
+
 
         initUmeng();
 

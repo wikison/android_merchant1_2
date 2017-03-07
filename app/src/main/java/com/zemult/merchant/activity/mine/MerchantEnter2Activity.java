@@ -91,8 +91,8 @@ public class MerchantEnter2Activity extends BaseActivity {
         mContext = this;
         lhTvTitle.setText("商户入驻");
         EditFilter.WordFilter(etName, 20);
-        EditFilter.WordFilter(etAddress, 30);
-        EditFilter.WordFilter(etPersonName, 5);
+        EditFilter.WordFilter(etAddress, 50);
+        EditFilter.WordFilter(etPersonName, 15);
 
         etName.addTextChangedListener(watcher);
         etAddress.addTextChangedListener(watcher);
@@ -118,12 +118,12 @@ public class MerchantEnter2Activity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_commit:
-                if(!StringMatchUtils.isMobileNO(etPersonPhone.getText().toString())){
-                    etPersonPhone.setError("手机号码格式不正确");
-                    return;
-                }
+                if(StringMatchUtils.isMobileNO(etPersonPhone.getText().toString())
+                        || StringMatchUtils.isFixedPhone(etPersonPhone.getText().toString())){
+                    merchant_addentity_new();
+                }else
+                    etPersonPhone.setError("联系电话格式不正确");
 
-                merchant_addentity_new();
                 break;
         }
     }
