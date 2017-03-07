@@ -122,7 +122,7 @@ public class MerchantEnter2Activity extends BaseActivity {
                         || StringMatchUtils.isFixedPhone(etPersonPhone.getText().toString())){
                     merchant_addentity_new();
                 }else
-                    etPersonPhone.setError("手机号码格式不正确");
+                    etPersonPhone.setError("联系电话格式不正确");
 
                 break;
         }
