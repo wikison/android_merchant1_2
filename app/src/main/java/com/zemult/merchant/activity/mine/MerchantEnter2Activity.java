@@ -91,8 +91,8 @@ public class MerchantEnter2Activity extends BaseActivity {
         mContext = this;
         lhTvTitle.setText("商户入驻");
         EditFilter.WordFilter(etName, 20);
-        EditFilter.WordFilter(etAddress, 30);
-        EditFilter.WordFilter(etPersonName, 5);
+        EditFilter.WordFilter(etAddress, 50);
+        EditFilter.WordFilter(etPersonName, 15);
 
         etName.addTextChangedListener(watcher);
         etAddress.addTextChangedListener(watcher);
