@@ -30,7 +30,7 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:textColor="@color/tv_subtitle"
-            android:hint="确定删除所有缓存？"
+            android:hint="确定删除所有缓存？所有离线内容及图片均会被删除"
             android:minHeight="45dp"
             android:padding="5dp"
             android:textSize="@dimen/TitleTextSize" />
