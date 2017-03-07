@@ -185,7 +185,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
         intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
         intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请再次输入新的密码");
-        intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "下一步");
+        intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "完成");
         intent.putExtra(ValidatePayPwdActivity.PASSWORD,
                 data.getStringExtra(ValidatePayPwdActivity.PASSWORD));
         intent.putExtra(ValidatePayPwdActivity.SMS_CODE, smsCode);
