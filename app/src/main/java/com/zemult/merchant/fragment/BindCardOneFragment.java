@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,18 @@ public class BindCardOneFragment extends BaseFragment {
         btNext.setEnabled(false);
         btNext.setBackgroundResource(R.drawable.next_bg_btn_select);
         etBankcard.addTextChangedListener(watcher);
+        cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (etBankcard.getText().toString().length() > 15 && cbAgree.isChecked()) {
+                    btNext.setEnabled(true);
+                    btNext.setBackgroundResource(R.drawable.common_selector_btn);
+                } else {
+                    btNext.setEnabled(false);
+                    btNext.setBackgroundResource(R.drawable.next_bg_btn_select);
+                }
+            }
+        });
     }
 
     private TextWatcher watcher = new TextWatcher() {
@@ -90,7 +103,7 @@ public class BindCardOneFragment extends BaseFragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (s.toString().length() > 15) {
+            if (s.toString().length() > 15 && cbAgree.isChecked()) {
                 btNext.setEnabled(true);
                 btNext.setBackgroundResource(R.drawable.common_selector_btn);
             } else {

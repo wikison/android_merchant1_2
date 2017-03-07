@@ -2,7 +2,6 @@ package com.zemult.merchant.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,16 +20,12 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.PasswordActivity;
-import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeBankRequest;
-import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.mine.UserBandcardDoRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.apimodel.APIM_CommonAppVersion;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
@@ -244,7 +239,7 @@ public class BindCardTwoFragment extends BaseFragment {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
-                        tvSendcode.setText("重新发送(" + 60 + "s)");
+                        tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
@@ -305,10 +300,10 @@ public class BindCardTwoFragment extends BaseFragment {
 
             public void handleMessage(Message msg) {
                 i--;
-                tvSendcode.setText("重新发送(" + i + "s)");
+                tvSendcode.setText("重新获取(" + i + "s)");
                 if (i == 0) {
                     isWait = false;
-                    tvSendcode.setText("重新发送");
+                    tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
                     tvSendcode.setTextColor(0xffe6bb7c);
                     i = 60;

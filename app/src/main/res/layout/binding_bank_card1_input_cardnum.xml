@@ -16,7 +16,7 @@
             android:id="@+id/et_bankcard"
             style="@style/binding_edittext"
             android:layout_marginLeft="12dp"
-            android:hint="输入银行卡号"
+            android:hint="请输入银行卡号"
             android:inputType="number"
             android:maxLength="19"/>
     </LinearLayout>
