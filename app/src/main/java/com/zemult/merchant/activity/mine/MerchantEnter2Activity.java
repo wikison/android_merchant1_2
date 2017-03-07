@@ -118,12 +118,12 @@ public class MerchantEnter2Activity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_commit:
-                if(!StringMatchUtils.isMobileNO(etPersonPhone.getText().toString())){
+                if(StringMatchUtils.isMobileNO(etPersonPhone.getText().toString())
+                        || StringMatchUtils.isFixedPhone(etPersonPhone.getText().toString())){
+                    merchant_addentity_new();
+                }else
                     etPersonPhone.setError("手机号码格式不正确");
-                    return;
-                }
 
-                merchant_addentity_new();
                 break;
         }
     }
