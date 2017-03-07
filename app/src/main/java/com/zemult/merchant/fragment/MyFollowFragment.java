@@ -95,12 +95,12 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
-            userAttractLis();
+        userAttractLis();
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -116,9 +116,11 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
 //        if (userId == -1) {
 //            lhTvTitle.setText("我的关注");
 //        } else {
-            lhTvTitle.setText("熟人");
+        lhTvTitle.setText("熟人");
 //        }
 
+        searchView.setMaxWordNum(6);
+        searchView.setFilter();
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.add_btn);
         llBack.setVisibility(View.GONE);
@@ -130,9 +132,9 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mContext, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position-1).userId);
-                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position-1).name);
-                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position-1).head);
+                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position - 1).userId);
+                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position - 1).name);
+                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position - 1).head);
                 startActivity(intent);
             }
         });
@@ -163,7 +165,7 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
             userAttractListRequest.cancel();
         }
         UserAttractListRequest.Input input = new UserAttractListRequest.Input();
-        if(null==SlashHelper.userManager().getUserinfo()){
+        if (null == SlashHelper.userManager().getUserinfo()) {
             return;
         }
         input.userId = SlashHelper.userManager().getUserId();
@@ -215,10 +217,10 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                                         holder.setText(R.id.tv_follow_name, mfollow.name);
                                         holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);
 
-                                        if(!TextUtils.isEmpty(mfollow.note)){
+                                        if (!TextUtils.isEmpty(mfollow.note)) {
                                             holder.setViewVisible(R.id.tv_rname);
                                             holder.setText(R.id.tv_rname, "备注名:" + mfollow.note);
-                                        }else
+                                        } else
                                             holder.setViewGone(R.id.tv_rname);
                                     }
                                 });
@@ -247,8 +249,6 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
         });
         sendJsonRequest(userAttractListRequest);
     }
-
-
 
 
     // 用户添加关注
@@ -330,12 +330,12 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
 
     @Override
     public void onRefresh() {
-            page = 1;
-            userAttractLis();
+        page = 1;
+        userAttractLis();
     }
 
     @Override
     public void onLoadMore() {
-            userAttractLis();
+        userAttractLis();
     }
 }

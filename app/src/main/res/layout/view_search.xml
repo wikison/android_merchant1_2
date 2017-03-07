@@ -42,7 +42,6 @@
             android:hint="搜索"
             android:maxLength="15"
             android:imeOptions="actionSearch"
-            android:inputType="text"
             android:paddingLeft="@dimen/margin_12dp"
             android:paddingRight="@dimen/margin_36dp"
             android:textColorHint="@color/font_black_999"
