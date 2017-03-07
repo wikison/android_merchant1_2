@@ -120,6 +120,7 @@ public class SearchHotActivity extends BaseActivity {
     }
 
     private void initListener() {
+//        mSearchView.setMaxWordNum(15);
         mSearchView.setSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearch(String text) {

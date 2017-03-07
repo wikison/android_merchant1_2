@@ -117,7 +117,12 @@ public class ReceiveRedActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney) + "元"));
+                    if(m.type==0){
+                        moneyTv.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)+ "元"));
+                    }else{
+                        moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+ "元"));
+                    }
+
                     if (!TextUtils.isEmpty(m.userHead)) {
                         imageManager.loadCircleImage(m.userHead, headIv);
                     }

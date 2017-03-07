@@ -142,8 +142,8 @@
                 android:textColor="#211d2e"
                 android:textSize="@dimen/font_30px"
                 android:textColorHint="@color/font_black_999"
-                android:inputType="number"
-                android:maxLength="11"/>
+                android:digits="0123456789-"
+                android:maxLength="15"/>
         </RelativeLayout>
         <View style="@style/divider"/>
     </LinearLayout>

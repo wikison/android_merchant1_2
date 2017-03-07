@@ -31,6 +31,17 @@ public class StringMatchUtils {
 
 	}
 
+	/**
+	 * 区号+座机号码+分机号码
+	 * @param fixedPhone
+	 * @return
+	 */
+	public static boolean isFixedPhone(String fixedPhone){
+		String reg="(?:(\\(\\+?86\\))(0[0-9]{2,3}\\-?)?([2-9][0-9]{6,7})+(\\-[0-9]{1,4})?)|" +
+				"(?:(86-?)?(0[0-9]{2,3}\\-?)?([2-9][0-9]{6,7})+(\\-[0-9]{1,4})?)";
+		return Pattern.matches(reg, fixedPhone);
+	}
+
 	// 判别用户身份证号的正则表达式
 	public static boolean isIdCard(String num){
 		//定义判别用户身份证号的正则表达式（要么是15位，要么是18位，最后一位可以为字母）
