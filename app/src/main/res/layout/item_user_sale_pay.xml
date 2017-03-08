@@ -64,7 +64,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:text="商       户"
+                android:text="商户"
                 android:textSize="15sp"/>
 
             <LinearLayout
