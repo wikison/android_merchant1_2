@@ -68,7 +68,6 @@ public class SendAppreciateRedActivity extends BaseActivity {
 
     }
 
-
     //订单详情
     private void user_pay_info() {
         showPd();
@@ -91,9 +90,9 @@ public class SendAppreciateRedActivity extends BaseActivity {
                 if (((APIM_UserBillInfo) response).status == 1) {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
-                    if(m.type==0){
+                    if (m.type == 0) {
                         moneyTv.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
-                    }else{
+                    } else {
                         moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                     }
                     if (!TextUtils.isEmpty(m.toUserHead)) {
