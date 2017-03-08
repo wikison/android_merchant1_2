@@ -3,7 +3,6 @@ package com.zemult.merchant.view;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.util.EditFilter;
 
 /**
  * Created by wikison on 2016/6/8.
@@ -58,7 +58,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
     private String strSearch;
 
-    private int maxWordNum;
+    private int maxWordNum = 15;
     private boolean unThinking;
 
     public SearchView(Context context, AttributeSet attrs) {
@@ -93,22 +93,23 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
     }
 
     //View.VISIBLE GONE
-    public void setBackVisible(int visible){
+    public void setBackVisible(int visible) {
         llBack.setVisibility(visible);
     }
 
-    public void setTvCancelVisible(int visible){
+    public void setTvCancelVisible(int visible) {
         tvCancel.setVisibility(visible);
     }
 
-    public void setTvCancelColor(int colorId){
+    public void setTvCancelColor(int colorId) {
         tvCancel.setTextColor(colorId);
     }
-    public void setBgColor(int colorId){
+
+    public void setBgColor(int colorId) {
         llRoot.setBackgroundColor(colorId);
     }
 
-    public void setTvCancelSize(int textSize){
+    public void setTvCancelSize(int textSize) {
         tvCancel.setTextSize(textSize);
     }
 
@@ -225,13 +226,13 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
          * @param text 传入输入框的文本
          */
         void onSearch(String text);
+
         void onClear();
     }
 
     //设置控件的输入字符最大数
     public void setFilter() {
-        InputFilter[] filters = {new InputFilter.LengthFilter(maxWordNum)};
-        etInput.setFilters(filters);
+        EditFilter.WordFilter(etInput, maxWordNum);
     }
 
     private class EditChangedListener implements TextWatcher {

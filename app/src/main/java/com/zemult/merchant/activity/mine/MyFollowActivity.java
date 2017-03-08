@@ -122,7 +122,8 @@ public class MyFollowActivity extends MBaseActivity implements SmoothListView.IS
 
             @Override
             public void onClear() {
-
+                name = "";
+                onRefresh();
             }
         });
     }

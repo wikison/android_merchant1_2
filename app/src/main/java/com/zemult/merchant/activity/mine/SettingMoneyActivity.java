@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -63,6 +64,10 @@ public class SettingMoneyActivity extends BaseActivity {
                     okBtn.setEnabled(true);
                     if (getMoney() > 0) {
                         okBtn.setBackgroundResource(R.drawable.common_selector_btn);
+                    }else{
+                        ninameEt.setHint("请填写收款金额");
+                        okBtn.setEnabled(false);
+                        okBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
                     }
                 }
             } else {
@@ -100,10 +105,9 @@ public class SettingMoneyActivity extends BaseActivity {
                 } else {
                     Intent intent = new Intent();
                     //把返回数据存入Intent
-                    intent.putExtra("result", ninameEt.getText().toString());
+                    intent.putExtra("result", Convert.getMoneyString(Double.parseDouble(ninameEt.getText().toString())));
                     //设置返回数据
                     SettingMoneyActivity.this.setResult(RESULT_OK, intent);
-//                    Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
                     SettingMoneyActivity.this.finish();
                 }
 

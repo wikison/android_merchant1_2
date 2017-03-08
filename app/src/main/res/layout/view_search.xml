@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:background="@color/font_black_28"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:id="@+id/ll_root">
+              android:id="@+id/ll_root"
+              android:layout_width="match_parent"
+              android:layout_height="44dp"
+              android:background="@color/font_black_28"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/ll_back"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/back_btn"
-            android:scaleType="centerInside" />
+            android:scaleType="centerInside"/>
     </LinearLayout>
 
     <FrameLayout
@@ -34,28 +34,28 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="@dimen/margin_6dp"
-            android:layout_marginTop="@dimen/margin_6dp"
             android:layout_marginRight="12dp"
+            android:layout_marginTop="@dimen/margin_6dp"
             android:background="@drawable/bg_view_search_edittext"
             android:drawableLeft="@mipmap/sousuo_black_icon"
             android:drawablePadding="12dp"
             android:hint="搜索"
-            android:maxLength="15"
             android:imeOptions="actionSearch"
             android:inputType="text"
+            android:maxLength="15"
             android:paddingLeft="@dimen/margin_12dp"
             android:paddingRight="@dimen/margin_36dp"
             android:textColorHint="@color/font_black_999"
-            android:textSize="@dimen/font_28px" />
+            android:textSize="@dimen/font_28px"/>
 
         <ImageView
-            android:visibility="invisible"
             android:id="@+id/search_iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:paddingRight="18dp"
-            android:src="@mipmap/sanchu_icon" />
+            android:src="@mipmap/sanchu_icon"
+            android:visibility="invisible"/>
     </FrameLayout>
 
     <TextView
@@ -66,6 +66,6 @@
         android:paddingRight="@dimen/margin_12dp"
         android:text="@string/cancel"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_32px" />
+        android:textSize="@dimen/font_32px"/>
 
 </LinearLayout>

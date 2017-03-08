@@ -411,7 +411,7 @@ public class BillInfoActivity extends BaseActivity {
                         imageManager.loadCircleImage(m_bill.userHead, ivUserHead);
                     }
                     tvUserName.setText(m_bill.userName);
-                    tvSaleMoneyCommission.setText("" + (m_bill.allMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.allMoney)));
+                    tvSaleMoneyCommission.setText("" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
                     tvPayNumCommission.setText(m_bill.number);
                     tvTradeTimeCommission.setText(m_bill.createtime);
 
