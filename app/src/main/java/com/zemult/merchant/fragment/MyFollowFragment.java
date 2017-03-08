@@ -157,6 +157,7 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
                 onRefresh();
             }
         });
+
     }
 
     //获取我的关注数据
