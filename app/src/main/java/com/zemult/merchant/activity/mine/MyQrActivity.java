@@ -160,7 +160,7 @@ public class MyQrActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111 && resultCode == RESULT_OK) {
             price = data.getExtras().getString("result");
-            moneyTv.setText("￥  " + price);
+            moneyTv.setText("￥ " + price);
             qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + price;
             bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));

@@ -104,7 +104,6 @@ public class ReceiveRedActivity extends BaseActivity {
 
         UserPayInfoRequest.Input input = new UserPayInfoRequest.Input();
         input.userPayId = userPayId;
-
         input.convertJosn();
         userPayInfoRequest = new UserPayInfoRequest(input, new ResponseListener() {
             @Override

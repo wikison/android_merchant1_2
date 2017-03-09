@@ -77,7 +77,13 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
 
         tipTv.setText(tip);
         titleTv.setText(content);
-        confirmBtn.setText(confirm);
+        if("".equals(confirm)){
+            confirmBtn.setVisibility(View.INVISIBLE);
+        }
+        else {
+            confirmBtn.setVisibility(View.VISIBLE);
+            confirmBtn.setText(confirm);
+        }
         lh_tv_title.setText(titletext);
     }
 
@@ -89,6 +95,34 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
                 .setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
                     public void onMaxLength(String psw) {
                         AppUtils.hideSoftKeyboard(ValidatePayPwdActivity.this);
+                        if(confirmBtn.getVisibility()==View.INVISIBLE){
+                            String pwd = passwordView.getPassWord();
+                            System.out.println(pwd);
+                            if (passwordView.getPassWord().length() < 6) {
+                                ToastUtil.showMessage("请输入6位安全密码");
+                            } else {
+                                if (operation == REQUEST_OLD_PASSWORD) {
+                                    user_checkpaypwd(passwordView.getPassWord());
+                                } else if (operation == REQUEST_CONFIRM_PASSWORD) {
+
+                                    String password1 = passwordView.getPassWord();
+                                    String password2 = getIntent().getStringExtra(PASSWORD);
+                                    String smsCode = getIntent().getStringExtra(SMS_CODE);
+                                    String oldPassword = getIntent().getStringExtra(OLD_PASSWORD);
+
+                                    if (password1.equals(password2)) {
+                                        updatePayPassword(password1, oldPassword, smsCode);
+                                    } else {
+                                        ToastUtil.showMessage("密码不同请重新设置");
+                                    }
+                                } else {
+                                    Intent data = new Intent();
+                                    data.putExtra(PASSWORD, passwordView.getPassWord());
+                                    setResult(RESULT_OK, data);
+                                    finish();
+                                }
+                            }
+                        }
 
                     }
 
