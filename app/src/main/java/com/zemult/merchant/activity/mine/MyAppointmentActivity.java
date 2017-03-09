@@ -113,6 +113,11 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
+    }
 
     private void userReservationList() {
 
