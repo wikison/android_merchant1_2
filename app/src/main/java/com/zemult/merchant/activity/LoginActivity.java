@@ -20,6 +20,7 @@ import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.UserLoginRequest;
+import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
@@ -70,6 +71,7 @@ public class LoginActivity extends BaseActivity {
     UserLoginRequest user_login_request;
 
     private LoginSampleHelper loginHelper;
+    AppApplication mApp = null;
 
 
     @Override
@@ -93,6 +95,7 @@ public class LoginActivity extends BaseActivity {
     public void init() {
         initViews();
         loginHelper = LoginSampleHelper.getInstance();
+        mApp = (AppApplication) getApplication();
 
     }
 
@@ -242,6 +245,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(final Object response) {
                 if (((APIM_UserLogin) response).status == 1) {
+                    mApp.iPasswordState = 0;
                     if (null != getIntent().getStringExtra("actfrom") && "notification".equals(getIntent().getStringExtra("actfrom"))) {
                         Intent notificationIntent = new Intent(LoginActivity.this, SplashActivity.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -262,6 +266,7 @@ public class LoginActivity extends BaseActivity {
                                 ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(strPwd).toUpperCase());
                                 UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                                 SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
+                                mApp.iPasswordState = 0;
                                 setResult(RESULT_OK);
                                 Intent intent = new Intent(Constants.BROCAST_LOGIN);
                                 sendBroadcast(intent);
@@ -274,7 +279,7 @@ public class LoginActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onError(int errorCode, String errorMessage) {
+                            public  void onError(int errorCode, String errorMessage) {
                                 loadingDialog.dismiss();
                                 if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
                                     Notification.showToastMsg(LoginActivity.this, "用户不存在");

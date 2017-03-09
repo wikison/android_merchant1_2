@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.SlashHelper;
 
@@ -39,6 +40,8 @@ public class ChangePassSucActivity extends BaseActivity {
     TextView tvRemark;
 
     String pwdType;
+    AppApplication mApp = null;
+
 
     @Override
     public void setContentView() {
@@ -48,6 +51,9 @@ public class ChangePassSucActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setVisibility(View.VISIBLE);
+
+        mApp = (AppApplication) getApplication();
+        mApp.iPasswordState = 1;
         pwdType = getIntent().getStringExtra("password");
         if (pwdType.equals("change")) {
             lhTvTitle.setText("修改密码");
@@ -72,6 +78,7 @@ public class ChangePassSucActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         SlashHelper.userManager().saveUserinfo(null);
+        mApp.iPasswordState = 0;
         Intent intent = new Intent(ChangePassSucActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
