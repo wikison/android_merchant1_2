@@ -16,6 +16,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.FindPasswordActivity;
 import com.zemult.merchant.aip.common.UserEditpwdRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
+import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
@@ -59,7 +60,7 @@ public class ChangePasswordActivity extends BaseActivity {
     private UserEditpwdRequest editpwdRequest;
     private UserLoginRequest user_login_request;
     private Context mContext;
-
+    AppApplication mApp = null;
     private String strOldPwd, strNewPwd, strNewPwd2;
     private TextWatcher watcher = new TextWatcher() {
         @Override
@@ -96,6 +97,7 @@ public class ChangePasswordActivity extends BaseActivity {
     @Override
     public void init() {
         mContext = this;
+        mApp = (AppApplication) getApplication();
         lhTvTitle.setText("修改密码");
         tvForgetpassword.setText(Html.fromHtml("<u>" + "忘记密码" + "</u>"));
         SlashHelper.setSettingBoolean("isChangingPassWord", true);
@@ -206,6 +208,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 dismissPd();
                 int status = ((CommonResult) response).status;
                 if (status == 1) {
+                    mApp.iPasswordState = 1;
                     ToastUtil.showMessage("密码修改成功, 请重新登录");
                     Intent intent = new Intent(mContext, ChangePassSucActivity.class);
                     intent.putExtra("password", "change");

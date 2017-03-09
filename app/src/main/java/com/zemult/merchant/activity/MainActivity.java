@@ -511,7 +511,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         SlashHelper.userManager().saveUserinfo(null);
                         LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
 
-
                         Intent mainintent = new Intent(AppApplication.getContext(), MainActivity.class);
                         mainintent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(mainintent);

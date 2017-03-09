@@ -21,8 +21,8 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slashfrgment.BaseListAdapter;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.Convert;
-import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.FixedListView;
+import com.zemult.merchant.view.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,7 +172,6 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
         }
 
         private void initTags(ViewHolder holder, M_Merchant m) {
-            holder.fnMyService.setChildMargin(0, 6, 24, 0);
             holder.fnMyService.removeAllViews();
             if (!StringUtils.isBlank(m.tags)) {
                 List<String> tagList = new ArrayList<String>(Arrays.asList(m.tags.split(",")));
@@ -263,7 +262,7 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             @Bind(R.id.tv_my_service)
             TextView tvMyService;
             @Bind(R.id.fn_my_service)
-            FNRadioGroup fnMyService;
+            FlowLayout fnMyService;
             @Bind(R.id.tv_service_right)
             TextView tvServiceRight;
             @Bind(R.id.rl_my_service)

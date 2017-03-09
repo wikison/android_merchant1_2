@@ -247,6 +247,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 ivDelete.setVisibility(VISIBLE);
             } else {
                 ivDelete.setVisibility(GONE);
+                if (mListener != null) {
+                    mListener.onClear();
+                }
             }
             if (onThinkingClickListener != null && !isUnThinking()) {
                 onThinkingClickListener.onThinkingClick(etInput.getText().toString());

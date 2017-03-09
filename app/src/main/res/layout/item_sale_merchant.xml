@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:card_view="http://schemas.android.com/apk/res-auto"
               xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+              xmlns:nex3z="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/bg_f2"
@@ -18,8 +19,7 @@
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="0dp"
-        card_view:cardPreventCornerOverlap="false"
-        >
+        card_view:cardPreventCornerOverlap="false">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -46,26 +46,27 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/top_bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:background="@drawable/top_bottom">
+
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="23sp"
-                        android:text="兰州大酒店"
+                        android:layout_margin="12dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:shadowColor="@color/font_black_28"
                         android:shadowDx="1"
                         android:shadowDy="3"
                         android:shadowRadius="8"
+                        android:text="兰州大酒店"
+                        android:textColor="@color/white"
+                        android:textSize="23sp"
                         android:textStyle="bold"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        android:layout_margin="12dp"
                         />
 
                 </LinearLayout>
@@ -185,16 +186,20 @@
                     android:gravity="center_vertical"
                     android:text="我的服务"/>
 
-                <com.zemult.merchant.view.FNRadioGroup
+                <com.zemult.merchant.view.FlowLayout
                     android:id="@+id/fn_my_service"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginLeft="@dimen/margin_24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:layout_marginRight="@dimen/margin_12dp"
                     android:layout_toLeftOf="@+id/tv_service_right"
-                    android:layout_toRightOf="@+id/tv_my_service"/>
+                    android:layout_toRightOf="@+id/tv_my_service"
+                    android:clickable="true"
+                    nex3z:flow="false"
+                    nex3z:childSpacing="6dp"
+                    nex3z:rtl="true"/>
 
                 <TextView
                     android:id="@+id/tv_service_right"
@@ -307,8 +312,8 @@
                     android:layout_width="0dp"
                     android:layout_height="58dp"
                     android:layout_weight="1"
-                    android:visibility="gone"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
 
                     <com.flyco.roundview.RoundTextView
                         style="@style/text_12_black_28"
