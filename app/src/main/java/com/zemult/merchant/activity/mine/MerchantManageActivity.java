@@ -132,7 +132,8 @@ public class MerchantManageActivity extends BaseActivity {
                     tvFullname.setText(mMerchant.name);
                     tvClassify.setText(mMerchant.industryName);
                     tvAddress.setText(mMerchant.address);
-                    if(!TextUtils.isEmpty(mMerchant.tel))
+                    if(!TextUtils.isEmpty(mMerchant.tel)
+                            && mMerchant.tel.length() > 10)
                         tvTel.setText(mMerchant.tel.substring(0,3) + "****" + mMerchant.tel.substring(mMerchant.tel.length()-4,mMerchant.tel.length()));
 
                     if(!TextUtils.isEmpty(mMerchant.bankCard))
