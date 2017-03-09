@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine.pwdsetting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -17,12 +18,15 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.mine.BindBankCardActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,6 +37,8 @@ public class OldPhoneAuthActivity extends BaseActivity {
 
     private static final int WAIT = 0x001;
     private static final int REQ_NEW_PHONE = 0x110;
+    private static final int REQ_BIND_BANK = 0x120;
+    private static final int REQ_AUTH = 0x130;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -54,7 +60,7 @@ public class OldPhoneAuthActivity extends BaseActivity {
     private Thread mThread = null;
     Request request_common_getcode, request_common_checkcode;
     String strPhone, strCode;
-    int isConfirm;
+    private Context context;
 
     private TextWatcher watcher = new TextWatcher() {
         @Override
@@ -89,10 +95,10 @@ public class OldPhoneAuthActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("更换绑定手机号码");
+        context = this;
         tvUnusephone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvUnusephone.getPaint().setAntiAlias(true);
         strPhone = SlashHelper.userManager().getUserinfo().getPhoneNum();
-        isConfirm = SlashHelper.userManager().getUserinfo().isConfirm;
         tvPhone.setText(strPhone);
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
@@ -169,8 +175,6 @@ public class OldPhoneAuthActivity extends BaseActivity {
                         tvSendcode.setText("重新获取");
                         tvSendcode.setClickable(true);
                         tvSendcode.setTextColor(0xffe6bb7c);
-//                        Intent intent = new Intent(OldPhoneAuthActivity.this, IdnoAuthActivity.class);
-//                        startActivity(intent);
 
                         Intent intent = new Intent(OldPhoneAuthActivity.this, NewPhoneAuthActivity.class);
                         startActivityForResult(intent, REQ_NEW_PHONE);
@@ -246,13 +250,30 @@ public class OldPhoneAuthActivity extends BaseActivity {
                 checkCode();
                 break;
             case R.id.tv_unusephone:
-                isWait = false;
-                tvSendcode.setText("获取验证码");
-                tvSendcode.setClickable(true);
-                tvSendcode.setTextColor(0xffe6bb7c);
-                if (isConfirm == 0) {
-                    Intent intent = new Intent(OldPhoneAuthActivity.this, GotoTurenameActivity.class);
-                    startActivity(intent);
+
+                if (SlashHelper.userManager().getUserinfo().isConfirm == 0) {
+                    // 没有绑定银行卡
+                    CommonDialog.showDialogListener(context, null, "取消", "去绑定", "请先绑定银行卡进行实名认证", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CommonDialog.DismissProgressDialog();
+
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CommonDialog.DismissProgressDialog();
+                            isWait = false;
+                            tvSendcode.setText("获取验证码");
+                            tvSendcode.setClickable(true);
+                            tvSendcode.setTextColor(0xffe6bb7c);
+
+                            Intent intent =new Intent(context,BindBankCardActivity.class);
+                            startActivityForResult(intent, REQ_BIND_BANK);
+                        }
+                    });
+//                    Intent intent = new Intent(OldPhoneAuthActivity.this, GotoTurenameActivity.class);
+//                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(OldPhoneAuthActivity.this, IdnoAuthActivity.class);
                     startActivity(intent);
@@ -264,7 +285,11 @@ public class OldPhoneAuthActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == REQ_NEW_PHONE)
+        if(resultCode == RESULT_OK && (requestCode == REQ_NEW_PHONE || requestCode == REQ_AUTH))
             onBackPressed();
+        if(requestCode == REQ_BIND_BANK && SlashHelper.userManager().getUserinfo().getIsConfirm() == 1){
+            Intent intent = new Intent(context, IdnoAuthActivity.class);
+            startActivityForResult(intent, REQ_AUTH);
+        }
     }
 }

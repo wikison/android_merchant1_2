@@ -127,7 +127,7 @@ public class IdnoAuthActivity extends BaseActivity {
                             if (strIdNo.equalsIgnoreCase(idNum.substring(idNum.length() - 8, idNum.length()))) {
                                 Intent intent = new Intent(IdnoAuthActivity.this, NewPhoneAuthActivity.class);
                                 intent.putExtra("strIdNo", strIdNo);
-                                startActivity(intent);
+                                startActivityForResult(intent, 0x110);
                             } else {
                                 ToastUtil.showMessage("输入信息有误");
                             }
@@ -147,5 +147,10 @@ public class IdnoAuthActivity extends BaseActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 0x110)
+            onBackPressed();
+    }
 }
