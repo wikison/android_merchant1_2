@@ -35,7 +35,7 @@
         <TextView
             android:layout_marginTop="15dp"
             style="@style/text_16_black_666"
-            android:text="请先绑定银行卡进行实名认证"
+            android:text="通过实名认证更换手机号"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -45,7 +45,7 @@
         android:layout_marginTop="35dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/common_selector_btn"
-        android:text="绑定银行卡"
+        android:text="去实名认证"
         style="@style/text_18_white"
         android:layout_width="250dp"
         android:layout_height="36dp" />
