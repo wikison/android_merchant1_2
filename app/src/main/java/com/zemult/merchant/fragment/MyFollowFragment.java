@@ -119,7 +119,7 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
         lhTvTitle.setText("熟人");
 //        }
 
-        searchView.setMaxWordNum(6);
+        searchView.setMaxWordNum(11);
         searchView.setFilter();
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.add_btn);

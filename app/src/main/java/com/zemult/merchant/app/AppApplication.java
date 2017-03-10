@@ -39,7 +39,7 @@ public class AppApplication extends MultiDexApplication {
     private PushAgent mPushAgent;
     private SQLHelper sqlHelper;
     public static Boolean ISDEBUG = false;
-    public int iPasswordState = 0;
+    public int iPasswordState;
 
     public AppApplication() {
         _instance = this;

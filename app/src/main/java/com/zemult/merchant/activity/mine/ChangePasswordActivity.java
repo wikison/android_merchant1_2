@@ -98,6 +98,7 @@ public class ChangePasswordActivity extends BaseActivity {
     public void init() {
         mContext = this;
         mApp = (AppApplication) getApplication();
+        mApp.iPasswordState = 1;
         lhTvTitle.setText("修改密码");
         tvForgetpassword.setText(Html.fromHtml("<u>" + "忘记密码" + "</u>"));
         SlashHelper.setSettingBoolean("isChangingPassWord", true);
@@ -236,4 +237,5 @@ public class ChangePasswordActivity extends BaseActivity {
 
         }
     }
+
 }
