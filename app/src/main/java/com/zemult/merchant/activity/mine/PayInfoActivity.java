@@ -143,13 +143,13 @@ public class PayInfoActivity extends BaseActivity {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
 
-                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                    tvMoney.setText("" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
                     if (m.rewardMoney == 0) {
                         haveredLl.setVisibility(View.GONE);
                     } else {
                         haveredLl.setVisibility(View.VISIBLE);
-                        tvRealpay.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-                        tvRedmoney.setText("-" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
+                        tvRealpay.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                        tvRedmoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
                     }
                     switch (m.state) {
                         case 0:
@@ -184,7 +184,7 @@ public class PayInfoActivity extends BaseActivity {
                             tvPayType.setText("账户余额");
                             break;
                         case 1:
-                            tvPayType.setText("支付宝");
+                            tvPayType.setText("支付宝支付");
                             break;
                     }
                     tvMerchantName.setText(m.merchantName);
