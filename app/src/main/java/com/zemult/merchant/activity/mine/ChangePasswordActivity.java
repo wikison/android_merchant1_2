@@ -98,7 +98,6 @@ public class ChangePasswordActivity extends BaseActivity {
     public void init() {
         mContext = this;
         mApp = (AppApplication) getApplication();
-        mApp.iPasswordState = 1;
         lhTvTitle.setText("修改密码");
         tvForgetpassword.setText(Html.fromHtml("<u>" + "忘记密码" + "</u>"));
         SlashHelper.setSettingBoolean("isChangingPassWord", true);
@@ -143,6 +142,7 @@ public class ChangePasswordActivity extends BaseActivity {
                 return;
             } else {
                 //先验证原密码
+                mApp.iPasswordState = 1;
                 get_user_login_request();
             }
         }
@@ -230,7 +230,6 @@ public class ChangePasswordActivity extends BaseActivity {
             switch (requestCode) {
                 case FORGET_PWD_REQ:
                 case CHANGE_PWD_SUCCESS_REQ:
-                    SlashHelper.setSettingBoolean("isChangingPassWord", false);
                     onBackPressed();
                     break;
             }

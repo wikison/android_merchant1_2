@@ -71,7 +71,6 @@ public class LoginActivity extends BaseActivity {
     UserLoginRequest user_login_request;
 
     private LoginSampleHelper loginHelper;
-    AppApplication mApp = null;
 
 
     @Override
@@ -95,7 +94,6 @@ public class LoginActivity extends BaseActivity {
     public void init() {
         initViews();
         loginHelper = LoginSampleHelper.getInstance();
-        mApp = (AppApplication) getApplication();
 
     }
 
@@ -245,7 +243,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(final Object response) {
                 if (((APIM_UserLogin) response).status == 1) {
-                    mApp.iPasswordState = 0;
                     if (null != getIntent().getStringExtra("actfrom") && "notification".equals(getIntent().getStringExtra("actfrom"))) {
                         Intent notificationIntent = new Intent(LoginActivity.this, SplashActivity.class);
                         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -266,7 +263,6 @@ public class LoginActivity extends BaseActivity {
                                 ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(strPwd).toUpperCase());
                                 UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
                                 SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
-                                mApp.iPasswordState = 0;
                                 setResult(RESULT_OK);
                                 Intent intent = new Intent(Constants.BROCAST_LOGIN);
                                 sendBroadcast(intent);
