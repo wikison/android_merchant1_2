@@ -520,7 +520,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         AppApplication.getContext().startActivity(intent);
                     } else {
-                        mApp.iPasswordState = 0;
                     }
 
                 }

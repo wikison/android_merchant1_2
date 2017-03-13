@@ -235,6 +235,10 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         EditFilter.WordFilter(etInput, maxWordNum);
     }
 
+    public void setShowKeyBoard(){
+        etInput.requestFocus();
+    }
+
     private class EditChangedListener implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
