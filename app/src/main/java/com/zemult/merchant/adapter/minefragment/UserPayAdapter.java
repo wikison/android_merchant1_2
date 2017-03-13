@@ -88,7 +88,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
             }
             switch (m.state) {
                 case 0:
-                    holder.tvState.setText("待付款");
+                    holder.tvState.setText("待支付");
                     holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                     holder.rtvToPay.setText(String.format("去支付 (还剩%s)", DateTimeUtil.strLeftTime(m.createtime, 30)));
                     holder.llToPay.setVisibility(View.VISIBLE);
@@ -129,7 +129,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                 //加载带外边框的
                 mImageManager.loadCircleHasBorderImage(m.toUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
             }
-        }else if (m.type == 4) {
+        } else if (m.type == 4) {
             holder.tvSaleName.setText("赠送对象: " + m.toUserName);
             holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
             holder.tvState.setText("赞赏红包");

@@ -14,7 +14,7 @@ import com.zemult.merchant.fragment.MyOrderFragment;
 public class MyOrderFragmentAdapter extends FragmentStatePagerAdapter {
 
     private Context context;
-    private String[] titles = new String[]{"全部", "待付款", "待评价", "已失效"};
+    private String[] titles = new String[]{"全部", "待支付", "待评价", "已失效"};
     MyOrderFragment myOrderFragment;
 
     public MyOrderFragmentAdapter(FragmentManager fm) {
