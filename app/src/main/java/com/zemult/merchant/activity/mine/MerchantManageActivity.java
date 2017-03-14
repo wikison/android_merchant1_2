@@ -84,7 +84,7 @@ public class MerchantManageActivity extends BaseActivity {
     public void init() {
         mContext = this;
         merchantId = getIntent().getIntExtra(INTENT_ID, -1);
-        lhTvTitle.setText("商家管理");
+        lhTvTitle.setText("商户管理");
 
         merchant_getinfo();
     }
