@@ -56,6 +56,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.push.MyPushIntentService;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
@@ -64,6 +65,8 @@ import com.zemult.merchant.view.SlashMenuWindow;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
@@ -77,6 +80,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     public Handler handler = new Handler();
     String TAG = "MainActivity";
     SlashMenuWindow mSlashMenuWindow;
+    @Bind(R.id.iv_first)
+    ImageView ivFirst;
     private HomeFragment slashFragment;       //斜杠
     //    private MainFriendFragment mainFriendFragment;    //杠友
     private Fragment conversationFragment;    //杠友
@@ -149,6 +154,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         mApp = (AppApplication) getApplication();
         // 初始化布局元素
         initViews();
@@ -162,6 +168,13 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         registerReceiver(new String[]{Constants.BROCAST_LOGIN, Constants.BROCAST_CLOSE_ACTIVITY_FORLABEL});
         registerReceiver(new String[]{Constants.BROCAST_UPDATEMYINFO});
         get_user_info_owner_request();
+
+        if (SPUtils.contains(MainActivity.this, "home_first_run"))
+            ivFirst.setVisibility(View.GONE);
+        else {
+            ivFirst.setVisibility(View.VISIBLE);
+            SPUtils.put(MainActivity.this, "home_first_run", false);
+        }
     }
 
     /**
@@ -174,7 +187,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         }
         mConversationService = mIMKit.getConversationService();
         initListeners();
-        getUndreadMsgCount ();
+        getUndreadMsgCount();
 
 //登录IM
         if (null != SlashHelper.userManager().getUserinfo()) {
@@ -236,8 +249,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         //添加IM连接状态监听
         addConnectionListener();
 
-        initOrderConversation("约服账单",0,new Date().getTime());
-        initCustomConversation("约服团队",0,new Date().getTime());
+        initOrderConversation("约服账单", 0, new Date().getTime());
+        initCustomConversation("约服团队", 0, new Date().getTime());
 
     }
 
@@ -329,6 +342,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         record_layout.setOnClickListener(this);
         discoverLayout.setOnClickListener(this);
         mineLayout.setOnClickListener(this);
+        ivFirst.setOnClickListener(this);
     }
 
     @Override
@@ -381,6 +395,10 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 }
 
 
+                break;
+
+            case R.id.iv_first:
+                ivFirst.setVisibility(View.GONE);
                 break;
 
             default:
@@ -500,11 +518,12 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     public static final String SYSTEM_SYSMESSAGE = "sysMessage";
     public static final String SYSTEM_ORDERMESSAGE = "orderMessage";
 
-    private void initCustomConversation(String message, int unReadCounr,long datatime) {
-        CustomConversationHelper.addCustomConversation(SYSTEM_SYSMESSAGE, message,datatime ,unReadCounr);
+    private void initCustomConversation(String message, int unReadCounr, long datatime) {
+        CustomConversationHelper.addCustomConversation(SYSTEM_SYSMESSAGE, message, datatime, unReadCounr);
     }
-    private void initOrderConversation(String message, int unReadCounr,long datatime) {
-        CustomConversationHelper.addCustomConversation(SYSTEM_ORDERMESSAGE, message,datatime ,unReadCounr);
+
+    private void initOrderConversation(String message, int unReadCounr, long datatime) {
+        CustomConversationHelper.addCustomConversation(SYSTEM_ORDERMESSAGE, message, datatime, unReadCounr);
     }
 
 
@@ -599,7 +618,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             /**
              * 发送消息结束后回调
              * @param message   当前发送的消息
-             * @param sendState 消息发送状态，具体状态请参考{@link com.alibaba.mobileim.conversation.YWMessageType.SendState}
+             * @param sendState 消息发送状态，具体状态请参考{@link YWMessageType.SendState}
              */
             @Override
             public void onMessageLifeFinishSend(YWMessage message, YWMessageType.SendState sendState) {
@@ -622,7 +641,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         final YWIMKit imKit = loginHelper.getIMKit();
                         mConversationService = imKit.getConversationService();
                         //获取当前登录用户的所有未读数
-                         int unReadCount = mConversationService.getAllUnreadCount();
+                        int unReadCount = mConversationService.getAllUnreadCount();
                         //设置桌面角标的未读数
                         mIMKit.setShortcutBadger(unReadCount);
                         if (unReadCount > 0) {
@@ -662,9 +681,9 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 //
     }
 
-    private void getUndreadMsgCount (){
+    private void getUndreadMsgCount() {
         IYWConversationService conversationService = mIMKit.getConversationService();
-       int  unReadCount=conversationService.getAllUnreadCount();
+        int unReadCount = conversationService.getAllUnreadCount();
         if (unReadCount > 0) {
             mUnread.setVisibility(View.VISIBLE);
             if (unReadCount < 100) {
@@ -715,7 +734,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         sendJsonRequest(userInfoOwnerRequest);
     }
 
-//约服团队 消息未读的数量
+    //约服团队 消息未读的数量
     private void UserMessageAllNumUnread_1_2Request() {
         if (userMessageAllNumUnread_1_2Request != null) {
             userMessageAllNumUnread_1_2Request.cancel();
@@ -735,18 +754,18 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    long datetime=new Date().getTime();
-                    try{
-                        String sDt =  ((CommonResult) response).createtime ;
-                        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    long datetime = new Date().getTime();
+                    try {
+                        String sDt = ((CommonResult) response).createtime;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date dt2 = sdf.parse(sDt);
                         //继续转换得到秒数的long型
-                        datetime= dt2.getTime();
-                    }catch (Exception e){
+                        datetime = dt2.getTime();
+                    } catch (Exception e) {
 
                     }
 
-                    initCustomConversation( ((CommonResult) response).note, ((CommonResult) response).num,datetime);
+                    initCustomConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
                 }
             }
@@ -774,18 +793,18 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    long datetime=new Date().getTime();
-                    try{
-                        String sDt =  ((CommonResult) response).createtime ;
-                        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    long datetime = new Date().getTime();
+                    try {
+                        String sDt = ((CommonResult) response).createtime;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date dt2 = sdf.parse(sDt);
                         //继续转换得到秒数的long型
-                        datetime= dt2.getTime();
-                    }catch (Exception e){
+                        datetime = dt2.getTime();
+                    } catch (Exception e) {
 
                     }
 
-                    initOrderConversation( ((CommonResult) response).note, ((CommonResult) response).num,datetime);
+                    initOrderConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
                 }
             }

@@ -200,7 +200,7 @@ public class CommonDialog {
 			}
 		});
 		//显示PopupWindow
-		mPopWindow.showAsDropDown(rightButton, -190, -26);
+		mPopWindow.showAsDropDown(rightButton, -180, 0);
 	}
 
 	public interface PopClickListener{
