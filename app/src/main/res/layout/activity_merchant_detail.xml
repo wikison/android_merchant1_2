@@ -59,30 +59,13 @@
         <RelativeLayout
             android:id="@+id/rl_first"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/half_transparent">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv"
-                android:layout_marginRight="6dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/shenqing_icon"/>
-            <ImageView
-                android:layout_marginRight="36dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="23dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/tishi"/>
-            <ImageView
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/tishi2"
-                android:layout_marginBottom="60dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/tishi"
+                android:scaleType="centerCrop"/>
         </RelativeLayout>
 
     </FrameLayout>

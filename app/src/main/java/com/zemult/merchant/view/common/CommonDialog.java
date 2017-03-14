@@ -180,9 +180,9 @@ public class CommonDialog {
 				holder.setText(R.id.tv, entity.getKey());
 
 				if(entity.isSelected())
-					holder.setViewGone(R.id.ivDot);
-				else
 					holder.setViewVisible(R.id.ivDot);
+				else
+					holder.setViewGone(R.id.ivDot);
 
 				if (position==list.size()-1)
 					holder.setViewGone(R.id.divider);
