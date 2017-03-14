@@ -385,14 +385,21 @@ public class ConversationListUICustomSample extends IMConversationListUI {
 //                    name = "联系人系统消息";
 //                }
 //                else
-                  if(conversationId.equals(MainActivity.SYSTEM_SYSMESSAGE)){
-                    headLoadHelper.setDefaultHeadView(holder.head);
-                    imageManager.loadResImage( R.mipmap.bell_icon,holder.head);
-                    name = "系统消息";
-                }else{
-                    headLoadHelper.setDefaultHeadView(holder.head);
-                    name = "这是一个自定义会话";
-                }
+//                  if(conversationId.equals(MainActivity.SYSTEM_SYSMESSAGE)){
+//                    headLoadHelper.setDefaultHeadView(holder.head);
+//                    imageManager.loadResImage( R.mipmap.bell_icon,holder.head);
+//                    name = "约服团队";
+//                }
+//                  else if (conversationId.equals(MainActivity.SYSTEM_ORDERMESSAGE)){
+//                      headLoadHelper.setDefaultHeadView(holder.head);
+//                      imageManager.loadResImage( R.mipmap.baobiao_icon,holder.head);
+//                      name = "约服账单";
+//                  }
+//
+//                else{
+//                    headLoadHelper.setDefaultHeadView(holder.head);
+//                    name = "这是一个自定义会话";
+//                }
             }
 
             headLoadHelper.setHeadView(holder.head, conversation);

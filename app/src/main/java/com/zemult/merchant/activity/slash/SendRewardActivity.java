@@ -23,8 +23,11 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,7 +58,7 @@ public class SendRewardActivity extends BaseActivity {
     private double money = 0;
     private String ORDER_SN;
     private int userPayId;
-
+    Set<Integer> selectidset=new HashSet<Integer>();
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_send_reward);
@@ -95,12 +98,27 @@ public class SendRewardActivity extends BaseActivity {
                         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                tvPayMoney.setText(adapter.getItem(position));
-                                adapter.setSelected(position);
-                                if (!tvPay.isEnabled()) {
-                                    money = Double.valueOf(adapter.getItem(position));
+                                if(selectidset.contains(position)){
+                                    selectidset.remove(position);
+                                }else{
+                                    selectidset.add(position);
+                                }
+                                double sumDoubleMoney = 0;
+                                for(Integer selectidposition : selectidset){
+                                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapter.getItem(selectidposition));
+                                }
+                                BigDecimal   b   =   new BigDecimal(sumDoubleMoney);
+                                money   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                                tvPayMoney.setText(money+"");
+
+                                adapter.setSelected(selectidset);
+                                if (money!=0) {
+//                                    money =Double.valueOf(adapter.getItem(position));//
                                     tvPay.setEnabled(true);
                                     tvPay.setBackgroundColor(getResources().getColor(R.color.bg_head_red));
+                                }else{
+                                    tvPay.setEnabled(false);
+                                    tvPay.setBackgroundColor(getResources().getColor(R.color.font_black_999));
                                 }
 
                             }

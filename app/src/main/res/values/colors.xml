@@ -23,6 +23,7 @@
     <color name="font_black_46">#464646</color>
     <color name="font_main">#e6bb7c</color>
 
+    <color name="tc_hb">#FEFBEF</color>
     <color name="bg_head">#e6bb7c</color>
     <color name="bg_head_red">#d84e43</color>
     <color name="subscribe_seperate_line">#ffcdcdcd</color>

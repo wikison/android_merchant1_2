@@ -398,8 +398,10 @@ public class Urls {
     public static String USER_LABEL_DEL_1_2 = "user_label_del_1_2";
 
 
-    //获取 我的消息中未读的所有数量
-    public static String USER_MESSAGE_ALLNUM_UNREAD_1_2 = "user_message_allNum_unread";
+    //获取 约服团队 消息未读的数量
+    public static String USER_MESSAGE_SYSNUM_UNREAD_1_2_2 = "user_message_sysNum_unread_1_2_2";
+    //获取 约服账单 消息未读的数量
+    public static String USER_MESSAGE_BILLNUM_UNREAD_1_2_2 = "user_message_billNum_unread_1_2_2";
     //获取 我的消息列表
     public static String USER_MESSAGELIST_1_2 = "user_messageList_1_2";
     //获取 @我的 消息列表
@@ -408,8 +410,11 @@ public class Urls {
     public static String USER_MESSAGELISTCOMMENT_1_2 = "user_messageList_comment_1_2";
     //获取 赞 消息列表
     public static String USER_MESSAGELIST_GOOD_1_2 = "user_messageList_good_1_2";
-    //获取 系统 消息列表  获取 个人 消息列表
-    public static String USER_MESSAGELIST_SYS_1_2 = "user_messageList_sys";
+    //获取约服团队 消息列表
+    public static String USER_MESSAGELIST_SYS_1_2_2 = "user_messageList_sys_1_2_2";
+    //约服账单 消息列表
+    public static String USER_MESSAGELIST_BILL_1_2_2 = "user_messageList_bill_1_2_2";
+
     //用户发布新的任务----非红包类状态为已发布,红包类由支付单操作变更任务状态
     public static String TASK_INDUSTRY_PUSH_1_2 = "task_industry_push_1_2";
     //用户参与探索(完成探索)

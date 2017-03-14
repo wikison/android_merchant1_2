@@ -1,7 +1,15 @@
 apply plugin: 'com.android.application'
 
+
+
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/' }
+    }
 }
 
 
@@ -12,6 +20,7 @@ android {
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
 
+
     defaultConfig {
         multiDexEnabled true
         applicationId "com.zemult.merchant"
@@ -21,7 +30,6 @@ android {
         versionName "1.2.1"
         manifestPlaceholders = [ UMENG_CHANNEL_VALUE:"default_channel", RELEASE_VERSION_VALUE:"v1.2.1",DEBUG_VERSION_VALUE:"测试版本号:Android_${releaseTime()}"]
     }
-
 
     signingConfigs {
         config {
@@ -75,18 +83,18 @@ android {
 
     productFlavors {
         d00 {}//泽马
-        d01 {}//华为
-        d02 {}//OPPO
-        d03 {}//小米
-        d04 {}//VIVO
-        d05 {}//三星
-        d06 {}//魅族
-        d07 {}//金立
-        d08 {}//海信
-        d09 {}//联想
-        d10 {}//百度
-        d11 {}//360
-        d12 {}//应用宝
+//        d01 {}//华为
+//        d02 {}//OPPO
+//        d03 {}//小米
+//        d04 {}//VIVO
+//        d05 {}//三星
+//        d06 {}//魅族
+//        d07 {}//金立
+//        d08 {}//海信
+//        d09 {}//联想
+//        d10 {}//百度
+//        d11 {}//360
+//        d12 {}//应用宝
     }
 
     productFlavors.all { flavor ->
@@ -167,7 +175,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
     compile project(':Pushlib')
-//    compile project(':YunWangVideoSDK')
+    //    compile project(':YunWangVideoSDK')
     compile project(':OneSDK')
     compile project(':volley')
     compile project(':library')
@@ -179,4 +187,10 @@ dependencies {
     compile files('libs/alipaySingle-20161009.jar')
     compile 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
+    //必选
+    compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
+    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
+    compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
 }

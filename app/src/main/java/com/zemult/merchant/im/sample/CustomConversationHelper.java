@@ -35,7 +35,8 @@ public class CustomConversationHelper {
         YWConversation conversation = conversationService.getCustomConversationByConversationId(conversationID);
         if (conversation != null){
             conversation.getUnreadCount();
-            LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
+            //会话置顶
+//            LoginSampleHelper.getInstance().getIMKit().getIMCore().getConversationService().setTopConversation(conversation);
         }
 
 //        if (conversationService.getCustomConversationByConversationId(conversationID) == null) {

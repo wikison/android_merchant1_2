@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
-//获取 约服团队 消息未读的数量
-public class UserMessageAllNumUnread_1_2Request extends PostStringRequest<Type>  {
+//获取 约服账单 消息未读的数量
+public class UserMessageBillNumUnread_1_2_2Request extends PostStringRequest<Type>  {
 
     public static class Input {
         public int	userId				;	//	用户id
@@ -28,8 +28,8 @@ public class UserMessageAllNumUnread_1_2Request extends PostStringRequest<Type> 
 
     }
 
-    public UserMessageAllNumUnread_1_2Request(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.USER_MESSAGE_SYSNUM_UNREAD_1_2_2,input.ejson , new TypeToken<CommonResult>() {
+    public UserMessageBillNumUnread_1_2_2Request(Input input, ResponseListener listener) {
+        super(Urls.BASIC_URL+Urls.USER_MESSAGE_BILLNUM_UNREAD_1_2_2,input.ejson , new TypeToken<CommonResult>() {
         }.getType() , listener);
 
     }

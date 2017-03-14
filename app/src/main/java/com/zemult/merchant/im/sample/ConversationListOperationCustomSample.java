@@ -89,7 +89,10 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
 //            }
 //            else
             if (conversationId.equals(MainActivity.SYSTEM_SYSMESSAGE)) {
-                return R.drawable.drawable_bell_icon;
+                return R.drawable.drawable_yuefu_icon;
+            }
+           else if (conversationId.equals(MainActivity.SYSTEM_ORDERMESSAGE)) {
+                return R.drawable.drawable_zhangdan_icon;
             }
             else {
                 return R.drawable.aliwx_head_default;
@@ -124,7 +127,10 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 return "自定义View展示的会话";
             }
             else if (body.getIdentity().equals(MainActivity.SYSTEM_SYSMESSAGE)) {
-                return "系统消息";
+                return "约服团队";
+            }
+            else if (body.getIdentity().equals(MainActivity.SYSTEM_ORDERMESSAGE)) {
+                return "约服账单";
             }
         }
 
@@ -169,6 +175,16 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 IYWConversationService conversationService = mIMKit.getConversationService();
                 // 将某一条会话标记为已读
                  conversationService.markReaded(conversation);
+                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
+                fragment.getActivity().startActivity(message_it);
+                return true;
+            }
+            else if (conversationId.startsWith(MainActivity.SYSTEM_ORDERMESSAGE)) {
+                // 获取会话管理类
+                YWIMKit  mIMKit = LoginSampleHelper.getInstance().getIMKit();
+                IYWConversationService conversationService = mIMKit.getConversationService();
+                // 将某一条会话标记为已读
+                conversationService.markReaded(conversation);
                 Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;

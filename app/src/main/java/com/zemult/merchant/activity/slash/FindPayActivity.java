@@ -49,9 +49,12 @@ import com.zemult.merchant.view.BounceScrollView;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.FixedListView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -137,7 +140,7 @@ public class FindPayActivity extends BaseActivity {
 
     private int selectPosition = 2; //选中的赞赏红包, 默认2, 金额6.66
     private String strRewardMoney = "";
-
+    Set<Integer> selectidset=new HashSet<Integer>();
 
     @Override
     public void setContentView() {
@@ -257,9 +260,15 @@ public class FindPayActivity extends BaseActivity {
                     rewardMoneys = ((CommonResult) response).rewardMoney;
                     if (!TextUtils.isEmpty(rewardMoneys)) {
                         moneyList = Arrays.asList(rewardMoneys.split(","));
-                        strRewardMoney = moneyList.get(selectPosition);
-                        rewardMoney = Double.parseDouble(strRewardMoney);
-                        cbReward.setText(String.format("赞赏红包%s元", moneyList.get(selectPosition)));
+//                        strRewardMoney = moneyList.get(selectPosition);
+//                        rewardMoney = Double.parseDouble(strRewardMoney);
+                        double sumDoubleMoney = 0;
+                        for(Integer selectidposition : selectidset){
+                            sumDoubleMoney=sumDoubleMoney+Double.valueOf(moneyList.get(selectidposition));
+                        }
+                        BigDecimal b   =   new BigDecimal(sumDoubleMoney);
+                        rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                        cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
                     }
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
@@ -275,33 +284,62 @@ public class FindPayActivity extends BaseActivity {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_reward, null);
         FixedGridView gv = (FixedGridView) view.findViewById(R.id.gv);
         TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
+
         adapterReward = new SendRewardAdapter(mContext, moneyList);
         gv.setAdapter(adapterReward);
 
-        if (cbReward.isChecked()) {
-            adapterReward.setSelected(selectPosition);
-        }
+//        if (cbReward.isChecked()) {
+//         adapterReward.setSelected(selectidset);
+//        }
+        adapterReward.setSelected(selectidset);
 
         alertDialog.setContentView(view);
         tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectidset.clear();
+                rewardMoney=0;
+                cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
+                cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                cbReward.setChecked(false);
+                alertDialog.dismiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
 
+
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cbReward.setText(String.format("赞赏红包%s元", adapterReward.getItem(position)));
+
                 selectPosition = position;
-                strRewardMoney = moneyList.get(selectPosition);
-                rewardMoney = Double.parseDouble(strRewardMoney);
+
+                if(selectidset.contains(position)){
+                    selectidset.remove(position);
+                }else{
+                    selectidset.add(position);
+                }
+                double sumDoubleMoney = 0;
+                for(Integer selectidposition : selectidset){
+                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapterReward.getItem(selectidposition));
+                }
+                BigDecimal b   =   new BigDecimal(sumDoubleMoney);
+                rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+                cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
+
+//                strRewardMoney = moneyList.get(selectPosition);
+//                rewardMoney = Double.parseDouble(strRewardMoney);
                 cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
                 cbReward.setChecked(true);
                 tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
-                adapterReward.setSelected(position);
-                alertDialog.dismiss();
+                adapterReward.setSelected(selectidset);
             }
         });
 

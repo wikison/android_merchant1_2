@@ -5,41 +5,38 @@
     android:layout_height="wrap_content"
     android:gravity="center">
 
-    <com.flyco.roundview.RoundLinearLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/rl"
-        android:layout_width="85dp"
-        android:layout_height="50dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:rv_backgroundColor="@color/white"
-        app:rv_cornerRadius="5px"
-        app:rv_strokeWidth="5px"
-        app:rv_strokeColor="@color/bg_head_red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/bg_head_red"
-            android:textSize="20sp"
+            android:textColor="@color/tc_hb"
+            android:gravity="center"
+            android:background="@mipmap/zshb_head"
+            android:textSize="12sp"
             android:id="@+id/tv"
-            android:textStyle="bold"
-            android:text="">
+            android:text="和和美美">
 
 
         </TextView>
         <TextView
-            android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/bg_head_red"
-            android:textSize="@dimen/font_20px"
+            android:background="@mipmap/zshb_unselected"
+            android:textSize="@dimen/font_28px"
+            android:gravity="center"
             android:id="@+id/tv_yuan"
-            android:textStyle="bold"
             android:text="元">
 
 
         </TextView>
-    </com.flyco.roundview.RoundLinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

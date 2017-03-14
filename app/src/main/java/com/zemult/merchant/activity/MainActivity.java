@@ -41,6 +41,7 @@ import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.mine.UserMessageAllNumUnread_1_2Request;
+import com.zemult.merchant.aip.mine.UserMessageBillNumUnread_1_2_2Request;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.MAppCompatActivity;
 import com.zemult.merchant.config.Constants;
@@ -123,6 +124,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     private PushAgent mPushAgent;
     private LoginSampleHelper loginHelper;
     UserMessageAllNumUnread_1_2Request userMessageAllNumUnread_1_2Request;
+    UserMessageBillNumUnread_1_2_2Request userMessageBillNumUnread_1_2_2Request;
+
     public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
 
         @Override
@@ -233,8 +236,9 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         //添加IM连接状态监听
         addConnectionListener();
 
+        initOrderConversation("约服账单",0,new Date().getTime());
+        initCustomConversation("约服团队",0,new Date().getTime());
 
-        initCustomConversation("系统消息",0,new Date().getTime());
     }
 
 
@@ -338,6 +342,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 // 当点击了联系人tab时，选中第2个tab
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     UserMessageAllNumUnread_1_2Request();
+                    UserMessageBillNumUnread_1_2_2Request();
                     setTabSelection(1);
                 } else {
                     IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
@@ -493,9 +498,13 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
      * 自定义会话示例展示系统通知的示例
      */
     public static final String SYSTEM_SYSMESSAGE = "sysMessage";
+    public static final String SYSTEM_ORDERMESSAGE = "orderMessage";
 
     private void initCustomConversation(String message, int unReadCounr,long datatime) {
         CustomConversationHelper.addCustomConversation(SYSTEM_SYSMESSAGE, message,datatime ,unReadCounr);
+    }
+    private void initOrderConversation(String message, int unReadCounr,long datatime) {
+        CustomConversationHelper.addCustomConversation(SYSTEM_ORDERMESSAGE, message,datatime ,unReadCounr);
     }
 
 
@@ -706,7 +715,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         sendJsonRequest(userInfoOwnerRequest);
     }
 
-
+//约服团队 消息未读的数量
     private void UserMessageAllNumUnread_1_2Request() {
         if (userMessageAllNumUnread_1_2Request != null) {
             userMessageAllNumUnread_1_2Request.cancel();
@@ -743,6 +752,45 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             }
         });
         sendJsonRequest(userMessageAllNumUnread_1_2Request);
+    }
+
+    //约服账单 消息未读的数量
+    private void UserMessageBillNumUnread_1_2_2Request() {
+        if (userMessageBillNumUnread_1_2_2Request != null) {
+            userMessageBillNumUnread_1_2_2Request.cancel();
+        }
+
+        UserMessageBillNumUnread_1_2_2Request.Input input = new UserMessageBillNumUnread_1_2_2Request.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+            input.convertJosn();
+        }
+
+        userMessageBillNumUnread_1_2_2Request = new UserMessageBillNumUnread_1_2_2Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    long datetime=new Date().getTime();
+                    try{
+                        String sDt =  ((CommonResult) response).createtime ;
+                        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date dt2 = sdf.parse(sDt);
+                        //继续转换得到秒数的long型
+                        datetime= dt2.getTime();
+                    }catch (Exception e){
+
+                    }
+
+                    initOrderConversation( ((CommonResult) response).note, ((CommonResult) response).num,datetime);
+//                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
+                }
+            }
+        });
+        sendJsonRequest(userMessageBillNumUnread_1_2_2Request);
     }
 
 

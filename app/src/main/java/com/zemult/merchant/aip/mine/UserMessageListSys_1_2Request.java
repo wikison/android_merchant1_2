@@ -32,7 +32,7 @@ public class UserMessageListSys_1_2Request extends PostStringRequest<Type> {
     }
 
     public UserMessageListSys_1_2Request(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.USER_MESSAGELIST_SYS_1_2, input.ejson, new TypeToken<APIM_CommonSysMessageList>() {
+        super(Urls.BASIC_URL+Urls.USER_MESSAGELIST_SYS_1_2_2, input.ejson, new TypeToken<APIM_CommonSysMessageList>() {
         }.getType(), listener);
 
     }

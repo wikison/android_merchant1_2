@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,13 +23,13 @@ import butterknife.ButterKnife;
  * @time 2017/2/5 11:26
  */
 public class SendRewardAdapter extends BaseListAdapter<String> {
-    private int selectedPos = -1;
+    private Set<Integer> selectedPos =new HashSet<Integer>();
 
     public SendRewardAdapter(Context context, List<String> list) {
         super(context, list);
     }
 
-    public void setSelected(int pos){
+    public void setSelected(Set<Integer>  pos){
         selectedPos = pos;
         notifyDataSetChanged();
     }
@@ -44,7 +46,7 @@ public class SendRewardAdapter extends BaseListAdapter<String> {
         }
 
         holder.tv.setText(getItem(position));
-        if(selectedPos == position){
+        if(selectedPos.contains(position) ){
             holder.rl.getDelegate().setBackgroundColor(0xffd84e43);
             holder.tv.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.tvYuan.setTextColor(mContext.getResources().getColor(R.color.white));
@@ -53,6 +55,8 @@ public class SendRewardAdapter extends BaseListAdapter<String> {
             holder.tv.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
             holder.tvYuan.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
         }
+
+
         return convertView;
     }
 
