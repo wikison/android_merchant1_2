@@ -60,6 +60,7 @@ import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.HeaderHomeView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,14 +95,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     LinearLayout llTopbar;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
-    @Bind(R.id.iv_maidan)
-    ImageView ivMaidan;
-    @Bind(R.id.iv_red_dot)
-    ImageView ivRedDot;
-    @Bind(R.id.rl_maidan)
-    RelativeLayout rlMaidan;
-    @Bind(R.id.rl_scan)
-    RelativeLayout rlScan;
 
     private Context mContext;
     private Activity mActivity;
@@ -117,8 +110,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private DBManager dbManager;
     private int titleHeight = 44, bottomHeight = 50, noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
+    private boolean showRedDot;
 
-    @OnClick({R.id.ll_city, R.id.rl_scan, R.id.rl_maidan})
+    @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -127,22 +121,38 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 intent.putExtra("cityName", tvCity.getText().toString());
                 startActivityForResult(intent, REQ_CITY);
                 break;
-            case R.id.rl_scan:
-                boolean cameraPermission = AndPermission.hasPermission(mContext, Manifest.permission.CAMERA);
-                if (cameraPermission) {
-                    intent = new Intent(mActivity, ScanQrActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(intent);
-                } else {
-                    requestCameraPermission();
-                }
-                break;
-            case R.id.rl_maidan:
+
+            case R.id.rl_add:
                 if(noLogin(mContext))
                     return;
-                intent = new Intent(mContext, MyAppointmentActivity.class);
-                intent.putExtra("fromHome", true);
-                startActivity(intent);
+                CommonDialog.showPopupWindow(mContext, view, ModelUtil.getHomeRightData(showRedDot), new CommonDialog.PopClickListener() {
+                    @Override
+                    public void onClick(int pos) {
+                        switch (pos){
+                            case 0:
+                                Intent intent = new Intent(mContext, MyAppointmentActivity.class);
+                                intent.putExtra("fromHome", true);
+                                startActivity(intent);
+                                break;
+
+                            case 1:
+                                boolean cameraPermission = AndPermission.hasPermission(mContext, Manifest.permission.CAMERA);
+                                if (cameraPermission) {
+                                    intent = new Intent(mActivity, ScanQrActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    startActivity(intent);
+                                } else {
+                                    requestCameraPermission();
+                                }
+                                break;
+
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                        }
+                    }
+                });
                 break;
         }
     }
@@ -406,9 +416,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 if (((APIM_UserReservationList) response).status == 1) {
                     if(((APIM_UserReservationList) response).reservationList != null
                             && !((APIM_UserReservationList) response).reservationList.isEmpty())
-                        ivRedDot.setVisibility(View.VISIBLE);
+                        showRedDot = true;
                     else
-                        ivRedDot.setVisibility(View.GONE);
+                        showRedDot = false;
                 }
             }
         });

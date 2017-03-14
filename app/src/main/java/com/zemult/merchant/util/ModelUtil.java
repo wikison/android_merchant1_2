@@ -101,4 +101,14 @@ public class ModelUtil {
         return list;
     }
 
+    // 首页右上角按钮数据
+    public static List<FilterEntity> getHomeRightData(boolean showRedDot) {
+        List<FilterEntity> list = new ArrayList<>();
+        list.add(new FilterEntity("待结账单", 0, showRedDot, R.mipmap.yuyuemaidan_home_icon));
+        list.add(new FilterEntity("扫一扫", 1, R.mipmap.saomiao_home_icon));
+        list.add(new FilterEntity("发起预邀", 2, R.mipmap.yuyao_icon));
+        list.add(new FilterEntity("推荐给好友", 3, R.mipmap.fenxiang_icon));
+        return list;
+    }
+
 }

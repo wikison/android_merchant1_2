@@ -396,6 +396,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="text_15_white">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 
     <style name="text_16_black">
         <item name="android:textColor">@color/black</item>

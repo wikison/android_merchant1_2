@@ -22,6 +22,12 @@ public class FilterEntity implements Serializable {
         this.intValue = intValue;
     }
 
+    public FilterEntity(String key, int intValue, int mipmap) {
+        this.key = key;
+        this.intValue = intValue;
+        this.mipmap = mipmap;
+    }
+
     public FilterEntity(String key, int intValue, boolean isSelected, int mipmap) {
         this.key = key;
         this.intValue = intValue;

@@ -3,6 +3,7 @@ package com.zemult.merchant.view.common;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,10 +17,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.model.FilterEntity;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.ImageManager;
 
 import java.util.ArrayList;
@@ -672,5 +676,5 @@ public final class MMAlert {
 			int type;
 		}
 
-	}
 
+	}

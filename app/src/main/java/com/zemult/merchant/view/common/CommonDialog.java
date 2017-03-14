@@ -3,16 +3,29 @@ package com.zemult.merchant.view.common;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.adapter.CommonAdapter;
+import com.zemult.merchant.adapter.CommonViewHolder;
+import com.zemult.merchant.model.FilterEntity;
+import com.zemult.merchant.model.M_Fan;
+import com.zemult.merchant.util.DensityUtil;
+import com.zemult.merchant.util.ToastUtil;
+
+import java.util.List;
 
 import cn.trinea.android.common.util.ToastUtils;
 
@@ -146,5 +159,51 @@ public class CommonDialog {
 
 	public interface CommitClickListener{
 		void onCommit(String content);
+	}
+
+	public static void showPopupWindow(final Context context, View rightButton, final List<FilterEntity> list, final PopClickListener popClickListener) {
+		//设置contentView
+		View contentView = LayoutInflater.from(context).inflate(R.layout.pop_layout, null);
+		final PopupWindow mPopWindow = new PopupWindow(contentView,
+				DensityUtil.dip2px(context, 132), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+		mPopWindow.setContentView(contentView);
+		mPopWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+		mPopWindow.setOutsideTouchable(true);
+
+		ListView lv = (ListView) contentView.findViewById(R.id.lv);
+
+
+		lv.setAdapter(new CommonAdapter<FilterEntity>(context, R.layout.item_pop, list) {
+			@Override
+			public void convert(CommonViewHolder holder, FilterEntity entity, final int position) {
+				holder.setImageResource(R.id.iv, entity.getMipmap());
+				holder.setText(R.id.tv, entity.getKey());
+
+				if(entity.isSelected())
+					holder.setViewGone(R.id.ivDot);
+				else
+					holder.setViewVisible(R.id.ivDot);
+
+				if (position==list.size()-1)
+					holder.setViewGone(R.id.divider);
+				else
+					holder.setViewVisible(R.id.divider);
+			}
+		});
+
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				mPopWindow.dismiss();
+				if(popClickListener!= null)
+					popClickListener.onClick(position);
+			}
+		});
+		//显示PopupWindow
+		mPopWindow.showAsDropDown(rightButton, -190, -26);
+	}
+
+	public interface PopClickListener{
+		void onClick(int pos);
 	}
 }
