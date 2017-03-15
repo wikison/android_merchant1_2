@@ -23,23 +23,7 @@
     </RelativeLayout>
 
     <View style="@style/divider"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/ripple_item_clicked2"
-        android:layout_height="44dp">
-    <TextView
-        android:id="@+id/tv_xiuxi"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:drawablePadding="12dp"
-       android:drawableLeft="@mipmap/xiuxi_icon"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:textColor="@color/font_black_999"
-        android:textSize="@dimen/font_30px"
-        android:text="休息"/>
-    </RelativeLayout>
-    <View style="@style/divider"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/ripple_item_clicked2"

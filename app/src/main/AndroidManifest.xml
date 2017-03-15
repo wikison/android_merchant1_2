@@ -590,6 +590,8 @@
         <activity android:name=".activity.slash.BeManagerFirstActivity" />
         <activity android:name=".activity.slash.ConnectLocalPhoneActivity" />
         <activity android:name=".activity.slash.BeManagerSuccessActivity"></activity>
+
+        <activity android:name=".activity.mine.MyInviteActivity"></activity>
     </application>
 
 </manifest>

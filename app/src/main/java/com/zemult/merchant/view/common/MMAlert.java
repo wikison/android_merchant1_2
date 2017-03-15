@@ -296,7 +296,7 @@ public final class MMAlert {
 	 */
 	public interface ChooseCallback {
 		void onfirstChoose();
-		void onsecondChoose();
+
 		void onthirdChoose();
 	}
 	public static Dialog showChooseStateDialog( Context context,
@@ -312,7 +312,7 @@ public final class MMAlert {
 		final int cFullFillWidth = 10000;
 		layout.setMinimumWidth(cFullFillWidth);
 		TextView tvfirst = (TextView) layout.findViewById(R.id.tv_kongxian);
-		TextView tvsecond = (TextView) layout.findViewById(R.id.tv_xiuxi);
+
 		TextView tvthird = (TextView) layout.findViewById(R.id.tv_manglu);
 		TextView tvCancel = (TextView) layout.findViewById(R.id.tv_cancle);
 		tvfirst.setOnClickListener(new OnClickListener() {
@@ -324,14 +324,7 @@ public final class MMAlert {
 
 			}
 		});
-		tvsecond.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
-				dlg.dismiss();
-				callback.onsecondChoose();
-			}
-		});
 		tvthird.setOnClickListener(new OnClickListener() {
 
 			@Override

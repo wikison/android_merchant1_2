@@ -21,6 +21,8 @@ import com.zemult.merchant.activity.mine.IamYuekeActivity;
 import com.zemult.merchant.activity.mine.MerchantEnter2Activity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyCardsActivity;
+import com.zemult.merchant.activity.mine.MyCollectionActivity;
+import com.zemult.merchant.activity.mine.MyInviteActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
 import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
@@ -32,17 +34,18 @@ import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.SettingsActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.UserManager;
+import com.zemult.merchant.view.DrawableCenterTextView;
 import com.zemult.merchant.view.common.MMAlert;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -57,8 +60,7 @@ public class MineFragment extends BaseFragment {
     TextView mynameTv;
     @Bind(R.id.mgrade_tv)
     TextView mgradeTv;
-    @Bind(R.id.iv_set)
-    ImageView ivSet;
+
     @Bind(R.id.mygo_layout)
     RelativeLayout mygoLayout;
 
@@ -110,14 +112,22 @@ public class MineFragment extends BaseFragment {
     TextView tvState;
     @Bind(R.id.state_rl)
     RelativeLayout stateRl;
-    @Bind(R.id.incomeaccount)
-    TextView incomeaccount;
-    @Bind(R.id.servicerecord)
-    TextView servicerecord;
     @Bind(R.id.applyfor_tv)
     TextView applyforTv;
     @Bind(R.id.fuwuguanjia_ll)
     LinearLayout fuwuguanjiaLl;
+    @Bind(R.id.servicerecord)
+    DrawableCenterTextView servicerecord;
+    @Bind(R.id.businessmanage)
+    DrawableCenterTextView businessmanage;
+    @Bind(R.id.incomeaccount)
+    DrawableCenterTextView incomeaccount;
+    @Bind(R.id.rl_my_oriprorder)
+    RelativeLayout rlMyOriprorder;
+    @Bind(R.id.rl_my_collect)
+    RelativeLayout rlMyCollect;
+    @Bind(R.id.rl_my_setting)
+    RelativeLayout rlMySetting;
 
     private boolean hasStarted = false;
     int state;
@@ -158,8 +168,8 @@ public class MineFragment extends BaseFragment {
 
     @OnClick({R.id.rl_record, R.id.mtag_layout,
             R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
-            R.id.mshop_layout, R.id.iv_set, R.id.msafe_layout,
-            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.state_rl, R.id.incomeaccount, R.id.servicerecord})
+            R.id.mshop_layout, R.id.msafe_layout,
+            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.state_rl, R.id.incomeaccount, R.id.servicerecord, R.id.businessmanage, R.id.rl_my_oriprorder, R.id.rl_my_collect, R.id.rl_my_setting})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -200,15 +210,12 @@ public class MineFragment extends BaseFragment {
 //                break;
             case R.id.mshop_layout:
                 //我是商家
-                if(SlashHelper.userManager().getUserinfo().getManagerUserNum()==0){
+                if (SlashHelper.userManager().getUserinfo().getManagerUserNum() == 0) {
                     startActivity(new Intent(getActivity(), MerchantEnter2Activity.class));
-                }else{
+                } else {
                     startActivity(new Intent(getActivity(), BusinessManActivity.class));
                 }
 
-                break;
-            case R.id.iv_set:
-                startActivity(new Intent(getActivity(), MySettingActivity.class));
                 break;
             case R.id.msafe_layout:
                 startActivity(new Intent(getActivity(), SafeSettingActivity.class));
@@ -247,12 +254,6 @@ public class MineFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onsecondChoose() {
-                        state = 1;
-                        userEditState();
-                    }
-
-                    @Override
                     public void onthirdChoose() {
                         state = 2;
                         userEditState();
@@ -268,6 +269,19 @@ public class MineFragment extends BaseFragment {
             case R.id.servicerecord:
                 //服务记录
                 startActivity(new Intent(getActivity(), ServiceHistoryActivity.class));
+                break;
+
+            case R.id.businessmanage:
+
+                break;
+            case R.id.rl_my_oriprorder:
+                startActivity(new Intent(getActivity(), MyInviteActivity.class));
+                break;
+            case R.id.rl_my_collect:
+                startActivity(new Intent(getActivity(), MyCollectionActivity.class));
+                break;
+            case R.id.rl_my_setting:
+                startActivity(new Intent(getActivity(), MySettingActivity.class));
                 break;
 
         }
@@ -292,7 +306,7 @@ public class MineFragment extends BaseFragment {
         if (userInfoOwnerRequest != null) {
             userInfoOwnerRequest.cancel();
         }
-          showPd();
+        showPd();
         UserInfoOwnerRequest.Input input = new UserInfoOwnerRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId() + "";
@@ -338,16 +352,16 @@ public class MineFragment extends BaseFragment {
                             levelIv.setBackgroundResource(R.mipmap.demon_iconsj);
                         }
 
-                        if(((APIM_UserLogin) response).userInfo.getIsSaleUser()>0){
+                        if (((APIM_UserLogin) response).userInfo.getIsSaleUser() > 0) {
                             fuwuguanjiaLl.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             fuwuguanjiaLl.setVisibility(View.GONE);
                         }
-                        if(((APIM_UserLogin) response).userInfo.getManagerUserNum()==0){
+                        if (((APIM_UserLogin) response).userInfo.getManagerUserNum() == 0) {
 
                             applyforTv.setText("申请商户入驻");
                             mshopLayout.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             mshopLayout.setVisibility(View.VISIBLE);
                             applyforTv.setText("我是商户");
                         }
@@ -399,15 +413,15 @@ public class MineFragment extends BaseFragment {
     //处理状态
     private void ondeal(int state) {
         if (state == 0) {
-            stateIv.setBackgroundResource(R.mipmap.kongxian_icon);
+            stateIv.setImageResource(R.mipmap.kongxian);
             tvState.setText("空闲");
             tvState.setTextColor(getResources().getColor(R.color.font_idle));
         } else if (state == 1) {
-            stateIv.setBackgroundResource(R.mipmap.xiuxi_icon);
+            stateIv.setImageResource(R.mipmap.xiuxi_icon);
             tvState.setText("休息");
             tvState.setTextColor(getResources().getColor(R.color.font_black_999));
         } else if (state == 2) {
-            stateIv.setBackgroundResource(R.mipmap.manglu_icon);
+            stateIv.setImageResource(R.mipmap.manglu);
             tvState.setText("忙碌");
             tvState.setTextColor(getResources().getColor(R.color.font_busy));
         }
@@ -419,6 +433,7 @@ public class MineFragment extends BaseFragment {
     protected void lazyLoad() {
 
     }
+
 
 
 }
