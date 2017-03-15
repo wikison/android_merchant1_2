@@ -1,11 +1,9 @@
 package com.zemult.merchant.activity.slash;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -13,18 +11,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.yanzhenjie.permission.AndPermission;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.mine.AlbumActivity;
-import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.MerchantDetailAdpater;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListFanRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
+import com.zemult.merchant.aip.slash.UserFavoriteMerchantAddRequest;
+import com.zemult.merchant.aip.slash.UserFavoriteMerchantDelRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.FilterEntity;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
@@ -55,8 +53,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
      * 调用详情页面必传参数 MERCHANT_ID
      */
     public static final String MERCHANT_ID = "merchantId";
-    private static final int REQ_APPLY = 0x110;
-
 
     @Bind(R.id.lv)
     SmoothListView lv;
@@ -230,6 +226,68 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         });
         sendJsonRequest(request);
     }
+    /**
+     * 用户添加收藏商家
+     */
+    private UserFavoriteMerchantAddRequest addRequest;
+    private void user_favorite_merchant_add() {
+        showPd();
+        if (addRequest != null) {
+            addRequest.cancel();
+        }
+        UserFavoriteMerchantAddRequest.Input input = new UserFavoriteMerchantAddRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantId;
+        input.convertJosn();
+        addRequest = new UserFavoriteMerchantAddRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    ToastUtils.show(mContext, ("收藏成功"));
+                } else {
+                    ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(addRequest);
+    }
+    /**
+     * 用户的删除收藏商家
+     */
+    private UserFavoriteMerchantDelRequest delRequest;
+    private void user_favorite_merchant_del() {
+        showPd();
+        if (delRequest != null) {
+            delRequest.cancel();
+        }
+        UserFavoriteMerchantDelRequest.Input input = new UserFavoriteMerchantDelRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantId;
+        input.convertJosn();
+        delRequest = new UserFavoriteMerchantDelRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    ToastUtils.show(mContext, ("取消收藏成功"));
+                } else {
+                    ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(delRequest);
+    }
 
     @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
     public void onClick(View view) {
@@ -245,7 +303,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
 
                 List<FilterEntity> list = new ArrayList<>();
                 list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
-                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_icon));
+                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_nor));
                 if (merchantInfo != null && merchantInfo.isCommission == 1)
                     list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
                  else
@@ -269,12 +327,16 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                                     intent.putExtra(TabManageActivity.NAME, name);
                                     intent.putExtra(TabManageActivity.TAGS, tags);
                                     intent.putExtra(TabManageActivity.COMEFROM, 2);
-                                    startActivityForResult(intent, REQ_APPLY);
+                                    startActivity(intent);
                                 } else {
-                                    Intent it = new Intent(mActivity, TabManageActivity.class);
+//                                    Intent it = new Intent(mActivity, TabManageActivity.class);
+//                                    it.putExtra(TabManageActivity.TAG, merchantId);
+//                                    it.putExtra(TabManageActivity.NAME, name);
+//                                    startActivity(it);
+                                    Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
                                     it.putExtra(TabManageActivity.TAG, merchantId);
                                     it.putExtra(TabManageActivity.NAME, name);
-                                    startActivityForResult(it, REQ_APPLY);
+                                    startActivity(it);
                                 }
                                 break;
                         }
@@ -404,12 +466,5 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQ_APPLY)
-            onRefresh();
     }
 }

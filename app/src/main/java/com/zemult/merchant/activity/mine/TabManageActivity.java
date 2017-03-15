@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
 import com.zemult.merchant.adapter.createroleadapter.DragAdapter;
 import com.zemult.merchant.adapter.createroleadapter.OtherAdapter;
 import com.zemult.merchant.aip.slash.CommonServiceTagListRequest;
@@ -182,7 +184,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         commonServiceTagList();
         initView();
         initData();
-        if (comefrom == 1) {
+        if (comefrom == 1 || comefrom == 3) {
             userAdapter.setB(isFalse);
             isvisibily = 0;
             name = getIntent().getStringExtra(NAME);
@@ -201,6 +203,9 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         }
         if (comefrom == 2) {
             userAdapter.setB(isFalse);
+        }
+        if (comefrom == 3) {
+            applyBtn.setText("下一步");
         }
 
 //        textView.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +245,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     private void initData() {
 //        userChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getUserChannel());
 //        otherChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getOtherChannel());
-        if (comefrom == 1) {
+        if (comefrom == 1 || comefrom == 3) {
             userChannelList.clear();
         }
         userAdapter = new DragAdapter(this, userChannelList);
@@ -525,7 +530,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     dismissPd();
                     sysdatalist = ((APIM_CommonGetallindustry) response).tagList;
-                    if (comefrom == 1) {
+                    if (comefrom == 1 || comefrom == 3) {
                         //来源于申请
                         if (otherChannelList.size() == 0) {
                             for (int k = 0; k < sysdatalist.size(); k++) {
@@ -584,16 +589,18 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Constants.SERVICEXIEYI));
                 break;
             case R.id.apply_btn:
-                if (comefrom == 1) {
+                if (comefrom == 1 || comefrom == 3) {
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-//                        if (cbAgree.isChecked()) {
-                        user_add_saleuser();
-//                        } else {
-//                            ToastUtils.show(this, "请勾选同意本平台协议");
-//                        }
-
+                        if (comefrom == 1)
+                            user_add_saleuser();
+                        else if(comefrom == 3){
+                            Intent it = new Intent(TabManageActivity.this, BeManagerFirstActivity.class);
+                            it.putExtra(TabManageActivity.TAG, merchantId);
+                            it.putExtra(TabManageActivity.TAGS, getTags());
+                            startActivity(it);
+                        }
                     }
                 } else if (comefrom == 2) {
                     if (userChannelList.size() == 0) {
@@ -604,6 +611,20 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 }
                 break;
         }
+    }
+
+    private String getTags() {
+        StringBuffer tagsname = new StringBuffer();
+        for (int i = 0; i < userChannelList.size(); i++) {
+            if (-1 != userChannelList.get(i).getId()) {
+                if (i == userChannelList.size() - 1) {
+                    tagsname.append(userChannelList.get(i).getName() + "");
+                } else {
+                    tagsname.append(userChannelList.get(i).getName() + ",");
+                }
+            }
+        }
+        return  tagsname.toString();
     }
 
 
@@ -617,21 +638,21 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             userAddSaleUserRequest.cancel();
         }
 
-        StringBuffer tagsname = new StringBuffer();
-        for (int i = 0; i < userChannelList.size(); i++) {
-            if (-1 != userChannelList.get(i).getId()) {
-                if (i == userChannelList.size() - 1) {
-                    tagsname.append(userChannelList.get(i).getName() + "");
-                } else {
-                    tagsname.append(userChannelList.get(i).getName() + ",");
-                }
-            }
-        }
+//        StringBuffer tagsname = new StringBuffer();
+//        for (int i = 0; i < userChannelList.size(); i++) {
+//            if (-1 != userChannelList.get(i).getId()) {
+//                if (i == userChannelList.size() - 1) {
+//                    tagsname.append(userChannelList.get(i).getName() + "");
+//                } else {
+//                    tagsname.append(userChannelList.get(i).getName() + ",");
+//                }
+//            }
+//        }
         UserAddSaleUserRequest.Input input = new UserAddSaleUserRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
 
         input.merchantId = merchantId;
-        input.tags = tagsname.toString();
+        input.tags = getTags();
         input.convertJosn();
         userAddSaleUserRequest = new UserAddSaleUserRequest(input, new ResponseListener() {
             @Override

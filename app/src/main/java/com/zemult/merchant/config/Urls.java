@@ -575,4 +575,8 @@ public class Urls {
     public static String USER_BANDCARDINFO_1_2_1 = "user_bandcard_info_1_2_1";
     //设置备注名
     public static String USER_ATTRACT_EDIT = "user_attract_edit";
+    //用户添加收藏商家
+    public static String USER_FAVORITE_MERCHANT_ADD = "user_favorite_merchant_add";
+    //用户的删除收藏商家
+    public static String USER_FAVORITE_MERCHANT_DEL = "user_favorite_merchant_del";
 }
