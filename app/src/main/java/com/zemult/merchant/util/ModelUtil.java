@@ -110,5 +110,4 @@ public class ModelUtil {
         list.add(new FilterEntity("推荐给好友", 3, R.mipmap.fenxiang_icon));
         return list;
     }
-
 }

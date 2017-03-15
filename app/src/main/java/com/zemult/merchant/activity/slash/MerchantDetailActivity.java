@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.slash;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.yanzhenjie.permission.AndPermission;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.mine.AlbumActivity;
+import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.MerchantDetailAdpater;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
@@ -21,6 +25,7 @@ import com.zemult.merchant.aip.slash.MerchantSaleuserListFanRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.FilterEntity;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
@@ -33,6 +38,7 @@ import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -236,19 +242,45 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     return;
                 if (noHead(mContext))
                     return;
-                if (merchantInfo != null && merchantInfo.isCommission == 1) {
-                    Intent intent = new Intent(mActivity, TabManageActivity.class);
-                    intent.putExtra(TabManageActivity.TAG, merchantId);
-                    intent.putExtra(TabManageActivity.NAME, name);
-                    intent.putExtra(TabManageActivity.TAGS, tags);
-                    intent.putExtra(TabManageActivity.COMEFROM, 2);
-                    startActivityForResult(intent, REQ_APPLY);
-                } else {
-                    Intent it = new Intent(mActivity, TabManageActivity.class);
-                    it.putExtra(TabManageActivity.TAG, merchantId);
-                    it.putExtra(TabManageActivity.NAME, name);
-                    startActivityForResult(it, REQ_APPLY);
-                }
+
+                List<FilterEntity> list = new ArrayList<>();
+                list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
+                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_icon));
+                if (merchantInfo != null && merchantInfo.isCommission == 1)
+                    list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
+                 else
+                    list.add(new FilterEntity("成为服务管家", 2, R.mipmap.shenqing_icon));
+
+
+                CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
+                    @Override
+                    public void onClick(int pos) {
+                        switch (pos){
+                            case 0:
+                                break;
+
+                            case 1:
+                                break;
+
+                            case 2:
+                                if (merchantInfo != null && merchantInfo.isCommission == 1) {
+                                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+                                    intent.putExtra(TabManageActivity.TAG, merchantId);
+                                    intent.putExtra(TabManageActivity.NAME, name);
+                                    intent.putExtra(TabManageActivity.TAGS, tags);
+                                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+                                    startActivityForResult(intent, REQ_APPLY);
+                                } else {
+                                    Intent it = new Intent(mActivity, TabManageActivity.class);
+                                    it.putExtra(TabManageActivity.TAG, merchantId);
+                                    it.putExtra(TabManageActivity.NAME, name);
+                                    startActivityForResult(it, REQ_APPLY);
+                                }
+                                break;
+                        }
+                    }
+                });
+
                 break;
             case R.id.rl_first:
                 rlFirst.setVisibility(View.GONE);

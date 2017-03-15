@@ -51,7 +51,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/shenqing_icon"/>
+                android:src="@mipmap/gengduo_circle_icon"/>
         </RelativeLayout>
 
 
@@ -59,13 +59,15 @@
         <RelativeLayout
             android:id="@+id/rl_first"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@mipmap/tishi">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/tishi"
-                />
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:src="@mipmap/tishi"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--/>-->
         </RelativeLayout>
 
     </FrameLayout>
