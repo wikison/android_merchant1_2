@@ -182,7 +182,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         commonServiceTagList();
         initView();
         initData();
-        if (comefrom == 1) {
+        if (comefrom == 1 || comefrom == 3) {
             userAdapter.setB(isFalse);
             isvisibily = 0;
             name = getIntent().getStringExtra(NAME);
@@ -201,6 +201,9 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         }
         if (comefrom == 2) {
             userAdapter.setB(isFalse);
+        }
+        if (comefrom == 3) {
+            applyBtn.setText("下一步");
         }
 
 //        textView.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +243,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     private void initData() {
 //        userChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getUserChannel());
 //        otherChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getOtherChannel());
-        if (comefrom == 1) {
+        if (comefrom == 1 || comefrom == 3) {
             userChannelList.clear();
         }
         userAdapter = new DragAdapter(this, userChannelList);
@@ -525,7 +528,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     dismissPd();
                     sysdatalist = ((APIM_CommonGetallindustry) response).tagList;
-                    if (comefrom == 1) {
+                    if (comefrom == 1 || comefrom == 3) {
                         //来源于申请
                         if (otherChannelList.size() == 0) {
                             for (int k = 0; k < sysdatalist.size(); k++) {
