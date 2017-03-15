@@ -587,7 +587,9 @@
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.FindPassword2Activity" />
         <activity android:name=".activity.mine.pwdsetting.BindNewPhoneSucessActivity" />
-        <activity android:name=".activity.slash.BeManagerFirstActivity"></activity>
+        <activity android:name=".activity.slash.BeManagerFirstActivity" />
+        <activity android:name=".activity.slash.ConnectLocalPhoneActivity" />
+        <activity android:name=".activity.slash.BeManagerSuccessActivity"></activity>
     </application>
 
 </manifest>

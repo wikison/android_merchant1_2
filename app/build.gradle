@@ -152,7 +152,6 @@ dependencies {
     compile files('libs/SocialSDK_WeiXin_2.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/umeng_social_sdk.jar')
-    compile 'com.nineoldandroids:library:2.4.0'
     compile project(':Pushlib')
     //    compile project(':YunWangVideoSDK')
     compile project(':OneSDK')
@@ -163,11 +162,12 @@ dependencies {
     //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
     //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
 //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.belerweb:pinyin4j:2.5.0'
-    compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
+import com.zemult.merchant.activity.slash.BeManagerSuccessActivity;
+import com.zemult.merchant.activity.slash.ConnectLocalPhoneActivity;
 import com.zemult.merchant.adapter.createroleadapter.DragAdapter;
 import com.zemult.merchant.adapter.createroleadapter.OtherAdapter;
 import com.zemult.merchant.aip.slash.CommonServiceTagListRequest;
@@ -226,7 +230,20 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 //            }
 //        });
 
+        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
+    }
 
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            finish();
+        }
     }
 
 
@@ -596,10 +613,16 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         if (comefrom == 1)
                             user_add_saleuser();
                         else if(comefrom == 3){
-                            Intent it = new Intent(TabManageActivity.this, BeManagerFirstActivity.class);
-                            it.putExtra(TabManageActivity.TAG, merchantId);
-                            it.putExtra(TabManageActivity.TAGS, getTags());
-                            startActivity(it);
+                            if(SlashHelper.userManager().getUserinfo().getIsOnBook() == 0){
+                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
+                                it.putExtra(TabManageActivity.TAG, merchantId);
+                                it.putExtra(TabManageActivity.NAME, name);
+                                it.putExtra(TabManageActivity.TAGS, getTags());
+                                startActivity(it);
+                            }else{
+                                user_add_saleuser();
+                            }
+
                         }
                     }
                 } else if (comefrom == 2) {
@@ -634,6 +657,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     UserAddSaleUserRequest userAddSaleUserRequest;
 
     private void user_add_saleuser() {
+        showPd();
         if (userAddSaleUserRequest != null) {
             userAddSaleUserRequest.cancel();
         }
@@ -663,6 +687,12 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
+                    if(comefrom == 3){
+                        Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
+                        it.putExtra(TabManageActivity.NAME, name);
+                        startActivity(it);
+                        return;
+                    }
                     ToastUtil.showMessage("申请成功");
                     EventBus.getDefault().post(SaleManageActivity.REFLASH);
                     setResult(RESULT_OK);

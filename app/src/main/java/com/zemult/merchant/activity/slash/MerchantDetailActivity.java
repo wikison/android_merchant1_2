@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -97,6 +99,20 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         merchantId = getIntent().getIntExtra(MERCHANT_ID, -1);
         mContext = this;
         mActivity = this;
+        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
+    }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+          onRefresh();
+        }
     }
 
     private void initView() {
@@ -249,6 +265,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     ToastUtils.show(mContext, ("收藏成功"));
+                    merchantInfo.isFavorite = 1;
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
                 }
@@ -280,6 +297,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     ToastUtils.show(mContext, ("取消收藏成功"));
+                    merchantInfo.isFavorite = 0;
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
                 }
@@ -287,67 +305,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             }
         });
         sendJsonRequest(delRequest);
-    }
-
-    @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                onBackPressed();
-                break;
-            case R.id.iv_more:
-                if (noLogin(mContext))
-                    return;
-                if (noHead(mContext))
-                    return;
-
-                List<FilterEntity> list = new ArrayList<>();
-                list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
-                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_nor));
-                if (merchantInfo != null && merchantInfo.isCommission == 1)
-                    list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
-                 else
-                    list.add(new FilterEntity("成为服务管家", 2, R.mipmap.shenqing_icon));
-
-
-                CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
-                    @Override
-                    public void onClick(int pos) {
-                        switch (pos){
-                            case 0:
-                                break;
-
-                            case 1:
-                                break;
-
-                            case 2:
-                                if (merchantInfo != null && merchantInfo.isCommission == 1) {
-                                    Intent intent = new Intent(mActivity, TabManageActivity.class);
-                                    intent.putExtra(TabManageActivity.TAG, merchantId);
-                                    intent.putExtra(TabManageActivity.NAME, name);
-                                    intent.putExtra(TabManageActivity.TAGS, tags);
-                                    intent.putExtra(TabManageActivity.COMEFROM, 2);
-                                    startActivity(intent);
-                                } else {
-//                                    Intent it = new Intent(mActivity, TabManageActivity.class);
-//                                    it.putExtra(TabManageActivity.TAG, merchantId);
-//                                    it.putExtra(TabManageActivity.NAME, name);
-//                                    startActivity(it);
-                                    Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
-                                    it.putExtra(TabManageActivity.TAG, merchantId);
-                                    it.putExtra(TabManageActivity.NAME, name);
-                                    startActivity(it);
-                                }
-                                break;
-                        }
-                    }
-                });
-
-                break;
-            case R.id.rl_first:
-                rlFirst.setVisibility(View.GONE);
-                break;
-        }
     }
 
 
@@ -466,5 +423,82 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+
+    @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                onBackPressed();
+                break;
+            case R.id.iv_more:
+                if (noLogin(mContext))
+                    return;
+                if (noHead(mContext))
+                    return;
+
+                List<FilterEntity> list = new ArrayList<>();
+                list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
+
+                // 收藏商户 0否1是
+                if (merchantInfo != null && merchantInfo.isFavorite == 1)
+                    list.add(new FilterEntity("取消收藏", 1, R.mipmap.shoucang_sel));
+                else
+                    list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_nor));
+
+                if (merchantInfo != null && merchantInfo.isCommission == 1)
+                    list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
+                else
+                    list.add(new FilterEntity("成为服务管家", 2, R.mipmap.shenqing_icon));
+
+
+                CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
+                    @Override
+                    public void onClick(int pos) {
+                        switch (pos){
+                            case 0:
+                                break;
+
+                            case 1:
+                                if (merchantInfo != null && merchantInfo.isFavorite == 1)
+                                    user_favorite_merchant_del(); // 取消收藏
+                                else
+                                    user_favorite_merchant_add(); // 收藏
+
+                                break;
+
+                            case 2:
+                                if (merchantInfo != null && merchantInfo.isCommission == 1) { // 是服务管家
+                                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+                                    intent.putExtra(TabManageActivity.TAG, merchantId);
+                                    intent.putExtra(TabManageActivity.NAME, name);
+                                    intent.putExtra(TabManageActivity.TAGS, tags);
+                                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+                                    startActivity(intent);
+                                } else { // 不是服务管家
+                                    if (noHead(mContext)) {
+                                        Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
+                                        it.putExtra(TabManageActivity.TAG, merchantId);
+                                        it.putExtra(TabManageActivity.NAME, name);
+                                        startActivity(it);
+                                    } else {
+                                        Intent it = new Intent(mActivity, TabManageActivity.class);
+                                        it.putExtra(TabManageActivity.TAG, merchantId);
+                                        it.putExtra(TabManageActivity.NAME, name);
+                                        it.putExtra(TabManageActivity.COMEFROM, 3);
+                                        startActivity(it);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                });
+
+                break;
+            case R.id.rl_first:
+                rlFirst.setVisibility(View.GONE);
+                break;
+        }
     }
 }

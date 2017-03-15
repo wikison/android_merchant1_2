@@ -589,4 +589,14 @@ public class M_Userinfo implements Serializable {
     }
     @Expose
     public String remarkName; // 备注名
+    @Expose
+    public int isOnBook; // 是否关联通讯录(作为服务管家 0:否,1:是)
+
+    public int getIsOnBook() {
+        return isOnBook;
+    }
+
+    public void setIsOnBook(int isOnBook) {
+        this.isOnBook = isOnBook;
+    }
 }

@@ -65,6 +65,7 @@ public class Constants {
     public static final String BROCAST_SEARCH_RECENT_WORD = "BROCAST_SEARCH_RECENT_WORD";
 
     public static final String BROCAST_REFRESH_ORDER = "BROCAST_REFRESH_ORDER";
+    public static final String BROCAST_BE_SERVER_MANAGER_SUCCESS = "BROCAST_BE_SERVER_MANAGER_SUCCESS";
 
     public static final String ENDPOINT = "http://oss-cn-shanghai.aliyuncs.com";
     public static final String OSSENDPOINT = "http://xiegang.oss-cn-shanghai.aliyuncs.com/";
