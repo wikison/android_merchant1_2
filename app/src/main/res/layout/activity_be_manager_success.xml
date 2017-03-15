@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/layout_head"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/beijing">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:text="恭喜您成为"
+                android:textColor="@color/white"
+                android:textSize="21sp"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_marginTop="6dp"
+                style="@style/text_15_black_28"
+                android:textColor="@color/white"
+                android:textSize="21sp"/>
+
+            <TextView
+                android:layout_marginTop="6dp"
+                style="@style/text_15_black_28"
+                android:text="的服务管家。"
+                android:textColor="@color/white"
+                android:textSize="21sp"/>
+            <TextView
+                android:layout_marginTop="26dp"
+                style="@style/text_15_black_28"
+                android:text="重要提示"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+            <TextView
+                android:gravity="center"
+                android:layout_marginTop="13dp"
+                style="@style/text_15_black_28"
+                android:text="为了您及时收到客户的需求信息,\n需要获取通讯录权限，\n请在手机权限管理中设置。"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_share"
+                android:layout_width="@dimen/common_btn_width_235"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_marginBottom="110dp"
+                android:background="@drawable/common_selector_btn_red"
+                android:text="分享给好友"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+            <Button
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btn_ok"
+                android:layout_width="@dimen/common_btn_width_235"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/common_selector_btn_red"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

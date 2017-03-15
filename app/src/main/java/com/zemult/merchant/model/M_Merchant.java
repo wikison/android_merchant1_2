@@ -162,7 +162,8 @@ public class M_Merchant implements Serializable {
     public int commentNumber;  // 被评价的总次数
     @Expose
     public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
-
+    @Expose
+    public int isFavorite;  // 收藏商户 0否1是
 
 
     public int getMerchantId() {
@@ -188,4 +189,5 @@ public class M_Merchant implements Serializable {
     public void setHead(String head) {
         this.head = head;
     }
+
 }

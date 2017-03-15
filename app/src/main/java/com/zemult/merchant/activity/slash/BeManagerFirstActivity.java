@@ -56,7 +56,6 @@ import zema.volley.network.ResponseListener;
 
 //1010A成为服务管家1
 public class BeManagerFirstActivity extends BaseActivity {
-    private static final int REQ_APPLY = 0x110;
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -125,7 +124,7 @@ public class BeManagerFirstActivity extends BaseActivity {
         btnNext.setEnabled(false);
         btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);
         etName.addTextChangedListener(watcher);
-        registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADIMAGE});
+        registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADIMAGE, Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     //接收广播回调
@@ -143,6 +142,8 @@ public class BeManagerFirstActivity extends BaseActivity {
             } else {
                 ToastUtils.show(this, intent.getStringExtra("info"));
             }
+        }else if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            onBackPressed();
         }
     }
 
@@ -355,7 +356,7 @@ public class BeManagerFirstActivity extends BaseActivity {
                     intent.putExtra(TabManageActivity.TAG, merchantId);
                     intent.putExtra(TabManageActivity.NAME, name);
                     intent.putExtra(TabManageActivity.COMEFROM, 3);
-                    startActivityForResult(intent, REQ_APPLY);
+                    startActivity(intent);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
