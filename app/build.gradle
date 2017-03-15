@@ -158,10 +158,6 @@ dependencies {
     compile project(':volley')
     compile project(':library')
     compile files('libs/alipaySingle-20161009.jar')
-    //必选
-    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
-    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
-//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
@@ -189,8 +185,12 @@ dependencies {
     compile 'com.yanzhenjie:permission:1.0.4'
     compile 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
+    //必选
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
+    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
     compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }
