@@ -2,12 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/layout_head" />
+    <LinearLayout
+        android:id="@+id/ll_unconncet"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_marginTop="61dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/tongxunlu"
+            />
 
+        <TextView
+            style="@style/text_30_2828"
+            android:gravity="center"
+            android:layout_marginTop="53dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关联通讯录可以让更多你曾今的客户\n找到你，为TA服务。"
+            />
+
+        <TextView
+            style="@style/text_30_2828"
+            android:gravity="center"
+            android:layout_marginTop="26dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如果此处你选择不关联，再次关联需要\n需要在 “设置”-“隐私”-“通讯录” 中打开。"
+            />
+    </LinearLayout>
     <com.zemult.merchant.view.SmoothListView.SmoothListView
         android:id="@+id/sml_new_friend"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
 </LinearLayout>

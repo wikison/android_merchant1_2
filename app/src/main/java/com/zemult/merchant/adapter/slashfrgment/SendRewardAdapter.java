@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundLinearLayout;
@@ -46,14 +47,11 @@ public class SendRewardAdapter extends BaseListAdapter<String> {
         }
 
         holder.tv.setText(getItem(position));
+        holder.tvYuan.setText(getItem(position));
         if(selectedPos.contains(position) ){
-            holder.rl.getDelegate().setBackgroundColor(0xffd84e43);
-            holder.tv.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.tvYuan.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.tvYuan.setBackground(mContext.getResources().getDrawable(R.mipmap.zshb_selected));
         }else {
-            holder.rl.getDelegate().setBackgroundColor(0xffffffff);
-            holder.tv.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
-            holder.tvYuan.setTextColor(mContext.getResources().getColor(R.color.bg_head_red));
+            holder.tvYuan.setBackground(mContext.getResources().getDrawable(R.mipmap.zshb_unselected));
         }
 
 
@@ -66,7 +64,7 @@ public class SendRewardAdapter extends BaseListAdapter<String> {
         @Bind(R.id.tv_yuan)
         TextView tvYuan;
         @Bind(R.id.rl)
-        RoundLinearLayout rl;
+        LinearLayout rl;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

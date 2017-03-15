@@ -1,7 +1,12 @@
 package com.zemult.merchant.activity.message;
 
+import android.annotation.TargetApi;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -19,6 +24,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendNoteActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.friend.UserCheckBookListFriendRequest;
+import com.zemult.merchant.aip.friend.UserCheckBookListRequest;
 import com.zemult.merchant.aip.friend.UserFriendAcceptRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.bean.ContactDataBean;
@@ -28,8 +34,10 @@ import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ContactsDao;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,12 +60,15 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
     SmoothListView lv_newfriend;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.ll_unconncet)
+    LinearLayout llUnconncet;
 
+    public static final int OP_READ_CONTACTS = 4;
     UserFriendAcceptRequest  userFriendAcceptRequest;
     List<M_Userinfo> friendList =new ArrayList<M_Userinfo>();
     int page=1;
     NewFriendListAdapter adapter;
-    UserCheckBookListFriendRequest userCheckBookListFriendRequest;
+    UserCheckBookListRequest userCheckBookListRequest;
     List<ContactDataBean> listMembers=new ArrayList<ContactDataBean>();
     String phoneIds;
     @Override
@@ -69,7 +80,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
     public void init() {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("可能认识的人");
+        lhTvTitle.setText("通讯录服务管家");
         lv_newfriend.setRefreshEnable(true);
         lv_newfriend.setLoadMoreEnable(false);
         lv_newfriend.setSmoothListViewListener(this);
@@ -92,11 +103,18 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
     @Override
     protected void onResume() {
         super.onResume();
-        phoneIds=AppUtils.getPhoneNumbers(RecogizePeopleActivity.this);
+
+        phoneIds=AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
         if(!StringUtils.isEmpty(phoneIds)){
             user_check_bookList_friend();
         }
 
+
+        if (checkOp(OP_READ_CONTACTS)==0) {
+            llUnconncet.setVisibility(View.GONE);
+        }else {
+            llUnconncet.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
@@ -112,18 +130,19 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
         //新的朋友(接受列表)
         private void user_check_bookList_friend( ) {
             showPd();
-            if (userCheckBookListFriendRequest != null) {
-                userCheckBookListFriendRequest.cancel();
+            if (userCheckBookListRequest != null) {
+                userCheckBookListRequest.cancel();
             }
-            UserCheckBookListFriendRequest.Input input = new UserCheckBookListFriendRequest.Input();
+            UserCheckBookListRequest.Input input = new UserCheckBookListRequest.Input();
             if (SlashHelper.userManager().getUserinfo() != null) {
                 input.operateUserId = SlashHelper.userManager().getUserId();
             }
             input.phones =phoneIds ;
             input.convertJosn();
-            userCheckBookListFriendRequest = new UserCheckBookListFriendRequest(input,new ResponseListener() {
+            userCheckBookListRequest = new UserCheckBookListRequest(input,new ResponseListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    dismissPd();
                     lv_newfriend.stopRefresh();
                     lv_newfriend.stopLoadMore();
                 }
@@ -146,7 +165,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
                     lv_newfriend.stopLoadMore();
                 }
             });
-            sendJsonRequest(userCheckBookListFriendRequest);
+            sendJsonRequest(userCheckBookListRequest);
         }
 
     @Override
@@ -274,6 +293,32 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
 
             }
         }
+    }
 
+
+    /**
+     * @return 1为拒绝，0为允许
+     * @param op
+     * @return
+     */
+    @TargetApi(19)
+    private int checkOp( int op) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 19) {
+            try {
+                AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+                Method dispatchMethod = AppOpsManager.class.getMethod(
+                        "checkOp", new Class[] { int.class, int.class,
+                                String.class });
+                int mode = (Integer) dispatchMethod.invoke(
+                        appOpsManager,
+                        new Object[] { op, Binder.getCallingUid(),
+                                getPackageName() });
+                return mode;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
     }
 }

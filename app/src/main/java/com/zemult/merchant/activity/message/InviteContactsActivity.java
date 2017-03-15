@@ -143,7 +143,7 @@ public class InviteContactsActivity extends BaseActivity {
         }
         UserCheckBookListRequest.Input input = new UserCheckBookListRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
-            input.userId = SlashHelper.userManager().getUserId();
+            input.operateUserId = SlashHelper.userManager().getUserId();
         }
         input.phones =phoneIds;
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f0"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head" />
+
+    <RelativeLayout
+        android:layout_marginTop="12dp"
+        android:id="@+id/rel_invitepeople"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/j60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <ImageView
+            android:id="@+id/iv_invitepeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:src="@mipmap/dianhua"/>
+
+        <TextView
+            android:id="@+id/tv_invitepeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_invitepeople"
+            android:text="通讯录匹配服务管家"
+            android:textColor="@color/ls_color_666666"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_invitepeople"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:layout_toRightOf="@+id/iv_invitepeople"
+            android:text="平台用户"
+            android:textColor="@color/font_black_999"
+            android:textSize="@dimen/font_24px"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:background="@mipmap/right_btn"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_people_num"
+        android:gravity="center"
+        android:text=""
+        style="@style/text_14_black_999"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/concern_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+    <include layout="@layout/item_no_search_data_layout"/>
+
+
+</LinearLayout>

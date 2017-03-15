@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendsActivity;
+import com.zemult.merchant.activity.message.RecogizePeopleActivity;
+import com.zemult.merchant.activity.mine.FamiliarPeopleActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
@@ -319,13 +321,17 @@ public class MyFollowFragment extends BaseFragment implements SmoothListView.ISm
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.ll_back, R.id.lh_btn_back, R.id.iv_right, R.id.ll_right})
+    @OnClick({R.id.ll_back, R.id.lh_btn_back, R.id.iv_right, R.id.ll_right,R.id.lh_tv_title})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_right:
             case R.id.ll_right:
                 startActivity(new Intent(mContext, AddFriendsActivity.class));
                 break;
+            case R.id.lh_tv_title:
+                startActivity(new Intent(mContext, FamiliarPeopleActivity.class));
+                break;
+
         }
     }
 

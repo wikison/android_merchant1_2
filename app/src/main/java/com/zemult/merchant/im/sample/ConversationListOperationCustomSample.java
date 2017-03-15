@@ -4,25 +4,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListOperation;
-import com.alibaba.mobileim.contact.IYWContact;
-import com.alibaba.mobileim.contact.YWContactFactory;
-import com.alibaba.mobileim.conversation.EServiceContact;
 import com.alibaba.mobileim.conversation.IYWConversationService;
-import com.alibaba.mobileim.conversation.IYWConversationUnreadChangeListener;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.mine.message.SystemMessageActivity;
-import com.zemult.merchant.activity.mine.message.SystemMessageChatUIActivity;
 import com.zemult.merchant.app.AppApplication;
-import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.contact.ContactSystemMessageActivity;
 import com.zemult.merchant.im.demo.FragmentTabs;
 import com.zemult.merchant.im.tribe.TribeSystemMessageActivity;
@@ -175,7 +168,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 IYWConversationService conversationService = mIMKit.getConversationService();
                 // 将某一条会话标记为已读
                  conversationService.markReaded(conversation);
-                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
+                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  OrderMessageActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;
             }
@@ -185,7 +178,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 IYWConversationService conversationService = mIMKit.getConversationService();
                 // 将某一条会话标记为已读
                 conversationService.markReaded(conversation);
-                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  SystemMessageChatUIActivity
+                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  OrderMessageActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;
             }

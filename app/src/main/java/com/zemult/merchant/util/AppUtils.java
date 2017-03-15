@@ -21,7 +21,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.zemult.merchant.R;
 import com.zemult.merchant.bean.ContactDataBean;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -447,6 +446,35 @@ public class AppUtils {
         return "";
     }
 
+    public static String getPhoneNumbersWithName(Context context) {
+        ContactsDao util = new ContactsDao(context);
+        List<ContactDataBean> listMembers = new ArrayList<ContactDataBean>();
+        util.getAllContact(listMembers);
+        List<ContactDataBean> cList2 = util.removeDuplicateData(listMembers);
+        for (ContactDataBean contactDataBean : cList2) {
+            String selfphone = SlashHelper.userManager().getUserinfo().getPhoneNum();
+            if (selfphone.equals(contactDataBean.getPhone()) == true) {
+                cList2.remove(contactDataBean);
+                break;
+            }
+        }
+
+        List<String> numberList1 = new ArrayList<String>();
+        for (ContactDataBean bean : cList2) {
+            numberList1.add(bean.getPhone()+"#"+bean.getName());
+        }
+
+        String numbers = "";
+        for (String num : numberList1) {
+            numbers = numbers + "," + num;
+
+        }
+        if (numbers.indexOf(",") != -1) {
+            return numbers.substring(1, numbers.length());
+        }
+        return "";
+    }
+
 
     public static String getConactName(List<ContactDataBean> listMembers, String phoneno) {
         String conactName = "";
@@ -499,6 +527,8 @@ public class AppUtils {
         return desc;
         
     }
+
+
 
 
     public static String replaceBlank(String str) {

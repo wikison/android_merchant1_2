@@ -12,12 +12,11 @@ import java.lang.reflect.Type;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
-//我的粉丝
+//获取 用户的 可能熟悉的人(推荐服务管家)
 public class UserFansListRequest extends PostStringRequest<Type>  {
 
     public static class Input {
-        public int userId;    //	用户id
-        public String name;    //	手机号或昵称(模糊搜索)
+        public int operateUserId;    //	用户id
         public int page;    //	获取第x页的数据
         public int rows;    //	每次获取的数据个数
 
@@ -26,21 +25,15 @@ public class UserFansListRequest extends PostStringRequest<Type>  {
 
 
         public void convertJosn(){
-            if(TextUtils.isEmpty(name))
                 ejson=Convert.securityJson(Convert.pairsToJson(
-                        new Pair<String, String>("userId", userId+""),
-                        new Pair<String, String>("page", page+""),new Pair<String, String>("rows", rows+"")));
-            else
-                ejson=Convert.securityJson(Convert.pairsToJson(
-                        new Pair<String, String>("userId", userId+""),
-                        new Pair<String, String>("name", name),
+                        new Pair<String, String>("operateUserId", operateUserId+""),
                         new Pair<String, String>("page", page+""),new Pair<String, String>("rows", rows+"")));
         }
 
     }
 
     public UserFansListRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.USER_FANSLIST,input.ejson , new TypeToken<APIM_UserFansList>() {
+        super(Urls.BASIC_URL+Urls.USER_SYS_SALEUSERLIST,input.ejson , new TypeToken<APIM_UserFansList>() {
         }.getType() , listener);
 
     }

@@ -16,6 +16,7 @@ public class M_Fan extends M_Userinfo{
 
     //1.1  用户的等级排行榜
     @Expose public int place	;//				排名
+    @Expose public String merchantName	;//				来自商家名称
 
 
 }

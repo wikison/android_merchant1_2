@@ -169,7 +169,7 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.fans_rl:
-                intent = new Intent(getActivity(), MyFansActivity.class);
+                intent = new Intent(getActivity(), FamiliarPeopleActivity.class);
                 startActivity(intent);
                 break;*/
             case R.id.mtag_layout:

@@ -355,7 +355,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             case R.id.sfriend_layout:
                 // 当点击了联系人tab时，选中第2个tab
                 if (SlashHelper.userManager().getUserinfo() != null) {
-                    UserMessageAllNumUnread_1_2Request();
                     UserMessageBillNumUnread_1_2_2Request();
                     setTabSelection(1);
                 } else {
@@ -806,6 +805,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
                     initOrderConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
+                    UserMessageAllNumUnread_1_2Request();
                 }
             }
         });

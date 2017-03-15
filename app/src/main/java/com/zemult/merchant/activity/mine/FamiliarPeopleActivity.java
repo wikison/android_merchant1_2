@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendsActivity;
+import com.zemult.merchant.activity.message.RecogizePeopleActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
@@ -45,8 +46,8 @@ import zema.volley.network.ResponseListener;
 /**
  * Created by wikison on 2016/6/14.
  */
-//我的粉丝
-public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
+//可能熟悉的人
+public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
     public ImageManager imageManager;
     UserFansListRequest userFansListRequest;
     TadeFansListRequest tadeFansListRequest;
@@ -58,6 +59,8 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.tv_people_num)
+    TextView tvPeopleNum;
     @Bind(R.id.concern_lv)
     SmoothListView fansLv;
     @Bind(R.id.rl_no_data)
@@ -66,22 +69,22 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     ImageView ivRight;
     @Bind(R.id.ll_right)
     LinearLayout llRight;
-    @Bind(R.id.search_view)
-    SearchView searchView;
+    @Bind(R.id.rel_invitepeople)
+    RelativeLayout relInvitepeople;
+
+
+
     private List<M_Fan> mDatas = new ArrayList<M_Fan>();
     private Context mContext;
     private int page = 1;
     private UserAttractAddRequest attractAddRequest; // 添加关注
     private UserAttractDelRequest attractDelRequest; // 取消关注
-    public static final String INTENT_USERID = "userid";
-    private int userId;
-    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        setContentView(R.layout.activity_my_follow);
+        setContentView(R.layout.activity_familiar_people);
         ButterKnife.bind(this);
         init();
     }
@@ -89,47 +92,20 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     public void init() {
         mContext = this;
         imageManager = new ImageManager(this);
+        lhTvTitle.setText("可能熟悉的人");
 
-
-        userId = getIntent().getIntExtra(INTENT_USERID, -1);
-        lhTvTitle.setVisibility(View.VISIBLE);
-        if (userId == -1) {
-            lhTvTitle.setText("我的粉丝");
-        } else {
-            lhTvTitle.setText("TA的粉丝");
-        }
         fansLv.setRefreshEnable(true);
         fansLv.setLoadMoreEnable(false);
         fansLv.setSmoothListViewListener(this);
-        fansLv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        showPd();
-        if (userId == -1) {
-            userFansLis();
-        } else {
-            tadeFansList();
-        }
 
-        llRight.setVisibility(View.INVISIBLE);
-        ivRight.setImageResource(R.mipmap.tianjia2_icon);
-        searchView.setTvCancelVisible(View.GONE);
-        searchView.setBgColor(getResources().getColor(R.color.divider_c1));
-        searchView.setSearchViewListener(new SearchView.SearchViewListener() {
-            @Override
-            public void onSearch(String text) {
-                name = text;
-                onRefresh();
-            }
+        userFansLis();
 
-            @Override
-            public void onClear() {
-
-            }
-        });
     }
 
 
-    //获取粉丝数据
+    //获取 用户的 可能熟悉的人(推荐服务管家)
     private void userFansLis() {
+        showPd();
         if (userFansListRequest != null) {
             userFansListRequest.cancel();
         }
@@ -142,6 +118,9 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
+                fansLv.setVisibility(View.GONE);
+                rlNoData.setVisibility(View.VISIBLE);
+                tvPeopleNum.setText("您有0人可能认识");
                 fansLv.stopRefresh();
                 fansLv.stopLoadMore();
             }
@@ -155,22 +134,19 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                         if (mDatas == null || mDatas.size() == 0) {
                             fansLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
+                            tvPeopleNum.setVisibility(View.GONE);
                         } else {
+                            tvPeopleNum.setVisibility(View.VISIBLE);
                             fansLv.setVisibility(View.VISIBLE);
                             rlNoData.setVisibility(View.GONE);
                             if (mDatas != null && !mDatas.isEmpty()) {
-                                fansLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(MyFansActivity.this, R.layout.item_my_follow, mDatas) {
+                                fansLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(FamiliarPeopleActivity.this, R.layout.item_familiar_people, mDatas) {
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
 
                                         if (!TextUtils.isEmpty(mfollow.head)) {
-                                            holder.setCircleImage(R.id.iv_follow_head, mfollow.head);
+                                            holder.setCircleImage(R.id.iv_follow_head, mfollow.userHead);
                                         }
-                                        // 性别
-                                        if (mfollow.sex == 0)
-                                            holder.setResImage(R.id.iv_sex, R.mipmap.man_icon);
-                                        else
-                                            holder.setResImage(R.id.iv_sex, R.mipmap.girl_icon);
 
                                         holder.setOnclickListener(R.id.iv_follow_head, new View.OnClickListener() {
                                             @Override
@@ -182,21 +158,14 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                                                 startActivity(intent);
                                             }
                                         });
-                                        if(!TextUtils.isEmpty(mfollow.note))
-                                            holder.setText(R.id.tv_describe, mfollow.note);
+                                        if(!TextUtils.isEmpty(mfollow.merchantName))
+                                            holder.setText(R.id.tv_describe, mfollow.merchantName);
 
-                                        holder.setText(R.id.tv_follow_name, mfollow.name);
-                                        holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);
+                                        holder.setText(R.id.tv_follow_name, mfollow.userName);
                                         holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-
-                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
                                                     addFous(mDatas.get(position).userId, position);//添加关注网络操作
-
-                                                }
                                             }
                                         });
 
@@ -221,7 +190,7 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                     }
 
                 } else {
-                    ToastUtils.show(MyFansActivity.this, ((APIM_UserFansList) response).info);
+                    ToastUtils.show(FamiliarPeopleActivity.this, ((APIM_UserFansList) response).info);
                 }
                 fansLv.stopRefresh();
                 fansLv.stopLoadMore();
@@ -232,113 +201,6 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         sendJsonRequest(userFansListRequest);
     }
 
-    //获取TA的粉丝数据
-    private void tadeFansList() {
-
-        if (tadeFansListRequest != null) {
-            tadeFansListRequest.cancel();
-        }
-        TadeFansListRequest.Input input = new TadeFansListRequest.Input();
-        if (SlashHelper.userManager().getUserinfo() != null) {
-            input.operateUserId = SlashHelper.userManager().getUserId();
-        }
-        input.userId = userId;
-        input.page = page;
-        input.rows = Constants.ROWS;     //每页显示的行数
-        input.convertJosn();
-
-        tadeFansListRequest = new TadeFansListRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-                fansLv.stopRefresh();
-                fansLv.stopLoadMore();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                dismissPd();
-                if (((APIM_UserFansList) response).status == 1) {
-                    if (page == 1) {
-                        mDatas = ((APIM_UserFansList) response).fansList;
-                        if (mDatas == null || mDatas.size() == 0) {
-                            fansLv.setVisibility(View.GONE);
-                            rlNoData.setVisibility(View.VISIBLE);
-                        } else {
-                            fansLv.setVisibility(View.VISIBLE);
-                            rlNoData.setVisibility(View.GONE);
-
-                            if (mDatas != null && !mDatas.isEmpty()) {
-                                fansLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(MyFansActivity.this, R.layout.item_my_follow, mDatas) {
-                                    @Override
-                                    public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
-
-//                                        if (!TextUtils.isEmpty(mfollow.head)) {
-//                                            holder.setCircleImage(R.id.iv_fan_head, mfollow.head);
-//                                        }
-//
-//                                        holder.setOnclickListener(R.id.iv_fan_head, new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(mContext, UserDetailActivity.class);
-//                                                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position).userId);
-//                                                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position).name);
-//                                                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position).head);
-//                                                startActivity(intent);
-//                                            }
-//                                        });
-//                                        holder.setText(R.id.sign_tv, mfollow.sign);
-//                                        holder.setText(R.id.tv_fan_name, mfollow.name);
-//                                        holder.setFocusState(R.id.tv_state, mfollow.state);
-//                                        if (mDatas.get(position).userId == SlashHelper.userManager().getUserId()) {
-//                                            holder.setViewGone(R.id.tv_state);
-//
-//                                        }
-
-                                        holder.setOnclickListener(R.id.tv_state, new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-
-                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
-                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
-
-                                                }
-                                            }
-                                        });
-
-                                    }
-
-                                });
-                            }
-
-                        }
-                    } else {
-                        mDatas.addAll(((APIM_UserFansList) response).fansList);
-                        commonAdapter.notifyDataSetChanged();
-                    }
-
-                    if (((APIM_UserFansList) response).maxpage <= page) {
-                        fansLv.setLoadMoreEnable(false);
-                    } else {
-                        fansLv.setLoadMoreEnable(true);
-                        page++;
-
-                        Log.i("sunjian", "" + page);
-                    }
-
-                } else {
-                    ToastUtils.show(MyFansActivity.this, ((APIM_UserFansList) response).info);
-                }
-                fansLv.stopRefresh();
-                fansLv.stopLoadMore();
-
-            }
-        });
-
-        sendJsonRequest(tadeFansListRequest);
-    }
 
 
     // 用户添加关注
@@ -408,38 +270,28 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     }
 
 
-    @OnClick({R.id.ll_back, R.id.lh_btn_back, R.id.iv_right, R.id.ll_right})
+    @OnClick({R.id.ll_back, R.id.lh_btn_back,R.id.rel_invitepeople})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
                 break;
-            case R.id.iv_right:
-            case R.id.ll_right:
-                startActivity(new Intent(mContext, AddFriendsActivity.class));
+            case R.id.rel_invitepeople:
+                startActivity(new Intent(mContext, RecogizePeopleActivity.class));
                 break;
         }
     }
 
     @Override
     public void onRefresh() {
-        if (userId == -1) {
             page = 1;
             userFansLis();
-        } else {
-            page = 1;
-            tadeFansList();
-        }
     }
 
     @Override
     public void onLoadMore() {
-        if (userId == -1) {
             userFansLis();
-        } else {
-            tadeFansList();
-        }
     }
 
 

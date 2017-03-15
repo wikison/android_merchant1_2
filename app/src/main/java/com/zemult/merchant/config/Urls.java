@@ -137,8 +137,8 @@ public class Urls {
     public static String USER_INFO_OWNER = "user_info_owner.do";
     //修改用户资料信息
     public static String USER_EDITINFO = "user_editinfo.do";
-    //我的粉丝
-    public static String USER_FANSLIST = "user_fansList.do";
+    //获取 用户的 可能熟悉的人(推荐服务管家)
+    public static String USER_SYS_SALEUSERLIST = "user_sys_saleUserList.do";
     //我的关注
     public static String USER_ATTRACTLIST = "user_attractList.do";
     //TA的粉丝
@@ -192,7 +192,7 @@ public class Urls {
     public static String USER_CASH_WITHDRAW = "user_cash_withdraw.do";
     //获取用户的当天可取余额信息
     public static final String USER_CASH_INFO = "user_cash_info";
-    //获取通讯录中不是平台账户的手机号
+    //筛选 通讯录中的手机号 是否为未关注的服务管家
     public static String USER_CHECK_BOOKLIST = "user_check_bookList.do";
     //获取通讯录中不是用户好友的手机号(是平台账号,发过好友申请的也不显示)
     public static String USER_CHECK_BOOKLIST_FRIEND = "user_check_bookList_friend.do";

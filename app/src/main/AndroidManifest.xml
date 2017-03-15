@@ -283,7 +283,7 @@
         <activity android:name=".activity.HeadManageActivity" />
         <activity android:name=".activity.mine.MyFollowActivity" />
         <activity android:name=".activity.FindPasswordActivity" />
-        <activity android:name=".activity.mine.MyFansActivity" />
+        <activity android:name=".activity.mine.FamiliarPeopleActivity" />
         <activity android:name=".activity.RecordLifeActivity">
 
             <!-- <intent-filter> -->
@@ -316,7 +316,7 @@
         <activity android:name=".activity.mine.MyPhoneSecretActivity" />
         <activity android:name=".activity.ScanQrActivity" />
         <activity android:name=".activity.mine.message.SystemMessageActivity" />
-        <activity android:name=".activity.mine.message.SystemMessageChatUIActivity" />
+        <activity android:name=".activity.mine.message.OrderMessageActivity" />
         <activity android:name=".activity.mine.message.NoticeMessageActivity" />
         <activity android:name=".activity.mine.MyAreaChildActivity" />
         <activity android:name=".activity.mine.MyAreaSubChildActivity" />

@@ -37,7 +37,7 @@ import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
-public class SystemMessageChatUIActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
+public class OrderMessageActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -73,7 +73,7 @@ public class SystemMessageChatUIActivity extends MBaseActivity implements Smooth
         concernLv.setLoadMoreEnable(false);
         concernLv.setSmoothListViewListener(this);
         user_messageList_sys_1_2(true);
-        concernLv.setAdapter( commonAdapter=new CommonAdapter<M_Message>(SystemMessageChatUIActivity.this, R.layout.item_systemmessagechatui_result, mDatas) {
+        concernLv.setAdapter( commonAdapter=new CommonAdapter<M_Message>(OrderMessageActivity.this, R.layout.item_ordermessage_result, mDatas) {
             @Override
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
                 holder.setText(R.id.tv_messagedate, message.createtime);
@@ -84,7 +84,7 @@ public class SystemMessageChatUIActivity extends MBaseActivity implements Smooth
                     holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            IntentUtil.start_activity(SystemMessageChatUIActivity.this,BaseWebViewActivity.class,
+                            IntentUtil.start_activity(OrderMessageActivity.this,BaseWebViewActivity.class,
                                     new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
                         }
                     });
@@ -96,7 +96,7 @@ public class SystemMessageChatUIActivity extends MBaseActivity implements Smooth
                         holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                IntentUtil.intStart_activity( SystemMessageChatUIActivity.this,
+                                IntentUtil.intStart_activity( OrderMessageActivity.this,
                                         BillInfoActivity.class, new Pair<String, Integer>("type",6),
                                         new Pair<String, Integer>("billId", message.billId));
                             }
@@ -149,7 +149,7 @@ public class SystemMessageChatUIActivity extends MBaseActivity implements Smooth
             public void onResponse(Object response) {
                 dismissPd();
                 if (((APIM_TaskIndustryInfo) response).status == 1) {
-                    Intent intent = new Intent(SystemMessageChatUIActivity.this, TaskDetailActivity.class);
+                    Intent intent = new Intent(OrderMessageActivity.this, TaskDetailActivity.class);
                     ((APIM_TaskIndustryInfo) response).taskIndustryRecordInfo.setTaskIndustryRecordId(taskIndustryRecordId);
                     intent.putExtra(TaskDetailActivity.INTENT_TASK, ((APIM_TaskIndustryInfo) response).taskIndustryRecordInfo);
                     startActivity(intent);
@@ -212,7 +212,7 @@ public class SystemMessageChatUIActivity extends MBaseActivity implements Smooth
                     concernLv.stopRefresh();
                     concernLv.stopLoadMore();
                 } else {
-                    ToastUtils.show(SystemMessageChatUIActivity.this, ((APIM_CommonSysMessageList) response).info);
+                    ToastUtils.show(OrderMessageActivity.this, ((APIM_CommonSysMessageList) response).info);
                 }
 
             }
