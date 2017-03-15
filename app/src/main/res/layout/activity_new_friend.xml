@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="如果此处你选择不关联，再次关联需要\n需要在 “设置”-“隐私”-“通讯录” 中打开。"
+            android:text="需要获取通讯录权限，请在手机权限管理中设置。"
             />
     </LinearLayout>
     <com.zemult.merchant.view.SmoothListView.SmoothListView
