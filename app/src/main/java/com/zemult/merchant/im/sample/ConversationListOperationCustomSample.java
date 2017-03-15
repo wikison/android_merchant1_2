@@ -14,6 +14,7 @@ import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.MainActivity;
+import com.zemult.merchant.activity.mine.message.OrderMessageActivity;
 import com.zemult.merchant.activity.mine.message.SystemMessageActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.im.contact.ContactSystemMessageActivity;
@@ -178,7 +179,7 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
                 IYWConversationService conversationService = mIMKit.getConversationService();
                 // 将某一条会话标记为已读
                 conversationService.markReaded(conversation);
-                Intent message_it = new Intent(AppApplication.getContext(),SystemMessageActivity.class);//  PushMessageActivity  OrderMessageActivity
+                Intent message_it = new Intent(AppApplication.getContext(),OrderMessageActivity.class);//  PushMessageActivity  OrderMessageActivity
                 fragment.getActivity().startActivity(message_it);
                 return true;
             }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.flyco.roundview.RoundRelativeLayout;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.util.EditFilter;
@@ -27,6 +28,8 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     private RoundTextView decrease;
     private RoundTextView plus;
     private EditText etNum;
+    private RoundRelativeLayout rllTaskDescribe;
+
     private int defaultNum = -1, minNum, maxNum;
 
     //数字变化监听器
@@ -78,12 +81,15 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         View view = View.inflate(context, R.layout.view_num_plus_minus, null);
         decrease = (RoundTextView) view.findViewById(R.id.decrease);
         plus = (RoundTextView) view.findViewById(R.id.plus);
+        rllTaskDescribe= (RoundRelativeLayout) view.findViewById(R.id.rll_task_describe);
         etNum = (EditText) view.findViewById(R.id.et_num);
         decrease.setOnClickListener(this);
         plus.setOnClickListener(this);
         etNum.addTextChangedListener(this);
         etNum.setText("");
         etNum.setLongClickable(false);
+        rllTaskDescribe.setOnClickListener(this);
+        etNum.setOnClickListener(this);
 
         //此处是禁止复制粘贴
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
@@ -151,6 +157,11 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
                     resultNum2 = maxNum;
                 }
                 etNum.setText(resultNum2 + "");
+                break;
+
+            case R.id.rll_task_describe:
+            case R.id.et_num:
+                etNum.setText("");
                 break;
         }
     }

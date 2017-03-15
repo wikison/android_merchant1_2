@@ -54,4 +54,10 @@ public class M_Message {
     @Expose public String  ruserName	;//				被回复用户昵称(type=1)
     @Expose public int  messageType	;//				消息类型(-1:系统广告，0:红包)
     @Expose public int  billId	;//账单id（红包类型时有值--点击查看详情用 user_bill_info_commission）
+
+    @Expose public String  number	;//	订单号
+    @Expose public String  fromUserHead	;//来自 用户头像（messageType=5/8）
+    @Expose public String  fromUserName	;//来自 用户名称（messageType=5/8）
+    @Expose public double  money	;//金额
+    @Expose public int userPayId			;
 }

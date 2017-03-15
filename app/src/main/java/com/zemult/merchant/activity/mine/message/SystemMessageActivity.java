@@ -68,7 +68,7 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
 
     public void init() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("系统消息");
+        lhTvTitle.setText("约服团队");
         concernLv.setRefreshEnable(true);
         concernLv.setLoadMoreEnable(false);
         concernLv.setSmoothListViewListener(this);

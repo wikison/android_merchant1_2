@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
-//获取 系统 消息列表
+//约服账单 消息列表
 public class UserMessageListBill_1_2_2Request extends PostStringRequest<Type> {
 
     public static class Input {
