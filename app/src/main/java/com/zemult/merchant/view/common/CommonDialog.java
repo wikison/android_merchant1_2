@@ -165,7 +165,7 @@ public class CommonDialog {
 		//设置contentView
 		View contentView = LayoutInflater.from(context).inflate(R.layout.pop_layout, null);
 		final PopupWindow mPopWindow = new PopupWindow(contentView,
-				DensityUtil.dip2px(context, 132), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+				list.get(0).getKey().length()>5 ? DensityUtil.dip2px(context, 172):DensityUtil.dip2px(context, 132), ViewGroup.LayoutParams.WRAP_CONTENT, true);
 		mPopWindow.setContentView(contentView);
 		mPopWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
 		mPopWindow.setOutsideTouchable(true);
@@ -200,7 +200,11 @@ public class CommonDialog {
 			}
 		});
 		//显示PopupWindow
-		mPopWindow.showAsDropDown(rightButton, -180, -20);
+		if(list.get(0).getKey().length()>5)
+			mPopWindow.showAsDropDown(rightButton, -250, -10);
+		else
+			mPopWindow.showAsDropDown(rightButton, -180, -20);
+
 	}
 
 	public interface PopClickListener{

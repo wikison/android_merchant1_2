@@ -245,7 +245,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
 
                 List<FilterEntity> list = new ArrayList<>();
                 list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
-                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_icon));
+                list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_nor));
                 if (merchantInfo != null && merchantInfo.isCommission == 1)
                     list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
                  else
