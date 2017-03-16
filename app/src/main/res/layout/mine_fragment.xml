@@ -263,7 +263,7 @@
                         android:layout_below="@+id/state_iv"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="7dp"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="16dp"
                         android:drawablePadding="15dp"
                         android:drawableRight="@mipmap/sanjiao_icon"
                         android:text="忙碌"

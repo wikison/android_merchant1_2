@@ -28,6 +28,7 @@ import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.MyinfoSetActivity;
 import com.zemult.merchant.activity.mine.SafeSettingActivity;
+import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.search.LabelHomeActivity;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
@@ -272,7 +273,7 @@ public class MineFragment extends BaseFragment {
                 break;
 
             case R.id.businessmanage:
-
+                startActivity(new Intent(getActivity(), SaleManageActivity.class));
                 break;
             case R.id.rl_my_oriprorder:
                 startActivity(new Intent(getActivity(), MyInviteActivity.class));

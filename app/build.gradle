@@ -26,7 +26,7 @@ android {
         applicationId "com.zemult.merchant"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
+        versionCode 4
         versionName "1.2.1"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v1.2.1", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
@@ -193,7 +193,10 @@ dependencies {
     //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
 //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     testCompile 'junit:junit:4.12'
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile 'com.contrarywind:Android-PickerView:3.1.0'
     compile 'com.github.crosswall:Android-Coverflow:release-v1.0.4'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
+
 }

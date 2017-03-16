@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="permission-1.0.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/905ec2d82f7b97de0e9c12699d70853177059e0b/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/905ec2d82f7b97de0e9c12699d70853177059e0b/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yanzhenjie/permission/1.0.4/82d060ef0d5d93c40b07db852c9b7e76d30cf877/permission-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
