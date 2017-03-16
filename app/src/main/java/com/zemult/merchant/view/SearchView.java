@@ -141,7 +141,6 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         ivBack.setOnClickListener(this);
         llBack.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
-
         etInput.setMaxLines(1);
         tvCancel.setTextColor(getResources().getColor(R.color.white));
         tvCancel.setTextSize(16);
@@ -233,10 +232,6 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
     //设置控件的输入字符最大数
     public void setFilter() {
         EditFilter.WordFilter(etInput, maxWordNum);
-    }
-
-    public void setShowKeyBoard(){
-        etInput.requestFocus();
     }
 
     private class EditChangedListener implements TextWatcher {
