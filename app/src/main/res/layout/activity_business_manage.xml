@@ -35,28 +35,14 @@
 
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/text_15_black_28"
                         android:layout_weight="1"
-                        android:layout_marginRight="15dp"
-                        android:background="@color/transparent"
-                        android:text="全称"
-                        android:singleLine="true"
-                        android:textColor="@color/font_black_999"
-                        android:textSize="@dimen/font_30px" />
+                        android:text="全称"/>
 
                     <TextView
-                        android:id="@+id/tv_fullname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/iv_name_right"
-                        android:layout_toRightOf="@+id/iv_full_name"
-                        android:background="@color/transparent"
-                        android:text="全称"
-                        android:singleLine="true"
-                        android:textColor="@color/font_black_999"
-                        android:textSize="@dimen/font_30px" />
+                        style="@style/text_15_black_28"
+                        android:id="@+id/tv_fullname"/>
+
 
                 </LinearLayout>
 
@@ -77,24 +63,17 @@
                         android:gravity="center_vertical">
 
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginRight="15dp"
-                            android:background="@color/transparent"
-                            android:text="分类"
-                            android:singleLine="true"
-                            android:textColor="@color/font_black_999"
-                            android:textSize="@dimen/font_30px" />
+
 
                         <TextView
-                            android:id="@+id/tv_classify"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="选择行业"
-                            android:textColor="@color/font_black_999"
-                            android:textSize="@dimen/font_30px" />
+                            style="@style/text_15_black_28"
+                            android:layout_weight="1"
+                            android:text="分类"/>
+
+                        <TextView
+                            style="@style/text_15_black_28"
+                            android:id="@+id/tv_classify"/>
+
 
                     </LinearLayout>
 
@@ -109,42 +88,28 @@
                         android:background="@color/white"
                         android:gravity="center_vertical">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginRight="15dp"
-                            android:background="@color/transparent"
-                            android:text="地址"
-                            android:singleLine="true"
-                            android:textColor="@color/font_black_999"
-                            android:textSize="@dimen/font_30px" />
 
                         <TextView
-                            android:id="@+id/tv_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="地址"
-                            android:textColor="@color/font_black_999"
-                            android:textSize="@dimen/font_30px" />
+                            style="@style/text_15_black_28"
+                            android:layout_weight="1"
+                            android:text="地址"/>
+
+                        <TextView
+                            style="@style/text_15_black_28"
+                            android:id="@+id/tv_address"/>
                     </LinearLayout>
 
                     <View style="@style/divider_1px" />
                 </LinearLayout>
 
-
-
                 <View style="@style/divider10dp" />
 
                 <View style="@style/divider_1px" />
 
-
-
-
-
                 //相册
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/ll_pic"
                     android:background="@drawable/ripple_item_clicked2"
                     android:layout_width="match_parent"
@@ -196,13 +161,13 @@
                         android:src="@mipmap/right_btn" />
                 </LinearLayout>
 
-                <View
-                    style="@style/divider" />
+                <!--<View-->
+                    <!--style="@style/divider" />-->
 
-                <View
-                    style="@style/divider12dp" />
-                <View
-                    style="@style/divider" />
+                <!--<View-->
+                    <!--style="@style/divider12dp" />-->
+                <!--<View-->
+                    <!--style="@style/divider" />-->
 
 
 
@@ -218,26 +183,17 @@
 
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/text_15_black_28"
                         android:layout_weight="1"
-                        android:layout_marginRight="15dp"
                         android:background="@color/transparent"
-                        android:text="入账账号"
-                        android:singleLine="true"
-                        android:textColor="#211d2e"
-                        android:textSize="@dimen/font_30px" />
+                        android:text="联系电话"/>
 
                     <TextView
-                        android:id="@+id/tv_account"
-                        android:layout_marginLeft="6dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:textColor="#211d2e"
-                        android:textSize="@dimen/font_30px" />
-
+                        style="@style/text_15_black_28"
+                        android:id="@+id/tv_tel"/>
                 </LinearLayout>
+
+
 
                 <View style="@style/divider_1px" />
 
@@ -251,24 +207,15 @@
 
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        style="@style/text_15_black_28"
                         android:layout_weight="1"
-                        android:layout_marginRight="15dp"
                         android:background="@color/transparent"
-                        android:text="联系电话"
-                        android:singleLine="true"
-                        android:textColor="#211d2e"
-                        android:textSize="@dimen/font_30px" />
+                        android:text="入账账号"/>
 
                     <TextView
-                        android:maxLength="11"
-                        android:id="@+id/tv_tel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#211d2e"
-                        android:textSize="@dimen/font_30px"
-                        android:background="@color/transparent"/>
+                        style="@style/text_15_black_28"
+                        android:id="@+id/tv_account"/>
+
                 </LinearLayout>
 
                 <View style="@style/divider_1px" />
