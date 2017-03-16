@@ -111,9 +111,9 @@ public class IamYuekeActivity extends BaseActivity {
             stateSp.setSelection(0);
 
         } else if (SlashHelper.userManager().getUserinfo().getState() == 1) {
-            stateSp.setSelection(1);
+        //    stateSp.setSelection(1);
         } else if (SlashHelper.userManager().getUserinfo().getState() == 2) {
-            stateSp.setSelection(2);
+            stateSp.setSelection(1);
         }
 
 
@@ -242,7 +242,7 @@ public class IamYuekeActivity extends BaseActivity {
         if (stateSp.getSelectedItem().toString().equals("空闲")) {
             input.state = 0;
         } else if (stateSp.getSelectedItem().toString().equals("休息")) {
-            input.state = 1;
+           // input.state = 1;
         } else if (stateSp.getSelectedItem().toString().equals("忙碌")) {
             input.state = 2;
         }
