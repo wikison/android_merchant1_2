@@ -8,6 +8,7 @@ def releaseTime() {
 allprojects {
     repositories {
         maven { url 'http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/' }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -192,4 +193,7 @@ dependencies {
     //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
 //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     testCompile 'junit:junit:4.12'
+    compile 'com.contrarywind:Android-PickerView:3.1.0'
+    compile 'com.github.crosswall:Android-Coverflow:release-v1.0.4'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
 }
