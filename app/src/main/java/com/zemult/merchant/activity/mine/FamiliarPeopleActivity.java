@@ -140,8 +140,8 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
 
-                                        if (!TextUtils.isEmpty(mfollow.head)) {
-                                            holder.setCircleImage(R.id.iv_follow_head, mfollow.head);
+                                        if (!TextUtils.isEmpty(mfollow.userHead)) {
+                                            holder.setCircleImage(R.id.iv_follow_head, mfollow.userHead);
                                         }
 
                                         holder.setOnclickListener(R.id.rel_layout, new View.OnClickListener() {
