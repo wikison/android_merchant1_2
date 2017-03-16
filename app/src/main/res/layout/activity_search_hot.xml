@@ -1,177 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <com.zemult.merchant.view.SearchView
+        android:id="@+id/a_seach_searchview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    android:background="@color/white"
-        android:orientation="vertical">
+        android:focusable="true"
 
-        <com.zemult.merchant.view.SearchView
-            android:id="@+id/a_seach_searchview"
+        android:layout_height="wrap_content">
+
+    </com.zemult.merchant.view.SearchView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        </com.zemult.merchant.view.SearchView>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
             <LinearLayout
+                android:id="@+id/ll_nofind"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="41dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/magnifier_btn"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/search_no_find"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_36px"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_hot_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_f2"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_nofind"
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_marginTop="@dimen/margin_12dp"
+                    android:gravity="left"
+                    android:paddingLeft="@dimen/margin_12dp"
+                    android:text="@string/search_hot"/>
+
+                <co.lujun.androidtagview.TagContainerLayout
+                    android:id="@+id/tcl_hot_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="41dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:padding="@dimen/margin_12dp"
+                    app:container_background_color="@color/bg_f2"
+                    app:container_border_color="@color/bg_f2"
+                    app:container_border_radius="0dp"
+                    app:container_enable_drag="false"
+                    app:container_gravity="left"
+                    app:horizontal_interval="10dp"
+                    app:tag_background_color="@color/white"
+                    app:tag_border_color="@color/white"
+                    app:tag_border_width="1dp"
+                    app:tag_clickable="true"
+                    app:tag_corner_radius="3dp"
+                    app:tag_horizontal_padding="16dp"
+                    app:tag_max_length="18"
+                    app:tag_text_color="@color/font_black_999"
+                    app:tag_text_size="14dp"
+                    app:tag_theme="none"
+                    app:tag_vertical_padding="8dp"
+                    app:vertical_interval="10dp"/>
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/magnifier_btn" />
+            <LinearLayout
+                android:id="@+id/ll_recent_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:text="@string/search_no_find"
-                        android:textColor="@color/font_black_999"
-                        android:textSize="@dimen/font_36px" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_hot_search"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_f2"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/margin_12dp">
 
                     <TextView
                         style="@style/text_15_black_28"
-                        android:layout_marginTop="@dimen/margin_12dp"
-                        android:gravity="left"
+                        android:layout_alignParentLeft="true"
                         android:paddingLeft="@dimen/margin_12dp"
-                        android:text="@string/search_hot" />
+                        android:text="@string/search_recent"/>
 
-                    <co.lujun.androidtagview.TagContainerLayout
-                        android:id="@+id/tcl_hot_search"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_delete_history"
+                        style="@style/text_14_black_28"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_12dp"
-                        app:container_background_color="@color/bg_f2"
-                        app:container_border_color="@color/bg_f2"
-                        app:container_border_radius="0dp"
-                        app:container_enable_drag="false"
-                        app:container_gravity="left"
-                        app:horizontal_interval="10dp"
-                        app:tag_background_color="@color/white"
-                        app:tag_border_color="@color/white"
-                        app:tag_border_width="1dp"
-                        app:tag_clickable="true"
-                        app:tag_corner_radius="3dp"
-                        app:tag_horizontal_padding="16dp"
-                        app:tag_max_length="18"
-                        app:tag_text_color="@color/font_black_999"
-                        app:tag_text_size="14dp"
-                        app:tag_theme="none"
-                        app:tag_vertical_padding="8dp"
-                        app:vertical_interval="10dp" />
-                </LinearLayout>
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/margin_12dp"
+                        android:text="@string/delete_recent"
+                        android:textColor="@color/font_main"/>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_recent_search"
+                <co.lujun.androidtagview.TagContainerLayout
+                    android:id="@+id/tcl_recent_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_12dp">
-
-                        <TextView
-                            style="@style/text_15_black_28"
-                            android:layout_alignParentLeft="true"
-                            android:paddingLeft="@dimen/margin_12dp"
-                            android:text="@string/search_recent" />
-
-                        <TextView
-                            android:id="@+id/tv_delete_history"
-                            style="@style/text_14_black_28"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:gravity="right"
-                            android:paddingRight="@dimen/margin_12dp"
-                            android:text="@string/delete_recent"
-                            android:textColor="@color/font_main" />
-                    </RelativeLayout>
-
-                    <co.lujun.androidtagview.TagContainerLayout
-                        android:id="@+id/tcl_recent_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_12dp"
-                        app:container_background_color="@color/white"
-                        app:container_border_color="@color/white"
-                        app:container_border_radius="0dp"
-                        app:container_gravity="left"
-                        app:horizontal_interval="10dp"
-                        app:tag_background_color="@color/white"
-                        app:tag_border_color="@color/divider_dc"
-                        app:tag_border_width="1dp"
-                        app:tag_clickable="true"
-                        app:tag_corner_radius="3dp"
-                        app:tag_horizontal_padding="16dp"
-                        app:tag_max_length="18"
-                        app:tag_text_color="@color/font_black_999"
-                        app:tag_text_size="14sp"
-                        app:tag_theme="none"
-                        app:tag_vertical_padding="10dp"
-                        app:vertical_interval="10dp" />
-                </LinearLayout>
-
-                <com.zemult.merchant.view.FixedGridView
-                    android:id="@+id/a_search_grid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_12dp"
-                    android:background="@color/divider_c1"
-                    android:horizontalSpacing="1.0px"
-                    android:numColumns="3"
-                    android:paddingBottom="1px"
-                    android:paddingTop="1px"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="1.0px"
-                    android:visibility="gone">
-
-                </com.zemult.merchant.view.FixedGridView>
+                    android:padding="@dimen/margin_12dp"
+                    app:container_background_color="@color/white"
+                    app:container_border_color="@color/white"
+                    app:container_border_radius="0dp"
+                    app:container_gravity="left"
+                    app:horizontal_interval="10dp"
+                    app:tag_background_color="@color/white"
+                    app:tag_border_color="@color/divider_dc"
+                    app:tag_border_width="1dp"
+                    app:tag_clickable="true"
+                    app:tag_corner_radius="3dp"
+                    app:tag_horizontal_padding="16dp"
+                    app:tag_max_length="18"
+                    app:tag_text_color="@color/font_black_999"
+                    app:tag_text_size="14sp"
+                    app:tag_theme="none"
+                    app:tag_vertical_padding="10dp"
+                    app:vertical_interval="10dp"/>
             </LinearLayout>
 
-           <ListView
-               android:visibility="gone"
-               android:id="@+id/lv"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:divider="@null"
-               android:background="@color/white">
+            <com.zemult.merchant.view.FixedGridView
+                android:id="@+id/a_search_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:background="@color/divider_c1"
+                android:horizontalSpacing="1.0px"
+                android:numColumns="3"
+                android:paddingBottom="1px"
+                android:paddingTop="1px"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="1.0px"
+                android:visibility="gone">
 
-           </ListView>
+            </com.zemult.merchant.view.FixedGridView>
+        </LinearLayout>
 
-        </FrameLayout>
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@null"
+            android:visibility="gone">
+
+        </ListView>
+
+    </FrameLayout>
 
 
-
-    </LinearLayout>
+</LinearLayout>
 
 

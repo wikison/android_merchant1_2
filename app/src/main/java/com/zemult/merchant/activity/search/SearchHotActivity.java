@@ -33,7 +33,6 @@ import com.zemult.merchant.view.SearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -117,6 +116,8 @@ public class SearchHotActivity extends BaseActivity {
         }
         lv.setAdapter(adapter);
         mSearchView.setStrHint("搜索你想要的");
+//        mSearchView.setFocusable(true);
+//        mSearchView.setFocusableInTouchMode(true);
     }
 
     private void initListener() {

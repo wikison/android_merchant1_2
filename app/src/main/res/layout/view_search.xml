@@ -40,6 +40,7 @@
             android:drawableLeft="@mipmap/sousuo_black_icon"
             android:drawablePadding="12dp"
             android:hint="搜索"
+            android:focusable="true"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLength="15"

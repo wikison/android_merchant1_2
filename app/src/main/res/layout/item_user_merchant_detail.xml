@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/text_15_black_28"
+                    android:text="锦江国际大酒店"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        style="@style/text_12_black_999"
+                        android:text="人均100元"/>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:background="@color/divider_c1"/>
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        style="@style/text_12_black_999"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:text="300m"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.zemult.merchant.view.FNRadioGroup
+                android:id="@+id/rg_ta_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16dp">
+
+            </com.zemult.merchant.view.FNRadioGroup>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/text_12_black_28"
+                android:layout_marginRight="@dimen/margin_16dp"
+                android:drawablePadding="@dimen/margin_8dp"
+                android:drawableRight="@mipmap/right_btn"
+                android:text="详情"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg_f2"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_f2"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/btn_buy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_btn_height_35"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="@dimen/j35dp"
+            android:layout_marginRight="@dimen/j35dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="找TA买单"
+            app:rv_strokeColor="@color/font_main"
+            app:rv_strokeWidth="1dp"
+            app:rv_cornerRadius="@dimen/font_36px"
+            app:rv_backgroundPressColor="@color/lightyellow"
+            app:rv_backgroundColor="@color/white"
+            android:textColor="@color/font_main"
+            android:textSize="@dimen/font_36px"
+            android:visibility="visible"/>
+
+
+        <Button
+            android:id="@+id/btn_service"
+            style="@style/common_btn_235"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_btn_height_35"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="@dimen/j35dp"
+            android:layout_marginRight="@dimen/j35dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="找TA约服"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_36px"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+</LinearLayout>

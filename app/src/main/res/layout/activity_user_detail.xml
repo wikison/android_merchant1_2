@@ -69,7 +69,7 @@
                                 android:ellipsize="end"
                                 android:maxEms="6"
                                 android:maxLines="1"
-                                android:text="呵呵哒呵呵哒呵哒哒呵哒"
+                                android:text=""
                                 android:textColor="@color/font_black_28"
                                 android:textSize="@dimen/font_34px"
                                 android:textStyle="bold"/>
@@ -96,9 +96,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_6dp"
                         android:text="备注名"
-                        android:visibility="gone"
                         android:textColor="@color/font_black_46"
-                        android:textSize="@dimen/font_24px"/>
+                        android:textSize="@dimen/font_24px"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -122,232 +122,160 @@
             </RelativeLayout>
 
             <TextView
-                android:paddingLeft="10dp"
                 android:id="@+id/tv_buy_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_6dp"
                 android:drawableLeft="@mipmap/xiuxi_icon"
                 android:drawablePadding="@dimen/margin_6dp"
+                android:paddingLeft="10dp"
                 android:text="休息"
                 android:textColor="@color/font_black_46"
                 android:textSize="@dimen/font_24px"/>
 
-            <LinearLayout
-                android:id="@+id/ll_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <View
-                    style="@style/divider_1px"
-                    android:layout_marginTop="@dimen/margin_16dp"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp">
-
-                    <TextView
-                        style="@style/text_15_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:text="手机号码"/>
-
-
-                    <ImageView
-                        android:id="@+id/iv_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/margin_6dp"
-                        android:layout_toLeftOf="@+id/tv_phone"
-                        android:scaleType="centerInside"
-                        android:src="@mipmap/dianhua_icon"/>
-
-                    <TextView
-                        android:id="@+id/tv_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center_vertical"
-                        android:text=""
-                        android:textColor="@color/font_main"
-                        android:textSize="@dimen/font_30px"/>
-
-                </RelativeLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <View
-            style="@style/divider_1px"/>
+            style="@style/divider_1px"
+            android:layout_marginTop="@dimen/margin_16dp"/>
+    </LinearLayout>
 
-        <View style="@style/divider12dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_height="100dp">
 
-            <LinearLayout
-                android:id="@+id/ll_photo"
+            <ImageView
+                android:id="@+id/iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:background="@drawable/ripple_item_clicked2"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_16dp">
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"/>
 
-                <TextView
-                    style="@style/text_15_black_28"
-                    android:layout_weight="1"
-                    android:text="TA的服务"/>
+            <RelativeLayout
+                android:id="@+id/rl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent">
 
-                <com.zemult.merchant.view.FixedGridView
-                    android:id="@+id/gv_pic"
+                <me.crosswall.lib.coverflow.core.LinkagePagerContainer
+                    android:id="@+id/pager_container"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="36dp"
-                    android:layout_weight="1"
-                    android:numColumns="3"
-                    android:scrollbars="none"
-                    android:stretchMode="columnWidth"
-                    android:visibility="gone"/>
+                    android:layout_height="75dp"
+                    android:layout_centerVertical="true">
 
-                <TextView
-                    android:id="@+id/num_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@color/font_black_999"
-                    android:textSize="12sp"/>
+                    <android.support.v4.view.LinkagePager
+                        android:layout_width="145dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"/>
+                </me.crosswall.lib.coverflow.core.LinkagePagerContainer>
 
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/right_btn"/>
-            </LinearLayout>
-        </LinearLayout>
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/sanjiao"/>
+            </RelativeLayout>
+        </FrameLayout>
 
-
-        <View
-            style="@style/divider12dp"
-            android:layout_height="12dp"
-            android:visibility="gone"/>
-
-        <View
-            style="@style/divider_1px"/>
-
-        <TextView
-            style="@style/text_15_black_28"
+        <android.support.v4.view.LinkagePager
+            android:id="@+id/bind_pager"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:background="@color/white"
-            android:drawableRight="@mipmap/right_btn"
-            android:padding="@dimen/margin_16dp"
-            android:text="TA的动态"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"/>
 
-        <com.zemult.merchant.view.FixedListView
-            android:id="@+id/flv_merchant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/bg_f2"
-            android:visibility="gone">
-
-        </com.zemult.merchant.view.FixedListView>
     </LinearLayout>
-
-
-    <View
-        style="@style/divider12dp"
-        android:layout_height="12dp"/>
 
     <LinearLayout
-        android:id="@+id/ll_bottom"
+        android:id="@+id/ll_bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <View style="@style/divider"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:weightSum="3">
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/btn_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/common_btn_height_35"
+
+            <LinearLayout
+                android:id="@+id/ll_phone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked2"
                 android:clickable="true"
-                android:gravity="center"
-                android:layout_alignParentLeft="true"
-                android:text="发消息"
-                android:layout_marginLeft="@dimen/j35dp"
-                android:textColor="@color/font_main"
-                android:textSize="@dimen/font_36px"
-                app:rv_backgroundColor="@color/white"
-                app:rv_backgroundPressColor="@color/bg_ce"
-                app:rv_cornerRadius="18dp"
-                app:rv_strokeColor="@color/font_main"
-                app:rv_strokeWidth="1px"/>
+                android:gravity="center">
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/btn_gift"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/common_btn_height_35"
-                android:layout_alignParentRight="true"
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/dadianhua"
+                    android:gravity="center"
+                    android:text="打电话"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/divider_c1"/>
+
+            <LinearLayout
+                android:id="@+id/ll_contact"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked2"
                 android:clickable="true"
-                android:gravity="center"
-                android:text="赞赏红包"
-                android:layout_marginRight="@dimen/j35dp"
-                android:textColor="@color/font_main"
-                android:textSize="@dimen/font_36px"
-                app:rv_backgroundColor="@color/white"
-                app:rv_backgroundPressColor="@color/bg_ce"
-                app:rv_cornerRadius="18dp"
-                app:rv_strokeColor="@color/font_main"
-                app:rv_strokeWidth="1px"/>
-        </RelativeLayout>
+                android:gravity="center">
 
-        <Button
-            android:id="@+id/btn_buy"
-            style="@style/common_btn_235"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="@dimen/j35dp"
-            android:layout_marginRight="@dimen/j35dp"
-            android:clickable="true"
-            android:visibility="visible"
-            android:gravity="center"
-            android:text="结账服务"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/faxiaoxi"
+                    android:gravity="center"
+                    android:text="发消息"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+            </LinearLayout>
 
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/divider_c1"/>
 
-        <Button
-            android:id="@+id/btn_service"
-            style="@style/common_btn_235"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginLeft="@dimen/j35dp"
-            android:layout_marginRight="@dimen/j35dp"
-            android:clickable="true"
-            android:visibility="visible"
-            android:gravity="center"
-            android:text="预约服务"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"/>
+            <LinearLayout
+                android:id="@+id/ll_gift"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ripple_item_clicked2"
+                android:clickable="true"
+                android:gravity="center">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@mipmap/zanshang"
+                    android:gravity="center"
+                    android:text="赞赏"
+                    android:textColor="@color/font_black_333"
+                    android:textSize="@dimen/font_30px"/>
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

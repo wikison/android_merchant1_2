@@ -132,57 +132,57 @@ public class MerchantManageActivity extends BaseActivity {
                     tvFullname.setText(mMerchant.name);
                     tvClassify.setText(mMerchant.industryName);
                     tvAddress.setText(mMerchant.address);
-                    if(!TextUtils.isEmpty(mMerchant.tel)
+                    if(!StringUtils.isBlank(mMerchant.tel)
                             && mMerchant.tel.length() > 10)
                         tvTel.setText(mMerchant.tel.substring(0,3) + "****" + mMerchant.tel.substring(mMerchant.tel.length()-4,mMerchant.tel.length()));
 
-                    if(!TextUtils.isEmpty(mMerchant.bankCard))
-                        tvAccount.setText(mMerchant.bankCard.substring(0,3) + "****" + mMerchant.bankCard.substring(mMerchant.bankCard.length()-4,mMerchant.bankCard.length()));
+                    if(!StringUtils.isBlank(mMerchant.bankCard))
+                        tvAccount.setText("************" + mMerchant.bankCard.substring(mMerchant.bankCard.length()-4,mMerchant.bankCard.length()));
 
-                    if (!TextUtils.isEmpty(mMerchant.pics)) {
-                        if (mMerchant.pics.contains(",")) {
-                            String[] photos = mMerchant.pics.split(",");
-                            String[] photosarray;
-
-                            if (photos.length > 3) {
-                                photosarray = new String[3];
-                                for (int i = 0; i < 3; i++) {
-                                    photosarray[i] = photos[i];
-                                }
-                            } else {
-                                photosarray = new String[photos.length];
-                                for (int i = 0; i < photos.length; i++) {
-                                    photosarray[i] = photos[i];
-                                }
-                            }
-                            switch (photosarray.length) {
-                                case 2:
-                                    iv1.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[0], iv1);
-                                    iv2.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[1], iv2);
-                                    iv3.setVisibility(View.GONE);
-                                    break;
-                                case 3:
-                                    iv1.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[0], iv1);
-                                    iv2.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[1], iv2);
-                                    iv3.setVisibility(View.VISIBLE);
-                                    imageManager.loadUrlImage(photosarray[2], iv3);
-                                    break;
-                            }
-                        } else {
-                            iv1.setVisibility(View.VISIBLE);
-                            imageManager.loadUrlImage(mMerchant.pics, iv1);
-                            iv2.setVisibility(View.GONE);
-                            iv3.setVisibility(View.GONE);
-                        }
-                    }else {
-                        iv1.setVisibility(View.GONE);
-                        iv2.setVisibility(View.GONE);
-                        iv3.setVisibility(View.GONE);
-                    }
+//                    if (!TextUtils.isEmpty(mMerchant.pics)) {
+//                        if (mMerchant.pics.contains(",")) {
+//                            String[] photos = mMerchant.pics.split(",");
+//                            String[] photosarray;
+//
+//                            if (photos.length > 3) {
+//                                photosarray = new String[3];
+//                                for (int i = 0; i < 3; i++) {
+//                                    photosarray[i] = photos[i];
+//                                }
+//                            } else {
+//                                photosarray = new String[photos.length];
+//                                for (int i = 0; i < photos.length; i++) {
+//                                    photosarray[i] = photos[i];
+//                                }
+//                            }
+//                            switch (photosarray.length) {
+//                                case 2:
+//                                    iv1.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[0], iv1);
+//                                    iv2.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[1], iv2);
+//                                    iv3.setVisibility(View.GONE);
+//                                    break;
+//                                case 3:
+//                                    iv1.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[0], iv1);
+//                                    iv2.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[1], iv2);
+//                                    iv3.setVisibility(View.VISIBLE);
+//                                    imageManager.loadUrlImage(photosarray[2], iv3);
+//                                    break;
+//                            }
+//                        } else {
+//                            iv1.setVisibility(View.VISIBLE);
+//                            imageManager.loadUrlImage(mMerchant.pics, iv1);
+//                            iv2.setVisibility(View.GONE);
+//                            iv3.setVisibility(View.GONE);
+//                        }
+//                    }else {
+//                        iv1.setVisibility(View.GONE);
+//                        iv2.setVisibility(View.GONE);
+//                        iv3.setVisibility(View.GONE);
+//                    }
                 } else {
                     ToastUtil.showMessage(((APIM_MerchantGetinfo) response).info);
                 }
