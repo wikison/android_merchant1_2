@@ -85,18 +85,31 @@
 
             </com.flyco.roundview.RoundLinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_add"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rl_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/add_btn" />
+                </RelativeLayout>
+
                 <ImageView
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="9dp"
+                    android:layout_gravity="right"
+                    android:id="@+id/ivDot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/add_btn" />
-            </RelativeLayout>
-
+                    android:src="@mipmap/tixing_icon"/>
+            </FrameLayout>
 
         </LinearLayout>
 

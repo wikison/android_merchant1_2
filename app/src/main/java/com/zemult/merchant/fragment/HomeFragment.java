@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +94,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     LinearLayout llTopbar;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
+    @Bind(R.id.ivDot)
+    ImageView ivDot;
 
     private Context mContext;
     private Activity mActivity;
@@ -123,12 +124,12 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 break;
 
             case R.id.rl_add:
-                if(noLogin(mContext))
+                if (noLogin(mContext))
                     return;
                 CommonDialog.showPopupWindow(mContext, view, ModelUtil.getHomeRightData(showRedDot), new CommonDialog.PopClickListener() {
                     @Override
                     public void onClick(int pos) {
-                        switch (pos){
+                        switch (pos) {
                             case 0:
                                 Intent intent = new Intent(mContext, MyAppointmentActivity.class);
                                 intent.putExtra("fromHome", true);
@@ -395,6 +396,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
 
     private UserReservationListRequest userReservationListRequest;
+
     private void userReservationList() {
 
         if (userReservationListRequest != null) {
@@ -414,11 +416,14 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             @Override
             public void onResponse(Object response) {
                 if (((APIM_UserReservationList) response).status == 1) {
-                    if(((APIM_UserReservationList) response).reservationList != null
-                            && !((APIM_UserReservationList) response).reservationList.isEmpty())
+                    if (((APIM_UserReservationList) response).reservationList != null
+                            && !((APIM_UserReservationList) response).reservationList.isEmpty()){
                         showRedDot = true;
-                    else
+                        ivDot.setVisibility(View.VISIBLE);
+                    } else{
                         showRedDot = false;
+                        ivDot.setVisibility(View.GONE);
+                    }
                 }
             }
         });
