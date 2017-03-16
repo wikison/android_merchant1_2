@@ -167,15 +167,15 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             }
         });
 
-        headerMerchantDetailView.setOnHeaderClickListener(new HeaderMerchantDetailView.OnHeaderClickListener() {
-            @Override
-            public void onCoverClick() {
-                Intent intent = new Intent(mContext, AlbumActivity.class);
-                intent.putExtra(AlbumActivity.INTENT_MERCHANTID, merchantId);
-                intent.putExtra(AlbumActivity.INTENT_JUSTLOOK, 1);
-                startActivity(intent);
-            }
-        });
+//        headerMerchantDetailView.setOnHeaderClickListener(new HeaderMerchantDetailView.OnHeaderClickListener() {
+//            @Override
+//            public void onCoverClick() {
+//                Intent intent = new Intent(mContext, AlbumActivity.class);
+//                intent.putExtra(AlbumActivity.INTENT_MERCHANTID, merchantId);
+//                intent.putExtra(AlbumActivity.INTENT_JUSTLOOK, 1);
+//                startActivity(intent);
+//            }
+//        });
         mAdapter.setOnMerchantDetailClick(new MerchantDetailAdpater.OnMerchantDetailClick() {
             @Override
             public void onUserClick(int position) {
