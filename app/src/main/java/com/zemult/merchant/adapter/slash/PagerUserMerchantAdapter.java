@@ -38,6 +38,7 @@ import cn.trinea.android.common.util.StringUtils;
 
 public class PagerUserMerchantAdapter extends PagerAdapter {
     int type = 0;// 0图片 1详细信息
+    boolean isSelf = false;
     Context mContext;
     private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
     ImageManager imageManager;
@@ -50,10 +51,11 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         this.onViewClickListener = onViewClickListener;
     }
 
-    public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type) {
+    public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type, boolean isSelf) {
         mContext = context;
         this.merchantList = merchantList;
         this.type = type;
+        this.isSelf = isSelf;
         imageManager = new ImageManager(context);
         viewList = new ArrayList<WeakReference<LinearLayout>>();
         inflater = LayoutInflater.from(context);
@@ -150,6 +152,11 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
         if (entity.reviewstatus != 2) {
             holder.btnBuy.setVisibility(View.GONE);
+        }
+
+        if (isSelf) {
+            holder.btnBuy.setVisibility(View.GONE);
+            holder.btnService.setVisibility(View.GONE);
         }
 
         initTags(holder, entity);

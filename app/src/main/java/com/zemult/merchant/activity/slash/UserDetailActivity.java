@@ -131,6 +131,7 @@ public class UserDetailActivity extends BaseActivity {
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
+    private boolean isSelf = false; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     private UserAttractAddRequest attractAddRequest; // 添加关注
@@ -192,9 +193,13 @@ public class UserDetailActivity extends BaseActivity {
 
         if (userId == SlashHelper.userManager().getUserId()) {
             btnFocus.setVisibility(View.GONE);
+            isSelf = true;
+            llBottomMenu.setVisibility(View.GONE);
         } else {
             llRight.setVisibility(View.VISIBLE);
             ivRight.setImageResource(R.mipmap.gengduo_icon);
+            isSelf = false;
+            llBottomMenu.setVisibility(View.VISIBLE);
         }
 
 
@@ -319,10 +324,8 @@ public class UserDetailActivity extends BaseActivity {
         if (!TextUtils.isEmpty(userInfo.getPhoneNum())) {
             if (userInfo.getIsOpen() == 1) {
                 tvPhone.setText("打电话");
-                tvPhone.setTextColor(getResources().getColor(R.color.font_black_28));
             } else {
                 tvPhone.setText("未公开");
-                tvPhone.setTextColor(getResources().getColor(R.color.font_black_999));
             }
         }
 
@@ -399,8 +402,8 @@ public class UserDetailActivity extends BaseActivity {
 
         } else {
             pager = pagerContainer.getViewPager();
-            pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0);
-            pagerUserMerchantDetailAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 1);
+            pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
+            pagerUserMerchantDetailAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 1, isSelf);
             pager.setAdapter(pagerUserMerchantHeadAdapter);
 
             pager.setOffscreenPageLimit(pagerUserMerchantHeadAdapter.getCount());
