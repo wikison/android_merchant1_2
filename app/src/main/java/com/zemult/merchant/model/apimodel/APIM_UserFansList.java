@@ -5,6 +5,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.M_Userinfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public class APIM_UserFansList extends CommonResult {
     @Expose
     public List<M_Fan> fansList;
     @Expose
-    public List<M_Fan> userList;
+    public ArrayList<M_Fan> userList;
     @Expose
     public int maxpage;//当分页获取时，最大的页数
 

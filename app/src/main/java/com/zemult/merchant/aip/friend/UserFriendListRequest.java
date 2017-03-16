@@ -1,4 +1,5 @@
 package com.zemult.merchant.aip.friend;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.google.gson.reflect.TypeToken;
@@ -25,15 +26,21 @@ public class UserFriendListRequest extends PostStringRequest<Type>  {
 
 
         public void convertJosn(){
-            ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("userId", userId+""), new Pair<String, String>("name", name),
-                    new Pair<String, String>("page", page+""),new Pair<String, String>("rows", rows+"")));
+            if(TextUtils.isEmpty(name))
+                ejson=Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("userId", userId+""),
+                        new Pair<String, String>("page", page+""),new Pair<String, String>("rows", rows+"")));
+            else
+                ejson=Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("userId", userId+""),
+                        new Pair<String, String>("name", name),
+                        new Pair<String, String>("page", page+""),new Pair<String, String>("rows", rows+"")));
         }
 
     }
 
     public UserFriendListRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.USER_FRIENDLIST,input.ejson , new TypeToken<APIM_UserFriendList>() {
+        super(Urls.BASIC_URL+Urls.USER_ATTRACTLIST,input.ejson , new TypeToken<APIM_UserFriendList>() {//USER_FRIENDLIST
         }.getType() , listener);
 
     }

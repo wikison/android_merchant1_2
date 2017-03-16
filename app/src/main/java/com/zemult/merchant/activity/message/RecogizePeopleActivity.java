@@ -20,14 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendNoteActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.friend.UserCheckBookListFriendRequest;
 import com.zemult.merchant.aip.friend.UserCheckBookListRequest;
 import com.zemult.merchant.aip.friend.UserFriendAcceptRequest;
+import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.bean.ContactDataBean;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserFriendList;
 import com.zemult.merchant.util.AppUtils;
@@ -50,7 +53,7 @@ import zema.volley.network.ResponseListener;
 /**
  * 可能认识的人
  */
-public class RecogizePeopleActivity extends BaseActivity implements  SmoothListView.ISmoothListViewListener {
+public class RecogizePeopleActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -60,17 +63,23 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
     SmoothListView lv_newfriend;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.tv_people_num)
+    TextView tvPeopleNum;
+
     @Bind(R.id.ll_unconncet)
     LinearLayout llUnconncet;
 
     public static final int OP_READ_CONTACTS = 4;
-    UserFriendAcceptRequest  userFriendAcceptRequest;
-    List<M_Userinfo> friendList =new ArrayList<M_Userinfo>();
-    int page=1;
+    UserFriendAcceptRequest userFriendAcceptRequest;
+    List<M_Userinfo> friendList = new ArrayList<M_Userinfo>();
+    int page = 1;
     NewFriendListAdapter adapter;
     UserCheckBookListRequest userCheckBookListRequest;
-    List<ContactDataBean> listMembers=new ArrayList<ContactDataBean>();
+    List<ContactDataBean> listMembers = new ArrayList<ContactDataBean>();
+    private UserAttractAddRequest attractAddRequest; // 添加关注
+
     String phoneIds;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_new_friend);
@@ -89,9 +98,9 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
         lv_newfriend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int friendId = ((M_Userinfo)adapter.getItem(position-1)).getUserId();
+                int friendId = ((M_Userinfo) adapter.getItem(position - 1)).getUserId();
                 IntentUtil.intStart_activity(RecogizePeopleActivity.this,
-                        UserDetailActivity.class,new Pair<String, Integer>("userId", friendId));
+                        UserDetailActivity.class, new Pair<String, Integer>("userId", friendId));
             }
         });
 
@@ -104,15 +113,15 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
     protected void onResume() {
         super.onResume();
 
-        phoneIds=AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
-        if(!StringUtils.isEmpty(phoneIds)){
+        phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
+        if (!StringUtils.isEmpty(phoneIds)) {
             user_check_bookList_friend();
         }
 
 
-        if (checkOp(OP_READ_CONTACTS)==0) {
+        if (checkOp(OP_READ_CONTACTS) == 0) {
             llUnconncet.setVisibility(View.GONE);
-        }else {
+        } else {
             llUnconncet.setVisibility(View.VISIBLE);
         }
     }
@@ -127,46 +136,48 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
         }
     }
 
-        //新的朋友(接受列表)
-        private void user_check_bookList_friend( ) {
-            showPd();
-            if (userCheckBookListRequest != null) {
-                userCheckBookListRequest.cancel();
-            }
-            UserCheckBookListRequest.Input input = new UserCheckBookListRequest.Input();
-            if (SlashHelper.userManager().getUserinfo() != null) {
-                input.operateUserId = SlashHelper.userManager().getUserId();
-            }
-            input.phones =phoneIds ;
-            input.convertJosn();
-            userCheckBookListRequest = new UserCheckBookListRequest(input,new ResponseListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    dismissPd();
-                    lv_newfriend.stopRefresh();
-                    lv_newfriend.stopLoadMore();
-                }
-
-                @Override
-                public void onResponse(Object response) {
-                    if (((APIM_UserFriendList) response).status == 1) {
-                            friendList.clear();
-                            friendList=((APIM_UserFriendList) response).userList;
-                            adapter = new NewFriendListAdapter(RecogizePeopleActivity.this,friendList);
-                            lv_newfriend.setAdapter(adapter);
-
-                            lv_newfriend.setLoadMoreEnable(false);
-
-                    } else {
-                        ToastUtils.show(RecogizePeopleActivity.this, ((APIM_UserFriendList) response).info);
-                    }
-                    dismissPd();
-                    lv_newfriend.stopRefresh();
-                    lv_newfriend.stopLoadMore();
-                }
-            });
-            sendJsonRequest(userCheckBookListRequest);
+    //新的朋友(接受列表)
+    private void user_check_bookList_friend() {
+        showPd();
+        if (userCheckBookListRequest != null) {
+            userCheckBookListRequest.cancel();
         }
+        UserCheckBookListRequest.Input input = new UserCheckBookListRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.operateUserId = SlashHelper.userManager().getUserId();
+        }
+        input.phones = phoneIds;
+        input.convertJosn();
+        userCheckBookListRequest = new UserCheckBookListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+                lv_newfriend.stopRefresh();
+                lv_newfriend.stopLoadMore();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_UserFriendList) response).status == 1) {
+                    friendList.clear();
+                    if (((APIM_UserFriendList) response).size != 0) {
+                        tvPeopleNum.setText("您有" + ((APIM_UserFriendList) response).size + "人可能认识");
+                        tvPeopleNum.setVisibility(View.VISIBLE);
+                    }
+                    friendList = ((APIM_UserFriendList) response).userList;
+                    adapter = new NewFriendListAdapter(RecogizePeopleActivity.this, friendList);
+                    lv_newfriend.setAdapter(adapter);
+                    lv_newfriend.setLoadMoreEnable(false);
+                } else {
+                    ToastUtils.show(RecogizePeopleActivity.this, ((APIM_UserFriendList) response).info);
+                }
+                dismissPd();
+                lv_newfriend.stopRefresh();
+                lv_newfriend.stopLoadMore();
+            }
+        });
+        sendJsonRequest(userCheckBookListRequest);
+    }
 
     @Override
     public void onRefresh() {
@@ -209,7 +220,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
             Log.i("position -->>", String.valueOf(position));
             Holder holder;
             if (convertView == null) {
-                convertView= LayoutInflater.from(context).inflate(
+                convertView = LayoutInflater.from(context).inflate(
                         R.layout.item_recognizepeople,// 文件名
                         null);
 //                View menuView = LayoutInflater.from(context).inflate(
@@ -221,7 +232,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
                         .findViewById(R.id.tv_my_name);
                 holder.iv_friend_head = (ImageView) convertView
                         .findViewById(R.id.iv_friend_head);
-                holder.btn_add_state = (Button) convertView
+                holder.btn_add_state = (RoundTextView) convertView
                         .findViewById(R.id.btn_add_state);
                 holder.tv_remove_btn = (TextView) convertView
                         .findViewById(R.id.remove_btn);
@@ -243,20 +254,19 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
 
             M_Userinfo role = list.get(position);
             holder.tv_my_name.setText(role.getUserName());
-            if(!StringUtils.isEmpty(role.getPhoneNum())){
-                holder.tv_my_remark.setText("手机联系人："+AppUtils.getConactName(listMembers,role.getPhoneNum()));
+            if (!StringUtils.isBlank(role.merchantName)) {
+                holder.tv_my_remark.setText("来自：" + role.merchantName);
+            } else {
+                holder.tv_my_remark.setVisibility(View.GONE);
             }
-            holder.tv_friend_level.setText(role.userLevel+"");
+            if (!StringUtils.isEmpty(role.getPhoneNum())) {
+                holder.tv_friend_level.setText("手机联系人：" + AppUtils.getConactName(listMembers, role.getPhoneNum()));
+            } else {
+                holder.tv_friend_level.setVisibility(View.GONE);
+            }
 
-            // 状态(0:不是好友且无申请1:等待验证;2:被请求中--等待接收请求)
-            if (role.getState() == 0) {
-                holder.tv_add_state.setVisibility(View.INVISIBLE);
-                holder.btn_add_state.setVisibility(View.VISIBLE);
-            }else {
-                holder.tv_add_state.setVisibility(View.VISIBLE);
-                holder.btn_add_state.setVisibility(View.INVISIBLE);
-            }
-            imageManager.loadCircleImage(StringUtils.isEmpty(role.getUserHead())?"":role.getUserHead(), holder.iv_friend_head);
+
+            imageManager.loadCircleImage(StringUtils.isEmpty(role.getUserHead()) ? "" : role.getUserHead(), holder.iv_friend_head);
             holder.initView(role);
             return convertView;
         }
@@ -265,7 +275,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
         private class Holder implements View.OnClickListener {
             TextView tv_my_name;
             ImageView iv_friend_head;
-            Button btn_add_state;
+            RoundTextView btn_add_state;
             TextView tv_remove_btn;
             TextView tv_add_state;
             TextView tv_friend_ship;
@@ -283,9 +293,7 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.btn_add_state:
-                        Intent i = new Intent(RecogizePeopleActivity.this, AddFriendNoteActivity.class);
-                        i.putExtra("friendId", model.getUserId());
-                        startActivity(i);
+                        addFocus(model.userId);
                         break;
                     default:
                         break;
@@ -295,25 +303,53 @@ public class RecogizePeopleActivity extends BaseActivity implements  SmoothListV
         }
     }
 
+    private void addFocus(int attractId) {
+        showPd();
+        if (attractAddRequest != null) {
+            attractAddRequest.cancel();
+        }
+        UserAttractAddRequest.Input input = new UserAttractAddRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId(); // 用户id
+        input.attractId = attractId; // 被关注的用户id
+
+        input.convertJosn();
+        attractAddRequest = new UserAttractAddRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                dismissPd();
+                if (((CommonResult) response).status == 1) {
+                    user_check_bookList_friend();
+                } else {
+                    ToastUtils.show(RecogizePeopleActivity.this, ((CommonResult) response).info);
+                }
+            }
+        });
+        sendJsonRequest(attractAddRequest);
+    }
+
 
     /**
-     * @return 1为拒绝，0为允许
      * @param op
      * @return
      */
     @TargetApi(19)
-    private int checkOp( int op) {
+    private int checkOp(int op) {
         final int version = Build.VERSION.SDK_INT;
         if (version >= 19) {
             try {
                 AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
                 Method dispatchMethod = AppOpsManager.class.getMethod(
-                        "checkOp", new Class[] { int.class, int.class,
-                                String.class });
+                        "checkOp", new Class[]{int.class, int.class,
+                                String.class});
                 int mode = (Integer) dispatchMethod.invoke(
                         appOpsManager,
-                        new Object[] { op, Binder.getCallingUid(),
-                                getPackageName() });
+                        new Object[]{op, Binder.getCallingUid(),
+                                getPackageName()});
                 return mode;
             } catch (Exception e) {
                 e.printStackTrace();
