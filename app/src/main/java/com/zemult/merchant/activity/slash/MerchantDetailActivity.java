@@ -6,15 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.AlbumActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.MerchantDetailAdpater;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
@@ -36,7 +41,9 @@ import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 import com.zemult.merchant.view.common.CommonDialog;
 
@@ -68,6 +75,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     TextView lhTvTitle;
     @Bind(R.id.rl_first)
     RelativeLayout rlFirst;
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
 
     private int merchantId;
     private Context mContext;
@@ -80,7 +89,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     private List<M_Userinfo> listFan;
     private int page = 1;
     private float mTopViewHeight, fraction, headerTopMargin;
-    String name = "", tags = "";
+    private String name = "", tags = "";
+    private SharePopwindow sharePopWindow;
 
     @Override
     public void setContentView() {
@@ -111,7 +121,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
-          onRefresh();
+            onRefresh();
         }
     }
 
@@ -188,6 +198,58 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 List<String> list = new ArrayList<String>();
                 list.add(mAdapter.getItem(position).getUserHead());
                 AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
+            }
+        });
+
+        sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
+
+                switch (position) {
+                    case SharePopwindow.SINA:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.SINA)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】给您推荐了【"+ merchantInfo.name+"】的服务管家和服务，快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】向您推荐商家服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.WECHAT:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】给您推荐了【"+ merchantInfo.name+"】的服务管家和服务，快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】向您推荐商家服务")
+                                .share();
+                        break;
+                    case SharePopwindow.WECHAT_FRIEND:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】给您推荐了【"+ merchantInfo.name+"】的服务管家和服务，快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】向您推荐商家服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.QQ:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.QQ)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】给您推荐了【"+ merchantInfo.name+"】的服务管家和服务，快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】向您推荐商家服务")
+                                .share();
+                        break;
+                }
             }
         });
     }
@@ -304,7 +366,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             merchant_saleuserList_fan();
         else
             merchant_saleuserList_all(false);
-            merchant_info();
+        merchant_info();
 
     }
 
@@ -415,6 +477,26 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         ButterKnife.bind(this);
     }
 
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享取消");
+        }
+    };
+
 
     @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
     public void onClick(View view) {
@@ -448,6 +530,10 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     public void onClick(int pos) {
                         switch (pos){
                             case 0:
+                                if (sharePopWindow.isShowing())
+                                    sharePopWindow.dismiss();
+                                else
+                                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
                                 break;
 
                             case 1:
