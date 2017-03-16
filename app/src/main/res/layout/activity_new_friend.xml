@@ -40,6 +40,16 @@
             android:text="需要获取通讯录权限，请在手机权限管理中设置。"
             />
     </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        style="@style/text_14_black_999"
+        android:background="@color/bg_f0"
+        android:id="@+id/tv_people_num"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <com.zemult.merchant.view.SmoothListView.SmoothListView
         android:id="@+id/sml_new_friend"
         android:layout_width="match_parent"

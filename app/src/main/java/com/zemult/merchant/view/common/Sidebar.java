@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.friend.ContactsAdapter;
+import com.zemult.merchant.adapter.friend.ContactsNewAdapter;
 import com.zemult.merchant.adapter.friend.FriendAdapter;
 import com.zemult.merchant.adapter.friend.InviteContactsAdapter;
 import com.zemult.merchant.util.DensityUtil;
@@ -93,28 +94,7 @@ public class Sidebar extends View{
 		header.setText(headerString);
 
 		try {
-			if(mListView.getAdapter() instanceof FriendAdapter){
-				FriendAdapter adapter = (FriendAdapter) mListView.getAdapter();
-				String[]  adapterSections = (String[]) adapter.getSections();
-				for (int i = adapterSections.length - 1; i > -1; i--) {
-					if(adapterSections[i].equals(headerString)){
-						mListView.setSelection(adapter.getPositionForSection(i));
-						break;
-					}
-				}
-			}
-			else if(mListView.getAdapter() instanceof InviteContactsAdapter){
-				InviteContactsAdapter adapter = (InviteContactsAdapter) mListView.getAdapter();
-				String[]  adapterSections = (String[]) adapter.getSections();
-				for (int i = adapterSections.length - 1; i > -1; i--) {
-					if(adapterSections[i].equals(headerString)){
-						mListView.setSelection(adapter.getPositionForSection(i));
-						break;
-					}
-				}
-			}
-			else{
-				ContactsAdapter adapter = (ContactsAdapter) mListView.getAdapter();
+				ContactsNewAdapter adapter = (ContactsNewAdapter) mListView.getAdapter();
 				String[] adapterSections = (String[]) adapter.getSections();
 				for (int i = adapterSections.length - 1; i > -1; i--) {
 					if(adapterSections[i].equals(headerString)){
@@ -122,7 +102,6 @@ public class Sidebar extends View{
 						break;
 					}
 				}
-			}
 		} catch (Exception e) {
 //			Log.e("setHeaderTextAndscroll", e.getMessage());
 		}

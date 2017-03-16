@@ -105,8 +105,8 @@ public class M_Userinfo implements Serializable {
     public List<M_UserRole> userIndustryList;//用户的所有角色列表
     @Expose
     int userIndustryNum;//用户的所有角色数量
-
-
+    @Expose
+    public String merchantName;//商家
     @Expose
     public String tagNames;//标签名称
     @Expose

@@ -46,9 +46,11 @@ import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.MAppCompatActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.fragment.FamiliarFragment;
 import com.zemult.merchant.fragment.HomeFragment;
 import com.zemult.merchant.fragment.MineFragment;
 import com.zemult.merchant.fragment.MyFollowFragment;
+import com.zemult.merchant.fragment.SfriendFragment;
 import com.zemult.merchant.im.sample.CustomConversationHelper;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -67,6 +69,7 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.trinea.android.common.util.StringUtils;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
@@ -90,7 +93,9 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 //    private DiscoverFragment discoverFragment;      //发现
 //    private MyRoleFragment myRoleFragment;      //角色
     private MineFragment mineFragment;             //我的
-    private MyFollowFragment myFollowFragment;
+//    private MyFollowFragment myFollowFragment;
+    private FamiliarFragment familiarFragment;
+
 
     private View slashLayout;
     private View sfriendLayout;
@@ -448,11 +453,11 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             case 3:
                 discoverImage.setImageResource(R.mipmap.gangyou_btn_sel);
                 discoverText.setTextColor(getResources().getColor(R.color.sel_color));
-                if (myFollowFragment == null) {
-                    myFollowFragment = new MyFollowFragment();
-                    transaction.add(R.id.content, myFollowFragment);
+                if (familiarFragment == null) {
+                    familiarFragment = new FamiliarFragment();
+                    transaction.add(R.id.content, familiarFragment);
                 } else {
-                    transaction.show(myFollowFragment);
+                    transaction.show(familiarFragment);
                 }
                 transaction.commitAllowingStateLoss();
                 break;
@@ -502,8 +507,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         if (conversationFragment != null) {
             transaction.hide(conversationFragment);
         }
-        if (myFollowFragment != null) {
-            transaction.hide(myFollowFragment);
+        if (familiarFragment != null) {
+            transaction.hide(familiarFragment);
         }
         if (mineFragment != null) {
             transaction.hide(mineFragment);
@@ -803,7 +808,9 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
                     }
 
-                    initOrderConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
+                    if(!StringUtils.isBlank(((CommonResult) response).note)){
+                        initOrderConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
+                    }
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);
                     UserMessageAllNumUnread_1_2Request();
                 }

@@ -19,6 +19,8 @@ public class APIM_UserFriendList extends CommonResult {
     //1.1 获取通讯录中不是用户好友的手机号(是平台账号,发过好友申请的也不显示)
     @Expose
     public ArrayList<M_Userinfo> userList;
+    @Expose
+    public int size;
 
     @Expose
     public int   maxpage;//当分页获取时，最大的页数

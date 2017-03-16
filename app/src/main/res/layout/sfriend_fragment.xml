@@ -6,8 +6,11 @@
     android:background="@color/bg_e5"
     android:orientation="vertical">
 
-
-
+    <include layout="@layout/layout_head" />
+    <com.zemult.merchant.view.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.zemult.merchant.view.SearchView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +30,7 @@
             android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="70dp"
             android:background="@android:color/transparent"
             android:clickable="true" />
 

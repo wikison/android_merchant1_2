@@ -120,7 +120,6 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                 dismissPd();
                 fansLv.setVisibility(View.GONE);
                 rlNoData.setVisibility(View.VISIBLE);
-                tvPeopleNum.setText("您有0人可能认识");
                 fansLv.stopRefresh();
                 fansLv.stopLoadMore();
             }
@@ -134,9 +133,7 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                         if (mDatas == null || mDatas.size() == 0) {
                             fansLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
-                            tvPeopleNum.setVisibility(View.GONE);
                         } else {
-                            tvPeopleNum.setVisibility(View.VISIBLE);
                             fansLv.setVisibility(View.VISIBLE);
                             rlNoData.setVisibility(View.GONE);
                             if (mDatas != null && !mDatas.isEmpty()) {
