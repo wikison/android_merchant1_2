@@ -211,7 +211,7 @@ public class FamiliarFragment extends BaseFragment {
                         lvFriends.setAdapter(adapter);
                     }
                     else{
-                        adapter.setData(filtercontacts);
+                        adapter.setData(filtercontacts,num);
                     }
 
                 } else {

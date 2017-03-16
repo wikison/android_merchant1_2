@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+
+        android:id="@+id/ll_head_layout"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/ll_new_friend"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:text="可能熟悉的人"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_30px" />
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/tv_people_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:text="2个熟人可以关联"
+                android:textColor="@color/font_black_999"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/right_btn"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <ImageView
+            android:clickable="false"
+            android:background="@color/bg_f0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+
+        <TextView
+            android:clickable="false"
+            android:gravity="center"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="关联手机通讯录，让熟人用户先找到你"
+            android:textColor="@color/font_black_999"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_e5"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/contact_friend_list_Letter"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/headline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_e5"
+        />
+
+    <RelativeLayout
+        style="@style/margin_lr_12dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_follow_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:src="@mipmap/user_icon" />
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_toRightOf="@+id/iv_follow_head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_follow_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_follow_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/font_black_333"
+                        android:textSize="@dimen/font_28px" />
+
+                    <ImageView
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_sex"
+                        android:src="@mipmap/xinshou_icon"/>
+
+                    <TextView
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/tv_describe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/e6bb7c"
+                        android:textSize="@dimen/font_22px" />
+                    <ImageView
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/iv_status"
+                        android:src="@mipmap/kongxian_icon"/>
+                    <TextView
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/font_black_333"
+                        android:textSize="@dimen/font_24px" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="4dp"
+                android:text="备注名"
+                android:id="@+id/tv_rname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/font_black_999"
+                android:textSize="@dimen/font_24px" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

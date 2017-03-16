@@ -129,7 +129,7 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                 dismissPd();
                 if (((APIM_UserFansList) response).status == 1) {
                     if (page == 1) {
-                        mDatas = ((APIM_UserFansList) response).fansList;
+                        mDatas = ((APIM_UserFansList) response).userList;
                         if (mDatas == null || mDatas.size() == 0) {
                             fansLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
