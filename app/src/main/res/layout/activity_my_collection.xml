@@ -7,38 +7,38 @@
 
     <include layout="@layout/layout_head" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:background="@color/bg_e5">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="46dp"-->
+        <!--android:background="@color/bg_e5">-->
 
-        <com.flyco.roundview.RoundLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginBottom="@dimen/margin_8dp"
-            android:layout_marginLeft="@dimen/margin_12dp"
-            android:layout_marginRight="@dimen/margin_12dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            app:rv_backgroundColor="@color/white"
-            app:rv_cornerRadius="@dimen/radius_16px">
+        <!--<com.flyco.roundview.RoundLinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_marginBottom="@dimen/margin_8dp"-->
+            <!--android:layout_marginLeft="@dimen/margin_12dp"-->
+            <!--android:layout_marginRight="@dimen/margin_12dp"-->
+            <!--android:layout_marginTop="@dimen/margin_8dp"-->
+            <!--app:rv_backgroundColor="@color/white"-->
+            <!--app:rv_cornerRadius="@dimen/radius_16px">-->
 
-            <EditText
-                android:id="@+id/search_et_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@color/transparent"
-                android:drawableLeft="@mipmap/search_search_icon"
-                android:drawablePadding="5dp"
-                android:hint="搜索"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingLeft="12dp"
-                android:singleLine="true"
-                android:textSize="16sp" />
-        </com.flyco.roundview.RoundLinearLayout>
+            <!--<EditText-->
+                <!--android:id="@+id/search_et_input"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:drawableLeft="@mipmap/search_search_icon"-->
+                <!--android:drawablePadding="5dp"-->
+                <!--android:hint="搜索"-->
+                <!--android:imeOptions="actionSearch"-->
+                <!--android:inputType="text"-->
+                <!--android:paddingLeft="12dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:textSize="16sp" />-->
+        <!--</com.flyco.roundview.RoundLinearLayout>-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 
 

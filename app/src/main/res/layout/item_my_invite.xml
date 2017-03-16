@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp">
+            <TextView
+                android:id="@+id/day_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/font_black_999"
+                android:text="今天"/>
+
+            <TextView
+                android:id="@+id/time_tv"
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/font_black_999"
+                android:layout_height="wrap_content"
+                android:text="123456"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/head_iv"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/ll1"
+            android:layout_width="40dp"
+            android:src="@mipmap/user_icon"
+            android:layout_centerVertical="true"
+            android:layout_height="40dp" />
+
+
+            <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:id="@+id/theme_tv"
+                android:layout_width="wrap_content"
+                android:textSize="15sp"
+                android:layout_toRightOf="@id/head_iv"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/font_black_999"
+                android:layout_height="wrap_content"
+                android:text="活动主题"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:src="@mipmap/right_btn"/>
+
+
+    </RelativeLayout>
+
+    <View
+        style="@style/divider12dp"></View>
 </LinearLayout>

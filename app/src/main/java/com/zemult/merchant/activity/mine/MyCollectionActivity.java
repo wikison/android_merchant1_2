@@ -18,16 +18,22 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.SearchDetailActivity;
 import com.zemult.merchant.activity.slash.TaskDetailActivity;
 import com.zemult.merchant.adapter.minefragment.MyCollectionAdapter;
+import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.mine.UserDeleteFavoriteRequest;
 import com.zemult.merchant.aip.mine.UserFavoriteListRequest;
+import com.zemult.merchant.aip.slash.UserFavoriteMerchantDelRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_News;
 import com.zemult.merchant.model.apimodel.APIM_ManagerSearchnewsList;
+import com.zemult.merchant.model.apimodel.APIM_MerchantList;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -54,18 +60,18 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.search_et_input)
-    EditText searchEtInput;
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
     private Context mContext;
     private Activity mActivity;
-    private MyCollectionAdapter mAdapter; // 主页数据
     private int page = 1;
     private UserFavoriteListRequest userFavoriteListRequest; // 获取用户的方案列表(角色/场景/时间倒排序)
-    private UserDeleteFavoriteRequest userDeleteFavoriteRequest;//删除收藏
+    private UserFavoriteMerchantDelRequest userFavoriteMerchantDelRequest;//删除收藏
+
+    private HomeChildNewAdapter mAdapter; // 主页数据
+
 
 
     @Override
@@ -78,7 +84,6 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
         initData();
         initView();
         initListener();
-
         showPd();
         user_favorite_list(false);
 
@@ -94,8 +99,8 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
                     @Override
                     public void onClick(View v) {
                         showPd();
-                        int favoriteId = ((M_News) parent.getAdapter().getItem(position)).favoriteId;
-                        userDeleteFavorite(favoriteId, position);
+                        int merchantId = ((M_Merchant) parent.getAdapter().getItem(position)).merchantId;
+                        userDeleteFavorite(merchantId, position);
                         CommonDialog.DismissProgressDialog();
                     }
                 });
@@ -104,17 +109,17 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
         });
     }
 
-    private void userDeleteFavorite(int favoriteId, final int position) {
-        if (userDeleteFavoriteRequest != null) {
-            userDeleteFavoriteRequest.cancel();
+    private void userDeleteFavorite(int merchantId, final int position) {
+        if (userFavoriteMerchantDelRequest != null) {
+            userFavoriteMerchantDelRequest.cancel();
         }
-        UserDeleteFavoriteRequest.Input input = new UserDeleteFavoriteRequest.Input();
+        UserFavoriteMerchantDelRequest.Input input = new UserFavoriteMerchantDelRequest.Input();
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
         }
-        input.favoriteId = favoriteId;
+        input.merchantId = merchantId;
         input.convertJosn();
-        userDeleteFavoriteRequest = new UserDeleteFavoriteRequest(input, new ResponseListener() {
+        userFavoriteMerchantDelRequest = new UserFavoriteMerchantDelRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -132,7 +137,7 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
 
             }
         });
-        sendJsonRequest(userDeleteFavoriteRequest);
+        sendJsonRequest(userFavoriteMerchantDelRequest);
     }
 
     private void initData() {
@@ -141,11 +146,9 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
     }
 
     private void initView() {
-        lhTvTitle.setVisibility(View.VISIBLE);
-        lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setText("我的收藏");
-
-        mAdapter = new MyCollectionAdapter(mActivity, new ArrayList<M_News>());
+        mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
+        mAdapter.unshowTop();
         smoothListView.setAdapter(mAdapter);
     }
 
@@ -156,35 +159,23 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                M_News m_news=mAdapter.getData().get(position - 1);
-                if(m_news.type == 2){
-                    //探索详情
-                    Intent intent = new Intent(mContext, SearchDetailActivity.class);
-                    intent.putExtra(SearchDetailActivity.INTENT_TASKINDUSTRYID, m_news.infoId);
-                    startActivity(intent);
-                }else if(m_news.type == 1){
-                   //探索完成详情
-                    Intent intent = new Intent(mContext, TaskDetailActivity.class);
-                    intent.putExtra(TaskDetailActivity.INTENT_TASKINDUSTRYRECORDID,  m_news.infoId);
-                    startActivity(intent);
-
-                }
-
+                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position-1).merchantId);
+                startActivity(intent);
             }
         });
-
-        searchEtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    hideSoftInputView();
-                    showPd();
-                    user_favorite_list(false);
-                    return true;
-                }
-                return false;
-            }
-        });
+//        searchEtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH
+//                        || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+//                    hideSoftInputView();
+//                    showPd();
+//                    user_favorite_list(false);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     /**
@@ -198,10 +189,7 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
         if (SlashHelper.userManager().getUserinfo() != null) {
             input.userId = SlashHelper.userManager().getUserId();
         }
-        if (!TextUtils.isEmpty(searchEtInput.getText().toString())) {
-            input.name = searchEtInput.getText().toString();
-        }
-
+        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
         input.page = isLoadMore ? ++page : (page = 1);
         input.rows = Constants.ROWS;
         input.convertJosn();
@@ -216,15 +204,16 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
 
             @Override
             public void onResponse(Object response) {
-                if (((APIM_ManagerSearchnewsList) response).status == 1) {
-                    fillAdapter(((APIM_ManagerSearchnewsList) response).favoriteList,
-                            ((APIM_ManagerSearchnewsList) response).maxpage,
+                if (((APIM_MerchantList) response).status == 1) {
+                    fillAdapter(((APIM_MerchantList) response).merchantList,
+                            ((APIM_MerchantList) response).maxpage,
                             isLoadMore);
+
                 } else {
-                    ToastUtils.show(mContext, ((APIM_ManagerSearchnewsList) response).info);
+                    ToastUtils.show(MyCollectionActivity.this, ((APIM_MerchantList) response).info);
                 }
-                smoothListView.stopRefresh();
                 smoothListView.stopLoadMore();
+                smoothListView.stopRefresh();
                 dismissPd();
             }
         });
@@ -232,7 +221,7 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
     }
 
     // 填充数据  List<M_News>  List<M_News>
-    private void fillAdapter(final List<M_News> list, int maxpage, boolean isLoadMore) {
+    private void fillAdapter(final List<M_Merchant> list, int maxpage, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
             smoothListView.setVisibility(View.GONE);
             rlNoData.setVisibility(View.VISIBLE);

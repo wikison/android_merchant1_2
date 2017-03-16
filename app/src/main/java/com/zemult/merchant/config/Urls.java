@@ -579,4 +579,9 @@ public class Urls {
     public static String USER_FAVORITE_MERCHANT_ADD = "user_favorite_merchant_add";
     //用户的删除收藏商家
     public static String USER_FAVORITE_MERCHANT_DEL = "user_favorite_merchant_del";
+    //用户的预邀单列表
+    public static String USER_PRE_INVITIONLIST="user_pre_invitationList";
+    //用户的收藏商家
+    public static String USER_FAVORITE_MERCHANTLIST = "user_favorite_merchantList.do";
+
 }

@@ -19,7 +19,7 @@ public class UserDeleteFavoriteRequest extends PostStringRequest<Type> {
 
     public static class Input {
         public int	userId				;	//	用户id
-        public int	favoriteId				;	//	收藏id
+        public int	merchantId				;	//	收藏商家id
 
 
         public String ejson;
@@ -27,7 +27,7 @@ public class UserDeleteFavoriteRequest extends PostStringRequest<Type> {
 
         public void convertJosn(){
             ejson= Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("userId", userId+""), new Pair<String, String>("favoriteId", favoriteId+"")));
+                    new Pair<String, String>("userId", userId+""), new Pair<String, String>("merchantId", merchantId+"")));
         }
 
     }

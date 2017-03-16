@@ -58,6 +58,12 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         unshowTop = true;
     }
 
+    // 删除单条记录
+    public void delOneRecord(int pos){
+        getData().remove(pos);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 暂无数据

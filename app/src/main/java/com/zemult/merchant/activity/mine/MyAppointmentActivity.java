@@ -73,6 +73,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
         setContentView(R.layout.activity_myappointment);
     }
 
+
     @Override
     public void init() {
         EventBus.getDefault().register(this);
