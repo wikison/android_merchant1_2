@@ -9,6 +9,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -31,6 +32,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     private RoundRelativeLayout rllTaskDescribe;
 
     private int defaultNum = -1, minNum, maxNum;
+    private String showText = "";
 
     //数字变化监听器
     private NumChangeListener numChangeListener;
@@ -91,6 +93,23 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         rllTaskDescribe.setOnClickListener(this);
         etNum.setOnClickListener(this);
 
+        etNum.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    boolean isOpen = imm.isActive();//isOpen若返回true，则表示输入法打开
+                    if (!isOpen)
+                        etNum.setText(showText);
+                    else {
+                        etNum.setText("");
+                    }
+                } else {
+                    etNum.setText(showText);
+                }
+            }
+        });
+
         //此处是禁止复制粘贴
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
             etNum.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
@@ -136,6 +155,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         String numStr = etNum.getText().toString();
         if (StringUtils.isBlank(numStr)) {
             numStr = "1";
+            showText = "1";
         }
         switch (viewId) {
             case R.id.decrease:
@@ -147,6 +167,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
                     resultNum = minNum;
                 }
                 etNum.setText(resultNum + "");
+                showText = resultNum + "";
                 break;
             case R.id.plus:
                 int curNum1 = Integer.parseInt(numStr);
@@ -157,6 +178,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
                     resultNum2 = maxNum;
                 }
                 etNum.setText(resultNum2 + "");
+                showText = resultNum2 + "";
                 break;
 
             case R.id.rll_task_describe:
@@ -189,6 +211,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         int resultNum = 0;
         if (!StringUtils.isBlank(etNum.getText().toString())) {
             resultNum = Integer.parseInt(etNum.getText().toString());
+            showText = etNum.getText().toString();
         } else {
             resultNum = defaultNum;
         }

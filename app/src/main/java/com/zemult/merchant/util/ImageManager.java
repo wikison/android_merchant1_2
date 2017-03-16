@@ -11,6 +11,8 @@ import com.zemult.merchant.view.GlideCircleBorderTransform;
 import com.zemult.merchant.view.GlideCircleTransform;
 
 import cn.trinea.android.common.util.StringUtils;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by admin on 2016/6/3.
@@ -87,6 +89,7 @@ public class ImageManager {
                     .into(imageView);
         }
     }
+
     // 加载网络图片
     public void loadUrlImageWithDefaultImg(String url, ImageView imageView, String rule, int defaultImg) {
         if (url.indexOf("xiegang.oss") != -1) {
@@ -142,7 +145,7 @@ public class ImageManager {
 
     // 加载网络圆型图片
     public void loadCircleImage(String url, ImageView imageView) {
-        if (null!=url&&url.indexOf("xiegang.oss") != -1) {
+        if (null != url && url.indexOf("xiegang.oss") != -1) {
             url = url.replace("xiegang.oss", "xiegang.img");
             Glide.with(mContext)
                     .load(url + getImageSize())
@@ -233,10 +236,10 @@ public class ImageManager {
 
     // 加载圆型头像
     public void loadCircleHead(String url, ImageView imageView) {
-        if(StringUtils.isBlank(url)){
+        if (StringUtils.isBlank(url)) {
             imageView.setImageResource(R.mipmap.user_icon);
-        }else {
-            if (null!=url&&url.indexOf("xiegang.oss") != -1) {
+        } else {
+            if (null != url && url.indexOf("xiegang.oss") != -1) {
                 url = url.replace("xiegang.oss", "xiegang.img");
                 Glide.with(mContext)
                         .load(url + getImageSize())
@@ -256,12 +259,13 @@ public class ImageManager {
             }
         }
     }
+
     // 加载圆型头像
     public void loadCircleHead(String url, ImageView imageView, String rule) {
-        if(StringUtils.isBlank(url)){
+        if (StringUtils.isBlank(url)) {
             imageView.setImageResource(R.mipmap.user_icon);
-        }else {
-            if (null!=url&&url.indexOf("xiegang.oss") != -1) {
+        } else {
+            if (null != url && url.indexOf("xiegang.oss") != -1) {
                 url = url.replace("xiegang.oss", "xiegang.img");
                 Glide.with(mContext)
                         .load(url + rule)
@@ -281,4 +285,49 @@ public class ImageManager {
             }
         }
     }
+
+    // 加载网络圆角图片-带边框
+    public void loadRoundImage(String url, ImageView imageView, int radius, String rule) {
+        if (url != null && url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(mContext)
+                    .load(url + rule)
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0))
+                    .into(imageView);
+        } else {
+            //不是网络图片加载本地图片
+            Glide.with(mContext)
+                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0))
+                    .into(imageView);
+        }
+    }
+
+    // 加载模糊
+    public void loadBlurImage(String url, ImageView imageView) {
+        if (url != null && url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(mContext)
+                    .load(url + getImageSize())
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .into(imageView);
+        } else {
+            //不是网络图片加载本地图片
+            Glide.with(mContext)
+                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .into(imageView);
+        }
+    }
+
+
+
 }
