@@ -34,6 +34,7 @@ import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.db.DBManager;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
+import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
@@ -150,6 +151,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                             case 2:
                                 break;
                             case 3:
+                                startActivity(new Intent(mActivity, InviteFriendActivity.class));
                                 break;
                         }
                     }

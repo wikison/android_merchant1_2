@@ -41,8 +41,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     TextView tvNum;
     @Bind(R.id.iv_cover)
     ImageView ivCover;
-    @Bind(R.id.tv_pic_num)
-    RoundTextView tvPicNum;
     @Bind(R.id.tv_qianyue)
     RoundTextView tvQianyue;
     @Bind(R.id.ll_ad_container)
@@ -63,9 +61,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     public void dealWithTheView(final M_Merchant merchantInfo) {
         if(merchantInfo.picNum == 0){
             ivCover.setVisibility(View.VISIBLE);
-            tvPicNum.setVisibility(View.VISIBLE);
             llAdContainer.setVisibility(View.GONE);
-            tvPicNum.setText(merchantInfo.picNum + "张");
             // 封面
             if (!TextUtils.isEmpty(merchantInfo.pic))
                 mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@320h", R.mipmap.merchant_default_cover);
@@ -73,7 +69,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                 ivCover.setImageResource(R.mipmap.merchant_default_cover);
         }else {
             ivCover.setVisibility(View.GONE);
-            tvPicNum.setVisibility(View.GONE);
             llAdContainer.setVisibility(View.VISIBLE);
             // 设置广告数据 加入到smoothListView的headerView
             List<M_Ad> advertList = new ArrayList<>();
@@ -84,17 +79,15 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                 advertList.add(ad);
             }
             HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
-            headerAdViewView.showNum();
-            headerAdViewView.setShowType(3);
             headerAdViewView.setRotate(false);
             headerAdViewView.fillView(advertList, llAdContainer);
-            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
-                @Override
-                public void imageOnclick() {
-                    if (headerClickListener != null)
-                        headerClickListener.onCoverClick();
-                }
-            });
+//            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
+//                @Override
+//                public void imageOnclick() {
+//                    if (headerClickListener != null)
+//                        headerClickListener.onCoverClick();
+//                }
+//            });
         }
         // 名字
         if (!TextUtils.isEmpty(merchantInfo.name))
