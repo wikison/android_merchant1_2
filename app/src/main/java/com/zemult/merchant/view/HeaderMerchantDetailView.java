@@ -64,7 +64,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
             llAdContainer.setVisibility(View.GONE);
             // 封面
             if (!TextUtils.isEmpty(merchantInfo.pic))
-                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@320h", R.mipmap.merchant_default_cover);
+                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@340h", R.mipmap.merchant_default_cover);
             else
                 ivCover.setImageResource(R.mipmap.merchant_default_cover);
         }else {
@@ -81,13 +81,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
             HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
             headerAdViewView.setRotate(false);
             headerAdViewView.fillView(advertList, llAdContainer);
-//            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
-//                @Override
-//                public void imageOnclick() {
-//                    if (headerClickListener != null)
-//                        headerClickListener.onCoverClick();
-//                }
-//            });
         }
         // 名字
         if (!TextUtils.isEmpty(merchantInfo.name))
@@ -97,25 +90,8 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
             tvAddress.setText(merchantInfo.address);
         tvNum.setText(merchantInfo.payNum + "人找人服务");
         tvMoney.setText((int) (merchantInfo.perMoney) + "");
-        ivCover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (headerClickListener != null)
-                    headerClickListener.onCoverClick();
-            }
-        });
         if (merchantInfo.reviewstatus == 2)
             tvQianyue.setVisibility(View.VISIBLE);
-    }
-
-    public interface OnHeaderClickListener {
-        void onCoverClick();
-    }
-
-    private OnHeaderClickListener headerClickListener;
-
-    public void setOnHeaderClickListener(OnHeaderClickListener headerClickListener) {
-        this.headerClickListener = headerClickListener;
     }
 
 }
