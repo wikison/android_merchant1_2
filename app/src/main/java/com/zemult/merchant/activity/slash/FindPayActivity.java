@@ -396,12 +396,16 @@ public class FindPayActivity extends BaseActivity {
                         intent.putExtra("managerhead", managerhead);
                         intent.putExtra("managername", managername);
 
-                        String imMessage="";
+                        String imMessageTitle="";
+                        String imMessageContent="";
                         for(int i:selectidset){
-                            imMessage=imMessage+ moneyList.get(i).name+",";
+                            imMessageTitle=imMessageTitle+ moneyList.get(i).name+",";
+                            imMessageContent=imMessageContent+ moneyList.get(i).name+moneyList.get(i).money+",";
                         }
-                        intent.putExtra("imMessage", "收到"+SlashHelper.userManager().getUserinfo().getName()+"的赞赏"+ imMessage);
-
+                        if(imMessageTitle.indexOf(",")!=-1){
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0,imMessageTitle.length()-1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0,imMessageContent.length()-1));
+                        }
                         startActivityForResult(intent, 10000);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);

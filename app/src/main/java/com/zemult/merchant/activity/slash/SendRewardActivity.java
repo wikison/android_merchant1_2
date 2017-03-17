@@ -170,11 +170,16 @@ public class SendRewardActivity extends BaseActivity {
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("toUserId", toUserId);
                         intent.putExtra("merchantName", "赞赏红包");
-                        String imMessage="";
+                        String imMessageTitle="";
+                        String imMessageContent="";
                         for(int i:selectidset){
-                            imMessage=imMessage+ moneyList.get(i).name+",";
+                            imMessageTitle=imMessageTitle+ moneyList.get(i).name+",";
+                            imMessageContent=imMessageContent+ moneyList.get(i).name+moneyList.get(i).money+",";
                         }
-                        intent.putExtra("imMessage","收到"+SlashHelper.userManager().getUserinfo().getName()+"的赞赏"+ imMessage);
+                        if(imMessageTitle.indexOf(",")!=-1){
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0,imMessageTitle.length()-1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0,imMessageContent.length()-1));
+                        }
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");
                         intent.putExtra("managername", "");

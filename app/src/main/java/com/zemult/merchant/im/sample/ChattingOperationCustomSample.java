@@ -593,13 +593,15 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                             Intent intent =new Intent(fragment.getActivity(),ReceiveRedActivity.class);
                             intent.putExtra("billId",customizeObject.getInt("billId"));
                             intent.putExtra("userId",customizeObject.getString("userId"));
-                            intent.putExtra("taskContent",customizeObject.optString("taskContent"));
+                            intent.putExtra("taskContent",StringUtils.isBlank(customizeObject.optString("taskContent"))?
+                                    customizeObject.optString("taskTitle"):customizeObject.optString("taskContent"));
                             fragment.startActivity(intent);
                         }
                         else{
                             Intent intent =new Intent(fragment.getActivity(),SendAppreciateRedActivity.class);
                             intent.putExtra("billId",customizeObject.getInt("billId"));
-                            intent.putExtra("taskContent",customizeObject.optString("taskContent"));
+                            intent.putExtra("taskContent",StringUtils.isBlank(customizeObject.optString("taskContent"))?
+                                    customizeObject.optString("taskTitle"):customizeObject.optString("taskContent"));
                             fragment.startActivity(intent);
 
                         }
@@ -1161,13 +1163,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             try {
                 String content = message.getMessageBody().getContent();
                 JSONObject object = new JSONObject(content);
-                if(StringUtils.isBlank(object.optString("taskContent"))){
-                    taskTitle = object.optString("taskTitle");
-                }
-                else {
-                    taskTitle = object.optString("taskContent");
-                }
-
+                taskTitle = object.optString("taskTitle");
                 tasktype= object.getString("tasktype");
             } catch (Exception e) {
             }

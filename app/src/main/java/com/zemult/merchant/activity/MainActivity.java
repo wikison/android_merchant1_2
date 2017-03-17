@@ -254,8 +254,8 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         //添加IM连接状态监听
         addConnectionListener();
 
-        initOrderConversation("约服账单", 0, new Date().getTime());
-        initCustomConversation("约服团队", 0, new Date().getTime());
+//        initOrderConversation("约服账单", 0, new Date().getTime());
+//        initCustomConversation("约服团队", 0, new Date().getTime());
 
     }
 

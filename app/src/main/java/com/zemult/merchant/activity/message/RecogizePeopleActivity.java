@@ -138,7 +138,6 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
 
     //新的朋友(接受列表)
     private void user_check_bookList_friend() {
-        showPd();
         if (userCheckBookListRequest != null) {
             userCheckBookListRequest.cancel();
         }
@@ -151,7 +150,6 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
         userCheckBookListRequest = new UserCheckBookListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dismissPd();
                 lv_newfriend.stopRefresh();
                 lv_newfriend.stopLoadMore();
             }
@@ -171,7 +169,6 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
                 } else {
                     ToastUtils.show(RecogizePeopleActivity.this, ((APIM_UserFriendList) response).info);
                 }
-                dismissPd();
                 lv_newfriend.stopRefresh();
                 lv_newfriend.stopLoadMore();
             }
