@@ -71,12 +71,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
         switch (type) {
             case 0:
-                if (viewList.size() > 0) {
-                    if (viewList.get(0) != null) {
-                        view = initHeadView(viewList.get(0).get(), entity);
-                        viewList.remove(0);
-                    }
-                }
                 view = initHeadView(null, entity);
                 pager.addView(view);
                 break;

@@ -124,8 +124,8 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             M_Merchant m = merchantList.get(position);
 
             // 商家封面
-            if (!TextUtils.isEmpty(m.head))
-                mImageManager.loadUrlImage(m.head, holder.ivCover, "@320h");
+            if (!TextUtils.isEmpty(m.pic))
+                mImageManager.loadUrlImage(m.pic, holder.ivCover, "@320h");
             else
                 holder.ivCover.setImageResource(R.mipmap.user_icon);
             // 商家名称

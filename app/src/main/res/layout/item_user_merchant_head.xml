@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="145dp"
               android:layout_height="75dp"
               android:orientation="vertical">
 
-    <com.flyco.roundview.RoundLinearLayout
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2dp"
-        app:rv_backgroundColor="@color/white"
-        app:rv_cornerRadius="10dp"
-        app:rv_strokeColor="@color/white"
-        app:rv_strokeWidth="2dp">
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="0dp"
+        card_view:cardPreventCornerOverlap="false">
 
         <ImageView
             android:id="@+id/card_img"
+            android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"/>
+            android:scaleType="centerCrop"/>
 
-    </com.flyco.roundview.RoundLinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

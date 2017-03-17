@@ -6,15 +6,14 @@ package com.zemult.merchant.config;
 public class Urls {
     //    public static String BASIC_URL = "http://server.54xiegang.com/dzyx/inter_json/";
 
-    public static String MAIN_URL = "http://yovoll.54xiegang.com/";
+    public static String MAIN_URL = "http://www.yovoll.com/";
 //正式
 //    public static String URL = "http://www.yovoll.com/dzyx/";
 //    public static  String APP_KEY = "23630707";
 
-//测试
+    //测试
     public static String URL = "http://test1.54xiegang.com/dzyx_test/";
-    public static  String APP_KEY = "23521799";
-
+    public static String APP_KEY = "23521799";
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -581,9 +580,12 @@ public class Urls {
     public static String USER_FAVORITE_MERCHANT_DEL = "user_favorite_merchant_del";
     //获取 用户的 可能熟悉的人(推荐服务管家)的数量
     public static String USER_SYS_SALEUSERLIST_NUM = "user_sys_saleUserList_num";
-
+    //获取预邀单主题
+    public static String COMMON_GETALLTITLE = "common_getallTitle";
     //用户的预邀单列表
-    public static String USER_PRE_INVITIONLIST="user_pre_invitationList";
+    public static String USER_PRE_INVITIONLIST = "user_pre_invitationList";
+    //用户发起预邀单
+    public static String USER_PRE_INVITATION_ADD = "user_pre_invitation_add";
     //用户的收藏商家
     public static String USER_FAVORITE_MERCHANTLIST = "user_favorite_merchantList.do";
     //获取商家详情的图片对应的描述列表

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,10 @@ import android.widget.TextView;
 import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.activity.mine.RemarkNameActivity;
@@ -44,6 +49,7 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
 
@@ -51,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -126,7 +131,8 @@ public class UserDetailActivity extends BaseActivity {
     LinearLayout llGift;
     @Bind(R.id.ll_bottom_menu)
     LinearLayout llBottomMenu;
-
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
 
     private Context mContext;
     private Activity mActivity;
@@ -148,6 +154,7 @@ public class UserDetailActivity extends BaseActivity {
     int merchantNum = 0;
     boolean isFromMerchant;
     LinkagePager pager;
+    private SharePopwindow sharePopWindow;
 
     @Override
     public void setContentView() {
@@ -202,7 +209,6 @@ public class UserDetailActivity extends BaseActivity {
             llBottomMenu.setVisibility(View.VISIBLE);
         }
 
-
     }
 
     private void initListener() {
@@ -212,6 +218,58 @@ public class UserDetailActivity extends BaseActivity {
                 List<String> list = new ArrayList<String>();
                 list.add(userInfo.getHead());
                 AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
+            }
+        });
+
+        sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
+
+                switch (position) {
+                    case SharePopwindow.SINA:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.SINA)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .share();
+                        break;
+
+                    case SharePopwindow.WECHAT:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .share();
+                        break;
+                    case SharePopwindow.WECHAT_FRIEND:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .share();
+                        break;
+
+                    case SharePopwindow.QQ:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.QQ)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .share();
+                        break;
+                }
             }
         });
     }
@@ -570,6 +628,10 @@ public class UserDetailActivity extends BaseActivity {
                                 doEdit();
                                 break;
                             case 1:
+                                if (sharePopWindow.isShowing())
+                                    sharePopWindow.dismiss();
+                                else
+                                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
                                 break;
                             case 2:
                                 doReport();
@@ -644,10 +706,24 @@ public class UserDetailActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享取消");
+        }
+    };
+
 }

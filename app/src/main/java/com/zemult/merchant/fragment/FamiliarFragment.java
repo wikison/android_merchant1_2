@@ -9,25 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.contact.IYWContact;
-import com.alibaba.mobileim.contact.YWContactFactory;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.NewFriendActivity;
-import com.zemult.merchant.activity.SfriendActivity;
-import com.zemult.merchant.activity.mine.FamiliarPeopleActivity;
+import com.zemult.merchant.activity.AddFriendsActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.friend.ContactsNewAdapter;
-import com.zemult.merchant.aip.friend.UserFriendDelRequest;
 import com.zemult.merchant.aip.mine.UserAttractListRequest;
-import com.zemult.merchant.aip.mine.UserMessageBillNumUnread_1_2_2Request;
 import com.zemult.merchant.aip.mine.UserSysSaleUserListNumRequest;
 import com.zemult.merchant.app.BaseFragment;
-import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
@@ -39,18 +32,13 @@ import com.zemult.merchant.view.SearchView;
 import com.zemult.merchant.view.common.Sidebar;
 import com.zemult.merchant.view.swipelistview.SwipeListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.trinea.android.common.util.StringUtils;
+import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -58,6 +46,10 @@ import zema.volley.network.ResponseListener;
  * Created by admin on 2016/6/3.
  */
 public class FamiliarFragment extends BaseFragment {
+    @Bind(R.id.iv_right)
+    ImageView ivRight;
+    @Bind(R.id.ll_right)
+    LinearLayout llRight;
     @Bind(R.id.lv_friends)
     SwipeListView lvFriends;
     @Bind(R.id.sidebar)
@@ -70,12 +62,13 @@ public class FamiliarFragment extends BaseFragment {
     LinearLayout llBack;
     @Bind(R.id.search_view)
     SearchView searchView;
-    ArrayList<M_Fan> filtercontacts= new ArrayList<M_Fan>();
+
+    ArrayList<M_Fan> filtercontacts = new ArrayList<M_Fan>();
     ContactsNewAdapter adapter;
     UserAttractListRequest userAttractListRequest;
     UserSysSaleUserListNumRequest userSysSaleUserListNumRequest;
-    int page=1,num;
-    String name="";
+    int page = 1, num;
+    String name = "";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sfriend_fragment, container, false);
@@ -108,6 +101,9 @@ public class FamiliarFragment extends BaseFragment {
         searchView.setMaxWordNum(11);
         searchView.setFilter();
 
+        llRight.setVisibility(View.VISIBLE);
+        ivRight.setImageResource(R.mipmap.jiahaoyou_icon);
+
         sidebar.setListView(lvFriends);
         lvFriends.setFooterDividersEnabled(false);
         lvFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,7 +113,7 @@ public class FamiliarFragment extends BaseFragment {
                                     int position, long id) {
                 int friendId = adapter.getItem(position).getUserId();
                 IntentUtil.intStart_activity(getActivity(),
-                        UserDetailActivity.class,new Pair<String, Integer>("userId", friendId));
+                        UserDetailActivity.class, new Pair<String, Integer>("userId", friendId));
             }
 
         });
@@ -161,7 +157,7 @@ public class FamiliarFragment extends BaseFragment {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    num=((CommonResult) response).num;
+                    num = ((CommonResult) response).num;
                     user_friendList();
                 }
             }
@@ -170,9 +166,8 @@ public class FamiliarFragment extends BaseFragment {
     }
 
 
-
     //熟人
-    private void user_friendList( ) {
+    private void user_friendList() {
         showPd();
         if (userAttractListRequest != null) {
             userAttractListRequest.cancel();
@@ -183,20 +178,20 @@ public class FamiliarFragment extends BaseFragment {
         }
         input.name = name;//	名称(用户名/所在公司/职位/角色名)
         input.page = page;
-        input.rows =1000;
+        input.rows = 1000;
 
         input.convertJosn();
-        userAttractListRequest = new UserAttractListRequest(input,new ResponseListener() {
+        userAttractListRequest = new UserAttractListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-              dismissPd();
+                dismissPd();
             }
 
             @Override
             public void onResponse(Object response) {
                 if (((APIM_UserFansList) response).status == 1) {
                     filtercontacts.clear();
-                    filtercontacts.addAll((ArrayList<M_Fan>)(((APIM_UserFansList) response).userList).clone());
+                    filtercontacts.addAll((ArrayList<M_Fan>) (((APIM_UserFansList) response).userList).clone());
                     getContactList();
                     Collections.sort(filtercontacts, new Comparator<M_Fan>() {
                         @Override
@@ -205,13 +200,12 @@ public class FamiliarFragment extends BaseFragment {
                         }
                     });
 
-                    if(adapter==null){
+                    if (adapter == null) {
                         adapter = new ContactsNewAdapter(getActivity(),
-                                R.layout.item_friend, filtercontacts,num);
+                                R.layout.item_friend, filtercontacts, num);
                         lvFriends.setAdapter(adapter);
-                    }
-                    else{
-                        adapter.setData(filtercontacts,num);
+                    } else {
+                        adapter.setData(filtercontacts, num);
                     }
 
                 } else {
@@ -233,8 +227,6 @@ public class FamiliarFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
-
 
 
     private void getContactList() {
@@ -275,6 +267,17 @@ public class FamiliarFragment extends BaseFragment {
             if (headerChar < 'a' || headerChar > 'z') {
                 friend.setHeader("#");
             }
+        }
+    }
+
+    @OnClick({R.id.iv_right, R.id.ll_right})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_right:
+            case R.id.ll_right:
+                startActivity(new Intent(getActivity(), AddFriendsActivity.class));
+                break;
+
         }
     }
 }

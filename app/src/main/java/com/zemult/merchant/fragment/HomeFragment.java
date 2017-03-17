@@ -40,6 +40,7 @@ import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
+import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
@@ -149,6 +150,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                                 break;
 
                             case 2:
+                                intent = new Intent(mActivity, PreInviteActivity.class);
+                                startActivity(intent);
                                 break;
                             case 3:
                                 startActivity(new Intent(mActivity, InviteFriendActivity.class));
@@ -419,10 +422,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             public void onResponse(Object response) {
                 if (((APIM_UserReservationList) response).status == 1) {
                     if (((APIM_UserReservationList) response).reservationList != null
-                            && !((APIM_UserReservationList) response).reservationList.isEmpty()){
+                            && !((APIM_UserReservationList) response).reservationList.isEmpty()) {
                         showRedDot = true;
                         ivDot.setVisibility(View.VISIBLE);
-                    } else{
+                    } else {
                         showRedDot = false;
                         ivDot.setVisibility(View.GONE);
                     }

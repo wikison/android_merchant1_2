@@ -104,5 +104,7 @@ public class CommonResult {
     public String note;//内容（zuixin）
     @Expose
     public String createtime;//创建时间(格式"yyyy-MM-dd HH:mm:ss")
+    @Expose
+    public int preId;//预邀单id
 
 }
