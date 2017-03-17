@@ -9,6 +9,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.view.GlideCircleBorderTransform;
 import com.zemult.merchant.view.GlideCircleTransform;
+import com.zemult.merchant.view.GlideRoundTransform;
 
 import cn.trinea.android.common.util.StringUtils;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -324,6 +325,49 @@ public class ImageManager {
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .into(imageView);
+        }
+    }
+
+    // 加载圆角图片
+    public void loadRoundImage(String url, ImageView imageView, float roundPx) {
+
+        if (url != null && url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(mContext)
+                    .load(url + getImageSize())
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
+                    .into(imageView);
+        } else {
+            //不是网络图片加载本地图片
+            Glide.with(mContext)
+                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
+                    .into(imageView);
+        }
+    }
+    // 加载圆角图片带边框
+    public void loadRoundImage(String url, ImageView imageView, float roundPx, int bordercolor, int borderwidth) {
+
+        if (url != null && url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(mContext)
+                    .load(url + getImageSize())
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
+                    .into(imageView);
+        } else {
+            //不是网络图片加载本地图片
+            Glide.with(mContext)
+                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
                     .into(imageView);
         }
     }
