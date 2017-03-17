@@ -21,7 +21,7 @@ public class M_Bill implements Serializable {
     @Expose
     public int merchantId;   //商户的id
     @Expose
-    public String merchantName;//	商家名称
+    public String merchantName,name;//	商家名称
     @Expose
     public String merchantHead;//商家头像
     @Expose

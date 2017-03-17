@@ -564,7 +564,7 @@ public class Urls {
     // 用户打/赞赏-生成支付单（支付宝）
     public static String USER_REWARD_PAY_ADD = "user_reward_pay_add";
     // 打赏种类
-    public static String COMMON_REWARD = "common_reward";
+    public static String COMMON_REWARD = "common_reward_1_2_2";
     // 根据金额算出用户提现手续费
     public static String COMMON_WITHCASH_COUNT = "common_withcash_count";
     //根据银行卡号获取银行卡名称
