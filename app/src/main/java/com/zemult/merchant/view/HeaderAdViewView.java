@@ -174,7 +174,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
                 @Override
                 public void onClick(View v) {
                     if(imageOnClick != null)
-                        imageOnClick.imageOnclick();
+                        imageOnClick.imageOnclick(postion);
                 }
             });
         }
@@ -285,7 +285,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     }
 
     public interface ImageOnClick{
-        void imageOnclick();
+        void imageOnclick(int postion);
     }
     private ImageOnClick imageOnClick;
 

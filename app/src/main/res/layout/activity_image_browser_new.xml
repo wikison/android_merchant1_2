@@ -2,15 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/font_black_28"
+    android:background="#000000"
     android:orientation="vertical">
 
     <include layout="@layout/layout_head"/>
-    <com.zemult.merchant.app.view.ScrollViewPager
-        android:id="@+id/vp"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent">
+        <com.zemult.merchant.app.view.ScrollViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:id="@+id/ll_note"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:scrollbars="vertical"
+                android:background="@color/half_transparent"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="153dp"
+                >
+                <TextView
+                    android:id="@+id/tv_note"
+                    style="@style/text_15_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="19dp"
+                    android:paddingBottom="43dp"
+                    />
+            </ScrollView>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+
+
 
 
     <LinearLayout

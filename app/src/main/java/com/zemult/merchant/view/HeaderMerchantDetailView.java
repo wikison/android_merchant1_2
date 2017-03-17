@@ -12,6 +12,7 @@ import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Pic;
 import com.zemult.merchant.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.trinea.android.common.util.StringUtils;
 
 /**
  * 商家详情页头部
@@ -59,29 +61,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     }
 
     public void dealWithTheView(final M_Merchant merchantInfo) {
-        if(merchantInfo.picNum == 0){
-            ivCover.setVisibility(View.VISIBLE);
-            llAdContainer.setVisibility(View.GONE);
-            // 封面
-            if (!TextUtils.isEmpty(merchantInfo.pic))
-                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@340h", R.mipmap.merchant_default_cover);
-            else
-                ivCover.setImageResource(R.mipmap.merchant_default_cover);
-        }else {
-            ivCover.setVisibility(View.GONE);
-            llAdContainer.setVisibility(View.VISIBLE);
-            // 设置广告数据 加入到smoothListView的headerView
-            List<M_Ad> advertList = new ArrayList<>();
-            String[] array = merchantInfo.pics.split(",");
-            for(String s : array){
-                M_Ad ad = new M_Ad();
-                ad.setImg(s);
-                advertList.add(ad);
-            }
-            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
-            headerAdViewView.setRotate(false);
-            headerAdViewView.fillView(advertList, llAdContainer);
-        }
         // 名字
         if (!TextUtils.isEmpty(merchantInfo.name))
             tvName.setText(merchantInfo.name);
@@ -93,5 +72,47 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
         if (merchantInfo.reviewstatus == 2)
             tvQianyue.setVisibility(View.VISIBLE);
     }
+    public void dealWithTheView(final M_Merchant merchantInfo, final List<M_Pic> picList) {
+        if(picList == null || picList.isEmpty()){
+            ivCover.setVisibility(View.VISIBLE);
+            llAdContainer.setVisibility(View.GONE);
+            // 封面
+            if (!StringUtils.isBlank(merchantInfo.pic))
+                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@340h", R.mipmap.merchant_default_cover);
+            else
+                ivCover.setImageResource(R.mipmap.merchant_default_cover);
+        }else {
+            ivCover.setVisibility(View.GONE);
+            llAdContainer.setVisibility(View.VISIBLE);
+            // 设置广告数据 加入到smoothListView的headerView
+            List<M_Ad> advertList = new ArrayList<>();
 
+            for(M_Pic pic : picList){
+                M_Ad ad = new M_Ad();
+                ad.setImg(pic.picPath);
+                advertList.add(ad);
+            }
+            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
+            headerAdViewView.setShowType(3);
+            headerAdViewView.fillView(advertList, llAdContainer);
+
+            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
+                @Override
+                public void imageOnclick(int postion) {
+                    if(imageOnClick != null)
+                        imageOnClick.imageOnclick(picList.get(postion).picId);
+
+                }
+            });
+        }
+    }
+
+    public interface ImageOnClick{
+        void imageOnclick(int picId);
+    }
+    private ImageOnClick imageOnClick;
+
+    public void setImageOnClick(ImageOnClick imageOnClick) {
+        this.imageOnClick = imageOnClick;
+    }
 }

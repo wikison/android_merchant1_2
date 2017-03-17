@@ -232,6 +232,25 @@ public class AppUtils {
             e.printStackTrace();
         }
     }
+    /**
+     * 跳转到图片详情
+     *
+     * @param activity
+     * @param position       当前图片位置
+     * @param pics          所有图片路径
+     * @param //图片详情页面是否可以删除
+     */
+    public static void toImageDetial(Activity activity, int position, List<String> pics, List<String> notes) {
+        try {
+            Intent intent = new Intent(activity, ImageBrowserNewActivity.class);
+            intent.putExtra(ImageBrowserNewActivity.INTENT_PICS, (Serializable) pics);
+            intent.putExtra(ImageBrowserNewActivity.INTENT_NOTES, (Serializable) notes);
+            intent.putExtra(ImageBrowserNewActivity.INTENT_POS, position);
+            activity.startActivityForResult(intent, Constants.IMAGEDITAL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**

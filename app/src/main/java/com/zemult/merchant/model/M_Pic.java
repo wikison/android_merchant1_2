@@ -14,6 +14,8 @@ public class M_Pic {
     public  int picId;//  照片id
     @Expose
     public   String	picPath			;	//	照片地址
+    @Expose
+    public   String	note			;	//	描述内容
 
     private boolean selected;
 

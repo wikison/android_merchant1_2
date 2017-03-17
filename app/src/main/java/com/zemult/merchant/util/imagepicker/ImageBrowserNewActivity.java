@@ -1,11 +1,12 @@
 package com.zemult.merchant.util.imagepicker;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import zema.volley.network.ResponseListener;
 
@@ -30,6 +32,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     public static final String INTENT_COVERABLE = "coverable";
     public static final String INTENT_POS = "pos";
     public static final String INTENT_PICS = "pics";
+    public static final String INTENT_NOTES = "notes";
     public static final String INTENT_PICIDS = "picIds";
     public static final String INTENT_MERCHANTID = "merchantId";
     public static final String INTENT_USERID = "userId";
@@ -49,9 +52,14 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     LinearLayout llDel;
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
+    @Bind(R.id.tv_note)
+    TextView tvNote;
+    @Bind(R.id.ll_note)
+    RelativeLayout llNote;
 
     private boolean coverable = false, deleteable = false, unshowTitle = false;
     private List<String> photos = new ArrayList<String>();
+    private List<String> notes = new ArrayList<String>();
     private List<Integer> ids = new ArrayList<Integer>();
     private ImageBrowserAdapter mAdapter;
     private int mPosition;
@@ -71,13 +79,14 @@ public class ImageBrowserNewActivity extends BaseActivity implements
         unshowTitle = getIntent().getBooleanExtra(INTENT_UNSHOWTITLE, false);
         mPosition = getIntent().getIntExtra(INTENT_POS, 0);
         photos = (List<String>) getIntent().getSerializableExtra(INTENT_PICS);
+        notes = (List<String>) getIntent().getSerializableExtra(INTENT_NOTES);
         ids = (List<Integer>) getIntent().getSerializableExtra(INTENT_PICIDS);
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, -1);
         userId = getIntent().getIntExtra(INTENT_USERID, -1);
         if (deleteable) {
             llBottom.setVisibility(View.VISIBLE);
             llDel.setVisibility(View.VISIBLE);
-            if(coverable)
+            if (coverable)
                 llCover.setVisibility(View.VISIBLE);
         }
 
@@ -85,7 +94,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
             return;
         }
         mAdapter = new ImageBrowserAdapter(this, photos);
-        if(unshowTitle){
+        if (unshowTitle) {
             lhTvTitle.setVisibility(View.GONE);
             mAdapter.setOnItemClickCallback(new ImageBrowserAdapter.OnItemClickCallback() {
                 @Override
@@ -110,6 +119,11 @@ public class ImageBrowserNewActivity extends BaseActivity implements
             vp.setAdapter(mAdapter);
         }
         vp.setOnPageChangeListener(this);
+
+        if (notes != null) {
+            llNote.setVisibility(View.VISIBLE);
+            tvNote.setText(notes.get(0));
+        }
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_cover, R.id.ll_del})
@@ -125,7 +139,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
                 break;
             case R.id.ll_del:
                 picIds = ids.get(mPosition) + "";
-                if(merchantId != -1)
+                if (merchantId != -1)
                     merchant_pic_del();
                 else
                     user_pic_del();
@@ -142,6 +156,9 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     public void onPageSelected(int position) {
         mPosition = position;
         lhTvTitle.setText((mPosition % mTotal) + 1 + "/" + mTotal);
+        if (notes != null) {
+            tvNote.setText(notes.get(position));
+        }
     }
 
     @Override
@@ -219,11 +236,11 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     }
 
     private void refresh() {
-        if(photos.get(mPosition).equals(coverPic))
+        if (photos.get(mPosition).equals(coverPic))
             coverPic = "";
         photos.remove(mPosition);
         ids.remove(mPosition);
-        if(photos.isEmpty())
+        if (photos.isEmpty())
             onBackPressed();
         else {
             mAdapter.notifyDataSetChanged();
@@ -242,5 +259,12 @@ public class ImageBrowserNewActivity extends BaseActivity implements
             vp.setAdapter(mAdapter);
             vp.setCurrentItem(mPosition, false);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

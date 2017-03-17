@@ -22,6 +22,8 @@ import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.MerchantDetailAdpater;
+import com.zemult.merchant.aip.mine.MerchantPicListRequest;
+import com.zemult.merchant.aip.mine.MerchantPicNoteListRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListFanRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
@@ -32,8 +34,10 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.FilterEntity;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Pic;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
+import com.zemult.merchant.model.apimodel.APIM_PicList;
 import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ColorUtil;
@@ -42,6 +46,7 @@ import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.HeaderAdViewView;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
 import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -53,6 +58,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -201,6 +207,13 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             }
         });
 
+        headerMerchantDetailView.setImageOnClick(new HeaderMerchantDetailView.ImageOnClick() {
+            @Override
+            public void imageOnclick(int picId) {
+                merchant_pic_noteList(picId);
+            }
+        });
+
         sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -286,6 +299,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     name = merchantInfo.name;
                     tags = merchantInfo.tags;
                     headerMerchantDetailView.dealWithTheView(merchantInfo);
+                    merchant_picList();
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
                 }
@@ -294,6 +308,79 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         });
         sendJsonRequest(request);
     }
+    /**
+     * 获取商家详情的图片列表(非证件照)
+     */
+    private MerchantPicListRequest merchantPicListRequest;
+    private void merchant_picList() {
+        showPd();
+        if (merchantPicListRequest != null) {
+            merchantPicListRequest.cancel();
+        }
+        MerchantPicListRequest.Input input = new MerchantPicListRequest.Input();
+        input.merchantId = merchantId;
+        input.page = 1;
+        input.rows = 5;
+        input.convertJosn();
+
+        merchantPicListRequest = new MerchantPicListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_PicList) response).status == 1) {
+                    headerMerchantDetailView.dealWithTheView(merchantInfo, ((APIM_PicList) response).picList);
+                } else {
+                    ToastUtil.showMessage(((APIM_PicList) response).info);
+                    headerMerchantDetailView.dealWithTheView(merchantInfo, null);
+                }
+               dismissPd();
+            }
+        });
+        sendJsonRequest(merchantPicListRequest);
+    }
+    /**
+     * 获取商家详情的图片对应的描述列表
+     */
+    private MerchantPicNoteListRequest picNoteListRequest;
+    private void merchant_pic_noteList(int picId) {
+        showPd();
+        if (picNoteListRequest != null) {
+            picNoteListRequest.cancel();
+        }
+        MerchantPicNoteListRequest.Input input = new MerchantPicNoteListRequest.Input();
+        input.picId = picId;
+        input.convertJosn();
+
+        picNoteListRequest = new MerchantPicNoteListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_PicList) response).status == 1) {
+                    List<M_Pic> noteList = ((APIM_PicList) response).noteList;
+                    List<String> pics = new ArrayList<>();
+                    List<String> notes = new ArrayList<>();
+                    for(M_Pic pic : noteList){
+                        pics.add(StringUtils.isBlank(pic.picPath)? "":pic.picPath);
+                        notes.add(StringUtils.isBlank(pic.note)? "":pic.note);
+                    }
+                    AppUtils.toImageDetial(mActivity, 0, pics, notes);
+                } else {
+                    ToastUtil.showMessage(((APIM_PicList) response).info);
+                }
+               dismissPd();
+            }
+        });
+        sendJsonRequest(picNoteListRequest);
+    }
+
     /**
      * 用户添加收藏商家
      */
@@ -367,7 +454,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         else
             merchant_saleuserList_all(false);
         merchant_info();
-
     }
 
     @Override
