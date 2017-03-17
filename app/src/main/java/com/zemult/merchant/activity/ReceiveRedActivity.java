@@ -125,7 +125,7 @@ public class ReceiveRedActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(m.userHead)) {
                         imageManager.loadCircleImage(m.userHead, headIv);
                     }
-                    redfromTv.setText(m.userName + "的红包");
+                    redfromTv.setText(m.userName + "的赞赏\n"+getIntent().getStringExtra("taskContent"));
                 } else {
                     ToastUtils.show(mActivity, ((APIM_UserBillInfo) response).info);
                 }

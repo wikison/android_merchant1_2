@@ -123,6 +123,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                                 intent.putExtra("managername", managername);
                                 intent.putExtra("merchantName", merchantName);
                                 intent.putExtra("userPayId", userPayId);
+                                intent.putExtra("imMessage", getIntent().getStringExtra("imMessage"));
                                 startActivityForResult(intent, 1000);
                             }
 
@@ -238,6 +239,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "MONEY");//GIFT
             object.put("taskTitle", "赞赏红包");//AppUtils.giftDescription(m_present.name)
+            object.put("taskContent",getIntent().getStringExtra("imMessage"));
             object.put("billId", userPayId+"");
             object.put("serviceId", toUserId+"");
             object.put("userId", SlashHelper.userManager().getUserId()+"");

@@ -24,6 +24,7 @@ import com.zemult.merchant.aip.mine.TadeFansListRequest;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.mine.UserFansListRequest;
+import com.zemult.merchant.aip.mine.UserSysSaleUserListNumRequest;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -71,7 +72,7 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
     LinearLayout llRight;
     @Bind(R.id.rel_invitepeople)
     RelativeLayout relInvitepeople;
-
+    UserSysSaleUserListNumRequest userSysSaleUserListNumRequest;
 
 
     private List<M_Fan> mDatas = new ArrayList<M_Fan>();
@@ -97,15 +98,14 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
         fansLv.setRefreshEnable(true);
         fansLv.setLoadMoreEnable(false);
         fansLv.setSmoothListViewListener(this);
+        user_sys_saleUserList_num();
 
-        userFansLis();
 
     }
 
 
     //获取 用户的 可能熟悉的人(推荐服务管家)
     private void userFansLis() {
-        showPd();
         if (userFansListRequest != null) {
             userFansListRequest.cancel();
         }
@@ -117,7 +117,6 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
         userFansListRequest = new UserFansListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dismissPd();
                 fansLv.setVisibility(View.GONE);
                 rlNoData.setVisibility(View.VISIBLE);
                 fansLv.stopRefresh();
@@ -126,7 +125,6 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
 
             @Override
             public void onResponse(Object response) {
-                dismissPd();
                 if (((APIM_UserFansList) response).status == 1) {
                     if (page == 1) {
                         mDatas = ((APIM_UserFansList) response).userList;
@@ -137,15 +135,16 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                             fansLv.setVisibility(View.VISIBLE);
                             rlNoData.setVisibility(View.GONE);
                             if (mDatas != null && !mDatas.isEmpty()) {
+
                                 fansLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(FamiliarPeopleActivity.this, R.layout.item_familiar_people, mDatas) {
                                     @Override
                                     public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
 
-                                        if (!TextUtils.isEmpty(mfollow.head)) {
+                                        if (!TextUtils.isEmpty(mfollow.userHead)) {
                                             holder.setCircleImage(R.id.iv_follow_head, mfollow.userHead);
                                         }
 
-                                        holder.setOnclickListener(R.id.iv_follow_head, new View.OnClickListener() {
+                                        holder.setOnclickListener(R.id.rel_layout, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(mContext, UserDetailActivity.class);
@@ -156,7 +155,7 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                                             }
                                         });
                                         if(!TextUtils.isEmpty(mfollow.merchantName))
-                                            holder.setText(R.id.tv_describe, mfollow.merchantName);
+                                            holder.setText(R.id.tv_rname,"来自："+ mfollow.merchantName);
 
                                         holder.setText(R.id.tv_follow_name, mfollow.userName);
                                         holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
@@ -200,9 +199,42 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
 
 
 
+    //获取 用户的 可能熟悉的人(推荐服务管家)的数量
+    private void user_sys_saleUserList_num() {
+        if (userSysSaleUserListNumRequest != null) {
+            userSysSaleUserListNumRequest.cancel();
+        }
+
+        UserSysSaleUserListNumRequest.Input input = new UserSysSaleUserListNumRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.operateUserId = SlashHelper.userManager().getUserId();
+            input.convertJosn();
+        }
+
+        userSysSaleUserListNumRequest = new UserSysSaleUserListNumRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    if(((CommonResult) response).num!=0){
+                        tvPeopleNum.setText("您有"+((CommonResult) response).num+"人可能认识");
+                    }
+                    else{
+                        tvPeopleNum.setText("");
+                    }
+
+                    userFansLis();
+                }
+            }
+        });
+        sendJsonRequest(userSysSaleUserListNumRequest);
+    }
+
     // 用户添加关注
     private void addFous(int userId, final int position) {
-        showPd();
         if (attractAddRequest != null) {
             attractAddRequest.cancel();
         }
@@ -214,17 +246,13 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
         attractAddRequest = new UserAttractAddRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dismissPd();
             }
 
             @Override
             public void onResponse(Object response) {
-                dismissPd();
                 if (((CommonResult) response).status == 1) {
                     ToastUtils.show(mContext, "添加成功");
-
-                    mDatas.get(position).state = 0;
-                    commonAdapter.setDataChanged(mDatas);  //改变按钮样式
+                    onRefresh();
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -234,37 +262,6 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
     }
 
 
-    // 用户取消关注
-    private void cancleFocus(int userId, final int position) {
-        showPd();
-        if (attractDelRequest != null) {
-            attractDelRequest.cancel();
-        }
-        UserAttractDelRequest.Input input = new UserAttractDelRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId(); // 用户id
-        input.attractId = userId; // 被关注的用户id
-        input.convertJosn();
-        attractDelRequest = new UserAttractDelRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                dismissPd();
-                if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(mContext, "取消成功");
-                    mDatas.get(position).state = 1;
-                    commonAdapter.setDataChanged(mDatas);  //改变按钮样式
-
-                } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
-                }
-            }
-        });
-        sendJsonRequest(attractDelRequest);
-    }
 
 
     @OnClick({R.id.ll_back, R.id.lh_btn_back,R.id.rel_invitepeople})
@@ -283,7 +280,7 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
     @Override
     public void onRefresh() {
             page = 1;
-            userFansLis();
+        user_sys_saleUserList_num();
     }
 
     @Override

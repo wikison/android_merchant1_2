@@ -179,7 +179,8 @@ public class TaskPayResultActivity extends BaseActivity {
         try {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "MONEY");//GIFT
-            object.put("taskTitle", "赞赏红包");//AppUtils.giftDescription(m_present.name)
+            object.put("taskTitle", "赞赏红包");
+            object.put("taskContent",getIntent().getStringExtra("imMessage"));
             object.put("billId", userPayId+"");
             object.put("serviceId", toUserId+"");
             object.put("userId", SlashHelper.userManager().getUserId()+"");

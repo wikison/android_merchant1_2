@@ -141,7 +141,7 @@ public class FamiliarFragment extends BaseFragment {
     }
 
 
-    //约服账单 消息未读的数量
+    //获取 用户的 可能熟悉的人(推荐服务管家)的数量
     private void user_sys_saleUserList_num() {
         if (userSysSaleUserListNumRequest != null) {
             userSysSaleUserListNumRequest.cancel();

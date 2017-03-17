@@ -35,13 +35,11 @@ import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.im.SettingsActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.UserManager;
-import com.zemult.merchant.view.DrawableCenterTextView;
 import com.zemult.merchant.view.common.MMAlert;
 
 import butterknife.Bind;
@@ -111,18 +109,18 @@ public class MineFragment extends BaseFragment {
     ImageView stateIv;
     @Bind(R.id.tv_state)
     TextView tvState;
-    @Bind(R.id.state_rl)
-    RelativeLayout stateRl;
+    //    @Bind(R.id.state_rl)
+//    RelativeLayout stateRl;
     @Bind(R.id.applyfor_tv)
     TextView applyforTv;
     @Bind(R.id.fuwuguanjia_ll)
     LinearLayout fuwuguanjiaLl;
     @Bind(R.id.servicerecord)
-    DrawableCenterTextView servicerecord;
+    TextView servicerecord;
     @Bind(R.id.businessmanage)
-    DrawableCenterTextView businessmanage;
+    TextView businessmanage;
     @Bind(R.id.incomeaccount)
-    DrawableCenterTextView incomeaccount;
+    TextView incomeaccount;
     @Bind(R.id.rl_my_oriprorder)
     RelativeLayout rlMyOriprorder;
     @Bind(R.id.rl_my_collect)
@@ -167,10 +165,10 @@ public class MineFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.rl_record, R.id.mtag_layout,
+    @OnClick({R.id.state_iv, R.id.servicerecord_iv, R.id.businessmanage_tv, R.id.incomeaccount_iv, R.id.tv_state, R.id.rl_record, R.id.mtag_layout,
             R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
             R.id.mshop_layout, R.id.msafe_layout,
-            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.state_rl, R.id.incomeaccount, R.id.servicerecord, R.id.businessmanage, R.id.rl_my_oriprorder, R.id.rl_my_collect, R.id.rl_my_setting})
+            R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.incomeaccount, R.id.servicerecord, R.id.businessmanage, R.id.rl_my_oriprorder, R.id.rl_my_collect, R.id.rl_my_setting})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -246,7 +244,9 @@ public class MineFragment extends BaseFragment {
             case R.id.rl_my_gift:
                 //我的礼物箱
                 break;
-            case R.id.state_rl:
+            case R.id.tv_state:
+            case R.id.state_iv:
+
                 MMAlert.showChooseStateDialog(getActivity(), new MMAlert.ChooseCallback() {
                     @Override
                     public void onfirstChoose() {
@@ -263,16 +263,17 @@ public class MineFragment extends BaseFragment {
 
                 break;
             case R.id.incomeaccount:
+            case R.id.incomeaccount_iv:
                 //收益账户
                 startActivity(new Intent(getActivity(), MyWalletActivity.class));
-
                 break;
             case R.id.servicerecord:
+            case R.id.servicerecord_iv:
                 //服务记录
                 startActivity(new Intent(getActivity(), ServiceHistoryActivity.class));
                 break;
-
             case R.id.businessmanage:
+            case R.id.businessmanage_tv:
                 startActivity(new Intent(getActivity(), SaleManageActivity.class));
                 break;
             case R.id.rl_my_oriprorder:
@@ -434,7 +435,5 @@ public class MineFragment extends BaseFragment {
     protected void lazyLoad() {
 
     }
-
-
 
 }
