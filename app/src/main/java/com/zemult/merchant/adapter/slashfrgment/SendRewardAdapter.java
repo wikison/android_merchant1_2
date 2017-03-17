@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
+import com.zemult.merchant.model.M_Bill;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,10 +24,10 @@ import butterknife.ButterKnife;
  * @author djy
  * @time 2017/2/5 11:26
  */
-public class SendRewardAdapter extends BaseListAdapter<String> {
+public class SendRewardAdapter extends BaseListAdapter<M_Bill> {
     private Set<Integer> selectedPos =new HashSet<Integer>();
 
-    public SendRewardAdapter(Context context, List<String> list) {
+    public SendRewardAdapter(Context context, List<M_Bill> list) {
         super(context, list);
     }
 
@@ -46,8 +47,8 @@ public class SendRewardAdapter extends BaseListAdapter<String> {
             holder = (ViewHolder) convertView.getTag(R.string.app_name);
         }
 
-        holder.tv.setText(getItem(position));
-        holder.tvYuan.setText(getItem(position));
+        holder.tv.setText(getItem(position).name);
+        holder.tvYuan.setText(getItem(position).money+"");
         if(selectedPos.contains(position) ){
             holder.tvYuan.setBackground(mContext.getResources().getDrawable(R.mipmap.zshb_selected));
         }else {

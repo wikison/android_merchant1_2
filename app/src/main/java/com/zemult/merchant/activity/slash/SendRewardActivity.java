@@ -19,6 +19,8 @@ import com.zemult.merchant.aip.mine.UserRewardPayAddRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Bill;
+import com.zemult.merchant.model.apimodel.APIM_PresentList;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
@@ -59,6 +61,7 @@ public class SendRewardActivity extends BaseActivity {
     private String ORDER_SN;
     private int userPayId;
     Set<Integer> selectidset=new HashSet<Integer>();
+    List<M_Bill> moneyList;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_send_reward);
@@ -75,7 +78,7 @@ public class SendRewardActivity extends BaseActivity {
 
     private CommonRewardRequest commonRewardRequest;
 
-    //获取所有的省市区列表
+    //获取打赏的金额种类
     private void common_reward() {
         if (commonRewardRequest != null) {
             commonRewardRequest.cancel();
@@ -89,10 +92,9 @@ public class SendRewardActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
 
-                if (((CommonResult) response).status == 1) {
-                    String moneys = ((CommonResult) response).rewardMoney;
-                    if (!TextUtils.isEmpty(moneys)) {
-                        List<String> moneyList = Arrays.asList(moneys.split(","));
+                if (((APIM_PresentList) response).status == 1) {
+                    if (((APIM_PresentList) response).moneyList.size()>0) {
+                         moneyList = ((APIM_PresentList) response).moneyList;
                         adapter = new SendRewardAdapter(mContext, moneyList);
                         gv.setAdapter(adapter);
                         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,7 +107,7 @@ public class SendRewardActivity extends BaseActivity {
                                 }
                                 double sumDoubleMoney = 0;
                                 for(Integer selectidposition : selectidset){
-                                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapter.getItem(selectidposition));
+                                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapter.getItem(selectidposition).money);
                                 }
                                 BigDecimal   b   =   new BigDecimal(sumDoubleMoney);
                                 money   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -125,7 +127,7 @@ public class SendRewardActivity extends BaseActivity {
                         });
                     }
                 } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
+                    ToastUtils.show(mContext, ((APIM_PresentList) response).info);
                 }
                 dismissPd();
             }
@@ -168,6 +170,11 @@ public class SendRewardActivity extends BaseActivity {
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("toUserId", toUserId);
                         intent.putExtra("merchantName", "赞赏红包");
+                        String imMessage="";
+                        for(int i:selectidset){
+                            imMessage=imMessage+ moneyList.get(i).name+",";
+                        }
+                        intent.putExtra("imMessage","收到"+SlashHelper.userManager().getUserinfo().getName()+"的赞赏"+ imMessage);
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");
                         intent.putExtra("managername", "");

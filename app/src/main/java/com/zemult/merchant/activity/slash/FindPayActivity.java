@@ -35,10 +35,12 @@ import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
+import com.zemult.merchant.model.apimodel.APIM_PresentList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.Convert;
@@ -133,8 +135,7 @@ public class FindPayActivity extends BaseActivity {
     M_Reservation mReservation;
 
     Dialog alertDialog;
-    String rewardMoneys = "";
-    List<String> moneyList = new ArrayList<>();
+    List<M_Bill> moneyList = new ArrayList<M_Bill>();
 
     private Context mContext;
 
@@ -256,22 +257,21 @@ public class FindPayActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
 
-                if (((CommonResult) response).status == 1) {
-                    rewardMoneys = ((CommonResult) response).rewardMoney;
-                    if (!TextUtils.isEmpty(rewardMoneys)) {
-                        moneyList = Arrays.asList(rewardMoneys.split(","));
+                if (((APIM_PresentList) response).status == 1) {
+                    if (((APIM_PresentList) response).moneyList.size()>0) {
+                        moneyList =((APIM_PresentList) response).moneyList;
 //                        strRewardMoney = moneyList.get(selectPosition);
 //                        rewardMoney = Double.parseDouble(strRewardMoney);
                         double sumDoubleMoney = 0;
                         for(Integer selectidposition : selectidset){
-                            sumDoubleMoney=sumDoubleMoney+Double.valueOf(moneyList.get(selectidposition));
+                            sumDoubleMoney=sumDoubleMoney+Double.valueOf(moneyList.get(selectidposition).money);
                         }
                         BigDecimal b   =   new BigDecimal(sumDoubleMoney);
                         rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
                         cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
                     }
                 } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
+                    ToastUtils.show(mContext, ((APIM_PresentList) response).info);
                 }
                 dismissPd();
             }
@@ -328,7 +328,7 @@ public class FindPayActivity extends BaseActivity {
                 }
                 double sumDoubleMoney = 0;
                 for(Integer selectidposition : selectidset){
-                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapterReward.getItem(selectidposition));
+                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapterReward.getItem(selectidposition).money);
                 }
                 BigDecimal b   =   new BigDecimal(sumDoubleMoney);
                 rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -395,6 +395,13 @@ public class FindPayActivity extends BaseActivity {
                         intent.putExtra("merchantHead", merchant.head);
                         intent.putExtra("managerhead", managerhead);
                         intent.putExtra("managername", managername);
+
+                        String imMessage="";
+                        for(int i:selectidset){
+                            imMessage=imMessage+ moneyList.get(i).name+",";
+                        }
+                        intent.putExtra("imMessage", "收到"+SlashHelper.userManager().getUserinfo().getName()+"的赞赏"+ imMessage);
+
                         startActivityForResult(intent, 10000);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);

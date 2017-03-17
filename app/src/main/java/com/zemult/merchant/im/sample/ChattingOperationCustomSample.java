@@ -79,6 +79,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.trinea.android.common.util.StringUtils;
+
 /**
  * 聊天界面(单聊和群聊界面)的定制点(根据需要实现相应的接口来达到自定义聊天界面)，不设置则使用openIM默认的实现
  * 1.CustomChattingTitleAdvice 自定义聊天窗口标题 2. OnUrlClickChattingAdvice 自定义聊天窗口中
@@ -591,11 +593,13 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                             Intent intent =new Intent(fragment.getActivity(),ReceiveRedActivity.class);
                             intent.putExtra("billId",customizeObject.getInt("billId"));
                             intent.putExtra("userId",customizeObject.getString("userId"));
+                            intent.putExtra("taskContent",customizeObject.optString("taskContent"));
                             fragment.startActivity(intent);
                         }
                         else{
                             Intent intent =new Intent(fragment.getActivity(),SendAppreciateRedActivity.class);
                             intent.putExtra("billId",customizeObject.getInt("billId"));
+                            intent.putExtra("taskContent",customizeObject.optString("taskContent"));
                             fragment.startActivity(intent);
 
                         }
@@ -1157,7 +1161,13 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             try {
                 String content = message.getMessageBody().getContent();
                 JSONObject object = new JSONObject(content);
-                taskTitle = object.getString("taskTitle");
+                if(StringUtils.isBlank(object.optString("taskContent"))){
+                    taskTitle = object.optString("taskTitle");
+                }
+                else {
+                    taskTitle = object.optString("taskContent");
+                }
+
                 tasktype= object.getString("tasktype");
             } catch (Exception e) {
             }
