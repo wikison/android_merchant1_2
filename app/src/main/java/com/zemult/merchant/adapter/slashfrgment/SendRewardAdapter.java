@@ -1,16 +1,14 @@
 package com.zemult.merchant.adapter.slashfrgment;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Bill;
+import com.zemult.merchant.util.Convert;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,7 +46,7 @@ public class SendRewardAdapter extends BaseListAdapter<M_Bill> {
         }
 
         holder.tv.setText(getItem(position).name);
-        holder.tvYuan.setText(getItem(position).money+"");
+        holder.tvYuan.setText(Convert.getMoneyString(getItem(position).money));
         if(selectedPos.contains(position) ){
             holder.tvYuan.setBackground(mContext.getResources().getDrawable(R.mipmap.zshb_selected));
         }else {

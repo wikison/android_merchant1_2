@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -53,7 +52,6 @@ import com.zemult.merchant.view.FixedListView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,7 +139,7 @@ public class FindPayActivity extends BaseActivity {
 
     private int selectPosition = 2; //选中的赞赏红包, 默认2, 金额6.66
     private String strRewardMoney = "";
-    Set<Integer> selectidset=new HashSet<Integer>();
+    Set<Integer> selectidset = new HashSet<Integer>();
 
     @Override
     public void setContentView() {
@@ -183,7 +181,7 @@ public class FindPayActivity extends BaseActivity {
             managerhead = userinfo.getHead();
             managername = userinfo.getName();
             tvName.setText(userinfo.getName());
-            if(!StringUtils.isBlank((userinfo.getHead()))){
+            if (!StringUtils.isBlank((userinfo.getHead()))) {
                 imageManager.loadCircleImage(userinfo.getHead(), ivHead);
             }
         }
@@ -222,7 +220,7 @@ public class FindPayActivity extends BaseActivity {
                 for (int i = 0; i < reservationList.size(); i++) {
                     if (i != position) {
                         reservationList.get(i).setChecked(false);
-                    }else {
+                    } else {
                         reservationList.get(position).setChecked(!reservationList.get(position).isChecked());
                     }
                 }
@@ -258,17 +256,18 @@ public class FindPayActivity extends BaseActivity {
             public void onResponse(Object response) {
 
                 if (((APIM_PresentList) response).status == 1) {
-                    if (((APIM_PresentList) response).moneyList.size()>0) {
-                        moneyList =((APIM_PresentList) response).moneyList;
+                    if (((APIM_PresentList) response).moneyList.size() > 0) {
+                        moneyList = ((APIM_PresentList) response).moneyList;
 //                        strRewardMoney = moneyList.get(selectPosition);
 //                        rewardMoney = Double.parseDouble(strRewardMoney);
+                        selectidset.add(1);
                         double sumDoubleMoney = 0;
-                        for(Integer selectidposition : selectidset){
-                            sumDoubleMoney=sumDoubleMoney+Double.valueOf(moneyList.get(selectidposition).money);
+                        for (Integer selectidposition : selectidset) {
+                            sumDoubleMoney = sumDoubleMoney + Double.valueOf(moneyList.get(selectidposition).money);
                         }
-                        BigDecimal b   =   new BigDecimal(sumDoubleMoney);
-                        rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-                        cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
+                        BigDecimal b = new BigDecimal(sumDoubleMoney);
+                        rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
                     }
                 } else {
                     ToastUtils.show(mContext, ((APIM_PresentList) response).info);
@@ -299,8 +298,8 @@ public class FindPayActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 selectidset.clear();
-                rewardMoney=0;
-                cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
+                rewardMoney = 0;
+                cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
                 cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
                 cbReward.setChecked(false);
                 alertDialog.dismiss();
@@ -321,24 +320,30 @@ public class FindPayActivity extends BaseActivity {
 
                 selectPosition = position;
 
-                if(selectidset.contains(position)){
+                if (selectidset.contains(position)) {
                     selectidset.remove(position);
-                }else{
+                } else {
                     selectidset.add(position);
                 }
                 double sumDoubleMoney = 0;
-                for(Integer selectidposition : selectidset){
-                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapterReward.getItem(selectidposition).money);
+                for (Integer selectidposition : selectidset) {
+                    sumDoubleMoney = sumDoubleMoney + Double.valueOf(adapterReward.getItem(selectidposition).money);
                 }
-                BigDecimal b   =   new BigDecimal(sumDoubleMoney);
-                rewardMoney   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-                cbReward.setText(String.format("赞赏红包%s元", rewardMoney));
+                BigDecimal b = new BigDecimal(sumDoubleMoney);
+                rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
 
 //                strRewardMoney = moneyList.get(selectPosition);
 //                rewardMoney = Double.parseDouble(strRewardMoney);
-                cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
-                cbReward.setChecked(true);
-                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
+                if (rewardMoney == 0) {
+                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                    cbReward.setChecked(false);
+                } else {
+                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    cbReward.setChecked(true);
+                }
+
+                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney));
                 adapterReward.setSelected(selectidset);
             }
         });
@@ -396,15 +401,15 @@ public class FindPayActivity extends BaseActivity {
                         intent.putExtra("managerhead", managerhead);
                         intent.putExtra("managername", managername);
 
-                        String imMessageTitle="";
-                        String imMessageContent="";
-                        for(int i:selectidset){
-                            imMessageTitle=imMessageTitle+ moneyList.get(i).name+",";
-                            imMessageContent=imMessageContent+ moneyList.get(i).name+moneyList.get(i).money+",";
+                        String imMessageTitle = "";
+                        String imMessageContent = "";
+                        for (int i : selectidset) {
+                            imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
+                            imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
                         }
-                        if(imMessageTitle.indexOf(",")!=-1){
-                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0,imMessageTitle.length()-1));
-                            intent.putExtra("imMessageContent", imMessageContent.substring(0,imMessageContent.length()-1));
+                        if (imMessageTitle.indexOf(",") != -1) {
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0, imMessageTitle.length() - 1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0, imMessageContent.length() - 1));
                         }
                         startActivityForResult(intent, 10000);
                     } else {
@@ -521,7 +526,7 @@ public class FindPayActivity extends BaseActivity {
                 if (((APIM_UserLogin) response).status == 1) {
                     userinfo = ((APIM_UserLogin) response).UserInfo;
                     tvName.setText(userinfo.getName());
-                    if(!StringUtils.isBlank(userinfo.getHead())){
+                    if (!StringUtils.isBlank(userinfo.getHead())) {
                         imageManager.loadCircleImage(userinfo.getHead(), ivHead);
                     }
                     managerhead = userinfo.getHead();

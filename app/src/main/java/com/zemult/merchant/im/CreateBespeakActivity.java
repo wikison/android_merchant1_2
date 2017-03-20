@@ -100,6 +100,7 @@ public class CreateBespeakActivity extends BaseActivity {
     private void initListener() {
         EditFilter.WordFilter(etBespeak, 100, tvNumber);
     }
+
     @Override
     public void init() {
         serviceId = getIntent().getIntExtra("serviceId", 0);
@@ -116,6 +117,7 @@ public class CreateBespeakActivity extends BaseActivity {
         }
 
         etCustomername.setText(SlashHelper.userManager().getUserinfo().getName());
+        EditFilter.WordFilter(etCustomername, 6);
         etCustomerphone.setText(SlashHelper.userManager().getUserinfo().getPhoneNum());
         pmnvSelectDeadline.setMinNum(1);
         pmnvSelectDeadline.setMaxNum(99);
@@ -275,7 +277,7 @@ public class CreateBespeakActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择商户");
                     return;
                 }
-                if (merchantId==0) {
+                if (merchantId == 0) {
                     ToastUtil.showMessage("请选择商户");
                     return;
                 }

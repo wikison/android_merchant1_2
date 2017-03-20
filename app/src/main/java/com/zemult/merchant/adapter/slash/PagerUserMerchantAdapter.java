@@ -113,7 +113,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         if (!TextUtils.isEmpty(entity.pic))
-            imageManager.loadRoundImage(entity.pic, viewHolder.cardImg, 24, Color.WHITE, 8, "@300h");
+            imageManager.loadRoundImage(entity.pic, viewHolder.cardImg, 24, Color.WHITE, 10, "@300h");
 
         return view;
     }
@@ -150,6 +150,13 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     private void initListener(ViewHolderDetail holder, final M_Merchant entity) {
         holder.rlDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onDetail(entity);
+            }
+        });
+        holder.llDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onViewClickListener != null)
@@ -214,6 +221,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         FNRadioGroup rgTaService;
         @Bind(R.id.rl_detail)
         RelativeLayout rlDetail;
+        @Bind(R.id.ll_detail)
+        LinearLayout llDetail;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
