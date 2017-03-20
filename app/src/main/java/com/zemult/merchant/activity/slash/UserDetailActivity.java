@@ -198,11 +198,7 @@ public class UserDetailActivity extends BaseActivity {
 
     private void initView() {
 
-        if(userInfo.getIsSaleUser() > 0){
-            lhTvTitle.setText("管家详情");
-        }else {
-            lhTvTitle.setText("个人详情");
-        }
+
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName))
@@ -441,6 +437,11 @@ public class UserDetailActivity extends BaseActivity {
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
         this.userInfo.setUserName(userName);
+        if(userInfo.getIsSaleUser() > 0){
+            lhTvTitle.setText("管家详情");
+        }else {
+            lhTvTitle.setText("个人详情");
+        }
     }
 
     /**
