@@ -48,6 +48,7 @@ public class GlideRoundTransform extends BitmapTransformation {
     private Bitmap drawImg(BitmapPool pool, Bitmap source) {
         if (source == null) return null;
 
+
         //绘制圆角矩形
         Bitmap roundBitmap = Bitmap.createBitmap(source.getWidth(),
                 source.getHeight(), Bitmap.Config.ARGB_8888);

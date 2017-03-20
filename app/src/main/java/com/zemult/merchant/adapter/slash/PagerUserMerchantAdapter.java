@@ -115,7 +115,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         if (!TextUtils.isEmpty(entity.head))
-            imageManager.loadRoundImage(entity.head, viewHolder.cardImg, 0, "@300h");
+            imageManager.loadRoundImage(entity.head, viewHolder.cardImg, 24, Color.WHITE, 4, "@300h");
 
         return view;
     }
