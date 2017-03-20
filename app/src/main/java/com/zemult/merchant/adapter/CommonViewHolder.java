@@ -184,6 +184,22 @@ public class CommonViewHolder {
         return this;
     }
 
+    public CommonViewHolder setImage2(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        //这里可以修改为自己的图片加载库
+        if(!TextUtils.isEmpty(url)){
+            //    Glide.with(mContext).load(url).into(imageView);
+            imageManager.loadUrlImage2(url, imageView);
+
+        }
+
+        return this;
+    }
+
+
+
+
+
     public CommonViewHolder setCircleImage(int viewId, String url) {
         ImageView imageView = getView(viewId);
         //这里可以修改为自己的图片加载库

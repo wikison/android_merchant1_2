@@ -126,7 +126,7 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
 //                                            holder.setViewGone(R.id.v1);
 //                                        }
                                         if (!TextUtils.isEmpty(mInvitation.titleIcon)) {
-                                            holder.setCircleImage(R.id.head_iv, mInvitation.titleIcon);
+                                            holder.setImage2(R.id.head_iv, mInvitation.titleIcon);
                                         }
 
                                         holder.setText(R.id.theme_tv, "活动主题:  " + mInvitation.titleName);
