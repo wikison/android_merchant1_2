@@ -16,6 +16,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonGetAllTitleRequest;
 import com.zemult.merchant.aip.slash.UserPreInvitationAddRequest;
@@ -24,6 +25,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Title;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetAllTitleList;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -179,6 +181,7 @@ public class PreInviteActivity extends BaseActivity {
     private void initView() {
         lhTvTitle.setText("发起预邀");
         etOrganizer.setText(SlashHelper.userManager().getUserinfo().name);
+        EditFilter.WordFilter(etOrganizer, 6);
     }
 
     private void initListener() {
@@ -280,7 +283,7 @@ public class PreInviteActivity extends BaseActivity {
                 .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
                 .isCyclic(false)//是否循环滚动
                 .setTitleColor(Color.BLACK)//标题文字颜色
-                .setSubmitColor(getResources().getColor(R.color.ls_blue))//确定按钮文字颜色
+                .setSubmitColor(getResources().getColor(R.color.font_main))//确定按钮文字颜色
                 .setCancelColor(Color.BLACK)//取消按钮文字颜色
                 .setTitleBgColor(Color.WHITE)//标题背景颜色 Night mode
                 .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
@@ -315,12 +318,16 @@ public class PreInviteActivity extends BaseActivity {
     };
 
     private void shareToWX() {
+        UMImage shareImage;
+        shareImage = new UMImage(mContext, R.mipmap.icon_share);
+
         //分享到微信
         new ShareAction(PreInviteActivity.this)
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
                 .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
                 .withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
+                .withMedia(shareImage)
                 .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】发起了一个" + selectTopic)
                 .share();
     }

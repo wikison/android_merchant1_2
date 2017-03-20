@@ -133,6 +133,12 @@ public class UserDetailActivity extends BaseActivity {
     LinearLayout llBottomMenu;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.btn_buy)
+    RoundTextView btnBuy;
+    @Bind(R.id.btn_service)
+    Button btnService;
+    @Bind(R.id.ll_bottom)
+    LinearLayout llBottom;
 
     private Context mContext;
     private Activity mActivity;
@@ -144,7 +150,7 @@ public class UserDetailActivity extends BaseActivity {
     private UserAttractDelRequest attractDelRequest; // 取消关注
     private M_Userinfo userInfo;
     private String userName, userHead;
-    private M_Merchant merchant;
+    private M_Merchant merchant, selectMerchant;
     private int merchantId;
     TaMerchantAdapter taMerchantAdapter;
     PagerUserMerchantAdapter pagerUserMerchantHeadAdapter;
@@ -191,7 +197,7 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        lhTvTitle.setText("管家详情");
+
 
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
@@ -202,6 +208,8 @@ public class UserDetailActivity extends BaseActivity {
             btnFocus.setVisibility(View.GONE);
             isSelf = true;
             llBottomMenu.setVisibility(View.GONE);
+            btnBuy.setVisibility(View.GONE);
+            btnService.setVisibility(View.GONE);
         } else {
             llRight.setVisibility(View.VISIBLE);
             ivRight.setImageResource(R.mipmap.gengduo_icon);
@@ -429,6 +437,11 @@ public class UserDetailActivity extends BaseActivity {
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
         this.userInfo.setUserName(userName);
+        if(userInfo.getIsSaleUser() > 0){
+            lhTvTitle.setText("管家详情");
+        }else {
+            lhTvTitle.setText("个人详情");
+        }
     }
 
     /**
@@ -472,7 +485,11 @@ public class UserDetailActivity extends BaseActivity {
 
             pager.setClipChildren(true);
             pager.setPageTransformer(false, new LinkageCoverTransformer(0.3f, 0f, 0f, 0f));
-            imageManager.loadBlurImage(listMerchant.get(0).head, ivCover);
+            selectMerchant = listMerchant.get(0);
+            if (selectMerchant.reviewstatus != 2) {
+                btnBuy.setVisibility(View.GONE);
+            }
+            imageManager.loadBlurImage(selectMerchant.pic, ivCover);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -493,7 +510,11 @@ public class UserDetailActivity extends BaseActivity {
                 public void onPageSelected(int position) {
                     if (position >= 0 && position < listMerchant.size()) {
                         bindPager.setCurrentItem(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).head, ivCover);
+                        selectMerchant = listMerchant.get(position);
+                        imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover);
+                        if (selectMerchant.reviewstatus != 2) {
+                            btnBuy.setVisibility(View.GONE);
+                        }
                     }
                 }
 
@@ -510,26 +531,6 @@ public class UserDetailActivity extends BaseActivity {
                     intent.putExtra("userSaleId", userId);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
                     startActivity(intent);
-                }
-
-                @Override
-                public void onBuy(M_Merchant entity) {
-                    Intent intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
-                    intent.putExtra("userSaleId", userId);
-                    intent.putExtra("merchantId", entity.merchantId);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onService(M_Merchant entity) {
-                    if (noLogin(mContext))
-                        return;
-                    Intent merchantintent = new Intent(mContext, CreateBespeakActivity.class);
-                    merchantintent.putExtra("serviceId", userId);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable("m_merchant", entity);
-                    merchantintent.putExtras(mBundle);
-                    startActivity(merchantintent);
                 }
             });
         }
@@ -599,7 +600,7 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_phone, R.id.tv_phone, R.id.ll_contact, R.id.ll_gift})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_phone, R.id.tv_phone, R.id.ll_contact, R.id.ll_gift, R.id.btn_buy, R.id.btn_service})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -640,6 +641,24 @@ public class UserDetailActivity extends BaseActivity {
                     }
                 });
 
+                break;
+            case R.id.btn_buy:
+                if (noLogin(mContext))
+                    return;
+                intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
+                intent.putExtra("userSaleId", userId);
+                intent.putExtra("merchantId", selectMerchant.merchantId);
+                startActivity(intent);
+                break;
+            case R.id.btn_service:
+                if (noLogin(mContext))
+                    return;
+                intent = new Intent(mContext, CreateBespeakActivity.class);
+                intent.putExtra("serviceId", userId);
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable("m_merchant", selectMerchant);
+                intent.putExtras(mBundle);
+                startActivity(intent);
                 break;
             case R.id.ll_phone:
             case R.id.tv_phone:

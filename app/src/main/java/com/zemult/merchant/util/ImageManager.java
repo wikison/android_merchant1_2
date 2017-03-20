@@ -316,7 +316,7 @@ public class ImageManager {
                     .load(url + getImageSize())
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .bitmapTransform(new BlurTransformation(mContext, 10))
                     .into(imageView);
         } else {
             //不是网络图片加载本地图片
@@ -357,6 +357,27 @@ public class ImageManager {
             url = url.replace("xiegang.oss", "xiegang.img");
             Glide.with(mContext)
                     .load(url + getImageSize())
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .transform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
+                    .into(imageView);
+        } else {
+            //不是网络图片加载本地图片
+            Glide.with(mContext)
+                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .error(R.mipmap.tupiansilie_circle_icon)
+                    .crossFade()
+                    .transform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
+                    .into(imageView);
+        }
+    }
+    // 加载圆角图片带边框
+    public void loadRoundImage(String url, ImageView imageView, float roundPx, int bordercolor, int borderwidth, String rule) {
+
+        if (url != null && url.indexOf("xiegang.oss") != -1) {
+            url = url.replace("xiegang.oss", "xiegang.img");
+            Glide.with(mContext)
+                    .load(url + rule)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))

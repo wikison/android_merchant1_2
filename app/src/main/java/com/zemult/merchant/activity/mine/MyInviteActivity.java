@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserPreInvitationListRequest;
@@ -124,7 +126,7 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
 //                                            holder.setViewGone(R.id.v1);
 //                                        }
                                         if (!TextUtils.isEmpty(mInvitation.titleIcon)) {
-                                            holder.setCircleImage(R.id.head_iv, mInvitation.titleIcon);
+                                            holder.setImage2(R.id.head_iv, mInvitation.titleIcon);
                                         }
 
                                         holder.setText(R.id.theme_tv, "活动主题:  " + mInvitation.titleName);
@@ -179,8 +181,10 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
                 onBackPressed();
                 break;
             case R.id.iv_right:
-                break;
+
             case R.id.ll_right:
+                Intent it = new Intent(this, PreInviteActivity.class);
+                startActivity(it);
                 break;
         }
     }

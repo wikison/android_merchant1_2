@@ -10,14 +10,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.ImageManager;
@@ -114,8 +112,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if (!TextUtils.isEmpty(entity.head))
-            imageManager.loadRoundImage(entity.head, viewHolder.cardImg, 0, "@300h");
+        if (!TextUtils.isEmpty(entity.pic))
+            imageManager.loadRoundImage(entity.pic, viewHolder.cardImg, 24, Color.WHITE, 10, "@300h");
 
         return view;
     }
@@ -144,15 +142,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                 holder.tvDistance.setText(entity.distance + "m");
         }
 
-        if (entity.reviewstatus != 2) {
-            holder.btnBuy.setVisibility(View.GONE);
-        }
-
-        if (isSelf) {
-            holder.btnBuy.setVisibility(View.GONE);
-            holder.btnService.setVisibility(View.GONE);
-        }
-
         initTags(holder, entity);
         initListener(holder, entity);
 
@@ -167,21 +156,11 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                     onViewClickListener.onDetail(entity);
             }
         });
-
-        holder.btnBuy.setOnClickListener(new View.OnClickListener() {
+        holder.llDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onViewClickListener != null)
-                    onViewClickListener.onBuy(entity);
-            }
-        });
-
-        holder.btnService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onViewClickListener != null)
-                    onViewClickListener.onService(entity);
-
+                    onViewClickListener.onDetail(entity);
             }
         });
 
@@ -242,12 +221,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         FNRadioGroup rgTaService;
         @Bind(R.id.rl_detail)
         RelativeLayout rlDetail;
-        @Bind(R.id.btn_buy)
-        RoundTextView btnBuy;
-        @Bind(R.id.btn_service)
-        Button btnService;
-        @Bind(R.id.ll_bottom)
-        LinearLayout llBottom;
+        @Bind(R.id.ll_detail)
+        LinearLayout llDetail;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
@@ -257,12 +232,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     public interface ViewClickListener {
         //查看详情
         void onDetail(M_Merchant entity);
-
-        //找TA买单
-        void onBuy(M_Merchant entity);
-
-        //找TA约服
-        void onService(M_Merchant entity);
 
     }
 

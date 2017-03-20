@@ -4,7 +4,6 @@ package com.zemult.merchant.activity.slash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,12 +20,12 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,8 +59,9 @@ public class SendRewardActivity extends BaseActivity {
     private double money = 0;
     private String ORDER_SN;
     private int userPayId;
-    Set<Integer> selectidset=new HashSet<Integer>();
+    Set<Integer> selectidset = new HashSet<Integer>();
     List<M_Bill> moneyList;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_send_reward);
@@ -71,7 +71,7 @@ public class SendRewardActivity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("赞赏红包");
-        toUserId=getIntent().getIntExtra("userId",0);//管家ID
+        toUserId = getIntent().getIntExtra("userId", 0);//管家ID
         showPd();
         common_reward();
     }
@@ -93,32 +93,32 @@ public class SendRewardActivity extends BaseActivity {
             public void onResponse(Object response) {
 
                 if (((APIM_PresentList) response).status == 1) {
-                    if (((APIM_PresentList) response).moneyList.size()>0) {
-                         moneyList = ((APIM_PresentList) response).moneyList;
+                    if (((APIM_PresentList) response).moneyList.size() > 0) {
+                        moneyList = ((APIM_PresentList) response).moneyList;
                         adapter = new SendRewardAdapter(mContext, moneyList);
                         gv.setAdapter(adapter);
                         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                if(selectidset.contains(position)){
+                                if (selectidset.contains(position)) {
                                     selectidset.remove(position);
-                                }else{
+                                } else {
                                     selectidset.add(position);
                                 }
                                 double sumDoubleMoney = 0;
-                                for(Integer selectidposition : selectidset){
-                                    sumDoubleMoney=sumDoubleMoney+Double.valueOf(adapter.getItem(selectidposition).money);
+                                for (Integer selectidposition : selectidset) {
+                                    sumDoubleMoney = sumDoubleMoney + Double.valueOf(adapter.getItem(selectidposition).money);
                                 }
-                                BigDecimal   b   =   new BigDecimal(sumDoubleMoney);
-                                money   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-                                tvPayMoney.setText(money+"");
+                                BigDecimal b = new BigDecimal(sumDoubleMoney);
+                                money = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                tvPayMoney.setText(Convert.getMoneyString(money));
 
                                 adapter.setSelected(selectidset);
-                                if (money!=0) {
+                                if (money != 0) {
 //                                    money =Double.valueOf(adapter.getItem(position));//
                                     tvPay.setEnabled(true);
                                     tvPay.setBackgroundColor(getResources().getColor(R.color.bg_head_red));
-                                }else{
+                                } else {
                                     tvPay.setEnabled(false);
                                     tvPay.setBackgroundColor(getResources().getColor(R.color.font_black_999));
                                 }
@@ -170,15 +170,15 @@ public class SendRewardActivity extends BaseActivity {
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("toUserId", toUserId);
                         intent.putExtra("merchantName", "赞赏红包");
-                        String imMessageTitle="";
-                        String imMessageContent="";
-                        for(int i:selectidset){
-                            imMessageTitle=imMessageTitle+ moneyList.get(i).name+",";
-                            imMessageContent=imMessageContent+ moneyList.get(i).name+moneyList.get(i).money+",";
+                        String imMessageTitle = "";
+                        String imMessageContent = "";
+                        for (int i : selectidset) {
+                            imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
+                            imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
                         }
-                        if(imMessageTitle.indexOf(",")!=-1){
-                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0,imMessageTitle.length()-1));
-                            intent.putExtra("imMessageContent", imMessageContent.substring(0,imMessageContent.length()-1));
+                        if (imMessageTitle.indexOf(",") != -1) {
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0, imMessageTitle.length() - 1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0, imMessageContent.length() - 1));
                         }
                         intent.putExtra("merchantHead", "");
                         intent.putExtra("managerhead", "");

@@ -307,12 +307,13 @@
                 android:background="@drawable/ripple_item_clicked2"
                 android:orientation="horizontal"
                 android:paddingBottom="16dp"
-                android:paddingTop="14dp"
+
                 android:weightSum="4">
 
                 <TextView
                     android:id="@+id/servicerecord"
                     android:layout_width="0dp"
+                    android:paddingTop="14dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -323,6 +324,7 @@
                 <TextView
                     android:id="@+id/businessmanage"
                     android:layout_width="0dp"
+                    android:paddingTop="14dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -337,6 +339,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="收益账户"
+                    android:paddingTop="14dp"
                     android:textColor="@color/font_black_28"
                     android:textSize="15sp" />
 
@@ -350,6 +353,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="14dp"
                         android:drawablePadding="8dp"
                         android:drawableRight="@mipmap/sanjiao_icon"
                         android:layout_centerHorizontal="true"
