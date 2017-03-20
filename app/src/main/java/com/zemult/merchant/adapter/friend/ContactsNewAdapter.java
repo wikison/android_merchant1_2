@@ -109,7 +109,7 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 			holder.tvHeader.setVisibility(View.GONE);
 		}
 
-		imageManager.loadCircleImage(friend.head,
+		imageManager.loadCircleHead(friend.head,
 				holder.iv_follow_head);
 		holder.tv_follow_name.setText(friend.name);
 		holder.iv_sex.setImageResource(friend.getExperienceImg());
