@@ -16,6 +16,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonGetAllTitleRequest;
 import com.zemult.merchant.aip.slash.UserPreInvitationAddRequest;
@@ -315,13 +316,16 @@ public class PreInviteActivity extends BaseActivity {
     };
 
     private void shareToWX() {
+        UMImage shareImage;
+        shareImage = new UMImage(mContext, R.mipmap.icon_share);
+
         //分享到微信
         new ShareAction(PreInviteActivity.this)
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
                 .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
-                //.withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
-                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                .withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
+                .withMedia(shareImage)
                 .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】发起了一个" + selectTopic)
                 .share();
     }
