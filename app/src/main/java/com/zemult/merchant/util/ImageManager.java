@@ -316,7 +316,7 @@ public class ImageManager {
                     .load(url + getImageSize())
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .bitmapTransform(new BlurTransformation(mContext, 10))
                     .into(imageView);
         } else {
             //不是网络图片加载本地图片
@@ -359,7 +359,7 @@ public class ImageManager {
                     .load(url + getImageSize())
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
+                    .transform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
                     .into(imageView);
         } else {
             //不是网络图片加载本地图片
@@ -367,7 +367,7 @@ public class ImageManager {
                     .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
+                    .transform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
                     .into(imageView);
         }
     }
