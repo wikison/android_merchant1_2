@@ -51,7 +51,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
     public void init() {
         mContext = this;
         lhTvTitle.setText("成为服务管家");
-        tvRight.setText("取消");
+        tvRight.setText("跳过");
         tvRight.setVisibility(View.VISIBLE);
 
         merchantId = getIntent().getIntExtra(TabManageActivity.TAG, -1);
