@@ -340,7 +340,7 @@ public class MineFragment extends BaseFragment {
                         mymoney = ((APIM_UserLogin) response).userInfo.money;
                         tvMyAccount.setText(mymoney + "元");
 
-                        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText() + "服务管家");
+                        levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText() + "服务");
                         experience = SlashHelper.userManager().getUserinfo().getExperience();
                         if (experience < 100) {
                             levelIv.setBackgroundResource(R.mipmap.xinshou_iconsj);

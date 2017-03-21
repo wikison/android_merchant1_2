@@ -74,7 +74,7 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
         iv.setVisibility(View.VISIBLE);
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.jiahao);
-        lhTvTitle.setText("我的预邀");
+        lhTvTitle.setText("我发起的预邀");
         mContext = this;
         imageManager = new ImageManager(this);
         myinviteLv.setRefreshEnable(true);

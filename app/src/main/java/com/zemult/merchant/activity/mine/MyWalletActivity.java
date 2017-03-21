@@ -75,7 +75,7 @@ public class MyWalletActivity extends BaseActivity {
     public void init() {
         lhBtnRightiamge.setVisibility(View.VISIBLE);
         lhBtnRightiamge.setBackgroundResource(R.mipmap.zhangdan_icon);
-        lhTvTitle.setText("我的账户");
+        lhTvTitle.setText("收益账户");
         mContext = this;
         showPd();
         getPresentList();
