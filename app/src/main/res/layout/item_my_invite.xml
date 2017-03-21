@@ -40,7 +40,7 @@
 
         <ImageView
             android:id="@+id/head_iv"
-            android:layout_marginLeft="18dp"
+            android:layout_marginLeft="28dp"
             android:layout_toRightOf="@+id/ll1"
             android:layout_width="40dp"
             android:src="@mipmap/user_icon"
