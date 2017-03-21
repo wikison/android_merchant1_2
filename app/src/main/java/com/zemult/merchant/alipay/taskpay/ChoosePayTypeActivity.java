@@ -113,7 +113,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                                 sendPayGiftMsg();
                         }
                         else{
-                            if("赞赏红包".equals(merchantName)){
+                            if("赞赏".equals(merchantName)){
                                 sendPayMoneyMsg();
                             }
                             else{
@@ -179,7 +179,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
             imageManager.loadCircleResImage(R.mipmap.chart_liwu_icon, ivHead);
         }
         else{
-            if("赞赏红包".equals(merchantName)){
+            if("赞赏".equals(merchantName)){
                 imageManager.loadCircleResImage(R.mipmap.chart_hongbao_icon, ivHead);
             }
            else {
@@ -387,7 +387,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                                     sendPayGiftMsg();
                             }
                             else{
-                                if("赞赏红包".equals(merchantName)){
+                                if("赞赏".equals(merchantName)){
                                     sendPayMoneyMsg();
                                 }
                                 else{

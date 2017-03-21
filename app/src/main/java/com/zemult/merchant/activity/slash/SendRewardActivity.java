@@ -70,7 +70,7 @@ public class SendRewardActivity extends BaseActivity {
     @Override
     public void init() {
         mContext = this;
-        lhTvTitle.setText("赞赏红包");
+        lhTvTitle.setText("赞赏");
         toUserId = getIntent().getIntExtra("userId", 0);//管家ID
         showPd();
         common_reward();
@@ -169,7 +169,7 @@ public class SendRewardActivity extends BaseActivity {
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
                         intent.putExtra("toUserId", toUserId);
-                        intent.putExtra("merchantName", "赞赏红包");
+                        intent.putExtra("merchantName", "赞赏");
                         String imMessageTitle = "";
                         String imMessageContent = "";
                         for (int i : selectidset) {
