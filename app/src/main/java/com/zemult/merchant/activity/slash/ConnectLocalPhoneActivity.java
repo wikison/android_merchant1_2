@@ -21,6 +21,7 @@ import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -39,6 +40,8 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.tv_right)
     TextView tvRight;
+    @Bind(R.id.tv_tip)
+    TextView tvTip;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
     @Bind(R.id.btn_next)
@@ -63,6 +66,13 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
         merchantId = getIntent().getIntExtra(TabManageActivity.TAG, -1);
         tags = getIntent().getStringExtra(TabManageActivity.TAGS);
         name = getIntent().getStringExtra(TabManageActivity.NAME);
+
+        Boolean refuse = (Boolean) SPUtils.get(mContext, "get_contact_refuse", false);
+
+        if(refuse){
+            btnNext.setVisibility(View.GONE);
+            tvTip.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -89,10 +99,12 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
 
                     // 暂时这么写吧。。。找不到6.0以下判断权限的方法
                     if(StringUtils.isBlank(bookPhones)){
-                        ToastUtil.showMessage("拒绝");
+                        SPUtils.put(mContext, "get_contact_refuse", true);
+                        isOnBook = 0;
                     }else {
-                        ToastUtil.showMessage("允许");
+                        isOnBook = 1;
                     }
+                    user_add_saleuser();
                 } else {
                     requestContactsPermission();
                 }
@@ -143,7 +155,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
     }
 
     private void requestContactsPermission() {
-        AndPermission.with(ConnectLocalPhoneActivity.this)
+        AndPermission.with(this)
                 .requestCode(101)
                 .permission(Manifest.permission.READ_CONTACTS)
                 .send();
@@ -163,6 +175,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
 
     @PermissionNo(101)
     private void getContactsNo() {
+        SPUtils.put(mContext, "get_contact_refuse", true);
         isOnBook = 0;
         user_add_saleuser();
     }

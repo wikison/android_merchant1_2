@@ -613,20 +613,20 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         if (comefrom == 1)
                             user_add_saleuser();
                         else if(comefrom == 3){
-//                            if(SlashHelper.userManager().getUserinfo().getIsOnBook() == 0){
-//                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-//                                it.putExtra(TabManageActivity.TAG, merchantId);
-//                                it.putExtra(TabManageActivity.NAME, name);
-//                                it.putExtra(TabManageActivity.TAGS, getTags());
-//                                startActivity(it);
-//                            }else{
-//                                user_add_saleuser();
-//                            }
-                            Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-                            it.putExtra(TabManageActivity.TAG, merchantId);
-                            it.putExtra(TabManageActivity.NAME, name);
-                            it.putExtra(TabManageActivity.TAGS, getTags());
-                            startActivity(it);
+                            if(SlashHelper.userManager().getUserinfo().getIsOnBook() == 0){
+                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
+                                it.putExtra(TabManageActivity.TAG, merchantId);
+                                it.putExtra(TabManageActivity.NAME, name);
+                                it.putExtra(TabManageActivity.TAGS, getTags());
+                                startActivity(it);
+                            }else{
+                                user_add_saleuser();
+                            }
+//                            Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
+//                            it.putExtra(TabManageActivity.TAG, merchantId);
+//                            it.putExtra(TabManageActivity.NAME, name);
+//                            it.putExtra(TabManageActivity.TAGS, getTags());
+//                            startActivity(it);
 
                         }
                     }
