@@ -3,10 +3,9 @@ package com.zemult.merchant.activity.slash;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,6 +24,7 @@ import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +33,6 @@ import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class ConnectLocalPhoneActivity extends BaseActivity {
-
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -85,20 +84,18 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                 user_add_saleuser();
                 break;
             case R.id.btn_next:
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+                    bookPhones = AppUtils.getPhoneNumbers(mContext);
 
-//                requestContactsPermission();
-
-                bookPhones = AppUtils.getPhoneNumbers(mContext);
-
-                // 暂时这么写吧。。。找不到6.0以下判断权限的方法
-                if(StringUtils.isBlank(bookPhones)){
-                    ToastUtil.showMessage("拒绝");
-                }else {
-                    ToastUtil.showMessage("允许");
+                    // 暂时这么写吧。。。找不到6.0以下判断权限的方法
+                    if(StringUtils.isBlank(bookPhones)){
+                        ToastUtil.showMessage("拒绝");
+                    }else {
+                        ToastUtil.showMessage("允许");
+                    }
+                } else {
+                    requestContactsPermission();
                 }
-
-
-
                 break;
         }
     }
