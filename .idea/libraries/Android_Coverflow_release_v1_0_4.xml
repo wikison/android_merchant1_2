@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Android-Coverflow-release-v1.0.4">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/cf31a5c008d97da5bd2e8e80f2918cbd0c6d5e7b/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/cf31a5c008d97da5bd2e8e80f2918cbd0c6d5e7b/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/cce660a6eda5a160e91084fbbda14978e7bffc8e/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/cce660a6eda5a160e91084fbbda14978e7bffc8e/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

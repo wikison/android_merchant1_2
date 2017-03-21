@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="androidtagview-1.0.3">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/ca35c10b1aef939c7f0b2ae340649b7a8b11921c/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/ca35c10b1aef939c7f0b2ae340649b7a8b11921c/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/d66c472f858ee23ec88272878fabdce2927b99d4/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/d66c472f858ee23ec88272878fabdce2927b99d4/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

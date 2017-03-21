@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="qrcodereaderview-1.0.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/fce3bf2c2bfddc8aab882df9d42cfb1776c0f2f6/output/jars/libs/core.jar!/" />
-      <root url="jar://$USER_HOME$/.android/build-cache/fce3bf2c2bfddc8aab882df9d42cfb1776c0f2f6/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/fce3bf2c2bfddc8aab882df9d42cfb1776c0f2f6/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/c5443e0d317ce55189330795e45a359962785795/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/c5443e0d317ce55189330795e45a359962785795/output/jars/libs/core.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/c5443e0d317ce55189330795e45a359962785795/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

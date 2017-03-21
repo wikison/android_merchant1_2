@@ -1,27 +1,36 @@
 package com.zemult.merchant.activity.slash;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -80,24 +89,12 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                 break;
             case R.id.btn_next:
 
-                CommonDialog.showDialogListener(mContext, "系统提示", "取消", "确定", "'约服'将读取您的通讯录，是否同意？", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-                        isOnBook = 0;
-                        bookPhones = "";
-                        user_add_saleuser();
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-
-                        isOnBook = 1;
-                        bookPhones = AppUtils.getPhoneNumbers(mContext);
-                        user_add_saleuser();
-                    }
-                });
+                requestContactsPermission();
+//                bookPhones = AppUtils.getPhoneNumbers(mContext);
+//                if(StringUtils.isBlank(bookPhones))
+//                    ToastUtil.showMessage("拒绝");
+//                else
+//                    ToastUtil.showMessage("成功");
 
                 break;
         }
@@ -143,6 +140,32 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
             }
         });
         sendJsonRequest(userAddSaleUserRequest);
+    }
+
+    private void requestContactsPermission() {
+        AndPermission.with(ConnectLocalPhoneActivity.this)
+                .requestCode(101)
+                .permission(Manifest.permission.READ_CONTACTS)
+                .send();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+    @PermissionYes(101)
+    private void getContactsYes() {
+        isOnBook = 1;
+        bookPhones = AppUtils.getPhoneNumbers(mContext);
+        user_add_saleuser();
+    }
+
+    @PermissionNo(101)
+    private void getContactsNo() {
+        isOnBook = 0;
+        bookPhones = "";
+        user_add_saleuser();
     }
 
 }

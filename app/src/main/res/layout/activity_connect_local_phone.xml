@@ -24,6 +24,7 @@
         />
 
     <TextView
+        android:visibility="invisible"
         android:layout_weight="1"
         style="@style/text_30_2828"
         android:gravity="center_horizontal"
