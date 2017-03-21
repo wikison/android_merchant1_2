@@ -3,8 +3,10 @@ package com.zemult.merchant.activity.slash;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,17 +17,13 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -84,17 +82,22 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                 break;
             case R.id.tv_right:
                 isOnBook = 0;
-                bookPhones = "";
                 user_add_saleuser();
                 break;
             case R.id.btn_next:
 
-                requestContactsPermission();
-//                bookPhones = AppUtils.getPhoneNumbers(mContext);
-//                if(StringUtils.isBlank(bookPhones))
-//                    ToastUtil.showMessage("拒绝");
-//                else
-//                    ToastUtil.showMessage("成功");
+//                requestContactsPermission();
+
+                bookPhones = AppUtils.getPhoneNumbers(mContext);
+
+                // 暂时这么写吧。。。找不到6.0以下判断权限的方法
+                if(StringUtils.isBlank(bookPhones)){
+                    ToastUtil.showMessage("拒绝");
+                }else {
+                    ToastUtil.showMessage("允许");
+                }
+
+
 
                 break;
         }
@@ -164,7 +167,6 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
     @PermissionNo(101)
     private void getContactsNo() {
         isOnBook = 0;
-        bookPhones = "";
         user_add_saleuser();
     }
 
