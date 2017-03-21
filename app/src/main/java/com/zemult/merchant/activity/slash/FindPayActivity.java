@@ -189,7 +189,7 @@ public class FindPayActivity extends BaseActivity {
     }
 
     private void initView() {
-        lhTvTitle.setText("结账服务");
+        lhTvTitle.setText("找TA买单");
 
         EditFilter.CashFilter(etPaymoney, Constants.MAX_PAY);
         btnPay.setEnabled(false);

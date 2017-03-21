@@ -24,6 +24,7 @@
         />
 
     <TextView
+        android:id="@+id/tv_tip"
         android:visibility="invisible"
         android:layout_weight="1"
         style="@style/text_30_2828"

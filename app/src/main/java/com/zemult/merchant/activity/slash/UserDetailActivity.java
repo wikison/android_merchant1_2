@@ -437,11 +437,12 @@ public class UserDetailActivity extends BaseActivity {
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
         this.userInfo.setUserName(userName);
-        if(userInfo.getIsSaleUser() > 0){
+        if (userInfo.getIsSaleUser() > 0) {
             lhTvTitle.setText("管家详情");
-        }else {
+        } else {
             lhTvTitle.setText("个人详情");
         }
+
     }
 
     /**
@@ -470,7 +471,8 @@ public class UserDetailActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Merchant> list) {
         if (list == null || list.size() == 0) {
-
+            btnBuy.setVisibility(View.GONE);
+            btnService.setVisibility(View.GONE);
         } else {
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
