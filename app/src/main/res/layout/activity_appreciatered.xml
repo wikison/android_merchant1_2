@@ -108,7 +108,7 @@
         android:layout_marginBottom="28dp"
         android:textSize="15sp"
         android:textColor="@color/font_black_999"
-        android:text="赞赏红包是对服务管家线下优质服务的奖励赠与"/>
+        android:text="赞赏是对服务管家线下优质服务的奖励赠与"/>
 
 </RelativeLayout>
 

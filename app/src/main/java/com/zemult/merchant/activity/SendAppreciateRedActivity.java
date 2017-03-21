@@ -58,7 +58,7 @@ public class SendAppreciateRedActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("赞赏红包");
+        lhTvTitle.setText("赞赏");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);

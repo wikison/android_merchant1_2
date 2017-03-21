@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:text="收到赞赏红包!"
+            android:text="收到赞赏!"
             android:textColor="@color/e6bb7c"
             android:textSize="24sp" />
 
