@@ -84,7 +84,9 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         CommonDialog.DismissProgressDialog();
-
+                        isOnBook = 0;
+                        bookPhones = "";
+                        user_add_saleuser();
                     }
                 }, new View.OnClickListener() {
                     @Override
