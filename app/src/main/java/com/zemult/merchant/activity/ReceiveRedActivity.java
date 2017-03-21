@@ -42,7 +42,7 @@ import zema.volley.network.ResponseListener;
 /**
  * Created by admin on 2017/2/5.
  */
-//收到赞赏红包
+//收到赞赏
 public class ReceiveRedActivity extends BaseActivity {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -84,7 +84,7 @@ public class ReceiveRedActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("赞赏红包");
+        lhTvTitle.setText("赞赏");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);
@@ -150,7 +150,7 @@ public class ReceiveRedActivity extends BaseActivity {
             case R.id.btn_tks:
                 String tksMsg = "";
                 if ("".equals(etTks.getText().toString())) {
-                    tksMsg = "谢谢土豪~祝你身体棒棒哒，事业顺顺哒~红包已收到，么么哒~";
+                    tksMsg = "谢谢土豪~祝你身体棒棒哒，事业顺顺哒~礼物已收到，么么哒~";
                 } else {
                     tksMsg = etTks.getText().toString();
                 }

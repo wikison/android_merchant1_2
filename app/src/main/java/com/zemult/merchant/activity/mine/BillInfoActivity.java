@@ -225,13 +225,13 @@ public class BillInfoActivity extends BaseActivity {
             user_bill_info_present_exchange();
         }
         if (type == 9) {
-            tvBillName.setText("赞赏红包");
+            tvBillName.setText("赞赏");
             tvState.setText("");
             llReward.setVisibility(View.VISIBLE);
             user_bill_info_reward();
         }
         if (type == 10) {
-            tvBillName.setText("赞赏红包");
+            tvBillName.setText("赞赏");
             tvState.setText("");
             llRewardGet.setVisibility(View.VISIBLE);
             user_bill_info_reward_get();

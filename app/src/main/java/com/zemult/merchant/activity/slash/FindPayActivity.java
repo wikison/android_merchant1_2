@@ -137,7 +137,7 @@ public class FindPayActivity extends BaseActivity {
 
     private Context mContext;
 
-    private int selectPosition = 2; //选中的赞赏红包, 默认2, 金额6.66
+    private int selectPosition = 2; //选中的赞赏, 默认2, 金额6.66
     private String strRewardMoney = "";
     Set<Integer> selectidset = new HashSet<Integer>();
 
@@ -267,7 +267,7 @@ public class FindPayActivity extends BaseActivity {
                         }
                         BigDecimal b = new BigDecimal(sumDoubleMoney);
                         rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                        cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
+                        cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
                     }
                 } else {
                     ToastUtils.show(mContext, ((APIM_PresentList) response).info);
@@ -299,7 +299,7 @@ public class FindPayActivity extends BaseActivity {
             public void onClick(View v) {
                 selectidset.clear();
                 rewardMoney = 0;
-                cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
+                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
                 cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
                 cbReward.setChecked(false);
                 alertDialog.dismiss();
@@ -331,7 +331,7 @@ public class FindPayActivity extends BaseActivity {
                 }
                 BigDecimal b = new BigDecimal(sumDoubleMoney);
                 rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                cbReward.setText(String.format("赞赏红包%s元", Convert.getMoneyString(rewardMoney)));
+                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
 
 //                strRewardMoney = moneyList.get(selectPosition);
 //                rewardMoney = Double.parseDouble(strRewardMoney);

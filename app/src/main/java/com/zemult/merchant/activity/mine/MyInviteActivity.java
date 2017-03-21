@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +84,20 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
         showPd();
 
         userPreInvitationList();
+
+
+        myinviteLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
+//                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
+//                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, "" + mReservation.reservationId);
+//                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, type);
+//                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void userPreInvitationList() {

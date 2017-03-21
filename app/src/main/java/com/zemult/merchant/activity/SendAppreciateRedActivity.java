@@ -29,7 +29,7 @@ import zema.volley.network.ResponseListener;
 /**
  * Created by admin on 2017/2/5.
  */
-//发赞赏红包
+//发赞赏
 public class SendAppreciateRedActivity extends BaseActivity {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -58,7 +58,7 @@ public class SendAppreciateRedActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("赞赏红包");
+        lhTvTitle.setText("赞赏");
         mContext = this;
         mActivity = this;
         mImageManager = new ImageManager(mContext);

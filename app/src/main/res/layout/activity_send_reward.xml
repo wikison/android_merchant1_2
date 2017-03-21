@@ -48,7 +48,7 @@
                 android:layout_marginTop="25dp"
                 android:gravity="bottom|center_horizontal"
                 android:layout_marginBottom="15dp"
-                android:text="赞赏红包是对服务管家线下优质服务的奖励赠与"
+                android:text="赞赏是对服务管家线下优质服务的奖励赠与"
                 android:textColor="@color/font_black_999"
                 android:textSize="@dimen/font_24px"/>
         </LinearLayout>
