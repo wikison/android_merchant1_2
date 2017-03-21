@@ -248,7 +248,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
         }
         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-        messageBody.setSummary("[送红包]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+        messageBody.setSummary("[送赞赏]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
         YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
         IYWContact appContact = YWContactFactory.createAPPContact(toUserId+"", imKit.getIMCore().getAppKey());
