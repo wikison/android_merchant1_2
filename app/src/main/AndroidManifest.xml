@@ -483,7 +483,8 @@
         <activity android:name=".activity.slash.CommonFriendActivity"/>
         <activity
             android:name=".activity.search.SearchHotActivity"
-            android:configChanges="orientation|navigation"/>
+            android:configChanges="orientation|navigation"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name=".activity.ReportActivity"/>
         <activity android:name=".activity.mine.pwdsetting.GotoTurenameActivity"/>
         <activity android:name=".activity.mine.BillInfoActivity"/>

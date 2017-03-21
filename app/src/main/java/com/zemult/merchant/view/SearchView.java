@@ -145,6 +145,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         tvCancel.setTextColor(getResources().getColor(R.color.white));
         tvCancel.setTextSize(16);
 
+
+        etInput.setFocusable(true);
+        etInput.setFocusableInTouchMode(true);
+        etInput.requestFocus();
+
         etInput.addTextChangedListener(new EditChangedListener());
         etInput.setOnClickListener(this);
         etInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {

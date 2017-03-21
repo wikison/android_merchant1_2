@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -51,7 +52,6 @@ import zema.volley.network.ResponseListener;
  */
 public class SearchHotActivity extends BaseActivity {
 
-    private static final int REQ_SEARCH = 0x110;
     @Bind(R.id.a_seach_searchview)
     SearchView mSearchView;
     @Bind(R.id.a_search_grid)
@@ -95,6 +95,8 @@ public class SearchHotActivity extends BaseActivity {
         initView();
         initListener();
         common_hot_search_list();
+        mSearchView.setFocusable(true);
+        mSearchView.setFocusableInTouchMode(true);
     }
 
     private void initData() {
@@ -116,12 +118,9 @@ public class SearchHotActivity extends BaseActivity {
         }
         lv.setAdapter(adapter);
         mSearchView.setStrHint("搜索你想要的");
-//        mSearchView.setFocusable(true);
-//        mSearchView.setFocusableInTouchMode(true);
     }
 
     private void initListener() {
-//        mSearchView.setMaxWordNum(15);
         mSearchView.setSearchViewListener(new SearchView.SearchViewListener() {
             @Override
             public void onSearch(String text) {
