@@ -129,17 +129,15 @@ public class SearchHotActivity extends BaseActivity {
 
             @Override
             public void onClear() {
-
             }
         });
         mSearchView.setOnThinkingClickListener(new SearchView.OnThinkingClickListener() {
             @Override
             public void onThinkingClick(String text) {
-                if (TextUtils.isEmpty(text.trim())) {
-                    lv.setVisibility(View.GONE);
-                    return;
-                }
-                merchant_firstpage_search_List(text);
+//                if (StringUtils.isBlank(text))
+//                    lv.setVisibility(View.GONE);
+//                else
+                    merchant_firstpage_search_List(text);
             }
         });
 
@@ -236,7 +234,7 @@ public class SearchHotActivity extends BaseActivity {
 
     private MerchantFirstpageSearchListRequest request;
 
-    public void merchant_firstpage_search_List(String key) {
+    public void merchant_firstpage_search_List(final String key) {
         if (request != null) {
             request.cancel();
         }
@@ -259,7 +257,7 @@ public class SearchHotActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    fillAdapter(((APIM_MerchantList) response).merchantList);
+                    fillAdapter(((APIM_MerchantList) response).merchantList, key);
 
                 } else {
                     ToastUtil.showMessage(((APIM_MerchantList) response).info);
@@ -270,8 +268,8 @@ public class SearchHotActivity extends BaseActivity {
     }
 
     // 填充数据
-    private void fillAdapter(List<M_Merchant> list) {
-        if (list == null || list.size() == 0) {
+    private void fillAdapter(List<M_Merchant> list, String key) {
+        if (list == null || list.size() == 0 || StringUtils.isBlank(key)) {
             lv.setVisibility(View.GONE);
         } else {
             lv.setVisibility(View.VISIBLE);
