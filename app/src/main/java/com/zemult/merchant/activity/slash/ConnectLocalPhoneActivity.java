@@ -3,9 +3,9 @@ package com.zemult.merchant.activity.slash;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,7 +24,6 @@ import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -94,20 +93,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                 user_add_saleuser();
                 break;
             case R.id.btn_next:
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-                    bookPhones = AppUtils.getPhoneNumbers(mContext);
-
-                    // 暂时这么写吧。。。找不到6.0以下判断权限的方法
-                    if(StringUtils.isBlank(bookPhones)){
-                        SPUtils.put(mContext, "get_contact_refuse", true);
-                        isOnBook = 0;
-                    }else {
-                        isOnBook = 1;
-                    }
-                    user_add_saleuser();
-                } else {
-                    requestContactsPermission();
-                }
+                ActivityCompat.requestPermissions(ConnectLocalPhoneActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
                 break;
         }
     }
@@ -164,20 +150,40 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
-    @PermissionYes(101)
-    private void getContactsYes() {
-        isOnBook = 1;
-        bookPhones = AppUtils.getPhoneNumbers(mContext);
-        user_add_saleuser();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+//           if(grantResults[0] == PackageManager.PERMISSION_GRANTED) //经测试，对于vivo和redmi永远返回0
+//               getContactsYes();
+//            else
+//               getContactsNo();
+
+            bookPhones = AppUtils.getPhoneNumbers(mContext);
+            // 只能用这种折中的方法了
+            if (StringUtils.isBlank(bookPhones)) {
+                SPUtils.put(mContext, "get_contact_refuse", true);
+                isOnBook = 0;
+            } else {
+                isOnBook = 1;
+            }
+            user_add_saleuser();
+        }
+
     }
 
-    @PermissionNo(101)
+    @PermissionYes(100)
+    private void getContactsYes() {
+
+        ToastUtil.showMessage("允许");
+//        isOnBook = 1;
+//        user_add_saleuser();
+    }
+
+    @PermissionNo(100)
     private void getContactsNo() {
-        SPUtils.put(mContext, "get_contact_refuse", true);
-        isOnBook = 0;
-        user_add_saleuser();
+        ToastUtil.showMessage("拒绝");
+//        SPUtils.put(mContext, "get_contact_refuse", true);
+//        isOnBook = 0;
+//        user_add_saleuser();
     }
 
 }

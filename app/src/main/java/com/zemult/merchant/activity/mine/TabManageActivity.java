@@ -622,12 +622,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                             }else{
                                 user_add_saleuser();
                             }
-//                            Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-//                            it.putExtra(TabManageActivity.TAG, merchantId);
-//                            it.putExtra(TabManageActivity.NAME, name);
-//                            it.putExtra(TabManageActivity.TAGS, getTags());
-//                            startActivity(it);
-
                         }
                     }
                 } else if (comefrom == 2) {
