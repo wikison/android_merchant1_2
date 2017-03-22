@@ -444,23 +444,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public void onResume() {
         super.onResume();
         userReservationList();
-
-
-//
-//        if(Build.VERSION.SDK_INT >= 23) {
-//            if(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS)== PackageManager.PERMISSION_GRANTED){
-//                ToastUtil.showMessage("允许");
-//            }else {
-//                ToastUtil.showMessage("拒绝");
-//            }
-//        } else{
-//
-//            if(mContext.getPackageManager().checkPermission(Manifest.permission.READ_CONTACTS, mContext.getPackageName())== PackageManager.PERMISSION_GRANTED){
-//                ToastUtil.showMessage("允许");
-//            }else {
-//                ToastUtil.showMessage("拒绝");
-//            }
-//        }
     }
 
     @Override
