@@ -154,6 +154,7 @@ public class PreInviteActivity extends BaseActivity {
             input.userId = SlashHelper.userManager().getUserId();
         }
         input.titleId = mTitle.titleId;
+        input.name = etOrganizer.getText().toString();
         input.invitationTime = selectTime;
         input.convertJosn();
         userPreInvitationAddRequest = new UserPreInvitationAddRequest(input, new ResponseListener() {
@@ -329,10 +330,10 @@ public class PreInviteActivity extends BaseActivity {
         new ShareAction(PreInviteActivity.this)
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
-                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
+                .withText("您的好友【" + etOrganizer.getText().toString() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
                 .withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
                 .withMedia(shareImage)
-                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】发起了一个" + selectTopic)
+                .withTitle("您的好友【" + etOrganizer.getText().toString() + "】发起了一个" + selectTopic)
                 .share();
     }
 }

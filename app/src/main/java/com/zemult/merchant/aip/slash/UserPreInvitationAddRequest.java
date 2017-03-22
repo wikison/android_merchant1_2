@@ -16,8 +16,9 @@ import zema.volley.network.ResponseListener;
 public class UserPreInvitationAddRequest extends PostStringRequest<Type> {
 
     public static class Input {
-        public int userId;    //	用户id
+        public int userId;     //	用户id
         public int titleId;    //	主题id
+        public String name;    //发起人
         public String invitationTime;    //	活动时间(格式为"yyyy-MM-dd HH:mm:ss")
 
 
@@ -28,6 +29,7 @@ public class UserPreInvitationAddRequest extends PostStringRequest<Type> {
             ejson = Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("userId", userId + ""),
                     new Pair<String, String>("titleId", titleId + ""),
+                    new Pair<String, String>("name", name + ""),
                     new Pair<String, String>("invitationTime", invitationTime)));
 
         }

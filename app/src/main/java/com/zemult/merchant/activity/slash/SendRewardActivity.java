@@ -111,14 +111,15 @@ public class SendRewardActivity extends BaseActivity {
                                 }
                                 BigDecimal b = new BigDecimal(sumDoubleMoney);
                                 money = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                                tvPayMoney.setText(Convert.getMoneyString(money));
 
                                 adapter.setSelected(selectidset);
                                 if (money != 0) {
 //                                    money =Double.valueOf(adapter.getItem(position));//
+                                    tvPayMoney.setText("￥" + Convert.getMoneyString(money) + "元");
                                     tvPay.setEnabled(true);
                                     tvPay.setBackgroundColor(getResources().getColor(R.color.bg_head_red));
                                 } else {
+                                    tvPayMoney.setText("");
                                     tvPay.setEnabled(false);
                                     tvPay.setBackgroundColor(getResources().getColor(R.color.font_black_999));
                                 }
