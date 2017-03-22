@@ -24,6 +24,7 @@ import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.MerchantDetailAdpater;
 import com.zemult.merchant.aip.mine.MerchantPicListRequest;
 import com.zemult.merchant.aip.mine.MerchantPicNoteListRequest;
+import com.zemult.merchant.aip.mine.UserCheckSaleUser1_2_2Request;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListFanRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
@@ -584,6 +585,50 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     };
 
 
+    /**
+     * 判断用户是否可以申请商家的服务管家
+     */
+    private UserCheckSaleUser1_2_2Request checkSaleUser1_2_2Request;
+    private void user_check_saleuser_1_2_2() {
+        showPd();
+        if (checkSaleUser1_2_2Request != null) {
+            checkSaleUser1_2_2Request.cancel();
+        }
+        UserCheckSaleUser1_2_2Request.Input input = new UserCheckSaleUser1_2_2Request.Input();
+
+        input.userId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantId;
+        input.convertJosn();
+        checkSaleUser1_2_2Request = new UserCheckSaleUser1_2_2Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    if (noHead(mContext)) {
+                        Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
+                        it.putExtra(TabManageActivity.TAG, merchantId);
+                        it.putExtra(TabManageActivity.NAME, name);
+                        startActivity(it);
+                    } else {
+                        Intent it = new Intent(mActivity, TabManageActivity.class);
+                        it.putExtra(TabManageActivity.TAG, merchantId);
+                        it.putExtra(TabManageActivity.NAME, name);
+                        it.putExtra(TabManageActivity.COMEFROM, 3);
+                        startActivity(it);
+                    }
+                } else {
+                    ToastUtils.show(mContext, ((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(checkSaleUser1_2_2Request);
+    }
+
     @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -639,18 +684,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                                     intent.putExtra(TabManageActivity.COMEFROM, 2);
                                     startActivity(intent);
                                 } else { // 不是服务管家
-                                    if (noHead(mContext)) {
-                                        Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
-                                        it.putExtra(TabManageActivity.TAG, merchantId);
-                                        it.putExtra(TabManageActivity.NAME, name);
-                                        startActivity(it);
-                                    } else {
-                                        Intent it = new Intent(mActivity, TabManageActivity.class);
-                                        it.putExtra(TabManageActivity.TAG, merchantId);
-                                        it.putExtra(TabManageActivity.NAME, name);
-                                        it.putExtra(TabManageActivity.COMEFROM, 3);
-                                        startActivity(it);
-                                    }
+                                    user_check_saleuser_1_2_2();
                                 }
                                 break;
                         }

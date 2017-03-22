@@ -120,7 +120,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
         }
         vp.setOnPageChangeListener(this);
 
-        if (notes != null) {
+        if (notes != null && !notes.isEmpty()) {
             llNote.setVisibility(View.VISIBLE);
             tvNote.setText(notes.get(0));
         }
@@ -156,7 +156,7 @@ public class ImageBrowserNewActivity extends BaseActivity implements
     public void onPageSelected(int position) {
         mPosition = position;
         lhTvTitle.setText((mPosition % mTotal) + 1 + "/" + mTotal);
-        if (notes != null) {
+        if (notes != null && !notes.isEmpty()) {
             tvNote.setText(notes.get(position));
         }
     }
