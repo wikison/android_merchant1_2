@@ -135,7 +135,7 @@
         android:gravity="center"
         android:drawablePadding="8dp"
         android:drawableTop="@mipmap/zhanghu_icons"
-        android:text="账户"
+        android:text="收益账户"
         style="@style/housekeeper_tv"
         />
 

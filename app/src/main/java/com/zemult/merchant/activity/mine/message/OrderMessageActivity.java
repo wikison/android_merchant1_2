@@ -105,7 +105,7 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
                 holder.setText(R.id.tv_messagedate, message.createtime);
                 holder.setText(R.id.tv_ordernum, message.number);
-                holder.setText(R.id.tv_orderprice, message.money+"");
+                holder.setText(R.id.tv_orderprice, "￥"+message.money);
 
                 if(message.messageType==0){//消息类型(0:获得激励红包，5:支付买单凭证(作为服务管家),8:收到打赏)
                     holder.setText(R.id.tv_title,"约服收入凭证");
