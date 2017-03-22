@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,11 +22,13 @@ import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserPreInvitationListRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Invitation;
 import com.zemult.merchant.model.apimodel.APIM_MyInvitationList;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
+import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -63,6 +66,7 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
     CommonAdapter commonAdapter;
     UserPreInvitationListRequest userPreInvitationListRequest;
     private List<M_Invitation> mDatas = new ArrayList<M_Invitation>();
+    int preId;
 
     @Override
     public void setContentView() {
@@ -89,11 +93,9 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
         myinviteLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
-//                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-//                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, "" + mReservation.reservationId);
-//                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, type);
-//                startActivity(intent);
+                M_Invitation mReservation = (M_Invitation) commonAdapter.getItem(position - 1);
+                preId=mReservation.preId;
+                IntentUtil.start_activity(MyInviteActivity.this, BaseWebViewActivity.class, new Pair<String, String>("titlename", "预邀函详情"), new Pair<String, String>("url", Constants.PERINVITATIONFEEDBACKINFO+preId));
             }
         });
 
