@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,12 +15,13 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class PayPasswordManagerActivity extends BaseActivity {
-
+    private static final int REQ_BIND_BANK = 0x120;
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -38,6 +40,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
 
     int isSetPaypwd;
     private String smsCode, oldPassWord; //短信验证码
+    private Context context;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_pay_password_manager);
@@ -45,6 +48,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
 
     @Override
     public void init() {
+        context = this;
         isSetPaypwd = SlashHelper.userManager().getUserinfo().isSetPaypwd;//是否设置过安全密码  0否  1是
         if (isSetPaypwd==0) {
             toEditNewPwd();
@@ -76,14 +80,22 @@ public class PayPasswordManagerActivity extends BaseActivity {
                 break;
             case R.id.rl_findpaypasswrd:
 
-                if(SlashHelper.userManager().getUserinfo().isConfirm==0) {
-                    ToastUtil.showMessage("您还没有完成实名认证");
-                    Intent intenttrue = new Intent(PayPasswordManagerActivity.this, TrueNameActivity.class);
-                    startActivity(intenttrue);
-                }else{
-                    onForgetPasswordClick();
-                }
+                if (SlashHelper.userManager().getUserinfo().isConfirm == 0) {
+                    // 没有绑定银行卡
+                    CommonDialog.showDialogListener(context, null, "取消", "去绑定", "请先绑定银行卡进行实名认证", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CommonDialog.DismissProgressDialog();
 
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent =new Intent(context,BindBankCardActivity.class);
+                            startActivityForResult(intent, REQ_BIND_BANK);
+                        }
+                    });
+                }
                 break;
         }
     }
@@ -163,6 +175,10 @@ public class PayPasswordManagerActivity extends BaseActivity {
         else if (requestCode == RetrievePasswordActivity.REQUEST_VALIDATE_ID
                 && resultCode == RESULT_OK) {
             toEditNewPwd();
+        }
+        // 绑银行卡
+        else if (requestCode == REQ_BIND_BANK && SlashHelper.userManager().getUserinfo().getIsConfirm() == 1) {
+            onForgetPasswordClick();
         }
 
         super.onActivityResult(requestCode, resultCode, data);
