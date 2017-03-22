@@ -111,8 +111,9 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
                     holder.setText(R.id.tv_title,"约服收入凭证");
                     holder.setText(R.id.tv_describe,"收入来源：");
                     holder.setText(R.id.tv_orderdescription,"收到金额");
-                    holder.setViewVisible(R.id.iv_headimage);
-                    holder.setCircleImage(R.id.iv_headimage,message.fromUserHead);
+//                    holder.setViewVisible(R.id.iv_headimage);
+//                    holder.setCircleImage(R.id.iv_headimage,message.fromUserHead);
+                    holder.setViewGone(R.id.iv_headimage);
                     holder.setText(R.id.tv_orderfrom,"约服平台的激励红包");
                 }
                 else  if(message.messageType==5) {//支付买单凭证(作为服务管家)

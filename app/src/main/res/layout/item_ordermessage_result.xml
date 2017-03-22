@@ -120,7 +120,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="10dp"
 				android:paddingRight="5dp"
-				android:text="订单编号：" />
+				android:text="订单号码：" />
 
 			<TextView
 				android:id="@+id/tv_ordernum"
