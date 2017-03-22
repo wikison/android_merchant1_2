@@ -4,8 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +62,7 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderHomeView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 import com.zemult.merchant.view.common.CommonDialog;
@@ -440,6 +444,23 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public void onResume() {
         super.onResume();
         userReservationList();
+
+
+//
+//        if(Build.VERSION.SDK_INT >= 23) {
+//            if(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS)== PackageManager.PERMISSION_GRANTED){
+//                ToastUtil.showMessage("允许");
+//            }else {
+//                ToastUtil.showMessage("拒绝");
+//            }
+//        } else{
+//
+//            if(mContext.getPackageManager().checkPermission(Manifest.permission.READ_CONTACTS, mContext.getPackageName())== PackageManager.PERMISSION_GRANTED){
+//                ToastUtil.showMessage("允许");
+//            }else {
+//                ToastUtil.showMessage("拒绝");
+//            }
+//        }
     }
 
     @Override
@@ -571,4 +592,5 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
+
 }

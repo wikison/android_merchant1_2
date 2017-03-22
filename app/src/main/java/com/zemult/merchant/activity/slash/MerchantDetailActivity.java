@@ -638,8 +638,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             case R.id.iv_more:
                 if (noLogin(mContext))
                     return;
-                if (noHead(mContext))
-                    return;
 
                 List<FilterEntity> list = new ArrayList<>();
                 list.add(new FilterEntity("推荐商户给好友", 0, R.mipmap.fenxiang_icon));
