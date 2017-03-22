@@ -106,7 +106,7 @@
                         android:layout_marginLeft="70dp"
                         android:background="@null"
                         android:gravity="right"
-                        android:hint="输入您的称呼"
+                        android:hint="输入发起人"
                         android:maxLength="15"
                         android:textColorHint="@color/font_black_999"/>
 
@@ -132,5 +132,5 @@
         style="@style/common_btn_235"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/margin_16dp"
-        android:text="发起预邀"/>
+        android:text="分享给好友"/>
 </LinearLayout>
