@@ -590,5 +590,7 @@ public class Urls {
     public static String USER_FAVORITE_MERCHANTLIST = "user_favorite_merchantList.do";
     //获取商家详情的图片对应的描述列表
     public static String MERCHANT_PIC_NOTE_LIST = "merchant_pic_noteList";
+    //判断用户是否可以申请商家的服务管家
+    public static String USER_CHECK_SALEUSER_1_2_2 = "user_check_saleuser_1_2_2";
 
 }
