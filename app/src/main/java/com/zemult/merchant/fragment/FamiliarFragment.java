@@ -11,11 +11,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendsActivity;
+import com.zemult.merchant.activity.mine.FamiliarPeopleActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.friend.ContactsNewAdapter;
 import com.zemult.merchant.aip.mine.UserAttractListRequest;
@@ -62,6 +64,13 @@ public class FamiliarFragment extends BaseFragment {
     LinearLayout llBack;
     @Bind(R.id.search_view)
     SearchView searchView;
+    @Bind(R.id.tv_people_num)
+    TextView tvPeopleNum;
+    @Bind(R.id.tv_nodata)
+    TextView tvNodata;
+    @Bind(R.id.rl_lv)
+    RelativeLayout rlLv;
+
 
     ArrayList<M_Fan> filtercontacts = new ArrayList<M_Fan>();
     ContactsNewAdapter adapter;
@@ -69,6 +78,7 @@ public class FamiliarFragment extends BaseFragment {
     UserSysSaleUserListNumRequest userSysSaleUserListNumRequest;
     int page = 1, num;
     String name = "";
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sfriend_fragment, container, false);
@@ -158,6 +168,7 @@ public class FamiliarFragment extends BaseFragment {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     num = ((CommonResult) response).num;
+                    tvPeopleNum.setText(num + "个熟人可以关联");
                     user_friendList();
                 }
             }
@@ -200,12 +211,20 @@ public class FamiliarFragment extends BaseFragment {
                         }
                     });
 
-                    if (adapter == null) {
-                        adapter = new ContactsNewAdapter(getActivity(),
-                                R.layout.item_friend, filtercontacts, num);
-                        lvFriends.setAdapter(adapter);
-                    } else {
-                        adapter.setData(filtercontacts, num);
+                    if(filtercontacts == null || filtercontacts.isEmpty()){
+                        tvNodata.setVisibility(View.VISIBLE);
+                        rlLv.setVisibility(View.GONE);
+                    }else {
+                        tvNodata.setVisibility(View.GONE);
+                        rlLv.setVisibility(View.VISIBLE);
+                        if (adapter == null) {
+                            adapter = new ContactsNewAdapter(getActivity(),
+                                    R.layout.item_friend, filtercontacts);
+                            lvFriends.setAdapter(adapter);
+                        } else {
+                            adapter.setData(filtercontacts, num);
+                        }
+
                     }
 
                 } else {
@@ -270,12 +289,16 @@ public class FamiliarFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.iv_right, R.id.ll_right})
+    @OnClick({R.id.iv_right, R.id.ll_right, R.id.ll_head_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_right:
             case R.id.ll_right:
                 startActivity(new Intent(getActivity(), AddFriendsActivity.class));
+                break;
+
+            case R.id.ll_head_layout:
+                startActivity(new Intent(getActivity(), FamiliarPeopleActivity.class));
                 break;
 
         }

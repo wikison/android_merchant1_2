@@ -95,7 +95,8 @@ public class PayPasswordManagerActivity extends BaseActivity {
                             startActivityForResult(intent, REQ_BIND_BANK);
                         }
                     });
-                }
+                }else
+                    onForgetPasswordClick();
                 break;
         }
     }

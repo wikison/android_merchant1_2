@@ -12,7 +12,74 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.zemult.merchant.view.SearchView>
 
+
+    <LinearLayout
+        android:id="@+id/ll_head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/ll_new_friend"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:text="可能熟悉的人"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_30px" />
+
+            <TextView
+                android:id="@+id/tv_people_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/margin_12dp"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/right_btn"
+                android:text="2个熟人可以关联"
+                android:textColor="@color/font_black_999"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_f0"
+            android:clickable="false" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="关联手机通讯录，让熟人用户优先找到你"
+            android:textColor="@color/font_black_999"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_nodata"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/font_34px"
+        android:textColor="@color/font_black_999"
+        android:text="暂无服务管家"/>
+
     <RelativeLayout
+        android:id="@+id/rl_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

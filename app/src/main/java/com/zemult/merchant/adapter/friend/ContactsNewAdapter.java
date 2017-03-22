@@ -46,15 +46,13 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 	List<M_Fan> friendlist;
 	Context mcontext;
 	ImageManager imageManager;
-	int peoplenum;
 
 
-	public ContactsNewAdapter(Context context, int resource, List<M_Fan> objects,int count) {
+	public ContactsNewAdapter(Context context, int resource, List<M_Fan> objects) {
 		super(context, resource, objects);
 		layoutInflater = LayoutInflater.from(context);
 		friendlist=objects;
 		mcontext=context;
-		peoplenum=count;
 		imageManager =	new ImageManager(mcontext);
 	}
 
@@ -68,14 +66,12 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		holder.iv_follow_head = (ImageView) convertView.findViewById(R.id.iv_follow_head);
 		holder.iv_sex = (ImageView) convertView.findViewById(R.id.iv_sex);
 	    holder.iv_status = (ImageView) convertView.findViewById(R.id.iv_status);
-		holder.ll_head_layout= (LinearLayout) convertView.findViewById(R.id.ll_head_layout);
 		holder.tv_describe = (TextView) convertView.findViewById(R.id.tv_describe);
 		holder.tv_follow_name = (TextView) convertView.findViewById(R.id.tv_follow_name);
 		holder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
 		holder.tv_rname = (TextView) convertView.findViewById(R.id.tv_rname);
 		holder.headline = (ImageView) convertView.findViewById(R.id.headline);
 		holder.tvHeader = (TextView) convertView.findViewById(R.id.header);
-		holder.tv_people_num = (TextView) convertView.findViewById(R.id.tv_people_num);
 
 		convertView.setTag(holder);
 		}else {
@@ -84,15 +80,6 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		final M_Fan friend =friendlist.get(position);
 		String nickName = friend.getName();
 		String header = friend.getHeader();
-
-		if(position == 0){
-			holder.ll_head_layout.setVisibility(View.VISIBLE);
-			holder.tv_people_num.setText(peoplenum+"个熟人可以关联");
-
-		}
-		else{
-			holder.ll_head_layout.setVisibility(View.GONE);
-		}
 
 		if (position == 0 || header != null
 				&& !header.equals(getItem(position - 1).getHeader())) {
@@ -118,12 +105,6 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		holder.tv_status.setText( friend.getStatusText(friend.state));
 		holder.tv_status.setTextColor(friend.getStatusTextColor(friend.state));
 		holder.tv_status.setTextSize(12);
-		holder.ll_head_layout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mcontext.startActivity(new Intent(mcontext, FamiliarPeopleActivity.class));
-			}
-		});
 		if (!TextUtils.isEmpty(friend.note)) {
 			holder.tv_rname.setVisibility(View.VISIBLE);
 			holder.tv_rname.setText( "备注名:" + friend.note);
@@ -142,9 +123,7 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		TextView tv_status;
 		TextView tv_rname;
 		TextView tvHeader;
-		TextView tv_people_num;
 		ImageView headline;
-		LinearLayout ll_head_layout;
 
 
 	}
@@ -164,7 +143,6 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 
 	public void setData(List<M_Fan> data,int count) {
 		friendlist=data;
-		peoplenum=count;
 	    notifyDataSetChanged();
 	}
 
