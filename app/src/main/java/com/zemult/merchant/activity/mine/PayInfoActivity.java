@@ -153,7 +153,7 @@ public class PayInfoActivity extends BaseActivity {
                     }
                     switch (m.state) {
                         case 0:
-                            tvState.setText("待付款");
+                            tvState.setText("待支付");
                             llPayType.setVisibility(View.GONE);
                             llPay.setVisibility(View.VISIBLE);
                             rtvToPay.setText("立即付款");
