@@ -215,8 +215,7 @@
             android:textColor="@color/font_main"
             android:textSize="@dimen/font_36px"
             android:visibility="visible"
-            app:rv_backgroundColor="@color/white"
-            app:rv_backgroundPressColor="@color/lightyellow"
+            app:rv_backgroundColor="@color/transparent"
             app:rv_cornerRadius="@dimen/font_36px"
             app:rv_strokeColor="@color/font_main"
             app:rv_strokeWidth="1dp"/>
