@@ -210,8 +210,8 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
 
         headerMerchantDetailView.setImageOnClick(new HeaderMerchantDetailView.ImageOnClick() {
             @Override
-            public void imageOnclick(int picId) {
-                merchant_pic_noteList(picId);
+            public void imageOnclick(M_Pic pic) {
+                merchant_pic_noteList(pic);
             }
         });
 
@@ -347,13 +347,13 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
      * 获取商家详情的图片对应的描述列表
      */
     private MerchantPicNoteListRequest picNoteListRequest;
-    private void merchant_pic_noteList(int picId) {
+    private void merchant_pic_noteList(final M_Pic pic) {
         showPd();
         if (picNoteListRequest != null) {
             picNoteListRequest.cancel();
         }
         MerchantPicNoteListRequest.Input input = new MerchantPicNoteListRequest.Input();
-        input.picId = picId;
+        input.picId = pic.picId;
         input.convertJosn();
 
         picNoteListRequest = new MerchantPicNoteListRequest(input, new ResponseListener() {
@@ -368,6 +368,9 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     List<M_Pic> noteList = ((APIM_PicList) response).noteList;
                     List<String> pics = new ArrayList<>();
                     List<String> notes = new ArrayList<>();
+                    if(noteList == null){
+                        noteList = new ArrayList<>();
+                    }
                     for(M_Pic pic : noteList){
                         pics.add(StringUtils.isBlank(pic.picPath)? "":pic.picPath);
                         notes.add(StringUtils.isBlank(pic.note)? "":pic.note);

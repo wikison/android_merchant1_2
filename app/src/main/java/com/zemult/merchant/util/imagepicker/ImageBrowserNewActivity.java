@@ -24,6 +24,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
 public class ImageBrowserNewActivity extends BaseActivity implements
@@ -121,8 +122,12 @@ public class ImageBrowserNewActivity extends BaseActivity implements
         vp.setOnPageChangeListener(this);
 
         if (notes != null && !notes.isEmpty()) {
-            llNote.setVisibility(View.VISIBLE);
-            tvNote.setText(notes.get(0));
+            if(StringUtils.isBlank(notes.get(0)))
+                llNote.setVisibility(View.GONE);
+            else {
+                llNote.setVisibility(View.VISIBLE);
+                tvNote.setText(notes.get(0));
+            }
         }
     }
 
@@ -157,7 +162,12 @@ public class ImageBrowserNewActivity extends BaseActivity implements
         mPosition = position;
         lhTvTitle.setText((mPosition % mTotal) + 1 + "/" + mTotal);
         if (notes != null && !notes.isEmpty()) {
-            tvNote.setText(notes.get(position));
+            if(StringUtils.isBlank(notes.get(position)))
+                llNote.setVisibility(View.GONE);
+            else {
+                llNote.setVisibility(View.VISIBLE);
+                tvNote.setText(notes.get(position));
+            }
         }
     }
 

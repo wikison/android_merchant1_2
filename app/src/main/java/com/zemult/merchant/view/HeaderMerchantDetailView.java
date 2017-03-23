@@ -78,7 +78,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
             llAdContainer.setVisibility(View.GONE);
             // 封面
             if (!StringUtils.isBlank(merchantInfo.pic))
-                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@340h", R.mipmap.merchant_default_cover);
+                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@400h", R.mipmap.merchant_default_cover);
             else
                 ivCover.setImageResource(R.mipmap.merchant_default_cover);
         }else {
@@ -100,7 +100,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
                 @Override
                 public void imageOnclick(int postion) {
                     if(imageOnClick != null)
-                        imageOnClick.imageOnclick(picList.get(postion).picId);
+                        imageOnClick.imageOnclick(picList.get(postion));
 
                 }
             });
@@ -108,7 +108,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
     }
 
     public interface ImageOnClick{
-        void imageOnclick(int picId);
+        void imageOnclick(M_Pic pic);
     }
     private ImageOnClick imageOnClick;
 
