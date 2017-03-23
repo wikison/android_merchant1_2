@@ -1,8 +1,11 @@
 package com.zemult.merchant.activity.mine;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendsActivity;
 import com.zemult.merchant.activity.message.RecogizePeopleActivity;
+import com.zemult.merchant.activity.slash.ConnectLocalPhoneActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
@@ -25,12 +29,15 @@ import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.mine.UserFansListRequest;
 import com.zemult.merchant.aip.mine.UserSysSaleUserListNumRequest;
+import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageManager;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SearchView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
@@ -41,6 +48,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -48,7 +56,7 @@ import zema.volley.network.ResponseListener;
  * Created by wikison on 2016/6/14.
  */
 //可能熟悉的人
-public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
+public class FamiliarPeopleActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
     public ImageManager imageManager;
     UserFansListRequest userFansListRequest;
     TadeFansListRequest tadeFansListRequest;
@@ -82,14 +90,11 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
     private UserAttractDelRequest attractDelRequest; // 取消关注
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
+    public void setContentView() {
         setContentView(R.layout.activity_familiar_people);
-        ButterKnife.bind(this);
-        init();
     }
 
+    @Override
     public void init() {
         mContext = this;
         imageManager = new ImageManager(this);
@@ -272,8 +277,17 @@ public class FamiliarPeopleActivity extends MBaseActivity implements SmoothListV
                 onBackPressed();
                 break;
             case R.id.rel_invitepeople:
-                startActivity(new Intent(mContext, RecogizePeopleActivity.class));
+                SPUtils.put(mContext, "has_req_contacts", true);
+                ActivityCompat.requestPermissions(FamiliarPeopleActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+            startActivity(new Intent(mContext, RecogizePeopleActivity.class));
         }
     }
 
