@@ -83,6 +83,8 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
         else {
             confirmBtn.setVisibility(View.VISIBLE);
             confirmBtn.setText(confirm);
+            confirmBtn.setEnabled(false);
+            confirmBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
         }
         lh_tv_title.setText(titletext);
     }
@@ -127,7 +129,15 @@ public class ValidatePayPwdActivity extends MAppCompatActivity implements View.O
                     }
 
                     public void onChanged(String psw) {
-
+                        if(confirmBtn.getVisibility()==View.VISIBLE){
+                            if (passwordView.getPassWord().length() == 6) {
+                                confirmBtn.setEnabled(true);
+                                confirmBtn.setBackgroundResource(R.drawable.common_selector_btn);
+                            }else {
+                                confirmBtn.setEnabled(false);
+                                confirmBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+                            }
+                        }
                     }
                 });
 

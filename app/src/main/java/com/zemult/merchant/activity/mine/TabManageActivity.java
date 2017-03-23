@@ -1,10 +1,14 @@
 package com.zemult.merchant.activity.mine;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +45,9 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.DragGrid;
@@ -53,6 +59,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
@@ -145,6 +152,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 
     //编辑服务标签
     UserSaleMerchantEditRequest userSaleMerchantEditRequest;
+
+
+    private int isOnBook;
+    private String bookPhones;
 
     @Override
     public void setContentView() {
@@ -613,14 +624,18 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         if (comefrom == 1)
                             user_add_saleuser();
                         else if(comefrom == 3){
-                            if(SlashHelper.userManager().getUserinfo().getIsOnBook() == 0){
+
+                            Boolean hasReqContacts = (Boolean) SPUtils.get(mContext, "has_req_contacts", false);
+                            if(hasReqContacts){
+                                ActivityCompat.requestPermissions(TabManageActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+                            }
+                            // 第一次请求权限 去关联通讯录界面
+                            else{
                                 Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
                                 it.putExtra(TabManageActivity.TAG, merchantId);
                                 it.putExtra(TabManageActivity.NAME, name);
                                 it.putExtra(TabManageActivity.TAGS, getTags());
                                 startActivity(it);
-                            }else{
-                                user_add_saleuser();
                             }
                         }
                     }
@@ -633,6 +648,43 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 }
                 break;
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+//           if(grantResults[0] == PackageManager.PERMISSION_GRANTED) //经测试，对于vivo和redmi永远返回0
+//               getContactsYes();
+//            else
+//               getContactsNo();
+
+            try {
+                bookPhones = AppUtils.getPhoneNumbers(mContext);
+                // 只能用这种折中的方法了
+                if (StringUtils.isBlank(bookPhones)) {
+                    isOnBook = 0;
+                } else {
+                    isOnBook = 1;
+                }
+            }catch (Exception e){
+                isOnBook = 0;
+            }
+
+            if(isOnBook == 1)
+                user_add_saleuser();
+            else {
+                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
+                it.putExtra(TabManageActivity.TAG, merchantId);
+                it.putExtra(TabManageActivity.NAME, name);
+                it.putExtra(TabManageActivity.TAGS, getTags());
+                it.putExtra("refuse", true);
+                startActivity(it);
+            }
+
+        }
+
     }
 
     private String getTags() {
@@ -673,9 +725,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 //        }
         UserAddSaleUserRequest.Input input = new UserAddSaleUserRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-
         input.merchantId = merchantId;
         input.tags = getTags();
+        input.isOnBook = isOnBook;
+        input.bookPhones = bookPhones;
         input.convertJosn();
         userAddSaleUserRequest = new UserAddSaleUserRequest(input, new ResponseListener() {
             @Override

@@ -49,6 +49,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
     private int merchantId, isOnBook;
     private String tags, bookPhones, name;
     private Context mContext;
+    private Boolean refuse;
 
     @Override
     public void setContentView() {
@@ -66,7 +67,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
         tags = getIntent().getStringExtra(TabManageActivity.TAGS);
         name = getIntent().getStringExtra(TabManageActivity.NAME);
 
-        Boolean refuse = (Boolean) SPUtils.get(mContext, "get_contact_refuse", false);
+        refuse = getIntent().getBooleanExtra("refuse", false);
 
         if(refuse){
             btnNext.setVisibility(View.GONE);
@@ -93,6 +94,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                 user_add_saleuser();
                 break;
             case R.id.btn_next:
+                SPUtils.put(mContext, "has_req_contacts", true);
                 ActivityCompat.requestPermissions(ConnectLocalPhoneActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
                 break;
         }
@@ -140,14 +142,6 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
         sendJsonRequest(userAddSaleUserRequest);
     }
 
-    private void requestContactsPermission() {
-        AndPermission.with(this)
-                .requestCode(101)
-                .permission(Manifest.permission.READ_CONTACTS)
-                .send();
-    }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -157,33 +151,18 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
 //            else
 //               getContactsNo();
 
-            bookPhones = AppUtils.getPhoneNumbers(mContext);
-            // 只能用这种折中的方法了
-            if (StringUtils.isBlank(bookPhones)) {
-                SPUtils.put(mContext, "get_contact_refuse", true);
+            try {
+                bookPhones = AppUtils.getPhoneNumbers(mContext);
+                // 只能用这种折中的方法了
+                if (StringUtils.isBlank(bookPhones)) {
+                    isOnBook = 0;
+                } else {
+                    isOnBook = 1;
+                }
+            }catch (Exception e){
                 isOnBook = 0;
-            } else {
-                isOnBook = 1;
             }
             user_add_saleuser();
         }
-
     }
-
-    @PermissionYes(100)
-    private void getContactsYes() {
-
-        ToastUtil.showMessage("允许");
-//        isOnBook = 1;
-//        user_add_saleuser();
-    }
-
-    @PermissionNo(100)
-    private void getContactsNo() {
-        ToastUtil.showMessage("拒绝");
-//        SPUtils.put(mContext, "get_contact_refuse", true);
-//        isOnBook = 0;
-//        user_add_saleuser();
-    }
-
 }

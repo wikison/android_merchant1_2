@@ -25,6 +25,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Title;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetAllTitleList;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
@@ -153,7 +154,8 @@ public class PreInviteActivity extends BaseActivity {
             input.userId = SlashHelper.userManager().getUserId();
         }
         input.titleId = mTitle.titleId;
-        input.invitationTime = selectTime + ":00";
+        input.name = etOrganizer.getText().toString();
+        input.invitationTime = selectTime;
         input.convertJosn();
         userPreInvitationAddRequest = new UserPreInvitationAddRequest(input, new ResponseListener() {
             @Override
@@ -242,7 +244,7 @@ public class PreInviteActivity extends BaseActivity {
      * 显示主题列表
      */
     private void showTopics() {
-        MMAlert.showAlert(this, null, titles, null,
+        MMAlert.showTitleAlert(this, titles,
                 new MMAlert.OnAlertSelectId() {
                     @Override
                     public void onClick(int whichButton) {
@@ -256,12 +258,15 @@ public class PreInviteActivity extends BaseActivity {
     }
 
     private void showTimePicker() {
-        Date date = new Date();
-        Calendar selectedDate = Calendar.getInstance();
+        Date now = new Date();
+        Calendar selectedDate = new GregorianCalendar();
+        if (!StringUtils.isBlank(selectTime)) {
+            selectedDate.setTime(DateTimeUtil.getDate(selectTime, "yyyy-MM-dd HH:mm:ss"));
+        }
         Calendar startDate = new GregorianCalendar();
-        startDate.setTime(new Date());
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2050, 12, 30);
+        startDate.setTime(now);
+        Calendar endDate = new GregorianCalendar();
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 7));
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -269,7 +274,7 @@ public class PreInviteActivity extends BaseActivity {
                 if (date.getTime() - now.getTime() < 0) {
                     ToastUtil.showMessage("选择时间不能晚于当前时间");
                 } else {
-                    selectTime = getTime(date);
+                    selectTime = DateTimeUtil.getFormatTime(date);
                     tvTime.setText(getTime(date));
                 }
 
@@ -295,8 +300,8 @@ public class PreInviteActivity extends BaseActivity {
     }
 
     private String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return format.format(date);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd (*) HH:mm");
+        return format.format(date).replace("*", DateTimeUtil.getWeekDayOfWeek(date));
     }
 
 
@@ -325,10 +330,10 @@ public class PreInviteActivity extends BaseActivity {
         new ShareAction(PreInviteActivity.this)
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
-                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
+                .withText("您的好友【" + etOrganizer.getText().toString() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
                 .withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
                 .withMedia(shareImage)
-                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】发起了一个" + selectTopic)
+                .withTitle("您的好友【" + etOrganizer.getText().toString() + "】发起了一个" + selectTopic)
                 .share();
     }
 }

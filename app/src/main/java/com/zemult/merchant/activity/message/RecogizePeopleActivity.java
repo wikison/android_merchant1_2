@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity.message;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AppOpsManager;
 import android.content.Context;
@@ -7,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.AddFriendNoteActivity;
+import com.zemult.merchant.activity.mine.FamiliarPeopleActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.friend.UserCheckBookListFriendRequest;
 import com.zemult.merchant.aip.friend.UserCheckBookListRequest;
@@ -104,26 +108,48 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
             }
         });
 
-        ContactsDao util = new ContactsDao(this);
-        util.getAllContact(listMembers);
 
+        ActivityCompat.requestPermissions(RecogizePeopleActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+//           if(grantResults[0] == PackageManager.PERMISSION_GRANTED) //经测试，对于vivo和redmi永远返回0
+//               getContactsYes();
+//            else
+//               getContactsNo();
+            try {
+                phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
+                // 只能用这种折中的方法了
+                if (StringUtils.isBlank(phoneIds)) {
+                    llUnconncet.setVisibility(View.VISIBLE);
+                } else {
+                    llUnconncet.setVisibility(View.GONE);
+                    user_check_bookList_friend();
+                }
+            }catch (Exception e){
+                llUnconncet.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
-        if (!StringUtils.isEmpty(phoneIds)) {
-            user_check_bookList_friend();
-        }
-
-
-        if (checkOp(OP_READ_CONTACTS) == 0) {
-            llUnconncet.setVisibility(View.GONE);
-        } else {
-            llUnconncet.setVisibility(View.VISIBLE);
-        }
+//        phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
+//        if (!StringUtils.isEmpty(phoneIds)) {
+//            user_check_bookList_friend();
+//        }
+//
+//
+//        if (checkOp(OP_READ_CONTACTS) == 0) {
+//            llUnconncet.setVisibility(View.GONE);
+//        } else {
+//            llUnconncet.setVisibility(View.VISIBLE);
+//        }
     }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})

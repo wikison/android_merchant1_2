@@ -159,7 +159,14 @@ dependencies {
     compile project(':volley')
     compile project(':library')
     compile files('libs/alipaySingle-20161009.jar')
-    compile 'com.nineoldandroids:library:2.4.0'
+    //必选
+    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+
+
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
@@ -186,17 +193,11 @@ dependencies {
     compile 'com.yanzhenjie:permission:1.0.5'
     compile 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
-    //必选
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'
-    //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
     compile 'com.alibaba.mobileim:IMKit:2.0.2.1@aar'
-    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
-//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
-    testCompile 'junit:junit:4.12'
-    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
-//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile 'com.contrarywind:Android-PickerView:3.1.0'
     compile 'com.github.crosswall:Android-Coverflow:release-v1.0.4'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 }

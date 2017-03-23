@@ -12,21 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.mobileim.IYWLoginService;
-import com.alibaba.mobileim.YWIMKit;
-import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.channel.util.YWLog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.mine.UserEditphoneBandRequest;
-import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
@@ -35,7 +28,6 @@ import com.zemult.merchant.util.ToastUtil;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
-import de.greenrobot.event.EventBus;
 import zema.volley.network.ResponseListener;
 
 public class NewPhoneAuthActivity extends BaseActivity {
@@ -117,11 +109,11 @@ public class NewPhoneAuthActivity extends BaseActivity {
             case R.id.tv_sendcode:
                 strPhone = etphone.getText().toString();
                 if (StringUtils.isBlank(strPhone) || !StringMatchUtils.isMobileNO(strPhone)) {
-                    etphone.setError("请输入正确的手机号码");
+                    ToastUtil.showMessage("请输入正确的手机号码");
                     return;
                 }
                 if (SlashHelper.userManager().getUserinfo().getPhoneNum().equals(strPhone)) {
-                    etphone.setError("请输入新的手机号码");
+                    ToastUtil.showMessage("该新手机号已注册，请输入新的手机号码");
                     return;
                 }
                 getCode();
@@ -130,7 +122,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
                 strPhone = etphone.getText().toString();
                 strCode = etCode.getText().toString();
                 if (SlashHelper.userManager().getUserinfo().getPhoneNum().equals(strPhone)) {
-                    etphone.setError("请输入新的手机号码");
+                    ToastUtil.showMessage("该新手机号已注册，请输入新的手机号码");
                     return;
                 }
                 checkCode();
@@ -171,7 +163,6 @@ public class NewPhoneAuthActivity extends BaseActivity {
         });
         sendJsonRequest(userEditphoneBandRequest);
     }
-
 
 
     private void getCode() {
@@ -287,7 +278,7 @@ public class NewPhoneAuthActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == REQ_SUCESS){
+        if (resultCode == RESULT_OK && requestCode == REQ_SUCESS) {
             setResult(RESULT_OK);
             onBackPressed();
         }

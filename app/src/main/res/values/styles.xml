@@ -100,7 +100,7 @@
     </style>
 
     <style name="divider1dpcba" parent="view1dp">
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">#CBA162</item>
     </style>
 
