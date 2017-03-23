@@ -75,8 +75,8 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="60dp"
             android:background="@null"
-            android:gravity="center"
             android:drawableBottom="@drawable/selector_drawable_line"
+            android:gravity="center"
             android:hint="@string/ht_pwd"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -111,7 +111,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/txt_login_forget_password"
-            android:textColorLink="@drawable/selector_color_forget_pwd"/>
+            android:textColorLink="@drawable/selector_color_forget_pwd"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/al_tv_notnow"
@@ -123,7 +124,7 @@
             android:background="@android:color/transparent"
             android:text="@string/txt_register_notnow"
             android:textColorLink="@drawable/selector_color_notnow"
-            android:textSize="14sp"/>
+            android:textSize="12sp"/>
     </RelativeLayout>
 
 

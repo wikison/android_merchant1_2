@@ -50,8 +50,7 @@
         android:gravity="right|center_vertical"
         android:paddingRight="12dp"
         android:textColor="@drawable/head_right_text_color"
-        android:textSize="@dimen/font_30px"
-        />
+        android:textSize="@dimen/font_30px"/>
 
 
     <TextView
