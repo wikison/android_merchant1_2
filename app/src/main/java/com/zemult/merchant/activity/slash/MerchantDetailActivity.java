@@ -608,7 +608,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if (noHead(mContext)) {
+                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
                         Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
                         it.putExtra(TabManageActivity.TAG, merchantId);
                         it.putExtra(TabManageActivity.NAME, name);
