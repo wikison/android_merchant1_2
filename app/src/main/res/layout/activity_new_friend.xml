@@ -55,5 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <include layout="@layout/item_no_search_data_layout"/>
+
 
 </LinearLayout>

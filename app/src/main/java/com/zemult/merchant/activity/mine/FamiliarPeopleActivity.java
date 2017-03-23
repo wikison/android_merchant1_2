@@ -12,15 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.AddFriendsActivity;
 import com.zemult.merchant.activity.message.RecogizePeopleActivity;
-import com.zemult.merchant.activity.slash.ConnectLocalPhoneActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
@@ -30,16 +27,13 @@ import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.mine.UserFansListRequest;
 import com.zemult.merchant.aip.mine.UserSysSaleUserListNumRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
-import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.view.SearchView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.util.ArrayList;
@@ -48,7 +42,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -81,6 +74,8 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
     @Bind(R.id.rel_invitepeople)
     RelativeLayout relInvitepeople;
     UserSysSaleUserListNumRequest userSysSaleUserListNumRequest;
+    @Bind(R.id.tv_nodata)
+    TextView tvNodata;
 
 
     private List<M_Fan> mDatas = new ArrayList<M_Fan>();
@@ -105,6 +100,7 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
         fansLv.setSmoothListViewListener(this);
         user_sys_saleUserList_num();
 
+        tvNodata.setText("没有可能熟悉的人");
 
     }
 
@@ -133,7 +129,7 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
                 if (((APIM_UserFansList) response).status == 1) {
                     if (page == 1) {
                         mDatas = ((APIM_UserFansList) response).userList;
-                        if (mDatas == null || mDatas.size() == 0) {
+                        if (mDatas == null || mDatas.isEmpty()) {
                             fansLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
                         } else {
@@ -159,14 +155,14 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
                                                 startActivity(intent);
                                             }
                                         });
-                                        if(!TextUtils.isEmpty(mfollow.merchantName))
-                                            holder.setText(R.id.tv_rname,"来自："+ mfollow.merchantName);
+                                        if (!TextUtils.isEmpty(mfollow.merchantName))
+                                            holder.setText(R.id.tv_rname, "来自：" + mfollow.merchantName);
 
                                         holder.setText(R.id.tv_follow_name, mfollow.userName);
                                         holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
+                                                addFous(mDatas.get(position).userId, position);//添加关注网络操作
                                             }
                                         });
 
@@ -203,7 +199,6 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
     }
 
 
-
     //获取 用户的 可能熟悉的人(推荐服务管家)的数量
     private void user_sys_saleUserList_num() {
         if (userSysSaleUserListNumRequest != null) {
@@ -224,10 +219,9 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if(((CommonResult) response).num!=0){
-                        tvPeopleNum.setText("您有"+((CommonResult) response).num+"人可能认识");
-                    }
-                    else{
+                    if (((CommonResult) response).num != 0) {
+                        tvPeopleNum.setText("您有" + ((CommonResult) response).num + "人可能认识");
+                    } else {
                         tvPeopleNum.setText("");
                     }
 
@@ -267,9 +261,7 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
     }
 
 
-
-
-    @OnClick({R.id.ll_back, R.id.lh_btn_back,R.id.rel_invitepeople})
+    @OnClick({R.id.ll_back, R.id.lh_btn_back, R.id.rel_invitepeople})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -293,15 +285,21 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
 
     @Override
     public void onRefresh() {
-            page = 1;
+        page = 1;
         user_sys_saleUserList_num();
     }
 
     @Override
     public void onLoadMore() {
-            userFansLis();
+        userFansLis();
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
 

@@ -143,7 +143,7 @@ public class BeManagerFirstActivity extends BaseActivity {
                 ToastUtils.show(this, intent.getStringExtra("info"));
             }
         }else if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
-            onBackPressed();
+            finish();
         }
     }
 

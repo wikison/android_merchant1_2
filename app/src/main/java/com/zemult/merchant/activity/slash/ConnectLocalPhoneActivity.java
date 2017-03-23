@@ -132,7 +132,7 @@ public class ConnectLocalPhoneActivity extends BaseActivity {
                     it.putExtra(TabManageActivity.NAME, name);
                     startActivity(it);
 
-                    onBackPressed();  //关闭自己
+                    finish();  //关闭自己
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

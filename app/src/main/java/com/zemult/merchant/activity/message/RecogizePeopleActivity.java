@@ -4,10 +4,9 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AppOpsManager;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -20,15 +19,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.AddFriendNoteActivity;
-import com.zemult.merchant.activity.mine.FamiliarPeopleActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
-import com.zemult.merchant.aip.friend.UserCheckBookListFriendRequest;
 import com.zemult.merchant.aip.friend.UserCheckBookListRequest;
 import com.zemult.merchant.aip.friend.UserFriendAcceptRequest;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
@@ -38,10 +35,8 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserFriendList;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.ContactsDao;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.lang.reflect.Method;
@@ -49,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -72,6 +68,10 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
 
     @Bind(R.id.ll_unconncet)
     LinearLayout llUnconncet;
+    @Bind(R.id.tv_nodata)
+    TextView tvNodata;
+    @Bind(R.id.rl_no_data)
+    RelativeLayout rlNoData;
 
     public static final int OP_READ_CONTACTS = 4;
     UserFriendAcceptRequest userFriendAcceptRequest;
@@ -97,6 +97,7 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
         lv_newfriend.setRefreshEnable(true);
         lv_newfriend.setLoadMoreEnable(false);
         lv_newfriend.setSmoothListViewListener(this);
+        tvNodata.setText("未匹配到服务管家");
 
 
         lv_newfriend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,7 +130,7 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
                     llUnconncet.setVisibility(View.GONE);
                     user_check_bookList_friend();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 llUnconncet.setVisibility(View.VISIBLE);
             }
         }
@@ -184,12 +185,19 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
             public void onResponse(Object response) {
                 if (((APIM_UserFriendList) response).status == 1) {
                     friendList.clear();
-                    tvPeopleNum.setText("您有" + ((APIM_UserFriendList) response).size + "人可能认识");
-                    tvPeopleNum.setVisibility(View.VISIBLE);
-                    friendList = ((APIM_UserFriendList) response).userList;
-                    adapter = new NewFriendListAdapter(RecogizePeopleActivity.this, friendList);
-                    lv_newfriend.setAdapter(adapter);
-                    lv_newfriend.setLoadMoreEnable(false);
+                    if (((APIM_UserFriendList) response).size > 0) {
+                        tvPeopleNum.setText("您有" + ((APIM_UserFriendList) response).size + "人可能认识");
+                        tvPeopleNum.setVisibility(View.VISIBLE);
+                        lv_newfriend.setVisibility(View.VISIBLE);
+
+                        friendList = ((APIM_UserFriendList) response).userList;
+                        adapter = new NewFriendListAdapter(RecogizePeopleActivity.this, friendList);
+                        lv_newfriend.setAdapter(adapter);
+                        lv_newfriend.setLoadMoreEnable(false);
+                    } else {
+                        tvPeopleNum.setVisibility(View.GONE);
+                        lv_newfriend.setVisibility(View.GONE);
+                    }
                 } else {
                     ToastUtils.show(RecogizePeopleActivity.this, ((APIM_UserFriendList) response).info);
                 }
@@ -209,6 +217,13 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
     public void onLoadMore() {
 
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 
