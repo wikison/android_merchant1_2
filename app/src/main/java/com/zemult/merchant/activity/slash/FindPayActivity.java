@@ -288,20 +288,21 @@ public class FindPayActivity extends BaseActivity {
         adapterReward = new SendRewardAdapter(mContext, moneyList);
         gv.setAdapter(adapterReward);
 
-//        if (cbReward.isChecked()) {
-//         adapterReward.setSelected(selectidset);
-//        }
-        adapterReward.setSelected(selectidset);
+        if (!cbReward.isChecked()) {
+
+        } else {
+            adapterReward.setSelected(selectidset);
+        }
 
         alertDialog.setContentView(view);
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectidset.clear();
-                rewardMoney = 0;
-                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
-                cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
-                cbReward.setChecked(false);
+//                selectidset.clear();
+//                rewardMoney = 0;
+//                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+//                cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+//                cbReward.setChecked(false);
                 alertDialog.dismiss();
             }
         });
@@ -309,6 +310,13 @@ public class FindPayActivity extends BaseActivity {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (rewardMoney == 0) {
+                    selectidset.add(1);
+                    BigDecimal b = new BigDecimal(Double.valueOf(moneyList.get(1).money));
+                    rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                    cbReward.setChecked(false);
+                }
                 alertDialog.dismiss();
             }
         });

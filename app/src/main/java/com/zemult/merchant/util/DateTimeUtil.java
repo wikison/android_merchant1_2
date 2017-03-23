@@ -446,6 +446,18 @@ public final class DateTimeUtil implements Serializable {
     }
 
     /**
+     * 返回当前日期是星期几。例如：星期日、星期一、星期六等等。
+     *
+     * @param date 格式为 yyyy/MM/dd 或者 yyyy-MM-dd
+     * @return 返回当前日期是星期几
+     */
+    public static String getWeekDayOfWeek(Date date) {
+        String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        int week = getDayOfWeek(date);
+        return weeks[week - 1];
+    }
+
+    /**
      * 根据指定的年、月、日返回当前是星期几。1表示星期天、2表示星期一、7表示星期六。
      *
      * @param date

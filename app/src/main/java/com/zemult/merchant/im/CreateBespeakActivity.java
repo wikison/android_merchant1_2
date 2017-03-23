@@ -134,7 +134,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 pmnvSelectDeadline.setDefaultNum(num);
             }
         });
-        lhTvTitle.setText("找TA预约");
+        lhTvTitle.setText("找TA约服");
         rgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

@@ -23,8 +23,8 @@
     <string name="txt_pwd">密码</string>
     <string name="txt_pwd_again">确认密码</string>
     <string name="ht_pwd_again">请再次输入密码</string>
-    <string name="ht_username">输入您的手机号码</string>
-    <string name="ht_pwd">输入您的帐户密码</string>
+    <string name="ht_username">请输入您的手机号码</string>
+    <string name="ht_pwd">请输入您的帐户密码</string>
     <string name="ht_nickname">请输入昵称,不超过6个字</string>
     <string name="title_set_password">请设置登录密码</string>
     <string name="title_find_password">忘记密码</string>
