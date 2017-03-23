@@ -120,7 +120,6 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
 //               getContactsYes();
 //            else
 //               getContactsNo();
-
             try {
                 phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
                 // 只能用这种折中的方法了
