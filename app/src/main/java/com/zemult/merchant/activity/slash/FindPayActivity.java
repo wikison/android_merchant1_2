@@ -50,7 +50,6 @@ import com.zemult.merchant.view.BounceScrollView;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.FixedListView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -137,7 +136,7 @@ public class FindPayActivity extends BaseActivity {
 
     private Context mContext;
 
-    private int selectPosition = 2; //选中的赞赏, 默认2, 金额6.66
+    private int selectPosition = 1; //选中的赞赏, 默认2, 金额6.66
     private String strRewardMoney = "";
     Set<Integer> selectidset = new HashSet<Integer>();
 
@@ -258,15 +257,8 @@ public class FindPayActivity extends BaseActivity {
                 if (((APIM_PresentList) response).status == 1) {
                     if (((APIM_PresentList) response).moneyList.size() > 0) {
                         moneyList = ((APIM_PresentList) response).moneyList;
-//                        strRewardMoney = moneyList.get(selectPosition);
-//                        rewardMoney = Double.parseDouble(strRewardMoney);
                         selectidset.add(1);
-                        double sumDoubleMoney = 0;
-                        for (Integer selectidposition : selectidset) {
-                            sumDoubleMoney = sumDoubleMoney + Double.valueOf(moneyList.get(selectidposition).money);
-                        }
-                        BigDecimal b = new BigDecimal(sumDoubleMoney);
-                        rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        rewardMoney = moneyList.get(1).money;
                         cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
                     }
                 } else {
@@ -289,7 +281,7 @@ public class FindPayActivity extends BaseActivity {
         gv.setAdapter(adapterReward);
 
         if (!cbReward.isChecked()) {
-
+            selectidset.clear();
         } else {
             adapterReward.setSelected(selectidset);
         }
@@ -310,13 +302,26 @@ public class FindPayActivity extends BaseActivity {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rewardMoney == 0) {
-                    selectidset.add(1);
-                    BigDecimal b = new BigDecimal(Double.valueOf(moneyList.get(1).money));
-                    rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
-                    cbReward.setChecked(false);
+                rewardMoney = 0;
+
+                for (Integer selectidposition : selectidset) {
+                    rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
                 }
+
+                if (rewardMoney == 0) {
+                    selectidset.clear();
+                    selectidset.add(1);
+                    rewardMoney = moneyList.get(1).money;
+                    cbReward.setChecked(false);
+                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                } else {
+                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    cbReward.setChecked(true);
+                }
+
+                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney + getMoney()));
+
                 alertDialog.dismiss();
             }
         });
@@ -325,33 +330,13 @@ public class FindPayActivity extends BaseActivity {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 selectPosition = position;
-
                 if (selectidset.contains(position)) {
                     selectidset.remove(position);
                 } else {
                     selectidset.add(position);
                 }
-                double sumDoubleMoney = 0;
-                for (Integer selectidposition : selectidset) {
-                    sumDoubleMoney = sumDoubleMoney + Double.valueOf(adapterReward.getItem(selectidposition).money);
-                }
-                BigDecimal b = new BigDecimal(sumDoubleMoney);
-                rewardMoney = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
 
-//                strRewardMoney = moneyList.get(selectPosition);
-//                rewardMoney = Double.parseDouble(strRewardMoney);
-                if (rewardMoney == 0) {
-                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
-                    cbReward.setChecked(false);
-                } else {
-                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
-                    cbReward.setChecked(true);
-                }
-
-                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney));
                 adapterReward.setSelected(selectidset);
             }
         });
@@ -605,12 +590,18 @@ public class FindPayActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (s.toString().length() > 0) {
                 if (etPaymoney.getText().toString().length() > 0) {
-                    etPaymoney.setHint("");
-                    btnPay.setEnabled(true);
                     if (getMoney() > 0) {
+                        etPaymoney.setHint("");
+                        btnPay.setEnabled(true);
                         btnPay.setBackgroundResource(R.drawable.common_selector_btn);
+                        tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + (cbReward.isChecked() ? rewardMoney : 0)));
+                    } else {
+                        etPaymoney.setHint("输入实际的消费金额");
+                        tvFuhao.setVisibility(View.GONE);
+                        btnPay.setEnabled(false);
+                        btnPay.setBackgroundResource(R.drawable.next_bg_btn_select);
+                        tvMoneyRealpay.setText("￥" + Convert.getMoneyString(cbReward.isChecked() ? rewardMoney : 0));
                     }
-                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + (cbReward.isChecked() ? rewardMoney : 0)));
                 }
             } else {
                 etPaymoney.setHint("输入实际的消费金额");
@@ -650,6 +641,8 @@ public class FindPayActivity extends BaseActivity {
                 money = getMoney();
                 if (money > 0) {
                     userTaskPayRequest();
+                } else {
+                    ToastUtil.showMessage("请输入消费金额");
                 }
 
                 break;
