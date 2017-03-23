@@ -78,7 +78,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface<M_Merchant> {
             llAdContainer.setVisibility(View.GONE);
             // 封面
             if (!StringUtils.isBlank(merchantInfo.pic))
-                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@400h", R.mipmap.merchant_default_cover);
+                mImageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@450h", R.mipmap.merchant_default_cover);
             else
                 ivCover.setImageResource(R.mipmap.merchant_default_cover);
         }else {
