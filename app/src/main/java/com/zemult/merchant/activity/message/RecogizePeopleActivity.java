@@ -121,7 +121,7 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
 //            else
 //               getContactsNo();
             try {
-                phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this);
+                phoneIds = AppUtils.getPhoneNumbersWithName(RecogizePeopleActivity.this, listMembers);
                 // 只能用这种折中的方法了
                 if (StringUtils.isBlank(phoneIds)) {
                     llUnconncet.setVisibility(View.VISIBLE);
@@ -184,10 +184,8 @@ public class RecogizePeopleActivity extends BaseActivity implements SmoothListVi
             public void onResponse(Object response) {
                 if (((APIM_UserFriendList) response).status == 1) {
                     friendList.clear();
-                    if (((APIM_UserFriendList) response).size != 0) {
-                        tvPeopleNum.setText("您有" + ((APIM_UserFriendList) response).size + "人可能认识");
-                        tvPeopleNum.setVisibility(View.VISIBLE);
-                    }
+                    tvPeopleNum.setText("您有" + ((APIM_UserFriendList) response).size + "人可能认识");
+                    tvPeopleNum.setVisibility(View.VISIBLE);
                     friendList = ((APIM_UserFriendList) response).userList;
                     adapter = new NewFriendListAdapter(RecogizePeopleActivity.this, friendList);
                     lv_newfriend.setAdapter(adapter);

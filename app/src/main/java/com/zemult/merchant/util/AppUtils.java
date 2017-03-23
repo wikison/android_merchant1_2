@@ -465,9 +465,9 @@ public class AppUtils {
         return "";
     }
 
-    public static String getPhoneNumbersWithName(Context context) {
+    public static String getPhoneNumbersWithName(Context context, List<ContactDataBean> listMembers) {
         ContactsDao util = new ContactsDao(context);
-        List<ContactDataBean> listMembers = new ArrayList<ContactDataBean>();
+//        List<ContactDataBean> listMembers = new ArrayList<ContactDataBean>();
         util.getAllContact(listMembers);
         List<ContactDataBean> cList2 = util.removeDuplicateData(listMembers);
         for (ContactDataBean contactDataBean : cList2) {
