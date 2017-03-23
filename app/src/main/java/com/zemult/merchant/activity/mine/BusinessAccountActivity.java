@@ -28,6 +28,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -156,7 +157,9 @@ public class BusinessAccountActivity extends BaseActivity implements SmoothListV
                                 if (mbill.type == 1) {
                                     holder.setText(R.id.tv_type, "提现");
                                 }
-                                holder.setText(R.id.time_tv, mbill.createtime);
+                                if(!StringUtils.isBlank(mbill.createtime)){
+                                    holder.setText(R.id.time_tv, mbill.createtime.length()<9 ? mbill.createtime : mbill.createtime.substring(0, 10));
+                                }
 
                                 if (mbill.inCome == 0) {  //收入
                                     holder.setText(R.id.money_tv, "+" + mbill.money);

@@ -79,6 +79,8 @@ import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
+import static com.zemult.merchant.app.AppApplication.getContext;
+
 /**
  * 首页
  *
