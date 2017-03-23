@@ -27,6 +27,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Message;
 import com.zemult.merchant.model.apimodel.APIM_CommonSysMessageList;
 import com.zemult.merchant.model.apimodel.APIM_TaskIndustryInfo;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -106,7 +107,8 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
                 holder.setText(R.id.tv_messagedate, message.createtime);
                 holder.setText(R.id.tv_ordernum, message.number);
-                holder.setText(R.id.tv_orderprice, "￥" + message.money);
+
+                holder.setText(R.id.tv_orderprice, "￥" + (message.money == 0 ? "0.00" : Convert.getMoneyString(message.money)));
 
                 if (message.messageType == 0) {//消息类型(0:获得激励红包，5:支付买单凭证(作为服务管家),8:收到打赏)
                     holder.setText(R.id.tv_title, "约服收入凭证");
@@ -128,7 +130,7 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
                     holder.setText(R.id.tv_title, "约服收入凭证");
                     holder.setText(R.id.tv_describe, "收入来源：");
                     holder.setText(R.id.tv_orderdescription, "收到金额");
-                    holder.setText(R.id.tv_orderprice, "￥" + message.bounseMoney);
+                    holder.setText(R.id.tv_orderprice, "￥" + (message.bounseMoney == 0 ? "0.00" : Convert.getMoneyString(message.bounseMoney)));
 //                    holder.setViewGone(R.id.iv_headimage);
                     holder.setViewVisible(R.id.iv_headimage);
                     holder.setCircleImage(R.id.iv_headimage, message.fromUserHead);
