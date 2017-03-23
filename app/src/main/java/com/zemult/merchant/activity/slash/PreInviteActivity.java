@@ -2,6 +2,8 @@ package com.zemult.merchant.activity.slash;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,7 +186,37 @@ public class PreInviteActivity extends BaseActivity {
         lhTvTitle.setText("发起预邀");
         etOrganizer.setText(SlashHelper.userManager().getUserinfo().name);
         EditFilter.WordFilter(etOrganizer, 6);
+
+        etOrganizer.addTextChangedListener(watcher);
+        btnConfirm.setEnabled(false);
+        btnConfirm.setBackgroundResource(R.drawable.next_bg_btn_select);
     }
+
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().length() > 0) {
+                if (etOrganizer.getText().toString().length() > 0
+                        && !"选择时间".equals(tvTime.getText().toString())) {
+                    btnConfirm.setEnabled(true);
+                    btnConfirm.setBackgroundResource(R.drawable.common_selector_btn);
+                }
+
+            } else {
+                btnConfirm.setEnabled(false);
+                btnConfirm.setBackgroundResource(R.drawable.next_bg_btn_select);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     private void initListener() {
 
@@ -216,18 +248,18 @@ public class PreInviteActivity extends BaseActivity {
                 showTimePicker();
                 break;
             case R.id.btn_confirm:
-                if (StringUtils.isBlank(selectTopic)) {
-                    ToastUtil.showMessage("请选择活动主题");
-                    return;
-                }
-                if (StringUtils.isBlank(selectTime)) {
-                    ToastUtil.showMessage("请选择活动时间");
-                    return;
-                }
-                if (StringUtils.isBlank(etOrganizer.getText().toString())) {
-                    ToastUtil.showMessage("请填写发起人");
-                    return;
-                }
+//                if (StringUtils.isBlank(selectTopic)) {
+//                    ToastUtil.showMessage("请选择活动主题");
+//                    return;
+//                }
+//                if (StringUtils.isBlank(selectTime)) {
+//                    ToastUtil.showMessage("请选择活动时间");
+//                    return;
+//                }
+//                if (StringUtils.isBlank(etOrganizer.getText().toString())) {
+//                    ToastUtil.showMessage("请填写发起人");
+//                    return;
+//                }
 
                 if (isAdd) {
                     shareToWX();
@@ -276,6 +308,15 @@ public class PreInviteActivity extends BaseActivity {
                 } else {
                     selectTime = DateTimeUtil.getFormatTime(date);
                     tvTime.setText(getTime(date));
+                    if (etOrganizer.getText().toString().length() > 0
+                            && !"选择时间".equals(tvTime.getText().toString())) {
+                        btnConfirm.setEnabled(true);
+                        btnConfirm.setBackgroundResource(R.drawable.common_selector_btn);
+                    }
+                    else {
+                        btnConfirm.setEnabled(false);
+                        btnConfirm.setBackgroundResource(R.drawable.next_bg_btn_select);
+                    }
                 }
 
             }

@@ -624,7 +624,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         if (comefrom == 1)
                             user_add_saleuser();
                         else if(comefrom == 3){
-
                             Boolean hasReqContacts = (Boolean) SPUtils.get(mContext, "has_req_contacts", false);
                             if(hasReqContacts){
                                 ActivityCompat.requestPermissions(TabManageActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
