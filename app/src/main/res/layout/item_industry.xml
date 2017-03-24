@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="75dp"
+    android:layout_height="38dp"
     android:background="@drawable/ripple_item_clicked2"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingTop="6dp"
-    android:paddingBottom="10dp"
     >
 
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/merchant_online"
-        android:background="@color/transparent"/>
 
     <TextView
+       android:layout_centerInParent="true"
         android:id="@+id/tv"
         android:text="x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_22px"
+        android:layout_weight="1"
+        android:textSize="@dimen/font_26px"
         android:singleLine="true"
-        android:textColor="@color/font_black_28"/>
+        android:textColor="@color/bg_head"/>
 
-</LinearLayout>
+    <View style="@style/divider"
+        android:id="@+id/view_select"
+        android:layout_height="1dp"
+        android:background="@color/bg_head"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
 
 

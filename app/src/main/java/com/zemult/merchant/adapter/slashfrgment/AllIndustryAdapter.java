@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
@@ -34,6 +35,11 @@ public class AllIndustryAdapter extends
     private Activity mActivity;
     private int selectedId;
 
+
+    public void setSelectedId(int selectedId) {
+        this.selectedId = selectedId;
+        notifyDataSetChanged();
+    }
 
     public void setData(List<M_Industry> list){
         mDatas.clear();
@@ -61,7 +67,8 @@ public class AllIndustryAdapter extends
 
         ImageView iv;
         TextView tv;
-        LinearLayout ll;
+        RelativeLayout ll;
+        View viewSelect;
     }
 
     @Override
@@ -80,13 +87,10 @@ public class AllIndustryAdapter extends
                 viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
-        viewHolder.iv = (ImageView) view.findViewById(R.id.iv);
         viewHolder.tv = (TextView) view.findViewById(R.id.tv);
-        viewHolder.ll = (LinearLayout) view.findViewById(R.id.ll);
+        viewHolder.ll = (RelativeLayout) view.findViewById(R.id.ll);
+        viewHolder.viewSelect = (View) view.findViewById(R.id.view_select);
 
-        RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) viewHolder.ll.getLayoutParams();
-        lp.width = (int)(DensityUtil.getWindowWidth(mActivity)/4.5);
-        viewHolder.ll.setLayoutParams(lp);
         return viewHolder;
     }
 
@@ -102,27 +106,21 @@ public class AllIndustryAdapter extends
             holder.tv.setText(industry.name);
 
         if(industry.id == selectedId){
-            holder.tv.getPaint().setFakeBoldText(true);
-            // 场景头像 地址
-            if (!TextUtils.isEmpty(industry.icon_select))
-                imageManager.loadUrlImage2(industry.icon_select, holder.iv);
-            else
-                holder.iv.setImageResource(industry.int_icon_select);
+            holder.viewSelect.setVisibility(View.VISIBLE);
+            holder.tv.setTextColor(0xffe6bb7c);
         } else{
-            holder.tv.getPaint().setFakeBoldText(false);
-            // 场景头像 地址
-            if (!TextUtils.isEmpty(industry.icon))
-                imageManager.loadUrlImage2(industry.icon, holder.iv);
-            else
-                holder.iv.setImageResource(industry.int_icon);
+            holder.viewSelect.setVisibility(View.GONE);
+            holder.tv.setTextColor(0xff666666);
         }
 
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(selectedId == mDatas.get(position).id)
+                    return;
+
+                setSelectedId(mDatas.get(position).id);
                 if(mOnItemClickLitener != null){
-                    selectedId = mDatas.get(position).id;
-                    notifyDataSetChanged();
                     mOnItemClickLitener.onItemClick(mDatas.get(position).id);
                 }
             }

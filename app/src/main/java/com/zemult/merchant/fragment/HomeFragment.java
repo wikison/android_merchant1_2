@@ -4,11 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,15 +42,16 @@ import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
-import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
+import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.slash.CommonFirstpageIndustryListRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetadvertList;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
@@ -79,8 +81,6 @@ import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
-import static com.zemult.merchant.app.AppApplication.getContext;
-
 /**
  * 首页
  *
@@ -104,6 +104,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     SmoothListView smoothListView;
     @Bind(R.id.ivDot)
     ImageView ivDot;
+    @Bind(R.id.rv_top)
+    RecyclerView rvTop;
+    @Bind(R.id.rl_top)
+    RelativeLayout rlTop;
 
     private Context mContext;
     private Activity mActivity;
@@ -117,9 +121,12 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
-    private int titleHeight = 44, bottomHeight = 50, noDataViewHeight, page = 1;
+    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
+    private AllIndustryAdapter industryAdapter;
+
+    private int llTop;
 
     @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
@@ -251,25 +258,38 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
                     if (mTopViewHeight == 0) {
                         mTopViewHeight = (float) llTopbar.getLayoutParams().height;
-                        headerTopHeight = (float) DensityUtil.dip2px(mContext, 213);
+                        headerTopHeight = (float) DensityUtil.dip2px(mContext, adHeight);
                     }
 
-//                    Log.i("djy", "headerTopMargin－－－－＞" +headerTopMargin);
-//                    Log.i("djy", "mTopViewHeight－－－－＞" +mTopViewHeight);
+                    Log.i("djy", "headerTopMargin－－－－＞" +headerTopMargin);
 //                    Log.i("djy", "headerTopHeight－－－－＞" +headerTopHeight);
+
+                    float a = -((float) DensityUtil.dip2px(mContext,headerHomeView.getTopHeight()) - (float) DensityUtil.dip2px(mContext,titleHeight));
+                    Log.i("djy", "a－－－－＞" +a);
+
+
                     if (headerTopMargin == 0)
                         fraction = 0f;
-                    else if (headerTopMargin > 0)
+                    else if (headerTopMargin > 0){
                         if (headerTopMargin < mTopViewHeight)
                             fraction = 1 - (mTopViewHeight - headerTopMargin) / mTopViewHeight;
-                        else
+                        else{
                             fraction = 1f;
-                    else if (headerTopHeight + headerTopMargin <= mTopViewHeight) {
+                        }
+                    } else if (headerTopHeight + headerTopMargin <= mTopViewHeight) {
                         fraction = 1f;
                     } else
                         fraction = 1 - ((headerTopHeight + headerTopMargin) / headerTopHeight);
 
                     llTopbar.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.transparent, R.color.font_black_28));
+
+
+                    //吸顶效果
+//                    if(headerTopMargin <= -(float) DensityUtil.dip2px(mContext,     adHeight + tabHeight + tvHeight))
+                    if(headerTopMargin <= -((float) DensityUtil.dip2px(mContext,headerHomeView.getTopHeight()) - (float) DensityUtil.dip2px(mContext,titleHeight)))
+                        rlTop.setVisibility(View.VISIBLE);
+                    else
+                        rlTop.setVisibility(View.GONE);
                 }
             }
         });
@@ -279,15 +299,15 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 IntentUtil.start_activity(mActivity, SearchHotActivity.class);
             }
         });
-        headerHomeView.setOnHeaderClickListener(new HeaderHomeView.OnHeaderClickListener() {
-            @Override
-            public void onTabClick(int industryId, String industryName) {
-                Intent intent = new Intent(mContext, AllChangjingActivity.class);
-                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_ID, industryId);
-                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_NAME, industryName);
-                startActivity(intent);
-            }
-        });
+//        headerHomeView.setOnHeaderClickListener(new HeaderHomeView.OnHeaderClickListener() {
+//            @Override
+//            public void onTabClick(int industryId, String industryName) {
+//                Intent intent = new Intent(mContext, AllChangjingActivity.class);
+//                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_ID, industryId);
+//                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_NAME, industryName);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void initLocation() {
@@ -397,6 +417,15 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     if (!((APIM_CommonGetallindustry) response).industryList.isEmpty()) {
                         headerHomeView.setVpIndustrys(((APIM_CommonGetallindustry) response).industryList);
+                        //设置布局管理器
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        rvTop.setLayoutManager(linearLayoutManager);
+                        //设置适配器
+                        industryAdapter = new AllIndustryAdapter(mContext, ((APIM_CommonGetallindustry) response).industryList);
+                        rvTop.setAdapter(industryAdapter);
+
+                        industryAdapter.setSelectedId(((APIM_CommonGetallindustry) response).industryList.get(0).id);
                     }
                 } else {
                     ToastUtils.show(mContext, ((APIM_CommonGetallindustry) response).info);

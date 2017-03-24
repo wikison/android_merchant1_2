@@ -6,16 +6,122 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_ad_container"
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"></LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:id="@+id/vp_industry"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_ad_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/ll_merchant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/zhaoren"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    style="@style/text_15_black_28"
+                    android:text="进店找人"
+                    android:textColor="@color/bg_head"/>
+                <TextView
+                    android:layout_marginTop="8dp"
+                    style="@style/text_12_black_999"
+                    android:text="找人服务也可以换换口味"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/divider"
+                android:layout_gravity="center"
+                android:layout_width="1px"
+                android:layout_height="107dp"/>
+            <LinearLayout
+                android:id="@+id/ll_people"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/tuijian"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    style="@style/text_15_black_28"
+                    android:text="找人推荐"
+                    android:textColor="@color/bg_head"/>
+                <TextView
+                    android:layout_marginTop="8dp"
+                    style="@style/text_12_black_999"
+                    android:text="不想动脑子就找人为你做主"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/divider"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:background="@color/bg_f2">
+            <View style="@style/divider"
+                android:layout_width="12dp"
+                android:layout_height="2px"
+                android:background="#e6bb7c"/>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                style="@style/text_15_black_28"
+                android:text="优选服务管家 "
+                android:textStyle="bold"
+                android:textColor="@color/bg_head"/>
+
+            <View style="@style/divider"
+                android:layout_width="12dp"
+                android:layout_height="2px"
+                android:background="#e6bb7c"/>
+        </LinearLayout>
+
+
+        <!--<android.support.v4.view.ViewPager-->
+        <!--android:paddingLeft="8dp"-->
+        <!--android:paddingRight="8dp"-->
+        <!--android:id="@+id/vp_industry"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="155dp" />-->
+    </LinearLayout>
+
+
+    
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="155dp" />
+        android:layout_height="38dp">
+
+    </android.support.v7.widget.RecyclerView>
 
     <View style="@style/divider"/>
 
