@@ -614,8 +614,6 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.ll_right:
                 if (noLogin(mContext))
                     return;
-                if (noHead(mContext))
-                    return;
 
                 List<FilterEntity> list = new ArrayList<>();
                 list.add(new FilterEntity("设置备注名", 0, R.mipmap.bianji_icon));

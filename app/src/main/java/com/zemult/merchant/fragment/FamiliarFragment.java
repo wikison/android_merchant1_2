@@ -168,7 +168,7 @@ public class FamiliarFragment extends BaseFragment {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     num = ((CommonResult) response).num;
-                    tvPeopleNum.setText(num + "个熟人可以关联");
+                    tvPeopleNum.setText(num + "个熟人可关联");
                     user_friendList();
                 }
             }
