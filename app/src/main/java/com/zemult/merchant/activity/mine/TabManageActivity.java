@@ -557,7 +557,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(TabManageActivity.this, "设置成功");
+                    ToastUtils.show(TabManageActivity.this, "修改成功");
                     setResult(RESULT_OK);
                     finish();
                 } else {
@@ -773,7 +773,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         startActivity(it);
                         return;
                     }
-                    ToastUtil.showMessage("申请成功");
+                  //  ToastUtil.showMessage("申请成功");
                     EventBus.getDefault().post(SaleManageActivity.REFLASH);
                     setResult(RESULT_OK);
                     finish();

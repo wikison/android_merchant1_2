@@ -225,7 +225,7 @@ public class AppointmentDetailActivity extends BaseActivity {
                         ordernumTv.setText(mReservation.userPayNumber);
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
-                        yuyueresultRl.setVisibility(View.VISIBLE);
+                        yuyueresultRl.setVisibility(View.GONE);
                         appresultTv.setText(mReservation.replayNote);
                     }
 

@@ -21,7 +21,7 @@
         <RelativeLayout
             android:id="@+id/ll_new_friend"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="58dp"
             android:background="@color/white"
             android:clickable="false"
             android:gravity="center_vertical"

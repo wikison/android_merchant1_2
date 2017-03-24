@@ -290,11 +290,6 @@ public class FindPayActivity extends BaseActivity {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                selectidset.clear();
-//                rewardMoney = 0;
-//                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
-//                cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
-//                cbReward.setChecked(false);
                 alertDialog.dismiss();
             }
         });
@@ -633,11 +628,21 @@ public class FindPayActivity extends BaseActivity {
                 break;
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
+                    rewardMoney = 0;
+                    for (Integer selectidposition : selectidset) {
+                        rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
+                    }
                     cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
                 } else {
-                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
+                    selectidset.clear();
+                    selectidset.add(1);
+                    rewardMoney = moneyList.get(1).money;
+                    cbReward.setChecked(false);
                     cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
+                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
                 }
                 break;
             case R.id.btn_pay:

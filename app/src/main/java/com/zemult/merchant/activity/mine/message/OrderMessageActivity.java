@@ -81,20 +81,20 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
         concernLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mDatas.get(position).messageType == 0) {//消息类型(0:获得激励红包，5:支付买单凭证(作为服务管家),8:收到打赏)
+                if (mDatas.get(position-1).messageType == 0) {//消息类型(0:获得激励红包，5:支付买单凭证(作为服务管家),8:收到打赏)
                     Intent intent = new Intent(OrderMessageActivity.this, BillInfoActivity.class);
-                    intent.putExtra("billId", mDatas.get(position).billId);
+                    intent.putExtra("billId", mDatas.get(position-1).billId);
                     intent.putExtra("type", 6);
                     startActivity(intent);
                 }
-                if (mDatas.get(position).messageType == 5) {
+                if (mDatas.get(position-1).messageType == 5) {
                     Intent intent = new Intent(OrderMessageActivity.this, ServiceHistoryDetailActivity.class);
-                    intent.putExtra("userPayId", mDatas.get(position).userPayId);
+                    intent.putExtra("userPayId", mDatas.get(position-1).userPayId);
                     startActivity(intent);
                 }
-                if (mDatas.get(position).messageType == 8) {
+                if (mDatas.get(position-1).messageType == 8) {
                     Intent intent = new Intent(OrderMessageActivity.this, BillInfoActivity.class);
-                    intent.putExtra("billId", mDatas.get(position).billId);
+                    intent.putExtra("billId", mDatas.get(position-1).billId);
                     intent.putExtra("type", 10);
                     startActivity(intent);
                 }

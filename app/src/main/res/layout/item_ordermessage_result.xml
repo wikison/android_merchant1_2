@@ -82,18 +82,17 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="10dp"
-				android:paddingRight="5dp"
 				android:text="流水来源：" />
 
 			<ImageView
 				android:id="@+id/iv_headimage"
 				android:layout_width="25dp"
 				android:layout_height="25dp"
-				android:layout_margin="10dp"
+				android:layout_marginLeft="12dp"
 				android:clickable="false"
 				android:scaleType="centerCrop"
 				android:src="@mipmap/user_icon"
-				android:visibility="gone" />
+				/>
 
 
 			<TextView
@@ -119,7 +118,6 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="10dp"
-				android:paddingRight="5dp"
 				android:text="订单号码：" />
 
 			<TextView
