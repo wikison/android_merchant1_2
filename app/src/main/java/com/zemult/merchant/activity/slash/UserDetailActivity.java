@@ -85,6 +85,7 @@ public class UserDetailActivity extends BaseActivity {
     private static final int REQ_REMARK_NAME = 0x120;
 
     public static final String TAG = UserDetailActivity.class.getSimpleName();
+
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -113,14 +114,22 @@ public class UserDetailActivity extends BaseActivity {
     RoundTextView btnFocus;
     @Bind(R.id.tv_buy_num)
     TextView tvBuyNum;
+    @Bind(R.id.tv_hint)
+    TextView tvHint;
     @Bind(R.id.iv_cover)
     ImageView ivCover;
     @Bind(R.id.pager_container)
     LinkagePagerContainer pagerContainer;
+    @Bind(R.id.iv_arrow)
+    ImageView ivArrow;
     @Bind(R.id.rl_container)
     RelativeLayout rlContainer;
     @Bind(R.id.bind_pager)
     LinkagePager bindPager;
+    @Bind(R.id.btn_buy)
+    RoundTextView btnBuy;
+    @Bind(R.id.btn_service)
+    Button btnService;
     @Bind(R.id.tv_phone)
     TextView tvPhone;
     @Bind(R.id.ll_phone)
@@ -131,14 +140,21 @@ public class UserDetailActivity extends BaseActivity {
     LinearLayout llGift;
     @Bind(R.id.ll_bottom_menu)
     LinearLayout llBottomMenu;
-    @Bind(R.id.ll_root)
-    LinearLayout llRoot;
-    @Bind(R.id.btn_buy)
-    RoundTextView btnBuy;
-    @Bind(R.id.btn_service)
-    Button btnService;
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
+    @Bind(R.id.ll_main)
+    LinearLayout llMain;
+    @Bind(R.id.iv_normal_head)
+    ImageView ivNormalHead;
+    @Bind(R.id.tv_normal_name)
+    TextView tvNormalName;
+    @Bind(R.id.btn_contact)
+    Button btnContact;
+    @Bind(R.id.ll_normal)
+    LinearLayout llNormal;
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
+
 
     private Context mContext;
     private Activity mActivity;
@@ -161,6 +177,7 @@ public class UserDetailActivity extends BaseActivity {
     boolean isFromMerchant;
     LinkagePager pager;
     private SharePopwindow sharePopWindow;
+    boolean isNormal = false;
 
     @Override
     public void setContentView() {
@@ -174,8 +191,8 @@ public class UserDetailActivity extends BaseActivity {
     @Override
     public void init() {
         initData();
-        initView();
         getNetworkData();
+        initView();
         initListener();
     }
 
@@ -197,7 +214,6 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-
 
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
@@ -439,8 +455,18 @@ public class UserDetailActivity extends BaseActivity {
         this.userInfo.setUserName(userName);
         if (userInfo.getIsSaleUser() > 0) {
             lhTvTitle.setText("管家详情");
+            isNormal = false;
         } else {
             lhTvTitle.setText("个人详情");
+            isNormal = true;
+            llNormal.setVisibility(View.VISIBLE);
+            llMain.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(userInfo.getHead())) {
+                imageManager.loadCircleHead(userInfo.getHead(), ivNormalHead, "@120w_120h");
+            }
+            if (!TextUtils.isEmpty(userInfo.getName()))
+                tvNormalName.setText(userInfo.getName());
+            ivRight.setImageResource(R.mipmap.jubao_icon);
         }
 
     }
@@ -473,6 +499,8 @@ public class UserDetailActivity extends BaseActivity {
         if (list == null || list.size() == 0) {
             btnBuy.setVisibility(View.GONE);
             btnService.setVisibility(View.GONE);
+            tvHint.setVisibility(View.VISIBLE);
+            ivArrow.setVisibility(View.GONE);
         } else {
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
@@ -602,7 +630,7 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_phone, R.id.tv_phone, R.id.ll_contact, R.id.ll_gift, R.id.btn_buy, R.id.btn_service})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_phone, R.id.tv_phone, R.id.ll_contact, R.id.ll_gift, R.id.btn_buy, R.id.btn_service, R.id.btn_contact})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -615,31 +643,35 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
 
-                List<FilterEntity> list = new ArrayList<>();
-                list.add(new FilterEntity("设置备注名", 0, R.mipmap.bianji_icon));
-                list.add(new FilterEntity("推荐给朋友", 1, R.mipmap.fenxiang_icon));
-                list.add(new FilterEntity("投诉举报", 2, R.mipmap.jubao_icon));
+                if (isNormal){
+                    doReport();
+                }else {
+                    List<FilterEntity> list = new ArrayList<>();
+                    list.add(new FilterEntity("设置备注名", 0, R.mipmap.bianji_icon));
+                    list.add(new FilterEntity("推荐给朋友", 1, R.mipmap.fenxiang_icon));
+                    list.add(new FilterEntity("投诉举报", 2, R.mipmap.jubao_icon));
 
 
-                CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
-                    @Override
-                    public void onClick(int pos) {
-                        switch (pos) {
-                            case 0:
-                                doEdit();
-                                break;
-                            case 1:
-                                if (sharePopWindow.isShowing())
-                                    sharePopWindow.dismiss();
-                                else
-                                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
-                                break;
-                            case 2:
-                                doReport();
-                                break;
+                    CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
+                        @Override
+                        public void onClick(int pos) {
+                            switch (pos) {
+                                case 0:
+                                    doEdit();
+                                    break;
+                                case 1:
+                                    if (sharePopWindow.isShowing())
+                                        sharePopWindow.dismiss();
+                                    else
+                                        sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
+                                    break;
+                                case 2:
+                                    doReport();
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
                 break;
             case R.id.btn_buy:
@@ -665,6 +697,7 @@ public class UserDetailActivity extends BaseActivity {
                 call();
                 break;
             case R.id.ll_contact:
+            case R.id.btn_contact:
                 if (noLogin(mContext))
                     return;
                 Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
