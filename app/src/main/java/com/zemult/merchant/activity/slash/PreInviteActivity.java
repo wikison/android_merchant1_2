@@ -27,6 +27,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Title;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetAllTitleList;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ShareText;
@@ -364,6 +365,10 @@ public class PreInviteActivity extends BaseActivity {
     };
 
     private void shareToWX() {
+        if(!AppUtils.isWeixinAvailable(this)){
+            ToastUtil.showMessage("你还没有安装微信");
+            return;
+        }
         UMImage shareImage;
         shareImage = new UMImage(mContext, R.mipmap.icon_share);
 
@@ -377,4 +382,5 @@ public class PreInviteActivity extends BaseActivity {
                 .withTitle("您的好友【" + etOrganizer.getText().toString() + "】发起了一个" + selectTopic)
                 .share();
     }
+
 }

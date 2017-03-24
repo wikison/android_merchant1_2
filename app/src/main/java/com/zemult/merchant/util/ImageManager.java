@@ -309,14 +309,14 @@ public class ImageManager {
     }
 
     // 加载模糊
-    public void loadBlurImage(String url, ImageView imageView) {
+    public void loadBlurImage(String url, ImageView imageView, int radius) {
         if (url != null && url.indexOf("xiegang.oss") != -1) {
             url = url.replace("xiegang.oss", "xiegang.img");
             Glide.with(mContext)
                     .load(url + getImageSize())
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new BlurTransformation(mContext, 10))
+                    .bitmapTransform(new BlurTransformation(mContext, radius))
                     .into(imageView);
         } else {
             //不是网络图片加载本地图片
@@ -324,7 +324,7 @@ public class ImageManager {
                     .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
-                    .bitmapTransform(new BlurTransformation(mContext, 15))
+                    .bitmapTransform(new BlurTransformation(mContext, radius))
                     .into(imageView);
         }
     }

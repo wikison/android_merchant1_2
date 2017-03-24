@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -212,11 +214,11 @@ public class AppUtils {
      *
      * @param activity
      * @param position       当前图片位置
-     * @param pics          所有图片路径
+     * @param pics           所有图片路径
      * @param //图片详情页面是否可以删除
      */
     public static void toImageDetial(Activity activity, int position,
-                                     List<String> pics, List<Integer> picIds, boolean deleteable, boolean coverable,boolean unshowTitle,int merchantId, int userId) {
+                                     List<String> pics, List<Integer> picIds, boolean deleteable, boolean coverable, boolean unshowTitle, int merchantId, int userId) {
         try {
             Intent intent = new Intent(activity, ImageBrowserNewActivity.class);
             intent.putExtra(ImageBrowserNewActivity.INTENT_PICS, (Serializable) pics);
@@ -232,12 +234,13 @@ public class AppUtils {
             e.printStackTrace();
         }
     }
+
     /**
      * 跳转到图片详情
      *
      * @param activity
      * @param position       当前图片位置
-     * @param pics          所有图片路径
+     * @param pics           所有图片路径
      * @param //图片详情页面是否可以删除
      */
     public static void toImageDetial(Activity activity, int position, List<String> pics, List<String> notes) {
@@ -480,7 +483,7 @@ public class AppUtils {
 
         List<String> numberList1 = new ArrayList<String>();
         for (ContactDataBean bean : cList2) {
-            numberList1.add(bean.getPhone()+"#"+bean.getName());
+            numberList1.add(bean.getPhone() + "#" + bean.getName());
         }
 
         String numbers = "";
@@ -525,34 +528,31 @@ public class AppUtils {
     }
 
 
-    public static String giftDescription(String giftname){
-            String desc="";
+    public static String giftDescription(String giftname) {
+        String desc = "";
         if (giftname.contains("兰博基尼")) {
-            desc="兰博基尼：电光火石，速度激情。";
+            desc = "兰博基尼：电光火石，速度激情。";
 
         } else if (giftname.contains("钻戒")) {
-            desc="通灵钻戒：一颗流传，伴生相随。";
+            desc = "通灵钻戒：一颗流传，伴生相随。";
 
         } else if (giftname.contains("钱包")) {
-            desc="LV钱包：生命本身就是一场旅行。";
+            desc = "LV钱包：生命本身就是一场旅行。";
 
         } else if (giftname.contains("花")) {
-            desc=" 爱の花：遇见最美的绽放……";
+            desc = " 爱の花：遇见最美的绽放……";
+        } else if (giftname.contains("六六大顺")) {
+            desc = " 六六大顺：三三不尽，六六无穷。";
         }
-        else if (giftname.contains("六六大顺")) {
-            desc=" 六六大顺：三三不尽，六六无穷。";
-        }
-        
+
         return desc;
-        
+
     }
-
-
 
 
     public static String replaceBlank(String str) {
         String dest = "";
-        if (str!=null) {
+        if (str != null) {
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
@@ -560,6 +560,45 @@ public class AppUtils {
         return dest;
     }
 
+    /**
+     * 判断微信是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isWeixinAvailable(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pInfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pInfo != null) {
+            for (int i = 0; i < pInfo.size(); i++) {
+                String pn = pInfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
 
+        return false;
+    }
+
+    /**
+     * 判断qq是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isQQClientAvailable(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pInfo = packageManager.getInstalledPackages(0);
+        if (pInfo != null) {
+            for (int i = 0; i < pInfo.size(); i++) {
+                String pn = pInfo.get(i).packageName;
+                if (pn.equals("com.tencent.mobileqq")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

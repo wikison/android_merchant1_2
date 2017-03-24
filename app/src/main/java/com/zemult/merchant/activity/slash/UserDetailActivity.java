@@ -491,13 +491,13 @@ public class UserDetailActivity extends BaseActivity {
             if (selectMerchant.reviewstatus != 2) {
                 btnBuy.setVisibility(View.GONE);
             }
-            imageManager.loadBlurImage(selectMerchant.pic, ivCover);
+            imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     if (position >= 0 && position < listMerchant.size()) {
                         bindPager.setCurrentItem(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).head, ivCover);
+                        imageManager.loadBlurImage(listMerchant.get(position).head, ivCover, 60);
                     }
 
                 }
@@ -513,7 +513,7 @@ public class UserDetailActivity extends BaseActivity {
                     if (position >= 0 && position < listMerchant.size()) {
                         bindPager.setCurrentItem(position);
                         selectMerchant = listMerchant.get(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover);
+                        imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover, 60);
                         if (selectMerchant.reviewstatus != 2) {
                             btnBuy.setVisibility(View.GONE);
                         }

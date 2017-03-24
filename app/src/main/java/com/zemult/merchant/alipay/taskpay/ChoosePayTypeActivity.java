@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,12 @@ import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.SendAppreciateRedActivity;
-import com.zemult.merchant.activity.mine.PayPasswordManagerActivity;
+import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.SendPresentActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.common.CommonSignNumberRequest;
 import com.zemult.merchant.aip.mine.UserMerchantPayRequest;
+import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -37,7 +38,9 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Present;
+import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.SlashHelper;
@@ -52,6 +55,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
+import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class ChoosePayTypeActivity extends BaseActivity {
@@ -60,41 +64,77 @@ public class ChoosePayTypeActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     // 商户订单号
     public String ORDER_SN = "";
-    private int userPayId = 0;
-    UserMerchantPayRequest userMerchantPayRequest;
-    CommonSignNumberRequest commonSignNumberRequest;
-    double paymoney, truepaymoney;
-    String merchantName = "", merchantHead = "",managerhead="",managername="";
-    int payType,toUserId;
-
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
-
     @Bind(R.id.ll_back)
     LinearLayout llBack;
-
+    @Bind(R.id.iv_right)
+    ImageView ivRight;
+    @Bind(R.id.ll_right)
+    LinearLayout llRight;
+    @Bind(R.id.tv_right)
+    TextView tvRight;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.lh_btn_right)
+    Button lhBtnRight;
+    @Bind(R.id.lh_btn_rightiamge)
+    Button lhBtnRightiamge;
     @Bind(R.id.iv_head)
     ImageView ivHead;
+    @Bind(R.id.tv_name1)
+    TextView tvName1;
+    @Bind(R.id.tv_buy_money1)
+    TextView tvBuyMoney1;
+    @Bind(R.id.tv_num1)
+    TextView tvNum1;
+    @Bind(R.id.ll_reward)
+    LinearLayout llReward;
+    @Bind(R.id.iv_cover)
+    ImageView ivCover;
     @Bind(R.id.tv_name)
     TextView tvName;
+    @Bind(R.id.tv_money)
+    TextView tvMoney;
+    @Bind(R.id.tv_distance)
+    TextView tvDistance;
+    @Bind(R.id.iv_qianyue)
+    ImageView ivQianyue;
+    @Bind(R.id.card_view)
+    CardView cardView;
+    @Bind(R.id.tv_merchant_name)
+    TextView tvMerchantName;
     @Bind(R.id.tv_buy_money)
     TextView tvBuyMoney;
     @Bind(R.id.tv_num)
     TextView tvNum;
-    @Bind(R.id.cb_accountpay)
-    CheckBox cbAccountpay;
+    @Bind(R.id.ll_buy)
+    LinearLayout llBuy;
+    @Bind(R.id.iv_img2)
+    ImageView ivImg2;
     @Bind(R.id.tv_lab1)
     TextView tvLab1;
     @Bind(R.id.cb_zhifubaopay)
     CheckBox cbZhifubaopay;
+    @Bind(R.id.iv_wx)
+    ImageView ivWx;
+    @Bind(R.id.cb_wx)
+    CheckBox cbWx;
     @Bind(R.id.pay)
     Button pay;
-    @Bind(R.id.tv_account_money)
-    TextView tvAccountMoney;
+    private int userPayId = 0;
+    UserMerchantPayRequest userMerchantPayRequest;
+    CommonSignNumberRequest commonSignNumberRequest;
+    double paymoney, truepaymoney;
+    String merchantName = "", merchantHead = "", managerhead = "", managername = "";
+    int payType, toUserId;
+    MerchantInfoRequest merchantInfoRequest;
+    int merchantId;
+
 
     M_Present m_present;
+    M_Merchant m_merchant;
+
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -109,14 +149,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        if(null!=m_present){
-                                sendPayGiftMsg();
-                        }
-                        else{
-                            if("赞赏".equals(merchantName)){
+                        if (null != m_present) {
+                            sendPayGiftMsg();
+                        } else {
+                            if ("赞赏".equals(merchantName)) {
                                 sendPayMoneyMsg();
-                            }
-                            else{
+                            } else {
                                 Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
                                 intent.putExtra("managerhead", managerhead);
                                 intent.putExtra("paymoney", paymoney);
@@ -161,39 +199,68 @@ public class ChoosePayTypeActivity extends BaseActivity {
         paymoney = getIntent().getDoubleExtra("consumeMoney", 0);
         ORDER_SN = getIntent().getStringExtra("order_sn");
         userPayId = getIntent().getIntExtra("userPayId", 0);
-        toUserId= getIntent().getIntExtra("toUserId", 0);
+        toUserId = getIntent().getIntExtra("toUserId", 0);
+        merchantId = getIntent().getIntExtra("merchantId", 0);
         merchantName = getIntent().getStringExtra("merchantName");
         merchantHead = getIntent().getStringExtra("merchantHead");
         managerhead = getIntent().getStringExtra("managerhead");
-        managername= getIntent().getStringExtra("managername");
+        managername = getIntent().getStringExtra("managername");
         m_present = (M_Present) getIntent().getSerializableExtra(SendPresentActivity.PRESENT);
+        m_merchant = (M_Merchant) getIntent().getSerializableExtra(FindPayActivity.MERCHANT_INFO);
         truepaymoney = paymoney;
 
-        tvBuyMoney.setText(" ￥" + Convert.getMoneyString(truepaymoney));
         pay.setText("确认支付  ￥" + Convert.getMoneyString(truepaymoney));
-        tvAccountMoney.setText("余额 "+SlashHelper.userManager().getUserinfo().getMoney() + "");
         lhTvTitle.setText("支付订单");
-        tvName.setText(""+merchantName);
-        tvNum.setText(ORDER_SN);
-        if(StringUtils.isEmpty(merchantHead)){
-            imageManager.loadCircleResImage(R.mipmap.chart_liwu_icon, ivHead);
-        }
-        else{
-            if("赞赏".equals(merchantName)){
-                imageManager.loadCircleResImage(R.mipmap.chart_hongbao_icon, ivHead);
+
+        if ("赞赏".equals(merchantName)) {
+            llReward.setVisibility(View.VISIBLE);
+            llBuy.setVisibility(View.GONE);
+            tvBuyMoney1.setText(" ￥" + Convert.getMoneyString(truepaymoney));
+            tvName1.setText("" + merchantName);
+            tvNum1.setText(ORDER_SN);
+            imageManager.loadCircleResImage(R.mipmap.chart_hongbao_icon, ivHead);
+        } else {
+            llReward.setVisibility(View.GONE);
+            llBuy.setVisibility(View.VISIBLE);
+
+            if (m_merchant == null) {
+                merchant_info(merchantId);
+            } else {
+                initMerchantInfo();
             }
-           else {
-                imageManager.loadCircleImage(merchantHead, ivHead);
-            }
+
         }
 
-//        if (SlashHelper.userManager().getUserinfo().getMoney() >= truepaymoney) {
-//            cbAccountpay.setChecked(true);
-//        }
-//        else {
-            payType = 1;
-            cbZhifubaopay.setChecked(true);
-//        }
+        payType = 1;
+        cbZhifubaopay.setChecked(true);
+
+    }
+
+    private void initMerchantInfo() {
+        llReward.setVisibility(View.GONE);
+        llBuy.setVisibility(View.VISIBLE);
+        // 商家封面
+        if (!TextUtils.isEmpty(m_merchant.pic))
+            imageManager.loadUrlImageWithDefaultImg(m_merchant.pic, ivCover, "@300h", R.mipmap.merchant_default_cover);
+        else
+            ivCover.setImageResource(R.mipmap.merchant_default_cover);
+        // 商家名称
+        if (!TextUtils.isEmpty(m_merchant.name))
+            tvName.setText(m_merchant.name);
+        // 人均消费
+        tvMoney.setText("人均￥" + (int) (m_merchant.perMoney));
+        // 距中心点距离(米)
+        if (!StringUtils.isEmpty(m_merchant.distance)) {
+            if (m_merchant.distance.length() > 3) {
+                double d = Double.valueOf(m_merchant.distance);
+                tvDistance.setText(d / 1000 + "km");
+            } else
+                tvDistance.setText(m_merchant.distance + "m");
+        }
+
+        tvBuyMoney.setText(" ￥" + Convert.getMoneyString(truepaymoney));
+        tvMerchantName.setText("向" + m_merchant.name);
+        tvNum.setText(ORDER_SN);
     }
 
     @Override
@@ -202,60 +269,90 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
     }
 
-    private void  sendPayGiftMsg(){
+    private void sendPayGiftMsg() {
         YWCustomMessageBody messageBody = new YWCustomMessageBody();
         JSONObject object = new JSONObject();
         try {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "GIFT");
             object.put("taskTitle", AppUtils.giftDescription(m_present.name));
-            object.put("reservationId", m_present.presentId+"");
+            object.put("reservationId", m_present.presentId + "");
             object.put("giftName", m_present.name);
-            object.put("serviceId", toUserId+"");
-            object.put("userId", SlashHelper.userManager().getUserId()+"");
-            object.put("giftPrice",m_present.price+"");
+            object.put("serviceId", toUserId + "");
+            object.put("userId", SlashHelper.userManager().getUserId() + "");
+            object.put("giftPrice", m_present.price + "");
         } catch (JSONException e) {
 
         }
         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
         messageBody.setSummary("[送礼物]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-        YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
-        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+"", imKit.getIMCore().getAppKey());
+        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId + "", imKit.getIMCore().getAppKey());
         imKit.getConversationService()
                 .forwardMsgToContact(appContact
-                        ,message,forwardCallBack);
+                        , message, forwardCallBack);
 //        startActivity(imKit.getChattingActivityIntent(userPayId+""));
         Intent intent = new Intent(ChoosePayTypeActivity.this, SendPresentSuccessActivity.class);
         intent.putExtra("giftName", m_present.name);
-        intent.putExtra("giftPrice", m_present.price+"");
+        intent.putExtra("giftPrice", m_present.price + "");
         startActivity(intent);
         finish();
     }
 
-    private void  sendPayMoneyMsg(){
+    //商家详情
+    private void merchant_info(int merchantId) {
+        if (merchantInfoRequest != null) {
+            merchantInfoRequest.cancel();
+        }
+
+
+        MerchantInfoRequest.Input input = new MerchantInfoRequest.Input();
+        input.merchantId = merchantId;
+
+        input.convertJosn();
+        merchantInfoRequest = new MerchantInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_MerchantGetinfo) response).status == 1) {
+                    m_merchant = ((APIM_MerchantGetinfo) response).merchant;
+                    initMerchantInfo();
+                } else {
+                    ToastUtils.show(ChoosePayTypeActivity.this, ((APIM_MerchantGetinfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(merchantInfoRequest);
+    }
+
+    private void sendPayMoneyMsg() {
         YWCustomMessageBody messageBody = new YWCustomMessageBody();
         JSONObject object = new JSONObject();
         try {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "MONEY");//GIFT
             object.put("taskTitle", getIntent().getStringExtra("imMessageTitle"));
-            object.put("taskContent",getIntent().getStringExtra("imMessageContent"));
-            object.put("billId", userPayId+"");
-            object.put("serviceId", toUserId+"");
-            object.put("userId", SlashHelper.userManager().getUserId()+"");
+            object.put("taskContent", getIntent().getStringExtra("imMessageContent"));
+            object.put("billId", userPayId + "");
+            object.put("serviceId", toUserId + "");
+            object.put("userId", SlashHelper.userManager().getUserId() + "");
         } catch (JSONException e) {
 
         }
         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
         messageBody.setSummary("[送赞赏]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-        YWIMKit imKit= LoginSampleHelper.getInstance().getIMKit();
-        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+"", imKit.getIMCore().getAppKey());
+        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId + "", imKit.getIMCore().getAppKey());
         imKit.getConversationService()
                 .forwardMsgToContact(appContact
-                        ,message,forwardCallBack);
-        startActivity(imKit.getChattingActivityIntent(toUserId+"", Urls.APP_KEY));
+                        , message, forwardCallBack);
+        startActivity(imKit.getChattingActivityIntent(toUserId + "", Urls.APP_KEY));
 //        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
 //        intent.putExtra("billId", userPayId);
 //        startActivity(intent);
@@ -285,7 +382,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
     };
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.cb_accountpay, R.id.cb_zhifubaopay, R.id.pay})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.cb_wx, R.id.cb_zhifubaopay, R.id.pay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -293,44 +390,26 @@ public class ChoosePayTypeActivity extends BaseActivity {
                 setResult(RESULT_OK);
                 finish();
                 break;
-            case R.id.cb_accountpay:
-                if (truepaymoney > SlashHelper.userManager().getUserinfo().getMoney()) {
-                    ToastUtil.showMessage("您的余额不够支出，请选择其他支付方式");
-                    cbAccountpay.setChecked(false);
-                    return;
+            case R.id.cb_zhifubaopay:
+                if (cbZhifubaopay.isChecked()) {
+                    payType = 1;
+                    cbWx.setChecked(false);
                 }
-                if (cbAccountpay.isChecked()) {
-                    payType = 0;
+                break;
+            case R.id.cb_wx:
+                if (cbWx.isChecked()) {
+                    payType = 2;
                     cbZhifubaopay.setChecked(false);
                 }
                 break;
-            case R.id.cb_zhifubaopay:
 
-                if (cbZhifubaopay.isChecked()) {
-                    payType = 1;
-                    cbAccountpay.setChecked(false);
-
-                }
-                break;
 
             case R.id.pay:
-                if (cbZhifubaopay.isChecked() == false && cbAccountpay.isChecked() == false) {
+                if (cbZhifubaopay.isChecked() == false && cbWx.isChecked() == false) {
                     ToastUtil.showMessage("请选择一种支付方式");
                     return;
                 }
-                if (cbAccountpay.isChecked() && SlashHelper.userManager().getUserinfo().isSetPaypwd == 0) {
-                    ToastUtil.showMessage("请设置安全密码");
-                    Intent intentpaypassword = new Intent(ChoosePayTypeActivity.this, PayPasswordManagerActivity.class);
-                    startActivity(intentpaypassword);
-                    return;
-                }
-
-                if (cbAccountpay.isChecked() && SlashHelper.userManager().getUserinfo().isSetPaypwd == 1) {
-                    showInputPwdDialog();
-                } else {
-                    userTaskPayRequest();
-                }
-
+                userTaskPayRequest();
 
                 break;
         }
@@ -383,14 +462,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
                             commonSignNumber();
                         } else {
                             Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                            if(null!=m_present){
-                                    sendPayGiftMsg();
-                            }
-                            else{
-                                if("赞赏".equals(merchantName)){
+                            if (null != m_present) {
+                                sendPayGiftMsg();
+                            } else {
+                                if ("赞赏".equals(merchantName)) {
                                     sendPayMoneyMsg();
-                                }
-                                else{
+                                } else {
                                     Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
                                     intent.putExtra("userPayId", userPayId);
                                     intent.putExtra("payTime", ((CommonResult) response).payTime);
@@ -470,7 +547,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     msg.what = SDK_PAY_FLAG;
                     msg.obj = result;
                     mHandler.sendMessage(msg);
-                }catch (Exception e){
+                } catch (Exception e) {
                     ToastUtil.showMessage("支付宝调用失败,请再试一次");
                 }
 
