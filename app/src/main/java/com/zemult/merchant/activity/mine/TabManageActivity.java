@@ -5,12 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -176,7 +181,17 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (comefrom == 2) {
             name = getIntent().getStringExtra(NAME);
             shopnameTv.setVisibility(View.GONE);
-            shopNameTv.setText( name );
+
+
+            SpannableStringBuilder spannableString  = new SpannableStringBuilder();
+            spannableString.append("选择您在  "+name+"  提供的服务");
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
+            spannableString.setSpan(styleSpan, 5, 4+name.length()+2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+
+            shopNameTv.setText( spannableString );
+
+
 
             tags = getIntent().getStringExtra(TAGS);
             otherChannelList.clear();
@@ -206,7 +221,21 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             shopnameTv.setVisibility(View.GONE);
             myCategoryText.setText("已提供的服务");
             // chooseYv.setText("选择您在  " + name + "  提供的服务");
-            shopNameTv.setText( name );
+
+
+            SpannableStringBuilder spannableString  = new SpannableStringBuilder();
+            spannableString.append("选择您在  "+name+"  提供的服务");
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
+//
+//            AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(20);
+//            spannableString.setSpan(absoluteSizeSpan, 0, 8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+//
+
+            spannableString.setSpan(styleSpan, 5, 4+name.length()+2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            shopNameTv.setText( spannableString );
+
+
+
             myCategoryTipText.setVisibility(View.VISIBLE);
             shopnameTv.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
