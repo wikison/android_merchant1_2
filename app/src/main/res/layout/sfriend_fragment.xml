@@ -44,7 +44,7 @@
                 android:layout_marginRight="@dimen/margin_12dp"
                 android:drawablePadding="10dp"
                 android:drawableRight="@mipmap/right_btn"
-                android:text="2个熟人可以关联"
+                android:text="0个熟人可关联"
                 android:textColor="@color/font_black_999"
                 android:textSize="12sp" />
         </RelativeLayout>
