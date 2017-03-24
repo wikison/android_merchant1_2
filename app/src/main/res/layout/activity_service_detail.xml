@@ -28,7 +28,7 @@
                 style="@style/text_16_black_28"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="交易金额"/>
+                android:text="消费金额"/>
 
             <View
                 android:layout_width="match_parent"
