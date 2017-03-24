@@ -290,7 +290,7 @@ public class FindPayActivity extends BaseActivity {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                alertDialog.dismiss();
             }
         });
 
