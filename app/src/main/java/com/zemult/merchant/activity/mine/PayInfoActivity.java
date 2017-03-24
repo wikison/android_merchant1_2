@@ -3,7 +3,6 @@ package com.zemult.merchant.activity.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +28,6 @@ import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
@@ -285,6 +283,7 @@ public class PayInfoActivity extends BaseActivity {
         intent.putExtra("consumeMoney", m.allMoney);
         intent.putExtra("order_sn", m.number);
         intent.putExtra("userPayId", userPayId);
+        intent.putExtra("merchantId", m.merchantId);
         intent.putExtra("merchantName", m.merchantName);
         intent.putExtra("merchantHead", m.merchantHead);
         startActivityForResult(intent, 1000);
@@ -308,10 +307,4 @@ public class PayInfoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

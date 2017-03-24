@@ -314,13 +314,14 @@ public class FindPayActivity extends BaseActivity {
                     rewardMoney = moneyList.get(1).money;
                     cbReward.setChecked(false);
                     cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
                 } else {
                     cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
                     cbReward.setChecked(true);
+                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney + getMoney()));
                 }
 
                 cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
-                tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney + getMoney()));
 
                 alertDialog.dismiss();
             }
@@ -389,10 +390,12 @@ public class FindPayActivity extends BaseActivity {
                         intent.putExtra("consumeMoney", money + (cbReward.isChecked() ? rewardMoney : 0));
                         intent.putExtra("order_sn", ORDER_SN);
                         intent.putExtra("userPayId", userPayId);
+                        intent.putExtra("merchantId", merchantId);
                         intent.putExtra("merchantName", merchant.name);
                         intent.putExtra("merchantHead", merchant.head);
                         intent.putExtra("managerhead", managerhead);
                         intent.putExtra("managername", managername);
+                        intent.putExtra(MERCHANT_INFO, merchant);
 
                         String imMessageTitle = "";
                         String imMessageContent = "";
