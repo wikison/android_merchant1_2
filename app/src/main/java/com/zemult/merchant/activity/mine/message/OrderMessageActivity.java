@@ -130,7 +130,7 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
                     holder.setText(R.id.tv_title, "约服收入凭证");
                     holder.setText(R.id.tv_describe, "收入来源：");
                     holder.setText(R.id.tv_orderdescription, "收到金额");
-                    holder.setText(R.id.tv_orderprice, "￥" + (message.bounseMoney == 0 ? "0.00" : Convert.getMoneyString(message.bounseMoney)));
+//                    holder.setText(R.id.tv_orderprice, "￥" + (message.bounseMoney == 0 ? "0.00" : Convert.getMoneyString(message.bounseMoney)));
 //                    holder.setViewGone(R.id.iv_headimage);
                     holder.setViewVisible(R.id.iv_headimage);
                     holder.setCircleImage(R.id.iv_headimage, message.fromUserHead);
