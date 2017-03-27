@@ -28,9 +28,11 @@
                 android:textSize="21sp"/>
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/tv_name"
                 android:layout_marginTop="6dp"
                 style="@style/text_15_black_28"
+                android:layout_width="220dp"
                 android:textColor="@color/white"
                 android:textSize="21sp"/>
 
@@ -50,9 +52,9 @@
                 android:gravity="center"
                 android:layout_marginTop="13dp"
                 style="@style/text_15_black_28"
-                android:text="为了您及时收到客户的需求信息,\n需要获取通讯录权限，\n请在手机权限管理中设置。"
+                android:text="为了能及时收到客户的需求信息,\n需要获取通讯录权限，\n请在手机权限管理中设置。"
                 android:textColor="@color/white"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/font_24px"/>
         </LinearLayout>
 
         <RelativeLayout
