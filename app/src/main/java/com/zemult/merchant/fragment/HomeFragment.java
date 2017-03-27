@@ -121,7 +121,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
-    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, noDataViewHeight, page = 1;
+    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 135,tvHeight = 38,noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
@@ -216,6 +216,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
         // 设置ListView数据
         mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
+        mAdapter.unshowTop();
         smoothListView.setAdapter(mAdapter);
     }
 
@@ -261,13 +262,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         headerTopHeight = (float) DensityUtil.dip2px(mContext, adHeight);
                     }
 
-                    Log.i("djy", "headerTopMargin－－－－＞" +headerTopMargin);
-//                    Log.i("djy", "headerTopHeight－－－－＞" +headerTopHeight);
-
-                    float a = -((float) DensityUtil.dip2px(mContext,headerHomeView.getTopHeight()) - (float) DensityUtil.dip2px(mContext,titleHeight));
-                    Log.i("djy", "a－－－－＞" +a);
-
-
                     if (headerTopMargin == 0)
                         fraction = 0f;
                     else if (headerTopMargin > 0){
@@ -282,11 +276,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         fraction = 1 - ((headerTopHeight + headerTopMargin) / headerTopHeight);
 
                     llTopbar.setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.transparent, R.color.font_black_28));
-
+                    rllSearchBg.getDelegate().setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.half_transparent_white, R.color.white));
 
                     //吸顶效果
-//                    if(headerTopMargin <= -(float) DensityUtil.dip2px(mContext,     adHeight + tabHeight + tvHeight))
-                    if(headerTopMargin <= -((float) DensityUtil.dip2px(mContext,headerHomeView.getTopHeight()) - (float) DensityUtil.dip2px(mContext,titleHeight)))
+                    if(headerTopMargin <= -((float) DensityUtil.dip2px(mContext,adHeight+tabHeight+tvHeight - titleHeight)))
                         rlTop.setVisibility(View.VISIBLE);
                     else
                         rlTop.setVisibility(View.GONE);

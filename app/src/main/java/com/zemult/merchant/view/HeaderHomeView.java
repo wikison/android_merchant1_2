@@ -39,10 +39,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     LinearLayout llPeople;
     @Bind(R.id.rv)
     RecyclerView rv;
-    @Bind(R.id.ll_top)
-    LinearLayout llTop;
 
-    private int topHeight;
 
     private HeaderAdViewView headerAdViewView; // 广告视图
     private AllIndustryAdapter mAdapter;
@@ -58,15 +55,6 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         View view = mInflate.inflate(R.layout.home_header, listView, false);
         listView.addHeaderView(view);
         ButterKnife.bind(this, view);
-
-        llTop.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                llTop.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                topHeight = llTop.getHeight();
-                ToastUtil.showMessage(topHeight + "");
-            }
-        });
     }
 
     public void setAd(List<M_Ad> advertList) {
@@ -95,11 +83,6 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
 
     public void setSelectedId(int id) {
         mAdapter.setSelectedId(id);
-    }
-
-    public int getTopHeight(){
-
-      return topHeight;
     }
 
 //    public void setVpIndustrys(List<M_Industry> industryList) {
