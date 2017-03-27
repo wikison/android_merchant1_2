@@ -24,7 +24,7 @@ public class InputMsgDialog extends DialogFragment {
     @Override
     public void setArguments(Bundle args) {
         super.setArguments(args);
-        this.updateBean = (M_AppInfo)args.getSerializable("appinfo");
+        this.updateBean = (M_AppInfo) args.getSerializable("appinfo");
     }
 
     public interface UpdateCallback {
@@ -45,9 +45,9 @@ public class InputMsgDialog extends DialogFragment {
         ListView lvDetial = (ListView) view.findViewById(R.id.lvDetial);
         TextView tvSize = (TextView) view.findViewById(R.id.tvSize);
         TextView tvVersion = (TextView) view.findViewById(R.id.tvVersion);
-        String[] detials=updateBean.note.split("\\n");
-        if(detials==null){
-            detials[0]="暂无介绍";
+        String[] detials = updateBean.note.split("\\n");
+        if (detials == null) {
+            detials[0] = "暂无介绍";
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.itemview_update_detial, detials);
         lvDetial.setAdapter(adapter);
@@ -55,7 +55,7 @@ public class InputMsgDialog extends DialogFragment {
         tvVersion.setText("版本:v" + updateBean.getVersion());
         builder.setView(view)
                 .setTitle("有新的客户端")
-                .setPositiveButton("朕准了",
+                .setPositiveButton("立即升级",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
@@ -64,7 +64,7 @@ public class InputMsgDialog extends DialogFragment {
                                 }
                             }
                         })
-                .setNegativeButton("就不要",
+                .setNegativeButton("暂不升级",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

@@ -122,53 +122,60 @@
             android:layout_marginTop="126dp"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/ll_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_12dp"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
-                <com.hedgehog.ratingbar.RatingBar
-                    android:id="@+id/rb_5"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_16dp"
-                    hedgehog:clickable="false"
-                    hedgehog:halfstart="true"
-                    hedgehog:starCount="5"
-                    hedgehog:starEmpty="@mipmap/kongxing_icon"
-                    hedgehog:starFill="@mipmap/xing_icon"
-                    hedgehog:starHalf="@mipmap/banxing_icon"
-                    hedgehog:starImageHeight="16dp"
-                    hedgehog:starImagePadding="3dp"
-                    hedgehog:starImageWidth="16dp"/>
+                    android:layout_marginTop="@dimen/margin_12dp"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@+id/rb_5"
-                    android:gravity="center"
-                    android:text="评价"
-                    android:textColor="@color/font_black_999"
-                    android:textSize="@dimen/font_22px"/>
+                    <com.hedgehog.ratingbar.RatingBar
+                        android:id="@+id/rb_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        hedgehog:clickable="false"
+                        hedgehog:halfstart="true"
+                        hedgehog:starCount="5"
+                        hedgehog:starEmpty="@mipmap/kongxing_icon"
+                        hedgehog:starFill="@mipmap/xing_icon"
+                        hedgehog:starHalf="@mipmap/banxing_icon"
+                        hedgehog:starImageHeight="16dp"
+                        hedgehog:starImagePadding="3dp"
+                        hedgehog:starImageWidth="16dp"/>
 
-                <TextView
-                    android:id="@+id/tv_service"
-                    style="@style/text_12_black_999"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/margin_16dp"
-                    android:text="约服人次: ---"/>
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@+id/rb_5"
+                        android:gravity="center"
+                        android:text="评价"
+                        android:textColor="@color/font_black_999"
+                        android:textSize="@dimen/font_22px"/>
 
-            <View
-                style="@style/divider_1px"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="@dimen/margin_12dp"/>
+                    <TextView
+                        android:id="@+id/tv_service"
+                        style="@style/text_12_black_999"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_16dp"
+                        android:text="约服人次: ---"/>
+                </RelativeLayout>
+
+                <View
+                    style="@style/divider_1px"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="@dimen/margin_12dp"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_my_service"
@@ -190,15 +197,15 @@
                     android:id="@+id/fn_my_service"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_12dp"
                     android:layout_marginRight="@dimen/margin_12dp"
                     android:layout_toLeftOf="@+id/tv_service_right"
                     android:layout_toRightOf="@+id/tv_my_service"
                     android:clickable="true"
-                    nex3z:flow="false"
                     nex3z:childSpacing="6dp"
+                    nex3z:flow="false"
                     nex3z:rtl="true"/>
 
                 <TextView
@@ -218,40 +225,49 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"/>
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/ll_trade"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-                android:gravity="center_vertical"
                 android:paddingLeft="@dimen/margin_16dp"
-                android:paddingRight="@dimen/margin_16dp">
+                android:paddingRight="@dimen/margin_16dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    >
+
+                    <TextView
+                        style="@style/text_14_black_28"
+                        android:layout_gravity="center_vertical"
+                        android:text="我的交易额"/>
+
+                    <TextView
+                        android:id="@+id/tv_sale_user_money"
+                        style="@style/text_14_black_28"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/margin_12dp"
+                        android:layout_toLeftOf="@+id/tv_sale_num"
+                        android:text=""
+                        android:textColor="@color/font_main"/>
+
+                    <TextView
+                        android:id="@+id/tv_sale_num"
+                        style="@style/text_14_black_28"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:text=""/>
 
 
-                <TextView
-                    style="@style/text_14_black_28"
-                    android:layout_gravity="center_vertical"
-                    android:text="我的交易额"/>
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_sale_user_money"
-                    style="@style/text_14_black_28"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/margin_12dp"
-                    android:layout_toLeftOf="@+id/tv_sale_num"
-                    android:text=""
-                    android:textColor="@color/font_main"/>
+                <View
+                    style="@style/divider_1px"/>
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_sale_num"
-                    style="@style/text_14_black_28"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center_vertical"
-                    android:text=""/>
-            </RelativeLayout>
-
-            <View
-                style="@style/divider_1px"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

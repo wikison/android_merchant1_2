@@ -95,6 +95,7 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             merchantList = merchant.merchantList;
 
         }
+
         @Override
         public int getCount() {
             return merchantList.size();
@@ -148,13 +149,17 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 holder.rb5.setStar(0);
             }
             holder.tvComment.setText(m.commentNumber + "人评价");
-            holder.tvService.setText("服务" + m.saleNum+"人次");
+            holder.tvService.setText("服务" + m.saleNum + "人次");
             holder.tvSaleUserMoney.setText(String.format("%s", Convert.getMoneyString(m.saleMoney)));
             holder.tvSaleNum.setText(String.format("共计%s笔交易", m.saleNum));
             if (m.reviewstatus != 2) {
+                holder.llRate.setVisibility(View.GONE);
+                holder.llTrade.setVisibility(View.GONE);
                 holder.rlQrShare.setVisibility(View.GONE);
                 holder.llNoAdd.setVisibility(View.VISIBLE);
             } else {
+                holder.llRate.setVisibility(View.VISIBLE);
+                holder.llTrade.setVisibility(View.VISIBLE);
                 holder.rlQrShare.setVisibility(View.VISIBLE);
                 holder.llNoAdd.setVisibility(View.GONE);
             }
@@ -267,6 +272,10 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             TextView tvServiceRight;
             @Bind(R.id.rl_my_service)
             RelativeLayout rlMyService;
+            @Bind(R.id.ll_rate)
+            LinearLayout llRate;
+            @Bind(R.id.ll_trade)
+            LinearLayout llTrade;
             @Bind(R.id.tv_sale_user_money)
             TextView tvSaleUserMoney;
             @Bind(R.id.tv_sale_num)
