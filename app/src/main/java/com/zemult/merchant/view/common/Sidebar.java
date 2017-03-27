@@ -40,6 +40,11 @@ public class Sidebar extends View {
         mListView = listView;
     }
 
+    public void setSections(String[] sections){
+        this.sections = sections;
+        invalidate();
+    }
+
 
     public Sidebar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,9 +52,10 @@ public class Sidebar extends View {
         init();
     }
 
-    private String[] sections = new String[]{"", "#", "A", "B", "C", "D",
-            "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-            "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+//    private String[] sections = new String[]{"", "#", "A", "B", "C", "D",
+//            "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+//            "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private String[] sections = new String[]{"#"};
 
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -63,7 +69,8 @@ public class Sidebar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float center = getWidth() / 2;
-        height = getHeight() / sections.length;
+//        height = getHeight() / sections.length;
+        height = 30;
         for (int i = sections.length - 1; i > -1; i--) {
             canvas.drawText(sections[i], center, height * (i + 1), paint);
         }

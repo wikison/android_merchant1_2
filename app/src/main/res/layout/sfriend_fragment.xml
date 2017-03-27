@@ -68,6 +68,7 @@
     </LinearLayout>
 
 
+    <View style="@style/divider"/>
     <TextView
         android:visibility="gone"
         android:id="@+id/tv_nodata"
@@ -92,12 +93,26 @@
             android:divider="@null"
             android:fastScrollEnabled="false" />
 
-        <com.zemult.merchant.view.common.Sidebar
-            android:id="@+id/sidebar"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_marginTop="55dp"
             android:layout_alignParentRight="true"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/sousuo_black_icon"/>
+        </LinearLayout>
+
+
+        <com.zemult.merchant.view.common.Sidebar
             android:layout_marginTop="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="25dp"
+            android:id="@+id/sidebar"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:clickable="true" />
 

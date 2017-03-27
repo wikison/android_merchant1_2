@@ -224,9 +224,8 @@ public class FamiliarFragment extends BaseFragment {
                         } else {
                             adapter.setData(filtercontacts, num);
                         }
-
+                        sidebar.setSections((String[]) adapter.getSections());
                     }
-
                 } else {
                     ToastUtils.show(getActivity(), ((APIM_UserFansList) response).info);
                 }
