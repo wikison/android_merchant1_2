@@ -60,4 +60,9 @@ public class DensityUtil {
     public static int dp2px(int dp) {
         return Math.round(dp * DENSITY);
     }
+
+    public static int dp3px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 }
