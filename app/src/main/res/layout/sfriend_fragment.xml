@@ -116,17 +116,33 @@
             android:background="@android:color/transparent"
             android:clickable="true" />
 
-        <TextView
+        <com.flyco.roundview.RoundTextView
             android:id="@+id/floating_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/show_head_toast_bg"
             android:gravity="center"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textColor="@android:color/white"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:text="R"
+            android:layout_centerInParent="true"
+            app:rv_backgroundColor="@color/half_transparent"
+            app:rv_cornerRadius="12px"
+            android:textColor="@color/bg_head"
             android:textSize="40sp"
-            android:visibility="invisible" />
+            android:textStyle="bold"
+            android:visibility="invisible"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/floating_header"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@drawable/show_head_toast_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingLeft="25dp"-->
+            <!--android:paddingRight="25dp"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="40sp" />-->
     </RelativeLayout>
 </LinearLayout>

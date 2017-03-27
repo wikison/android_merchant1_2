@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.friend.ContactsNewAdapter;
 import com.zemult.merchant.util.DensityUtil;
@@ -116,7 +117,7 @@ public class Sidebar extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 if (header == null) {
-                    header = (TextView) ((View) getParent()).findViewById(R.id.floating_header);
+                    header = (RoundTextView) ((View) getParent()).findViewById(R.id.floating_header);
                 }
                 setHeaderTextAndscroll(event);
                 header.setVisibility(View.VISIBLE);
