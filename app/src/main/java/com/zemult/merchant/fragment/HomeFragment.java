@@ -125,8 +125,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
-
-    private int llTop;
+    private LinearLayoutManager linearLayoutManager;
 
     @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
@@ -301,6 +300,19 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 //                startActivity(intent);
 //            }
 //        });
+        headerHomeView.setOnIndustryClickListener(new HeaderHomeView.OnIndustryListener() {
+            @Override
+            public void onIndustryClick(int industryId) {
+                industryAdapter.setSelectedId(industryId);
+            }
+
+            @Override
+            public void onIndustryMove(int pos, int offsetLeft) {
+                linearLayoutManager.scrollToPositionWithOffset(pos, offsetLeft);
+            }
+        });
+
+
     }
 
     private void initLocation() {
@@ -410,15 +422,34 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     if (!((APIM_CommonGetallindustry) response).industryList.isEmpty()) {
                         headerHomeView.setVpIndustrys(((APIM_CommonGetallindustry) response).industryList);
+                        
+                        List<M_Industry> industryList = ((APIM_CommonGetallindustry) response).industryList;
                         //设置布局管理器
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                        linearLayoutManager = new LinearLayoutManager(mContext);
                         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         rvTop.setLayoutManager(linearLayoutManager);
                         //设置适配器
-                        industryAdapter = new AllIndustryAdapter(mContext, ((APIM_CommonGetallindustry) response).industryList);
+                        industryAdapter = new AllIndustryAdapter(mContext,industryList);
                         rvTop.setAdapter(industryAdapter);
 
                         industryAdapter.setSelectedId(((APIM_CommonGetallindustry) response).industryList.get(0).id);
+                        industryAdapter.setOnItemClickLitener(new AllIndustryAdapter.OnItemClickLitener() {
+                            @Override
+                            public void onItemClick(int industryId) {
+                                headerHomeView.setSelectedId(industryId);
+                            }
+                        });
+                        rvTop.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                            @Override
+                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                super.onScrollStateChanged(recyclerView, newState);
+                                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                                    int position = linearLayoutManager.findFirstVisibleItemPosition();
+                                    View current = linearLayoutManager.findViewByPosition(position);
+                                    headerHomeView.onMove(position, current.getLeft());
+                                }
+                            }
+                        });
                     }
                 } else {
                     ToastUtils.show(mContext, ((APIM_CommonGetallindustry) response).info);

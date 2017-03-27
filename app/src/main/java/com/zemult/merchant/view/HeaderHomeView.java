@@ -1,11 +1,9 @@
 package com.zemult.merchant.view;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -14,7 +12,6 @@ import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.util.DensityUtil;
-import com.zemult.merchant.util.ToastUtil;
 
 import java.util.List;
 
@@ -45,6 +42,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     private AllIndustryAdapter mAdapter;
 //    private ArrayList<View> pageViews;
 //    private List<HomeIndustryAdapter> industryAdapters;
+    private LinearLayoutManager linearLayoutManager;
 
     public HeaderHomeView(Activity context) {
         super(context);
@@ -64,13 +62,13 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     }
 
     public void setVpIndustrys(List<M_Industry> industryList) {
-//        M_Industry industry = new M_Industry();
-//        industry.name = "全部";
-//        industry.id = -1;
-//
-//        industryList.add(0, industry);
+        M_Industry industry = new M_Industry();
+        industry.name = "全部";
+        industry.id = -1;
+
+        industryList.add(0, industry);
         //设置布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rv.setLayoutManager(linearLayoutManager);
         //设置适配器
@@ -78,11 +76,36 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         rv.setAdapter(mAdapter);
 
         mAdapter.setSelectedId(industryList.get(0).id);
+        mAdapter.setOnItemClickLitener(new AllIndustryAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(int industryId) {
+                if(onIndustryListener!=null)
+                    onIndustryListener.onIndustryClick(industryId);
+            }
+        });
+
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    int position = linearLayoutManager.findFirstVisibleItemPosition();
+                    View current = linearLayoutManager.findViewByPosition(position);
+
+                    if(onIndustryListener!=null)
+                        onIndustryListener.onIndustryMove(position, current.getLeft());
+
+                }
+            }
+        });
     }
 
 
     public void setSelectedId(int id) {
         mAdapter.setSelectedId(id);
+    }
+    public void onMove(int pos, int offsetLeft) {
+        linearLayoutManager.scrollToPositionWithOffset(pos, offsetLeft);
     }
 
 //    public void setVpIndustrys(List<M_Industry> industryList) {
@@ -172,14 +195,15 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
 //        }
 //    }
 //
-//    public interface OnHeaderClickListener {
-//        void onTabClick(int industryId, String industryName);
-//    }
-//
-//    private OnHeaderClickListener headerClickListener;
-//
-//    public void setOnHeaderClickListener(OnHeaderClickListener headerClickListener) {
-//        this.headerClickListener = headerClickListener;
-//    }
+    public interface OnIndustryListener {
+        void onIndustryClick(int industryId);
+        void onIndustryMove(int pos, int offsetLeft);
+    }
+
+    private OnIndustryListener onIndustryListener;
+
+    public void setOnIndustryClickListener(OnIndustryListener onIndustryListener) {
+        this.onIndustryListener = onIndustryListener;
+    }
 
 }
