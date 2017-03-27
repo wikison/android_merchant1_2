@@ -26,7 +26,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="绑卡后会实名认证，认证后无法修改身份信息!"
+            android:text="绑卡后会实名认证 认证后无法修改身份信息"
             android:textColor="@color/bg_head"
             android:textSize="@dimen/font_22px" />
 
