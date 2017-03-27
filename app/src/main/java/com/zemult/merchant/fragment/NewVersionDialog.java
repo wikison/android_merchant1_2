@@ -55,7 +55,7 @@ public class NewVersionDialog extends DialogFragment {
         tvVersion.setText("版本:v" + updateBean.getVersion());
         builder.setView(view)
                 .setTitle("有新的客户端")
-                .setPositiveButton("朕准了",
+                .setPositiveButton("立即升级",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
@@ -64,7 +64,7 @@ public class NewVersionDialog extends DialogFragment {
                                 }
                             }
                         })
-                .setNegativeButton("就不要",
+                .setNegativeButton("暂不升级",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
