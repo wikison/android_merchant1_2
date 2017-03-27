@@ -291,15 +291,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 IntentUtil.start_activity(mActivity, SearchHotActivity.class);
             }
         });
-//        headerHomeView.setOnHeaderClickListener(new HeaderHomeView.OnHeaderClickListener() {
-//            @Override
-//            public void onTabClick(int industryId, String industryName) {
-//                Intent intent = new Intent(mContext, AllChangjingActivity.class);
-//                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_ID, industryId);
-//                intent.putExtra(AllChangjingActivity.INTENT_INDUSTYR_NAME, industryName);
-//                startActivity(intent);
-//            }
-//        });
         headerHomeView.setOnIndustryClickListener(new HeaderHomeView.OnIndustryListener() {
             @Override
             public void onIndustryClick(int industryId) {
@@ -463,7 +454,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private UserReservationListRequest userReservationListRequest;
 
     private void userReservationList() {
-
         if (userReservationListRequest != null) {
             userReservationListRequest.cancel();
         }

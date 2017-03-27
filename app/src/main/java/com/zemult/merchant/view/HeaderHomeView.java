@@ -1,6 +1,7 @@
 package com.zemult.merchant.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,11 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.util.DensityUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -61,8 +64,8 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         headerAdViewView.fillView(advertList, llAdContainer);
     }
 
-    public void setVpIndustrys(List<M_Industry> industryList) {
-        M_Industry industry = new M_Industry();
+    public void setVpIndustrys(final List<M_Industry> industryList) {
+        final M_Industry industry = new M_Industry();
         industry.name = "全部";
         industry.id = -1;
 
@@ -96,6 +99,15 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
                         onIndustryListener.onIndustryMove(position, current.getLeft());
 
                 }
+            }
+        });
+
+        llMerchant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AllChangjingActivity.class);
+                intent.putExtra("industryList", (Serializable) industryList);
+                mContext.startActivity(intent);
             }
         });
     }

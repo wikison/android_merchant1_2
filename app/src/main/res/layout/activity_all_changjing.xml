@@ -6,51 +6,23 @@
     android:background="@color/bg_f2">
 
     <com.zemult.merchant.view.SearchView
+        android:visibility="gone"
         android:id="@+id/searchview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.zemult.merchant.view.SearchView>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/divider_c1">-->
+    <include layout="@layout/layout_head"/>
 
-        <!--<com.flyco.roundview.RoundLinearLayout-->
-            <!--android:id="@+id/rll_search_bg"-->
-            <!--android:layout_marginLeft="16dp"-->
-            <!--android:layout_marginRight="16dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:gravity="left|center_vertical"-->
-            <!--app:rv_backgroundColor="@color/white"-->
-            <!--app:rv_cornerRadius="16dp"-->
-            <!--app:rv_strokeColor="#c1c1c1"-->
-            <!--app:rv_strokeWidth="1px">-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="38dp">
 
-            <!--<ImageView-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp"-->
-                <!--android:layout_marginLeft="12dp"-->
-                <!--android:src="@mipmap/sousuo_black_icon" />-->
+    </android.support.v7.widget.RecyclerView>
 
-            <!--<EditText-->
-                <!--android:gravity="center"-->
-                <!--android:imeOptions="actionSearch"-->
-                <!--android:id="@+id/et_search"-->
-                <!--style="@style/topbar_edit_text"-->
-                <!--android:layout_marginLeft="-20dp"-->
-                <!--android:paddingLeft="30dp"-->
-                <!--android:paddingRight="30dp"-->
-                <!--android:hint="请输入商户名称" />-->
-        <!--</com.flyco.roundview.RoundLinearLayout>-->
-
-    <!--</LinearLayout>-->
-
+    <View style="@style/divider"/>
 
     <FrameLayout
         android:id="@+id/fl"
