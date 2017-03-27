@@ -163,11 +163,14 @@ public class BindCardOneFragment extends BaseFragment {
             @Override
             public void onResponse(final Object response) {
                 if (((CommonResult) response).status == 1) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.JIE_JI_KA);
-                    bundle.putString(BindCardTwoFragment.BANK_NAME, ((CommonResult) response).bankName);
-                    bundle.putString(BindCardTwoFragment.CARD_NUM, etBankcard.getText().toString());
-                    fragmentCallBack.showTwo(bundle);
+                    if(((CommonResult) response).isFit == 1){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(BindCardTwoFragment.CARD_TYPE, BindCardTwoFragment.JIE_JI_KA);
+                        bundle.putString(BindCardTwoFragment.BANK_NAME, ((CommonResult) response).bankName);
+                        bundle.putString(BindCardTwoFragment.CARD_NUM, etBankcard.getText().toString());
+                        fragmentCallBack.showTwo(bundle);
+                    }else
+                        tvError.setText("请填写正确的卡号");
                 } else
                     tvError.setText(((CommonResult) response).info);
 

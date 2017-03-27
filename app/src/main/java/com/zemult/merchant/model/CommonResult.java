@@ -106,5 +106,7 @@ public class CommonResult {
     public String createtime;//创建时间(格式"yyyy-MM-dd HH:mm:ss")
     @Expose
     public int preId;//预邀单id
+    @Expose
+    public int isFit;//是否符合要求(0:否，1:是----信用卡类型和无法识别的银行卡都不符合要求)
 
 }

@@ -6,24 +6,18 @@
     android:orientation="vertical">
 
     <TextView
+        android:visibility="gone"
+        style="@style/text_15_black_28"
+        android:textStyle="bold"
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/bg_e5"
-        android:paddingBottom="2dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="2dp"
-        android:textColor="@color/contact_friend_list_Letter"
-        android:textSize="13sp"
-        android:visibility="gone" />
+        android:layout_height="25dp"
+        android:background="@color/bg_f2"
+        android:paddingLeft="10dp" />
 
 
-    <ImageView
-        android:id="@+id/headline"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/bg_e5"
-        />
+    <View style="@style/divider"
+        android:id="@+id/headline"/>
 
     <RelativeLayout
         style="@style/margin_lr_12dp"

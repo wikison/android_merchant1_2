@@ -164,6 +164,9 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
 
             smoothListView.setLoadMoreEnable(page < maxpage);
             mAdapter.setData(list, isLoadMore);
+
+            if(!isLoadMore)
+                smoothListView.setSelection(0);
         }
     }
 
@@ -181,5 +184,11 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     @Override
     public void onLoadMore() {
         merchant_firstpage_search_List(true);
+    }
+
+    public void setIndustryIdAndSearch(int industryId) {
+        this.industryId = industryId;
+        showPd();
+        merchant_firstpage_search_List(false);
     }
 }

@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.slash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,8 @@ public class BeManagerSuccessActivity extends BaseActivity {
         lhTvTitle.setText("成为服务管家");
         name = getIntent().getStringExtra(TabManageActivity.NAME);
         tvName.setText('"' + name + '"' );
+        if(name.length() > 10 )
+            tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
 
         sharePopWindow = new SharePopwindow(BeManagerSuccessActivity.this, new SharePopwindow.OnItemClickListener() {
             @Override

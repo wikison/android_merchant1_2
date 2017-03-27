@@ -65,7 +65,7 @@
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/tv_readandconsent"
             android:text="《用户协议》"
-            android:textColor="#999"
+            android:textColor="@color/bg_head"
             android:padding="3dp"
             android:textSize="@dimen/font_24px" />
 
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="注：仅支持借记卡绑定"
+            android:text="注：仅支持招商银行借记卡绑定"
             android:textColor="#d84f42"
             android:padding="3dp"
             android:textSize="@dimen/font_24px"/>

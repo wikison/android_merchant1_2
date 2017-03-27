@@ -70,7 +70,7 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		holder.tv_follow_name = (TextView) convertView.findViewById(R.id.tv_follow_name);
 		holder.tv_status = (TextView) convertView.findViewById(R.id.tv_status);
 		holder.tv_rname = (TextView) convertView.findViewById(R.id.tv_rname);
-		holder.headline = (ImageView) convertView.findViewById(R.id.headline);
+		holder.headline = (View) convertView.findViewById(R.id.headline);
 		holder.tvHeader = (TextView) convertView.findViewById(R.id.header);
 
 		convertView.setTag(holder);
@@ -88,7 +88,7 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 				holder.tvHeader.setVisibility(View.GONE);
 				holder.headline.setVisibility(View.VISIBLE);
 			} else {
-				holder.headline.setVisibility(View.VISIBLE);
+				holder.headline.setVisibility(View.GONE);
 				holder.tvHeader.setVisibility(View.VISIBLE);
 				holder.tvHeader.setText(header);
 			}
@@ -123,7 +123,7 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		TextView tv_status;
 		TextView tv_rname;
 		TextView tvHeader;
-		ImageView headline;
+		View headline;
 
 
 	}
@@ -162,19 +162,27 @@ public class ContactsNewAdapter extends ArrayAdapter<M_Fan> implements
 		sectionOfPosition = new SparseIntArray();
 		int count = getCount();
 		List<String> list = new ArrayList<String>();
-		list.add(getContext().getString(R.string.search_header));
-		positionOfSection.put(0, 0);
-		sectionOfPosition.put(0, 0);
-		for (int i = 1; i < count; i++) {
+//		list.add(getContext().getString(R.string.search_header));
+//		positionOfSection.put(0, 0);
+//		sectionOfPosition.put(0, 0);
+		for (int i = 0; i < count; i++) {
 			String letter = getItem(i).getHeader();
-			int section = list.size() - 1;
-			if (list.get(section) != null && !list.get(section).equals(letter)) {
+			if(list.isEmpty()){
 				list.add(letter);
-				section++;
-				positionOfSection.put(section, i);
+				positionOfSection.put(0, i);
+			}else {
+				int section = list.size() - 1;
+				if (list.get(section) != null && !list.get(section).equals(letter)) {
+					list.add(letter);
+					section++;
+					positionOfSection.put(section, i);
+				}
+				sectionOfPosition.put(i, section);
 			}
-			sectionOfPosition.put(i, section);
 		}
+		list.add("#");
+		positionOfSection.put(count, 0);
+		sectionOfPosition.put(count, 0);
 		return list.toArray(new String[list.size()]);
 	}
 
