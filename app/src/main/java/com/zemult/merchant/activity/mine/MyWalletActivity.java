@@ -93,7 +93,8 @@ public class MyWalletActivity extends BaseActivity {
         isConfirm = SlashHelper.userManager().getUserinfo().isConfirm;//是否实名认证过(0:否1:是)
 
         if (isfirstload) {
-            tvMoney.setText(mymoney+"");
+          //  tvMoney.setText(mymoney+"");
+            tvMoney.setText("" + (mymoney == 0.0 ? "0.00" :  Convert.getMoneyString(mymoney)));
 //            tvMoney.withNumber((float) mymoney);
 //            tvMoney.setDuration(1000);
 //            tvMoney.start();
