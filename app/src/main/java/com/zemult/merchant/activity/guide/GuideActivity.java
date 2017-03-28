@@ -87,16 +87,7 @@ public class GuideActivity extends FragmentActivity {
 
 
         //initView();
-//		viewPage.setOnPageChangeListener(new MyPagerChangeListener());
-//
-//        viewPage.setPageTransformer(false, new ViewPager.PageTransformer() {
-//			@Override
-//			public void transformPage(View page, float position) {
-//				final float normalizedposition = Math.abs(Math.abs(position) - 1);
-//				page.setScaleX(normalizedposition / 2 + 0.5f);
-//				page.setScaleY(normalizedposition / 2 + 0.5f);
-//			}
-//		});
+
         mVideoView.setVideoURI(Uri.parse(getVideoPath()));
 
         doplayvideo();
@@ -120,7 +111,7 @@ public class GuideActivity extends FragmentActivity {
             public void onPageSelected(int position) {
                 mCurrentPage = position;
                 mIndicator.setSelected(mCurrentPage);
-             //   startLoop();
+                //   startLoop();
             }
 
             @Override
@@ -164,7 +155,7 @@ public class GuideActivity extends FragmentActivity {
         return "android.resource://" + this.getPackageName() + "/" + R.raw.intro_video;
     }
 
-    private void doplayvideo(){
+    private void doplayvideo() {
         //播放
         mVideoView.start();
         //循环播放
@@ -175,7 +166,6 @@ public class GuideActivity extends FragmentActivity {
             }
         });
     }
-
 
 
 //    /**
@@ -260,12 +250,13 @@ public class GuideActivity extends FragmentActivity {
         switch (view.getId()) {
             case R.id.login_btn:
                 it = new Intent(this, LoginActivity.class);
-                startActivityForResult(it,1);
+                startActivityForResult(it, 1);
 
                 break;
             case R.id.register_btn:
                 it = new Intent(this, RegisterActivity.class);
-                startActivity(it);
+                startActivityForResult(it, 1);
+
                 break;
             case R.id.weixinlog_iv:
 
@@ -303,18 +294,20 @@ public class GuideActivity extends FragmentActivity {
         }
     }
 
+
     @Override
-    protected void onDestroy() {
-        if (null != mLoop) {
-            mLoop.unsubscribe();
-        }
+    public void onDestroy() {
         super.onDestroy();
+        if (mVideoView != null) {
+            mVideoView.stopPlayback();
+        }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1&&resultCode==RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             it = new Intent(GuideActivity.this, MainActivity.class);
             startActivity(it);
         }

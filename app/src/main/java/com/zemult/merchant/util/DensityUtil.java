@@ -65,4 +65,15 @@ public class DensityUtil {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
+    public static int dp4px(Context context, float dp) {
+        //获取设备密度
+        float density = context.getResources().getDisplayMetrics().density;
+        //4.3, 4.9, 加0.5是为了四舍五入
+        int px = (int) (dp * density + 0.5f);
+        return px;
+    }
+
+
+
 }
