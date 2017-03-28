@@ -142,6 +142,35 @@
             </RelativeLayout>
 
             <include layout="@layout/include_devider1dp_layout"/>
+            <RelativeLayout
+                android:id="@+id/rl_wx"
+                style="@style/layout_item_click"
+                android:clickable="true">
+
+                <TextView
+                    style="@style/my_mini_text"
+                    android:drawableLeft="@mipmap/weixin_icon2"
+                    android:layout_centerVertical="true"
+                    android:text="微信账号"/>
+                <TextView
+                    android:id="@+id/tv_wx_tip"
+                    android:layout_marginRight="16dp"
+                    android:layout_toLeftOf="@+id/iv"
+                    style="@style/my_mini_text"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/bg_head" />
+
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
+                    android:background="@mipmap/right_btn"/>
+            </RelativeLayout>
+
+            <include layout="@layout/include_devider1dp_layout"/>
         </LinearLayout>
     </ScrollView>
 

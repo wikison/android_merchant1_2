@@ -160,13 +160,16 @@ dependencies {
     compile project(':library')
     compile files('libs/alipaySingle-20161009.jar')
     //必选
+
     //可选，如果使用SDK的UI必须添加该依赖，如果不使用SDK的UI，完全自己开发UI则无需添加该依赖
-    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
-//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
-    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
-//    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
 
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
 
+    //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+
+    //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
+
+    //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
@@ -200,4 +203,5 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile files('libs/libammsdk.jar')
 }

@@ -486,7 +486,10 @@ public class Urls {
     public static String COMMON_SIGN_NUMBER = "common_sign_number";
     //搜索用户(手机号或者昵称)--精确搜索
     public static String USER_SEARCHUSER_PHONE = "user_searchuser_phone";
-
+    //微信支付
+    public static String WXPAY_APPLYPAY = "wxpay_applyPay";
+    //设置支付单为微信支付
+    public static String USER_PAY_SETWX = "user_pay_setwx";
     //我的订单
     public static String USER_PAYLIST = "user_payList";
     //订单详情
@@ -592,5 +595,16 @@ public class Urls {
     public static String MERCHANT_PIC_NOTE_LIST = "merchant_pic_noteList";
     //判断用户是否可以申请商家的服务管家
     public static String USER_CHECK_SALEUSER_1_2_2 = "user_check_saleuser_1_2_2";
-
+    //根据微信号获取绑定的用户信息
+    public static String USER_WX_BAND_USER = "user_wx_band_user";
+    //获取手机号是否绑定微信账号
+    public static String USER_BAND_WX_INFO_PHONE = "user_band_wx_info_phone";
+    //微信授权并绑定手机号登陆(注册)
+    public static String USER_LOGIN_WX = "user_login_wx";
+    //获取用户是否绑定微信账号
+    public static String USER_BAND_WX_INFO = "user_band_wx_info";
+    //绑定微信账号
+    public static String USER_BAND_WX = "user_band_wx";
+    //用户解绑微信账号
+    public static String USER_BAND_WX_DEL = "user_band_wx_del";
 }

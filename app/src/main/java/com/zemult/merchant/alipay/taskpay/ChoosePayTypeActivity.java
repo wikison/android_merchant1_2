@@ -24,12 +24,17 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.alipay.sdk.app.PayTask;
 import com.android.volley.VolleyError;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.SendPresentActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.common.CommonSignNumberRequest;
+import com.zemult.merchant.aip.common.WxPayApplyPayRequest;
 import com.zemult.merchant.aip.mine.UserMerchantPayRequest;
+import com.zemult.merchant.aip.mine.UserPaySetWxRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
@@ -40,6 +45,7 @@ import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Present;
+import com.zemult.merchant.model.M_WxData;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
@@ -125,69 +131,17 @@ public class ChoosePayTypeActivity extends BaseActivity {
     private int userPayId = 0;
     UserMerchantPayRequest userMerchantPayRequest;
     CommonSignNumberRequest commonSignNumberRequest;
+    UserPaySetWxRequest userPaySetWxRequest;
+    WxPayApplyPayRequest wxPayApplyPayRequest;
     double paymoney, truepaymoney;
     String merchantName = "", merchantHead = "", managerhead = "", managername = "";
     int payType, toUserId;
     MerchantInfoRequest merchantInfoRequest;
     int merchantId;
-
+    private IWXAPI api;
 
     M_Present m_present;
     M_Merchant m_merchant;
-
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @SuppressWarnings("unused")
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case SDK_PAY_FLAG: {
-                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                    String resultInfo = payResult.getResult();
-                    // 同步返回需要验证的信息
-                    String resultStatus = payResult.getResultStatus();
-                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        if (null != m_present) {
-                            sendPayGiftMsg();
-                        } else {
-                            if ("赞赏".equals(merchantName)) {
-                                sendPayMoneyMsg();
-                            } else {
-                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
-                                intent.putExtra("managerhead", managerhead);
-                                intent.putExtra("paymoney", paymoney);
-                                intent.putExtra("managername", managername);
-                                intent.putExtra("merchantName", merchantName);
-                                intent.putExtra("userPayId", userPayId);
-                                intent.putExtra("imMessageTitle", getIntent().getStringExtra("imMessageTitle"));
-                                intent.putExtra("imMessageContent", getIntent().getStringExtra("imMessageContent"));
-                                startActivityForResult(intent, 1000);
-                            }
-
-                        }
-
-                    } else {
-                        // 判断resultStatus 为非"9000"则代表可能支付失败
-                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
-                        if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(ChoosePayTypeActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(ChoosePayTypeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-
-        ;
-    };
 
     @Override
     public void setContentView() {
@@ -230,6 +184,8 @@ public class ChoosePayTypeActivity extends BaseActivity {
             }
 
         }
+
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
 
         payType = 1;
         cbZhifubaopay.setChecked(true);
@@ -409,7 +365,11 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择一种支付方式");
                     return;
                 }
-                userTaskPayRequest();
+                if (payType == 1) {
+                    userTaskPayRequest();
+                } else if (payType == 2) {
+                    userPaySetWx();
+                }
 
                 break;
         }
@@ -499,8 +459,6 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
     private void commonSignNumber() {
         try {
-            showPd();
-
             if (commonSignNumberRequest != null) {
                 commonSignNumberRequest.cancel();
             }
@@ -521,6 +479,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
                         alipay(((CommonResult) response).orderStr);
+
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -528,6 +487,86 @@ public class ChoosePayTypeActivity extends BaseActivity {
                 }
             });
             sendJsonRequest(commonSignNumberRequest);
+        } catch (Exception e) {
+            dismissPd();
+        }
+    }
+
+    //设置支付单为微信支付
+    private void userPaySetWx() {
+        try {
+            if (userPaySetWxRequest != null) {
+                userPaySetWxRequest.cancel();
+            }
+            UserPaySetWxRequest.Input input = new UserPaySetWxRequest.Input();
+            input.userPayId = userPayId;
+            input.convertJosn();
+
+            userPaySetWxRequest = new UserPaySetWxRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dismissPd();
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        //调用微信支付
+                        wxPayApplyPay();
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(userPaySetWxRequest);
+        } catch (Exception e) {
+            dismissPd();
+        }
+    }
+
+    //获取微信支付参数
+    private void wxPayApplyPay() {
+        try {
+            if (wxPayApplyPayRequest != null) {
+                wxPayApplyPayRequest.cancel();
+            }
+            WxPayApplyPayRequest.Input input = new WxPayApplyPayRequest.Input();
+            input.userPayId = userPayId;
+            input.convertJosn();
+
+            wxPayApplyPayRequest = new WxPayApplyPayRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    ToastUtil.showMessage(error.toString());
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        M_WxData m_wxData = ((CommonResult) response).wxdata;
+                        //调用微信支付
+                        PayReq req = new PayReq();
+                        req.appId = m_wxData.appid;
+                        req.partnerId = m_wxData.partnerid;
+                        req.prepayId = m_wxData.prepayid;
+                        req.nonceStr = m_wxData.noncestr;
+                        req.timeStamp = m_wxData.timestamp;
+                        req.packageValue = "Sign=WXPay";
+                        req.sign = m_wxData.sign;
+                        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                        api.sendReq(req);
+
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(wxPayApplyPayRequest);
         } catch (Exception e) {
             dismissPd();
         }
@@ -559,6 +598,59 @@ public class ChoosePayTypeActivity extends BaseActivity {
         Thread payThread = new Thread(payRunnable);
         payThread.start();
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    String resultInfo = payResult.getResult();
+                    // 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Toast.makeText(ChoosePayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        if (null != m_present) {
+                            sendPayGiftMsg();
+                        } else {
+                            if ("赞赏".equals(merchantName)) {
+                                sendPayMoneyMsg();
+                            } else {
+                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                intent.putExtra("managerhead", managerhead);
+                                intent.putExtra("paymoney", paymoney);
+                                intent.putExtra("managername", managername);
+                                intent.putExtra("merchantName", merchantName);
+                                intent.putExtra("userPayId", userPayId);
+                                intent.putExtra("imMessageTitle", getIntent().getStringExtra("imMessageTitle"));
+                                intent.putExtra("imMessageContent", getIntent().getStringExtra("imMessageContent"));
+                                startActivityForResult(intent, 1000);
+                            }
+
+                        }
+
+                    } else {
+                        // 判断resultStatus 为非"9000"则代表可能支付失败
+                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(ChoosePayTypeActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(ChoosePayTypeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
