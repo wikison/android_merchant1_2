@@ -14,11 +14,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.ThirdBandPhoneActivity;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
@@ -34,6 +39,8 @@ import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.DigestUtils;
@@ -46,6 +53,7 @@ import zema.volley.network.ResponseListener;
 public class LoginActivity extends BaseActivity {
 
     private static final int REQ_FIND_PWD = 0x110;
+    private static final int REQ_THIRD_LOGIN = 0x120;
     @Bind(R.id.al_et_name)
     EditText etName;
     @Bind(R.id.al_et_pwd)
@@ -71,6 +79,7 @@ public class LoginActivity extends BaseActivity {
     UserLoginRequest user_login_request;
 
     private LoginSampleHelper loginHelper;
+    private UMShareAPI umShareAPI;
 
 
     @Override
@@ -81,8 +90,11 @@ public class LoginActivity extends BaseActivity {
                 etName.setText(data.getStringExtra("phone"));
                 etPwd.setText(data.getStringExtra("password"));
                 login();
+            }else if(requestCode == REQ_THIRD_LOGIN){
+                finish();
             }
         }
+        umShareAPI.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -94,7 +106,7 @@ public class LoginActivity extends BaseActivity {
     public void init() {
         initViews();
         loginHelper = LoginSampleHelper.getInstance();
-
+        umShareAPI = UMShareAPI.get(this);
     }
 
     private void initViews() {
@@ -302,4 +314,46 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
+    private void thirdLogin(){
+        umShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
+    }
+
+    private UMAuthListener doOauthVerifyListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, getPlatformInfoListener);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText( getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText( getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
+        }
+    };
+    private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            String nickname = data.get("nickname");
+            String head = data.get("headimgurl");
+
+            Intent intent = new Intent(LoginActivity.this, ThirdBandPhoneActivity.class);
+            intent.putExtra("nickname", nickname);
+            intent.putExtra("head", head);
+            startActivityForResult(intent, REQ_THIRD_LOGIN);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText( getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText( getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
+        }
+    };
 }

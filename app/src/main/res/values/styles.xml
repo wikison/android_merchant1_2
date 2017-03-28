@@ -166,6 +166,9 @@
     <style name="CheckboxReward" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkboxreward</item>
     </style>
+    <style name="CheckboxEye" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkboxeye</item>
+    </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/font_main</item>
