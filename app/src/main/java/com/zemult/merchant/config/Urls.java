@@ -486,7 +486,10 @@ public class Urls {
     public static String COMMON_SIGN_NUMBER = "common_sign_number";
     //搜索用户(手机号或者昵称)--精确搜索
     public static String USER_SEARCHUSER_PHONE = "user_searchuser_phone";
-
+    //微信支付
+    public static String WXPAY_APPLYPAY = "wxpay_applyPay";
+    //设置支付单为微信支付
+    public static String USER_PAY_SETWX = "user_pay_setwx";
     //我的订单
     public static String USER_PAYLIST = "user_payList";
     //订单详情

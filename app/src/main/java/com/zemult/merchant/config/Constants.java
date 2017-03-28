@@ -75,7 +75,7 @@ public class Constants {
     public static final String PROTOCOL_REGISTER = Urls.MAIN_URL + "html/dzyx_common/userProtocal.html";
     public static final String PROTOCOL_MERCHANT = Urls.MAIN_URL + "html/dzyx_common/merchantProtocal.html";
     public static final String URL_HELP = Urls.MAIN_URL + "html/help.html";
-    public static final  String PERINVITATIONFEEDBACKINFO=Urls.MAIN_URL+"dzyx/app/share_perInvitationfeedback_info.do?perId=";
+    public static final String PERINVITATIONFEEDBACKINFO = Urls.MAIN_URL + "dzyx/app/share_perInvitationfeedback_info.do?perId=";
     //服务管家等级
     public static String SERVICELEVEL = Urls.MAIN_URL + "html/dzyx_common/level.html";
     //服务管家协议
@@ -130,6 +130,8 @@ public class Constants {
     //订单超时时间
     public static int ORDER_EXPIRE_MINUTE = 30;
     public static int ORDER_EXPIRE_SECOND = 1800;
+
+    public static final String APP_ID = "wx0e6067b5bc878112";
 
 
 }
