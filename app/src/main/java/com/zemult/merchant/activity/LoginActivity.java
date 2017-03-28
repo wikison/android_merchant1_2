@@ -25,12 +25,14 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.ThirdBandPhoneActivity;
 import com.zemult.merchant.aip.common.UserLoginRequest;
-import com.zemult.merchant.app.AppApplication;
+import com.zemult.merchant.aip.common.UserWxBandUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
+import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
@@ -85,12 +87,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQ_FIND_PWD){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQ_FIND_PWD) {
                 etName.setText(data.getStringExtra("phone"));
                 etPwd.setText(data.getStringExtra("password"));
                 login();
-            }else if(requestCode == REQ_THIRD_LOGIN){
+            } else if (requestCode == REQ_THIRD_LOGIN) {
                 finish();
             }
         }
@@ -125,7 +127,7 @@ public class LoginActivity extends BaseActivity {
         btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
 
         String strLoginPhone = SlashHelper.getSettingString("last_login_phone", "");
-        if (!StringUtils.isBlank(strLoginPhone)&& strLoginPhone.length()==11){
+        if (!StringUtils.isBlank(strLoginPhone) && strLoginPhone.length() == 11) {
             imageManager.loadCircleHead(SlashHelper.getSettingString(strLoginPhone, ""), userIcon);
             etPwd.requestFocus();
         }
@@ -196,7 +198,7 @@ public class LoginActivity extends BaseActivity {
                         LoginActivity.this.finish();
                         break;
                     case R.id.al_tv_forget:
-                        Intent intent= new Intent(LoginActivity.this, FindPasswordActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
                         startActivityForResult(intent, REQ_FIND_PWD);
                         break;
                 }
@@ -287,7 +289,7 @@ public class LoginActivity extends BaseActivity {
                             }
 
                             @Override
-                            public  void onError(int errorCode, String errorMessage) {
+                            public void onError(int errorCode, String errorMessage) {
                                 loadingDialog.dismiss();
                                 if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
                                     Notification.showToastMsg(LoginActivity.this, "用户不存在");
@@ -314,7 +316,11 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    private void thirdLogin(){
+    @OnClick(R.id.iv_wx)
+    public void onClick() {
+        thirdLogin();
+    }
+    private void thirdLogin() {
         umShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
 
@@ -326,34 +332,74 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText( getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText( getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
         }
     };
     private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            String nickname = data.get("nickname");
-            String head = data.get("headimgurl");
-
-            Intent intent = new Intent(LoginActivity.this, ThirdBandPhoneActivity.class);
-            intent.putExtra("nickname", nickname);
-            intent.putExtra("head", head);
-            startActivityForResult(intent, REQ_THIRD_LOGIN);
+            user_wx_band_user( data.get("openid"), data.get("nickname"), data.get("headimgurl"));
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText( getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText( getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private UserWxBandUserRequest userWxBandUserRequest;
+    //根据微信号获取绑定的用户信息
+    private void user_wx_band_user(final String openid, final String nickname, final String head) {
+        loadingDialog.show();
+        if (userWxBandUserRequest != null) {
+            userWxBandUserRequest.cancel();
+        }
+        UserWxBandUserRequest.Input input = new UserWxBandUserRequest.Input();
+        input.openid = openid;
+        input.convertJosn();
+
+        userWxBandUserRequest = new UserWxBandUserRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    if(((CommonResult) response).isBand == 0) { // 是否已经绑定了用户账号(0:否,1:是)
+                        Intent intent = new Intent(LoginActivity.this, ThirdBandPhoneActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        intent.putExtra("head", head);
+                        intent.putExtra("openid", openid);
+                        startActivityForResult(intent, REQ_THIRD_LOGIN);
+                    } else{
+                        // 直接获取信息
+                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+                        M_Userinfo userInfo = new M_Userinfo();
+                        userInfo.setUserId(((CommonResult) response).userId);
+                        UserManager.instance().saveUserinfo(userInfo);
+                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
+                        sendBroadcast(updateintent);
+                        finish();
+                    }
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(userWxBandUserRequest);
+    }
+
 }

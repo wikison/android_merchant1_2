@@ -9,6 +9,8 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +27,10 @@ import com.zemult.merchant.activity.PasswordActivity;
 import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
+import com.zemult.merchant.aip.common.UserBandWxInfoPhoneRequest;
 import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
+import com.zemult.merchant.aip.common.UserLoginWxRequest;
 import com.zemult.merchant.aip.common.UserRegisterRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -34,6 +38,7 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
@@ -75,7 +80,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
 
     private boolean isWait = false;
     private Thread mThread = null;
-    private String nickname, head;
+    private String nickname, head, openid;
     private LoginSampleHelper loginHelper;
 
     private TextWatcher watcher = new TextWatcher() {
@@ -114,6 +119,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     public void init() {
         nickname = getIntent().getStringExtra("nickname");
         head = getIntent().getStringExtra("head");
+        openid = getIntent().getStringExtra("openid");
         loginHelper = LoginSampleHelper.getInstance();
 
         lhTvTitle.setText("绑定手机号码");
@@ -129,9 +135,11 @@ public class ThirdBandPhoneActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
-                    etPwd.setInputType(InputType.TYPE_CLASS_TEXT);
+                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 else
-                    etPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                etPwd.setSelection(etPwd.length());
             }
         });
     }
@@ -153,18 +161,18 @@ public class ThirdBandPhoneActivity extends BaseActivity {
             case R.id.tv_sendcode:
                 String strPhone = etPhone.getText().toString();
                 if (StringUtils.isBlank(strPhone)) {
-                    etPhone.setError("请输入手机号码");
+                    ToastUtil.showMessage("请输入手机号码");
                 } else {
                     if (!StringMatchUtils.isMobileNO(etPhone.getText().toString())) {
-                        etPhone.setError("请输入正确的手机号码");
+                        ToastUtil.showMessage("请输入正确的手机号码");
                         return;
                     }
 
-                    isRegister();
+                    user_band_wx_info_phone();
                 }
                 break;
             case R.id.btn_bangding:
-                if(StringMatchUtils.isMobileNO(etPhone.getText().toString()))
+                if(!StringMatchUtils.isMobileNO(etPhone.getText().toString()))
                     ToastUtil.showMessage("请输入正确的手机号码");
                 if (etPwd.getText().toString().length() < 6) {
                     ToastUtil.showMessage("密码格式错误");
@@ -180,17 +188,17 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         }
     }
 
-    private UserIsRegisterRequest request_user_is_register;
-    private void isRegister() {
+    private UserBandWxInfoPhoneRequest userBandWxInfoPhoneRequest;
+        private void user_band_wx_info_phone() {
         try {
-            if (request_user_is_register != null) {
-                request_user_is_register.cancel();
+            if (userBandWxInfoPhoneRequest != null) {
+                userBandWxInfoPhoneRequest.cancel();
             }
-            UserIsRegisterRequest.Input input = new UserIsRegisterRequest.Input();
+            UserBandWxInfoPhoneRequest.Input input = new UserBandWxInfoPhoneRequest.Input();
             input.phone = etPhone.getText().toString();
             input.convertJosn();
 
-            request_user_is_register = new UserIsRegisterRequest(input, new ResponseListener() {
+            userBandWxInfoPhoneRequest = new UserBandWxInfoPhoneRequest(input, new ResponseListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
@@ -200,19 +208,21 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        getCode();
+                        if(((CommonResult) response).isBand == 0)// 是否已经绑定了微信账号(0:否,1:是)
+                            getCode();
+                        else
+                            ToastUtil.showMessage("手机号码已绑定，请先解绑");
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
                 }
             });
-            sendJsonRequest(request_user_is_register);
+            sendJsonRequest(userBandWxInfoPhoneRequest);
         } catch (Exception e) {
             Log.e("USER_IS_REGISTER", e.toString());
         }
 
     }
-
 
     private CommonGetCodeRequest request_common_getcode;
     private void getCode() {
@@ -271,7 +281,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        userRegister();
+                        user_login_wx();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
 
@@ -286,21 +296,22 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     }
 
 
-    //注册
-    private UserRegisterRequest userRegisterRequest;
-    private void userRegister() {
+    //微信授权并绑定手机号登陆(注册)
+    private UserLoginWxRequest userLoginWxRequest;
+    private void user_login_wx() {
         try {
-            if (userRegisterRequest != null) {
-                userRegisterRequest.cancel();
+            if (userLoginWxRequest != null) {
+                userLoginWxRequest.cancel();
             }
-            UserRegisterRequest.Input input = new UserRegisterRequest.Input();
+            final UserLoginWxRequest.Input input = new UserLoginWxRequest.Input();
             input.phone = etPhone.getText().toString();
             input.password = DigestUtils.md5(etPwd.getText().toString()).toUpperCase();
             input.name = nickname;
-            // TODO: 2017/3/28  头像
+            input.pic = head;
+            input.openid = openid;
             input.convertJosn();
 
-            userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {
+            userLoginWxRequest = new UserLoginWxRequest(input, new ResponseListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -312,83 +323,25 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        getUserLoginRequest();
+                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+                        M_Userinfo userInfo = new M_Userinfo();
+                        userInfo.setUserId(((CommonResult) response).userId);
+                        UserManager.instance().saveUserinfo(userInfo);
+                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
+                        sendBroadcast(updateintent);
+                        setResult(RESULT_OK);
+                        finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
                 }
             });
-            sendJsonRequest(userRegisterRequest);
+            sendJsonRequest(userLoginWxRequest);
         } catch (Exception e) {
             Log.e("USER_REGISTER", e.toString());
         }
 
 
-    }
-
-
-    //用户登录
-    private UserLoginRequest userLoginRequest;
-    private void getUserLoginRequest() {
-        loadingDialog.show();
-        if (userLoginRequest != null) {
-            userLoginRequest.cancel();
-        }
-        UserLoginRequest.Input input = new UserLoginRequest.Input();
-        input.account = etPhone.getText().toString();
-        input.password = DigestUtils.md5(etPwd.getText().toString()).toUpperCase();
-        input.device_token = SlashHelper.deviceManager().getUmengDeviceToken();
-        input.convertJosn();
-
-        userLoginRequest = new UserLoginRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loadingDialog.dismiss();
-            }
-
-            @Override
-            public void onResponse(final Object response) {
-                if (((APIM_UserLogin) response).status == 1) {
-                    AppUtils.initIm(((APIM_UserLogin) response).userInfo.getUserId() + "", Urls.APP_KEY);
-                    loginHelper.login_Sample(((APIM_UserLogin) response).userInfo.getUserId() + "", DigestUtils.md5(etPhone.getText().toString()).toUpperCase(), Urls.APP_KEY, new IWxCallback() {
-                        @Override
-                        public void onSuccess(Object... arg0) {
-                            loadingDialog.dismiss();
-                            ((APIM_UserLogin) response).userInfo.setPassword(DigestUtils.md5(etPhone.getText().toString()).toUpperCase());
-                            UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
-                            SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
-                            setResult(RESULT_OK);
-                            ToastUtil.showMessage("注册成功");
-                            Intent intent = new Intent(Constants.BROCAST_LOGIN);
-                            sendBroadcast(intent);
-                            finish();
-                        }
-
-                        @Override
-                        public void onProgress(int arg0) {
-
-                        }
-
-                        @Override
-                        public void onError(int errorCode, String errorMessage) {
-                            loadingDialog.dismiss();
-                            if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
-                                Notification.showToastMsg(ThirdBandPhoneActivity.this, "用户不存在");
-                            } else {
-                                Notification.showToastMsg(ThirdBandPhoneActivity.this, errorMessage);
-                            }
-                        }
-                    });
-//                        }
-
-                } else {
-                    loadingDialog.dismiss();
-                    ToastUtil.showMessage(((APIM_UserLogin) response).info);
-                }
-
-            }
-        });
-        sendJsonRequest(userLoginRequest);
     }
 
 
