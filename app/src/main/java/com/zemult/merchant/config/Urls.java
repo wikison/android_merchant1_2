@@ -598,4 +598,10 @@ public class Urls {
     public static String USER_BAND_WX_INFO_PHONE = "user_band_wx_info_phone";
     //微信授权并绑定手机号登陆(注册)
     public static String USER_LOGIN_WX = "user_login_wx";
+    //获取用户是否绑定微信账号
+    public static String USER_BAND_WX_INFO = "user_band_wx_info";
+    //绑定微信账号
+    public static String USER_BAND_WX = "user_band_wx";
+    //用户解绑微信账号
+    public static String USER_BAND_WX_DEL = "user_band_wx_del";
 }

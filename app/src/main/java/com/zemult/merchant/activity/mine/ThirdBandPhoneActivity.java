@@ -190,6 +190,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
 
     private UserBandWxInfoPhoneRequest userBandWxInfoPhoneRequest;
         private void user_band_wx_info_phone() {
+            showUncanclePd();
         try {
             if (userBandWxInfoPhoneRequest != null) {
                 userBandWxInfoPhoneRequest.cancel();
@@ -202,6 +203,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
+                    dismissPd();
                 }
 
                 @Override
@@ -215,6 +217,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
+                    dismissPd();
                 }
             });
             sendJsonRequest(userBandWxInfoPhoneRequest);
@@ -299,6 +302,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     //微信授权并绑定手机号登陆(注册)
     private UserLoginWxRequest userLoginWxRequest;
     private void user_login_wx() {
+        showUncanclePd();
         try {
             if (userLoginWxRequest != null) {
                 userLoginWxRequest.cancel();
@@ -316,6 +320,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
+                    dismissPd();
                 }
 
 
@@ -334,6 +339,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
+                    dismissPd();
                 }
             });
             sendJsonRequest(userLoginWxRequest);
