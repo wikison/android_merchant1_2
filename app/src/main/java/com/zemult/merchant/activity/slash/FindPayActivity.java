@@ -259,7 +259,8 @@ public class FindPayActivity extends BaseActivity {
                         moneyList = ((APIM_PresentList) response).moneyList;
                         selectidset.add(1);
                         rewardMoney = moneyList.get(1).money;
-                        cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                        adapterReward = new SendRewardAdapter(mContext, moneyList);
+                        cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
                     }
                 } else {
                     ToastUtils.show(mContext, ((APIM_PresentList) response).info);
@@ -277,7 +278,6 @@ public class FindPayActivity extends BaseActivity {
         TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
 
-        adapterReward = new SendRewardAdapter(mContext, moneyList);
         gv.setAdapter(adapterReward);
 
         if (!cbReward.isChecked()) {
@@ -316,7 +316,7 @@ public class FindPayActivity extends BaseActivity {
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney + getMoney()));
                 }
 
-                cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
 
                 alertDialog.dismiss();
             }
@@ -632,8 +632,9 @@ public class FindPayActivity extends BaseActivity {
                     for (Integer selectidposition : selectidset) {
                         rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
                     }
+
                     cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
-                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                    cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
                 } else {
                     selectidset.clear();
@@ -642,7 +643,7 @@ public class FindPayActivity extends BaseActivity {
                     cbReward.setChecked(false);
                     cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
-                    cbReward.setText(String.format("赞赏%s元", Convert.getMoneyString(rewardMoney)));
+                    cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
                 }
                 break;
             case R.id.btn_pay:

@@ -7,7 +7,7 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="23"
         tools:ignore="OldTargetApi"
-        tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest,com.taobao.taorecorder,com.taobao.taorecorde_sdk" />
+        tools:overrideLibrary="com.umeng.socialize.evernote,com.umeng.socialize.pinterest,com.taobao.taorecorder,com.taobao.taorecorde_sdk"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_LOGS" />
@@ -48,11 +48,18 @@
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="281f98c9ecdfde9631e6e74981c49e75" />
+            android:value="c370c3ba57f067567bfe42808ece2ac0"/>
 
         <service android:name="com.amap.api.location.APSService" />
         <!-- 下载服务 -->
         <service android:name=".service.NewVersionUpdateService" />
+
+        <receiver
+            android:name=".app.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".activity.guide.GuideActivity">
             <intent-filter>
@@ -378,6 +385,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
