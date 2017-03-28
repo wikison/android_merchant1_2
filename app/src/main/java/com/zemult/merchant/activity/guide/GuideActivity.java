@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.guide;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -98,6 +99,8 @@ public class GuideActivity extends FragmentActivity {
 //		});
         mVideoView.setVideoURI(Uri.parse(getVideoPath()));
 
+        doplayvideo();
+
         for (int i = 0; i < mTextoneResIds.length; i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.preview_item, null, false);
             ((TextView) view.findViewById(R.id.iv_intro_text)).setText(mTextoneResIds[i]);
@@ -117,7 +120,7 @@ public class GuideActivity extends FragmentActivity {
             public void onPageSelected(int position) {
                 mCurrentPage = position;
                 mIndicator.setSelected(mCurrentPage);
-                startLoop();
+             //   startLoop();
             }
 
             @Override
@@ -142,8 +145,14 @@ public class GuideActivity extends FragmentActivity {
             }
         });
 
-        startLoop();
+//        startLoop();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doplayvideo();
     }
 
     /**
@@ -155,25 +164,38 @@ public class GuideActivity extends FragmentActivity {
         return "android.resource://" + this.getPackageName() + "/" + R.raw.intro_video;
     }
 
-
-    /**
-     * 开启轮询
-     */
-    private void startLoop() {
-        if (null != mLoop) {
-            mLoop.unsubscribe();
-        }
-        mLoop = Observable.interval(0, 6 * 1000, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        mVideoView.seekTo(mCurrentPage * 6 * 1000);
-                        if (!mVideoView.isPlaying()) {
-                            mVideoView.start();
-                        }
-                    }
-                });
+    private void doplayvideo(){
+        //播放
+        mVideoView.start();
+        //循环播放
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mVideoView.start();
+            }
+        });
     }
+
+
+
+//    /**
+//     * 开启轮询
+//     */
+//    private void startLoop() {
+//        if (null != mLoop) {
+//            mLoop.unsubscribe();
+//        }
+//        mLoop = Observable.interval(0, 6 * 1000, TimeUnit.MILLISECONDS)
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        mVideoView.seekTo(mCurrentPage * 6 * 1000);
+//                        if (!mVideoView.isPlaying()) {
+//                            mVideoView.start();
+//                        }
+//                    }
+//                });
+//    }
 
 
 //	private void initView() {
