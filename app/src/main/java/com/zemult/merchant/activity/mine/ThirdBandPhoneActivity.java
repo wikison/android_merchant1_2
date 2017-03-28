@@ -297,7 +297,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
             input.phone = etPhone.getText().toString();
             input.password = DigestUtils.md5(etPwd.getText().toString()).toUpperCase();
             input.name = nickname;
-            // TODO: 2017/3/28  头像 
+            // TODO: 2017/3/28  头像
             input.convertJosn();
 
             userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {

@@ -1,6 +1,7 @@
 package com.zemult.merchant.model;
 
 import com.google.gson.annotations.Expose;
+import com.zemult.merchant.R;
 
 import java.io.Serializable;
 import java.util.List;
@@ -190,4 +191,54 @@ public class M_Merchant implements Serializable {
         this.head = head;
     }
 
+    @Expose
+    public int isSaleUser;  // 是否有服务管家(0:否,1:是，没有时下面服务管家的返回为null)
+    @Expose
+    public int saleUserId;  // 是否有服务管家(0:否,1:是，没有时下面服务管家的返回为null)
+    @Expose
+    public String saleUserName;  // 服务管家的用户昵称
+    @Expose
+    public String saleUserHead;  // 服务管家的用户头像
+    @Expose
+    public String saleUserTags;  // 服务管家的标签(","分隔)
+    @Expose
+    public double saleUserExperience;  // 服务管家的经验值
+    @Expose
+    public int saleUserSumScore;  // 前7日的服务分总和
+    @Expose
+    public int saleUserFanNum;  // 服务管家的顾客数
+
+    public String getExperienceText() {
+        String result = "";
+        if (saleUserExperience < 100) {
+            result = "新手";
+        } else if (saleUserExperience >= 100 && saleUserExperience < 10000) {
+            result = "铜牌";
+        } else if (saleUserExperience >= 10000 && saleUserExperience < 100000) {
+            result = "银牌";
+        } else if (saleUserExperience >= 100000 && saleUserExperience < 1000000) {
+            result = "金牌";
+        } else {
+            result = "钻石";
+        }
+
+        return result;
+    }
+
+    public int getExperienceImg() {
+        int result = 0;
+        if (saleUserExperience < 100) {
+            result = R.mipmap.xinshou_icon;
+        } else if (saleUserExperience >= 100 && saleUserExperience < 10000) {
+            result = R.mipmap.tong_icon2;
+        } else if (saleUserExperience >= 10000 && saleUserExperience < 100000) {
+            result = R.mipmap.yin_icon2;
+        } else if (saleUserExperience >= 100000 && saleUserExperience < 1000000) {
+            result = R.mipmap.jingpai_icon2;
+        } else {
+            result = R.mipmap.demon_icon2;
+        }
+
+        return result;
+    }
 }

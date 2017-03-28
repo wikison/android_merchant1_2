@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ripple_item_clicked2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/user_icon"/>
+
+        <LinearLayout
+            android:layout_marginLeft="21dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom">
+
+                <TextView
+                    android:text="xxx"
+                    android:id="@+id/tv_user_name"
+                    style="@style/text_15_black_28"
+                    />
+
+
+                <ImageView
+                    android:layout_marginBottom="1dp"
+                    android:id="@+id/iv_service"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/yin_icon2"
+                    />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginLeft="4dp"
+                    android:id="@+id/tv_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#e6bb7c"
+                    android:textSize="@dimen/font_24px"
+                    android:text="新手"
+                    />
+                <ImageView
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/guanzhu"
+                    />
+                <TextView
+                    android:layout_marginLeft="4dp"
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_head_red"
+                    android:textSize="@dimen/font_24px"
+                    android:text="0客户"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom">
+
+                <TextView
+                    android:text="服务于"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_26px"
+                    />
+
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/tv_merchant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_26px"
+                    />
+            </LinearLayout>
+
+            <com.zemult.merchant.view.FNRadioGroup
+                android:id="@+id/rg_ta_service"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ll_ad_container"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:orientation="vertical"
+            android:background="@color/transparent"></LinearLayout>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_zhishu"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_width="100dp"
+            android:layout_height="22dp"
+            android:text="7天服务指数"
+            android:textColor="@color/white"
+            app:rv_cornerRadius="12dp"
+            app:rv_backgroundColor="#40000000"/>
+    </FrameLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/dingwei2"/>
+
+        <TextView
+            android:layout_marginLeft="7dp"
+            style="@style/text_16_black_666"
+            android:id="@+id/tv_distance"
+            android:text="xxm"
+            android:textSize="@dimen/font_24px" />
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginLeft="7dp"
+            style="@style/text_16_black_666"
+            android:id="@+id/tv_address"
+            android:text="address"
+            android:textSize="@dimen/font_24px" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_marginLeft="7dp"
+            style="@style/text_16_black_666"
+            android:textSize="@dimen/font_24px"/>
+
+    </LinearLayout>
+
+
+    <View style="@style/divider"/>
+
+    <View style="@style/divider12dp"/>
+
+
+</LinearLayout>
+

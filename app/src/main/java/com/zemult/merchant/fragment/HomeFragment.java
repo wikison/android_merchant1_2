@@ -45,6 +45,7 @@ import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
+import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
@@ -117,7 +118,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
     public static final int REQ_CITY = 0x110;
     private AMapLocationClient mLocationClient;
-    private HomeChildNewAdapter mAdapter;
+    private HomeChild1_2_3Adapter mAdapter;
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
@@ -126,6 +127,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private int industryId = -1;
 
     @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
@@ -204,7 +206,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         dbManager.copyDBFile();
         homePresenter = new HomePresenter(listJsonRequest, this);
 
-        noDataViewHeight = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, titleHeight + bottomHeight);
+        noDataViewHeight = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, titleHeight + bottomHeight + 38);
         registerReceiver(new String[]{Constants.BROCAST_LOGIN});
     }
 
@@ -214,8 +216,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         headerHomeView.fillView(null, smoothListView);
 
         // 设置ListView数据
-        mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
-        mAdapter.unshowTop();
+        mAdapter = new HomeChild1_2_3Adapter(mContext, new ArrayList<M_Merchant>());
         smoothListView.setAdapter(mAdapter);
     }
 
@@ -232,14 +233,14 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 startActivity(intent);
             }
         });
-        mAdapter.setUserClickListener(new HomeChildNewAdapter.UserClickListener() {
-            @Override
-            public void onUserClick(int position) {
-                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position).merchantId);
-                startActivity(intent);
-            }
-        });
+//        mAdapter.setUserClickListener(new HomeChildNewAdapter.UserClickListener() {
+//            @Override
+//            public void onUserClick(int position) {
+//                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+//                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, mAdapter.getItem(position).merchantId);
+//                startActivity(intent);
+//            }
+//        });
         smoothListView.setOnScrollListener(new SmoothListView.OnSmoothScrollListener() {
             @Override
             public void onSmoothScrolling(View view) {
@@ -293,8 +294,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         });
         headerHomeView.setOnIndustryClickListener(new HeaderHomeView.OnIndustryListener() {
             @Override
-            public void onIndustryClick(int industryId) {
-                industryAdapter.setSelectedId(industryId);
+            public void onIndustryClick(int id) {
+                industryAdapter.setSelectedId(id);
+                industryId = id;
+                onRefresh();
             }
 
             @Override
@@ -426,8 +429,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         industryAdapter.setSelectedId(((APIM_CommonGetallindustry) response).industryList.get(0).id);
                         industryAdapter.setOnItemClickLitener(new AllIndustryAdapter.OnItemClickLitener() {
                             @Override
-                            public void onItemClick(int industryId) {
-                                headerHomeView.setSelectedId(industryId);
+                            public void onItemClick(int id) {
+                                headerHomeView.setSelectedId(id);
+                                industryId = id;
+                                onRefresh();
                             }
                         });
                         rvTop.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -500,13 +505,13 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
     @Override
     public void onRefresh() {
-        homePresenter.merchant_firstpage_List(-2, page = 1, Constants.ROWS, false);
+        homePresenter.merchant_firstpage_List(industryId, page = 1, Constants.ROWS, false);
     }
 
 
     @Override
     public void onLoadMore() {
-        homePresenter.merchant_firstpage_List(-2, ++page, Constants.ROWS, true);
+        homePresenter.merchant_firstpage_List(industryId, ++page, Constants.ROWS, true);
     }
 
     @Override

@@ -56,6 +56,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     private int showType = 1;  //0  无操作，1  网页  2   跳转到图片展示  3 自定义
     private boolean rotate = true;
+    private boolean round = false;
 
 
     private Handler mHandler = new Handler() {
@@ -91,6 +92,10 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     public void setRotate(boolean rotate) {
         this.rotate = rotate;
+    }
+
+    public void setRound(boolean round) {
+        this.round = round;
     }
 
     @Override
@@ -147,7 +152,11 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         ImageView imageView = new ImageView(mContext);
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(params);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if(!round)
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        else
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
         if (showType == 1) {//网页
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -179,7 +188,11 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
             });
         }
 
-        mImageManager.loadUrlImage(mAd.getImg(), imageView, "@500h");
+        if(!round)
+            mImageManager.loadUrlImage(mAd.getImg(), imageView, "@500h");
+        else
+            mImageManager.loadRoundImage(mAd.getImg(), imageView, 24, "@450h");
+
         return imageView;
     }
 
