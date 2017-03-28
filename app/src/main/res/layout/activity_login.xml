@@ -105,14 +105,22 @@
 
         <TextView
             android:id="@+id/al_tv_forget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_12_black_28"
             android:layout_below="@+id/al_btn_login"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_alignLeft="@+id/al_btn_login"
             android:text="@string/txt_login_forget_password"
-            android:textColorLink="@drawable/selector_color_forget_pwd"
-            android:textSize="12sp"/>
+            android:textColorLink="@drawable/selector_color_forget_pwd"/>
+
+        <TextView
+            android:id="@+id/al_tv_register"
+            style="@style/text_12_black_28"
+            android:layout_below="@+id/al_btn_login"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_alignRight="@+id/al_btn_login"
+            android:text="@string/txt_first_use"
+            android:textColorLink="@drawable/selector_color_forget_pwd"/>
+
 
         <RelativeLayout
             android:layout_above="@+id/al_tv_notnow"
@@ -130,14 +138,13 @@
 
         <TextView
             android:id="@+id/al_tv_notnow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_14_black_28"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:background="@android:color/transparent"
             android:text="@string/txt_register_notnow"
-            android:textColorLink="@drawable/selector_color_notnow"
+            android:textColor="#D84F42"
             android:textSize="12sp"/>
     </RelativeLayout>
 
