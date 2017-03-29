@@ -6,10 +6,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,25 +41,89 @@ public class FindPasswordActivity extends BaseActivity {
     private static final int WAIT = 0x001;
     private static final int REQ_RESET_PWD = 0x120;
     private static String LOG_TAG = "FindPasswordActivity";
-    private String strPhone, strCode;
-    CommonGetCodeRequest request_common_getcode;
-    @Bind(R.id.afp_et_phone)
-    EditText etPhone;
-    @Bind(R.id.ar_et_code)
-    EditText etCode;
-    @Bind(R.id.afp_btn_submit)
-    Button btnNext;
-    @Bind(R.id.tv_sendcode)
-    TextView tvSendcode;
-    private boolean isWait = false;
-    private Thread mThread = null;
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
+    @Bind(R.id.iv_right)
+    ImageView ivRight;
+    @Bind(R.id.ll_right)
+    LinearLayout llRight;
+    @Bind(R.id.tv_right)
+    TextView tvRight;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.lh_btn_right)
+    Button lhBtnRight;
+    @Bind(R.id.lh_btn_rightiamge)
+    Button lhBtnRightiamge;
+    @Bind(R.id.et_phone)
+    EditText etPhone;
+    @Bind(R.id.tv_sendcode)
+    TextView tvSendcode;
+    @Bind(R.id.et_code)
+    EditText etCode;
+    @Bind(R.id.et_pwd)
+    EditText etPwd;
+    @Bind(R.id.cb_look_pwd)
+    CheckBox cbLookPwd;
+    @Bind(R.id.btn_next)
+    Button btnNext;
+
+    CommonGetCodeRequest request_common_getcode;
+
+    private String strPhone, strCode, strPwd;
+    private boolean isWait = false;
+    private Thread mThread = null;
+
+
+    @Override
+    public void setContentView() {
+        setContentView(R.layout.activity_find_pwd);
+
+    }
+
+    @Override
+    public void init() {
+        initViews();
+        initData();
+        initListener();
+
+    }
+
+    private void initData() {
+        strPhone = getIntent().getStringExtra("RegisterPhone");
+        etPhone.setText(strPhone);
+        SlashHelper.setSettingBoolean("isChangingPassWord", true);
+    }
+
+    private void initListener() {
+        cbLookPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                else
+                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                etPwd.setSelection(etPwd.length());
+            }
+        });
+    }
+
+
+    public void initViews() {
+        lhTvTitle.setText(getResources().getString(R.string.title_find_password));
+
+        btnNext.setEnabled(false);
+        btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);
+        etPhone.addTextChangedListener(watcher);
+        etCode.addTextChangedListener(watcher);
+        etPwd.addTextChangedListener(watcher);
+        tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
+    }
 
     private TextWatcher watcher = new TextWatcher() {
         @Override
@@ -63,12 +132,11 @@ public class FindPasswordActivity extends BaseActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (s.toString().length() > 0) {
-                if (etCode.getText().toString().length() > 0
-                        && etPhone.getText().toString().length() > 0) {
-                    btnNext.setEnabled(true);
-                    btnNext.setBackgroundResource(R.drawable.common_selector_btn);
-                }
+            if (etCode.getText().toString().length() > 0
+                    && etPhone.getText().toString().length() == 11
+                    && etPwd.getText().toString().length() >= 6) {
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundResource(R.drawable.common_selector_btn);
 
             } else {
                 btnNext.setEnabled(false);
@@ -82,51 +150,20 @@ public class FindPasswordActivity extends BaseActivity {
         }
     };
 
-    @Override
-    public void setContentView() {
-        setContentView(R.layout.activity_find_pwd);
-
-    }
-
-    @Override
-    public void init() {
-        initViews();
-        Intent intent = getIntent();
-        strPhone = intent.getStringExtra("RegisterPhone");
-        etPhone.setText(strPhone);
-        SlashHelper.setSettingBoolean("isChangingPassWord", true);
-    }
-
-
-    public void initViews() {
-        lhTvTitle.setText(getResources().getString(R.string.title_find_password));
-
-        btnNext.setEnabled(false);
-        btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);
-        etPhone.addTextChangedListener(watcher);
-        etCode.addTextChangedListener(watcher);
-        tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
-        tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
-    }
-
-
-    @OnClick(R.id.tv_sendcode)
     public void onBtnCodeClick() {
-        String rUrl = "";
         strPhone = etPhone.getText().toString();
         if (StringUtils.isBlank(strPhone)) {
-            etPhone.setError("请输入手机号码");
+            ToastUtil.showMessage("请输入手机号码");
             return;
         }
         if (!StringMatchUtils.isMobileNO(strPhone)) {
-            etPhone.setError("请输入正确的手机号码");
+            ToastUtil.showMessage("请输入正确的手机号码");
             return;
         }
         isRegister();
     }
 
-    @OnClick(R.id.afp_btn_submit)
-    public void onBtnSubmitClick(View v) {
+    public void onBtnSubmitClick() {
         strPhone = etPhone.getText().toString();
         strCode = etCode.getText().toString();
 
@@ -135,6 +172,7 @@ public class FindPasswordActivity extends BaseActivity {
     }
 
     private UserIsRegisterRequest request_user_is_register;
+
     private void isRegister() {
         try {
             if (request_user_is_register != null) {
@@ -155,7 +193,7 @@ public class FindPasswordActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     // 返回结果状态值,值为0或1.(0表示不能注册--已经有该手机号；1表示可以注册)
                     if (status == 1)
-                        ToastUtil.showMessage("该手机号码还未注册，赶快去注册吧！");
+                        ToastUtil.showMessage("该手机号码未注册");
                     else
                         getCode();
                 }
@@ -192,7 +230,7 @@ public class FindPasswordActivity extends BaseActivity {
                         tvSendcode.setClickable(false);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
-                    }else
+                    } else
                         ToastUtil.showMessage(((CommonResult) response).info);
                 }
             });
@@ -240,17 +278,24 @@ public class FindPasswordActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.tv_sendcode, R.id.btn_next})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
                 break;
+            case R.id.tv_sendcode:
+                onBtnCodeClick();
+                break;
+            case R.id.btn_next:
+                onBtnSubmitClick();
+                break;
         }
     }
 
     CommonCheckcodeRequest request_common_checkcode;
+
     private void checkCode() {//发送验证码校验
         try {
             if (request_common_checkcode != null) {
@@ -290,11 +335,12 @@ public class FindPasswordActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK ){
-            if(requestCode == REQ_RESET_PWD){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQ_RESET_PWD) {
                 setResult(RESULT_OK, data);
                 onBackPressed();
             }
         }
     }
+
 }

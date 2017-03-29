@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/bg_f2"
               android:focusable="true"
               android:focusableInTouchMode="true"
-              android:gravity="center_horizontal"
               android:orientation="vertical">
 
     <include
@@ -14,82 +13,147 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="60dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:text="@string/txt_86"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_30px"/>
 
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="60dp"
-            android:background="@null"
-            android:drawableBottom="@drawable/selector_drawable_line"
-            android:gravity="center_vertical"
-            android:hint="@string/txt_register_phone"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="11"
-            android:paddingLeft="108dp"
-            android:textColorHint="@color/hint_text_color"
-            android:textSize="@dimen/font_30px"/>
-    </RelativeLayout>
+        <LinearLayout
+            style="@style/binding_linearLayout">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="48dip"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp">
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="+86"
+                android:textSize="15sp"/>
 
-        <EditText
-            android:id="@+id/et_code"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@null"
-            android:drawableBottom="@drawable/selector_drawable_line"
-            android:gravity="center_vertical"
-            android:hint="@string/txt_register_code"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:maxLength="11"
-            android:paddingLeft="108dp"
-            android:textColorHint="@color/hint_text_color"
-            android:textSize="@dimen/font_30px"/>
 
-        <TextView
-            android:id="@+id/tv_sendcode"
-            android:layout_width="wrap_content"
-            android:layout_height="47dp"
-            android:gravity="center_vertical"
-            android:text="获取验证码"
-            android:textColor="#ffa726"
-            android:textSize="@dimen/font_30px"/>
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入您的手机号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textColor="@color/font_black_28"
+                android:textColorHint="@color/font_black_999"
+                android:textSize="@dimen/font_30px"/>
 
+            <TextView
+                android:id="@+id/tv_sendcode"
+                style="@style/text_15_black_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="获取验证码"
+                android:textColor="@color/bg_head"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+
+        <LinearLayout
+            style="@style/binding_linearLayout">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="验证码"
+                android:textSize="15sp"/>
+
+
+            <EditText
+                android:id="@+id/et_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入您的手机验证码"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textColor="@color/font_black_28"
+                android:textColorHint="@color/font_black_999"
+                android:textSize="@dimen/font_30px"/>
+        </LinearLayout>
+
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+
+        <LinearLayout
+            style="@style/binding_linearLayout">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="密码"
+                android:textSize="15sp"/>
+
+
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请设置登录密码"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/font_black_28"
+                android:textColorHint="@color/font_black_999"
+                android:textSize="@dimen/font_30px"/>
+
+            <CheckBox
+                android:id="@+id/cb_look_pwd"
+                style="@style/CheckboxEye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:checked="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_12_black_999"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:text="*密码长度6~20位, 密码不能为纯数字"/>
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="@dimen/common_btn_width_235"
         android:layout_height="@dimen/common_btn_height_35"
-        android:layout_marginTop="154dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
         android:background="@drawable/common_selector_btn"
-        android:text="@string/btn_next"
         android:gravity="center"
+        android:text="@string/register_and_login"
         android:textColor="@color/white"
         android:textSize="18sp"/>
 
@@ -107,8 +171,8 @@
             style="@style/MyCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/font_black_999"
             android:text="我确定同意"
+            android:textColor="@color/font_black_999"
             android:textSize="@dimen/font_24px"/>
 
         <TextView
@@ -118,14 +182,19 @@
             android:textColor="@color/font_main"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <TextView
         android:id="@+id/tv_not_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="40dp"
         android:text="@string/txt_register_notnow"
-        android:textColorLink="@drawable/selector_color_notnow"
+        android:textColor="@color/not_now"
         android:textSize="14sp"/>
 
 </LinearLayout>

@@ -542,4 +542,5 @@
     <color name="shenqingyueke">#211d2e</color>
     <color name="font_idle">#5eb31b</color>
     <color name="font_busy">#eb4f38</color>
+    <color name="not_now">#d84f42</color>
 </resources>

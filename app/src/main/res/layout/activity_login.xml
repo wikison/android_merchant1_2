@@ -126,7 +126,7 @@
             android:layout_above="@+id/al_tv_notnow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="40dp">
             <ImageView
                 android:id="@+id/iv_wx"
                 android:layout_centerInParent="true"
@@ -141,10 +141,10 @@
             style="@style/text_14_black_28"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
             android:background="@android:color/transparent"
             android:text="@string/txt_register_notnow"
-            android:textColor="#D84F42"
+            android:textColor="@color/not_now"
             android:textSize="12sp"/>
     </RelativeLayout>
 

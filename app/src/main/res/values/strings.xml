@@ -49,6 +49,7 @@
     <string name="txt_search_hint">搜索一下, 呈现更多精彩</string>
     <string name="txt_login_forget_password">忘记密码</string>
     <string name="btn_next">下一步</string>
+    <string name="register_and_login">注册并登录</string>
     <string name="btn_submit">提交</string>
     <string name="sex_male">男</string>
     <string name="sex_female">女</string>
@@ -344,5 +345,6 @@
     <string name="input_tribe_pwd">请输入密码</string>
     <string name="filter_vcode">0123456789X</string>
     <string name="txt_first_use">第一次用?去注册</string>
+    <string name="commit_and_login">确认提交并登录</string>
 
 </resources>
