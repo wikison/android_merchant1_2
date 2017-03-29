@@ -191,7 +191,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         if(!round)
             mImageManager.loadUrlImage(mAd.getImg(), imageView, "@500h");
         else
-            mImageManager.loadRoundImage(mAd.getImg(), imageView, 24, "@450h");
+            mImageManager.loadRoundImage2(mAd.getImg(), imageView, 24, "@450h");
 
         return imageView;
     }

@@ -1,6 +1,7 @@
 package com.zemult.merchant.adapter.slashfrgment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.flyco.roundview.RoundTextView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 
 import java.util.ArrayList;
@@ -94,7 +98,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
      * @param holder
      * @param entity
      */
-    private void initData(ViewHolder holder, M_Merchant entity, final int position) {
+    private void initData(ViewHolder holder, final M_Merchant entity, final int position) {
         // 服务管家的用户昵称
         if (!TextUtils.isEmpty(entity.saleUserName))
             holder.tvUserName.setText(entity.saleUserName);
@@ -133,11 +137,29 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         holder.banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
+                mImageManager.loadRoundImage2((String) path, imageView, 24, "@450h");
             }
         });
-        holder.banner.setIndicatorGravity(BannerConfig.CENTER);
-        holder.banner.start();
+        holder.banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
+                intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
+                mContext.startActivity(intent);
+            }
+        });
+        holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
+
+        holder.llRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
+                intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 
@@ -173,16 +195,6 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         }
     }
 
-    public interface UserClickListener {
-        void onUserClick(int pos);
-    }
-
-    private UserClickListener userClickListener;
-
-    public void setUserClickListener(UserClickListener userClickListener) {
-        this.userClickListener = userClickListener;
-    }
-
     static class ViewHolder {
         @Bind(R.id.iv_head)
         ImageView ivHead;
@@ -198,8 +210,6 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvMerchantName;
         @Bind(R.id.rg_ta_service)
         FNRadioGroup rgTaService;
-//        @Bind(R.id.ll_ad_container)
-//        LinearLayout llAdContainer;
         @Bind(R.id.banner)
         Banner banner;
         @Bind(R.id.tv_zhishu)
@@ -210,6 +220,8 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvAddress;
         @Bind(R.id.tv_money)
         TextView tvMoney;
+        @Bind(R.id.ll_root)
+        LinearLayout llRoot;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
