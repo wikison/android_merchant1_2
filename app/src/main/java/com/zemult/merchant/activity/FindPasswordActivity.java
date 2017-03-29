@@ -18,12 +18,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.mobileim.login.YWLoginState;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
+import com.zemult.merchant.aip.common.UserFindpwdRequest;
 import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
@@ -31,6 +34,7 @@ import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.DigestUtils;
 import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
@@ -72,6 +76,8 @@ public class FindPasswordActivity extends BaseActivity {
     Button btnNext;
 
     CommonGetCodeRequest request_common_getcode;
+    CommonCheckcodeRequest request_common_checkcode;
+    UserFindpwdRequest userFindpwdRequest;
 
     private String strPhone, strCode, strPwd;
     private boolean isWait = false;
@@ -166,7 +172,12 @@ public class FindPasswordActivity extends BaseActivity {
     public void onBtnSubmitClick() {
         strPhone = etPhone.getText().toString();
         strCode = etCode.getText().toString();
+        strPwd = etPwd.getText().toString();
 
+        if (StringMatchUtils.isAllNum(strPwd)) {
+            ToastUtil.showMessage("密码格式错误");
+            return;
+        }
         //验证码校验
         checkCode();
     }
@@ -193,7 +204,7 @@ public class FindPasswordActivity extends BaseActivity {
                     int status = ((CommonResult) response).status;
                     // 返回结果状态值,值为0或1.(0表示不能注册--已经有该手机号；1表示可以注册)
                     if (status == 1)
-                        ToastUtil.showMessage("该手机号码未注册");
+                        ToastUtil.showMessage("该手机号码还未注册，赶快去注册吧！");
                     else
                         getCode();
                 }
@@ -294,8 +305,6 @@ public class FindPasswordActivity extends BaseActivity {
         }
     }
 
-    CommonCheckcodeRequest request_common_checkcode;
-
     private void checkCode() {//发送验证码校验
         try {
             if (request_common_checkcode != null) {
@@ -316,10 +325,7 @@ public class FindPasswordActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        Intent intent = new Intent(FindPasswordActivity.this, FindPassword2Activity.class);
-                        intent.putExtra("strPhone", strPhone);
-                        intent.putExtra("strCode", strCode);
-                        startActivityForResult(intent, REQ_RESET_PWD);
+                        findPassword();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
 
@@ -330,6 +336,47 @@ public class FindPasswordActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e("COMMON_CHECKCODE", e.toString());
         }
+    }
+
+    //找回密码
+    private void findPassword() {
+        loadingDialog.show();
+        if (userFindpwdRequest != null) {
+            userFindpwdRequest.cancel();
+        }
+        final UserFindpwdRequest.Input input = new UserFindpwdRequest.Input();
+
+        input.phone = strPhone;
+        input.code = strCode;
+        input.password = DigestUtils.md5(strPwd).toUpperCase();
+        input.convertJosn();
+
+        userFindpwdRequest = new UserFindpwdRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                loadingDialog.dismiss();
+                if (((CommonResult) response).status == 1) {
+                    ToastUtil.showMessage("密码找回成功");
+                    SlashHelper.userManager().saveUserinfo(null);
+                    LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
+
+                    Intent intent = new Intent();
+                    intent.putExtra("phone", strPhone);
+                    intent.putExtra("password", strPwd);
+                    setResult(RESULT_OK, intent);
+                    onBackPressed();
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+
+            }
+        });
+        sendJsonRequest(userFindpwdRequest);
     }
 
     @Override
