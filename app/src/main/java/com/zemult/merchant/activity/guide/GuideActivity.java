@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,27 +14,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.LoginActivity;
 import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.SplashActivity;
+import com.zemult.merchant.activity.mine.ThirdBandPhoneActivity;
+import com.zemult.merchant.aip.common.UserWxBandUserRequest;
+import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Userinfo;
+import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.util.UserManager;
 import com.zemult.merchant.view.PreviewIndicator;
 import com.zemult.merchant.view.PreviewVideoView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
 import rx.Subscription;
-import rx.functions.Action1;
+import zema.volley.network.ResponseListener;
 
 
-public class GuideActivity extends FragmentActivity {
+public class GuideActivity extends BaseActivity {
 
     private ViewPager viewPage;
     private Fragment0 mFragment0;
@@ -61,29 +74,33 @@ public class GuideActivity extends FragmentActivity {
     private int mCurrentPage = 0;
     private Subscription mLoop;
     Intent it;
+    private UMShareAPI umShareAPI;
+    private static final int REQ_THIRD_LOGIN = 0x120;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setContentView() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_guide);
-        ButterKnife.bind(this);
+    }
 
+    @Override
+    public void init() {
         mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
         mVpImage = (ViewPager) findViewById(R.id.vp_image);
         mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
 
-		SharedPreferences sharedPreferences=GuideActivity.this.getSharedPreferences("share",MODE_PRIVATE);
-		boolean isFirstRun=sharedPreferences.getBoolean("isFirstRun", true);
-		SharedPreferences.Editor editor=sharedPreferences.edit();
-		if(isFirstRun){       //第一次
-			editor.putBoolean("isFirstRun", false);
-			editor.commit();
-		}else{
-			startActivity(new Intent(GuideActivity.this,SplashActivity.class));
-			GuideActivity.this.finish();
-		}
+        SharedPreferences sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
+        boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (isFirstRun) {       //第一次
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        } else {
+            startActivity(new Intent(GuideActivity.this, SplashActivity.class));
+            GuideActivity.this.finish();
+        }
+        umShareAPI = UMShareAPI.get(this);
 
 
         //initView();
@@ -136,9 +153,9 @@ public class GuideActivity extends FragmentActivity {
             }
         });
 
-//        startLoop();
 
     }
+
 
     @Override
     protected void onResume() {
@@ -245,24 +262,113 @@ public class GuideActivity extends FragmentActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
+
+
+    private void thirdLogin() {
+        umShareAPI.doOauthVerify(GuideActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
+    }
+
+    private UMAuthListener doOauthVerifyListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            UMShareAPI.get(GuideActivity.this).getPlatformInfo(GuideActivity.this, SHARE_MEDIA.WEIXIN, getPlatformInfoListener);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
+    private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            user_wx_band_user(data.get("openid"), data.get("nickname"), data.get("headimgurl"));
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
+        }
+    };
+    private UserWxBandUserRequest userWxBandUserRequest;
+
+    //根据微信号获取绑定的用户信息
+    private void user_wx_band_user(final String openid, final String nickname, final String head) {
+        loadingDialog.show();
+        if (userWxBandUserRequest != null) {
+            userWxBandUserRequest.cancel();
+        }
+        UserWxBandUserRequest.Input input = new UserWxBandUserRequest.Input();
+        input.openid = openid;
+        input.convertJosn();
+
+        userWxBandUserRequest = new UserWxBandUserRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    if (((CommonResult) response).isBand == 0) { // 是否已经绑定了用户账号(0:否,1:是)
+                        Intent intent = new Intent(GuideActivity.this, ThirdBandPhoneActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        intent.putExtra("head", head);
+                        intent.putExtra("openid", openid);
+                        startActivityForResult(intent, REQ_THIRD_LOGIN);
+                    } else {
+                        // 直接获取信息
+                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+                        M_Userinfo userInfo = new M_Userinfo();
+                        userInfo.setUserId(((CommonResult) response).userId);
+                        UserManager.instance().saveUserinfo(userInfo);
+                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
+                        sendBroadcast(updateintent);
+                        finish();
+                    }
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(userWxBandUserRequest);
+    }
+
+
+
     @OnClick({R.id.login_btn, R.id.register_btn, R.id.weixinlog_iv})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.login_btn:
-                it = new Intent(this, LoginActivity.class);
-                startActivityForResult(it, 1);
+            switch (view.getId()) {
+                case R.id.login_btn:
+                    it = new Intent(this, LoginActivity.class);
+                    startActivityForResult(it, 1);
 
-                break;
-            case R.id.register_btn:
-                it = new Intent(this, RegisterActivity.class);
-                startActivityForResult(it, 1);
-
-                break;
-            case R.id.weixinlog_iv:
-
-                break;
+                    break;
+                case R.id.register_btn:
+                    it = new Intent(this, RegisterActivity.class);
+                    startActivityForResult(it, 1);
+                    break;
+                case R.id.weixinlog_iv:
+                    thirdLogin();
+                    break;
         }
     }
+
 
     public static class CustomPagerAdapter extends PagerAdapter {
 
@@ -307,11 +413,14 @@ public class GuideActivity extends FragmentActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            it = new Intent(GuideActivity.this, MainActivity.class);
-            startActivity(it);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                it = new Intent(GuideActivity.this, MainActivity.class);
+                startActivity(it);
+            } else if (requestCode == REQ_THIRD_LOGIN) {
+                finish();
+            }
         }
-
-
+        umShareAPI.onActivityResult(requestCode, resultCode, data);
     }
 }

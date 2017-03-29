@@ -301,7 +301,7 @@ public class LoginActivity extends BaseActivity {
         sendJsonRequest(user_login_request);
     }
 
-    @OnClick({R.id.iv_wx, R.id.al_btn_login, R.id.al_tv_forget, R.id.al_tv_register})
+    @OnClick({R.id.iv_wx, R.id.al_btn_login, R.id.al_tv_forget, R.id.al_tv_register, R.id.al_tv_notnow})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_wx:
