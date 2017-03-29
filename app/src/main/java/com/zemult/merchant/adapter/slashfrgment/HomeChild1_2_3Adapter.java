@@ -1,6 +1,5 @@
 package com.zemult.merchant.adapter.slashfrgment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,12 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flyco.roundview.RoundTextView;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.view.FNRadioGroup;
-import com.zemult.merchant.view.HeaderAdViewView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,24 +121,23 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         holder.tvAddress.setText(entity.address);
         // 前7日的服务分总和
         holder.tvZhishu.setText("7天服务指数" + entity.saleUserSumScore + "");
-        // 设置广告数据 加入到smoothListView的headerView
-        HeaderAdViewView headerAdViewView = new HeaderAdViewView((Activity) mContext, DensityUtil.dip2px(mContext, 170));
-        headerAdViewView.setShowType(0);
-        headerAdViewView.setRotate(false);
-        headerAdViewView.setRound(true);
-        List<M_Ad> list = new ArrayList<>();
-        if(StringUtils.isBlank(entity.pics)){
-            M_Ad a = new M_Ad();
-            a.setImg(entity.pic);
-            list.add(a);
-        }else {
-            for(String url : entity.pics.split(",")){
-                M_Ad a = new M_Ad();
-                a.setImg(url);
-                list.add(a);
-            }
+        // 设置广告数据
+        List<String> adList = new ArrayList<>();
+        if (StringUtils.isBlank(entity.pics)) {
+            adList.add(entity.pic);
+        } else {
+            adList = Arrays.asList(entity.pics.split(","));
         }
-        headerAdViewView.fillView(list, holder.llAdContainer);
+
+        holder.banner.setImages(adList);
+        holder.banner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
+            }
+        });
+        holder.banner.setIndicatorGravity(BannerConfig.CENTER);
+        holder.banner.start();
     }
 
 
@@ -157,13 +156,15 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
                     drawable.setShape(GradientDrawable.RECTANGLE); // 画框
                     drawable.setCornerRadii(new float[]{50,
                             50, 50, 50, 50, 50, 50, 50});
-                    drawable.setColor(0xffe8e8e8);  // 边框内部颜色
+                    drawable.setColor(0xffffffff);  // 边框内部颜色
+                    drawable.setStroke(1, 0xffdcdcdc);
+
                     RadioButton rbTag = new RadioButton(mContext);
                     rbTag.setBackgroundDrawable(drawable); // 设置背景（效果就是有边框及底色）
                     rbTag.setTextSize(12);
                     rbTag.setPadding(22, 8, 22, 8);
                     rbTag.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    rbTag.setTextColor(0xff464646);
+                    rbTag.setTextColor(0xff999999);
                     rbTag.setText(tagList.get(i).toString());
 
                     holder.rgTaService.addView(rbTag);
@@ -197,8 +198,10 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvMerchantName;
         @Bind(R.id.rg_ta_service)
         FNRadioGroup rgTaService;
-        @Bind(R.id.ll_ad_container)
-        LinearLayout llAdContainer;
+//        @Bind(R.id.ll_ad_container)
+//        LinearLayout llAdContainer;
+        @Bind(R.id.banner)
+        Banner banner;
         @Bind(R.id.tv_zhishu)
         RoundTextView tvZhishu;
         @Bind(R.id.tv_distance)

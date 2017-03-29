@@ -204,4 +204,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile files('libs/libammsdk.jar')
+    compile 'com.youth.banner:banner:1.4.9'
 }

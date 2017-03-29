@@ -538,8 +538,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             smoothListView.setLoadMoreEnable(page < maxpage);
             mAdapter.setData(list, isLoadMore);
 
-            if (!isLoadMore)
-                smoothListView.setSelection(0);
+//            if (!isLoadMore)
+//                smoothListView.setSelection(0);
         }
     }
 

@@ -53,7 +53,7 @@ public class MerchantFirstPageListRequest extends PostStringRequest<Type> {
     }
 
     public MerchantFirstPageListRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.MERCHANT_FIRSTPAGE_LIST,input.ejson , new TypeToken<APIM_MerchantList>() {
+        super(Urls.BASIC_URL+Urls.MERCHANT_FIRSTPAGE_LIST_1_2_3,input.ejson , new TypeToken<APIM_MerchantList>() {
         }.getType() , listener);
 
     }

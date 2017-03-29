@@ -453,7 +453,7 @@ public class Urls {
     public static String MANAGER_CUSTOMER_BILLINFO_1_3 = "manager_customer_billInfo_1_3.do";
 
     //首页商家列表          全是已上线的
-    public static String MERCHANT_FIRSTPAGE_LIST = "merchant_firstpage_List.do";
+    public static String MERCHANT_FIRSTPAGE_LIST_1_2_3 = "merchant_firstpage_List_1_2_3";
     //搜索商家列表          全是已上线的
     public static String MERCHANT_FIRSTPAGE_SEARCH_LIST = "merchant_firstpage_search_List.do";
     //商家详情
