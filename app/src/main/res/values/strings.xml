@@ -14,7 +14,7 @@
     <string name="mobile_num">手机号码</string>
     <string name="btn_register">注册</string>
     <string name="btn_register_login">注册并登录</string>
-    <string name="txt_register_notnow">先去看看</string>
+    <string name="txt_register_notnow">先去看看 ></string>
     <string name="txt_86">+86</string>
     <string name="txt_register_getcode">获取验证码</string>
     <string name="txt_register_phone">请输入您的手机号码</string>
@@ -47,7 +47,7 @@
 
     <string name="txt_select_all">全部选择</string>
     <string name="txt_search_hint">搜索一下, 呈现更多精彩</string>
-    <string name="txt_login_forget_password">忘记密码?</string>
+    <string name="txt_login_forget_password">忘记密码</string>
     <string name="btn_next">下一步</string>
     <string name="btn_submit">提交</string>
     <string name="sex_male">男</string>
@@ -343,5 +343,6 @@
     <string name="set_tribe_pwd_desc">密码必须由6-20个英文字母或数字(0-9)组成，区分大小写</string>
     <string name="input_tribe_pwd">请输入密码</string>
     <string name="filter_vcode">0123456789X</string>
+    <string name="txt_first_use">第一次用?去注册</string>
 
 </resources>

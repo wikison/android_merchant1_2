@@ -1,12 +1,10 @@
 package com.zemult.merchant.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
@@ -76,9 +74,22 @@ public class LoginActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.iv_right)
+    ImageView ivRight;
+    @Bind(R.id.ll_right)
+    LinearLayout llRight;
+    @Bind(R.id.tv_right)
+    TextView tvRight;
+    @Bind(R.id.lh_btn_rightiamge)
+    Button lhBtnRightiamge;
+    @Bind(R.id.al_tv_register)
+    TextView alTvRegister;
+    @Bind(R.id.iv_wx)
+    ImageView ivWx;
 
     String strUserName, strPwd;
     UserLoginRequest user_login_request;
+
 
     private LoginSampleHelper loginHelper;
     private UMShareAPI umShareAPI;
@@ -113,15 +124,7 @@ public class LoginActivity extends BaseActivity {
 
     private void initViews() {
         lhBtnBack.setVisibility(View.GONE);
-        tvForgetPwd.setMovementMethod(LinkMovementMethod.getInstance());
-        tvForgetPwd.setText(setLinkText(getResources().getString(R.string.txt_login_forget_password)));
-        tvNotNow.setMovementMethod(LinkMovementMethod.getInstance());
-        tvNotNow.setText(setLinkText(getResources().getString(R.string.txt_register_notnow)));
 
-        btnRight.setText(getResources().getString(R.string.btn_register));
-        btnRight.setVisibility(View.VISIBLE);
-        btnRight.setTextColor(getResources().getColor(R.color.white));
-        btnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         lhTvTitle.setText("登录");
         btnLogin.setEnabled(false);
         btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
@@ -208,17 +211,6 @@ public class LoginActivity extends BaseActivity {
         return spannableString;
     }
 
-    @OnClick(R.id.lh_btn_right)
-    public void onRegisterClick() {
-        IntentUtil.start_activity(LoginActivity.this, RegisterActivity.class);
-        this.finish();
-    }
-
-    @OnClick(R.id.al_btn_login)
-    public void onBtnLoginClick() {
-        login();
-    }
-
     private void login() {
         strUserName = etName.getText().toString();
         strPwd = etPwd.getText().toString();
@@ -298,7 +290,6 @@ public class LoginActivity extends BaseActivity {
                                 }
                             }
                         });
-//                        }
                     }
 
                 } else {
@@ -310,16 +301,29 @@ public class LoginActivity extends BaseActivity {
         sendJsonRequest(user_login_request);
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @OnClick({R.id.iv_wx, R.id.al_btn_login, R.id.al_tv_forget, R.id.al_tv_register})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_wx:
+                thirdLogin();
+                break;
+            case R.id.al_btn_login:
+                login();
+                break;
+            case R.id.al_tv_forget:
+                Intent intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
+                startActivityForResult(intent, REQ_FIND_PWD);
+                break;
+            case R.id.al_tv_notnow:
+                LoginActivity.this.finish();
+                break;
+            case R.id.al_tv_register:
+                IntentUtil.start_activity(LoginActivity.this, RegisterActivity.class);
+                this.finish();
+                break;
+        }
     }
 
-    @OnClick(R.id.iv_wx)
-    public void onClick() {
-        thirdLogin();
-    }
     private void thirdLogin() {
         umShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
@@ -343,7 +347,7 @@ public class LoginActivity extends BaseActivity {
     private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            user_wx_band_user( data.get("openid"), data.get("nickname"), data.get("headimgurl"));
+            user_wx_band_user(data.get("openid"), data.get("nickname"), data.get("headimgurl"));
         }
 
         @Override
@@ -358,6 +362,7 @@ public class LoginActivity extends BaseActivity {
     };
 
     private UserWxBandUserRequest userWxBandUserRequest;
+
     //根据微信号获取绑定的用户信息
     private void user_wx_band_user(final String openid, final String nickname, final String head) {
         loadingDialog.show();
@@ -377,13 +382,13 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(final Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if(((CommonResult) response).isBand == 0) { // 是否已经绑定了用户账号(0:否,1:是)
+                    if (((CommonResult) response).isBand == 0) { // 是否已经绑定了用户账号(0:否,1:是)
                         Intent intent = new Intent(LoginActivity.this, ThirdBandPhoneActivity.class);
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("head", head);
                         intent.putExtra("openid", openid);
                         startActivityForResult(intent, REQ_THIRD_LOGIN);
-                    } else{
+                    } else {
                         // 直接获取信息
                         AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
                         M_Userinfo userInfo = new M_Userinfo();
