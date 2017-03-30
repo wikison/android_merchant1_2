@@ -22,6 +22,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.ThirdBandPhoneActivity;
+import com.zemult.merchant.aip.common.UserGetPwdRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserWxBandUserRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -325,6 +326,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void thirdLogin() {
+        showUncanclePd();
         umShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
 
@@ -336,11 +338,13 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
         }
     };
@@ -352,11 +356,13 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
         }
     };
@@ -390,13 +396,7 @@ public class LoginActivity extends BaseActivity {
                         startActivityForResult(intent, REQ_THIRD_LOGIN);
                     } else {
                         // 直接获取信息
-                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
-                        M_Userinfo userInfo = new M_Userinfo();
-                        userInfo.setUserId(((CommonResult) response).userId);
-                        UserManager.instance().saveUserinfo(userInfo);
-                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
-                        sendBroadcast(updateintent);
-                        finish();
+                        user_get_pwd(((CommonResult) response).userId);
                     }
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
@@ -405,6 +405,44 @@ public class LoginActivity extends BaseActivity {
             }
         });
         sendJsonRequest(userWxBandUserRequest);
+    }
+    //根据用户id获取密码
+    private UserGetPwdRequest userGetPwdRequest;
+    private void user_get_pwd(final int userId) {
+        loadingDialog.show();
+        if (userGetPwdRequest != null) {
+            userGetPwdRequest.cancel();
+        }
+        UserGetPwdRequest.Input input = new UserGetPwdRequest.Input();
+        input.userId = userId;
+        input.convertJosn();
+
+        userGetPwdRequest = new UserGetPwdRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    M_Userinfo userInfo = new M_Userinfo();
+                    userInfo.setUserId(userId);
+                    userInfo.setPassword(((CommonResult) response).password);
+                    UserManager.instance().saveUserinfo(userInfo);
+
+                    AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+
+                    sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+                    sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
+                    finish();
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(userGetPwdRequest);
     }
 
 }

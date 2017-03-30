@@ -607,4 +607,6 @@ public class Urls {
     public static String USER_BAND_WX = "user_band_wx";
     //用户解绑微信账号
     public static String USER_BAND_WX_DEL = "user_band_wx_del";
+    //根据用户id获取密码
+    public static String USER_GET_PWD = "user_get_pwd";
 }

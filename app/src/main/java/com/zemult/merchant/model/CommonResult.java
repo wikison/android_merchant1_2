@@ -110,6 +110,8 @@ public class CommonResult {
     public int isFit;//是否符合要求(0:否，1:是----信用卡类型和无法识别的银行卡都不符合要求)
     @Expose
     public M_WxData wxdata; //微信支付参数
+    @Expose
+    public String password;
 
 
 }

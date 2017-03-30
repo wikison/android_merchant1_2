@@ -28,6 +28,7 @@ import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.common.UserBandWxInfoPhoneRequest;
+import com.zemult.merchant.aip.common.UserGetPwdRequest;
 import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserLoginWxRequest;
@@ -328,14 +329,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
-                        M_Userinfo userInfo = new M_Userinfo();
-                        userInfo.setUserId(((CommonResult) response).userId);
-                        UserManager.instance().saveUserinfo(userInfo);
-                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
-                        sendBroadcast(updateintent);
-                        setResult(RESULT_OK);
-                        finish();
+                        user_get_pwd(((CommonResult) response).userId);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -346,8 +340,46 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e("USER_REGISTER", e.toString());
         }
+    }
 
+    //根据用户id获取密码
+    private UserGetPwdRequest userGetPwdRequest;
+    private void user_get_pwd(final int userId) {
+        loadingDialog.show();
+        if (userGetPwdRequest != null) {
+            userGetPwdRequest.cancel();
+        }
+        UserGetPwdRequest.Input input = new UserGetPwdRequest.Input();
+        input.userId = userId;
+        input.convertJosn();
 
+        userGetPwdRequest = new UserGetPwdRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    M_Userinfo userInfo = new M_Userinfo();
+                    userInfo.setUserId(userId);
+                    userInfo.setPassword(((CommonResult) response).password);
+                    UserManager.instance().saveUserinfo(userInfo);
+
+                    AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+
+                    sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+                    sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(userGetPwdRequest);
     }
 
 
