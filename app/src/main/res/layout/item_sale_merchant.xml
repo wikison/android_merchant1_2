@@ -175,6 +175,41 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="@dimen/margin_12dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_my_seven"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp">
+
+                    <TextView
+                        android:id="@+id/tv_my_seven"
+                        style="@style/text_14_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:text="7天服务指数"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_seven_right"
+                        style="@style/text_12_black_999"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:drawablePadding="@dimen/margin_8dp"
+                        android:drawableRight="@mipmap/right_btn"
+                        android:gravity="center_vertical"
+                        android:text="查看详情"/>
+
+                </RelativeLayout>
+
+                <View
+                    style="@style/divider_1px"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"/>
             </LinearLayout>
 
             <RelativeLayout

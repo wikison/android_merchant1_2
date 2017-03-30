@@ -143,6 +143,8 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
                     holder.tvDistance.setText(m.distance + "m");
             }
 
+            holder.tvMySeven.setText("7天服务指数" + m.saleUserSumScore);
+
             if (m.commentNumber != 0) {
                 holder.rb5.setStar(m.comment / m.commentNumber);
             } else {
@@ -249,7 +251,7 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             }
         }
 
-        class ViewHolder {
+         class ViewHolder {
             @Bind(R.id.iv_cover)
             ImageView ivCover;
             @Bind(R.id.tv_name)
@@ -264,6 +266,14 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             TextView tvComment;
             @Bind(R.id.tv_service)
             TextView tvService;
+            @Bind(R.id.tv_my_seven)
+            TextView tvMySeven;
+            @Bind(R.id.tv_seven_right)
+            TextView tvSevenRight;
+            @Bind(R.id.rl_my_seven)
+            RelativeLayout rlMySeven;
+            @Bind(R.id.ll_rate)
+            LinearLayout llRate;
             @Bind(R.id.tv_my_service)
             TextView tvMyService;
             @Bind(R.id.fn_my_service)
@@ -272,14 +282,12 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
             TextView tvServiceRight;
             @Bind(R.id.rl_my_service)
             RelativeLayout rlMyService;
-            @Bind(R.id.ll_rate)
-            LinearLayout llRate;
-            @Bind(R.id.ll_trade)
-            LinearLayout llTrade;
             @Bind(R.id.tv_sale_user_money)
             TextView tvSaleUserMoney;
             @Bind(R.id.tv_sale_num)
             TextView tvSaleNum;
+            @Bind(R.id.ll_trade)
+            LinearLayout llTrade;
             @Bind(R.id.tv_qr)
             TextView tvQr;
             @Bind(R.id.tv_share)
@@ -299,8 +307,6 @@ public class MySaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 ButterKnife.bind(this, view);
             }
         }
-
-
     }
 
     public interface ItemMerchantClickListener {

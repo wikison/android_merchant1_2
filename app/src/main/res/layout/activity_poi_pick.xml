@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:background="@color/font_black_28"
+        android:orientation="horizontal">
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:id="@+id/rll_search_bg"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            app:rv_backgroundColor="@color/white"
+            app:rv_cornerRadius="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/sousuo_icon_black"/>
+
+            <EditText
+                android:id="@+id/et_search"
+                style="@style/topbar_edit_text"
+                android:layout_marginLeft="8dp"
+                android:focusable="false"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:textColorHint="@color/font_black_666"/>
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingRight="@dimen/margin_12dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_32px"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="228dp">
+
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.amap.api.maps2d.MapView>
+
+        <ImageView
+            android:id="@+id/iv_locate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/margin_16dp"
+            android:src="@mipmap/dangqian_btn"/>
+    </FrameLayout>
+
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>
