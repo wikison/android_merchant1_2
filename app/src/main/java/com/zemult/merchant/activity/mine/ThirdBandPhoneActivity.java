@@ -23,6 +23,7 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.LoginActivity;
 import com.zemult.merchant.activity.PasswordActivity;
 import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
@@ -368,11 +369,32 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     UserManager.instance().saveUserinfo(userInfo);
 
                     AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+                    loginHelper.login_Sample(userId+ "", ((CommonResult) response).password, Urls.APP_KEY, new IWxCallback() {
+                        @Override
+                        public void onSuccess(Object... arg0) {
+                            loadingDialog.dismiss();
+                            SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
+                            sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+                            sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
+                            setResult(RESULT_OK);
+                            finish();
+                        }
 
-                    sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
-                    sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
-                    setResult(RESULT_OK);
-                    finish();
+                        @Override
+                        public void onProgress(int arg0) {
+
+                        }
+
+                        @Override
+                        public void onError(int errorCode, String errorMessage) {
+                            loadingDialog.dismiss();
+                            if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
+                                Notification.showToastMsg(ThirdBandPhoneActivity.this, "用户不存在");
+                            } else {
+                                Notification.showToastMsg(ThirdBandPhoneActivity.this, errorMessage);
+                            }
+                        }
+                    });
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
