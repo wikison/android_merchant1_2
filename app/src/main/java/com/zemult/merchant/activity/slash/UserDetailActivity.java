@@ -255,10 +255,10 @@ public class UserDetailActivity extends BaseActivity {
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userInfo.name + "】快去看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userInfo.name + "】")
                                 .share();
                         break;
 
@@ -266,20 +266,20 @@ public class UserDetailActivity extends BaseActivity {
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userInfo.name + "】快去看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userInfo.name + "】")
                                 .share();
                         break;
                     case SharePopwindow.WECHAT_FRIEND:
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userInfo.name + "】快去看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userInfo.name + "】")
                                 .share();
                         break;
 
@@ -287,10 +287,10 @@ public class UserDetailActivity extends BaseActivity {
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userName + "】快去看看...")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】给您推荐了一个服务管家【" + userInfo.name + "】快去看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
-                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userName + "】")
+                                .withTitle("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】向您推荐服务管家【" + userInfo.name + "】")
                                 .share();
                         break;
                 }
@@ -518,6 +518,8 @@ public class UserDetailActivity extends BaseActivity {
             selectMerchant = listMerchant.get(0);
             if (selectMerchant.reviewstatus != 2) {
                 btnBuy.setVisibility(View.GONE);
+            } else {
+                btnBuy.setVisibility(View.VISIBLE);
             }
             imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
@@ -544,6 +546,8 @@ public class UserDetailActivity extends BaseActivity {
                         imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover, 60);
                         if (selectMerchant.reviewstatus != 2) {
                             btnBuy.setVisibility(View.GONE);
+                        } else {
+                            btnBuy.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -643,9 +647,9 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
 
-                if (isNormal){
+                if (isNormal) {
                     doReport();
-                }else {
+                } else {
                     List<FilterEntity> list = new ArrayList<>();
                     list.add(new FilterEntity("设置备注名", 0, R.mipmap.bianji_icon));
                     list.add(new FilterEntity("推荐给朋友", 1, R.mipmap.fenxiang_icon));

@@ -402,6 +402,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
+                    SlashHelper.userManager().getUserinfo().setState(state);
                     ondeal(state);
                 } else {
                     ToastUtils.show(getActivity(), ((CommonResult) response).info);

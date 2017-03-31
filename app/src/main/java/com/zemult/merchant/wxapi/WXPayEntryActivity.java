@@ -1,6 +1,7 @@
 package com.zemult.merchant.wxapi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +13,6 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zemult.merchant.R;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.util.ToastUtil;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
@@ -41,7 +41,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            ToastUtil.showMessage("支付成功");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("提示");
+            builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errStr)));
+            builder.show();
         }
     }
 }
