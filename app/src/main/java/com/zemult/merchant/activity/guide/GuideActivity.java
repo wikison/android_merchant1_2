@@ -76,6 +76,9 @@ public class GuideActivity extends BaseActivity {
     Intent it;
     private UMShareAPI umShareAPI;
     private static final int REQ_THIRD_LOGIN = 0x120;
+    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
+    boolean isFirstRun;
 
 
     @Override
@@ -86,23 +89,19 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public void init() {
-        mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
-        mVpImage = (ViewPager) findViewById(R.id.vp_image);
-        mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
 
-        SharedPreferences sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
-        boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
+        isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         if (isFirstRun) {       //第一次
-            editor.putBoolean("isFirstRun", false);
-            editor.commit();
+
         } else {
             startActivity(new Intent(GuideActivity.this, SplashActivity.class));
             GuideActivity.this.finish();
         }
+        mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
+        mVpImage = (ViewPager) findViewById(R.id.vp_image);
+        mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
         umShareAPI = UMShareAPI.get(this);
-
-
         //initView();
 
         mVideoView.setVideoURI(Uri.parse(getVideoPath()));
@@ -263,8 +262,6 @@ public class GuideActivity extends BaseActivity {
     }
 
 
-
-
     private void thirdLogin() {
         umShareAPI.doOauthVerify(GuideActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
@@ -350,25 +347,39 @@ public class GuideActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.login_btn, R.id.register_btn, R.id.weixinlog_iv})
+    @OnClick({R.id.login_btn, R.id.register_btn, R.id.weixinlog_iv, R.id.btn_pass})
     public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.login_btn:
-                    it = new Intent(this, LoginActivity.class);
-                    startActivityForResult(it, 1);
+        switch (view.getId()) {
+            case R.id.login_btn:
+                save();
+                it = new Intent(this, LoginActivity.class);
+                startActivityForResult(it, 1);
 
-                    break;
-                case R.id.register_btn:
-                    it = new Intent(this, RegisterActivity.class);
-                    startActivityForResult(it, 1);
-                    break;
-                case R.id.weixinlog_iv:
-                    thirdLogin();
-                    break;
+                break;
+            case R.id.register_btn:
+                save();
+                it = new Intent(this, RegisterActivity.class);
+                startActivityForResult(it, 1);
+                break;
+            case R.id.weixinlog_iv:
+                save();
+                thirdLogin();
+                break;
+            case R.id.btn_pass:
+                save();
+                startActivity(new Intent(GuideActivity.this, SplashActivity.class));
+                GuideActivity.this.finish();
+                break;
         }
     }
 
+    private  void save(){
+        editor = sharedPreferences.edit();
+        if (isFirstRun) {       //第一次
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        }
+    }
 
     public static class CustomPagerAdapter extends PagerAdapter {
 

@@ -141,7 +141,7 @@ public class PayInfoActivity extends BaseActivity {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
 
-                    tvMoney.setText("" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
                     if (m.rewardMoney == 0) {
                         haveredLl.setVisibility(View.GONE);
                     } else {

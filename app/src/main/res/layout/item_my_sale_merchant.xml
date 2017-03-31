@@ -10,7 +10,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin_16dp"
-        android:paddingRight="@dimen/margin_16dp">
+        android:paddingRight="@dimen/margin_16dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_category"
@@ -26,6 +27,7 @@
         android:id="@+id/flv_merchant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:divider="@color/bg_f2"
         android:dividerHeight="@dimen/margin_16dp">
 

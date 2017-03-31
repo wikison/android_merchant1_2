@@ -185,6 +185,11 @@
     <View style="@style/divider"/>
 
     <View style="@style/divider12dp"/>
+    <View
+        android:visibility="gone"
+        android:id="@+id/one_data_show"
+        style="@style/divider12dp"
+        android:layout_height="200dp"/>
 
 
 </LinearLayout>

@@ -23,7 +23,6 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.aip.common.CommonGetAllTitleRequest;
 import com.zemult.merchant.aip.slash.UserPreInvitationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Title;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetAllTitleList;
@@ -313,8 +312,7 @@ public class PreInviteActivity extends BaseActivity {
                             && !"选择时间".equals(tvTime.getText().toString())) {
                         btnConfirm.setEnabled(true);
                         btnConfirm.setBackgroundResource(R.drawable.common_selector_btn);
-                    }
-                    else {
+                    } else {
                         btnConfirm.setEnabled(false);
                         btnConfirm.setBackgroundResource(R.drawable.next_bg_btn_select);
                     }
@@ -365,7 +363,7 @@ public class PreInviteActivity extends BaseActivity {
     };
 
     private void shareToWX() {
-        if(!AppUtils.isWeixinAvailable(this)){
+        if (!AppUtils.isWeixinAvailable(this)) {
             ToastUtil.showMessage("你还没有安装微信");
             return;
         }
@@ -377,7 +375,7 @@ public class PreInviteActivity extends BaseActivity {
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
                 .withText("您的好友【" + etOrganizer.getText().toString() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
-                .withTargetUrl(Constants.PRE_SHARE_INVITATION + preId)
+                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/share_preInvitation_info.do?preId=" + preId + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect")
                 .withMedia(shareImage)
                 .withTitle("您的好友【" + etOrganizer.getText().toString() + "】发起了一个" + selectTopic)
                 .share();

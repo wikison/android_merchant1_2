@@ -8,8 +8,6 @@
     android:orientation="vertical">
 
 
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,15 +16,16 @@
             android:id="@+id/smoothListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
+            android:background="@color/white"
             android:divider="@null"
-            android:background="@color/white">
+            android:scrollbars="none">
         </com.zemult.merchant.view.SmoothListView.SmoothListView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/ll_topbar"
                 android:layout_width="match_parent"
@@ -38,85 +37,90 @@
                     android:id="@+id/ll_city"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_marginLeft="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
                         android:src="@mipmap/dingwei"/>
 
                     <TextView
                         android:id="@+id/tv_city"
-                        android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:ellipsize="end"
+                        android:maxEms="6"
+                        android:maxLines="1"
                         android:text="定位"
-                        android:textSize="@dimen/font_30px"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_30px"/>
 
                     <ImageView
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/xia" />
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@mipmap/xia"/>
                 </LinearLayout>
 
                 <com.flyco.roundview.RoundLinearLayout
                     android:id="@+id/rll_search_bg"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"
                     android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
                     android:gravity="left|center_vertical"
                     app:rv_backgroundColor="@color/half_transparent_white"
                     app:rv_cornerRadius="16dp">
 
                     <ImageView
-                        android:layout_gravity="center"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="12dp"
-                        android:src="@mipmap/sousuo_icon_black" />
+                        android:src="@mipmap/sousuo_icon_black"/>
 
                     <EditText
-                        android:focusable="false"
-                        android:imeOptions="actionSearch"
                         android:id="@+id/et_search"
                         style="@style/topbar_edit_text"
                         android:layout_marginLeft="8dp"
-                        android:textColorHint="@color/font_black_666"
-                        android:hint="搜索商家或服务管家" />
+                        android:focusable="false"
+                        android:hint="搜索商户"
+                        android:imeOptions="actionSearch"
+                        android:textColorHint="@color/font_black_666"/>
 
                 </com.flyco.roundview.RoundLinearLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <RelativeLayout
                         android:id="@+id/rl_add"
                         android:layout_width="44dp"
                         android:layout_height="44dp">
+
                         <ImageView
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/home_jia" />
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/home_jia"/>
                     </RelativeLayout>
 
                     <ImageView
-                        android:visibility="gone"
-                        android:layout_marginTop="9dp"
-                        android:layout_marginRight="9dp"
-                        android:layout_gravity="right"
                         android:id="@+id/ivDot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/tixing_icon"/>
+                        android:layout_gravity="right"
+                        android:layout_marginRight="9dp"
+                        android:layout_marginTop="9dp"
+                        android:src="@mipmap/tixing_icon"
+                        android:visibility="gone"/>
                 </FrameLayout>
 
             </LinearLayout>
@@ -125,25 +129,20 @@
                 android:id="@+id/rl_top"
                 android:layout_width="match_parent"
                 android:layout_height="39dp">
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_top"
                     android:layout_width="match_parent"
                     android:layout_height="38dp">
 
                 </android.support.v7.widget.RecyclerView>
-                <View style="@style/divider"
+
+                <View
+                    style="@style/divider"
                     android:layout_alignParentBottom="true"/>
 
 
             </RelativeLayout>
-
-
         </LinearLayout>
-
-
-
     </FrameLayout>
-
-
-
 </LinearLayout>

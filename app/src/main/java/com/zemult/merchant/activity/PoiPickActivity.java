@@ -2,9 +2,12 @@ package com.zemult.merchant.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,8 +36,9 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.search.SearchLocateAdapter;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.AMapUtil;
-import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -44,6 +48,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
+
+import static com.zemult.merchant.fragment.HomeFragment.REQ_CITY;
 
 /**
  * Created by Wikison on 2017/3/30.
@@ -116,16 +122,38 @@ public class PoiPickActivity extends Activity {
         aMap.setTrafficEnabled(false);// 显示实时交通状况
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);
 
+        //是否显示地图中放大缩小按钮
+        mUiSettings.setZoomControlsEnabled(false);
+        mUiSettings.setMyLocationButtonEnabled(false); // 是否显示默认的定位按钮
+        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
+
         location();
     }
 
     private void initListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PoiItem p = aMapLocationList.get(position);
+                // 存储到SP中
+                SPUtils.put(mActivity, Constants.SP_CITY, p.getCityCode());
+                SPUtils.put(mContext, Constants.SP_POI, p.getTitle());
+                SPUtils.put(mContext, Constants.SP_CENTER, p.getLatLonPoint().getLongitude() + "," + p.getLatLonPoint().getLatitude());
+                Constants.CITYID = (String) SPUtils.get(mContext, Constants.SP_CITY, "0519");
+                Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
+                Intent data = new Intent();
+                data.putExtra("poi_name", p.getTitle());
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
+
         //监测地图画面的移动
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
                 //     ToastUtil.showToast(getApplicationContext(), cameraPosition.target.longitude+"当前地图中心位置: "+cameraPosition.target.latitude);
-                addMark(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                //addMark(cameraPosition.target.latitude, cameraPosition.target.longitude);
                 latSearchList(cameraPosition.target.latitude, cameraPosition.target.longitude);
 
             }
@@ -134,10 +162,6 @@ public class PoiPickActivity extends Activity {
             public void onCameraChange(CameraPosition cameraPosition) {
             }
         });
-        //是否显示地图中放大缩小按钮
-        mUiSettings.setZoomControlsEnabled(false);
-        mUiSettings.setMyLocationButtonEnabled(false); // 是否显示默认的定位按钮
-        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
 
         //不设置触摸地图的时候会报错
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
@@ -158,7 +182,7 @@ public class PoiPickActivity extends Activity {
                         searchList(aMapLocation.getCityCode(), aMapLocation.getRoad());
                         //把地图移动到定位地点
                         moveMapCamera(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                        addLocationMark(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                        addMark(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                     }
                 } else {
                     ToastUtil.showMessage("定位失败");
@@ -169,24 +193,10 @@ public class PoiPickActivity extends Activity {
 
     //把地图画面移动到定位地点
     private void moveMapCamera(double latitude, double longitude) {
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 14));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 18));
     }
 
     private void addMark(double latitude, double longitude) {
-        if (marker == null) {
-            marker = aMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(latitude, longitude))
-                    .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                            .decodeResource(getResources(), R.mipmap.dingwei_blue)))
-                    .draggable(true));
-        } else {
-            marker.setPosition(new LatLng(latitude, longitude));
-            aMap.invalidate();
-        }
-
-    }
-
-    private void addLocationMark(double latitude, double longitude) {
         if (marker == null) {
             marker = aMap.addMarker(new MarkerOptions()
                     .position(new LatLng(latitude, longitude))
@@ -207,8 +217,8 @@ public class PoiPickActivity extends Activity {
             searchLocateAdapter.notifyDataSetChanged();
         }
         poiQuery = new PoiSearch.Query(road, "", cityCode);
-        poiQuery.setPageSize(15);
-        poiQuery.setPageNum(2);
+        poiQuery.setPageSize(20);
+        poiQuery.setPageNum(1);
         PoiSearch poiSearch = new PoiSearch(this, poiQuery);
         poiSearch.setOnPoiSearchListener(onPoiSearchListener);
         poiSearch.searchPOIAsyn();
@@ -258,7 +268,7 @@ public class PoiPickActivity extends Activity {
                 if (rCode == 1000) {
                     if (result != null && result.getRegeocodeAddress() != null
                             && result.getRegeocodeAddress().getFormatAddress() != null) {
-                        searchList(result.getRegeocodeAddress().getCityCode(), result.getRegeocodeAddress().getTownship());
+                        searchList(result.getRegeocodeAddress().getCityCode(), result.getRegeocodeAddress().getRoads().get(0).getName());
                     }
                 }
             }
@@ -270,6 +280,19 @@ public class PoiPickActivity extends Activity {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == -1) {
+            if (requestCode == REQ_CITY) {
+                if (!TextUtils.isEmpty(data.getStringExtra("poi_name"))) {
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+            }
+        }
+    }
+
     @OnClick({R.id.iv_locate, R.id.et_search, R.id.tv_cancel})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -277,7 +300,9 @@ public class PoiPickActivity extends Activity {
                 location();
                 break;
             case R.id.et_search:
-                IntentUtil.start_activity(mActivity, SearchLocationActivity.class);
+                Intent intent = new Intent(mContext, SearchLocationActivity.class);
+                startActivityForResult(intent, REQ_CITY);
+
                 break;
             case R.id.tv_cancel:
                 this.finish();

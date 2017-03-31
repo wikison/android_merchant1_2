@@ -170,7 +170,7 @@ public class BindCardOneFragment extends BaseFragment {
                         bundle.putString(BindCardTwoFragment.CARD_NUM, etBankcard.getText().toString());
                         fragmentCallBack.showTwo(bundle);
                     }else
-                        tvError.setText("请填写正确的卡号");
+                        tvError.setText("请绑定招商银行借记卡");
                 } else
                     tvError.setText(((CommonResult) response).info);
 

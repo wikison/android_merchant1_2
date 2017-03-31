@@ -1,5 +1,10 @@
 package com.zemult.merchant.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.amap.api.location.AMapLocation;
@@ -10,7 +15,9 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.search.SearchLocateAdapter;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.AMapUtil;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SearchView;
 
@@ -29,6 +36,9 @@ public class SearchLocationActivity extends BaseActivity {
     SearchView searchView;
     @Bind(R.id.listView)
     ListView listView;
+
+    Context mContext;
+    Activity mActivity;
 
     SearchLocateAdapter searchLocateAdapter;
     PoiSearch.Query poiQuery;
@@ -51,6 +61,9 @@ public class SearchLocationActivity extends BaseActivity {
     }
 
     private void initData() {
+        mContext = this;
+        mActivity = this;
+
         searchLocateAdapter = new SearchLocateAdapter(this, aMapLocationList, false);
         listView.setAdapter(searchLocateAdapter);
 
@@ -74,11 +87,42 @@ public class SearchLocationActivity extends BaseActivity {
     }
 
     private void initListener() {
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PoiItem p = aMapLocationList.get(position);
+                // 存储到SP中
+                SPUtils.put(mActivity, Constants.SP_CITY, p.getCityCode());
+                SPUtils.put(mContext, Constants.SP_POI, p.getTitle());
+                SPUtils.put(mContext, Constants.SP_CENTER, p.getLatLonPoint().getLongitude() + "," + p.getLatLonPoint().getLatitude());
+                Constants.CITYID = (String) SPUtils.get(mContext, Constants.SP_CITY, "0519");
+                Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
+                Intent data = new Intent();
+                data.putExtra("poi_name", p.getTitle());
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
+
         searchView.setOnThinkingClickListener(new SearchView.OnThinkingClickListener() {
             @Override
             public void onThinkingClick(String text) {
                 if (!StringUtils.isBlank(text))
                     searchList(cityCode, text);
+            }
+        });
+
+        searchView.setSearchViewListener(new SearchView.SearchViewListener() {
+            @Override
+            public void onSearch(String text) {
+                searchList(cityCode, text);
+            }
+
+            @Override
+            public void onClear() {
+                aMapLocationList.clear();
+                searchLocateAdapter.notifyDataSetChanged();
             }
         });
 

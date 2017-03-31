@@ -110,8 +110,13 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void init() {
+        initData();
         initViews();
         initListener();
+    }
+
+    private void initData() {
+        loginHelper = LoginSampleHelper.getInstance();
     }
 
 

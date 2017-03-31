@@ -346,5 +346,5 @@
     <string name="filter_vcode">0123456789X</string>
     <string name="txt_first_use">第一次用?去注册</string>
     <string name="commit_and_login">确认提交并登录</string>
-
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
 </resources>

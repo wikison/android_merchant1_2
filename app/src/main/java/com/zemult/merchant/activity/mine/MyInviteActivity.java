@@ -102,6 +102,12 @@ public class MyInviteActivity extends BaseActivity implements SmoothListView.ISm
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
     private void userPreInvitationList() {
 
         if (userPreInvitationListRequest != null) {

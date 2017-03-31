@@ -119,7 +119,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
-    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 135,tvHeight = 38,noDataViewHeight, page = 1;
+    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 135, tvHeight = 38, noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
@@ -261,10 +261,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
                     if (headerTopMargin == 0)
                         fraction = 0f;
-                    else if (headerTopMargin > 0){
+                    else if (headerTopMargin > 0) {
                         if (headerTopMargin < mTopViewHeight)
                             fraction = 1 - (mTopViewHeight - headerTopMargin) / mTopViewHeight;
-                        else{
+                        else {
                             fraction = 1f;
                         }
                     } else if (headerTopHeight + headerTopMargin <= mTopViewHeight) {
@@ -276,7 +276,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                     rllSearchBg.getDelegate().setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.half_transparent_white, R.color.white));
 
                     //吸顶效果
-                    if(headerTopMargin <= -((float) DensityUtil.dip2px(mContext,adHeight+tabHeight+tvHeight - titleHeight)))
+                    if (headerTopMargin <= -((float) DensityUtil.dip2px(mContext, adHeight + tabHeight + tvHeight - titleHeight)))
                         rlTop.setVisibility(View.VISIBLE);
                     else
                         rlTop.setVisibility(View.GONE);
@@ -340,9 +340,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         SPUtils.put(mContext, Constants.SP_POI, aMapLocation.getPoiName());
                         SPUtils.put(mContext, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude());
 
+                        Constants.CITYID = (String) SPUtils.get(mContext, Constants.SP_CITY, Constants.CITYID);
                         Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
-                        tvCity.setText(city.getName());
-                        //tvCity.setText(aMapLocation.getPoiName());
+                        tvCity.setText(aMapLocation.getPoiName());
+                        //tvCity.setText(city.getName());
 
                     } else {
                         dbManager.insertCity(new City(Constants.CITY_NAME, Constants.CITY_PINYIN, Constants.CITYID));
@@ -413,14 +414,14 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     if (!((APIM_CommonGetallindustry) response).industryList.isEmpty()) {
                         headerHomeView.setVpIndustrys(((APIM_CommonGetallindustry) response).industryList);
-                        
+
                         List<M_Industry> industryList = ((APIM_CommonGetallindustry) response).industryList;
                         //设置布局管理器
                         linearLayoutManager = new LinearLayoutManager(mContext);
                         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         rvTop.setLayoutManager(linearLayoutManager);
                         //设置适配器
-                        industryAdapter = new AllIndustryAdapter(mContext,industryList);
+                        industryAdapter = new AllIndustryAdapter(mContext, industryList);
                         rvTop.setAdapter(industryAdapter);
 
                         industryAdapter.setSelectedId(((APIM_CommonGetallindustry) response).industryList.get(0).id);
@@ -436,7 +437,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                             @Override
                             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                                 super.onScrollStateChanged(recyclerView, newState);
-                                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                                     int position = linearLayoutManager.findFirstVisibleItemPosition();
                                     View current = linearLayoutManager.findViewByPosition(position);
                                     headerHomeView.onMove(position, current.getLeft());
@@ -559,8 +560,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == -1) {
             if (requestCode == REQ_CITY) {
-                if (!TextUtils.isEmpty(data.getStringExtra("city_name"))) {
-                    tvCity.setText(data.getStringExtra("city_name"));
+                if (!TextUtils.isEmpty(data.getStringExtra("poi_name"))) {
+                    tvCity.setText(data.getStringExtra("poi_name"));
                     onRefresh();
                 }
             }
