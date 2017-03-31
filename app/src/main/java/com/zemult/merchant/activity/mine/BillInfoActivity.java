@@ -272,7 +272,16 @@ public class BillInfoActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(m_bill.saleUserHead)) {
                         imageManager.loadCircleImage(m_bill.saleUserHead, ivSaleHead);
                     }
-                    tvPayType.setText(m_bill.moneyType == 0 ? "账户余额" : "支付宝");
+
+                    if (m_bill.moneyType == 0) {
+                        tvPayType.setText("账户余额");
+                    } else if (m_bill.moneyType == 1) {
+                        tvPayType.setText("支付宝账户");
+                    } else if (m_bill.moneyType == 2) {
+                        tvPayType.setText("微信支付");
+                    }
+
+//                    tvPayType.setText(m_bill.moneyType == 0 ? "账户余额" : "支付宝");
                     tvSaleName.setText(m_bill.saleUserName);
                     tvSaleMoney.setText("" + (m_bill.allMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.allMoney)));
                     tvPayMoney.setText("" + (m_bill.payMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.payMoney)));
@@ -359,7 +368,7 @@ public class BillInfoActivity extends BaseActivity {
                     tvServiceMoney.setText("￥" + (m_bill.serviceMoney == 0 ? "0.00" : Convert.getMoneyString(m_bill.serviceMoney)));
                     tvMoneyWithdraw.setText("￥" + (m_bill.money == 0 ? "0.00" : Convert.getMoneyString(m_bill.money)));
                     tvBankWithdraw.setText("************"
-                            + m_bill.bankCard.substring(m_bill.bankCard.length()-4, m_bill.bankCard.length()));
+                            + m_bill.bankCard.substring(m_bill.bankCard.length() - 4, m_bill.bankCard.length()));
                     if (m_bill.withdrawState == 0) {
                         tvTimeWithdraw.setText("提现申请已提交");
                     } else if (m_bill.withdrawState == 1) {
