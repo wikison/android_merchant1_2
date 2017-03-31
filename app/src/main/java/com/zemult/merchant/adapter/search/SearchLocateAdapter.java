@@ -52,18 +52,22 @@ public class SearchLocateAdapter extends BaseListAdapter<PoiItem> {
         }
 
         PoiItem poiItem = mDatas.get(position);
+        holder.tvAddress.setText(poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet());
+
         if (showFirst) {
             if (position == 0) {
                 holder.tvNow.setVisibility(View.VISIBLE);
+                holder.tvAddress.setTextColor(mContext.getResources().getColor(R.color.font_black_28));
             } else {
                 holder.tvNow.setVisibility(View.GONE);
+                holder.tvAddress.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
 
             }
+        }else{
+            holder.tvAddress.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
         }
 
-
         holder.tvPoi.setText(poiItem.getTitle());
-        holder.tvAddress.setText(poiItem.getSnippet());
 
         return container;
     }

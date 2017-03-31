@@ -506,7 +506,6 @@ public class ChoosePayTypeActivity extends BaseActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     dismissPd();
-                    System.out.print(error);
                 }
 
                 @Override
