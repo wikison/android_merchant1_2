@@ -22,9 +22,7 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
-import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 
 import java.util.ArrayList;
@@ -85,6 +83,10 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             convertView.setTag(R.string.app_name, holder);
         }
 
+        if(getCount() == 1)
+            holder.oneDataShow.setVisibility(View.VISIBLE);
+        else
+            holder.oneDataShow.setVisibility(View.GONE);
         M_Merchant entity = getItem(position);
         initData(holder, entity, position);
         initTags(holder, entity);
@@ -220,6 +222,8 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvAddress;
         @Bind(R.id.tv_money)
         TextView tvMoney;
+        @Bind(R.id.one_data_show)
+        View oneDataShow;
         @Bind(R.id.ll_root)
         LinearLayout llRoot;
 
