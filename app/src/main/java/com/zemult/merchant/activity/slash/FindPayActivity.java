@@ -138,7 +138,8 @@ public class FindPayActivity extends BaseActivity {
 
     private int selectPosition = 1; //选中的赞赏, 默认2, 金额6.66
     private String strRewardMoney = "";
-    Set<Integer> selectidset = new HashSet<Integer>();
+    Set<Integer> selectIdSet = new HashSet<Integer>();
+    Set<Integer> selectIdSetTemp = new HashSet<Integer>();
 
     @Override
     public void setContentView() {
@@ -257,7 +258,7 @@ public class FindPayActivity extends BaseActivity {
                 if (((APIM_PresentList) response).status == 1) {
                     if (((APIM_PresentList) response).moneyList.size() > 0) {
                         moneyList = ((APIM_PresentList) response).moneyList;
-                        selectidset.add(1);
+                        selectIdSet.add(1);
                         rewardMoney = moneyList.get(1).money;
                         adapterReward = new SendRewardAdapter(mContext, moneyList);
                         cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
@@ -281,9 +282,9 @@ public class FindPayActivity extends BaseActivity {
         gv.setAdapter(adapterReward);
 
         if (!cbReward.isChecked()) {
-            selectidset.clear();
+            selectIdSet.clear();
         } else {
-            adapterReward.setSelected(selectidset);
+            adapterReward.setSelected(selectIdSet);
         }
 
         alertDialog.setContentView(view);
@@ -299,13 +300,13 @@ public class FindPayActivity extends BaseActivity {
             public void onClick(View v) {
                 rewardMoney = 0;
 
-                for (Integer selectidposition : selectidset) {
+                for (Integer selectidposition : selectIdSet) {
                     rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
                 }
 
                 if (rewardMoney == 0) {
-                    selectidset.clear();
-                    selectidset.add(1);
+                    selectIdSet.clear();
+                    selectIdSet.add(1);
                     rewardMoney = moneyList.get(1).money;
                     cbReward.setChecked(false);
                     cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
@@ -327,13 +328,13 @@ public class FindPayActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectPosition = position;
-                if (selectidset.contains(position)) {
-                    selectidset.remove(position);
+                if (selectIdSet.contains(position)) {
+                    selectIdSet.remove(position);
                 } else {
-                    selectidset.add(position);
+                    selectIdSet.add(position);
                 }
 
-                adapterReward.setSelected(selectidset);
+                adapterReward.setSelected(selectIdSet);
             }
         });
 
@@ -394,7 +395,7 @@ public class FindPayActivity extends BaseActivity {
 
                         String imMessageTitle = "";
                         String imMessageContent = "";
-                        for (int i : selectidset) {
+                        for (int i : selectIdSet) {
                             imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
                             imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
                         }
@@ -629,7 +630,7 @@ public class FindPayActivity extends BaseActivity {
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
                     rewardMoney = 0;
-                    for (Integer selectidposition : selectidset) {
+                    for (Integer selectidposition : selectIdSet) {
                         rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
                     }
 
@@ -637,8 +638,8 @@ public class FindPayActivity extends BaseActivity {
                     cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
                 } else {
-                    selectidset.clear();
-                    selectidset.add(1);
+                    selectIdSet.clear();
+                    selectIdSet.add(1);
                     rewardMoney = moneyList.get(1).money;
                     cbReward.setChecked(false);
                     cbReward.setTextColor(getResources().getColor(R.color.font_black_999));

@@ -516,7 +516,7 @@ public class UserDetailActivity extends BaseActivity {
             pager.setClipChildren(true);
             pager.setPageTransformer(false, new LinkageCoverTransformer(0.3f, 0f, 0f, 0f));
             selectMerchant = listMerchant.get(0);
-            if (selectMerchant.reviewstatus != 2) {
+            if (selectMerchant.reviewstatus != 2 || userId == SlashHelper.userManager().getUserId()) {
                 btnBuy.setVisibility(View.GONE);
             } else {
                 btnBuy.setVisibility(View.VISIBLE);
@@ -544,7 +544,7 @@ public class UserDetailActivity extends BaseActivity {
                         bindPager.setCurrentItem(position);
                         selectMerchant = listMerchant.get(position);
                         imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover, 60);
-                        if (selectMerchant.reviewstatus != 2) {
+                        if (selectMerchant.reviewstatus != 2 || userId == SlashHelper.userManager().getUserId()) {
                             btnBuy.setVisibility(View.GONE);
                         } else {
                             btnBuy.setVisibility(View.VISIBLE);
