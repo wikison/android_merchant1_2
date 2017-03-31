@@ -351,29 +351,35 @@ public class GuideActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_btn:
+                save();
                 it = new Intent(this, LoginActivity.class);
                 startActivityForResult(it, 1);
 
                 break;
             case R.id.register_btn:
+                save();
                 it = new Intent(this, RegisterActivity.class);
                 startActivityForResult(it, 1);
                 break;
             case R.id.weixinlog_iv:
+                save();
                 thirdLogin();
                 break;
             case R.id.btn_pass:
-                editor = sharedPreferences.edit();
-                if (isFirstRun) {       //第一次
-                    editor.putBoolean("isFirstRun", false);
-                    editor.commit();
-                }
+                save();
                 startActivity(new Intent(GuideActivity.this, SplashActivity.class));
                 GuideActivity.this.finish();
                 break;
         }
     }
 
+    private  void save(){
+        editor = sharedPreferences.edit();
+        if (isFirstRun) {       //第一次
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        }
+    }
 
     public static class CustomPagerAdapter extends PagerAdapter {
 
