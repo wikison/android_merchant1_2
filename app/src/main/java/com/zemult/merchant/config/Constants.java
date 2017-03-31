@@ -75,7 +75,7 @@ public class Constants {
     public static final String PROTOCOL_REGISTER = Urls.MAIN_URL + "html/dzyx_common/userProtocal.html";
     public static final String PROTOCOL_MERCHANT = Urls.MAIN_URL + "html/dzyx_common/merchantProtocal.html";
     public static final String URL_HELP = Urls.MAIN_URL + "html/help.html";
-    public static final String PERINVITATIONFEEDBACKINFO = Urls.MAIN_URL + "dzyx/app/share_perInvitationfeedback_info.do?perId=";
+    public static final String PERINVITATIONFEEDBACKINFO = Urls.MAIN_URL + "dzyx/app/share_preInvitationfeedback_info.do?preId=";
     //服务管家等级
     public static String SERVICELEVEL = Urls.MAIN_URL + "html/dzyx_common/level.html";
     //服务管家协议

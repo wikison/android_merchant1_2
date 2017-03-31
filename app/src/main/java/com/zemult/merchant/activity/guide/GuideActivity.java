@@ -263,8 +263,6 @@ public class GuideActivity extends BaseActivity {
     }
 
 
-
-
     private void thirdLogin() {
         umShareAPI.doOauthVerify(GuideActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
@@ -350,22 +348,25 @@ public class GuideActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.login_btn, R.id.register_btn, R.id.weixinlog_iv})
+    @OnClick({R.id.login_btn, R.id.register_btn, R.id.weixinlog_iv, R.id.btn_pass})
     public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.login_btn:
-                    it = new Intent(this, LoginActivity.class);
-                    startActivityForResult(it, 1);
+        switch (view.getId()) {
+            case R.id.login_btn:
+                it = new Intent(this, LoginActivity.class);
+                startActivityForResult(it, 1);
 
-                    break;
-                case R.id.register_btn:
-                    it = new Intent(this, RegisterActivity.class);
-                    startActivityForResult(it, 1);
-                    break;
-                case R.id.weixinlog_iv:
-                    thirdLogin();
-                    break;
+                break;
+            case R.id.register_btn:
+                it = new Intent(this, RegisterActivity.class);
+                startActivityForResult(it, 1);
+                break;
+            case R.id.weixinlog_iv:
+                thirdLogin();
+                break;
+            case R.id.btn_pass:
+                startActivity(new Intent(GuideActivity.this, SplashActivity.class));
+                GuideActivity.this.finish();
+                break;
         }
     }
 
