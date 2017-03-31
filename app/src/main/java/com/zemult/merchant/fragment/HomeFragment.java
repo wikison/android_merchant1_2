@@ -340,6 +340,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         SPUtils.put(mContext, Constants.SP_POI, aMapLocation.getPoiName());
                         SPUtils.put(mContext, Constants.SP_CENTER, aMapLocation.getLongitude() + "," + aMapLocation.getLatitude());
 
+                        Constants.CITYID = (String) SPUtils.get(mContext, Constants.SP_CITY, Constants.CITYID);
                         Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
                         tvCity.setText(aMapLocation.getPoiName());
                         //tvCity.setText(city.getName());

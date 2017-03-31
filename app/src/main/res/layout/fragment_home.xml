@@ -89,7 +89,7 @@
                         style="@style/topbar_edit_text"
                         android:layout_marginLeft="8dp"
                         android:textColorHint="@color/font_black_666"
-                        android:hint="搜索商家或服务管家" />
+                        android:hint="搜索商户" />
 
                 </com.flyco.roundview.RoundLinearLayout>
 
