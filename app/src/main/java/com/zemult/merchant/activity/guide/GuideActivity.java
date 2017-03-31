@@ -76,6 +76,9 @@ public class GuideActivity extends BaseActivity {
     Intent it;
     private UMShareAPI umShareAPI;
     private static final int REQ_THIRD_LOGIN = 0x120;
+    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
+    boolean isFirstRun;
 
 
     @Override
@@ -86,23 +89,19 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public void init() {
-        mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
-        mVpImage = (ViewPager) findViewById(R.id.vp_image);
-        mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
 
-        SharedPreferences sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
-        boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
+        isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         if (isFirstRun) {       //第一次
-            editor.putBoolean("isFirstRun", false);
-            editor.commit();
+
         } else {
             startActivity(new Intent(GuideActivity.this, SplashActivity.class));
             GuideActivity.this.finish();
         }
+        mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
+        mVpImage = (ViewPager) findViewById(R.id.vp_image);
+        mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
         umShareAPI = UMShareAPI.get(this);
-
-
         //initView();
 
         mVideoView.setVideoURI(Uri.parse(getVideoPath()));
@@ -364,6 +363,11 @@ public class GuideActivity extends BaseActivity {
                 thirdLogin();
                 break;
             case R.id.btn_pass:
+                editor = sharedPreferences.edit();
+                if (isFirstRun) {       //第一次
+                    editor.putBoolean("isFirstRun", false);
+                    editor.commit();
+                }
                 startActivity(new Intent(GuideActivity.this, SplashActivity.class));
                 GuideActivity.this.finish();
                 break;
