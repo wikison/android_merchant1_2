@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginTop="74dp"
                     android:gravity="center"
-                    android:text="该服务管家目前没有在任何商家提供服务"
+                    android:text="该服务管家目前没有在任何商户提供服务"
                     android:visibility="gone"/>
 
                 <ImageView

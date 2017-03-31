@@ -116,10 +116,16 @@ public class PoiPickActivity extends Activity {
         aMap.setTrafficEnabled(false);// 显示实时交通状况
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);
 
+        //是否显示地图中放大缩小按钮
+        mUiSettings.setZoomControlsEnabled(false);
+        mUiSettings.setMyLocationButtonEnabled(false); // 是否显示默认的定位按钮
+        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
+
         location();
     }
 
     private void initListener() {
+
         //监测地图画面的移动
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
@@ -134,10 +140,6 @@ public class PoiPickActivity extends Activity {
             public void onCameraChange(CameraPosition cameraPosition) {
             }
         });
-        //是否显示地图中放大缩小按钮
-        mUiSettings.setZoomControlsEnabled(false);
-        mUiSettings.setMyLocationButtonEnabled(false); // 是否显示默认的定位按钮
-        aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
 
         //不设置触摸地图的时候会报错
         aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
@@ -169,7 +171,7 @@ public class PoiPickActivity extends Activity {
 
     //把地图画面移动到定位地点
     private void moveMapCamera(double latitude, double longitude) {
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 14));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16));
     }
 
     private void addMark(double latitude, double longitude) {
