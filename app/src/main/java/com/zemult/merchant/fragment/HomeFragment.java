@@ -349,6 +349,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         dbManager.insertCity(new City(Constants.CITY_NAME, Constants.CITY_PINYIN, Constants.CITYID));
                         tvCity.setText(Constants.CITY_NAME);
                     }
+                    onRefresh();
                 }
             }
         });
