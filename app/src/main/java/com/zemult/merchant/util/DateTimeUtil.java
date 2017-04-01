@@ -1283,4 +1283,15 @@ public final class DateTimeUtil implements Serializable {
         result= iDiffMinute+"分"+iDiffSecond+"秒";
         return result;
     }
+
+    public static  String formatDate(String mdate) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date=sdf.parse(mdate);
+
+        SimpleDateFormat sdf2=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String datestr=sdf2.format(date);
+
+        return  datestr;
+    }
+
 }

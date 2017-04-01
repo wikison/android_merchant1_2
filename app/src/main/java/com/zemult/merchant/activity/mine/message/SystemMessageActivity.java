@@ -23,11 +23,13 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Message;
 import com.zemult.merchant.model.apimodel.APIM_CommonSysMessageList;
 import com.zemult.merchant.model.apimodel.APIM_TaskIndustryInfo;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,11 +78,15 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
         concernLv.setAdapter( commonAdapter=new CommonAdapter<M_Message>(SystemMessageActivity.this, R.layout.item_systemmessagechatui_result, mDatas) {
             @Override
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
-                holder.setText(R.id.tv_messagedate, message.createtime);
+                try {
+                    holder.setText(R.id.tv_messagedate, DateTimeUtil.formatDate(message.createtime));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 if(message.messageType==-1){//消息类型(-1:系统广告，0:激励红包，1:注册欢迎，2:升级,3:被举报警告)
                     holder.setText(R.id.tv_messagetitle,message.title);
                     holder.setText(R.id.tv_messagecontent,message.note);
-                    holder.setCircleImage(R.id.iv_icon,message.pic);
+                    holder.setImage2(R.id.iv_icon,message.pic);
                     holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
