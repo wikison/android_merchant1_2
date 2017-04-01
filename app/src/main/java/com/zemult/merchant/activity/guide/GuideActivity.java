@@ -168,7 +168,7 @@ public class GuideActivity extends BaseActivity {
      * @return 路径
      */
     private String getVideoPath() {
-        return "android.resource://" + this.getPackageName() + "/" + R.raw.intro_video;
+        return "android.resource://" + this.getPackageName() + "/" + R.raw.end;
     }
 
     private void doplayvideo() {
