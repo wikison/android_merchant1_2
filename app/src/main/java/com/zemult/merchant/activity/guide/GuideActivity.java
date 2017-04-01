@@ -19,6 +19,8 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -29,13 +31,17 @@ import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.activity.SplashActivity;
 import com.zemult.merchant.activity.mine.ThirdBandPhoneActivity;
+import com.zemult.merchant.aip.common.UserGetPwdRequest;
 import com.zemult.merchant.aip.common.UserWxBandUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 import com.zemult.merchant.view.PreviewIndicator;
@@ -56,11 +62,7 @@ public class GuideActivity extends BaseActivity {
 
     @Bind(R.id.vp_image)
     ViewPager vpImage;
-    private ViewPager viewPage;
-    private Fragment0 mFragment0;
-    private Fragment1 mFragment1;
-    private Fragment2 mFragment2;
-    private Fragment3 mFragment3;
+
     private boolean misScrolled;
 
     private PagerAdapter mPgAdapter;
@@ -88,6 +90,7 @@ public class GuideActivity extends BaseActivity {
     private static final int TYPE_CHANGE_AD = 0;
     private boolean isStopThread = false;
     private Thread mThread;
+    private LoginSampleHelper loginHelper;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -141,7 +144,7 @@ public class GuideActivity extends BaseActivity {
             GuideActivity.this.finish();
         }
         mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
-
+        loginHelper = LoginSampleHelper.getInstance();
         mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
 //        mIndicator.setSelected(0);
         umShareAPI = UMShareAPI.get(this);
@@ -310,6 +313,10 @@ public class GuideActivity extends BaseActivity {
 
 
     private void thirdLogin() {
+        if(!umShareAPI.isInstall(GuideActivity.this, SHARE_MEDIA.WEIXIN)){
+            return;
+        }
+        showPd();
         umShareAPI.doOauthVerify(GuideActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
 
@@ -321,11 +328,13 @@ public class GuideActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
         }
     };
@@ -339,11 +348,13 @@ public class GuideActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
+            dismissPd();
             Toast.makeText(getApplicationContext(), "获取信息取消", Toast.LENGTH_SHORT).show();
         }
     };
@@ -376,13 +387,7 @@ public class GuideActivity extends BaseActivity {
                         startActivityForResult(intent, REQ_THIRD_LOGIN);
                     } else {
                         // 直接获取信息
-                        AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
-                        M_Userinfo userInfo = new M_Userinfo();
-                        userInfo.setUserId(((CommonResult) response).userId);
-                        UserManager.instance().saveUserinfo(userInfo);
-                        Intent updateintent = new Intent(Constants.BROCAST_UPDATEMYINFO);
-                        sendBroadcast(updateintent);
-                        finish();
+                        user_get_pwd(((CommonResult) response).userId);
                     }
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
@@ -391,6 +396,67 @@ public class GuideActivity extends BaseActivity {
             }
         });
         sendJsonRequest(userWxBandUserRequest);
+    }
+
+
+    //根据用户id获取密码
+    private UserGetPwdRequest userGetPwdRequest;
+    private void user_get_pwd(final int userId) {
+        loadingDialog.show();
+        if (userGetPwdRequest != null) {
+            userGetPwdRequest.cancel();
+        }
+        UserGetPwdRequest.Input input = new UserGetPwdRequest.Input();
+        input.userId = userId;
+        input.convertJosn();
+
+        userGetPwdRequest = new UserGetPwdRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((CommonResult) response).status == 1) {
+                    M_Userinfo userInfo = new M_Userinfo();
+                    userInfo.setUserId(userId);
+                    userInfo.setPassword(((CommonResult) response).password);
+                    UserManager.instance().saveUserinfo(userInfo);
+
+                    AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
+                    loginHelper.login_Sample(userId+ "", ((CommonResult) response).password, Urls.APP_KEY, new IWxCallback() {
+                        @Override
+                        public void onSuccess(Object... arg0) {
+                            loadingDialog.dismiss();
+                            SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
+                            sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+                            sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
+                            finish();
+                        }
+
+                        @Override
+                        public void onProgress(int arg0) {
+
+                        }
+
+                        @Override
+                        public void onError(int errorCode, String errorMessage) {
+                            loadingDialog.dismiss();
+                            if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
+                                Notification.showToastMsg(GuideActivity.this, "用户不存在");
+                            } else {
+                                Notification.showToastMsg(GuideActivity.this, errorMessage);
+                            }
+                        }
+                    });
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(userGetPwdRequest);
     }
 
 
