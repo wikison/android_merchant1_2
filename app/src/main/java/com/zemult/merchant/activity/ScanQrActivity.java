@@ -143,7 +143,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
                     }
                 }
             } else
-                ToastUtil.showMessage("期待您使用" + Constants.APPNAME + "APP");
+                ToastUtil.showMessage("期待您使用" + Constants.APP_CHINESE_NAME + "APP");
         }
     }
 

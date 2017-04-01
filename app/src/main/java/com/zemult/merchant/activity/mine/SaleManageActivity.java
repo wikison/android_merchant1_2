@@ -22,7 +22,6 @@ import com.umeng.socialize.utils.Log;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.minefragment.SaleMerchantAdapter;
-import com.zemult.merchant.adapter.slash.MySaleMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantListRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantList_1_2_2Request;
@@ -86,7 +85,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     private UserSaleMerchantDelRequest userSaleMerchantDelRequest;
     private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
     private SaleMerchantAdapter saleMerchantAdapter;
-    private MySaleMerchantAdapter mySaleMerchantAdapter;
+    //private MySaleMerchantAdapter mySaleMerchantAdapter;
     int page = 1;
     private SharePopwindow sharePopWindow;
     private M_Merchant merchantItem;

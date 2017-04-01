@@ -107,7 +107,7 @@ public class SaleMerchantAdapter extends BaseListAdapter<M_Merchant> {
                 holder.tvDistance.setText(m.distance + "m");
         }
 
-        holder.tvMySeven.setText("7天服务指数" + m.saleUserSumScore);
+        holder.tvMySeven.setText("7天服务指数" + m.saleUserSumScore/7);
 
         if (m.commentNumber != 0) {
             holder.rb5.setStar(m.comment / m.commentNumber);
