@@ -142,6 +142,9 @@ public class LoginActivity extends BaseActivity {
         etName.addTextChangedListener(watcher2);
         etPwd.addTextChangedListener(watcher2);
 
+        if(!AppUtils.isWeixinAvailable(LoginActivity.this))
+            ivWx.setVisibility(View.GONE);
+
     }
 
 
@@ -326,7 +329,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void thirdLogin() {
-        showUncanclePd();
+        if(!umShareAPI.isInstall(LoginActivity.this, SHARE_MEDIA.WEIXIN)){
+            return;
+        }
+        showPd();
         umShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, doOauthVerifyListener);
     }
 
