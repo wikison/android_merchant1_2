@@ -9,6 +9,7 @@ import java.io.File;
  */
 public class Constants {
     public static final String APPNAME = "yogous";
+    public static final String APP_CHINESE_NAME = "约服";
     public static final String APP_SHAREREFERENCE = "yogous";
     public static final int REQUESTCODE_UPLOADAVATAR_CAMERA = 1;// 拍照修改头像
     public static final int REQUESTCODE_UPLOADAVATAR_LOCATION = 2;// 本地相册修改头像
