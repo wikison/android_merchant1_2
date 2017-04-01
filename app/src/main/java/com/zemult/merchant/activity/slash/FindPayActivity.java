@@ -136,8 +136,6 @@ public class FindPayActivity extends BaseActivity {
 
     private Context mContext;
 
-    private int selectPosition = 1; //选中的赞赏, 默认2, 金额6.66
-    private String strRewardMoney = "";
     Set<Integer> selectIdSet = new HashSet<Integer>();
     Set<Integer> selectIdSetTemp = new HashSet<Integer>();
 
@@ -281,16 +279,22 @@ public class FindPayActivity extends BaseActivity {
 
         gv.setAdapter(adapterReward);
 
+        for (Integer selectIdPosition : selectIdSet) {
+            selectIdSetTemp.add(selectIdPosition);
+        }
+
         if (!cbReward.isChecked()) {
             selectIdSet.clear();
+            selectIdSetTemp.clear();
         } else {
-            adapterReward.setSelected(selectIdSet);
+            adapterReward.setSelected(selectIdSetTemp);
         }
 
         alertDialog.setContentView(view);
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectIdSetTemp.clear();
                 alertDialog.dismiss();
             }
         });
@@ -299,9 +303,14 @@ public class FindPayActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 rewardMoney = 0;
+                selectIdSet.clear();
+                for (Integer selectIdPosition : selectIdSetTemp) {
+                    selectIdSet.add(selectIdPosition);
+                }
+                selectIdSetTemp.clear();
 
-                for (Integer selectidposition : selectIdSet) {
-                    rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
+                for (Integer selectIdPosition : selectIdSet) {
+                    rewardMoney = rewardMoney + adapterReward.getItem(selectIdPosition).money;
                 }
 
                 if (rewardMoney == 0) {
@@ -327,14 +336,13 @@ public class FindPayActivity extends BaseActivity {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectPosition = position;
-                if (selectIdSet.contains(position)) {
-                    selectIdSet.remove(position);
+                if (selectIdSetTemp.contains(position)) {
+                    selectIdSetTemp.remove(position);
                 } else {
-                    selectIdSet.add(position);
+                    selectIdSetTemp.add(position);
                 }
 
-                adapterReward.setSelected(selectIdSet);
+                adapterReward.setSelected(selectIdSetTemp);
             }
         });
 
@@ -630,15 +638,18 @@ public class FindPayActivity extends BaseActivity {
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
                     rewardMoney = 0;
+                    if(selectIdSet.size()==0){
+                        selectIdSet.add(1);
+                    }
                     for (Integer selectidposition : selectIdSet) {
                         rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
                     }
-
                     cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
                     cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
                     tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney() + rewardMoney));
                 } else {
                     selectIdSet.clear();
+                    selectIdSetTemp.clear();
                     selectIdSet.add(1);
                     rewardMoney = moneyList.get(1).money;
                     cbReward.setChecked(false);
