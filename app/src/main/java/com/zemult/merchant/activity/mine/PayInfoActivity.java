@@ -184,6 +184,10 @@ public class PayInfoActivity extends BaseActivity {
                         case 1:
                             tvPayType.setText("支付宝支付");
                             break;
+                        case 2:
+                            tvPayType.setText("微信支付");
+                            break;
+
                     }
                     tvMerchantName.setText(m.merchantName);
                     if (!TextUtils.isEmpty(m.saleUserHead)) {
