@@ -157,7 +157,7 @@ public class ImageManager {
                     .into(imageView);
         } else {
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .placeholder(R.drawable.xml_circle_grey_bg)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
@@ -179,7 +179,7 @@ public class ImageManager {
                     .into(imageView);
         } else {
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .placeholder(R.drawable.xml_circle_grey_bg)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
@@ -251,7 +251,7 @@ public class ImageManager {
                         .into(imageView);
             } else {
                 Glide.with(mContext)
-                        .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                        .load(url)
                         .placeholder(R.drawable.xml_circle_grey_bg)
                         .error(R.mipmap.tupiansilie_circle_icon)
                         .crossFade()
@@ -266,7 +266,7 @@ public class ImageManager {
         if (StringUtils.isBlank(url)) {
             imageView.setImageResource(R.mipmap.user_icon);
         } else {
-            if (null != url && url.indexOf("xiegang.oss") != -1) {
+            if (url.indexOf("xiegang.oss") != -1) {
                 url = url.replace("xiegang.oss", "xiegang.img");
                 Glide.with(mContext)
                         .load(url + rule)
@@ -277,7 +277,7 @@ public class ImageManager {
                         .into(imageView);
             } else {
                 Glide.with(mContext)
-                        .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                        .load(url)
                         .placeholder(R.drawable.xml_circle_grey_bg)
                         .error(R.mipmap.tupiansilie_circle_icon)
                         .crossFade()
@@ -300,7 +300,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new RoundedCornersTransformation(mContext, radius, 0))
@@ -321,7 +321,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new BlurTransformation(mContext, radius))
@@ -343,7 +343,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
@@ -364,7 +364,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.merchant_default_cover)
                     .crossFade()
                     .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
@@ -385,7 +385,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .transform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
@@ -406,7 +406,7 @@ public class ImageManager {
         } else {
             //不是网络图片加载本地图片
             Glide.with(mContext)
-                    .load(resourceIdToUri(R.mipmap.tupiansilie_icon))
+                    .load(url)
                     .error(R.mipmap.tupiansilie_circle_icon)
                     .crossFade()
                     .bitmapTransform(new GlideRoundTransform(mContext, roundPx, bordercolor, borderwidth))
