@@ -134,12 +134,12 @@ public class GuideActivity extends BaseActivity {
 
         sharedPreferences = GuideActivity.this.getSharedPreferences("share", MODE_PRIVATE);
         isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
-//        if (isFirstRun) {       //第一次
-//
-//        } else {
-//            startActivity(new Intent(GuideActivity.this, SplashActivity.class));
-//            GuideActivity.this.finish();
-//        }
+        if (isFirstRun) {       //第一次
+
+        } else {
+            startActivity(new Intent(GuideActivity.this, SplashActivity.class));
+            GuideActivity.this.finish();
+        }
         mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
 
         mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
