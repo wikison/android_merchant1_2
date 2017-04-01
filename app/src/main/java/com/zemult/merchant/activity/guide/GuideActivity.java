@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -42,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
@@ -50,6 +54,8 @@ import zema.volley.network.ResponseListener;
 
 public class GuideActivity extends BaseActivity {
 
+    @Bind(R.id.vp_image)
+    ViewPager vpImage;
     private ViewPager viewPage;
     private Fragment0 mFragment0;
     private Fragment1 mFragment1;
@@ -62,8 +68,8 @@ public class GuideActivity extends BaseActivity {
 
 
     private PreviewVideoView mVideoView;
-    private ViewPager mVpImage;
-    private PreviewIndicator mIndicator;
+
+    private static PreviewIndicator mIndicator;
 
     private List<View> mViewListone = new ArrayList<>();
 
@@ -79,6 +85,42 @@ public class GuideActivity extends BaseActivity {
     SharedPreferences.Editor editor;
     SharedPreferences sharedPreferences;
     boolean isFirstRun;
+    private static final int TYPE_CHANGE_AD = 0;
+    private boolean isStopThread = false;
+    private Thread mThread;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == TYPE_CHANGE_AD) {
+                vpImage.setCurrentItem(vpImage.getCurrentItem() + 1);
+
+            }
+        }
+    };
+
+    // 启动循环广告的线程
+    private void startADRotate() {
+        isStopThread = false;
+        // 一个广告的时候不用转
+
+        if (mThread == null) {
+            mThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 当没离开该页面时一直转
+                    while (!isStopThread) {
+                        // 每隔4秒转一次
+                        SystemClock.sleep(4000);
+                        // 在主线程更新界面
+                        mHandler.sendEmptyMessage(TYPE_CHANGE_AD);
+                    }
+                }
+            });
+            mThread.start();
+        }
+    }
 
 
     @Override
@@ -99,13 +141,14 @@ public class GuideActivity extends BaseActivity {
             GuideActivity.this.finish();
         }
         mVideoView = (PreviewVideoView) findViewById(R.id.vv_preview);
-        mVpImage = (ViewPager) findViewById(R.id.vp_image);
+
         mIndicator = (PreviewIndicator) findViewById(R.id.indicator);
+//        mIndicator.setSelected(0);
         umShareAPI = UMShareAPI.get(this);
         //initView();
 
         mVideoView.setVideoURI(Uri.parse(getVideoPath()));
-
+        startADRotate();
         doplayvideo();
 
         for (int i = 0; i < mTextoneResIds.length; i++) {
@@ -116,8 +159,9 @@ public class GuideActivity extends BaseActivity {
         }
 
         mAdapter = new CustomPagerAdapter(mViewListone);
-        mVpImage.setAdapter(mAdapter);
-        mVpImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vpImage.setAdapter(mAdapter);
+//        vpImage.setCurrentItem(0);
+        vpImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -126,8 +170,10 @@ public class GuideActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 mCurrentPage = position;
-                mIndicator.setSelected(mCurrentPage);
-                //   startLoop();
+//                mIndicator.setSelected(mCurrentPage);
+                int newPosition = position % 5;
+                mIndicator.setSelected(newPosition);
+
             }
 
             @Override
@@ -148,6 +194,7 @@ public class GuideActivity extends BaseActivity {
 //                        misScrolled = true;
 //                        break;
 //                }
+
 
             }
         });
@@ -373,12 +420,19 @@ public class GuideActivity extends BaseActivity {
         }
     }
 
-    private  void save(){
+    private void save() {
         editor = sharedPreferences.edit();
         if (isFirstRun) {       //第一次
             editor.putBoolean("isFirstRun", false);
             editor.commit();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     public static class CustomPagerAdapter extends PagerAdapter {
@@ -391,18 +445,30 @@ public class GuideActivity extends BaseActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mViewList.get(position));
-            return mViewList.get(position);
+
+//            container.addView(mViewList.get(position));
+//            return mViewList.get(position);
+
+
+            int newPosition = position % mViewList.size();
+            // 先移除在添加，更新图片在container中的位置（把iv放至container末尾）
+            View view = mViewList.get(newPosition);
+            container.removeView(view);
+            container.addView(view);
+        //    mIndicator.setSelected(newPosition);
+            return view;
+
+
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(mViewList.get(position));
+//            container.removeView(mViewList.get(position));
         }
 
         @Override
         public int getCount() {
-            return mViewList.size();
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -418,6 +484,7 @@ public class GuideActivity extends BaseActivity {
         if (mVideoView != null) {
             mVideoView.stopPlayback();
         }
+        stopADRotate();
     }
 
 
@@ -434,4 +501,15 @@ public class GuideActivity extends BaseActivity {
         }
         umShareAPI.onActivityResult(requestCode, resultCode, data);
     }
+
+
+    // 停止循环广告的线程，清空消息队列
+    public void stopADRotate() {
+        isStopThread = true;
+        if (mHandler != null && mHandler.hasMessages(TYPE_CHANGE_AD)) {
+            mHandler.removeMessages(TYPE_CHANGE_AD);
+        }
+    }
+
+
 }
