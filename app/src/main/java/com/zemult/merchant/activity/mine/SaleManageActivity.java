@@ -21,10 +21,11 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.utils.Log;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
+import com.zemult.merchant.adapter.minefragment.SaleMerchantAdapter;
 import com.zemult.merchant.adapter.slash.MySaleMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantListRequest;
-import com.zemult.merchant.aip.mine.UserSaleMerchantList_1_2Request;
+import com.zemult.merchant.aip.mine.UserSaleMerchantList_1_2_2Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
@@ -81,10 +82,10 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
     private Activity mActivity;
 
     private UserSaleMerchantListRequest userSaleMerchantListRequest;
-    private UserSaleMerchantList_1_2Request userSaleMerchantList_1_2Request;
+    private UserSaleMerchantList_1_2_2Request userSaleMerchantList_1_2_2Request;
     private UserSaleMerchantDelRequest userSaleMerchantDelRequest;
     private List<M_Merchant> merchantList = new ArrayList<M_Merchant>();
-    //private SaleMerchantAdapter saleMerchantAdapter;
+    private SaleMerchantAdapter saleMerchantAdapter;
     private MySaleMerchantAdapter mySaleMerchantAdapter;
     int page = 1;
     private SharePopwindow sharePopWindow;
@@ -115,14 +116,14 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
-        //saleMerchantAdapter = new SaleMerchantAdapter(this, merchantList);
-        mySaleMerchantAdapter = new MySaleMerchantAdapter(this, merchantList);
+        saleMerchantAdapter = new SaleMerchantAdapter(this, merchantList);
+        //mySaleMerchantAdapter = new MySaleMerchantAdapter(this, merchantList);
 
-        smoothListView.setAdapter(mySaleMerchantAdapter);
+        smoothListView.setAdapter(saleMerchantAdapter);
     }
 
     private void initListener() {
-        mySaleMerchantAdapter.setOnItemMerchantClickListener(new MySaleMerchantAdapter.ItemMerchantClickListener() {
+        saleMerchantAdapter.setOnItemMerchantClickListener(new SaleMerchantAdapter.ItemMerchantClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, MerchantDetailActivity.class);
@@ -131,7 +132,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        mySaleMerchantAdapter.setOnItemServiceClickListener(new MySaleMerchantAdapter.ItemServiceClickListener() {
+        saleMerchantAdapter.setOnItemServiceClickListener(new SaleMerchantAdapter.ItemServiceClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, TabManageActivity.class);
@@ -143,7 +144,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        mySaleMerchantAdapter.setOnItemQRClickListener(new MySaleMerchantAdapter.ItemQRClickListener() {
+        saleMerchantAdapter.setOnItemQRClickListener(new SaleMerchantAdapter.ItemQRClickListener() {
             @Override
             public void onItemClick(M_Merchant merchant) {
                 Intent intent = new Intent(mActivity, MyQrActivity.class);
@@ -157,7 +158,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        mySaleMerchantAdapter.setOnItemShareClickListener(new MySaleMerchantAdapter.ItemShareClickListener() {
+        saleMerchantAdapter.setOnItemShareClickListener(new SaleMerchantAdapter.ItemShareClickListener() {
             @Override
             public void onItemClick(final M_Merchant merchant) {
                 merchantItem = merchant;
@@ -169,7 +170,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             }
         });
 
-        mySaleMerchantAdapter.setOnItemDeleteClickListener(new MySaleMerchantAdapter.ItemDeleteClickListener() {
+        saleMerchantAdapter.setOnItemDeleteClickListener(new SaleMerchantAdapter.ItemDeleteClickListener() {
             @Override
             public void onItemClick(final M_Merchant merchant) {
                 CommonDialog.showDialogListener(mContext, null, "取消", "确定", "确定退出商户", new View.OnClickListener() {
@@ -276,16 +277,16 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
 
     // 获取挂靠的商家列表
     private void getUserMerchantList() {
-        if (userSaleMerchantList_1_2Request != null) {
-            userSaleMerchantList_1_2Request.cancel();
+        if (userSaleMerchantList_1_2_2Request != null) {
+            userSaleMerchantList_1_2_2Request.cancel();
         }
 
-        UserSaleMerchantList_1_2Request.Input input = new UserSaleMerchantList_1_2Request.Input();
+        UserSaleMerchantList_1_2_2Request.Input input = new UserSaleMerchantList_1_2_2Request.Input();
         input.userId = SlashHelper.userManager().getUserId();
         input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
         input.convertJosn();
 
-        userSaleMerchantList_1_2Request = new UserSaleMerchantList_1_2Request(input, new ResponseListener() {
+        userSaleMerchantList_1_2_2Request = new UserSaleMerchantList_1_2_2Request(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -294,13 +295,13 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    fillAdapter(((APIM_MerchantList) response).industryList);
+                    fillAdapter(((APIM_MerchantList) response).merchantList);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
                 }
             }
         });
-        sendJsonRequest(userSaleMerchantList_1_2Request);
+        sendJsonRequest(userSaleMerchantList_1_2_2Request);
     }
 
 
@@ -354,7 +355,7 @@ public class SaleManageActivity extends BaseActivity implements SmoothListView.I
         } else {
             rlNoData.setVisibility(View.GONE);
             smoothListView.setLoadMoreEnable(false);
-            mySaleMerchantAdapter.setData(list);
+            saleMerchantAdapter.setData(list, false);
         }
     }
 

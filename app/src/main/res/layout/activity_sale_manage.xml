@@ -45,8 +45,9 @@
             android:layout_height="match_parent"
             android:background="@color/bg_f2"
             android:divider="@color/bg_f2"
+            android:dividerHeight="@dimen/margin_16dp"
             android:footerDividersEnabled="true"
-            android:headerDividersEnabled="false"
+            android:headerDividersEnabled="true"
             android:scrollbars="vertical"/>
     </RelativeLayout>
 </LinearLayout>

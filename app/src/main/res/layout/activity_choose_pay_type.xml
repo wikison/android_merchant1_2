@@ -124,8 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/top_bottom">
+                        android:layout_marginRight="8dp">
 
                         <TextView
                             android:id="@+id/tv_name"
@@ -150,7 +149,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="19dp"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_money"
@@ -306,6 +306,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_wx"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_marginTop="@dimen/margin_12dp"

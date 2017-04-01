@@ -60,6 +60,7 @@ public class Constants {
     public static final String BROCAST_PUBLISH_TASK_VOICE = "BROCAST_PUBLISH_TASK_VOICE";
     public static final String BROCAST_PUBLISH_TASK_BONUSES = "BROCAST_PUBLISH_TASK_BONUSES";
     public static final String BROCAST_PUBLISH_TASK_COUPON = "BROCAST_PUBLISH_TASK_COUPON";
+    public static final String BROCAST_WX_PAY_SUCCESS = "BROCAST_WX_PAY_SUCCESS";
 
     public static final String BROCAST_CLOSE_ACTIVITY_FORLABEL = "BROCAST_CLOSE_ACTIVITY_FORLABEL";
     public static final String BROCAST_SEARCH_RECENT_WORD = "BROCAST_SEARCH_RECENT_WORD";

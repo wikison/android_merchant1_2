@@ -126,7 +126,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         // 商家地址
         holder.tvAddress.setText(entity.address);
         // 前7日的服务分总和
-        holder.tvZhishu.setText("7天服务指数" + entity.saleUserSumScore + "");
+        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore/7) + "");
         // 设置广告数据
         List<String> adList = new ArrayList<>();
         if (StringUtils.isBlank(entity.pics)) {

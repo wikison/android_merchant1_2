@@ -1,11 +1,10 @@
 package com.zemult.merchant.wxapi;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.tencent.mm.sdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -13,6 +12,7 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zemult.merchant.R;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.util.ToastUtil;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
@@ -41,10 +41,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("提示");
-            builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errStr)));
-            builder.show();
+            if (resp.errCode == 0) {
+                //发送广播, 跳转到支付成功界面
+                Intent intent = new Intent(Constants.BROCAST_WX_PAY_SUCCESS);
+                setResult(RESULT_OK, intent);
+                sendBroadcast(intent);
+            }else{
+                ToastUtil.showMessage("未支付成功");
+            }
+            finish();
         }
     }
 }

@@ -346,7 +346,6 @@ public class RegisterActivity extends BaseActivity {
 
     //用户登录
     private void getUserLoginRequest() {
-        loadingDialog.show();
         if (userLoginRequest != null) {
             userLoginRequest.cancel();
         }
