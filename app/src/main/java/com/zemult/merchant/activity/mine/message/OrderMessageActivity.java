@@ -28,11 +28,13 @@ import com.zemult.merchant.model.M_Message;
 import com.zemult.merchant.model.apimodel.APIM_CommonSysMessageList;
 import com.zemult.merchant.model.apimodel.APIM_TaskIndustryInfo;
 import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +107,11 @@ public class OrderMessageActivity extends MBaseActivity implements SmoothListVie
         concernLv.setAdapter(commonAdapter = new CommonAdapter<M_Message>(OrderMessageActivity.this, R.layout.item_ordermessage_result, mDatas) {
             @Override
             public void convert(CommonViewHolder holder, final M_Message message, final int position) {
-                holder.setText(R.id.tv_messagedate, message.createtime);
+                try {
+                    holder.setText(R.id.tv_messagedate, DateTimeUtil.formatDate(message.createtime));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 holder.setText(R.id.tv_ordernum, message.number);
 
                 holder.setText(R.id.tv_orderprice, "￥" + (message.money == 0 ? "0.00" : Convert.getMoneyString(message.money)));
