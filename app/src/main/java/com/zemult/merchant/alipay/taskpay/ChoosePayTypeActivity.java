@@ -1,6 +1,7 @@
 package com.zemult.merchant.alipay.taskpay;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,6 +124,8 @@ public class ChoosePayTypeActivity extends BaseActivity {
     TextView tvLab1;
     @Bind(R.id.cb_zhifubaopay)
     CheckBox cbZhifubaopay;
+    @Bind(R.id.rl_wx)
+    RelativeLayout rlWx;
     @Bind(R.id.iv_wx)
     ImageView ivWx;
     @Bind(R.id.cb_wx)
@@ -146,6 +150,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_choose_pay_type);
+        registerReceiver(new String[]{Constants.BROCAST_WX_PAY_SUCCESS});
     }
 
     @Override
@@ -189,6 +194,9 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
         payType = 1;
         cbZhifubaopay.setChecked(true);
+        if (!AppUtils.isWeixinAvailable(this)) {
+            rlWx.setVisibility(View.GONE);
+        }
 
     }
 
@@ -284,6 +292,30 @@ public class ChoosePayTypeActivity extends BaseActivity {
             }
         });
         sendJsonRequest(merchantInfoRequest);
+    }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        if (Constants.BROCAST_WX_PAY_SUCCESS.equals(intent.getAction())) {
+            if ("赞赏".equals(merchantName)) {
+                sendPayMoneyMsg();
+            } else {
+                Intent intent1 = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                intent1.putExtra("managerhead", managerhead);
+                intent1.putExtra("paymoney", paymoney);
+                intent1.putExtra("managername", managername);
+                intent1.putExtra("merchantName", merchantName);
+                intent1.putExtra("userPayId", userPayId);
+                intent1.putExtra("imMessageTitle", getIntent().getStringExtra("imMessageTitle"));
+                intent1.putExtra("imMessageContent", getIntent().getStringExtra("imMessageContent"));
+                startActivityForResult(intent1, 1000);
+            }
+        }
+
     }
 
     private void sendPayMoneyMsg() {

@@ -557,6 +557,8 @@ public class Urls {
     public static String COMMON_SYSPRESENTLIST = "common_syspresentList";
     //获取用户挂靠的商家列表(服务管家)
     public static String USER_SALE_MERCHANTLIST_1_2 = "user_sale_merchantList_1_2";
+    //获取用户挂靠的商家列表(服务管家)
+    public static String USER_SALE_MERCHANTLIST_1_2_2 = "user_sale_merchantList_1_2_2";
 
     //修改用户状态(服务管家状态)
     public static String USER_EDITSTATE = "user_editstate";
