@@ -174,12 +174,12 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         registerReceiver(new String[]{Constants.BROCAST_UPDATEMYINFO});
         get_user_info_owner_request();
 
-        if (SPUtils.contains(MainActivity.this, "home_first_run"))
-            ivFirst.setVisibility(View.GONE);
-        else {
-            ivFirst.setVisibility(View.VISIBLE);
-            SPUtils.put(MainActivity.this, "home_first_run", false);
-        }
+//        if (SPUtils.contains(MainActivity.this, "home_first_run"))
+//            ivFirst.setVisibility(View.GONE);
+//        else {
+//            ivFirst.setVisibility(View.VISIBLE);
+//            SPUtils.put(MainActivity.this, "home_first_run", false);
+//        }
     }
 
     /**
