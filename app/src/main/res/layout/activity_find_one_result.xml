@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zemult.merchant.activity.mine.FindOneResultActivity">
+<include
+    android:id="@+id/head"
+    layout="@layout/layout_head"/>
+<ImageView
+    android:id="@+id/iv"
+    android:layout_below="@id/head"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="120dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@mipmap/nvli"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv"
+        android:text="@string/find_result"/>
+
+    <Button
+        android:id="@+id/al_btn_login"
+        android:layout_width="@dimen/common_btn_width_235"
+        android:layout_height="@dimen/common_btn_height_35"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/common_selector_btn"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+</RelativeLayout>

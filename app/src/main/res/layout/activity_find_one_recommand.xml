@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<include layout="@layout/layout_head"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+           style="@style/find_one_recommend_left_tv"
+            android:text="需求时间"/>
+
+        <TextView
+            android:text="17-01-01(星期五) 18:00"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/right_btn"
+            style="@style/find_one_recommend_right_tv"/>
+
+    </RelativeLayout>
+<View
+    style="@style/divider1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:text="找人范围"
+            style="@style/find_one_recommend_left_tv" />
+        <TextView
+            android:text="1Km以内"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/right_btn"
+            style="@style/find_one_recommend_right_tv"/>
+
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            style="@style/find_one_recommend_left_tv"
+            android:text="需求分类"/>
+        <TextView
+            android:text="商务餐饮"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/right_btn"
+            style="@style/find_one_recommend_right_tv"/>
+
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            style="@style/find_one_recommend_left_tv"
+            android:text="预计人数"/>
+        <TextView
+            android:text="10"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/bianji_icon_black"
+            style="@style/find_one_recommend_right_tv"/>
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            style="@style/find_one_recommend_left_tv"
+            android:text="预算人均"/>
+        <TextView
+            android:text="￥200"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/bianji_icon_black"
+            style="@style/find_one_recommend_right_tv"/>
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"/>
+    <View
+      style="@style/divider10dp"></View>
+    <View
+        style="@style/divider1dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            style="@style/find_one_recommend_left_tv"
+            android:text="响应有效期"/>
+        <TextView
+            android:text="15分钟"
+
+            style="@style/find_one_recommend_right_tv"/>
+    </RelativeLayout>
+    <View
+        style="@style/divider1dp"/>
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/al_btn_login"
+        android:layout_width="@dimen/common_btn_width_235"
+        android:layout_height="@dimen/common_btn_height_35"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/common_selector_btn"
+        android:text="立即发布"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#d84f42"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp"
+        android:text="约服将为您优选1位管家提供咨询"
+        android:layout_above="@+id/al_btn_login"/>
+</RelativeLayout>
+
+
+</LinearLayout>

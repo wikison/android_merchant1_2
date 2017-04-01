@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.FindOneRecommandActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
@@ -39,6 +40,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     LinearLayout llPeople;
     @Bind(R.id.rv)
     RecyclerView rv;
+    private Intent it;
 
 
     private HeaderAdViewView headerAdViewView; // 广告视图
@@ -165,6 +167,9 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
             case R.id.ll_merchant:
                 break;
             case R.id.ll_people:
+                it= new Intent(mContext, FindOneRecommandActivity.class);
+                mContext.startActivity(it);
+
                 break;
         }
     }

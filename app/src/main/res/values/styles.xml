@@ -787,4 +787,25 @@
         <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
         <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
     </style>
+
+    <style name="find_one_recommend_left_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/font_black_28</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="find_one_recommend_right_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textColor">@color/font_black_28</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+
 </resources>

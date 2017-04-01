@@ -170,6 +170,10 @@ dependencies {
     //可选，如果使用小视频功能必须添加该依赖，如果不使用小视频功能则无需添加该依赖
 
     //    compile 'com.alibaba.mobileim:RecorderSDK:1.0.0@aar'
+    compile files('libs/libammsdk.jar')
+    compile files('libs/AMap_Search_V4.0.0_20170111.jar')
+    compile files('libs/Amap_2DMap_V4.2.0_20170120.jar')
+    compile files('libs/AMap_Location_V3.3.0_20170118.jar')
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
@@ -201,11 +205,8 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.1.0'
     compile 'com.github.crosswall:Android-Coverflow:release-v1.0.4'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile files('libs/libammsdk.jar')
     compile 'com.youth.banner:banner:1.4.9'
-    compile files('libs/AMap_Search_V4.0.0_20170111.jar')
-    compile files('libs/Amap_2DMap_V4.2.0_20170120.jar')
-    compile files('libs/AMap_Location_V3.3.0_20170118.jar')
+
+    testCompile 'junit:junit:4.12'
 }

@@ -494,10 +494,13 @@ public class GuideActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 it = new Intent(GuideActivity.this, MainActivity.class);
+
                 startActivity(it);
+
             } else if (requestCode == REQ_THIRD_LOGIN) {
-                finish();
+
             }
+            finish();
         }
         umShareAPI.onActivityResult(requestCode, resultCode, data);
     }
