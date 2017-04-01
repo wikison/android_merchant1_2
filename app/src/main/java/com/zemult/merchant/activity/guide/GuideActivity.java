@@ -92,6 +92,7 @@ public class GuideActivity extends BaseActivity {
     private Thread mThread;
     private LoginSampleHelper loginHelper;
 
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -466,12 +467,13 @@ public class GuideActivity extends BaseActivity {
             case R.id.login_btn:
                 save();
                 it = new Intent(this, LoginActivity.class);
+                it.putExtra("guide_login",1);
                 startActivityForResult(it, 1);
-
                 break;
             case R.id.register_btn:
                 save();
                 it = new Intent(this, RegisterActivity.class);
+                it.putExtra("guide_regist",1);
                 startActivityForResult(it, 1);
                 break;
             case R.id.weixinlog_iv:

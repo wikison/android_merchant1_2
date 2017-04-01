@@ -94,6 +94,7 @@ public class LoginActivity extends BaseActivity {
 
     private LoginSampleHelper loginHelper;
     private UMShareAPI umShareAPI;
+    int from;
 
 
     @Override
@@ -119,6 +120,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
         initViews();
+        from=getIntent().getIntExtra("guide_login",0);
         loginHelper = LoginSampleHelper.getInstance();
         umShareAPI = UMShareAPI.get(this);
     }
@@ -319,6 +321,10 @@ public class LoginActivity extends BaseActivity {
                 startActivityForResult(intent, REQ_FIND_PWD);
                 break;
             case R.id.al_tv_notnow:
+                if (from==1){
+                    startActivity(new Intent(this,MainActivity.class));
+                    from=0;
+                }
                 LoginActivity.this.finish();
                 break;
             case R.id.al_tv_register:

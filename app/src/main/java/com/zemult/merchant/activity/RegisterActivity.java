@@ -101,7 +101,7 @@ public class RegisterActivity extends BaseActivity {
 
     UserRegisterRequest userRegisterRequest;
     UserLoginRequest userLoginRequest;
-
+    int from;
 
     @Override
     public void setContentView() {
@@ -116,6 +116,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initData() {
+        from = getIntent().getIntExtra("guide_regist", 0);
         loginHelper = LoginSampleHelper.getInstance();
     }
 
@@ -473,7 +474,13 @@ public class RegisterActivity extends BaseActivity {
                 IntentUtil.start_activity(RegisterActivity.this, BaseWebViewActivity.class, new Pair<String, String>("titlename", getString(R.string.app_name) + "服务协议"), new Pair<String, String>("url", Constants.PROTOCOL_REGISTER));
                 break;
             case R.id.tv_not_now:
-                onBackPressed();
+                if (from == 1) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    from=0;
+                } else {
+
+                    onBackPressed();
+                }
                 break;
         }
     }
