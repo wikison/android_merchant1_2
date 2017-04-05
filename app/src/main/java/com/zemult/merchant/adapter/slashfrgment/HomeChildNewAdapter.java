@@ -113,7 +113,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         holder.banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                mImageManager.loadRoundImage((String) path, imageView, 24, 0xFFC1C1C1, 4,"@450h");
+                mImageManager.loadRoundImage((String) path, imageView, 24, Color.LTGRAY, 4,"@450h");
             }
         });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
