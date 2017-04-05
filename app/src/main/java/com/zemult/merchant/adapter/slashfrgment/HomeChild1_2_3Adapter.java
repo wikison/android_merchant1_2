@@ -15,7 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.flyco.roundview.RoundTextView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -83,7 +82,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             convertView.setTag(R.string.app_name, holder);
         }
 
-        if(getCount() == 1)
+        if (getCount() == 1)
             holder.oneDataShow.setVisibility(View.VISIBLE);
         else
             holder.oneDataShow.setVisibility(View.GONE);
@@ -110,7 +109,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(entity.name))
             holder.tvMerchantName.setText(entity.name);
         // 人均消费
-        holder.tvMoney.setText("人均：" + (int) (entity.perMoney) + "元");
+        holder.tvMoney.setText("人均" + (int) (entity.perMoney) + "元");
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(entity.distance)) {
             if (entity.distance.length() > 3) {
@@ -120,13 +119,16 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
                 holder.tvDistance.setText(entity.distance + "m");
         }
         // 服务管家的顾客数
-        holder.tvNum.setText(entity.saleUserFanNum + "客户");
+        holder.tvNum.setText(entity.saleUserFanNum + "关注");
         holder.ivService.setImageResource(entity.getExperienceImg());
-        holder.tvService.setText(entity.getExperienceText());
-        // 商家地址
-        holder.tvAddress.setText(entity.address);
+        holder.tvService.setText(entity.getExperienceText() + "管家");
         // 前7日的服务分总和
-        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore/7) + "");
+        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+        // 签约商户
+        if (entity.reviewstatus == 2)
+            holder.ivQianyue.setVisibility(View.VISIBLE);
+        else
+            holder.ivQianyue.setVisibility(View.GONE);
         // 设置广告数据
         List<String> adList = new ArrayList<>();
         if (StringUtils.isBlank(entity.pics)) {
@@ -210,18 +212,20 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvNum;
         @Bind(R.id.tv_merchant_name)
         TextView tvMerchantName;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
-        @Bind(R.id.banner)
-        Banner banner;
-        @Bind(R.id.tv_zhishu)
-        RoundTextView tvZhishu;
+        @Bind(R.id.tv_job)
+        TextView tvJob;
         @Bind(R.id.tv_distance)
         TextView tvDistance;
-        @Bind(R.id.tv_address)
-        TextView tvAddress;
         @Bind(R.id.tv_money)
         TextView tvMoney;
+        @Bind(R.id.banner)
+        Banner banner;
+        @Bind(R.id.iv_qianyue)
+        ImageView ivQianyue;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
+        @Bind(R.id.tv_zhishu)
+        TextView tvZhishu;
         @Bind(R.id.one_data_show)
         View oneDataShow;
         @Bind(R.id.ll_root)

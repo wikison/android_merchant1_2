@@ -74,13 +74,13 @@
             android:background="@color/transparent"
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="150dp"
             app:is_auto_play="false"
             app:image_scale_type="fit_xy"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="150dp">
             <ImageView
                 android:visibility="gone"
                 android:id="@+id/iv_qianyue"

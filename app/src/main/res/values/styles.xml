@@ -532,7 +532,7 @@
 
     <style name="text_12_wtite">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
     <style name="text_30_black_28">
         <item name="android:textColor">@color/font_black_28</item>

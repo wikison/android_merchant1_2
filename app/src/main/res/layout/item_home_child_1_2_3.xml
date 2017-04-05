@@ -83,31 +83,22 @@
                 android:gravity="bottom">
 
                 <TextView
-                    android:text="服务于"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/font_black_999"
-                    android:textSize="@dimen/font_26px"
-                    />
-
-
-                <TextView
-                    android:layout_marginLeft="10dp"
                     android:id="@+id/tv_merchant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/font_black_999"
                     android:textSize="@dimen/font_26px"
                     />
+
+                <TextView
+                    android:id="@+id/tv_job"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_black_999"
+                    android:textSize="@dimen/font_26px"
+                    />
             </LinearLayout>
-
-
-            <com.zemult.merchant.view.FNRadioGroup
-                android:layout_marginTop="6dp"
-                android:id="@+id/rg_ta_service"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="vertical" />
 
         </LinearLayout>
 
@@ -119,28 +110,64 @@
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.youth.banner.Banner
-            android:background="@color/transparent"
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            app:is_auto_play="false"
-            app:image_scale_type="fit_xy"/>
+            android:layout_height="150dp"
+            android:background="@color/transparent"
+            app:image_scale_type="fit_xy"
+            app:is_auto_play="false" />
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/tv_zhishu"
-            android:gravity="center"
+
+        <com.flyco.roundview.RoundLinearLayout
             android:layout_gravity="right"
-            android:layout_marginTop="9dp"
-            android:layout_marginRight="9dp"
+            android:gravity="center"
             android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:rv_cornerRadius="12dp"
+            app:rv_backgroundColor="#55000000"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_height="22dp"
-            android:text="7天服务指数"
-            android:textColor="@color/white"
-            app:rv_cornerRadius="12dp"
-            app:rv_backgroundColor="#55000000"/>
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="9dp">
+
+            <TextView
+                android:layout_marginLeft="7dp"
+                style="@style/text_12_wtite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_distance"
+                android:text="xxm"/>
+
+            <View android:background="@color/white"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_width="1px"
+                android:layout_height="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_money"
+                style="@style/text_12_wtite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cxc"/>
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_qianyue"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/qianyuehsanghu"/>
+        </RelativeLayout>
+
+
     </FrameLayout>
 
 
@@ -150,34 +177,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/dingwei2"/>
 
-        <TextView
-            android:layout_marginLeft="7dp"
-            style="@style/text_16_black_666"
-            android:id="@+id/tv_distance"
-            android:text="xxm"
-            android:textSize="@dimen/font_24px" />
-        <TextView
+        <com.zemult.merchant.view.FNRadioGroup
             android:layout_weight="1"
-            android:layout_marginLeft="7dp"
-            style="@style/text_16_black_666"
-            android:id="@+id/tv_address"
-            android:text="address"
-            android:textSize="@dimen/font_24px" />
+            android:id="@+id/rg_ta_service"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical" />
 
         <TextView
-            android:id="@+id/tv_money"
-            android:layout_marginLeft="7dp"
             style="@style/text_16_black_666"
-            android:textSize="@dimen/font_24px"/>
+            android:textSize="@dimen/font_24px"
+            android:id="@+id/tv_zhishu"
+            android:text="7天服务指数"
+           />
 
     </LinearLayout>
 
