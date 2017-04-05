@@ -113,7 +113,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         holder.banner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                mImageManager.loadRoundImage((String) path, imageView, 24, Color.LTGRAY, 4,"@450h");
+                mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
             }
         });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
@@ -125,7 +125,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(entity.address))
             holder.tvAddress.setText(entity.address);
         // 人均消费
-        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
+        holder.tvMoney.setText("人均" + (int) (entity.perMoney) + "元");
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(entity.distance)) {
             if (entity.distance.length() > 3) {
