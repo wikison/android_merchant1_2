@@ -148,7 +148,6 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
     private void initView() {
         lhTvTitle.setText("我的收藏");
         mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
-        mAdapter.unshowTop();
         smoothListView.setAdapter(mAdapter);
     }
 

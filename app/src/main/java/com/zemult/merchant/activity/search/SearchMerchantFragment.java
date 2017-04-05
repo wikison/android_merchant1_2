@@ -84,7 +84,6 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
 
     private void initView() {
         mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
-        mAdapter.unshowTop();
         smoothListView.setAdapter(mAdapter);
     }
 

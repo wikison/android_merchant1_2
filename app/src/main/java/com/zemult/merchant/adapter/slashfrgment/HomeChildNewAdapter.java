@@ -1,7 +1,8 @@
 package com.zemult.merchant.adapter.slashfrgment;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,9 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.model.M_Merchant;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,7 +39,7 @@ import cn.trinea.android.common.util.StringUtils;
  */
 public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
 
-    private boolean isNoData, unshowTop;
+    private boolean isNoData;
     private int mHeight;
 
     public HomeChildNewAdapter(Context context, List<M_Merchant> list) {
@@ -54,12 +62,9 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         notifyDataSetChanged();
     }
 
-    public void unshowTop() {
-        unshowTop = true;
-    }
 
     // 删除单条记录
-    public void delOneRecord(int pos){
+    public void delOneRecord(int pos) {
         getData().remove(pos);
         notifyDataSetChanged();
     }
@@ -83,13 +88,6 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
             convertView.setTag(R.string.app_name, holder);
         }
 
-        if (position == 0 && !unshowTop) {
-            holder.llTop.setVisibility(View.VISIBLE);
-            holder.viewTop.setVisibility(View.GONE);
-        } else {
-            holder.llTop.setVisibility(View.GONE);
-            holder.viewTop.setVisibility(View.VISIBLE);
-        }
         M_Merchant entity = getItem(position);
         initData(holder, entity, position);
 
@@ -103,16 +101,31 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
      * @param entity
      */
     private void initData(ViewHolder holder, M_Merchant entity, final int position) {
-        // 商家封面
-        if (!TextUtils.isEmpty(entity.pic))
-            mImageManager.loadUrlImageWithDefaultImg(entity.pic, holder.ivCover, "@300h", R.mipmap.merchant_default_cover);
-        else
-            holder.ivCover.setImageResource(R.mipmap.merchant_default_cover);
+        // 设置广告数据
+        List<String> adList = new ArrayList<>();
+        if (StringUtils.isBlank(entity.pics)) {
+            adList.add(entity.pic);
+        } else {
+            adList = Arrays.asList(entity.pics.split(","));
+        }
+
+        holder.banner.setImages(adList);
+        holder.banner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                mImageManager.loadRoundImage((String) path, imageView, 24, 0xFFC1C1C1, 4,"@450h");
+            }
+        });
+        holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
+
         // 商家名称
         if (!TextUtils.isEmpty(entity.name))
             holder.tvName.setText(entity.name);
+        // 商家地址
+        if (!TextUtils.isEmpty(entity.address))
+            holder.tvAddress.setText(entity.address);
         // 人均消费
-        holder.tvMoney.setText("人均￥" + (int)(entity.perMoney));
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(entity.distance)) {
             if (entity.distance.length() > 3) {
@@ -144,21 +157,22 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(userClickListener!=null)
+                if (userClickListener != null)
                     userClickListener.onUserClick(position);
                 return true;
             }
         });
 
-        if(entity.reviewstatus == 2)
+        if (entity.reviewstatus == 2)
             holder.ivQianyue.setVisibility(View.VISIBLE);
         else
             holder.ivQianyue.setVisibility(View.GONE);
     }
 
-    public interface UserClickListener{
+    public interface UserClickListener {
         void onUserClick(int pos);
     }
+
     private UserClickListener userClickListener;
 
     public void setUserClickListener(UserClickListener userClickListener) {
@@ -166,22 +180,18 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
     }
 
     static class ViewHolder {
-        @Bind(R.id.ll_top)
-        LinearLayout llTop;
-        @Bind(R.id.view_top)
-        View viewTop;
-        @Bind(R.id.iv_cover)
-        ImageView ivCover;
         @Bind(R.id.tv_name)
         TextView tvName;
-        @Bind(R.id.tv_money)
-        TextView tvMoney;
+        @Bind(R.id.tv_address)
+        TextView tvAddress;
         @Bind(R.id.tv_distance)
         TextView tvDistance;
+        @Bind(R.id.tv_money)
+        TextView tvMoney;
+        @Bind(R.id.banner)
+        Banner banner;
         @Bind(R.id.iv_qianyue)
         ImageView ivQianyue;
-        @Bind(R.id.card_view)
-        CardView cardView;
         @Bind(R.id.iv_shuren)
         ImageView ivShuren;
         @Bind(R.id.tv_num)
