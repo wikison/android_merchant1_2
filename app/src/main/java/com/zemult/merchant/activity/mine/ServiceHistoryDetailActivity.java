@@ -2,6 +2,7 @@ package com.zemult.merchant.activity.mine;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -68,6 +70,8 @@ public class ServiceHistoryDetailActivity extends BaseActivity {
     TextView tvCommissionRight;
     @Bind(R.id.rl_my_service)
     RelativeLayout rlMyService;
+    @Bind(R.id.comment_ll)
+    LinearLayout commentLl;
     private Context mContext;
     private Activity mActivity;
     UserPayInfoRequest userPayInfoRequest;
@@ -130,11 +134,16 @@ public class ServiceHistoryDetailActivity extends BaseActivity {
                     tvPayNum.setText(m.number);
                     tvTradeTime.setText(m.createtime);
                     tvCommissionRight.setText(Convert.getMoneyString(m.saleUserMoney));
+                    if (m.payMoney >= 50) {
+                        commentLl.setVisibility(View.VISIBLE);
+                        if (m.isComment == 1) {
+                            ratingbar.setStar(m.comment);
+                        } else {
+                            ratingbar.setStar(0);
+                        }
+                    } else {
+                        commentLl.setVisibility(View.GONE);
 
-                    if (m.isComment == 1) {
-                        ratingbar.setStar(m.comment);
-                    }else {
-                        ratingbar.setStar(0);
                     }
 
                 } else {
@@ -154,5 +163,12 @@ public class ServiceHistoryDetailActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
