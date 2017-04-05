@@ -189,12 +189,10 @@
 
     <TextView
         android:id="@+id/tv_not_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/text_14_black_28"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="40dp"
         android:text="@string/txt_register_notnow"
-        android:textColor="@color/not_now"
-        android:textSize="14sp"/>
+        android:textColor="@color/not_now"/>
 
 </LinearLayout>
