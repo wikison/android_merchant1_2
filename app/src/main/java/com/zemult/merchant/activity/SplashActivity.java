@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.umeng.socialize.utils.Log;
@@ -57,15 +56,18 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void init() {
-        initDebugVersion();
     }
 
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             iTime++;
-            if (iTime > 5) {
-                if(null!=mTimer){
+            // 启动页至少显示2S
+            if (iTime == 2) {
+                initDebugVersion();
+            }
+            if (iTime > 4) {
+                if (null != mTimer) {
                     mTimer.cancel();
                 }
                 mTimer = null;

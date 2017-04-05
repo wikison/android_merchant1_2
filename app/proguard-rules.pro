@@ -159,3 +159,10 @@
 -keep class * implements android.os.Parcelable {
  public static final android.os.Parcelable$Creator *;
 }
+
+-keepclassmembers class ** {
+    @com.yanzhenjie.permission.PermissionYes <methods>;
+}
+-keepclassmembers class ** {
+    @com.yanzhenjie.permission.PermissionNo <methods>;
+}
