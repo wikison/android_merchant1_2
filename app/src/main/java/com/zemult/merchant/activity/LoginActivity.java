@@ -329,7 +329,6 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.al_tv_register:
                 IntentUtil.start_activity(LoginActivity.this, RegisterActivity.class);
-                this.finish();
                 break;
         }
     }
