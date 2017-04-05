@@ -180,7 +180,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="12dp"
-        android:paddingBottom="12dp"
+        android:paddingBottom="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -195,6 +195,9 @@
         <TextView
             style="@style/text_16_black_666"
             android:textSize="@dimen/font_24px"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp"
             android:id="@+id/tv_zhishu"
             android:text="7天服务指数"
            />
