@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +39,6 @@ import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
-import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
@@ -591,12 +588,12 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     }
 
     @PermissionYes(101)
-    private void getLocationYes() {
+    private void getLocationYes(List<String> grantedPermissions) {
         location();
     }
 
     @PermissionNo(101)
-    private void getLocationNo() {
+    private void getLocationNo(List<String> deniedPermissions) {
         //定位失败, 设置为常州
         City c = new City("常州", "changzhou", "0519");
         SPUtils.put(mContext, Constants.SP_CITY, c.getNo());
@@ -605,7 +602,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 

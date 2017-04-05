@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,9 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.flyco.roundview.RoundLinearLayout;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.search.SearchLocateAdapter;
 import com.zemult.merchant.config.Constants;
@@ -127,7 +131,7 @@ public class PoiPickActivity extends Activity {
         mUiSettings.setMyLocationButtonEnabled(false); // 是否显示默认的定位按钮
         aMap.setMyLocationEnabled(true);// 是否可触发定位并显示定位层
 
-        location();
+        initLocation();
     }
 
     private void initListener() {
@@ -173,6 +177,32 @@ public class PoiPickActivity extends Activity {
 
     }
 
+    private void initLocation() {
+        boolean bLocationPermission = AndPermission.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (bLocationPermission) {
+            location();
+        } else {
+            requestLocationPermission();
+        }
+    }
+
+    private void requestLocationPermission() {
+        AndPermission.with(this)
+                .requestCode(101)
+                .permission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .send();
+    }
+
+    @PermissionYes(101)
+    private void getLocationYes(List<String> grantedPermissions) {
+        location();
+    }
+
+    @PermissionNo(101)
+    private void getLocationNo(List<String> deniedPermissions) {
+        ToastUtil.showMessage("为了更好体验App, 请打开定位权限");
+    }
+
     private void location() {
         AMapUtil.getInstence().init(this, new AMapUtil.GetAMapListener() {
             @Override
@@ -190,6 +220,7 @@ public class PoiPickActivity extends Activity {
             }
         });
     }
+
 
     //把地图画面移动到定位地点
     private void moveMapCamera(double latitude, double longitude) {
@@ -308,5 +339,10 @@ public class PoiPickActivity extends Activity {
                 this.finish();
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }
