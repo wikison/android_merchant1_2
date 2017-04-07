@@ -117,7 +117,7 @@ public class SearchHotActivity extends BaseActivity {
             llRecentSearch.setVisibility(View.GONE);
         }
         lv.setAdapter(adapter);
-        mSearchView.setStrHint("搜索你想要的");
+        mSearchView.setStrHint("搜索你想要的...");
     }
 
     private void initListener() {
