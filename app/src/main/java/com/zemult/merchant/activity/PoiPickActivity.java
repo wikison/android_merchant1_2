@@ -84,7 +84,9 @@ public class PoiPickActivity extends Activity {
     List<PoiItem> aMapLocationList = new ArrayList<>();
     SearchLocateAdapter searchLocateAdapter;
 
+    private PoiSearch poiSearch;
     PoiSearch.Query poiQuery;
+    PoiSearch.SearchBound searchBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +211,7 @@ public class PoiPickActivity extends Activity {
             public void onMapListener(String cityName, AMapLocation aMapLocation, boolean location) {
                 if (true) {
                     if (!StringUtils.isBlank(aMapLocation.getCityCode())) {
-                        searchList(aMapLocation.getCityCode(), aMapLocation.getRoad());
+                        searchList(aMapLocation.getCityCode(), aMapLocation.getCity(), new LatLonPoint(aMapLocation.getLatitude(), aMapLocation.getLongitude()));
                         //把地图移动到定位地点
                         moveMapCamera(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                         addMark(aMapLocation.getLatitude(), aMapLocation.getLongitude());
@@ -242,15 +244,22 @@ public class PoiPickActivity extends Activity {
     }
 
     //poi搜索
-    private void searchList(String cityCode, String road) {
-        if (StringUtils.isBlank(road)) {
+    private void searchList(String cityCode, String city, LatLonPoint latLonPoint) {
+        if (StringUtils.isBlank(city)) {
             aMapLocationList.clear();
             searchLocateAdapter.notifyDataSetChanged();
         }
-        poiQuery = new PoiSearch.Query(road, "", cityCode);
+        poiQuery = new PoiSearch.Query("", "地名地址信息|公司企业|公共设施|道路附属设施", cityCode);
         poiQuery.setPageSize(20);
         poiQuery.setPageNum(1);
-        PoiSearch poiSearch = new PoiSearch(this, poiQuery);
+
+        poiSearch = new PoiSearch(this, poiQuery);
+
+        if (latLonPoint != null) {
+            searchBound = new PoiSearch.SearchBound(latLonPoint, 500);
+            poiSearch.setBound(searchBound);
+        }
+
         poiSearch.setOnPoiSearchListener(onPoiSearchListener);
         poiSearch.searchPOIAsyn();
     }
@@ -285,7 +294,7 @@ public class PoiPickActivity extends Activity {
         }
     };
 
-    private void latSearchList(double latitude, double longitude) {
+    private void latSearchList(final double latitude, final double longitude) {
         //设置周边搜索的中心点以及半径
         GeocodeSearch geocodeSearch = new GeocodeSearch(this);
         //地点范围50米
@@ -299,7 +308,7 @@ public class PoiPickActivity extends Activity {
                 if (rCode == 1000) {
                     if (result != null && result.getRegeocodeAddress() != null
                             && result.getRegeocodeAddress().getFormatAddress() != null) {
-                        searchList(result.getRegeocodeAddress().getCityCode(), result.getRegeocodeAddress().getRoads().get(0).getName());
+                        searchList(result.getRegeocodeAddress().getCityCode(), result.getRegeocodeAddress().getCity(), new LatLonPoint(latitude, longitude));
                     }
                 }
             }
