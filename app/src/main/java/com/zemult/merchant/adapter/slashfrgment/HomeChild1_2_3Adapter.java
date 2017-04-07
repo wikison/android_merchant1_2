@@ -154,16 +154,6 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             }
         });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
-
-        holder.llRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, UserDetailActivity.class);
-                intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
-                intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
-                mContext.startActivity(intent);
-            }
-        });
     }
 
 

@@ -20,6 +20,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.model.M_Merchant;
 
@@ -100,7 +101,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
      * @param holder
      * @param entity
      */
-    private void initData(ViewHolder holder, M_Merchant entity, final int position) {
+    private void initData(ViewHolder holder, final M_Merchant entity, final int position) {
         // 设置广告数据
         List<String> adList = new ArrayList<>();
         if (StringUtils.isBlank(entity.pics)) {
@@ -114,6 +115,14 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
                 mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
+            }
+        });
+        holder.banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
+                mContext.startActivity(intent);
             }
         });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();

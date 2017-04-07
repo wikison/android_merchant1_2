@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +40,9 @@ import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
+import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
@@ -219,6 +222,18 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
+        smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position - 2).saleUserId);
+                intent.putExtra(UserDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
+                startActivity(intent);
+            }
+        });
+
+
+
         smoothListView.setOnScrollListener(new SmoothListView.OnSmoothScrollListener() {
             @Override
             public void onSmoothScrolling(View view) {
