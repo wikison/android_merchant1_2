@@ -608,10 +608,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.SearchLocationActivity" />
-        <activity android:name=".activity.mine.FindOneResultActivity"></activity>
-        <activity android:name=".activity.mine.FindOneRecommandActivity">
-
-        </activity>
+        <activity android:name=".activity.mine.FindOneResultActivity" />
+        <activity android:name=".activity.mine.FindOneRecommandActivity"></activity>
+        <activity android:name=".activity.mine.MyServiceTicketActivity"></activity>
     </application>
 
 </manifest>

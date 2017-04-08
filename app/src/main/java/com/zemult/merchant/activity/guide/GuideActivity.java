@@ -182,31 +182,11 @@ public class GuideActivity extends BaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//                //最后一页左滑进入
-//                switch (state) {
-//                    case ViewPager.SCROLL_STATE_DRAGGING:
-//                        misScrolled = false;
-//                        break;
-//                    case ViewPager.SCROLL_STATE_SETTLING:
-//                        misScrolled = true;
-//                        break;
-//                    case ViewPager.SCROLL_STATE_IDLE:
-//                        if (viewPage.getCurrentItem() == viewPage.getAdapter().getCount() - 1 && !misScrolled) {
-//                            startActivity(new Intent(GuideActivity.this, SplashActivity.class));
-//                            GuideActivity.this.finish();
-//                        }
-//                        misScrolled = true;
-//                        break;
-//                }
-
 
             }
         });
-
-
     }
-
-
+    
     @Override
     protected void onResume() {
         super.onResume();
