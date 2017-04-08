@@ -73,7 +73,7 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
     }
 
     private void initData() {
-        userId = getIntent().getIntExtra(UserDetailActivity.USER_ID,  111019);
+        userId = getIntent().getIntExtra(UserDetailActivity.USER_ID,  -1);
         actionFrom = getIntent().getStringExtra("actionFrom");
         mContext = this;
         mActivity = this;
