@@ -67,7 +67,7 @@ import zema.volley.network.ResponseListener;
 /**
  * 012111用户详情
  */
-public class UserDetailActivity extends BaseActivity {
+public class SelfUserDetailActivity extends BaseActivity {
     /**
      * 调用用户详情页面必传参数
      */
@@ -84,7 +84,7 @@ public class UserDetailActivity extends BaseActivity {
     private static final int REQ_ALBUM = 0x110;
     private static final int REQ_REMARK_NAME = 0x120;
 
-    public static final String TAG = UserDetailActivity.class.getSimpleName();
+    public static final String TAG = SelfUserDetailActivity.class.getSimpleName();
 
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
@@ -181,7 +181,7 @@ public class UserDetailActivity extends BaseActivity {
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_user_detail);
+        setContentView(R.layout.activity_self_user_detail);
     }
 
     private YWIMKit getIMkit() {
@@ -561,7 +561,7 @@ public class UserDetailActivity extends BaseActivity {
             pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
                 @Override
                 public void onDetail(M_Merchant entity) {
-                    Intent intent = new Intent(UserDetailActivity.this, MerchantDetailActivity.class);
+                    Intent intent = new Intent(SelfUserDetailActivity.this, MerchantDetailActivity.class);
                     intent.putExtra("userSaleId", userId);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
                     startActivity(intent);
@@ -681,7 +681,7 @@ public class UserDetailActivity extends BaseActivity {
             case R.id.btn_buy:
                 if (noLogin(mContext))
                     return;
-                intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
+                intent = new Intent(SelfUserDetailActivity.this, FindPayActivity.class);
                 intent.putExtra("userSaleId", userId);
                 intent.putExtra("merchantId", selectMerchant.merchantId);
                 startActivity(intent);

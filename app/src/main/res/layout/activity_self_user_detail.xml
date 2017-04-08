@@ -17,6 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+
         <LinearLayout
             android:id="@+id/ll_main"
             android:layout_width="match_parent"
@@ -115,23 +116,6 @@
 
                         </LinearLayout>
 
-                        <com.flyco.roundview.RoundTextView
-                            android:id="@+id/btn_focus"
-                            android:layout_width="80dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:text="@string/add_focus_yogouser"
-                            android:textColor="@color/font_main"
-                            android:textSize="@dimen/font_28px"
-                            app:rv_backgroundColor="@color/white"
-                            app:rv_backgroundPressColor="@color/bg_ce"
-                            app:rv_cornerRadius="18dp"
-                            app:rv_strokeColor="@color/font_main"
-                            app:rv_strokeWidth="1px"/>
-
                     </RelativeLayout>
 
                     <TextView
@@ -164,15 +148,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@color/bg_f2">
-
-                    <TextView
-                        android:id="@+id/tv_hint"
-                        style="@style/text_15_black_28"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="74dp"
-                        android:gravity="center"
-                        android:text="该服务管家目前没有在任何商户提供服务"
-                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/iv_cover"
@@ -217,6 +192,7 @@
 
 
         </LinearLayout>
+
     </com.zemult.merchant.view.BounceScrollView>
 
     <LinearLayout
@@ -228,188 +204,22 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/btn_buy"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="@dimen/j35dp"
-            android:layout_marginRight="@dimen/j35dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="找TA买单"
-            android:textColor="@color/font_main"
-            android:textSize="@dimen/font_36px"
-            android:visibility="visible"
-            app:rv_backgroundColor="@color/transparent"
-            app:rv_cornerRadius="@dimen/font_36px"
-            app:rv_strokeColor="@color/font_main"
-            app:rv_strokeWidth="1dp"/>
-
 
         <Button
             android:id="@+id/btn_service"
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="36dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
             android:clickable="true"
             android:gravity="center"
-            android:text="找TA约服"
+            android:text="发起服务订单"
             android:textColor="@color/white"
             android:textSize="@dimen/font_36px"
             android:visibility="visible"/>
 
-        <LinearLayout
-            android:id="@+id/ll_bottom_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View style="@style/divider"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:weightSum="3">
-
-
-                <LinearLayout
-                    android:id="@+id/ll_phone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked2"
-                    android:clickable="true"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/dadianhua"
-                        android:gravity="center"
-                        android:text="打电话"
-                        android:textColor="@color/font_black_333"
-                        android:textSize="@dimen/font_30px"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/divider_c1"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_contact"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked2"
-                    android:clickable="true"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/faxiaoxi"
-                        android:gravity="center"
-                        android:text="发消息"
-                        android:textColor="@color/font_black_333"
-                        android:textSize="@dimen/font_30px"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:background="@color/divider_c1"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_gift"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked2"
-                    android:clickable="true"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@mipmap/zanshang"
-                        android:gravity="center"
-                        android:text="赞赏"
-                        android:textColor="@color/font_black_333"
-                        android:textSize="@dimen/font_30px"/>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_normal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/iv_normal_head"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@color/transparent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/user_icon"/>
-
-                <TextView
-                    android:id="@+id/tv_normal_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_16dp"
-                    android:ellipsize="end"
-                    android:maxEms="6"
-                    android:maxLines="1"
-                    android:text=""
-                    android:textColor="@color/font_black_28"
-                    android:textSize="@dimen/font_34px"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg_f2"
-                android:gravity="bottom|center_horizontal">
-
-                <Button
-                    android:id="@+id/btn_contact"
-                    style="@style/common_btn_235"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_btn_height_35"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginRight="70dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="发消息"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_36px"
-                    android:visibility="visible"/>
-            </LinearLayout>
-        </LinearLayout>
-
 </LinearLayout>

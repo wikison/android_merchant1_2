@@ -81,6 +81,62 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <View style="@style/divider"/>
+
+    <View
+        style="@style/divider"
+        android:layout_marginTop="@dimen/margin_16dp"/>
+
+    <RelativeLayout
+        style="@style/relative_layout_item">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:text="7天服务指数"/>
+
+        <TextView
+            android:id="@+id/tv_seven"
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:text="98"/>
+    </RelativeLayout>
+
+    <View style="@style/divider"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_"
+        style="@style/relative_layout_item"
+        android:layout_marginTop="@dimen/margin_16dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:text="管家动态"/>
+
+        <TextView
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/margin_8dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="新动态"/>
+    </RelativeLayout>
+
+    <View style="@style/divider"/>
+
+    <RelativeLayout
+        style="@style/relative_layout_item">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:text="服务评价"/>
+
+        <TextView
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/margin_8dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="12条评价"/>
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
