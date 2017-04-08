@@ -208,6 +208,14 @@ public class CommonViewHolder {
         }
         return this;
     }
+    public CommonViewHolder setRoundImage(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        //这里可以修改为自己的图片加载库
+        if(!TextUtils.isEmpty(url)){
+            imageManager.loadRoundImage(url, imageView, 24, "@450h");
+        }
+        return this;
+    }
 
 
     public CommonViewHolder addSpannableString(int viewId, SpannableStringBuilder ssb) {
