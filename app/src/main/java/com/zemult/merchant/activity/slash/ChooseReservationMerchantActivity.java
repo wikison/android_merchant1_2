@@ -87,7 +87,6 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Merchant m_merchant = (M_Merchant) lv.getAdapter().getItem(position);
-                ToastUtil.showMessage(m_merchant.name);
                 if (null != actionFrom && actionFrom.equals("CreateBespeakActivity")) {
                     Intent intent = new Intent();
                     intent.putExtra("tags", m_merchant.tags);
