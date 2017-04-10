@@ -81,12 +81,9 @@ public class PayInfoActivity extends BaseActivity {
     LinearLayout llPay;
     @Bind(R.id.ll_pay_type)
     LinearLayout llPayType;
-    @Bind(R.id.tv_realpay)
-    TextView tvRealpay;
-    @Bind(R.id.tv_redmoney)
-    TextView tvRedmoney;
-    @Bind(R.id.havered_ll)
-    LinearLayout haveredLl;
+
+
+
 
     private Context mContext;
     private Activity mActivity;
@@ -142,13 +139,13 @@ public class PayInfoActivity extends BaseActivity {
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
 
                     tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
-                    if (m.rewardMoney == 0) {
-                        haveredLl.setVisibility(View.GONE);
-                    } else {
-                        haveredLl.setVisibility(View.VISIBLE);
-                        tvRealpay.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
-                        tvRedmoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
-                    }
+//                    if (m.rewardMoney == 0) {
+//                        haveredLl.setVisibility(View.GONE);
+//                    } else {
+//                        haveredLl.setVisibility(View.VISIBLE);
+//                        tvRealpay.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+//                        tvRedmoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
+//                    }
                     switch (m.state) {
                         case 0:
                             tvState.setText("待支付");

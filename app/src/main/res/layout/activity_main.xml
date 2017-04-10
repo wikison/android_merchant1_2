@@ -181,7 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="熟人"
+                            android:text="管家"
                             android:textColor="#98999b"
                             android:textSize="10sp" />
                     </LinearLayout>

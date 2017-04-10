@@ -44,6 +44,7 @@ public class MyOrderActivity extends BaseActivity {
     ViewPager vpMyOrder;
     int page_position = -1;
 
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_my_order);

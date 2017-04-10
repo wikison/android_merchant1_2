@@ -54,7 +54,7 @@
 
 
         <LinearLayout
-            android:id="@+id/havered_ll"
+            android:id="@+id/havedingjin_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_12dp"
@@ -71,11 +71,11 @@
                 <TextView
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
-                    android:text="消费金额"
+                    android:text="订金"
                     android:textSize="15sp"/>
 
                 <TextView
-                    android:id="@+id/tv_realpay"
+                    android:id="@+id/tv_dingjin"
                     style="@style/text_15_black_999"
                     android:layout_width="0dp"
                     android:layout_marginLeft="12dp"
@@ -92,13 +92,14 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/tv_rest_left"
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
-                    android:text="赞赏"
+                    android:text="----------"
                     android:textSize="15sp"/>
 
                 <TextView
-                    android:id="@+id/tv_redmoney"
+                    android:id="@+id/tv_restmoney"
                     style="@style/text_15_black_999"
                     android:layout_width="0dp"
                     android:layout_marginLeft="12dp"
@@ -338,16 +339,18 @@
         android:visibility="visible">
 
         <com.flyco.roundview.RoundTextView
-            android:id="@+id/rtv_cancel"
-            style="@style/text_12_black_46"
-            android:padding="@dimen/margin_12dp"
-            android:text="@string/cancel_bill"
+            android:id="@+id/rtv_to_recom"
+            style="@style/text_16_black_28"
+            android:layout_width="@dimen/common_btn_width_235"
+            android:layout_height="@dimen/common_btn_height_35"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:gravity="center"
             android:visibility="gone"
-            app:rv_backgroundColor="@color/white"
-            app:rv_backgroundPressColor="@color/lightyellow"
-            app:rv_cornerRadius="10px"
-            app:rv_strokeColor="@color/black"
-            app:rv_strokeWidth="1px"/>
+            android:text="@string/go_recom"
+            android:textColor="@color/white"
+            app:rv_backgroundColor="@color/font_main"
+            app:rv_backgroundPressColor="@color/orange"
+            app:rv_cornerRadius="35dp"/>
 
         <com.flyco.roundview.RoundTextView
             android:id="@+id/rtv_to_pay"
@@ -356,12 +359,18 @@
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_marginLeft="@dimen/margin_12dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/go_pay"
             android:textColor="@color/white"
             app:rv_backgroundColor="@color/font_main"
             app:rv_backgroundPressColor="@color/orange"
             app:rv_cornerRadius="35dp"/>
     </LinearLayout>
+
+
+
+
+
 </LinearLayout>
 
 

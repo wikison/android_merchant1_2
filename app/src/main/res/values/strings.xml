@@ -328,6 +328,7 @@
     <string name="share">分享</string>
     <string name="cancel_bill">取消订单</string>
     <string name="go_pay">立即付款</string>
+    <string name="go_recom">立即评价</string>
     <string name="trade">交易</string>
     <string name="sale_manager">营销经理</string>
     <string name="text_phone_isopen">设置“打开”，您的手机号码将在您的个人详情页面对外公开，否则不显示。</string>

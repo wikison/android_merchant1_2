@@ -66,6 +66,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
     int selectPosition;
     int selectPayId;
 
+
     @Override
     protected void lazyLoad() {
         if (!hasLoaded || !isVisible) {

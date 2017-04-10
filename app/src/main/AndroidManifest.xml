@@ -609,8 +609,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.SearchLocationActivity" />
         <activity android:name=".activity.mine.FindOneResultActivity" />
-        <activity android:name=".activity.mine.FindOneRecommandActivity"></activity>
-        <activity android:name=".activity.mine.MyServiceTicketActivity"></activity>
+        <activity android:name=".activity.mine.FindOneRecommandActivity" />
+        <activity android:name=".activity.mine.MyServiceTicketActivity" />
+        <activity android:name=".activity.mine.ServiceTicketDetailActivity"></activity>
     </application>
 
 </manifest>
