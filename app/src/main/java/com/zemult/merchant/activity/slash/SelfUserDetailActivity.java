@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,20 +17,29 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.MyFansActivity;
+import com.zemult.merchant.activity.mine.MyWalletActivity;
+import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
+import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
+import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,9 +147,11 @@ public class SelfUserDetailActivity extends BaseActivity {
 
     private Context mContext;
     private Activity mActivity;
+    public static int MODIFY_TAG = 111;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
+    UserEditStateRequest userEditStateRequest;
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     private M_Userinfo userInfo;
     private String userName, userHead;
@@ -151,6 +163,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
     int merchantNum = 0;
     LinkagePager pager;
+    int state = 0;
 
     @Override
     public void setContentView() {
@@ -173,7 +186,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         merchantId = getIntent().getIntExtra(MERCHANT_ID, -1);
         userName = getIntent().getStringExtra(USER_NAME);
         userHead = getIntent().getStringExtra(USER_HEAD);
-
+        state = SlashHelper.userManager().getUserinfo().state;
         mContext = this;
         mActivity = this;
 
@@ -183,9 +196,12 @@ public class SelfUserDetailActivity extends BaseActivity {
         lhTvTitle.setText("管家详情");
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
-        if (!TextUtils.isEmpty(userName))
+        if (!TextUtils.isEmpty(userName)) {
             tvName.setText(userName);
-
+        }
+        dealState(state);
+        tvAccount.setText("￥" + Convert.getMoneyString(SlashHelper.userManager().getUserinfo().money) + "元");
+        tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "客户关注");
     }
 
     private void initListener() {
@@ -197,6 +213,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
             }
         });
+
 
     }
 
@@ -354,13 +371,25 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
-            pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
+            pagerUserMerchantDetailAdapter.setOnViewMerchantClickListener(new PagerUserMerchantAdapter.ViewMerchantClickListener() {
                 @Override
-                public void onDetail(M_Merchant entity) {
+                public void onMerchantManage(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, MerchantDetailActivity.class);
                     intent.putExtra("userSaleId", userId);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
                     startActivity(intent);
+                }
+            });
+
+            pagerUserMerchantDetailAdapter.setOnViewTagClickListener(new PagerUserMerchantAdapter.ViewTagClickListener() {
+                @Override
+                public void onTagManage(M_Merchant merchant) {
+                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+                    intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                    intent.putExtra(TabManageActivity.NAME, merchant.name);
+                    intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+                    startActivityForResult(intent, MODIFY_TAG);
                 }
             });
         }
@@ -373,7 +402,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.tv_scrm})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -385,16 +414,93 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.iv_add:
                 ToastUtil.showMessage("add");
                 break;
+            case R.id.tv_state:
+                MMAlert.showChooseStateDialog(this, new MMAlert.ChooseCallback() {
+                    @Override
+                    public void onfirstChoose() {
+                        state = 0;
+                        userEditState();
+                    }
+
+                    @Override
+                    public void onthirdChoose() {
+                        state = 2;
+                        userEditState();
+                    }
+                });
+
+                break;
+            case R.id.tv_add_level:
+                break;
+            case R.id.tv_level:
+            case R.id.iv_level:
+                IntentUtil.start_activity(this, BaseWebViewActivity.class,
+                        new Pair<String, String>("titlename", "服务等级"), new Pair<String, String>("url", Constants.SERVICELEVEL));
+                break;
+            case R.id.tv_account:
+                startActivity(new Intent(SelfUserDetailActivity.this, MyWalletActivity.class));
+                break;
+            case R.id.tv_scrm:
+                intent = new Intent(mActivity, MyFansActivity.class);
+                intent.putExtra(MyFansActivity.INTENT_USERID, -1);
+                startActivity(intent);
+                break;
         }
+    }
+
+    private void userEditState() {
+        if (userEditStateRequest != null) {
+            userEditStateRequest.cancel();
+        }
+        showPd();
+        UserEditStateRequest.Input input = new UserEditStateRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.state = state;
+        input.convertJosn();
+        userEditStateRequest = new UserEditStateRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    SlashHelper.userManager().getUserinfo().setState(state);
+                    dealState(state);
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(userEditStateRequest);
+    }
+
+    //处理状态
+    private void dealState(int state) {
+        if (state == 0) {
+            ivState.setImageResource(R.mipmap.kongxian);
+            tvState.setText("空闲");
+            tvState.setTextColor(getResources().getColor(R.color.font_idle));
+        } else if (state == 1) {
+            ivState.setImageResource(R.mipmap.xiuxi_icon);
+            tvState.setText("休息");
+            tvState.setTextColor(getResources().getColor(R.color.font_black_999));
+        } else if (state == 2) {
+            ivState.setImageResource(R.mipmap.manglu);
+            tvState.setText("忙碌");
+            tvState.setTextColor(getResources().getColor(R.color.font_busy));
+        }
+
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQ_ALBUM
-                && userId == SlashHelper.userManager().getUserId()) {
-            getUserInfo();
+        if (requestCode == MODIFY_TAG && resultCode == RESULT_OK) {
+            getOtherMerchantList();
         }
 
     }

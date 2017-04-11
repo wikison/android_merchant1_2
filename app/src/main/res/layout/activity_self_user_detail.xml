@@ -120,7 +120,6 @@
                 <RelativeLayout
                     style="@style/relative_layout_item">
 
-
                     <TextView
                         android:id="@+id/tv_text_level"
                         style="@style/text_15_black_28"
@@ -136,7 +135,6 @@
                         android:layout_toRightOf="@+id/tv_text_level"
                         android:text="@string/how_add_level"
                         android:textColor="@color/font_new_blue"/>
-
 
                     <TextView
                         android:id="@+id/tv_level"

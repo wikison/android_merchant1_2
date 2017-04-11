@@ -182,7 +182,7 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                                                 startActivity(intent);
                                             }
                                         });
-                                        if(!TextUtils.isEmpty(mfollow.note))
+                                        if (!TextUtils.isEmpty(mfollow.note))
                                             holder.setText(R.id.tv_describe, mfollow.note);
 
                                         holder.setText(R.id.tv_follow_name, mfollow.name);

@@ -618,6 +618,7 @@
         <activity android:name=".activity.mine.ServiceTicketDetailActivity"></activity>
 
         <activity android:name=".activity.slash.SelfUserDetailActivity"/>
+        <activity android:name=".activity.mine.MyFansActivity"/>
     </application>
 
 </manifest>
