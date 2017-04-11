@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_f2">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_f2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/user_icon" />
+                android:src="@mipmap/user_icon"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="昵称"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/mgrade_tv"
@@ -50,7 +50,7 @@
                     android:text="地区"
                     android:textColor="@color/font_black_999"
                     android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -69,7 +69,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我的账户" />
+                android:text="我的账户"/>
 
             <TextView
                 android:id="@+id/tv_my_account"
@@ -78,7 +78,7 @@
                 android:layout_marginRight="@dimen/margin_12dp"
                 android:layout_toLeftOf="@+id/iv_right"
                 android:text=""
-                android:textColor="@color/eb1b33" />
+                android:textColor="@color/eb1b33"/>
 
 
             <ImageView
@@ -88,7 +88,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
 
@@ -103,7 +103,7 @@
             <TextView
                 style="@style/my_mini_text"
                 android:drawableLeft="@mipmap/quanbao_icon"
-                android:text="我的券包" />
+                android:text="我的券包"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -111,12 +111,12 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
         <include
             layout="@layout/include_devider1dp_layout"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/mtag_layout"
@@ -129,7 +129,7 @@
             <TextView
                 style="@style/my_mini_text"
                 android:drawableLeft="@mipmap/mine_biaoqian_icon"
-                android:text="我的标签" />
+                android:text="我的标签"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
 
@@ -159,7 +159,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_16dp"
                     android:gravity="center_vertical"
-                    android:text="我是服务管家" />
+                    android:text="我是服务管家"/>
 
 
                 <ImageView
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="12dp"
-                    android:layout_toLeftOf="@+id/level_tv" />
+                    android:layout_toLeftOf="@+id/level_tv"/>
 
 
                 <TextView
@@ -179,7 +179,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_toLeftOf="@+id/iv1"
                     android:text="------服务管家"
-                    android:textColor="@color/e6bb7c" />
+                    android:textColor="@color/e6bb7c"/>
 
 
                 <ImageView
@@ -189,13 +189,13 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="12dp"
-                    android:background="@mipmap/right_btn" />
+                    android:background="@mipmap/right_btn"/>
             </RelativeLayout>
 
             <View
                 style="@style/divider_1px"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp" />
+                android:layout_marginRight="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,28 +211,28 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/jilu" />
+                    android:src="@mipmap/jilu"/>
 
                 <ImageView
                     android:id="@+id/businessmanage_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/dianpu" />
+                    android:src="@mipmap/dianpu"/>
 
                 <ImageView
                     android:id="@+id/incomeaccount_iv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/zhanghu" />
+                    android:src="@mipmap/zhanghu"/>
 
                 <ImageView
                     android:id="@+id/state_iv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@mipmap/manglu" />
+                    android:src="@mipmap/manglu"/>
                 <!--<com.zemult.merchant.view.DrawableCenterTextView-->
                 <!--android:id="@+id/servicerecord"-->
                 <!--android:layout_width="0dp"-->
@@ -313,24 +313,24 @@
                 <TextView
                     android:id="@+id/servicerecord"
                     android:layout_width="0dp"
-                    android:paddingTop="14dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingTop="14dp"
                     android:text="服务记录"
                     android:textColor="@color/font_black_28"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/businessmanage"
                     android:layout_width="0dp"
-                    android:paddingTop="14dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingTop="14dp"
                     android:text="商户管理"
                     android:textColor="@color/font_black_28"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:id="@+id/incomeaccount"
@@ -338,10 +338,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="收益账户"
                     android:paddingTop="14dp"
+                    android:text="收益账户"
                     android:textColor="@color/font_black_28"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -352,27 +352,27 @@
                         android:id="@+id/tv_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_weight="1"
-                        android:paddingTop="14dp"
                         android:drawablePadding="8dp"
                         android:drawableRight="@mipmap/sanjiao_icon"
-                        android:layout_centerHorizontal="true"
+                        android:paddingTop="14dp"
                         android:text="忙碌"
-                        android:textColor="@color/font_black_28"
+                        android:textColor="@color/font_busy"
 
-                        android:textSize="15sp" />
+                        android:textSize="15sp"/>
                 </RelativeLayout>
 
 
             </LinearLayout>
 
 
-            <View style="@style/divider_1px" />
+            <View style="@style/divider_1px"/>
 
             <View style="@style/divider12dp"></View>
         </LinearLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <RelativeLayout
             android:id="@+id/rl_my_oriprorder"
@@ -386,7 +386,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我发起的预邀" />
+                android:text="我发起的预邀"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -394,10 +394,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <RelativeLayout
             android:id="@+id/rl_my_prorder"
@@ -411,7 +411,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我的预约单" />
+                android:text="我的预约单"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -419,10 +419,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <RelativeLayout
             android:id="@+id/rl_my_order"
@@ -436,7 +436,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我的消费单" />
+                android:text="我的消费单"/>
 
             <ImageView
                 android:id="@+id/iv_my_order_right"
@@ -445,11 +445,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
 
             <View
                 style="@style/divider_1px"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
 
@@ -466,7 +466,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我的礼物箱" />
+                android:text="我的礼物箱"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -474,11 +474,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
 
             <View
                 style="@style/divider_1px"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
 
@@ -492,7 +492,7 @@
             <TextView
                 style="@style/my_mini_text"
                 android:drawableLeft="@mipmap/safe_icon"
-                android:text="安全设置" />
+                android:text="安全设置"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -500,11 +500,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
 
             <View
                 style="@style/divider_1px"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
@@ -520,7 +520,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="我的收藏" />
+                android:text="我的收藏"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -528,14 +528,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <View style="@style/divider12dp"></View>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <RelativeLayout
             android:id="@+id/rl_my_setting"
@@ -549,7 +549,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="设置" />
+                android:text="设置"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -557,14 +557,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
         </RelativeLayout>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <View style="@style/divider12dp"></View>
 
-        <View style="@style/divider_1px" />
+        <View style="@style/divider_1px"/>
 
         <RelativeLayout
             android:id="@+id/mshop_layout"
@@ -576,7 +576,7 @@
 
             <View
                 style="@style/divider_1px"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:id="@+id/applyfor_tv"
@@ -584,7 +584,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:gravity="center_vertical"
-                android:text="------------------" />
+                android:text="------------------"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -592,11 +592,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="12dp"
-                android:background="@mipmap/right_btn" />
+                android:background="@mipmap/right_btn"/>
 
             <View
                 style="@style/divider_1px"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
     </LinearLayout>
