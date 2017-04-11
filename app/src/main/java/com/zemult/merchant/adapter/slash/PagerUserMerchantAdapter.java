@@ -44,10 +44,21 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     private LinkagePager pager;
     LayoutInflater inflater = null;
     private ViewClickListener onViewClickListener;
+    private ViewMerchantClickListener onViewMerchantClickListener;
+    private ViewTagClickListener onViewTagClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
     }
+
+    public void setOnViewMerchantClickListener(ViewMerchantClickListener onViewMerchantClickListener) {
+        this.onViewMerchantClickListener = onViewMerchantClickListener;
+    }
+
+    public void setOnViewTagClickListener(ViewTagClickListener onViewTagClickListener) {
+        this.onViewTagClickListener = onViewTagClickListener;
+    }
+
 
     public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type, boolean isSelf) {
         mContext = context;
@@ -79,7 +90,13 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                         viewList.remove(0);
                     }
                 }
-                view = initDetailView(null, entity);
+                if (isSelf) {
+                    view = initSelfDetailView(null, entity);
+
+                } else {
+                    view = initDetailView(null, entity);
+                }
+
                 pager.addView(view);
                 break;
         }
@@ -118,7 +135,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         return view;
     }
 
-
     private View initDetailView(View view, M_Merchant entity) {
         ViewHolderDetail holder = null;
         if (view == null) {
@@ -127,6 +143,35 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             view.setTag(holder);
         } else {
             holder = (ViewHolderDetail) view.getTag();
+        }
+        // 商家名称
+        if (!TextUtils.isEmpty(entity.name))
+            holder.tvName.setText(entity.name);
+        // 人均消费
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
+        // 距中心点距离(米)
+        if (!StringUtils.isEmpty(entity.distance)) {
+            if (entity.distance.length() > 3) {
+                double d = Double.valueOf(entity.distance);
+                holder.tvDistance.setText(d / 1000 + "km");
+            } else
+                holder.tvDistance.setText(entity.distance + "m");
+        }
+
+        initTags(holder, entity);
+        initListener(holder, entity);
+
+        return view;
+    }
+
+    private View initSelfDetailView(View view, M_Merchant entity) {
+        ViewHolderSelfDetail holder = null;
+        if (view == null) {
+            view = inflater.inflate(R.layout.item_self_user_merchant_detail, null);
+            holder = new ViewHolderSelfDetail(view);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolderSelfDetail) view.getTag();
         }
         // 商家名称
         if (!TextUtils.isEmpty(entity.name))
@@ -166,6 +211,60 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     }
 
+    private void initListener(ViewHolderSelfDetail holder, final M_Merchant entity) {
+        holder.llDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewMerchantClickListener != null)
+                    onViewMerchantClickListener.onMerchantManage(entity);
+            }
+        });
+
+        holder.rlService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewTagClickListener != null)
+                    onViewTagClickListener.onTagManage(entity);
+            }
+        });
+
+
+    }
+
+
+    private void initTags(ViewHolderSelfDetail holder, M_Merchant entity) {
+        holder.rgTaService.setChildMargin(0, 24, 24, 0);
+        holder.rgTaService.removeAllViews();
+        if (!StringUtils.isBlank(entity.tags)) {
+            List<String> tagList = new ArrayList<String>(Arrays.asList(entity.tags.split(",")));
+            int iShowSize = tagList.size();
+            if (iShowSize > 0) {
+                holder.rgTaService.setVisibility(View.VISIBLE);
+
+                for (int i = 0; i < iShowSize; i++) {
+                    GradientDrawable drawable = new GradientDrawable();
+                    drawable = new GradientDrawable();
+                    drawable.setShape(GradientDrawable.RECTANGLE); // 画框
+                    drawable.setCornerRadii(new float[]{50,
+                            50, 50, 50, 50, 50, 50, 50});
+                    drawable.setColor(0xffe8e8e8);  // 边框内部颜色
+                    RadioButton rbTag = new RadioButton(mContext);
+                    rbTag.setBackgroundDrawable(drawable); // 设置背景（效果就是有边框及底色）
+                    rbTag.setTextSize(12);
+                    rbTag.setPadding(22, 8, 22, 8);
+                    rbTag.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    rbTag.setTextColor(0xff464646);
+                    rbTag.setText(tagList.get(i).toString());
+
+                    holder.rgTaService.addView(rbTag);
+
+                }
+            } else {
+                holder.rgTaService.setVisibility(View.GONE);
+            }
+        }
+
+    }
 
     private void initTags(ViewHolderDetail holder, M_Merchant entity) {
         holder.rgTaService.setChildMargin(0, 24, 24, 0);
@@ -201,7 +300,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         @Bind(R.id.card_img)
         ImageView cardImg;
 
@@ -229,11 +328,54 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         }
     }
 
+    class ViewHolderSelfDetail {
+        @Bind(R.id.tv_name)
+        TextView tvName;
+        @Bind(R.id.tv_money)
+        TextView tvMoney;
+        @Bind(R.id.tv_distance)
+        TextView tvDistance;
+        @Bind(R.id.rl_detail)
+        RelativeLayout rlDetail;
+        @Bind(R.id.ll_detail)
+        LinearLayout llDetail;
+        @Bind(R.id.tv_seven)
+        TextView tvSeven;
+        @Bind(R.id.rl_service)
+        RelativeLayout rlService;
+        @Bind(R.id.tv_text_service)
+        TextView tvTextService;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
+        @Bind(R.id.tv_service)
+        TextView tvService;
+        @Bind(R.id.rl_activity)
+        RelativeLayout rlActivity;
+        @Bind(R.id.rl_service_comment)
+        RelativeLayout rlServiceComment;
+        @Bind(R.id.iv_service_record)
+        ImageView ivServiceRecord;
+        @Bind(R.id.rl_service_record)
+        RelativeLayout rlServiceRecord;
+        @Bind(R.id.rl_record)
+        RelativeLayout rlRecord;
+
+        ViewHolderSelfDetail(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
     public interface ViewClickListener {
         //查看详情
         void onDetail(M_Merchant entity);
-
     }
 
+    public interface ViewMerchantClickListener {
+        void onMerchantManage(M_Merchant entity);
+    }
+
+    public interface ViewTagClickListener {
+        void onTagManage(M_Merchant entity);
+    }
 
 }

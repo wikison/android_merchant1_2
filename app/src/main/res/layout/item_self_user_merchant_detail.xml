@@ -9,13 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_item_clicked2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_16dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_16dp"
-            android:layout_marginTop="@dimen/margin_16dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingLeft="@dimen/margin_16dp">
@@ -55,14 +56,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <com.zemult.merchant.view.FNRadioGroup
-                android:id="@+id/rg_ta_service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_16dp">
-
-            </com.zemult.merchant.view.FNRadioGroup>
         </LinearLayout>
 
         <RelativeLayout
@@ -77,7 +70,7 @@
                 android:layout_marginRight="@dimen/margin_16dp"
                 android:drawablePadding="@dimen/margin_8dp"
                 android:drawableRight="@mipmap/right_btn"
-                android:text="详情"/>
+                android:text=""/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -104,7 +97,42 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
-        android:id="@+id/rl_"
+        android:id="@+id/rl_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_item_clicked2"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_text_service"
+            style="@style/text_15_black_28"
+            android:text="服务标签"/>
+
+        <com.zemult.merchant.view.FNRadioGroup
+            android:id="@+id/rg_ta_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_toLeftOf="@+id/tv_service"
+            android:layout_toRightOf="@+id/tv_text_service">
+        </com.zemult.merchant.view.FNRadioGroup>
+
+        <TextView
+            android:id="@+id/tv_service"
+            style="@style/text_15_black_999"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/right_btn"
+            android:text=""/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_activity"
         style="@style/relative_layout_item"
         android:layout_marginTop="@dimen/margin_16dp">
 
@@ -123,6 +151,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_service_comment"
         style="@style/relative_layout_item">
 
         <TextView
@@ -135,6 +164,51 @@
             android:drawablePadding="@dimen/margin_8dp"
             android:drawableRight="@mipmap/right_btn"
             android:text="12条评价"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_service_record"
+        style="@style/relative_layout_item"
+        android:layout_marginTop="@dimen/margin_16dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_height="match_parent"
+            android:text="服务单记录"/>
+
+        <TextView
+            style="@style/text_15_black_999"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/iv_service_record"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/margin_8dp"
+            android:text="待确认服务单2条"/>
+
+        <ImageView
+            android:id="@+id/iv_service_record"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/right_btn"/>
+    </RelativeLayout>
+
+    <View style="@style/divider"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_record"
+        style="@style/relative_layout_item">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:text="交易单记录"/>
+
+        <TextView
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/margin_8dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text=""/>
     </RelativeLayout>
 
 </LinearLayout>

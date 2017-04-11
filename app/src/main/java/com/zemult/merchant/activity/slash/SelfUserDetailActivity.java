@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
@@ -21,7 +21,6 @@ import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
@@ -29,6 +28,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 
 import java.util.ArrayList;
@@ -96,10 +96,10 @@ public class SelfUserDetailActivity extends BaseActivity {
     TextView tvTextLevel;
     @Bind(R.id.tv_add_level)
     TextView tvAddLevel;
-    @Bind(R.id.iv_level)
-    ImageView ivLevel;
     @Bind(R.id.tv_level)
     TextView tvLevel;
+    @Bind(R.id.iv_level)
+    ImageView ivLevel;
     @Bind(R.id.tv_text_account)
     TextView tvTextAccount;
     @Bind(R.id.tv_add_money)
@@ -120,6 +120,10 @@ public class SelfUserDetailActivity extends BaseActivity {
     ImageView ivArrow;
     @Bind(R.id.rl_container)
     RelativeLayout rlContainer;
+    @Bind(R.id.ll_add)
+    LinearLayout llAdd;
+    @Bind(R.id.iv_add)
+    ImageView ivAdd;
     @Bind(R.id.bind_pager)
     LinkagePager bindPager;
     @Bind(R.id.ll_main)
@@ -134,7 +138,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private Context mContext;
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
-    private boolean isSelf = false; //用户是否是自己
+    private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     private M_Userinfo userInfo;
@@ -153,9 +157,6 @@ public class SelfUserDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_self_user_detail);
     }
 
-    private YWIMKit getIMkit() {
-        return LoginSampleHelper.getInstance().getIMKit();
-    }
 
     @Override
     public void init() {
@@ -166,7 +167,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        merchantAdd= new M_Merchant();
+        merchantAdd = new M_Merchant();
         userId = getIntent().getIntExtra(USER_ID, -1);
         merchant = (M_Merchant) getIntent().getSerializableExtra(MERCHANT_INFO);
         merchantId = getIntent().getIntExtra(MERCHANT_ID, -1);
@@ -319,13 +320,12 @@ public class SelfUserDetailActivity extends BaseActivity {
             pager.setClipChildren(true);
             pager.setPageTransformer(false, new LinkageCoverTransformer(0.3f, 0f, 0f, 0f));
             selectMerchant = listMerchant.get(0);
-            imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+            changeItem(0);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     if (position >= 0 && position < listMerchant.size()) {
-                        bindPager.setCurrentItem(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).head, ivCover, 60);
+                        changeItem(position);
                     }
 
                 }
@@ -333,15 +333,18 @@ public class SelfUserDetailActivity extends BaseActivity {
             pager.setOnPageChangeListener(new LinkagePager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int i, float v, int i1) {
-
+                    Log.i("Scroll", "i=" + i + ", v=" + v + ", i1=" + i1);
+                    if (i1 > 100)
+                        ivAdd.setVisibility(View.GONE);
+                    if (i == 0 && i1 < 50) {
+                        ivAdd.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
                 public void onPageSelected(int position) {
                     if (position >= 0 && position < listMerchant.size()) {
-                        bindPager.setCurrentItem(position);
-                        selectMerchant = listMerchant.get(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover, 60);
+                        changeItem(position);
                     }
                 }
 
@@ -363,14 +366,24 @@ public class SelfUserDetailActivity extends BaseActivity {
         }
     }
 
+    private void changeItem(int position) {
+        bindPager.setCurrentItem(position);
+        selectMerchant = listMerchant.get(position);
+        imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+    }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back})
+
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.ll_add:
+            case R.id.iv_add:
+                ToastUtil.showMessage("add");
                 break;
         }
     }
@@ -385,6 +398,4 @@ public class SelfUserDetailActivity extends BaseActivity {
         }
 
     }
-
-
 }
