@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,110 +30,200 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    style="@style/relative_layout_item">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="@dimen/margin_16dp"
-                    android:paddingTop="@dimen/margin_16dp">
+                    <ImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/user_icon"/>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-                        <ImageView
-                            android:id="@+id/iv_head"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@color/transparent"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/user_icon"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/margin_12dp"
-                            android:layout_marginRight="2dp"
-                            android:layout_toLeftOf="@+id/btn_focus"
-                            android:layout_toRightOf="@+id/iv_head"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-
-                                    <TextView
-                                        android:id="@+id/tv_name"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentLeft="true"
-                                        android:layout_centerVertical="true"
-                                        android:ellipsize="end"
-                                        android:maxEms="6"
-                                        android:maxLines="1"
-                                        android:text=""
-                                        android:textColor="@color/font_black_28"
-                                        android:textSize="@dimen/font_34px"
-                                        android:textStyle="bold"/>
-
-                                    <TextView
-                                        android:id="@+id/tv_level"
-                                        style="@style/text_12_black_28"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginLeft="12dp"
-                                        android:layout_toRightOf="@+id/tv_name"
-                                        android:drawableLeft="@mipmap/tong_icon2"
-                                        android:drawablePadding="@dimen/margin_6dp"
-                                        android:paddingBottom="2dp"
-                                        android:paddingTop="2dp"
-                                        android:text="金牌"
-                                        android:textColor="@color/bg_head"/>
-
-                                </RelativeLayout>
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_rname"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/margin_6dp"
-                                android:text="备注名"
-                                android:textColor="@color/font_black_46"
-                                android:textSize="@dimen/font_24px"
-                                android:visibility="gone"/>
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/tv_buy_num"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_name"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/iv_head"
+                        android:ellipsize="end"
+                        android:maxEms="6"
+                        android:maxLines="1"
+                        android:text=""/>
+
+                    <TextView
+                        android:id="@+id/tv_focus"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_name"
+                        android:text="-客户关注"
+                        android:textColor="@color/font_new_red"/>
+
+                    <TextView
+                        android:id="@+id/tv_add_fan"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_focus"
+                        android:text="@string/how_add_focus"
+                        android:textColor="@color/font_new_blue"/>
+
+                    <TextView
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:drawablePadding="@dimen/margin_8dp"
+                        android:drawableRight="@mipmap/right_btn"
+                        android:text=""/>
+                </RelativeLayout>
+
+                <View style="@style/divider_dash"/>
+
+                <RelativeLayout
+                    style="@style/relative_layout_item">
+
+
+                    <TextView
+                        android:id="@+id/tv_text_state"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="状态"/>
+
+                    <ImageView
+                        android:id="@+id/iv_state"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tv_state"
+                        android:src="@mipmap/manglu"/>
+
+                    <TextView
+                        android:id="@+id/tv_state"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="8dp"
+                        android:drawableRight="@mipmap/sanjiao_icon"
+                        android:text="忙碌"/>
+
+                </RelativeLayout>
+
+                <View style="@style/divider_dash"/>
+
+                <RelativeLayout
+                    style="@style/relative_layout_item">
+
+
+                    <TextView
+                        android:id="@+id/tv_text_level"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="等级"/>
+
+                    <TextView
+                        android:id="@+id/tv_add_level"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_text_level"
+                        android:text="@string/how_add_level"
+                        android:textColor="@color/font_new_blue"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_level"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/iv_level"
+                        android:layout_marginRight="8dp"
+                        android:drawablePadding="4dp"
+                        android:text=""
+                        android:textColor="@color/font_main"/>
+
+                    <ImageView
+                        android:id="@+id/iv_level"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_6dp"
-                        android:drawableLeft="@mipmap/xiuxi_icon"
-                        android:drawablePadding="@dimen/margin_6dp"
-                        android:paddingLeft="10dp"
-                        android:text="休息"
-                        android:textColor="@color/font_black_46"
-                        android:textSize="@dimen/font_24px"/>
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="4dp"
+                       android:layout_alignParentRight="true"
+                        android:src="@mipmap/right_btn"/>
+                </RelativeLayout>
 
-                </LinearLayout>
+                <View style="@style/divider_dash"/>
 
-                <View
-                    style="@style/divider_1px"
-                    android:layout_marginTop="@dimen/margin_16dp"/>
+                <RelativeLayout
+                    style="@style/relative_layout_item">
+
+
+                    <TextView
+                        android:id="@+id/tv_text_account"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="收益账户"/>
+
+                    <TextView
+                        android:id="@+id/tv_add_money"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_text_account"
+                        android:text="@string/how_add_moeny"
+                        android:textColor="@color/font_new_blue"/>
+
+                    <TextView
+                        android:id="@+id/tv_account"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="8dp"
+                        android:drawableRight="@mipmap/right_btn"
+                        android:text="￥1222元"
+                        android:textColor="@color/font_black_999"/>
+
+                </RelativeLayout>
+
+                <View style="@style/divider_dash"/>
+
+                <RelativeLayout
+                    style="@style/relative_layout_item">
+
+
+                    <TextView
+                        android:id="@+id/tv_text_scrm"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="SCRM"/>
+
+                    <com.zemult.merchant.view.FixedGridView
+                        android:id="@+id/fgv_scrm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tv_scrm"
+                        android:layout_toRightOf="@+id/tv_text_scrm">
+
+                    </com.zemult.merchant.view.FixedGridView>
+
+                    <TextView
+                        android:id="@+id/tv_scrm"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="8dp"
+                        android:drawableRight="@mipmap/right_btn"/>
+
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -210,10 +299,10 @@
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginTop="@dimen/margin_16dp"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:clickable="true"
             android:gravity="center"
             android:text="发起服务订单"

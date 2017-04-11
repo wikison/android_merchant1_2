@@ -40,8 +40,8 @@ import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
-import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
@@ -225,13 +225,20 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                int userId = mAdapter.getItem(position - 2).saleUserId;
+                Intent intent;
+                if (SlashHelper.userManager().getUserId() == userId) {
+                    intent = new Intent(mContext, SelfUserDetailActivity.class);
+                } else {
+                    intent = new Intent(mContext, UserDetailActivity.class);
+                }
                 intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position - 2).saleUserId);
                 intent.putExtra(UserDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
                 startActivity(intent);
-            }
-        });
 
+            }
+
+        });
 
 
         smoothListView.setOnScrollListener(new SmoothListView.OnSmoothScrollListener() {

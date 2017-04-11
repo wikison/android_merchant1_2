@@ -84,6 +84,14 @@
         <item name="android:background">@color/divider_dc</item>
     </style>
 
+    <style name="divider_dash">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@drawable/shape_line_dash</item>
+        <item name="android:layerType">software</item>
+        <item name="android:layout_marginLeft">@dimen/margin_12dp</item>
+    </style>
+
     <style name="divider_margin_top" parent="view1dp">
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/divider_dc</item>
@@ -823,6 +831,14 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AudioDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>

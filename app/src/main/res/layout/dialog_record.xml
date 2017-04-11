@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="175dp"
+              android:layout_height="86dp"
+              android:background="@drawable/dialog_loading_bg"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_dialog_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/dialog_recorder"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_hint"
+        style="@style/text_15_black_28"
+        android:layout_marginTop="5dp"
+        android:text="手指上滑取消发送"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

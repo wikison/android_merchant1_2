@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +22,8 @@ import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.android.volley.VolleyError;
+import com.czt.mp3recorder.MP3Recorder;
+import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundTextView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -36,7 +41,6 @@ import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
-import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.FilterEntity;
@@ -49,12 +53,16 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.util.oss.OssFileService;
+import com.zemult.merchant.view.RecordDialog;
 import com.zemult.merchant.view.SharePopwindow;
+import com.zemult.merchant.view.VerticalScrollView;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -83,6 +91,23 @@ public class UserDetailActivity extends BaseActivity {
 
     private static final int REQ_ALBUM = 0x110;
     private static final int REQ_REMARK_NAME = 0x120;
+
+    private static final int STATE_NORMAL = 1;// 默认的状态
+    private static final int STATE_RECORDING = 2;// 正在录音
+    private static final int STATE_WANT_TO_CANCEL = 3;// 希望取消
+
+    private int mCurrentState = STATE_NORMAL; // 当前的状态
+    private boolean isRecording = false;// 已经开始录音
+
+    private static final int DISTANCE_Y_CANCEL = 50;
+
+    private float mTime;
+    // 是否触发longClick
+    private boolean mReady;
+
+    private static final int MSG_AUDIO_PREPARED = 0x110;
+    private static final int MSG_VOICE_CHANGED = 0x111;
+    private static final int MSG_DIALOG_DIMISS = 0x112;
 
     public static final String TAG = UserDetailActivity.class.getSimpleName();
 
@@ -126,34 +151,32 @@ public class UserDetailActivity extends BaseActivity {
     RelativeLayout rlContainer;
     @Bind(R.id.bind_pager)
     LinkagePager bindPager;
-    @Bind(R.id.btn_buy)
-    RoundTextView btnBuy;
-    @Bind(R.id.btn_service)
-    Button btnService;
-    @Bind(R.id.tv_phone)
-    TextView tvPhone;
-    @Bind(R.id.ll_phone)
-    LinearLayout llPhone;
-    @Bind(R.id.ll_contact)
-    LinearLayout llContact;
-    @Bind(R.id.ll_gift)
-    LinearLayout llGift;
-    @Bind(R.id.ll_bottom_menu)
-    LinearLayout llBottomMenu;
-    @Bind(R.id.ll_bottom)
-    LinearLayout llBottom;
     @Bind(R.id.ll_main)
     LinearLayout llMain;
     @Bind(R.id.iv_normal_head)
     ImageView ivNormalHead;
     @Bind(R.id.tv_normal_name)
     TextView tvNormalName;
-    @Bind(R.id.btn_contact)
-    Button btnContact;
     @Bind(R.id.ll_normal)
     LinearLayout llNormal;
+    @Bind(R.id.btn_service)
+    RoundLinearLayout btnService;
+    @Bind(R.id.tv_phone)
+    TextView tvPhone;
+    @Bind(R.id.tv_buy)
+    TextView tvBuy;
+    @Bind(R.id.tv_reward)
+    TextView tvReward;
+    @Bind(R.id.ll_bottom_menu)
+    LinearLayout llBottomMenu;
+    @Bind(R.id.ll_bottom)
+    LinearLayout llBottom;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.vertical_scrollview)
+    VerticalScrollView verticalScrollview;
+    @Bind(R.id.btn_contact)
+    Button btnContact;
 
 
     private Context mContext;
@@ -178,6 +201,63 @@ public class UserDetailActivity extends BaseActivity {
     LinkagePager pager;
     private SharePopwindow sharePopWindow;
     boolean isNormal = false;
+
+    RecordDialog mDialogManager;
+    String ossFilename = "", filename = "";
+    String URL_UPLOAD_FILEPATH = "";
+    private MediaPlayer mMediaPlayer;
+    private OssFileService ossFileService;
+    private MP3Recorder mRecorder = null;
+    long lastDownTime, thisEventTime;
+    String fileUrl = "";
+    private boolean isStartRecord;
+
+    private Timer timer;
+    private int recordTime = 60;
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_AUDIO_PREPARED:
+                    // 开始录音后显示对话框
+                    mDialogManager.showRecordingDialog();
+                    isRecording = true;
+                    break;
+                case MSG_VOICE_CHANGED:
+                    break;
+
+                case MSG_DIALOG_DIMISS:
+                    mDialogManager.dismissDialog();
+                    break;
+
+            }
+
+            super.handleMessage(msg);
+        }
+    };
+
+    /**
+     * 恢复状态及标志位
+     */
+    private void reset() {
+        isRecording = false;
+        mTime = 0;
+        mReady = false;
+    }
+
+    private boolean wantToCancel(int x, int y) {
+        if (x < 0 || x > btnService.getWidth()) { // 超过按钮的宽度
+            return true;
+        }
+        // 超过按钮的高度
+        if (y < -DISTANCE_Y_CANCEL) {
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     public void setContentView() {
@@ -214,7 +294,7 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-
+        mDialogManager = new RecordDialog(this);
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName))
@@ -224,7 +304,6 @@ public class UserDetailActivity extends BaseActivity {
             btnFocus.setVisibility(View.GONE);
             isSelf = true;
             llBottomMenu.setVisibility(View.GONE);
-            btnBuy.setVisibility(View.GONE);
             btnService.setVisibility(View.GONE);
         } else {
             llRight.setVisibility(View.VISIBLE);
@@ -242,6 +321,60 @@ public class UserDetailActivity extends BaseActivity {
                 List<String> list = new ArrayList<String>();
                 list.add(userInfo.getHead());
                 AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
+            }
+        });
+
+        btnService.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mReady = true;
+                return false;
+            }
+        });
+
+        btnService.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                int x = (int) event.getX();// 获得x轴坐标
+                int y = (int) event.getY();// 获得y轴坐标
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
+                        changeState(STATE_RECORDING);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (!mReady) {
+                            reset();
+                        }
+                        if (!isRecording || mTime < 0.6f) {
+                            mDialogManager.tooShort();
+                            mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DIMISS, 1000);// 延迟显示对话框
+                        } else if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
+                            mDialogManager.dismissDialog();
+
+                        } else if (mCurrentState == STATE_WANT_TO_CANCEL) { // 想要取消
+                            mDialogManager.dismissDialog();
+                        }
+                        reset();
+                        break;
+                    case MotionEvent.ACTION_CANCEL: // 首次开权限时会走这里，录音取消
+                        mDialogManager.wantToCancel();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE: // 滑动手指
+                        if (isRecording) {
+                            // 如果想要取消，根据x,y的坐标看是否需要取消
+                            if (wantToCancel(x, y)) {
+                                changeState(STATE_WANT_TO_CANCEL);
+                            } else {
+                                changeState(STATE_RECORDING);
+                            }
+                        }
+                        break;
+
+                }
+                return true;
             }
         });
 
@@ -296,6 +429,26 @@ public class UserDetailActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void changeState(int state) {
+        if (mCurrentState != state) {
+            mCurrentState = state;
+            switch (state) {
+                case STATE_NORMAL:
+                    break;
+
+                case STATE_RECORDING:
+                    if (isRecording) {
+                        mDialogManager.recording();
+                    }
+                    break;
+
+                case STATE_WANT_TO_CANCEL:
+                    mDialogManager.wantToCancel();
+                    break;
+            }
+        }
     }
 
     private void getNetworkData() {
@@ -453,14 +606,15 @@ public class UserDetailActivity extends BaseActivity {
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
         this.userInfo.setUserName(userName);
-        if (userInfo.getIsSaleUser() > 0) {
+        if (userInfo.getIsSaleUser() == 1) {
             lhTvTitle.setText("管家详情");
             isNormal = false;
         } else {
             lhTvTitle.setText("个人详情");
             isNormal = true;
             llNormal.setVisibility(View.VISIBLE);
-            llMain.setVisibility(View.GONE);
+            llBottom.setVisibility(View.GONE);
+            verticalScrollview.setVisibility(View.GONE);
             if (!TextUtils.isEmpty(userInfo.getHead())) {
                 imageManager.loadCircleHead(userInfo.getHead(), ivNormalHead, "@120w_120h");
             }
@@ -497,10 +651,10 @@ public class UserDetailActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Merchant> list) {
         if (list == null || list.size() == 0) {
-            btnBuy.setVisibility(View.GONE);
             btnService.setVisibility(View.GONE);
             tvHint.setVisibility(View.VISIBLE);
             ivArrow.setVisibility(View.GONE);
+            tvBuy.setVisibility(View.GONE);
         } else {
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
@@ -516,18 +670,12 @@ public class UserDetailActivity extends BaseActivity {
             pager.setClipChildren(true);
             pager.setPageTransformer(false, new LinkageCoverTransformer(0.3f, 0f, 0f, 0f));
             selectMerchant = listMerchant.get(0);
-            if (selectMerchant.reviewstatus != 2 || userId == SlashHelper.userManager().getUserId()) {
-                btnBuy.setVisibility(View.GONE);
-            } else {
-                btnBuy.setVisibility(View.VISIBLE);
-            }
-            imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+            changeItem(0);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     if (position >= 0 && position < listMerchant.size()) {
-                        bindPager.setCurrentItem(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).head, ivCover, 60);
+                        changeItem(position);
                     }
 
                 }
@@ -541,14 +689,8 @@ public class UserDetailActivity extends BaseActivity {
                 @Override
                 public void onPageSelected(int position) {
                     if (position >= 0 && position < listMerchant.size()) {
-                        bindPager.setCurrentItem(position);
-                        selectMerchant = listMerchant.get(position);
-                        imageManager.loadBlurImage(listMerchant.get(position).pic, ivCover, 60);
-                        if (selectMerchant.reviewstatus != 2 || userId == SlashHelper.userManager().getUserId()) {
-                            btnBuy.setVisibility(View.GONE);
-                        } else {
-                            btnBuy.setVisibility(View.VISIBLE);
-                        }
+                        changeItem(position);
+
                     }
                 }
 
@@ -568,6 +710,28 @@ public class UserDetailActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    private void changeItem(int position) {
+        bindPager.setCurrentItem(position);
+        selectMerchant = listMerchant.get(position);
+        imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+        setBuyState(selectMerchant.reviewstatus == 2);
+    }
+
+    private void setBuyState(boolean isCan) {
+        if (isCan) {
+            Drawable drawable = getResources().getDrawable(R.mipmap.money_red);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvBuy.setCompoundDrawables(null, drawable, null, null);
+            tvBuy.setTextColor(getResources().getColor(R.color.font_busy));
+        } else {
+            Drawable drawable = getResources().getDrawable(R.mipmap.money_gray);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvBuy.setCompoundDrawables(null, drawable, null, null);
+            tvBuy.setTextColor(getResources().getColor(R.color.font_black_999));
+        }
+
     }
 
     // 用户添加关注
@@ -634,7 +798,7 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_phone, R.id.tv_phone, R.id.ll_contact, R.id.ll_gift, R.id.btn_buy, R.id.btn_service, R.id.btn_contact})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.tv_phone, R.id.tv_buy, R.id.tv_reward, R.id.btn_contact})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -678,7 +842,7 @@ public class UserDetailActivity extends BaseActivity {
                 }
 
                 break;
-            case R.id.btn_buy:
+            case R.id.tv_buy:
                 if (noLogin(mContext))
                     return;
                 intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
@@ -686,33 +850,21 @@ public class UserDetailActivity extends BaseActivity {
                 intent.putExtra("merchantId", selectMerchant.merchantId);
                 startActivity(intent);
                 break;
-            case R.id.btn_service:
-                if (noLogin(mContext))
-                    return;
-                intent = new Intent(mContext, CreateBespeakActivity.class);
-                intent.putExtra("serviceId", userId);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("m_merchant", selectMerchant);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-                break;
-            case R.id.ll_phone:
             case R.id.tv_phone:
                 call();
-                break;
-            case R.id.ll_contact:
-            case R.id.btn_contact:
-                if (noLogin(mContext))
-                    return;
-                Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
-                startActivity(IMkitintent);
                 break;
             case R.id.btn_focus:
                 if (noLogin(mContext))
                     return;
                 focus_operate();
                 break;
-            case R.id.ll_gift:
+            case R.id.btn_contact:
+                if (noLogin(mContext))
+                    return;
+                Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
+                startActivity(IMkitintent);
+                break;
+            case R.id.tv_reward:
                 if (noLogin(mContext))
                     return;
                 intent = new Intent(mContext, SendRewardActivity.class);
@@ -781,5 +933,4 @@ public class UserDetailActivity extends BaseActivity {
             ToastUtil.showMessage("分享取消");
         }
     };
-
 }
