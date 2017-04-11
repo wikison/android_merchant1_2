@@ -89,8 +89,5 @@ public class M_Reservation implements Serializable {
         isChecked = checked;
     }
 
-    @Expose
-    public double userPayMoney;//消费金额(支付单金额)(总额为支付单金额+预约单的定金)
-
 
 }
