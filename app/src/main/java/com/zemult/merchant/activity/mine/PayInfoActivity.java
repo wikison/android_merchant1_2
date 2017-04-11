@@ -3,6 +3,7 @@ package com.zemult.merchant.activity.mine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +26,9 @@ import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.ImageManager;
-import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
@@ -80,8 +81,16 @@ public class PayInfoActivity extends BaseActivity {
     LinearLayout llPay;
     @Bind(R.id.ll_pay_type)
     LinearLayout llPayType;
-
-
+    @Bind(R.id.tv_dingjin)
+    TextView tvDingjin;
+    @Bind(R.id.tv_rest_left)
+    TextView tvRestLeft;
+    @Bind(R.id.tv_restmoney)
+    TextView tvRestmoney;
+    @Bind(R.id.havedingjin_ll)
+    LinearLayout havedingjinLl;
+    @Bind(R.id.rtv_to_recom)
+    RoundTextView rtvToRecom;
 
 
     private Context mContext;
@@ -145,34 +154,74 @@ public class PayInfoActivity extends BaseActivity {
 //                        tvRealpay.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
 //                        tvRedmoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
 //                    }
-                    switch (m.state) {
-                        case 0:
-                            tvState.setText("待支付");
-                            llPayType.setVisibility(View.GONE);
-                            llPay.setVisibility(View.VISIBLE);
-                            rtvToPay.setText("立即付款");
-                            break;
-                        case 1:
-                            tvState.setText("已完成");
-                            llPayType.setVisibility(View.VISIBLE);
-                            if (m.isComment == 0 & m.payMoney >= 100) {
+                    if (m.type == 5) {
+                        tvState.setText("订金");
+                        havedingjinLl.setVisibility(View.GONE);
+                        llPay.setVisibility(View.GONE);
+                    } else {
+                        switch (m.state) {
+                            case 0:
+                                tvState.setText("待支付");
+                                llPayType.setVisibility(View.GONE);
                                 llPay.setVisibility(View.VISIBLE);
-                                rtvToPay.setText("立即评价");
-                            } else {
+                                rtvToPay.setVisibility(View.VISIBLE);
+                                if (m.type == 0) {
+                                    havedingjinLl.setVisibility(View.GONE);
+                                } else {
+                                    havedingjinLl.setVisibility(View.VISIBLE);
+                                    tvRestLeft.setText("应付尾款");
+                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
+                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                                }
+                                break;
+                            case 1:
+                                if (m.type == 0) {
+                                    havedingjinLl.setVisibility(View.GONE);
+                                    if (m.isComment == 0 & m.payMoney >= 100) {
+                                        llPayType.setVisibility(View.VISIBLE);
+                                        tvState.setText("待评价");
+                                        rtvToRecom.setVisibility(View.VISIBLE);
+                                    } else {
+                                        tvState.setText("已完成");
+                                        llPay.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    havedingjinLl.setVisibility(View.VISIBLE);
+                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
+                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                                    if (m.isComment == 0 & m.payMoney >= 100) {
+                                        llPayType.setVisibility(View.VISIBLE);
+                                        tvState.setText("待评价");
+                                        rtvToRecom.setVisibility(View.VISIBLE);
+                                    } else {
+                                        tvState.setText("已完成");
+                                        llPay.setVisibility(View.GONE);
+                                    }
+
+                                }
+                                break;
+                            case 2:
+                                tvState.setText("已失效");
+                                llPayType.setVisibility(View.GONE);
                                 llPay.setVisibility(View.GONE);
-                            }
-                            break;
-                        case 2:
-                            tvState.setText("已失效");
-                            llPayType.setVisibility(View.GONE);
-                            llPay.setVisibility(View.GONE);
-                            break;
-                        case 3:
-                            tvState.setText("已取消");
-                            llPayType.setVisibility(View.GONE);
-                            llPay.setVisibility(View.GONE);
-                            break;
+                                if (m.type == 0) {
+                                    havedingjinLl.setVisibility(View.GONE);
+                                } else {
+                                    havedingjinLl.setVisibility(View.VISIBLE);
+                                    tvRestLeft.setText("应付尾款");
+                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
+                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                                }
+
+                                break;
+                            case 3:
+                                tvState.setText("已取消");
+                                llPayType.setVisibility(View.GONE);
+                                llPay.setVisibility(View.GONE);
+                                break;
+                        }
                     }
+
                     switch (m.moneyType) {
                         case 0:
                             tvPayType.setText("账户余额");
@@ -183,15 +232,14 @@ public class PayInfoActivity extends BaseActivity {
                         case 2:
                             tvPayType.setText("微信支付");
                             break;
-
                     }
                     tvMerchantName.setText(m.merchantName);
                     if (!TextUtils.isEmpty(m.saleUserHead)) {
                         mImageManager.loadCircleImage(m.saleUserHead, ivSaleHead);
                     }
                     tvSaleName.setText(m.saleUserName);
-                    tvSaleMoney.setText("" + (m.allMoney == 0 ? "0.00" : Convert.getMoneyString(m.allMoney)));
-                    tvPayMoney.setText("" + (m.payMoney == 0 ? "0.00" : Convert.getMoneyString(m.payMoney)));
+//                    tvSaleMoney.setText("" + (m.allMoney == 0 ? "0.00" : Convert.getMoneyString(m.allMoney)));
+//                    tvPayMoney.setText("" + (m.payMoney == 0 ? "0.00" : Convert.getMoneyString(m.payMoney)));
                     tvPayNum.setText(m.number);
                     tvTradeTime.setText(m.createtime);
 
@@ -204,7 +252,7 @@ public class PayInfoActivity extends BaseActivity {
         sendJsonRequest(userPayInfoRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay, R.id.rtv_to_recom})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -228,11 +276,11 @@ public class PayInfoActivity extends BaseActivity {
 //                });
 //                break;
             case R.id.rtv_to_pay:
-                if (m.state == 0) {
-                    goPay();
-                } else if (m.state == 1) {
-                    goAssessment();
-                }
+                goPay();
+                break;
+
+            case R.id.rtv_to_recom:
+                goAssessment();
                 break;
         }
     }
@@ -307,4 +355,10 @@ public class PayInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
