@@ -166,6 +166,7 @@
 
                     <TextView
                         android:id="@+id/tv_room"
+                        android:maxEms="15"
                         style="@style/detail_right"
                         android:text="------" />
                 </RelativeLayout>
