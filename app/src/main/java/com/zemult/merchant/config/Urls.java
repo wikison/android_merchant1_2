@@ -491,9 +491,9 @@ public class Urls {
     //设置支付单为微信支付
     public static String USER_PAY_SETWX = "user_pay_setwx";
     //我的订单
-    public static String USER_PAYLIST = "user_payList";
+    public static String USER_PAYLIST = "user2_payList.do";
     //订单详情
-    public static String USER_PAY_INFO = "user_pay_info";
+    public static String USER_PAY_INFO = "user2_pay_info.do";
     //取消订单
     public static String USER_PAY_DEL = "user_pay_del";
     //搜索商家-未挂靠

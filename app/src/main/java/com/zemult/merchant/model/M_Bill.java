@@ -39,7 +39,7 @@ public class M_Bill implements Serializable {
     @Expose
     public int type;    //	类型(0:支付买单,1:支付红包,2:支付绑定支付宝账户,3:取现,4:领取红包,5:红包退还)
     @Expose
-    public String note;    //	描述内容
+    public String note;    //	描述内容payTime
     @Expose
     public String createtime;    //	时间"yyyy-MM-dd HH:mm:ss"
     @Expose
@@ -123,6 +123,9 @@ public class M_Bill implements Serializable {
 
     @Expose
     public double rewardMoney;//打赏金额
+
+    @Expose
+    public  double reservationMoney;//预约单的定金(type=6时有值)
 
 
 }
