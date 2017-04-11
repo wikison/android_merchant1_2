@@ -20,8 +20,10 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.FNRadioGroup;
 
 import java.util.ArrayList;
@@ -147,7 +149,12 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         holder.banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                Intent intent;
+                if (SlashHelper.userManager().getUserId() == entity.saleUserId) {
+                    intent = new Intent(mContext, SelfUserDetailActivity.class);
+                } else {
+                    intent = new Intent(mContext, UserDetailActivity.class);
+                }
                 intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
                 intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
                 mContext.startActivity(intent);
