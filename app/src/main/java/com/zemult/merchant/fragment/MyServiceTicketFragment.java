@@ -25,6 +25,7 @@ import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
+import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
@@ -140,6 +141,11 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         UserReservationListRequest.Input input = new UserReservationListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
 //        input.state = fromHome ? 1 : -1;
+        if (pagePosition == 3) {
+            input.state=6;
+        } else {
+            input.state = pagePosition - 1;
+        }
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的行数
         input.convertJosn();
@@ -168,42 +174,43 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                     @Override
                                     public void convert(CommonViewHolder holder, final M_Reservation mReservation, final int position) {
 
+                                        //状态(1:预约成功,2:已支付,3:预约结束)
+                                        if (mReservation.state == 1) {
+                                            holder.setText(R.id.tv_state, "已确认");
+                                            holder.setViewGone(R.id.money_ll);
+                                        } else if (mReservation.state == 2) {
+                                            holder.setText(R.id.tv_state, "已支付");
+                                            holder.setViewVisible(R.id.money_ll);
+                                            holder.setText(R.id.tv_price, "￥"+Convert.getMoneyString(mReservation.userPayMoney));
+                                        } else if (mReservation.state == 3) {
+                                            holder.setText(R.id.tv_state, "已结束");
+                                            holder.setViewGone(R.id.money_ll);
+                                        }else if (mReservation.state == 4) {
+                                            holder.setText(R.id.tv_state, "已结束");
+                                            holder.setViewGone(R.id.money_ll);
+                                        }
+
                                         if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
-                                            holder.setCircleImage(R.id.head_iv, mReservation.saleUserHead);
+                                            holder.setCircleImage(R.id.iv_headimage, mReservation.saleUserHead);
                                         }
-                                        holder.setText(R.id.servicer_tv, "服务管家:  " + mReservation.saleUserName);
+                                        holder.setText(R.id.tv_saleuser, mReservation.saleUserName);
 
-                                        holder.setText(R.id.shop_tv, mReservation.merchantName);
+                                        holder.setText(R.id.tv_merchantName, mReservation.merchantName);
 
-                                            //状态(1:预约成功,2:已支付,3:预约结束)
-                                            if (mReservation.state == 1) {
-                                                //tv_state
-                                                holder.setText(R.id.tv_state, "预约成功");
-                                            } else if (mReservation.state == 2) {
-                                                holder.setText(R.id.tv_state, "已支付");
-                                            } else if (mReservation.state == 3) {
-                                                holder.setText(R.id.tv_state, "已结束");
-                                            }
-                                            else if(mReservation.state == 0){
-                                                holder.setText(R.id.tv_state, "待确认");
-                                            }
-                                            else if(mReservation.state == 4){
-                                                holder.setText(R.id.tv_state, "已结束");
-                                            }
-
-
-                                        long a = DateTimeUtil.getIntervalDays(DateTimeUtil.getCurrentDate(), mReservation.reservationTime.substring(0, 10));
-
-                                        if (a < 1 && a >= 0) {
-                                            holder.setText(R.id.day_tv, "今天");
-                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
-                                        } else if (a >= 1 && a < 2) {
-                                            holder.setText(R.id.day_tv, "昨天");
-                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
-                                        } else {
-                                            holder.setText(R.id.day_tv, DateTimeUtil.getChinaDayofWeek(mReservation.reservationTime.substring(0, 10)));
-                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(5, 10));
-                                        }
+//
+//
+//                                        long a = DateTimeUtil.getIntervalDays(DateTimeUtil.getCurrentDate(), mReservation.reservationTime.substring(0, 10));
+//
+//                                        if (a < 1 && a >= 0) {
+//                                            holder.setText(R.id.day_tv, "今天");
+//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+//                                        } else if (a >= 1 && a < 2) {
+//                                            holder.setText(R.id.day_tv, "昨天");
+//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
+//                                        } else {
+//                                            holder.setText(R.id.day_tv, DateTimeUtil.getChinaDayofWeek(mReservation.reservationTime.substring(0, 10)));
+//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(5, 10));
+//                                        }
 
 
                                     }
@@ -237,7 +244,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
 
     @Override
     public void onRefresh() {
-        page=1;
+        page = 1;
         userReservationList();
     }
 

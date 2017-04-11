@@ -73,8 +73,7 @@ public class PayInfoActivity extends BaseActivity {
     TextView tvTradeTime;
     @Bind(R.id.tv_pay_type)
     TextView tvPayType;
-    @Bind(R.id.rtv_cancel)
-    RoundTextView rtvCancel;
+
     @Bind(R.id.rtv_to_pay)
     RoundTextView rtvToPay;
     @Bind(R.id.ll_pay)
@@ -205,7 +204,7 @@ public class PayInfoActivity extends BaseActivity {
         sendJsonRequest(userPayInfoRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_cancel, R.id.rtv_to_pay})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -213,21 +212,21 @@ public class PayInfoActivity extends BaseActivity {
                 EventBus.getDefault().post(TaskPayResultActivity.APPOINT_REFLASH);
                 finish();
                 break;
-            case R.id.rtv_cancel:
-                CommonDialog.showDialogListener(mContext, null, "否", "是", "是否取消订单", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-                        cancelPay();
-                    }
-                });
-                break;
+//            case R.id.rtv_cancel:
+//                CommonDialog.showDialogListener(mContext, null, "否", "是", "是否取消订单", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        CommonDialog.DismissProgressDialog();
+//
+//                    }
+//                }, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        CommonDialog.DismissProgressDialog();
+//                        cancelPay();
+//                    }
+//                });
+//                break;
             case R.id.rtv_to_pay:
                 if (m.state == 0) {
                     goPay();

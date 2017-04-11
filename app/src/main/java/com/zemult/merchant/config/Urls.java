@@ -8,12 +8,12 @@ public class Urls {
 
     public static String MAIN_URL = "http://www.yovoll.com/";
 //正式
-//    public static String URL = "http://www.yovoll.com/dzyx/";
-//    public static  String APP_KEY = "23630707";
+    public static String URL = "http://www.yovoll.com/dzyx/";
+    public static  String APP_KEY = "23630707";
 
     //测试
-    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
-    public static String APP_KEY = "23521799";
+//    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
+//    public static String APP_KEY = "23521799";
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -528,7 +528,7 @@ public class Urls {
     public static String USER_SALE_PAYLIST = "user_sale_payList.do";
 
     //用户的预约单列表
-    public static String USER_RESERVATION_LIST = "user_reservation_list.do";
+    public static String USER_RESERVATION_LIST = "user2_reservation_list.do";
     //约客的预约记录列表     (不包含待确认的)
     public static String USER_SALE_RESERVATION_LIST = "user_sale_reservation_list";
 

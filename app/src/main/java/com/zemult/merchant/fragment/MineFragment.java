@@ -24,6 +24,7 @@ import com.zemult.merchant.activity.mine.MyCardsActivity;
 import com.zemult.merchant.activity.mine.MyCollectionActivity;
 import com.zemult.merchant.activity.mine.MyInviteActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
+import com.zemult.merchant.activity.mine.MyServiceTicketActivity;
 import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.MyinfoSetActivity;
@@ -238,7 +239,7 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent_wallet);
                 break;
             case R.id.rl_my_prorder:
-                startActivity(new Intent(getActivity(), MyAppointmentActivity.class));
+                startActivity(new Intent(getActivity(), MyServiceTicketActivity.class));
                 //我的预约
                 break;
             case R.id.rl_my_gift:
