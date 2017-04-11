@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rlcustomer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+
+                <ImageView
+                    android:src="@mipmap/user_icon"
+                    android:id="@+id/v_user"
+                    android:layout_centerVertical="true"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:layout_toRightOf="@+id/v_user"
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="消费者"
+                    />
+
+                <Button
+                    android:layout_centerVertical="true"
+                    android:id="@+id/play_btn"
+                    style="@style/common_btn_235"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="@dimen/margin_12dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/detail_white_btn"
+                    android:drawableLeft="@mipmap/volume_icon_loud"
+                    android:paddingLeft="10dp"
+                    android:text="播放预约需求"
+                    android:paddingRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#e6bb7c" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/firstline"
+                style="@style/divider12dp"></View>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="服务管家" />
+
+                <ImageView
+                    android:id="@+id/head_iv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_toLeftOf="@+id/name_tv"
+                    android:src="@mipmap/user_icon" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:text="------" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="预约状态" />
+
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="商户" />
+
+
+                <TextView
+                    android:id="@+id/shop_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View style="@style/divider1dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="人数" />
+
+
+                <TextView
+                    android:id="@+id/pernumber_tv"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+
+
+                <com.zemult.merchant.view.PMNumView
+                    android:visibility="gone"
+                    android:id="@+id/pmnv_select_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="时间" />
+
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/ripple_item_clicked2"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+                <TextView
+                    android:id="@+id/tv_beizhu"
+                    style="@style/detail_left"
+                    android:layout_gravity="center"
+                    android:text="包厢/房间号" />
+
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/tv_beizhu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_extra"
+                    style="@style/detail_right"
+                    android:text="------" />
+
+                    <EditText
+                        android:visibility="gone"
+                        android:id="@+id/et_customerremark"
+                        style="@style/text_15_black_28"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="70dp"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:drawableRight="@mipmap/bianji_black_icon"
+                        android:layout_marginRight="15dp"
+                        android:drawablePadding="5dp"
+                        android:hint="如：二楼龙城厅或188号房间"
+                        android:maxLength="15"
+                        android:textColor="#999999"
+                        android:textColorHint="#999999"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                style="@style/divider12dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    android:gravity="center"
+                    android:drawableRight="@mipmap/exclamation"
+                    style="@style/detail_left"
+                    android:text="订金" />
+
+
+                <TextView
+                    android:id="@+id/tv_dingjin"
+                    android:textColor="@color/text_red"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/et_dingjin"
+                    style="@style/text_15_black_28"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:drawableRight="@mipmap/bianji_black_icon"
+                    android:drawablePadding="5dp"
+                    android:hint="如需收取订金请输入金额"
+                    android:inputType="phone"
+                    android:textColor="#999999"
+                    android:textColorHint="#999999"/>
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_15_black_999"
+                android:text="订金如需退款请线下和商户协商"
+                />
+
+
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/yuyueresultcommit_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp">
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="120dp"
+                    android:layout_height="@dimen/common_btn_height_35"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="撤销"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_36px"
+                    app:rv_backgroundColor="@color/font_main"
+                    app:rv_backgroundPressColor="@color/bg_ce"
+                    app:rv_cornerRadius="18dp"
+                    app:rv_strokeColor="@color/divider_dc"
+                    app:rv_strokeWidth="1px" />
+
+
+                <com.flyco.roundview.RoundTextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/btn_modify"
+                    android:layout_width="120dp"
+                    android:layout_height="@dimen/common_btn_height_35"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="修改"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_36px"
+                    app:rv_backgroundColor="@color/font_main"
+                    app:rv_backgroundPressColor="@color/bg_ce"
+                    app:rv_cornerRadius="18dp"
+                    app:rv_strokeColor="@color/divider_dc"
+                    app:rv_strokeWidth="1px" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/others_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/yuyueresult_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_result"
+                        style="@style/detail_left"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="预约结果" />
+
+                <RelativeLayout
+                    android:layout_toRightOf="@+id/tv_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/appresult_tv"
+                        style="@style/detail_right"
+                        android:layout_centerVertical="true"
+                        android:text="-------" />
+                </RelativeLayout>
+
+                </RelativeLayout>
+
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/serveraccount_btn"
+                    style="@style/common_btn_235"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="94dp"
+                    android:layout_marginTop="22dp"
+                    android:onClick="click"
+                    android:text="发起收款"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/customerconfirm_btn"
+                    style="@style/common_btn_235"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="94dp"
+                    android:layout_marginTop="22dp"
+                    android:onClick="click"
+                    android:text="确认"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/dinghaole_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="定好了,就立即邀请好友吧~"
+                    android:textColor="@color/text_red"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/ordersuccess_btn_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/rltwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <Button
+                            android:id="@+id/invite_btn"
+                            style="@style/common_btn_235"
+                            android:layout_width="130dp"
+                            android:layout_marginBottom="@dimen/margin_12dp"
+                            android:drawableLeft="@mipmap/fenxiang"
+                            android:padding="8dp"
+                            android:text="生成邀请函" />
+
+                        <Button
+                            android:id="@+id/jiezhang_btn"
+                            style="@style/common_btn_235"
+                            android:layout_width="128dp"
+                            android:layout_marginBottom="@dimen/margin_12dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/invite_btn"
+                            android:background="@drawable/detail_btn"
+                            android:drawableLeft="@mipmap/complete"
+                            android:paddingLeft="10dp"
+                            android:text="快速结账"
+                            android:textColor="#e6bb7c" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

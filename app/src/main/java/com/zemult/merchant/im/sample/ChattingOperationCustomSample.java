@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
@@ -62,6 +63,7 @@ import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.CreateBespeakNewActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
@@ -97,8 +99,6 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
     private static final String TAG = "ChattingOperationCustomSample";
 
-//    int BECREATESPEAKCODE=1000;
-    int BEMODIFYSPEAKCODE=1001;
     YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
 
     public class CustomMessageType {
@@ -1397,23 +1397,27 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             /**
              * 预约
              */
-
-//            ReplyBarItem replyBarItem3 = new ReplyBarItem();
-//            replyBarItem3.setItemId(ITEM_ID_4);
-//            replyBarItem3.setItemImageRes(R.mipmap.demo_reply_bar_profile_card);
-//            replyBarItem3.setItemLabel("预约");
-//            replyBarItem3.setOnClicklistener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    mConversation = conversation;
-//                    Intent intent = new Intent(pointcut.getActivity(), CreateBespeakActivity.class);
-//                    pointcut.startActivityForResult(intent,BECREATESPEAKCODE);
-//
-//                }
-//            });
-//            replyBarItems.add(replyBarItem3);
-
-
+            if(SlashHelper.userManager().getUserinfo().saleUserNum!=0){
+                ReplyBarItem replyBarItem3 = new ReplyBarItem();
+                replyBarItem3.setItemId(ITEM_ID_4);
+                replyBarItem3.setItemImageRes(R.mipmap.demo_reply_bar_profile_card);
+                replyBarItem3.setItemLabel("服务订单");
+                replyBarItem3.setOnClicklistener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        mConversation = conversation;
+                        YWP2PConversationBody conversationBody = (YWP2PConversationBody) conversation
+                                .getConversationBody();
+                        Intent intent = new Intent(pointcut.getActivity(), CreateBespeakNewActivity.class);
+                        intent.putExtra("customerId",Integer.parseInt(conversationBody.getContact().getUserId()));
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable("m_merchant", null);
+                        intent.putExtras(mBundle);
+                        pointcut.startActivity(intent);
+                    }
+                });
+                replyBarItems.add(replyBarItem3);
+            }
 
 
 //            ReplyBarItem replyBarItem3 = new ReplyBarItem();

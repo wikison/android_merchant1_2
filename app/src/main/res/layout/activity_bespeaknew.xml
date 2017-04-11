@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_bespeak"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.zemult.merchant.im.CreateBespeakActivity">
+
+    <include
+        android:id="@+id/layout_head"
+        layout="@layout/layout_head"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_orderuser"
+                style="@style/container_height88"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+
+                <ImageView
+                    android:src="@mipmap/user_icon"
+                    android:id="@+id/v_user"
+                    android:layout_centerVertical="true"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:id="@+id/tv_customername"
+                    android:layout_toRightOf="@+id/v_user"
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="消费者"
+                    />
+
+                <Button
+                    android:layout_centerVertical="true"
+                    android:id="@+id/play_btn"
+                    style="@style/common_btn_235"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="@dimen/margin_12dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/detail_white_btn"
+                    android:drawableLeft="@mipmap/volume_icon_loud"
+                    android:paddingLeft="10dp"
+                    android:text="播放预约需求"
+                    android:paddingRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#e6bb7c" />
+
+
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/divider10dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_ordershopname"
+                style="@style/container_height88"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="商户"
+                    />
+
+
+                <TextView
+                    android:id="@+id/bespek_shopname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/right_btn"
+                    android:text="请选择商户"
+                    android:textColor="#999999"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/divider1dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_ordertime"
+                style="@style/container_height88"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="时间"
+                    />
+
+
+                <TextView
+                    android:id="@+id/bespek_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/right_btn"
+                    android:text="选择时间"
+                    android:textColor="#999999"
+                    />
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/divider1dp"               />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_select_deadline"
+                style="@style/container_height88"
+                android:background="@color/white"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    android:id="@+id/tv_title_select_deadline"
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="人数"/>
+
+                <com.zemult.merchant.view.PMNumView
+                    android:id="@+id/pmnv_select_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+
+            <View
+                style="@style/divider1dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_customername"
+                style="@style/container_height88"
+                android:background="@color/white"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="包厢/房间号"/>
+
+                <EditText
+                    android:id="@+id/et_customerremark"
+                    style="@style/text_15_black_28"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="如：二楼龙城厅或188号房间"
+                    android:maxLength="15"
+                    android:textColor="#999999"
+                    android:textColorHint="#999999"/>
+
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/divider10dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/rl_customerphone"
+                style="@style/container_height88"
+                android:background="@color/white"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="订金"
+                    android:drawableRight="@mipmap/exclamation"
+                    />
+
+                <EditText
+                    android:id="@+id/et_dingjin"
+                    style="@style/text_15_black_28"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="如需收取订金请输入金额"
+                    android:inputType="phone"
+                    android:textColor="#999999"
+                    android:textColorHint="#999999"/>
+
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_15_black_999"
+                android:text="订金如需退款请线下和商户协商"
+                />
+
+
+            <com.flyco.roundview.RoundTextView
+                android:layout_marginTop="90dp"
+                android:id="@+id/btn_bespeak_commit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/j70dp"
+                android:layout_marginRight="@dimen/j70dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="预约服务"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_36px"
+                app:rv_backgroundColor="@color/font_main"
+                app:rv_backgroundPressColor="@color/bg_ce"
+                app:rv_cornerRadius="18dp"
+                app:rv_strokeColor="@color/divider_dc"
+                app:rv_strokeWidth="1px"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

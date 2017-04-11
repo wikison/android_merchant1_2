@@ -1,17 +1,12 @@
 package com.zemult.merchant.im;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
@@ -33,26 +28,19 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
-import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
-public class CreateBespeakActivity extends BaseActivity {
+public class ModifyBespeakActivity extends BaseActivity {
 
     @Bind(R.id.bespek_time)
     TextView bespekTime;
@@ -62,44 +50,44 @@ public class CreateBespeakActivity extends BaseActivity {
     RoundTextView btnBespeakCommit;
     @Bind(R.id.pmnv_select_deadline)
     PMNumView pmnvSelectDeadline;
-    @Bind(R.id.et_bespeak)
-    EditText etBespeak;
-    @Bind(R.id.et_customername)
-    EditText etCustomername;
-    @Bind(R.id.et_customerphone)
-    EditText etCustomerphone;
+    @Bind(R.id.et_dingjin)
+    EditText etDingjin;
+    @Bind(R.id.et_customerremark)
+    EditText etCustomerRemark;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
-    @Bind(R.id.rg_group)
-    RadioGroup rgGroup;
-    @Bind(R.id.fn_my_service)
-    FNRadioGroup fnMyService;
-    @Bind(R.id.editnum)
-    TextView tvNumber;
+    @Bind(R.id.firstline)
+    View viewFirstline;
+    @Bind(R.id.rl_orderuser)
+    RelativeLayout rlOrderuser;
+    @Bind(R.id.play_btn)
+    Button playBtn;
+
 
     UserReservationAddRequest userReservationAddRequest;
     int userSex = 0;
     int serviceId;
-    String shopname = "", ordertime = "", ordername = "", orderphone = "", orderpeople, note;
+    String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note;
     int merchantId;
     M_Merchant m_merchant;
     int CHOOSEMERCHANT = 100;
     boolean isFromMerchant;
 
+    int showOrderState;//1 生成预约单(有语音)  2 生成预约单（无语音）
+                       // 3 预约单 （待确定  服务管家） 4 预约单 （待确定  客户）
+                       //5  已确认（服务管家）  6  已确认（客户）
+
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_bespeak);
+        setContentView(R.layout.activity_bespeaknew);
 
     }
 
-    private void initListener() {
-        EditFilter.WordFilter(etBespeak, 100, tvNumber);
-    }
 
     @Override
     public void init() {
@@ -109,16 +97,16 @@ public class CreateBespeakActivity extends BaseActivity {
         if (isFromMerchant) {
             shopname = m_merchant.getName();
             merchantId = m_merchant.getMerchantId();
-            initTags(m_merchant.tags);
             bespekShopname.setText(shopname);
             bespekShopname.setCompoundDrawables(null, null, null, null);
+            viewFirstline.setVisibility(View.VISIBLE);
+            rlOrderuser.setVisibility(View.VISIBLE);
         } else {
+            viewFirstline.setVisibility(View.GONE);
+            rlOrderuser.setVisibility(View.GONE);
             bespekShopname.setText("请选择商户");
         }
 
-        etCustomername.setText(SlashHelper.userManager().getUserinfo().getName());
-        EditFilter.WordFilter(etCustomername, 6);
-        etCustomerphone.setText(SlashHelper.userManager().getUserinfo().getPhoneNum());
         pmnvSelectDeadline.setMinNum(1);
         pmnvSelectDeadline.setMaxNum(99);
         pmnvSelectDeadline.setDefaultNum(1);
@@ -135,17 +123,7 @@ public class CreateBespeakActivity extends BaseActivity {
             }
         });
         lhTvTitle.setText("找TA约服");
-        rgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_nvshi) {
-                    userSex = 1;
-                } else {
-                    userSex = 0;
-                }
-            }
-        });
-        initListener();
+
     }
 
     @Override
@@ -210,51 +188,8 @@ public class CreateBespeakActivity extends BaseActivity {
     }
 
 
-    private void initTags(String tags) {
-        fnMyService.setChildMargin(0, 24, 24, 0);
-        fnMyService.removeAllViews();
-        if (!StringUtils.isBlank(tags)) {
-            List<String> tagList = new ArrayList<String>(Arrays.asList(tags.split(",")));
-            int iShowSize = tagList.size();
-            if (iShowSize > 0) {
-                fnMyService.setVisibility(View.VISIBLE);
 
-                RadioButton rbTitle = new RadioButton(this);
-                rbTitle.setTextSize(15);
-                rbTitle.setGravity(Gravity.CENTER_VERTICAL);
-                rbTitle.setPadding(0, 0, 8, 0);
-                rbTitle.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
-                rbTitle.setTextColor(0xff282828);
-//                rbTitle.setText("TA的服务");
-                fnMyService.addView(rbTitle);
-
-                for (int i = 0; i < iShowSize; i++) {
-                    GradientDrawable drawable = new GradientDrawable();
-                    drawable = new GradientDrawable();
-                    drawable.setShape(GradientDrawable.RECTANGLE); // 画框
-                    drawable.setCornerRadii(new float[]{50,
-                            50, 50, 50, 50, 50, 50, 50});
-                    drawable.setColor(0xffe8e8e8);  // 边框内部颜色
-                    RadioButton rbTag = new RadioButton(this);
-                    rbTag.setBackgroundDrawable(drawable); // 设置背景（效果就是有边框及底色）
-                    rbTag.setTextSize(12);
-                    rbTitle.setGravity(Gravity.CENTER_VERTICAL);
-                    rbTag.setPadding(22, 8, 22, 8);
-                    rbTag.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    rbTag.setTextColor(0xff464646);
-                    rbTag.setText(tagList.get(i).toString());
-
-                    fnMyService.addView(rbTag);
-
-                }
-            } else {
-                fnMyService.setVisibility(View.GONE);
-            }
-        }
-
-    }
-
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime,R.id.play_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -262,14 +197,14 @@ public class CreateBespeakActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_bespeak_commit:
-                if (noLogin(CreateBespeakActivity.this))
+                if (noLogin(ModifyBespeakActivity.this))
                     return;
                 shopname = bespekShopname.getText().toString();
                 ordertime = bespekTime.getText().toString();
                 pmnvSelectDeadline.getText().toString();
-                note = AppUtils.replaceBlank(etBespeak.getText().toString());
-                ordername = etCustomername.getText().toString();
-                orderphone = etCustomerphone.getText().toString();
+                note = AppUtils.replaceBlank(etCustomerRemark.getText().toString());
+                strdingjin = etDingjin.getText().toString();
+                strremark = etCustomerRemark.getText().toString();
                 if ("请选择商户".equals(shopname)) {
                     ToastUtil.showMessage("请选择商户");
                     return;
@@ -287,19 +222,10 @@ public class CreateBespeakActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择预约时间");
                     return;
                 }
-                if (StringUtils.isEmpty(ordername)) {
-                    ToastUtil.showMessage("请填写预约人姓名");
+                if (StringUtils.isEmpty(strremark)) {
+                    ToastUtil.showMessage("请输入包厢或房间号");
                     return;
                 }
-                if (StringUtils.isEmpty(orderphone)) {
-                    ToastUtil.showMessage("请输入手机号码");
-                    return;
-                }
-                if (!StringMatchUtils.isMobileNO(orderphone)) {
-                    ToastUtil.showMessage("请输入正确的手机号码");
-                    return;
-                }
-
 
                 user_reservation_add();
 
@@ -307,7 +233,7 @@ public class CreateBespeakActivity extends BaseActivity {
 
             case R.id.rl_ordershopname:
                 if (!isFromMerchant) {
-                    Intent intent = new Intent(CreateBespeakActivity.this, ChooseReservationMerchantActivity.class);
+                    Intent intent = new Intent(ModifyBespeakActivity.this, ChooseReservationMerchantActivity.class);
                     intent.putExtra("userId", serviceId);// 管家id
                     intent.putExtra("actionFrom", "CreateBespeakActivity");
                     startActivityForResult(intent, CHOOSEMERCHANT);
@@ -319,6 +245,11 @@ public class CreateBespeakActivity extends BaseActivity {
                         this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
                 dateTimePicKDialog.dateTimePicKDialog(bespekTime);
                 break;
+            case R.id.play_btn:
+
+
+                break;
+
 
         }
     }
@@ -327,7 +258,6 @@ public class CreateBespeakActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CHOOSEMERCHANT && resultCode == RESULT_OK) {
-            initTags(data.getStringExtra("tags"));
             bespekShopname.setText(data.getStringExtra("shopName"));
             merchantId = data.getIntExtra("merchantId", 0);
         }
@@ -337,12 +267,12 @@ public class CreateBespeakActivity extends BaseActivity {
 
         @Override
         public void onSuccess(Object... result) {
-            Notification.showToastMsg(CreateBespeakActivity.this, "forward succeed!");
+            Notification.showToastMsg(ModifyBespeakActivity.this, "forward succeed!");
         }
 
         @Override
         public void onError(int code, String info) {
-            Notification.showToastMsg(CreateBespeakActivity.this, "forward fail!");
+            Notification.showToastMsg(ModifyBespeakActivity.this, "forward fail!");
 
         }
 

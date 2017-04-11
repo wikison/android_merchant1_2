@@ -862,6 +862,9 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
                 Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
+                Bundle bundle=new Bundle();
+                bundle.putInt("serviceId", userId);
+                IMkitintent.putExtras(bundle);
                 startActivity(IMkitintent);
                 break;
             case R.id.tv_reward:

@@ -574,6 +574,10 @@
         <activity
             android:name=".im.CreateBespeakActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".im.CreateBespeakNewActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
         <activity android:name=".activity.mine.MerchantEnter2Activity" />
         <activity android:name=".alipay.taskpay.AssessmentActivity" />
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity" />

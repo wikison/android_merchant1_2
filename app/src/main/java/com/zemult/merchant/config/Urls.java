@@ -8,12 +8,12 @@ public class Urls {
 
     public static String MAIN_URL = "http://www.yovoll.com/";
 //正式
-    public static String URL = "http://www.yovoll.com/dzyx/";
-    public static  String APP_KEY = "23630707";
+//    public static String URL = "http://www.yovoll.com/dzyx/";
+//    public static  String APP_KEY = "23630707";
 
     //测试
-//    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
-//    public static String APP_KEY = "23521799";
+    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
+    public static String APP_KEY = "23521799";
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -539,7 +539,7 @@ public class Urls {
 
     //约服  1.2
     //用户预约申请
-    public static String USER_RESERVATION_ADD = "user_reservation_add.do";
+    public static String USER_RESERVATION_ADD = "user2_reservation_add.do";
     //获取用户在某个约客下的某家商户下的预约单列表
     public static String USER_RESERVATION_SALE_LIST = "user_reservation_sale_list.do";
 
@@ -611,4 +611,26 @@ public class Urls {
     public static String USER_BAND_WX_DEL = "user_band_wx_del";
     //根据用户id获取密码
     public static String USER_GET_PWD = "user_get_pwd";
+
+
+    //用户对已经确认的预约单(服务单)评价
+    public static String USER2_RESERVATION_COMMONT_ADD = "user2_reservation_commont_add";
+    //用户对买单评价
+    public static String USER2_PAY_COMMONT_ADD = "user2_pay_commont_add";
+    //预约单申请
+    public static String USER2_RESERVATION_ADD = "user2_reservation_add";
+    // 服务管家修改预约单(未确认的)
+    public static String USER2_RESERVATION_EDIT = "user2_reservation_edit";
+    //服务管家撤销预约单(未确认的)
+    public static String USER2_RESERVATION_DEL = "user2_reservation_del";
+    //用户确认预约单
+    public static String USER2_RESERVATION_SURE = "user2_reservation_sure";
+    // 查看预约单详情
+    public static String USER2_RESERVATION_INFO = "user2_reservation_info";
+    // 生成定金支付单(用户确认预约单)
+    public static String USER2_RESERVATION_PAY = "user2_reservation_pay";
+    //生成支付单(找TA买单)--(关联预约单)
+    public static String USER2_PAY_ADD = "user2_pay_add";
+    // 用户的预约单列表
+    public static String USER2_RESERVATION_LIST = "user2_reservation_list";
 }
