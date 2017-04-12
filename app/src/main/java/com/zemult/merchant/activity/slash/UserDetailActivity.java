@@ -1080,13 +1080,11 @@ public class UserDetailActivity extends BaseActivity {
     class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-            Message msg = new Message();
             if (recordTime != 0) {
-                msg.what = MSG_VOICE_CHANGED;
+                mHandler.sendEmptyMessage(MSG_VOICE_CHANGED);
             } else {
-                msg.what = MSG_VOICE_FINISH;
+                mHandler.sendEmptyMessage(MSG_VOICE_FINISH);
             }
-            mHandler.sendMessage(msg);
         }
 
     }
