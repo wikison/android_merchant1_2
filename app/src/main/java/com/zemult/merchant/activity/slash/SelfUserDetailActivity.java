@@ -21,6 +21,7 @@ import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
+import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
@@ -38,7 +39,6 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
@@ -118,8 +118,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     TextView tvAccount;
     @Bind(R.id.tv_text_scrm)
     TextView tvTextScrm;
-    @Bind(R.id.fgv_scrm)
-    FixedGridView fgvScrm;
+    @Bind(R.id.ll_scrm_head)
+    LinearLayout llSCRMHead;
     @Bind(R.id.tv_scrm)
     TextView tvScrm;
     @Bind(R.id.iv_cover)
@@ -152,6 +152,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     UserEditStateRequest userEditStateRequest;
+    User2SaleUserFanListRequest user2SaleUserFanListRequest;
     private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
     private M_Userinfo userInfo;
     private String userName, userHead;
@@ -286,6 +287,40 @@ public class SelfUserDetailActivity extends BaseActivity {
             }
         });
         sendJsonRequest(merchantOtherMerchantListRequest);
+    }
+
+    /**
+     * 查看TA挂靠的商家
+     */
+    private void getFanList() {
+        if (user2SaleUserFanListRequest != null) {
+            user2SaleUserFanListRequest.cancel();
+        }
+        User2SaleUserFanListRequest.Input input = new User2SaleUserFanListRequest.Input();
+        input.saleUserId = SlashHelper.userManager().getUserId();
+        input.name = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+        input.page = 1;
+        input.rows = 4;
+        input.convertJosn();
+        user2SaleUserFanListRequest = new User2SaleUserFanListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_MerchantList) response).status == 1) {
+                    listMerchant = ((APIM_MerchantList) response).merchantList;
+
+                    fillAdapter(listMerchant);
+                } else {
+                    ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(user2SaleUserFanListRequest);
     }
 
     /**

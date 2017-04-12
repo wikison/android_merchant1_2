@@ -20,7 +20,6 @@ public class User2SaleUserFanListRequest extends PostStringRequest<Type> {
 
     public static class Input {
         public int saleUserId;   //服务管家用户id
-        public int merchantId;    //商户id
         public String name;    //昵称
         public int page;    //	获取第x页的数据
         public int rows;    //	每次获取的数据个数
@@ -32,7 +31,6 @@ public class User2SaleUserFanListRequest extends PostStringRequest<Type> {
         public void convertJosn() {
             ejson = Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("saleUserId", saleUserId + ""),
-                    new Pair<String, String>("merchantId", merchantId + ""),
                     new Pair<String, String>("name", name),
                     new Pair<String, String>("page", page + ""),
                     new Pair<String, String>("rows", rows + ""))

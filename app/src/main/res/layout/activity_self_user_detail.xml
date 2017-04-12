@@ -195,7 +195,6 @@
                 <RelativeLayout
                     style="@style/relative_layout_item">
 
-
                     <TextView
                         android:id="@+id/tv_text_scrm"
                         style="@style/text_15_black_28"
@@ -203,15 +202,17 @@
                         android:layout_alignParentLeft="true"
                         android:text="SCRM"/>
 
-                    <com.zemult.merchant.view.FixedGridView
-                        android:id="@+id/fgv_scrm"
+                    <LinearLayout
+                        android:id="@+id/ll_scrm_head"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/tv_scrm"
-                        android:layout_toRightOf="@+id/tv_text_scrm">
+                        android:layout_toRightOf="@+id/tv_text_scrm"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal">
 
-                    </com.zemult.merchant.view.FixedGridView>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_scrm"
