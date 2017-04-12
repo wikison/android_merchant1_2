@@ -633,4 +633,8 @@ public class Urls {
     public static String USER2_PAY_ADD = "user2_pay_add";
     // 用户的预约单列表
     public static String USER2_RESERVATION_LIST = "user2_reservation_list";
+    //服务管家的SCRM列表
+    public static String USER2_SALEUSER_FANSLIST = "user2_saleUser_fansList";
+    //服务管家用户的商家列表(所有)
+    public static String MERCHANT2_SALEUSER_MERCHANTLIST = "merchant2_saleUser_merchantList";
 }
