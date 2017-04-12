@@ -104,7 +104,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
-        android:id="@+id/rl_"
+        android:id="@+id/rl_activity"
         style="@style/relative_layout_item"
         android:layout_marginTop="@dimen/margin_16dp">
 
@@ -113,6 +113,7 @@
             android:text="管家动态"/>
 
         <TextView
+            android:id="@+id/tv_activity"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
             android:drawablePadding="@dimen/margin_8dp"
@@ -123,6 +124,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_service_comment"
         style="@style/relative_layout_item">
 
         <TextView
@@ -130,6 +132,7 @@
             android:text="服务评价"/>
 
         <TextView
+            android:id="@+id/tv_comment_num"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
             android:drawablePadding="@dimen/margin_8dp"

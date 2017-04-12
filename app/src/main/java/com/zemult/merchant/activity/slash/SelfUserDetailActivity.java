@@ -23,7 +23,7 @@ import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
-import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
+import com.zemult.merchant.aip.slash.Merchant2SaleUserMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
@@ -156,7 +156,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     UserEditStateRequest userEditStateRequest;
     User2SaleUserFanListRequest user2SaleUserFanListRequest;
-    private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
+    Merchant2SaleUserMerchantListRequest merchant2SaleUserMerchantListRequest; // 挂靠的商家
     private M_Userinfo userInfo;
     private String userName, userHead;
     private M_Merchant merchant, merchantAdd, selectMerchant;
@@ -263,17 +263,15 @@ public class SelfUserDetailActivity extends BaseActivity {
      * 查看TA挂靠的商家
      */
     private void getOtherMerchantList() {
-        if (merchantOtherMerchantListRequest != null) {
-            merchantOtherMerchantListRequest.cancel();
+        if (merchant2SaleUserMerchantListRequest != null) {
+            merchant2SaleUserMerchantListRequest.cancel();
         }
-        MerchantOtherMerchantListRequest.Input input = new MerchantOtherMerchantListRequest.Input();
+        Merchant2SaleUserMerchantListRequest.Input input = new Merchant2SaleUserMerchantListRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
-        input.userId = userId;
-        input.page = 1;
-        input.rows = Constants.ROWS;
+        input.saleUserId = userId;
         input.convertJosn();
-        merchantOtherMerchantListRequest = new MerchantOtherMerchantListRequest(input, new ResponseListener() {
+        merchant2SaleUserMerchantListRequest = new Merchant2SaleUserMerchantListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -291,7 +289,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 dismissPd();
             }
         });
-        sendJsonRequest(merchantOtherMerchantListRequest);
+        sendJsonRequest(merchant2SaleUserMerchantListRequest);
     }
 
     /**
@@ -452,11 +450,11 @@ public class SelfUserDetailActivity extends BaseActivity {
     private void changeItem(int position) {
         bindPager.setCurrentItem(position);
         selectMerchant = listMerchant.get(position);
-        imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+        imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.tv_scrm})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account,R.id.ll_scrm_head,  R.id.tv_scrm})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -497,6 +495,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.tv_account:
                 startActivity(new Intent(SelfUserDetailActivity.this, MyWalletActivity.class));
                 break;
+            case R.id.ll_scrm_head:
             case R.id.tv_scrm:
                 intent = new Intent(mActivity, MyFansActivity.class);
                 intent.putExtra(MyFansActivity.INTENT_USERID, userId);

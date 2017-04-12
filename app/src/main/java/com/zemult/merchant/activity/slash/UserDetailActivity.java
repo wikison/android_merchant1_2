@@ -39,7 +39,7 @@ import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
-import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
+import com.zemult.merchant.aip.slash.Merchant2SaleUserMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -108,8 +108,6 @@ public class UserDetailActivity extends BaseActivity {
     private int mCurrentState = STATE_NORMAL; // 当前的状态
 
     private static final int DISTANCE_Y_CANCEL = 50;
-
-    private float mTime;
 
     private static final int MSG_AUDIO_PREPARED = 0x110;
     private static final int MSG_VOICE_CHANGED = 0x111;
@@ -191,7 +189,7 @@ public class UserDetailActivity extends BaseActivity {
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = false; //用户是否是自己
     UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
-    MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
+    Merchant2SaleUserMerchantListRequest merchant2SaleUserMerchantListRequest; // 挂靠的商家
     User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
     UserAttractAddRequest attractAddRequest; // 添加关注
     UserAttractDelRequest attractDelRequest; // 取消关注
@@ -479,7 +477,6 @@ public class UserDetailActivity extends BaseActivity {
      */
     private void reset() {
         isStartRecord = false;
-        mTime = 0;
     }
 
     private boolean wantToCancel(int x, int y) {
@@ -613,17 +610,15 @@ public class UserDetailActivity extends BaseActivity {
      * 查看TA挂靠的商家
      */
     private void getOtherMerchantList() {
-        if (merchantOtherMerchantListRequest != null) {
-            merchantOtherMerchantListRequest.cancel();
+        if (merchant2SaleUserMerchantListRequest != null) {
+            merchant2SaleUserMerchantListRequest.cancel();
         }
-        MerchantOtherMerchantListRequest.Input input = new MerchantOtherMerchantListRequest.Input();
+        Merchant2SaleUserMerchantListRequest.Input input = new Merchant2SaleUserMerchantListRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
-        input.userId = userId;
-        input.page = 1;
-        input.rows = Constants.ROWS;
+        input.saleUserId = userId;
         input.convertJosn();
-        merchantOtherMerchantListRequest = new MerchantOtherMerchantListRequest(input, new ResponseListener() {
+        merchant2SaleUserMerchantListRequest = new Merchant2SaleUserMerchantListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -641,7 +636,7 @@ public class UserDetailActivity extends BaseActivity {
                 dismissPd();
             }
         });
-        sendJsonRequest(merchantOtherMerchantListRequest);
+        sendJsonRequest(merchant2SaleUserMerchantListRequest);
     }
 
     /**
@@ -853,7 +848,7 @@ public class UserDetailActivity extends BaseActivity {
     private void changeItem(int position) {
         bindPager.setCurrentItem(position);
         selectMerchant = listMerchant.get(position);
-        imageManager.loadBlurImage(selectMerchant.pic, ivCover, 60);
+        imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
         setBuyState(selectMerchant.reviewstatus == 2);
     }
 

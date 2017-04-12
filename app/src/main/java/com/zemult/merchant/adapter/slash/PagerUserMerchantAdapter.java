@@ -129,8 +129,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if (!TextUtils.isEmpty(entity.pic))
-            imageManager.loadRoundImage(entity.pic, viewHolder.cardImg, 24, Color.WHITE, 10, "@300h");
+        if (!TextUtils.isEmpty(entity.merchantPic))
+            imageManager.loadRoundImage(entity.merchantPic, viewHolder.cardImg, 24, Color.WHITE, 10, "@300h");
 
         return view;
     }
@@ -157,6 +157,9 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             } else
                 holder.tvDistance.setText(entity.distance + "m");
         }
+
+        holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvCommentNum.setText(entity.commentNum + "条评价");
 
         initTags(holder, entity);
         initListener(holder, entity);
@@ -186,7 +189,13 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             } else
                 holder.tvDistance.setText(entity.distance + "m");
         }
-
+        holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvCommentNum.setText(entity.commentNum + "条评价");
+        if (entity.unSureOrderNum > 0) {
+            holder.tvUnsureNum.setText("待确认服务单" + entity.unSureOrderNum + "条");
+        } else {
+            holder.tvUnsureNum.setText("");
+        }
         initTags(holder, entity);
         initListener(holder, entity);
 
@@ -322,6 +331,16 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         RelativeLayout rlDetail;
         @Bind(R.id.ll_detail)
         LinearLayout llDetail;
+        @Bind(R.id.tv_seven)
+        TextView tvSeven;
+        @Bind(R.id.tv_activity)
+        TextView tvActivity;
+        @Bind(R.id.rl_activity)
+        RelativeLayout rlActivity;
+        @Bind(R.id.tv_comment_num)
+        TextView tvCommentNum;
+        @Bind(R.id.rl_service_comment)
+        RelativeLayout rlServiceComment;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
@@ -341,18 +360,24 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         LinearLayout llDetail;
         @Bind(R.id.tv_seven)
         TextView tvSeven;
-        @Bind(R.id.rl_service)
-        RelativeLayout rlService;
         @Bind(R.id.tv_text_service)
         TextView tvTextService;
         @Bind(R.id.rg_ta_service)
         FNRadioGroup rgTaService;
         @Bind(R.id.tv_service)
         TextView tvService;
+        @Bind(R.id.rl_service)
+        RelativeLayout rlService;
+        @Bind(R.id.tv_activity)
+        TextView tvActivity;
         @Bind(R.id.rl_activity)
         RelativeLayout rlActivity;
+        @Bind(R.id.tv_comment_num)
+        TextView tvCommentNum;
         @Bind(R.id.rl_service_comment)
         RelativeLayout rlServiceComment;
+        @Bind(R.id.tv_unsure_num)
+        TextView tvUnsureNum;
         @Bind(R.id.iv_service_record)
         ImageView ivServiceRecord;
         @Bind(R.id.rl_service_record)

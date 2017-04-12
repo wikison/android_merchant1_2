@@ -19,6 +19,8 @@ public class M_Merchant implements Serializable {
     @Expose
     public String head;    //	头像
     @Expose
+    public String merchantPic;    //	商家封面
+    @Expose
     public String industryNames;    //	场景下的可加盟的角色名称(多个用","分隔)
     @Expose
     public String distance;    //	距中心点距离(米)
@@ -162,6 +164,9 @@ public class M_Merchant implements Serializable {
     @Expose
     public int commentNumber;  // 被评价的总次数
     @Expose
+    public int commentNum;  // 被评价的总次数
+
+    @Expose
     public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
     @Expose
     public int isFavorite;  // 收藏商户 0否1是
@@ -206,7 +211,11 @@ public class M_Merchant implements Serializable {
     @Expose
     public int saleUserSumScore;  // 前7日的服务分总和
     @Expose
+    public int sumScore;  // 前7日的服务分总和
+    @Expose
     public int saleUserFanNum;  // 服务管家的顾客数
+    @Expose
+    public int unSureOrderNum;  //待确认服务单数量
 
     public String getExperienceText() {
         String result = "";
