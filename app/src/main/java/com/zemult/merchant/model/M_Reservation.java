@@ -81,6 +81,12 @@ public class M_Reservation implements Serializable {
     @Expose
     public  double userPayMoney;//消费金额(支付单金额)(总额为支付单金额+预约单的定金)
 
+    @Expose
+    public double reservationMoney;//预约单的定金
+
+    @Expose
+    public String createTime;//创建时间(格式为"yyyy-MM-dd HH:mm:ss")
+
     public boolean isChecked() {
         return isChecked;
     }

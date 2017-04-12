@@ -11,7 +11,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,8 +167,8 @@
 
                     <TextView
                         android:id="@+id/tv_room"
-                        android:maxEms="15"
                         style="@style/detail_right"
+                        android:maxEms="15"
                         android:text="------" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -178,10 +179,11 @@
 
             <LinearLayout
                 android:id="@+id/havepayed_ll"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -204,7 +206,7 @@
                         android:layout_toRightOf="@+id/tv1">
 
                         <TextView
-                            android:id="@+id/tv_dingjin"
+                            android:id="@+id/tv_dingjin_haved"
                             style="@style/detail_right"
                             android:layout_centerVertical="true"
                             android:text="-------" />
@@ -218,6 +220,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:visibility="gone"></View>
+
                 <RelativeLayout
                     android:id="@+id/yuyueresult_rl"
                     android:layout_width="match_parent"
@@ -225,7 +228,6 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/ripple_item_clicked2"
                     android:paddingBottom="12dp"
-
                     android:paddingTop="12dp">
 
                     <TextView
@@ -248,7 +250,6 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-
 
 
                 <RelativeLayout
@@ -282,70 +283,172 @@
             </LinearLayout>
 
 
-                <!--<RelativeLayout-->
-                    <!--android:id="@+id/ordersuccess_btn_rl"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="15dp"-->
-                    <!--android:layout_marginTop="15dp"-->
-                    <!--android:visibility="gone">-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rltwo"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerInParent="true">-->
-
-                        <!--<Button-->
-                            <!--android:id="@+id/invite_btn"-->
-                            <!--style="@style/common_btn_235"-->
-                            <!--android:layout_width="130dp"-->
-                            <!--android:layout_marginBottom="@dimen/margin_12dp"-->
-                            <!--android:drawableLeft="@mipmap/fenxiang"-->
-                            <!--android:padding="8dp"-->
-                            <!--android:text="生成邀请函" />-->
-
-                        <!--<Button-->
-                            <!--android:id="@+id/jiezhang_btn"-->
-                            <!--style="@style/common_btn_235"-->
-                            <!--android:layout_width="128dp"-->
-                            <!--android:layout_marginBottom="@dimen/margin_12dp"-->
-                            <!--android:layout_marginLeft="20dp"-->
-                            <!--android:layout_toRightOf="@+id/invite_btn"-->
-                            <!--android:background="@drawable/detail_btn"-->
-                            <!--android:drawableLeft="@mipmap/complete"-->
-                            <!--android:paddingLeft="10dp"-->
-                            <!--android:text="快速结账"-->
-                            <!--android:textColor="#e6bb7c" />-->
-                    <!--</RelativeLayout>-->
-
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/hongbao_tv"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_below="@+id/rltwo"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_marginTop="20dp"-->
-                        <!--android:text="觉得服务不错给个赞赏吧"-->
-                        <!--android:textColor="@color/font_black_999" />-->
-
-                <!--</RelativeLayout>-->
             <LinearLayout
-                android:id="@+id/success_ll"
+                android:id="@+id/success1_ll"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:visibility="gone"
+                >
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        style="@style/detail_left"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="订金" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv2">
+
+                        <TextView
+                            android:id="@+id/tv_dingjin_success"
+                            style="@style/detail_right"
+                            android:layout_centerVertical="true"
+                            android:text="-------" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/dingjin_discuss" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:id="@+id/bottom_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp">
+
+                        <Button
+                            android:id="@+id/recom_btn"
+                            style="@style/common_btn_235"
+                            android:layout_width="130dp"
+                            android:background="@drawable/detail_btn"
+                            android:text="评价一下"
+                            android:textColor="#e6bb7c" />
+
+                        <Button
+                            android:id="@+id/invite_btn"
+                            style="@style/common_btn_235"
+                            android:layout_width="128dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/recom_btn"
+                            android:text="邀请函" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/bottom_rl"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:text="@string/dinghaole"
+                        android:textColor="@color/not_now" />
+
+                </RelativeLayout>
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/success2_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/creatinvite_btn"
+                        style="@style/common_btn_235"
+                        android:layout_width="150dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="60dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="生成邀请函" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/creatinvite_btn"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:text="@string/dinghaole"
+                        android:textColor="@color/not_now" />
+                </RelativeLayout>
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:id="@+id/finished_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical"
+               >
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp">
 
+                    <TextView
+                        android:id="@+id/tv6"
+                        style="@style/detail_left"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="预约定金" />
 
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv6">
+
+                        <TextView
+                            android:id="@+id/tv_redingjin_finished"
+                            style="@style/detail_right"
+                            android:layout_centerVertical="true"
+                            android:text="-------" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/dingjin_discuss" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

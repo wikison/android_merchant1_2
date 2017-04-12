@@ -22,7 +22,7 @@ public class UserReservationListRequest extends PostStringRequest<Type> {
     public static class Input {
 
         public int userId;    //	用户id
-        public int state;   //状态(-1:全部-不包含待确认的,1:预约成功)
+        public int state;   //状态(-1:全部-不包含待确认的,1:已确定,2:已支付,6:已结束(3/4是已结束的分支))
         public int page;    //	获取第x页的数据
         public int rows;    //	每次获取的数据个数
         public String ejson;

@@ -534,7 +534,7 @@ public class Urls {
 
 
     //用户预约单详情
-    public static String USER_RESERVATION_INFO = "user_reservation_info.do";
+    public static String USER_RESERVATION_INFO = "user2_reservation_info.do";
 
 
     //约服  1.2

@@ -92,7 +92,6 @@ public class PayInfoActivity extends BaseActivity {
     @Bind(R.id.rtv_to_recom)
     RoundTextView rtvToRecom;
 
-
     private Context mContext;
     private Activity mActivity;
     UserPayInfoRequest userPayInfoRequest;

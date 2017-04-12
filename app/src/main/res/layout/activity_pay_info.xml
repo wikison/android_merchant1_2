@@ -275,7 +275,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="支付方式"/>
+                    android:text="--------"/>
             </LinearLayout>
 
             <LinearLayout

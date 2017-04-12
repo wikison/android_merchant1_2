@@ -23,7 +23,7 @@ public class UserReservationEditRequest extends PostStringRequest<Type>  {
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("reservationId", reservationId),
+                    new Pair<String, String>("reservationId", reservationId+""),
                     new Pair<String, String>("userId", userId+""),
                     new Pair<String, String>("replayNote", replayNote)));
         }

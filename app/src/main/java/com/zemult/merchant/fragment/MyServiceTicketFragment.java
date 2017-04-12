@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
+import com.zemult.merchant.activity.mine.ServiceTicketDetailActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
@@ -70,6 +72,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
     private List<M_Reservation> mDatas = new ArrayList<M_Reservation>();
     public static String INTENT_TYPE = "type";
     UserSaleReservationList userSaleReservationList;//服务管家的预约列表
+    int reservationId;
 
 
     @Override
@@ -132,6 +135,19 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         mActivity = getActivity();
     }
 
+    private void initListener() {
+        smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                reservationId = mDatas.get(position - 1).reservationId;
+                Intent intent = new Intent(mActivity, ServiceTicketDetailActivity.class);
+                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, reservationId + "");
+                startActivity(intent);
+            }
+        });
+
+    }
+
 
     private void userReservationList() {
 
@@ -142,7 +158,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         input.userId = SlashHelper.userManager().getUserId();
 //        input.state = fromHome ? 1 : -1;
         if (pagePosition == 3) {
-            input.state=6;
+            input.state = 6;
         } else {
             input.state = pagePosition - 1;
         }
@@ -173,7 +189,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                 smoothListView.setAdapter(commonAdapter = new CommonAdapter<M_Reservation>(mActivity, R.layout.item_myserviceticket_result, mDatas) {
                                     @Override
                                     public void convert(CommonViewHolder holder, final M_Reservation mReservation, final int position) {
-
+                                        holder.setText(R.id.tv_servicedate, mReservation.createTime);
                                         //状态(1:预约成功,2:已支付,3:预约结束)
                                         if (mReservation.state == 1) {
                                             holder.setText(R.id.tv_state, "已确认");
@@ -181,11 +197,11 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                         } else if (mReservation.state == 2) {
                                             holder.setText(R.id.tv_state, "已支付");
                                             holder.setViewVisible(R.id.money_ll);
-                                            holder.setText(R.id.tv_price, "￥"+Convert.getMoneyString(mReservation.userPayMoney));
+                                            holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.userPayMoney));
                                         } else if (mReservation.state == 3) {
                                             holder.setText(R.id.tv_state, "已结束");
                                             holder.setViewGone(R.id.money_ll);
-                                        }else if (mReservation.state == 4) {
+                                        } else if (mReservation.state == 4) {
                                             holder.setText(R.id.tv_state, "已结束");
                                             holder.setViewGone(R.id.money_ll);
                                         }
@@ -198,7 +214,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                         holder.setText(R.id.tv_merchantName, mReservation.merchantName);
                                         String time = mReservation.reservationTime;
 
-                                        holder.setText(R.id.tv_reservationTime,mReservation.reservationTime+DateTimeUtil.getWeekDayOfWeek(time)+"  "+time.substring(11, 16));
+//                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime + DateTimeUtil.getWeekDayOfWeek(time) + "  " + time.substring(11, 16));
 
 //
 //
@@ -234,6 +250,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                         page++;
                         Log.i("sunjian", "" + page);
                     }
+                    initListener();
                 } else {
                     ToastUtils.show(mActivity, ((APIM_UserReservationList) response).info);
                 }
@@ -254,7 +271,6 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
     @Override
     public void onLoadMore() {
         userReservationList();
-
     }
 
     @Override

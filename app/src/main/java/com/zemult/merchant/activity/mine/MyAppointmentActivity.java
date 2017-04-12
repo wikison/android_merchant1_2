@@ -106,7 +106,7 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
                 Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, "" + mReservation.reservationId);
+                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, mReservation.reservationId);
                 intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, type);
                 startActivity(intent);
             }
