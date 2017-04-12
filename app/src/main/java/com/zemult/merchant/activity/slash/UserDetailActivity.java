@@ -342,6 +342,11 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext)) {
                     //登录
                 }
+
+                btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_press));
+                mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
+                changeState(STATE_RECORDING);
+
                 startRecord();
 
                 //开始计时
@@ -365,12 +370,6 @@ public class UserDetailActivity extends BaseActivity {
                 int x = (int) event.getX();// 获得x轴坐标
                 int y = (int) event.getY();// 获得y轴坐标
                 switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_press));
-                        mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
-                        changeState(STATE_RECORDING);
-
-                        break;
                     case MotionEvent.ACTION_UP:
                         btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
                         if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
@@ -397,9 +396,11 @@ public class UserDetailActivity extends BaseActivity {
                             }
                         }
                         break;
+                    default:
+                        break;
 
                 }
-                return true;
+                return false;
             }
         });
 
@@ -735,7 +736,6 @@ public class UserDetailActivity extends BaseActivity {
     }
 
     private void addRemindIM() {
-        loadingDialog.show();
         if (user2RemindIMAddRequest != null) {
             user2RemindIMAddRequest.cancel();
         }
@@ -752,7 +752,6 @@ public class UserDetailActivity extends BaseActivity {
 
             @Override
             public void onResponse(Object response) {
-                loadingDialog.dismiss();
                 if (((CommonResult) response).status == 1) {
                     int remindIMId = ((CommonResult) response).remindIMId;
                 } else {
