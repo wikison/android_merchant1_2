@@ -9,6 +9,7 @@ import com.zemult.merchant.util.Convert;
 
 import java.lang.reflect.Type;
 
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
@@ -29,12 +30,20 @@ public class User2SaleUserFanListRequest extends PostStringRequest<Type> {
 
 
         public void convertJosn() {
-            ejson = Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("saleUserId", saleUserId + ""),
-                    new Pair<String, String>("name", name),
-                    new Pair<String, String>("page", page + ""),
-                    new Pair<String, String>("rows", rows + ""))
-            );
+            if(StringUtils.isBlank(name))
+                ejson = Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("saleUserId", saleUserId + ""),
+                        new Pair<String, String>("page", page + ""),
+                        new Pair<String, String>("rows", rows + ""))
+                );
+            else
+                ejson = Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("saleUserId", saleUserId + ""),
+                        new Pair<String, String>("name", name),
+                        new Pair<String, String>("page", page + ""),
+                        new Pair<String, String>("rows", rows + ""))
+                );
+
         }
 
     }
