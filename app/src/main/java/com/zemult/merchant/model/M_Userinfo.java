@@ -542,6 +542,24 @@ public class M_Userinfo implements Serializable {
 
         return result;
     }
+
+    public int getMaxMerchantNum(){
+        int result = 0;
+        if (experience < 100) {
+            result = 1;
+        } else if (experience >= 100 && experience < 10000) {
+            result = 3;
+        } else if (experience >= 10000 && experience < 100000) {
+            result = 5;
+        } else if (experience >= 100000 && experience < 1000000) {
+            result = 10;
+        } else {
+            result = 20;
+        }
+
+        return result;
+    }
+
     public String getStatusText(int userState) {
         String result = "";
         switch (userState){

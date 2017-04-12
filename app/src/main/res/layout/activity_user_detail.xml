@@ -297,7 +297,6 @@
 
         <com.flyco.roundview.RoundLinearLayout
             android:id="@+id/btn_service"
-            style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_marginBottom="36dp"

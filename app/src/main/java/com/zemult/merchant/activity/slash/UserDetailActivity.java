@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,6 +38,7 @@ import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
+import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -55,15 +57,19 @@ import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.oss.OssFileService;
+import com.zemult.merchant.util.oss.OssHelper;
 import com.zemult.merchant.view.RecordDialog;
 import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.VerticalScrollView;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -72,6 +78,8 @@ import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
 import me.crosswall.lib.coverflow.core.LinkagePagerContainer;
 import me.crosswall.lib.coverflow.core.PageItemClickListener;
 import zema.volley.network.ResponseListener;
+
+import static com.zemult.merchant.config.Constants.OSSENDPOINT;
 
 /**
  * 012111用户详情
@@ -98,17 +106,15 @@ public class UserDetailActivity extends BaseActivity {
     private static final int STATE_WANT_TO_CANCEL = 3;// 希望取消
 
     private int mCurrentState = STATE_NORMAL; // 当前的状态
-    private boolean isRecording = false;// 已经开始录音
 
     private static final int DISTANCE_Y_CANCEL = 50;
 
     private float mTime;
-    // 是否触发longClick
-    private boolean mReady;
 
     private static final int MSG_AUDIO_PREPARED = 0x110;
     private static final int MSG_VOICE_CHANGED = 0x111;
-    private static final int MSG_DIALOG_DIMISS = 0x112;
+    private static final int MSG_DIALOG_DISMISS = 0x112;
+    private static final int MSG_VOICE_FINISH = 0x113;
 
     public static final String TAG = UserDetailActivity.class.getSimpleName();
 
@@ -184,10 +190,11 @@ public class UserDetailActivity extends BaseActivity {
     private Activity mActivity;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = false; //用户是否是自己
-    private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
-    private MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
-    private UserAttractAddRequest attractAddRequest; // 添加关注
-    private UserAttractDelRequest attractDelRequest; // 取消关注
+    UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
+    MerchantOtherMerchantListRequest merchantOtherMerchantListRequest; // 挂靠的商家
+    User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
+    UserAttractAddRequest attractAddRequest; // 添加关注
+    UserAttractDelRequest attractDelRequest; // 取消关注
     private M_Userinfo userInfo;
     private String userName, userHead;
     private M_Merchant merchant, selectMerchant;
@@ -206,15 +213,14 @@ public class UserDetailActivity extends BaseActivity {
     RecordDialog mDialogManager;
     String ossFilename = "", filename = "";
     String URL_UPLOAD_FILEPATH = "";
-    private MediaPlayer mMediaPlayer;
     private OssFileService ossFileService;
     private MP3Recorder mRecorder = null;
-    long lastDownTime, thisEventTime;
     String fileUrl = "";
+    private MyTimerTask timerTask;
     private boolean isStartRecord;
 
     private Timer timer;
-    private int recordTime = 60;
+    private int recordTime = 120;
 
     private Handler mHandler = new Handler() {
 
@@ -224,41 +230,35 @@ public class UserDetailActivity extends BaseActivity {
                 case MSG_AUDIO_PREPARED:
                     // 开始录音后显示对话框
                     mDialogManager.showRecordingDialog();
-                    isRecording = true;
+                    isStartRecord = true;
                     break;
                 case MSG_VOICE_CHANGED:
+                    if (isStartRecord) {
+                        recordTime--;
+                        Log.d(getClass().getName(), recordTime + "");
+                    } else {
+                        if (timerTask != null) {
+                            timerTask.cancel();
+                            timer.cancel();
+                        }
+                    }
                     break;
 
-                case MSG_DIALOG_DIMISS:
+                case MSG_DIALOG_DISMISS:
                     mDialogManager.dismissDialog();
                     break;
-
+                case MSG_VOICE_FINISH:
+                    if (timerTask != null) {
+                        timerTask.cancel();
+                        timer.cancel();
+                    }
+                    recordVoice();
+                    break;
             }
 
             super.handleMessage(msg);
         }
     };
-
-    /**
-     * 恢复状态及标志位
-     */
-    private void reset() {
-        isRecording = false;
-        mTime = 0;
-        mReady = false;
-    }
-
-    private boolean wantToCancel(int x, int y) {
-        if (x < 0 || x > btnService.getWidth()) { // 超过按钮的宽度
-            return true;
-        }
-        // 超过按钮的高度
-        if (y < -DISTANCE_Y_CANCEL) {
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     public void setContentView() {
@@ -291,6 +291,17 @@ public class UserDetailActivity extends BaseActivity {
 
         mContext = this;
         mActivity = this;
+
+        ossFileService = OssHelper.initFileOSS(this);
+        filename = SlashHelper.userManager().getUserId() + System.currentTimeMillis() + ".mp3";
+        File downloadFile = new File(Constants.SOUND_CACHE_DIR);
+        AppUtils.deleteAllFiles(downloadFile);
+        if (!downloadFile.exists()) {
+            downloadFile.mkdirs();
+        }
+        URL_UPLOAD_FILEPATH = Constants.SOUND_CACHE_DIR + filename;
+        mRecorder = new MP3Recorder(new File(URL_UPLOAD_FILEPATH));
+        registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADSOUND});
 
     }
 
@@ -328,8 +339,22 @@ public class UserDetailActivity extends BaseActivity {
         btnService.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mReady = true;
-                return false;
+                if (noLogin(mContext)) {
+                    //登录
+                }
+                startRecord();
+
+                //开始计时
+                if (timerTask != null) {
+                    timerTask.cancel();
+                    timer.cancel();
+                }
+
+                recordTime = 120;
+                timer = new Timer(true);
+                timerTask = new MyTimerTask();
+                timer.scheduleAtFixedRate(timerTask, 0, 1000);
+                return true;
             }
         });
 
@@ -341,18 +366,16 @@ public class UserDetailActivity extends BaseActivity {
                 int y = (int) event.getY();// 获得y轴坐标
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
+                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_press));
                         mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
                         changeState(STATE_RECORDING);
+
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (!mReady) {
-                            reset();
-                        }
-                        if (!isRecording || mTime < 0.6f) {
-                            mDialogManager.tooShort();
-                            mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DIMISS, 1000);// 延迟显示对话框
-                        } else if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
+                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
+                        if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
                             mDialogManager.dismissDialog();
+                            recordVoice();
 
                         } else if (mCurrentState == STATE_WANT_TO_CANCEL) { // 想要取消
                             mDialogManager.dismissDialog();
@@ -361,10 +384,11 @@ public class UserDetailActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_CANCEL: // 首次开权限时会走这里，录音取消
                         mDialogManager.wantToCancel();
+                        stopRecord();
                         break;
 
                     case MotionEvent.ACTION_MOVE: // 滑动手指
-                        if (isRecording) {
+                        if (isStartRecord) {
                             // 如果想要取消，根据x,y的坐标看是否需要取消
                             if (wantToCancel(x, y)) {
                                 changeState(STATE_WANT_TO_CANCEL);
@@ -432,6 +456,90 @@ public class UserDetailActivity extends BaseActivity {
         });
     }
 
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        if (Constants.BROCAST_OSS_UPLOADSOUND.equals(intent.getAction())) {
+            if (intent.getStringExtra("status").equals("ok")) {
+                Log.d(getClass().getName(), ossFilename);
+                fileUrl = OSSENDPOINT + ossFilename;
+                addRemindIM();
+            } else {
+                ToastUtil.showMessage(intent.getStringExtra("info"));
+            }
+        }
+    }
+
+    /**
+     * 恢复状态及标志位
+     */
+    private void reset() {
+        isStartRecord = false;
+        mTime = 0;
+    }
+
+    private boolean wantToCancel(int x, int y) {
+        if (x < 0 || x > btnService.getWidth()) { // 超过按钮的宽度
+            return true;
+        }
+        // 超过按钮的高度
+        if (y < -DISTANCE_Y_CANCEL) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void startRecord() {
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            ToastUtil.showMessage("请插入SD卡！");
+            return;
+        }
+        isStartRecord = true;
+
+        try {
+            mRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopRecord() {
+        if (null != mRecorder) {
+            mRecorder.stop();
+        }
+        isStartRecord = false;
+    }
+
+    private void recordVoice() {
+        //结束计时器
+        if (timerTask != null) {
+            timerTask.cancel();
+            timer.cancel();
+        }
+
+        if (isStartRecord) {
+            // 停止录音
+            stopRecord();
+            File file = new File(URL_UPLOAD_FILEPATH);
+            if (file.exists() && recordTime < 110) {
+                if (SlashHelper.userManager().getUserinfo() != null) {
+                    ossFilename = "aduio/android_" + filename;
+                    ossFileService.asyncPutFile(ossFilename, URL_UPLOAD_FILEPATH);
+                }
+            } else {
+                mDialogManager.tooShort();
+                // 延迟显示对话框
+                mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 500);
+            }
+        }
+
+    }
+
     private void changeState(int state) {
         if (mCurrentState != state) {
             mCurrentState = state;
@@ -440,7 +548,7 @@ public class UserDetailActivity extends BaseActivity {
                     break;
 
                 case STATE_RECORDING:
-                    if (isRecording) {
+                    if (isStartRecord) {
                         mDialogManager.recording();
                     }
                     break;
@@ -624,6 +732,36 @@ public class UserDetailActivity extends BaseActivity {
             ivRight.setImageResource(R.mipmap.jubao_icon);
         }
 
+    }
+
+    private void addRemindIM() {
+        loadingDialog.show();
+        if (user2RemindIMAddRequest != null) {
+            user2RemindIMAddRequest.cancel();
+        }
+        final User2RemindIMAddRequest.Input input = new User2RemindIMAddRequest.Input();
+
+        input.userId = SlashHelper.userManager().getUserId();
+        input.saleUserId = userId;
+        input.convertJosn();
+
+        user2RemindIMAddRequest = new User2RemindIMAddRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                loadingDialog.dismiss();
+                if (((CommonResult) response).status == 1) {
+                    int remindIMId = ((CommonResult) response).remindIMId;
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+
+            }
+        });
+        sendJsonRequest(user2RemindIMAddRequest);
     }
 
     /**
@@ -863,7 +1001,7 @@ public class UserDetailActivity extends BaseActivity {
                 if (noLogin(mContext))
                     return;
                 Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt("serviceId", userId);
                 IMkitintent.putExtras(bundle);
                 startActivity(IMkitintent);
@@ -937,4 +1075,19 @@ public class UserDetailActivity extends BaseActivity {
             ToastUtil.showMessage("分享取消");
         }
     };
+
+    /* 秒表计时器-Task */
+    class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            Message msg = new Message();
+            if (recordTime != 0) {
+                msg.what = MSG_VOICE_CHANGED;
+            } else {
+                msg.what = MSG_VOICE_FINISH;
+            }
+            mHandler.sendMessage(msg);
+        }
+
+    }
 }

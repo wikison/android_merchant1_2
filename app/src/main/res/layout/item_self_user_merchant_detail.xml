@@ -117,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_16dp"
             android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="8dp"
             android:layout_toLeftOf="@+id/tv_service"
             android:layout_toRightOf="@+id/tv_text_service">
         </com.zemult.merchant.view.FNRadioGroup>

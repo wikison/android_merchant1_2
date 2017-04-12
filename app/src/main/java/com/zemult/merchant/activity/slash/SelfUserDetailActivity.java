@@ -29,12 +29,15 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
+import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
@@ -162,6 +165,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+    List<M_Fan> listFan = new ArrayList<M_Fan>();
     int merchantNum = 0;
     LinkagePager pager;
     int state = 0;
@@ -221,6 +225,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private void getNetworkData() {
         showPd();
         getUserInfo();
+        getFanList();
         getOtherMerchantList();
     }
 
@@ -298,7 +303,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         }
         User2SaleUserFanListRequest.Input input = new User2SaleUserFanListRequest.Input();
         input.saleUserId = SlashHelper.userManager().getUserId();
-        input.name = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+        input.name = "";
         input.page = 1;
         input.rows = 4;
         input.convertJosn();
@@ -310,10 +315,9 @@ public class SelfUserDetailActivity extends BaseActivity {
 
             @Override
             public void onResponse(Object response) {
-                if (((APIM_MerchantList) response).status == 1) {
-                    listMerchant = ((APIM_MerchantList) response).merchantList;
-
-                    fillAdapter(listMerchant);
+                if (((APIM_UserFansList) response).status == 1) {
+                    listFan = ((APIM_UserFansList) response).userList;
+                    setSCRMHeads(listFan);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
                 }
@@ -321,6 +325,21 @@ public class SelfUserDetailActivity extends BaseActivity {
             }
         });
         sendJsonRequest(user2SaleUserFanListRequest);
+    }
+
+    private void setSCRMHeads(List<M_Fan> listFans) {
+        if (listFans != null && listFans.size() > 0) {
+            llSCRMHead.removeAllViews();
+            for (int i = 0; i < listFans.size(); i++) {
+                ImageView imageView = new ImageView(this);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(DensityUtil.dip2px(this, 40), DensityUtil.dip2px(this, 40)));
+                imageView.setPadding(0, 0, DensityUtil.dip2px(this, 12), 0);
+                imageManager.loadCircleHead(listFans.get(i).head, imageView, "@120w_120h");
+                llSCRMHead.addView(imageView);
+            }
+        }
+
+
     }
 
     /**
@@ -337,7 +356,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         // 用户名
         if (!TextUtils.isEmpty(userInfo.getName()))
             tvName.setText(userInfo.getName());
-        tvLevel.setText(userInfo.getExperienceText());
+        tvLevel.setText(userInfo.getExperienceText() + "管家");
         if (userInfo.getExperienceImg() > 0) {
             drawable = getResources().getDrawable(userInfo.getExperienceImg());
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -447,7 +466,10 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_add:
             case R.id.iv_add:
-                ToastUtil.showMessage("add");
+                if (userInfo.getMaxMerchantNum() == listMerchant.size()) {
+                    ToastUtil.showMessage(String.format("您当前服务等级只能申请%d家商户, 当前已经申请了%d家", userInfo.getMaxMerchantNum(), listMerchant.size()));
+                    return;
+                }
                 break;
             case R.id.tv_state:
                 MMAlert.showChooseStateDialog(this, new MMAlert.ChooseCallback() {

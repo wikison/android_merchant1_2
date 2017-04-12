@@ -208,6 +208,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_8dp"
                         android:layout_toRightOf="@+id/tv_text_scrm"
                         android:gravity="right|center_vertical"
                         android:orientation="horizontal">
@@ -288,7 +289,7 @@
                 <android.support.v4.view.LinkagePager
                     android:id="@+id/bind_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="490dp"/>
+                    android:layout_height="498dp"/>
 
             </LinearLayout>
 

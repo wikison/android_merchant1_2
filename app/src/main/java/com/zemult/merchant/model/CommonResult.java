@@ -112,6 +112,8 @@ public class CommonResult {
     public M_WxData wxdata; //微信支付参数
     @Expose
     public String password;
+    @Expose
+    public int remindIMId;
 
 
 }
