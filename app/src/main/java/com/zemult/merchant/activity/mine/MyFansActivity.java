@@ -20,11 +20,14 @@ import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.TadeFansListRequest;
+import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.mine.UserFansListRequest;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
@@ -45,11 +48,9 @@ import zema.volley.network.ResponseListener;
 /**
  * Created by wikison on 2016/6/14.
  */
-//我的粉丝
+//1026客户管理
 public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
     public ImageManager imageManager;
-    UserFansListRequest userFansListRequest;
-    TadeFansListRequest tadeFansListRequest;
     CommonAdapter commonAdapter;
 
     @Bind(R.id.lh_btn_back)
@@ -90,27 +91,14 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         mContext = this;
         imageManager = new ImageManager(this);
 
-
         userId = getIntent().getIntExtra(INTENT_USERID, -1);
-        lhTvTitle.setVisibility(View.VISIBLE);
-        if (userId == -1) {
-            lhTvTitle.setText("我的粉丝");
-        } else {
-            lhTvTitle.setText("TA的粉丝");
-        }
+        lhTvTitle.setText("SCRM客户管理");
         fansLv.setRefreshEnable(true);
         fansLv.setLoadMoreEnable(false);
         fansLv.setSmoothListViewListener(this);
         fansLv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         showPd();
-        if (userId == -1) {
-            userFansLis();
-        } else {
-            tadeFansList();
-        }
-
-        llRight.setVisibility(View.INVISIBLE);
-        ivRight.setImageResource(R.mipmap.tianjia2_icon);
+        user2_saleUser_fansList();
         searchView.setTvCancelVisible(View.GONE);
         searchView.setBgColor(getResources().getColor(R.color.divider_c1));
         searchView.setSearchViewListener(new SearchView.SearchViewListener() {
@@ -127,18 +115,20 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         });
     }
 
+    private User2SaleUserFanListRequest userFansListRequest;
 
-    //获取粉丝数据
-    private void userFansLis() {
+    //服务管家的SCRM列表         对该服务管家 关注过的/成功预约/完成支付/赞赏过的
+    private void user2_saleUser_fansList() {
         if (userFansListRequest != null) {
             userFansListRequest.cancel();
         }
-        UserFansListRequest.Input input = new UserFansListRequest.Input();
-        input.operateUserId = SlashHelper.userManager().getUserId();
+        User2SaleUserFanListRequest.Input input = new User2SaleUserFanListRequest.Input();
+        input.saleUserId = userId;
+        input.name = name;
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的行数
         input.convertJosn();
-        userFansListRequest = new UserFansListRequest(input, new ResponseListener() {
+        userFansListRequest = new User2SaleUserFanListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -151,8 +141,8 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                 dismissPd();
                 if (((APIM_UserFansList) response).status == 1) {
                     if (page == 1) {
-                        mDatas = ((APIM_UserFansList) response).fansList;
-                        if (mDatas == null || mDatas.size() == 0) {
+                        mDatas = ((APIM_UserFansList) response).userList;
+                        if (mDatas == null || mDatas.isEmpty()) {
                             fansLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
                         } else {
@@ -166,40 +156,20 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                                         if (!TextUtils.isEmpty(mfollow.head)) {
                                             holder.setCircleImage(R.id.iv_follow_head, mfollow.head);
                                         }
-                                        // 性别
-                                        if (mfollow.sex == 0)
-                                            holder.setResImage(R.id.iv_sex, R.mipmap.man_icon);
-                                        else
-                                            holder.setResImage(R.id.iv_sex, R.mipmap.girl_icon);
+                                        holder.setText(R.id.tv_follow_name, mfollow.name);
+                                        holder.setViewGone(R.id.iv_sex);
+                                        holder.setViewGone(R.id.iv_status);
 
                                         holder.setOnclickListener(R.id.iv_follow_head, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent intent = new Intent(mContext, UserDetailActivity.class);
-                                                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position).userId);
-                                                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position).name);
-                                                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position).head);
-                                                startActivity(intent);
+                                                Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mDatas.get(position).userId + "", Urls.APP_KEY);
+                                                Bundle bundle=new Bundle();
+                                                bundle.putInt("serviceId", mDatas.get(position).userId);
+                                                IMkitintent.putExtras(bundle);
+                                                startActivity(IMkitintent);
                                             }
                                         });
-                                        if (!TextUtils.isEmpty(mfollow.note))
-                                            holder.setText(R.id.tv_describe, mfollow.note);
-
-                                        holder.setText(R.id.tv_follow_name, mfollow.name);
-                                        holder.setFocusState(R.id.tv_state, mfollow.state, R.id.iv_state);
-                                        holder.setOnclickListener(R.id.ll_state, new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-
-                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
-                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
-
-                                                }
-                                            }
-                                        });
-
                                     }
 
                                 });
@@ -207,7 +177,7 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
 
                         }
                     } else {
-                        mDatas.addAll(((APIM_UserFansList) response).fansList);
+                        mDatas.addAll(((APIM_UserFansList) response).userList);
                         commonAdapter.notifyDataSetChanged();
                     }
 
@@ -232,216 +202,24 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         sendJsonRequest(userFansListRequest);
     }
 
-    //获取TA的粉丝数据
-    private void tadeFansList() {
-
-        if (tadeFansListRequest != null) {
-            tadeFansListRequest.cancel();
-        }
-        TadeFansListRequest.Input input = new TadeFansListRequest.Input();
-        if (SlashHelper.userManager().getUserinfo() != null) {
-            input.operateUserId = SlashHelper.userManager().getUserId();
-        }
-        input.userId = userId;
-        input.page = page;
-        input.rows = Constants.ROWS;     //每页显示的行数
-        input.convertJosn();
-
-        tadeFansListRequest = new TadeFansListRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-                fansLv.stopRefresh();
-                fansLv.stopLoadMore();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                dismissPd();
-                if (((APIM_UserFansList) response).status == 1) {
-                    if (page == 1) {
-                        mDatas = ((APIM_UserFansList) response).fansList;
-                        if (mDatas == null || mDatas.size() == 0) {
-                            fansLv.setVisibility(View.GONE);
-                            rlNoData.setVisibility(View.VISIBLE);
-                        } else {
-                            fansLv.setVisibility(View.VISIBLE);
-                            rlNoData.setVisibility(View.GONE);
-
-                            if (mDatas != null && !mDatas.isEmpty()) {
-                                fansLv.setAdapter(commonAdapter = new CommonAdapter<M_Fan>(MyFansActivity.this, R.layout.item_my_follow, mDatas) {
-                                    @Override
-                                    public void convert(CommonViewHolder holder, M_Fan mfollow, final int position) {
-
-//                                        if (!TextUtils.isEmpty(mfollow.head)) {
-//                                            holder.setCircleImage(R.id.iv_fan_head, mfollow.head);
-//                                        }
-//
-//                                        holder.setOnclickListener(R.id.iv_fan_head, new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                Intent intent = new Intent(mContext, UserDetailActivity.class);
-//                                                intent.putExtra(UserDetailActivity.USER_ID, mDatas.get(position).userId);
-//                                                intent.putExtra(UserDetailActivity.USER_NAME, mDatas.get(position).name);
-//                                                intent.putExtra(UserDetailActivity.USER_HEAD, mDatas.get(position).head);
-//                                                startActivity(intent);
-//                                            }
-//                                        });
-//                                        holder.setText(R.id.sign_tv, mfollow.sign);
-//                                        holder.setText(R.id.tv_fan_name, mfollow.name);
-//                                        holder.setFocusState(R.id.tv_state, mfollow.state);
-//                                        if (mDatas.get(position).userId == SlashHelper.userManager().getUserId()) {
-//                                            holder.setViewGone(R.id.tv_state);
-//
-//                                        }
-
-                                        holder.setOnclickListener(R.id.tv_state, new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                if (mDatas.get(position).state == 0) {       //已关注的状态
-                                                    cancleFocus(mDatas.get(position).userId, position); //取消关注操作
-
-                                                } else if (mDatas.get(position).state == 1) {         //未关注的状态
-                                                    addFous(mDatas.get(position).userId, position);//添加关注网络操作
-
-                                                }
-                                            }
-                                        });
-
-                                    }
-
-                                });
-                            }
-
-                        }
-                    } else {
-                        mDatas.addAll(((APIM_UserFansList) response).fansList);
-                        commonAdapter.notifyDataSetChanged();
-                    }
-
-                    if (((APIM_UserFansList) response).maxpage <= page) {
-                        fansLv.setLoadMoreEnable(false);
-                    } else {
-                        fansLv.setLoadMoreEnable(true);
-                        page++;
-
-                        Log.i("sunjian", "" + page);
-                    }
-
-                } else {
-                    ToastUtils.show(MyFansActivity.this, ((APIM_UserFansList) response).info);
-                }
-                fansLv.stopRefresh();
-                fansLv.stopLoadMore();
-
-            }
-        });
-
-        sendJsonRequest(tadeFansListRequest);
-    }
-
-
-    // 用户添加关注
-    private void addFous(int userId, final int position) {
-        showPd();
-        if (attractAddRequest != null) {
-            attractAddRequest.cancel();
-        }
-        UserAttractAddRequest.Input input = new UserAttractAddRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId(); // 用户id
-        input.attractId = userId; // 被关注的用户id
-
-        input.convertJosn();
-        attractAddRequest = new UserAttractAddRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                dismissPd();
-                if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(mContext, "添加成功");
-
-                    mDatas.get(position).state = 0;
-                    commonAdapter.setDataChanged(mDatas);  //改变按钮样式
-                } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
-                }
-            }
-        });
-        sendJsonRequest(attractAddRequest);
-    }
-
-
-    // 用户取消关注
-    private void cancleFocus(int userId, final int position) {
-        showPd();
-        if (attractDelRequest != null) {
-            attractDelRequest.cancel();
-        }
-        UserAttractDelRequest.Input input = new UserAttractDelRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId(); // 用户id
-        input.attractId = userId; // 被关注的用户id
-        input.convertJosn();
-        attractDelRequest = new UserAttractDelRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                dismissPd();
-                if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(mContext, "取消成功");
-                    mDatas.get(position).state = 1;
-                    commonAdapter.setDataChanged(mDatas);  //改变按钮样式
-
-                } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
-                }
-            }
-        });
-        sendJsonRequest(attractDelRequest);
-    }
-
-
-    @OnClick({R.id.ll_back, R.id.lh_btn_back, R.id.iv_right, R.id.ll_right})
+    @OnClick({R.id.ll_back, R.id.lh_btn_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
                 break;
-            case R.id.iv_right:
-            case R.id.ll_right:
-                startActivity(new Intent(mContext, AddFriendsActivity.class));
-                break;
         }
     }
 
     @Override
     public void onRefresh() {
-        if (userId == -1) {
-            page = 1;
-            userFansLis();
-        } else {
-            page = 1;
-            tadeFansList();
-        }
+        user2_saleUser_fansList();
     }
 
     @Override
     public void onLoadMore() {
-        if (userId == -1) {
-            userFansLis();
-        } else {
-            tadeFansList();
-        }
+        user2_saleUser_fansList();
     }
-
-
 }
 

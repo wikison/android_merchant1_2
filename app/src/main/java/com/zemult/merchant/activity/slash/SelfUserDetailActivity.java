@@ -477,7 +477,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_scrm:
                 intent = new Intent(mActivity, MyFansActivity.class);
-                intent.putExtra(MyFansActivity.INTENT_USERID, -1);
+                intent.putExtra(MyFansActivity.INTENT_USERID, userId);
                 startActivity(intent);
                 break;
         }
