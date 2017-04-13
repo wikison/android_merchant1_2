@@ -233,7 +233,7 @@ public class UserDetailActivity extends BaseActivity {
                 case MSG_VOICE_CHANGED:
                     if (isStartRecord) {
                         recordTime--;
-                        Log.d(getClass().getName(), recordTime + "");
+                        System.out.println("recordTime left" + recordTime + "");
                     } else {
                         if (timerTask != null) {
                             timerTask.cancel();
@@ -337,9 +337,6 @@ public class UserDetailActivity extends BaseActivity {
         btnService.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (noLogin(mContext)) {
-                    //登录
-                }
 
                 btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_press));
                 mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
@@ -368,6 +365,11 @@ public class UserDetailActivity extends BaseActivity {
                 int x = (int) event.getX();// 获得x轴坐标
                 int y = (int) event.getY();// 获得y轴坐标
                 switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (noLogin(mContext)) {
+                            return true;
+                        }
+                        break;
                     case MotionEvent.ACTION_UP:
                         btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
                         if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
@@ -858,11 +860,13 @@ public class UserDetailActivity extends BaseActivity {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tvBuy.setCompoundDrawables(null, drawable, null, null);
             tvBuy.setTextColor(getResources().getColor(R.color.font_busy));
+            tvBuy.setEnabled(true);
         } else {
             Drawable drawable = getResources().getDrawable(R.mipmap.money_gray);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tvBuy.setCompoundDrawables(null, drawable, null, null);
             tvBuy.setTextColor(getResources().getColor(R.color.font_black_999));
+            tvBuy.setEnabled(false);
         }
 
     }
