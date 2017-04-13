@@ -36,6 +36,7 @@ public class ServiceTicketListActivity extends BaseActivity {
         initListener();
     }
 
+
     private void initData() {
         lhTvTitle.setText("服务单记录");
         page_position = getIntent().getIntExtra("page_position", 0);

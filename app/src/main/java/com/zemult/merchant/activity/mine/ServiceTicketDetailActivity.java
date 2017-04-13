@@ -114,7 +114,6 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         mActivity = this;
         mImageManager = new ImageManager(mContext);
         lhTvTitle.setText("服务定单");
-
         userReservationInfo();
 
     }
