@@ -17,7 +17,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
     public static class Input {
         public String ejson;
         public int  userId;//				是	用户id
-        public int merchantId;//				是	商户id
+        public String merchantId;//				是	商户id
         public int saleUserId;//				是	约客的用户id
         public String reservationTime;//				是	预约时间(格式为"yyyy-MM-dd HH:mm:ss")
         public String num;			//	是	人数
@@ -27,7 +27,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("userId", userId+""),
-                    new Pair<String, String>("merchantId", merchantId+""),
+                    new Pair<String, String>("merchantId", merchantId),
                     new Pair<String, String>("saleUserId", saleUserId+""),
                     new Pair<String, String>("reservationTime", reservationTime),
                     new Pair<String, String>("num", num+""),

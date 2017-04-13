@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -570,6 +571,15 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                             Intent intent =new Intent(fragment.getActivity(),AppointmentDetailNewActivity.class);
                             intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
                             fragment.startActivity(intent);
+                    }
+                    if("VOICE".equals(customizeObject.getString("tasktype"))&&!customizeObject.getString("userId").equals(SlashHelper.userManager().getUserId()+"")){
+                        Intent intent =new Intent(fragment.getActivity(),CreateBespeakNewActivity.class);
+                        intent.putExtra("customerId",Integer.parseInt(customizeObject.getString("userId")));
+                        intent.putExtra("customerVoice",customizeObject.getString("recordPath"));
+                        intent.putExtra("reviewstatus",customizeObject.getString("reviewstatus"));
+                        intent.putExtra("merchantName",customizeObject.getString("merchantName"));
+                        intent.putExtra("merchantId",customizeObject.getString("merchantId"));
+                        fragment.startActivity(intent);
                     }
                     else if("GIFT".equals(customizeObject.getString("tasktype"))){
                         if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家
@@ -1175,6 +1185,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                 convertView = View.inflate(fragment.getActivity(), R.layout.demo_custom_msg_layout_without_head, null);
                 holder.head = (ImageView) convertView.findViewById(R.id.head);
                 holder.name = (TextView) convertView.findViewById(R.id.name);
+                holder.small_head = (ImageView) convertView.findViewById(R.id.small_head);
                 convertView.setTag(holder);
                 YWLog.i(TAG, "getCustomView, convertView == null");
             } else {
@@ -1187,6 +1198,10 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
             }
             else if("GIFT".equals(tasktype)){
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_liwu_icon,null);
+            }
+            else if("VOICE".equals(tasktype)){
+                holder.small_head.setVisibility(View.VISIBLE);
+                holder.head.setVisibility(View.GONE);
             }
             else {
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_hongbao_icon,null);
@@ -1208,6 +1223,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
     public class ViewHolder2 {
         ImageView head;
+        ImageView small_head;
         TextView name;
     }
 

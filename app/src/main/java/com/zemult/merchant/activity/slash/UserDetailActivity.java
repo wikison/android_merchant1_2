@@ -23,6 +23,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.YWCustomMessageBody;
+import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundLinearLayout;
@@ -44,6 +50,8 @@ import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.AppointmentDetailNewActivity;
+import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.FilterEntity;
@@ -52,6 +60,7 @@ import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
@@ -63,6 +72,9 @@ import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.VerticalScrollView;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -750,7 +762,34 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    int remindIMId = ((CommonResult) response).remindIMId;
+//                    int remindIMId = ((CommonResult) response).remindIMId;
+                    YWCustomMessageBody messageBody = new YWCustomMessageBody();
+                    //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("customizeMessageType", "Task");
+                        object.put("tasktype", "VOICE");
+                        object.put("taskTitle", "发了一个约服需求"+ DateTimeUtil.getCurrentTime2()+"如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
+                        object.put("merchantId", selectMerchant.merchantId);
+                        object.put("reviewstatus",selectMerchant.reviewstatus);
+                        object.put("merchantName",selectMerchant.merchantName);
+                        object.put("userId",SlashHelper.userManager().getUserId());
+                        object.put("fromuserName",SlashHelper.userManager().getUserinfo().name);
+                        object.put("fromuserHead",SlashHelper.userManager().getUserinfo().head);
+                        object.put("recordPath",fileUrl);
+                    } catch (JSONException e) {
+
+                    }
+                    messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+                    messageBody.setSummary("[预约服务]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                    YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                    YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                    IYWContact appContact = YWContactFactory.createAPPContact(userId+ "", imKit.getIMCore().getAppKey());
+                    imKit.getConversationService()
+                            .forwardMsgToContact(appContact
+                                    , message, forwardCallBack);
+                        startActivity(imKit.getChattingActivityIntent(userId+""));
+
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
@@ -759,6 +798,25 @@ public class UserDetailActivity extends BaseActivity {
         });
         sendJsonRequest(user2RemindIMAddRequest);
     }
+
+    final IWxCallback forwardCallBack = new IWxCallback() {
+
+        @Override
+        public void onSuccess(Object... result) {
+            Notification.showToastMsg(UserDetailActivity.this, "forward succeed!");
+        }
+
+        @Override
+        public void onError(int code, String info) {
+            Notification.showToastMsg(UserDetailActivity.this, "forward fail!");
+        }
+
+        @Override
+        public void onProgress(int progress) {
+
+        }
+    };
+
 
     /**
      * 拨打电话

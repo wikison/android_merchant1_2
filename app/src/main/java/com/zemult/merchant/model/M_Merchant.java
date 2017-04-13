@@ -17,6 +17,8 @@ public class M_Merchant implements Serializable {
     @Expose
     public String name;    //	商家名称
     @Expose
+    public String merchantName;    //	商家名称
+    @Expose
     public String head;    //	头像
     @Expose
     public String merchantPic;    //	商家封面

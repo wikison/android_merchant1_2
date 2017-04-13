@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -42,12 +46,14 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
+import com.zemult.merchant.util.sound.HttpOperateUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,16 +90,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
     TextView tvCustomername;
     @Bind(R.id.v_user)
     ImageView vUser;
-
+    @Bind(R.id.rl_customerphone)
+    RelativeLayout rlCustomerphone;
+    @Bind(R.id.tv_dingjin_tpis)
+    TextView tvDingjinTpis;
+    private MediaPlayer mMediaPlayer;
 
 
     UserInfoOwnerRequest userInfoOwnerRequest;
     UserReservationAddRequest userReservationAddRequest;
-    int userSex = 0;
     int customerId;
     String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note,customerName,customerHead,customerVoice;
-    int merchantId;
-    M_Merchant m_merchant;
+    String merchantId,reviewstatus;
     int CHOOSEMERCHANT = 100;
     boolean isFromMerchant;
 
@@ -115,6 +123,9 @@ public class CreateBespeakNewActivity extends BaseActivity {
         customerId = getIntent().getIntExtra("customerId", 0);
 
         customerVoice= getIntent().getStringExtra("customerVoice");
+        merchantId= getIntent().getStringExtra("merchantId");
+        reviewstatus= getIntent().getStringExtra("reviewstatus");
+
         if(null!=customerVoice){
             playBtn.setVisibility(View.VISIBLE);
         }
@@ -122,11 +133,17 @@ public class CreateBespeakNewActivity extends BaseActivity {
             playBtn.setVisibility(View.GONE                         );
         }
 
-        m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
-        isFromMerchant = m_merchant == null ? false : true;
-        if (isFromMerchant) {
-            shopname = m_merchant.getName();
-            merchantId = m_merchant.getMerchantId();
+        if (null!=merchantId&&null!=reviewstatus) {
+
+            if(reviewstatus.equals("2")){
+                rlCustomerphone.setVisibility(View.VISIBLE);
+                tvDingjinTpis.setVisibility(View.VISIBLE);
+            }
+            else {
+                rlCustomerphone.setVisibility(View.GONE);
+                tvDingjinTpis.setVisibility(View.GONE);
+            }
+            shopname =getIntent().getStringExtra("merchantName");
             bespekShopname.setText(shopname);
             bespekShopname.setCompoundDrawables(null, null, null, null);
         } else {
@@ -270,7 +287,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择商户");
                     return;
                 }
-                if (merchantId == 0) {
+                if ( StringUtils.isBlank(merchantId)) {
                     ToastUtil.showMessage("请选择商户");
                     return;
                 }
@@ -308,6 +325,9 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 break;
             case R.id.play_btn:
 
+                if(!StringUtils.isBlank(customerVoice)){
+                    startPlay();
+                }
 
                 break;
 
@@ -316,11 +336,53 @@ public class CreateBespeakNewActivity extends BaseActivity {
     }
 
 
+    public void startPlay() {
+        stopPlay();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                // TODO Auto-generated method stub
+
+                String fileName = HttpOperateUtil.downLoadFile(customerVoice,
+                        customerVoice.substring(customerVoice.lastIndexOf("/") + 1));
+
+                Log.i("keanbin", "fileName = " + fileName);
+                File file = new File(fileName);
+
+                if (!file.exists()) {
+//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
+//                            .show();
+                    return;
+                }
+                try{
+                    mMediaPlayer = MediaPlayer.create(CreateBespeakNewActivity.this,
+                            Uri.parse(fileName));
+                    mMediaPlayer.setLooping(false);
+                    mMediaPlayer.start();
+                }catch (Exception e){
+                }
+                Looper.loop();
+            }
+        }).start();
+
+    }
+
+    ;
+
+    public void stopPlay() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+        }
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CHOOSEMERCHANT && resultCode == RESULT_OK) {
             bespekShopname.setText(data.getStringExtra("shopName"));
-            merchantId = data.getIntExtra("merchantId", 0);
+            merchantId = data.getIntExtra("merchantId", 0)+"";
         }
     }
 
