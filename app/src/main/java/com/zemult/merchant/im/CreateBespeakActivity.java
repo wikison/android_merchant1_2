@@ -160,7 +160,7 @@ public class CreateBespeakActivity extends BaseActivity {
                 userReservationAddRequest.cancel();
             }
             UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
-            input.merchantId = merchantId;
+            input.merchantId = merchantId+"";
             input.saleUserId = serviceId;
             input.reservationTime = ordertime + ":00";
             input.num = orderpeople;

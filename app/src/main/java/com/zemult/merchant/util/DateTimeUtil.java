@@ -197,7 +197,9 @@ public final class DateTimeUtil implements Serializable {
     public static String getCurrentTime() {
         return getFormatDateTime(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
-
+    public static String getCurrentTime2() {
+        return getFormatDateTime(new Date(), "HH:mm:ss");
+    }
 
     /**
      * 返回给定时间字符串。
