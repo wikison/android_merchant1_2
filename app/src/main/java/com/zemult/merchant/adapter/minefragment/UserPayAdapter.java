@@ -81,7 +81,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
 
 
         if (m.type == 0||m.type==6) {
-            holder.tvSaleName.setText("交易对象: " + m.saleUserName);
+            holder.tvSaleName.setText("服务管家: " + m.saleUserName);
             if (!TextUtils.isEmpty(m.saleUserHead)) {
                 //加载带外边框的
                 mImageManager.loadCircleHasBorderImage(m.saleUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
@@ -138,7 +138,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                 mImageManager.loadCircleHasBorderImage(m.toUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
             }
         }else if(m.type == 5){
-            holder.tvSaleName.setText("交易对象: " + m.saleUserName);
+            holder.tvSaleName.setText("服务管家: " + m.saleUserName);
             holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
             holder.tvState.setText("订金");
             if (!TextUtils.isEmpty(m.saleUserHead)) {

@@ -16,9 +16,6 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.MyAppointmentActivity;
-import com.zemult.merchant.activity.mine.ServiceTicketDetailActivity;
-import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
@@ -44,10 +41,10 @@ import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 /**
- * Created by admin on 2017/4/8.
+ * Created by admin on 2017/4/13.
  */
 
-public class MyServiceTicketFragment extends BaseFragment implements SmoothListView.ISmoothListViewListener {
+public class ServiceTicketListFragment extends BaseFragment implements SmoothListView.ISmoothListViewListener {
 
     protected WeakReference<View> mRootView;
     @Bind(R.id.smoothListView)
@@ -68,12 +65,12 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
     int selectPayId;
 
     public ImageManager imageManager;
-    UserReservationListRequest userReservationListRequest;//消费者的预约列表
     CommonAdapter commonAdapter;
     private List<M_Reservation> mDatas = new ArrayList<M_Reservation>();
     public static String INTENT_TYPE = "type";
     UserSaleReservationList userSaleReservationList;//服务管家的预约列表
     int reservationId;
+    int saleUserId, merchantId;
 
 
     @Override
@@ -85,7 +82,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         if (mDatas.size() < 1) {
             showPd();
             //获取列表数据
-            userReservationList();
+            userSaleReservation();
         }
     }
 
@@ -94,6 +91,8 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         super.onCreate(savedInstanceState);
         //get page index
         pagePosition = getArguments().getInt("page_position");
+        saleUserId = getArguments().getInt("saleUserId");
+        merchantId = getArguments().getInt("merchantId");
 //        registerReceiver(new String[]{Constants.BROCAST_REFRESH_ORDER});
     }
 
@@ -124,7 +123,6 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         return mRootView.get();
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -140,36 +138,38 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                reservationId = mDatas.get(position - 1).reservationId;
-                Intent intent = new Intent(mActivity, ServiceTicketDetailActivity.class);
-                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, reservationId + "");
-                startActivity(intent);
+//                reservationId = mDatas.get(position - 1).reservationId;
+//                Intent intent = new Intent(mActivity, ServiceTicketDetailActivity.class);
+//                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, reservationId + "");
+//                startActivity(intent);
             }
         });
 
     }
 
 
-    private void userReservationList() {
+    private void userSaleReservation() {
 
-        if (userReservationListRequest != null) {
-            userReservationListRequest.cancel();
+        if (userSaleReservationList != null) {
+            userSaleReservationList.cancel();
         }
-        UserReservationListRequest.Input input = new UserReservationListRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId();
+        UserSaleReservationList.Input input = new UserSaleReservationList.Input();
 
-        switch (pagePosition){
+        input.saleUserId = saleUserId;
+        input.merchantId = merchantId;
+
+        switch (pagePosition) {
             case 0:
-                input.state=-1;
+                input.state = -1;
                 break;
             case 1:
-                input.state=1;
+                input.state = 0;
                 break;
             case 2:
-                input.state=2;
+                input.state = 1;
                 break;
             case 3:
-                input.state=6;
+                input.state = 5;
                 break;
         }
 
@@ -177,7 +177,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         input.page = page;
         input.rows = Constants.ROWS;     //每页显示的行数
         input.convertJosn();
-        userReservationListRequest = new UserReservationListRequest(input, new ResponseListener() {
+        userSaleReservationList = new UserSaleReservationList(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -206,30 +206,72 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        //状态(1:预约成功,2:已支付,3:预约结束)
-                                        if (mReservation.state == 1) {
-                                            holder.setText(R.id.tv_state, "已确认");
-                                            holder.setViewGone(R.id.money_ll);
-                                        } else if (mReservation.state == 2) {
-                                            holder.setText(R.id.tv_state, "已支付");
-                                            holder.setViewVisible(R.id.money_ll);
-                                            holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.userPayMoney));
-                                        } else if (mReservation.state == 3) {
-                                            holder.setText(R.id.tv_state, "已结束");
-                                            holder.setViewGone(R.id.money_ll);
-                                        } else if (mReservation.state == 4) {
-                                            holder.setText(R.id.tv_state, "已结束");
-                                            holder.setViewGone(R.id.money_ll);
-                                        }
+                                        holder.setText(R.id.tv_describe, "客户:");
 
-                                        if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
-                                            holder.setCircleImage(R.id.iv_headimage, mReservation.saleUserHead);
+                                        if (!TextUtils.isEmpty(mReservation.head)) {
+                                            holder.setCircleImage(R.id.iv_headimage, mReservation.head);
                                         }
-                                        holder.setText(R.id.tv_saleuser, mReservation.saleUserName);
+                                        holder.setText(R.id.tv_saleuser, mReservation.name);
 
                                         holder.setText(R.id.tv_merchantName, mReservation.merchantName);
-                                        holder.setText(R.id.tv_reservationTime,mReservation.reservationTime);
-                                        String time = mReservation.reservationTime;
+                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime);
+
+                                        switch (mReservation.state) {
+                                            //状态(状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时)))
+                                            case 0:
+                                                holder.setViewVisible(R.id.money_ll);
+                                                holder.setText(R.id.tv_state, "待确认");
+                                                holder.setText(R.id.tv_orderdescription, "待支付订金");
+                                                holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.reservationMoney));
+
+
+                                                break;
+                                            case 1:
+                                                if (mReservation.merchantReviewstatus == 2) {
+                                                    holder.setViewVisible(R.id.money_ll);
+                                                    holder.setText(R.id.tv_state, "待买单");
+                                                    holder.setText(R.id.tv_orderdescription, "已付订金");
+                                                    holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.reservationMoney));
+
+                                                } else {
+                                                    holder.setViewGone(R.id.money_ll);
+                                                    holder.setText(R.id.tv_state, "已确认");
+
+                                                }
+                                                break;
+
+                                            case 2:
+                                                holder.setViewVisible(R.id.money_ll);
+                                                holder.setText(R.id.tv_state, "已支付");
+                                                holder.setText(R.id.tv_orderdescription, "消费金额");
+                                                holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.userPayMoney));
+                                                break;
+                                            case 3:
+                                            case 4:
+                                                holder.setViewGone(R.id.money_ll);
+                                                holder.setText(R.id.tv_state, "已结束");
+                                                break;
+                                        }
+
+
+//                                        //状态(1:预约成功,2:已支付,3:预约结束)
+//                                        if (mReservation.state == 1) {
+//                                            holder.setText(R.id.tv_state, "已确认");
+//                                            holder.setViewGone(R.id.money_ll);
+//                                        } else if (mReservation.state == 2) {
+//                                            holder.setText(R.id.tv_state, "已支付");
+//                                            holder.setViewVisible(R.id.money_ll);
+//                                            holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.userPayMoney));
+//                                        } else if (mReservation.state == 3) {
+//                                            holder.setText(R.id.tv_state, "已结束");
+//                                            holder.setViewGone(R.id.money_ll);
+//                                        } else if (mReservation.state == 4) {
+//                                            holder.setText(R.id.tv_state, "已结束");
+//                                            holder.setViewGone(R.id.money_ll);
+//                                        }
+//
+//
+//                                        String time = mReservation.reservationTime;
 
 //                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime + DateTimeUtil.getWeekDayOfWeek(time) + "  " + time.substring(11, 16));
 
@@ -275,24 +317,18 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                 smoothListView.stopLoadMore();
             }
         });
-        sendJsonRequest(userReservationListRequest);
+        sendJsonRequest(userSaleReservationList);
     }
 
 
     @Override
     public void onRefresh() {
         page = 1;
-        userReservationList();
+        userSaleReservation();
     }
 
     @Override
     public void onLoadMore() {
-        userReservationList();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+        userSaleReservation();
     }
 }

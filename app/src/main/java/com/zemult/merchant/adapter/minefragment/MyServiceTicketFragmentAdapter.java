@@ -12,7 +12,7 @@ import com.zemult.merchant.fragment.MyServiceTicketFragment;
  * Created by admin on 2017/4/8.
  */
 
-public class MyServiceTicketFragmentAdapter extends FragmentStatePagerAdapter {
+public class MyServiceTicketFragmentAdapter extends FragmentStatePagerAdapter  {
     private Context context;
     private String[] titles = new String[]{"全部", "已确认", "已支付", "已结束"};
     MyServiceTicketFragment myServiceTicketFragment;

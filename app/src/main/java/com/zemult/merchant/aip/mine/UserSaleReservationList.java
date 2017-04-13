@@ -21,6 +21,8 @@ public class UserSaleReservationList extends PostStringRequest<Type> {
     public static class Input {
 
         public int saleUserId;    //	约客的用户id
+        public int merchantId; //商户id
+        public int state;//状态(-1:全部,0:待确认,1:带买单,5:已结束(状态2/3/4都是已结束的分支))
         public int page;    //	获取第x页的数据
         public int rows;    //	每次获取的数据个数
         public String ejson;
@@ -29,6 +31,8 @@ public class UserSaleReservationList extends PostStringRequest<Type> {
         public void convertJosn() {
             ejson = Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("saleUserId", saleUserId + ""),
+                    new Pair<String, String>("merchantId",merchantId+""),
+                    new Pair<String, String>("state",state+""),
                     new Pair<String, String>("page", page + ""),
                     new Pair<String, String>("rows", rows + ""))
             );

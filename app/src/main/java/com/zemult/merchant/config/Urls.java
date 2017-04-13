@@ -530,7 +530,7 @@ public class Urls {
     //用户的预约单列表
     public static String USER_RESERVATION_LIST = "user2_reservation_list.do";
     //约客的预约记录列表     (不包含待确认的)
-    public static String USER_SALE_RESERVATION_LIST = "user_sale_reservation_list";
+    public static String USER_SALE_RESERVATION_LIST = "user2_saleUser_reservationList.do";
 
 
     //用户预约单详情

@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.PayInfoActivity;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
@@ -66,6 +64,8 @@ public class RedRecordDetailActivity extends BaseActivity {
     RoundTextView rtvToPay;
     int userPayId;
     int comefrom;
+    @Bind(R.id.tv_pay_type)
+    TextView tvPayType;
 
     @Override
     public void setContentView() {
@@ -97,12 +97,12 @@ public class RedRecordDetailActivity extends BaseActivity {
 
         } else {
 
-            if(m.type==0){
+            if (m.type == 0) {
                 tvMoney.setText("+" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
-            }else{
+            } else {
                 tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
             }
-         //   tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+            //   tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
             fromTv.setText("来自");
             if (!TextUtils.isEmpty(m.userHead)) {
                 imageManager.loadCircleImage(m.userHead, ivUserHead);
@@ -160,6 +160,19 @@ public class RedRecordDetailActivity extends BaseActivity {
                     } else {
                         rtvToPay.setVisibility(View.GONE);
                     }
+
+                    switch (m.moneyType) {
+                        case 0:
+                            tvPayType.setText("账户余额");
+                            break;
+                        case 1:
+                            tvPayType.setText("支付宝支付");
+                            break;
+                        case 2:
+                            tvPayType.setText("微信支付");
+                            break;
+                    }
+
 
                 } else {
                     ToastUtils.show(RedRecordDetailActivity.this, ((APIM_UserBillInfo) response).info);

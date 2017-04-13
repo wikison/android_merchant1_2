@@ -290,8 +290,7 @@
         <activity android:name=".activity.mine.MyFollowActivity" />
         <activity android:name=".activity.FindPasswordActivity" />
         <activity android:name=".activity.mine.FamiliarPeopleActivity" />
-        <activity android:name=".activity.RecordLifeActivity">
-        </activity>
+        <activity android:name=".activity.RecordLifeActivity" />
         <activity android:name=".util.imagepicker.SelectPictureActivity" />
         <activity android:name=".util.imagepicker.ImageAlbumActivity" />
         <activity android:name=".util.imagepicker.ImageBrowserActivity" />
@@ -570,7 +569,6 @@
         <activity
             android:name=".im.CreateBespeakNewActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity android:name=".activity.mine.MerchantEnter2Activity" />
         <activity android:name=".alipay.taskpay.AssessmentActivity" />
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity" />
@@ -608,10 +606,11 @@
         <activity android:name=".activity.mine.FindOneResultActivity" />
         <activity android:name=".activity.mine.FindOneRecommandActivity" />
         <activity android:name=".activity.mine.MyServiceTicketActivity" />
-        <activity android:name=".activity.mine.ServiceTicketDetailActivity"></activity>
-
-        <activity android:name=".activity.slash.SelfUserDetailActivity"/>
-        <activity android:name=".activity.mine.MyFansActivity"/>
+        <activity android:name=".activity.mine.ServiceTicketDetailActivity" />
+        <activity android:name=".activity.slash.SelfUserDetailActivity" />
+        <activity android:name=".activity.mine.MyFansActivity" />
+        <activity android:name=".activity.slash.ServiceTicketListActivity" />
+        <activity android:name=".activity.slash.ServiceTicketDetailActivity"></activity>
     </application>
 
 </manifest>

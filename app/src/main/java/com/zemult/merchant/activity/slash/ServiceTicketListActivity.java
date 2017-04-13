@@ -1,4 +1,4 @@
-package com.zemult.merchant.activity.mine;
+package com.zemult.merchant.activity.slash;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
-import com.zemult.merchant.adapter.minefragment.MyServiceTicketFragmentAdapter;
+import com.zemult.merchant.adapter.minefragment.ServiceTicketListFragmentAdapter;
 import com.zemult.merchant.app.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyServiceTicketActivity extends BaseActivity {
+public class ServiceTicketListActivity extends BaseActivity {
 
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
@@ -23,9 +23,10 @@ public class MyServiceTicketActivity extends BaseActivity {
     @Bind(R.id.vp_my_sertick)
     ViewPager vpMySertick;
     int page_position = -1;
+    int saleUserId,merchantId;
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_my_service_ticket);
+        setContentView(R.layout.activity_service_ticket_list);
     }
 
     @Override
@@ -35,15 +36,15 @@ public class MyServiceTicketActivity extends BaseActivity {
         initListener();
     }
 
-
-
     private void initData() {
-        lhTvTitle.setText("我的服务单");
+        lhTvTitle.setText("服务单记录");
         page_position = getIntent().getIntExtra("page_position", 0);
+        saleUserId=getIntent().getIntExtra("saleUserId",0);
+        merchantId=getIntent().getIntExtra("merchantId",0);
     }
 
     private void initView() {
-        MyServiceTicketFragmentAdapter adapter = new MyServiceTicketFragmentAdapter(getSupportFragmentManager());
+        ServiceTicketListFragmentAdapter adapter = new ServiceTicketListFragmentAdapter(getSupportFragmentManager(),saleUserId,merchantId);
         vpMySertick.setAdapter(adapter);
         vpMySertick.setOffscreenPageLimit(4);
         vpMySertick.setCurrentItem(page_position);
@@ -54,7 +55,6 @@ public class MyServiceTicketActivity extends BaseActivity {
         vpMySertick.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -69,6 +69,7 @@ public class MyServiceTicketActivity extends BaseActivity {
         });
 
     }
+
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
