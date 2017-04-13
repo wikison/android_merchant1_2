@@ -8,6 +8,7 @@ import com.zemult.merchant.util.Convert;
 
 import java.lang.reflect.Type;
 
+import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
@@ -23,16 +24,32 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
         public String num;			//	是	人数
         public String note;		//		否	备注
         public String reservationMoney;		//定金
+        public String replayNote;		//语音地址
+
 
         public void convertJosn(){
-            ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("userId", userId+""),
-                    new Pair<String, String>("merchantId", merchantId),
-                    new Pair<String, String>("saleUserId", saleUserId+""),
-                    new Pair<String, String>("reservationTime", reservationTime),
-                    new Pair<String, String>("num", num+""),
-                    new Pair<String, String>("reservationMoney", reservationMoney),
-                    new Pair<String, String>("note", note)));
+            if(StringUtils.isBlank(replayNote)){
+                ejson=Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("userId", userId+""),
+                        new Pair<String, String>("merchantId", merchantId),
+                        new Pair<String, String>("saleUserId", saleUserId+""),
+                        new Pair<String, String>("reservationTime", reservationTime),
+                        new Pair<String, String>("num", num+""),
+                        new Pair<String, String>("reservationMoney", reservationMoney),
+                        new Pair<String, String>("note", note)));
+            }
+            else{
+                ejson=Convert.securityJson(Convert.pairsToJson(
+                        new Pair<String, String>("userId", userId+""),
+                        new Pair<String, String>("merchantId", merchantId),
+                        new Pair<String, String>("saleUserId", saleUserId+""),
+                        new Pair<String, String>("reservationTime", reservationTime),
+                        new Pair<String, String>("num", num+""),
+                        new Pair<String, String>("reservationMoney", reservationMoney),
+                        new Pair<String, String>("replayNote", replayNote),
+                        new Pair<String, String>("note", note)));
+            }
+
         }
 
     }

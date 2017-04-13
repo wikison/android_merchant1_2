@@ -222,7 +222,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
             input.note = note;
             input.userId = customerId;
             input.reservationMoney =etDingjin.getText().toString() ;
-
+            input.replayNote=customerVoice;
             input.convertJosn();
 
             userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
@@ -254,7 +254,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
-                        startActivity(imKit.getChattingActivityIntent(customerId + ""));
+//                        startActivity(imKit.getChattingActivityIntent(customerId + ""));
                         finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
