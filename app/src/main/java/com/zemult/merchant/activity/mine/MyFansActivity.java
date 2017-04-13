@@ -15,24 +15,18 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.AddFriendsActivity;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
-import com.zemult.merchant.aip.mine.TadeFansListRequest;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
-import com.zemult.merchant.aip.mine.UserFansListRequest;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
-import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.util.ImageManager;
-import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SearchView;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -110,7 +104,8 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
 
             @Override
             public void onClear() {
-
+                name = "";
+                onRefresh();
             }
         });
     }

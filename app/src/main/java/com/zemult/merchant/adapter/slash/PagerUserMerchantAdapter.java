@@ -237,6 +237,14 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             }
         });
 
+        holder.rlServiceRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onServiceList(entity);
+            }
+        });
+
 
     }
 
@@ -393,6 +401,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     public interface ViewClickListener {
         //查看详情
         void onDetail(M_Merchant entity);
+        //查看服务单列表
+        void onServiceList(M_Merchant entity);
     }
 
     public interface ViewMerchantClickListener {

@@ -20,14 +20,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.adapter.slash.ChooseReservationAdapter;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
-import com.zemult.merchant.aip.mine.UserMerchantPayAddRequest;
-import com.zemult.merchant.aip.mine.UserReservationPayAddRequest;
-import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
+import com.zemult.merchant.aip.mine.User2PayAddRequest;
+import com.zemult.merchant.aip.reservation.User2ReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
@@ -105,8 +105,12 @@ public class FindPayActivity extends BaseActivity {
     CheckBox cbReward;
     @Bind(R.id.iv_reward)
     ImageView ivReward;
-    private M_Merchant merchant;
+    @Bind(R.id.et_reservation_money)
+    EditText etReservationMoney;
+    @Bind(R.id.rll_reservation)
+    RoundLinearLayout rllReservation;
 
+    private M_Merchant merchant;
     private M_Userinfo userinfo;
     int merchantId, userSaleId, reservationId;
     String reservationIds;
@@ -118,12 +122,13 @@ public class FindPayActivity extends BaseActivity {
     // 商户订单号
     private String ORDER_SN = "", managerhead, managername, scanMoney;
     private int userPayId = 0;
-    double money = 0, rewardMoney = 0;
+    private int type = 0;
+    double money = 0, consumeMoney = 0, reservationMoney = 0, rewardMoney = 0;
     MerchantInfoRequest merchantInfoRequest;
 
     UserInfoRequest userInfoRequest;
-    UserMerchantPayAddRequest userMerchantPayAddRequest;
-    UserReservationSaleListRequest userReservationSaleListRequest;
+    User2PayAddRequest user2PayAddRequest;
+    User2ReservationSaleListRequest user2ReservationSaleListRequest;
     CommonRewardRequest commonRewardRequest;
     List<M_Reservation> reservationList = new ArrayList<>();
 
@@ -222,6 +227,9 @@ public class FindPayActivity extends BaseActivity {
                         reservationList.get(position).setChecked(!reservationList.get(position).isChecked());
                     }
                 }
+                M_Reservation reservation = reservationList.get(position);
+                showReservation(reservation.isChecked(), reservation);
+
                 adapter.setData(reservationList, false);
 
             }
@@ -360,24 +368,22 @@ public class FindPayActivity extends BaseActivity {
         try {
             showPd();
 
-            if (userMerchantPayAddRequest != null) {
-                userMerchantPayAddRequest.cancel();
+            if (user2PayAddRequest != null) {
+                user2PayAddRequest.cancel();
             }
-            UserMerchantPayAddRequest.Input input = new UserMerchantPayAddRequest.Input();
+            User2PayAddRequest.Input input = new User2PayAddRequest.Input();
             input.userId = SlashHelper.userManager().getUserId();
             input.merchantId = merchantId;
             input.saleUserId = userSaleId;
-            input.consumeMoney = money + (cbReward.isChecked() ? rewardMoney : 0);
+            input.type = type;
+            input.consumeMoney = consumeMoney;
             input.money = money;
-            if (StringUtils.isEmpty(selectReservations())) {
-                input.reservationIds = "";
-            } else {
-                input.reservationIds = selectReservations();
-            }
+            input.reservationId = reservationId;
+            input.reservationMoney = reservationMoney;
             input.rewardMoney = cbReward.isChecked() ? rewardMoney : 0;
             input.convertJosn();
 
-            userMerchantPayAddRequest = new UserMerchantPayAddRequest(input, new ResponseListener() {
+            user2PayAddRequest = new User2PayAddRequest(input, new ResponseListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     dismissPd();
@@ -418,58 +424,7 @@ public class FindPayActivity extends BaseActivity {
                     dismissPd();
                 }
             });
-            sendJsonRequest(userMerchantPayAddRequest);
-        } catch (Exception e) {
-            dismissPd();
-        }
-    }
-
-    private UserReservationPayAddRequest reservationPayAddRequest;
-
-    private void user_reservation_pay_add() {
-        try {
-            showPd();
-
-            if (reservationPayAddRequest != null) {
-                reservationPayAddRequest.cancel();
-            }
-            UserReservationPayAddRequest.Input input = new UserReservationPayAddRequest.Input();
-            input.userId = SlashHelper.userManager().getUserId();
-            input.reservationId = mReservation.reservationId;
-            input.consumeMoney = money + (cbReward.isChecked() ? rewardMoney : 0);
-            input.money = money;
-            input.rewardMoney = rewardMoney;
-            input.convertJosn();
-
-            reservationPayAddRequest = new UserReservationPayAddRequest(input, new ResponseListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    dismissPd();
-                    System.out.print(error);
-                }
-
-                @Override
-                public void onResponse(Object response) {
-                    int status = ((CommonResult) response).status;
-                    if (status == 1) {
-                        ORDER_SN = ((CommonResult) response).number;
-                        userPayId = ((CommonResult) response).userPayId;
-                        Intent intent = new Intent(FindPayActivity.this, ChoosePayTypeActivity.class);
-                        intent.putExtra("consumeMoney", money + (cbReward.isChecked() ? rewardMoney : 0));
-                        intent.putExtra("order_sn", ORDER_SN);
-                        intent.putExtra("userPayId", userPayId);
-                        intent.putExtra("merchantName", merchant.name);
-                        intent.putExtra("merchantHead", merchant.head);
-                        intent.putExtra("managerhead", managerhead);
-                        intent.putExtra("managername", managername);
-                        startActivityForResult(intent, 10000);
-                    } else {
-                        ToastUtil.showMessage(((CommonResult) response).info);
-                    }
-                    dismissPd();
-                }
-            });
-            sendJsonRequest(reservationPayAddRequest);
+            sendJsonRequest(user2PayAddRequest);
         } catch (Exception e) {
             dismissPd();
         }
@@ -541,17 +496,17 @@ public class FindPayActivity extends BaseActivity {
     }
 
     private void getReservationSaleList() {
-        if (userReservationSaleListRequest != null) {
-            userReservationSaleListRequest.cancel();
+        if (user2ReservationSaleListRequest != null) {
+            user2ReservationSaleListRequest.cancel();
         }
-        UserReservationSaleListRequest.Input input = new UserReservationSaleListRequest.Input();
+        User2ReservationSaleListRequest.Input input = new User2ReservationSaleListRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
         input.saleUserId = userSaleId;
         input.merchantId = merchantId;
         input.page = 1;
         input.rows = Constants.ROWS;
         input.convertJosn();
-        userReservationSaleListRequest = new UserReservationSaleListRequest(input, new ResponseListener() {
+        user2ReservationSaleListRequest = new User2ReservationSaleListRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -569,7 +524,7 @@ public class FindPayActivity extends BaseActivity {
                 dismissPd();
             }
         });
-        sendJsonRequest(userReservationSaleListRequest);
+        sendJsonRequest(user2ReservationSaleListRequest);
     }
 
     // 填充数据
@@ -577,6 +532,7 @@ public class FindPayActivity extends BaseActivity {
         if (list == null || list.size() == 0) {
         } else {
             list.get(0).setChecked(true);
+            showReservation(list.get(0).isChecked(), list.get(0));
             adapter.setData(list, isLoadMore);
         }
         bsvContainer.post(new Runnable() {
@@ -588,6 +544,28 @@ public class FindPayActivity extends BaseActivity {
         });
     }
 
+    private void showReservation(boolean isChecked, M_Reservation reservation) {
+        if (isChecked) {
+            if (reservation.reservationMoney > 0) {
+                rllReservation.setVisibility(View.VISIBLE);
+                reservationMoney = reservation.reservationMoney;
+                etReservationMoney.setText("-￥" + Convert.getMoneyString(reservationMoney));
+            } else {
+                reservationMoney = 0;
+                rllReservation.setVisibility(View.GONE);
+
+            }
+            mReservation = reservation;
+        } else {
+            rllReservation.setVisibility(View.GONE);
+            reservationMoney = 0;
+            mReservation = null;
+        }
+        etPaymoney.setText("");
+        etPaymoney.addTextChangedListener(watcher);
+    }
+
+
     private TextWatcher watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -597,7 +575,7 @@ public class FindPayActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (s.toString().length() > 0) {
                 if (etPaymoney.getText().toString().length() > 0) {
-                    if (getMoney() > 0) {
+                    if (getMoney() > reservationMoney) {
                         etPaymoney.setHint("");
                         btnPay.setEnabled(true);
                         btnPay.setBackgroundResource(R.drawable.common_selector_btn);
@@ -638,7 +616,7 @@ public class FindPayActivity extends BaseActivity {
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
                     rewardMoney = 0;
-                    if(selectIdSet.size()==0){
+                    if (selectIdSet.size() == 0) {
                         selectIdSet.add(1);
                     }
                     for (Integer selectidposition : selectIdSet) {
@@ -660,6 +638,14 @@ public class FindPayActivity extends BaseActivity {
                 break;
             case R.id.btn_pay:
                 money = getMoney();
+                consumeMoney = getConsumeMoney();
+                if (mReservation != null && mReservation.reservationMoney > 0) {
+                    type = 6;
+                    reservationId = mReservation.reservationId;
+                } else {
+                    type = 0;
+                    reservationId = 0;
+                }
                 if (money > 0) {
                     userTaskPayRequest();
                 } else {
@@ -694,6 +680,15 @@ public class FindPayActivity extends BaseActivity {
         double result = 0;
         if (!StringUtils.isBlank(etPaymoney.getText().toString())) {
             result = Double.parseDouble(etPaymoney.getText().toString());
+            result = result - reservationMoney;
+        }
+        return result;
+    }
+
+    private double getConsumeMoney() {
+        double result = 0;
+        if (!StringUtils.isBlank(etPaymoney.getText().toString())) {
+            result = Double.parseDouble(etPaymoney.getText().toString());
         }
         return result;
     }
@@ -706,4 +701,5 @@ public class FindPayActivity extends BaseActivity {
             onBackPressed();
         }
     }
+
 }

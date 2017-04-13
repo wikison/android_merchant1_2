@@ -28,6 +28,9 @@ public class M_Reservation implements Serializable {
     public String merchantName;//商家名称
 
     @Expose
+    public String merchantAddress;//商家地址
+
+    @Expose
     public int saleUserId;//约客的用户id
 
     @Expose
@@ -73,8 +76,10 @@ public class M_Reservation implements Serializable {
     public int status;
     @Expose
     public String info;
+
     @Expose
-    public int merchantReviewstatus;//商户审核状态(0未审核,1待审核,2审核通过)
+    public int merchantReviewstatus;//状态(1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
+
     @Expose
     public boolean isChecked;//是否选中
 

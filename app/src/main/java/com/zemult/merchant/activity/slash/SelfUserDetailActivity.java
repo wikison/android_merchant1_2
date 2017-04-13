@@ -444,6 +444,21 @@ public class SelfUserDetailActivity extends BaseActivity {
                     startActivityForResult(intent, MODIFY_TAG);
                 }
             });
+
+            pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
+                @Override
+                public void onDetail(M_Merchant entity) {
+
+                }
+
+                @Override
+                public void onServiceList(M_Merchant entity) {
+                    Intent intent = new Intent(SelfUserDetailActivity.this, ServiceTicketListActivity.class);
+                    intent.putExtra("userSaleId", userId);
+                    intent.putExtra("merchantId", entity.merchantId);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

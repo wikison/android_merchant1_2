@@ -96,11 +96,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginBottom="12dp"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_16dp"
                 android:layout_marginTop="55dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="8dp"
                 app:rv_strokeColor="#e1e1e1"
                 app:rv_strokeWidth="1px">
 
@@ -131,6 +134,39 @@
                     android:paddingRight="@dimen/margin_16dp"
                     android:text=""
                     android:textColor="@color/font_main"
+                    android:textSize="@dimen/font_30px"/>
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll_reservation"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:visibility="gone"
+                app:rv_backgroundColor="@color/white"
+                app:rv_strokeColor="#e1e1e1"
+                app:rv_strokeWidth="1px">
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="订金"/>
+
+                <EditText
+                    android:id="@+id/et_reservation_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:inputType="numberDecimal"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="-￥200.00"
+                    android:textColor="@color/bg_head_red"
                     android:textSize="@dimen/font_30px"/>
 
             </com.flyco.roundview.RoundLinearLayout>

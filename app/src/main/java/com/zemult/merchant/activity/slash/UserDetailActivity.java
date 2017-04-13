@@ -539,6 +539,7 @@ public class UserDetailActivity extends BaseActivity {
             stopRecord();
             File file = new File(URL_UPLOAD_FILEPATH);
             if (file.exists() && recordTime < 110) {
+                showPd();
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     ossFilename = "aduio/android_" + filename;
                     ossFileService.asyncPutFile(ossFilename, URL_UPLOAD_FILEPATH);
@@ -757,10 +758,12 @@ public class UserDetailActivity extends BaseActivity {
         user2RemindIMAddRequest = new User2RemindIMAddRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dismissPd();
             }
 
             @Override
             public void onResponse(Object response) {
+                dismissPd();
                 if (((CommonResult) response).status == 1) {
 //                    int remindIMId = ((CommonResult) response).remindIMId;
                     YWCustomMessageBody messageBody = new YWCustomMessageBody();
@@ -900,6 +903,11 @@ public class UserDetailActivity extends BaseActivity {
                     intent.putExtra("userSaleId", userId);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
                     startActivity(intent);
+                }
+
+                @Override
+                public void onServiceList(M_Merchant entity) {
+
                 }
             });
         }
