@@ -22,6 +22,8 @@ public class User2ReservationPayRequest extends PostStringRequest<Type> {
         public int saleUserId;    //	服务管家的用户id
         public double money;    //	定金金额
         public int reservationId;    //	预约单id
+        public String consumeMoney;    //	是	当次支付总金额(money+rewardMoney)
+        public double rewardMoney;    //	否	打赏金额(没有为0)
 
         public String ejson;
 
@@ -31,6 +33,8 @@ public class User2ReservationPayRequest extends PostStringRequest<Type> {
                     new Pair<String, String>("merchantId", merchantId + ""),
                     new Pair<String, String>("saleUserId", saleUserId + ""),
                     new Pair<String, String>("money", money + ""),
+                    new Pair<String, String>("consumeMoney", consumeMoney ),
+                    new Pair<String, String>("rewardMoney", rewardMoney + ""),
                     new Pair<String, String>("reservationId", reservationId + "")
                     ));
 

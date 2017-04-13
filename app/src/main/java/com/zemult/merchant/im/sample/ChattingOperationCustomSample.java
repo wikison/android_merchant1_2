@@ -63,6 +63,7 @@ import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.CreateBespeakNewActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
@@ -566,7 +567,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     JSONObject contentObject = new JSONObject(message.getContent());
                     JSONObject customizeObject = new JSONObject(contentObject.optString("customize"));
                     if("ORDER".equals(customizeObject.getString("tasktype"))){
-                            Intent intent =new Intent(fragment.getActivity(),AppointmentDetailActivity.class);
+                            Intent intent =new Intent(fragment.getActivity(),AppointmentDetailNewActivity.class);
                             intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
                             fragment.startActivity(intent);
                     }

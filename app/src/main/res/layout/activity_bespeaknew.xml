@@ -240,8 +240,9 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:gravity="right"
+
                     android:hint="如需收取订金请输入金额"
-                    android:inputType="phone"
+                    android:inputType="numberDecimal"
                     android:textColor="#999999"
                     android:textColorHint="#999999"/>
 

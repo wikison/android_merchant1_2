@@ -9,7 +9,15 @@
 
     <include layout="@layout/layout_head"></include>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ScrollView
+        android:id="@+id/sl_data"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -35,6 +43,7 @@
                     android:layout_height="40dp" />
 
                 <TextView
+                    android:id="@+id/tv_name"
                     android:layout_toRightOf="@+id/v_user"
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="15dp"
@@ -45,6 +54,7 @@
                     />
 
                 <Button
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:id="@+id/play_btn"
                     style="@style/common_btn_235"
@@ -70,6 +80,7 @@
                 style="@style/divider12dp"></View>
 
             <RelativeLayout
+                android:id="@+id/rl_service"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -103,7 +114,12 @@
                 android:layout_marginRight="15dp"></View>
 
 
-
+        <LinearLayout
+            android:id="@+id/ll_state"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -112,7 +128,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="预约状态" />
+                    android:text="服务单状态" />
 
 
                 <TextView
@@ -127,6 +143,7 @@
                 style="@style/view1dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"></View>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -169,6 +186,7 @@
 
 
                 <com.zemult.merchant.view.PMNumView
+                    android:layout_marginRight="15dp"
                     android:visibility="gone"
                     android:id="@+id/pmnv_select_deadline"
                     android:layout_width="wrap_content"
@@ -183,6 +201,7 @@
                 android:layout_marginRight="15dp"></View>
 
             <RelativeLayout
+                android:id="@+id/rl_ordertime"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/ripple_item_clicked2">
@@ -235,7 +254,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="70dp"
                         android:background="@null"
                         android:gravity="right"
                         android:drawableRight="@mipmap/bianji_black_icon"
@@ -256,6 +274,8 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rl_dingjin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/ripple_item_clicked2">
@@ -275,6 +295,7 @@
                     android:text="------" />
 
                 <EditText
+                    android:lines="1"
                     android:visibility="gone"
                     android:id="@+id/et_dingjin"
                     style="@style/text_15_black_28"
@@ -282,7 +303,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="70dp"
                     android:layout_marginRight="15dp"
                     android:background="@null"
                     android:gravity="right"
@@ -297,14 +317,38 @@
 
 
             <TextView
+                android:id="@+id/tv_dingjintips"
                 android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/text_15_black_999"
+                style="@style/text_14_black_999"
                 android:text="订金如需退款请线下和商户协商"
                 />
 
+            <LinearLayout
+                android:id="@+id/ll_zanshang"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/margin_12dp">
 
+                <CheckBox
+                    android:id="@+id/cb_reward"
+                    style="@style/text_12_black_999"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/checkboxreward"
+                    android:drawablePadding="5dp"
+                    android:text="赞赏6.66元"/>
+
+                <ImageView
+                    android:id="@+id/iv_reward"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/down_btn"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:visibility="gone"
@@ -361,37 +405,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
-                <RelativeLayout
-                    android:id="@+id/yuyueresult_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/ripple_item_clicked2"
-                    android:paddingBottom="12dp"
-                    android:visibility="gone"
-                    android:paddingTop="12dp">
-
-                    <TextView
-                        android:id="@+id/tv_result"
-                        style="@style/detail_left"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="预约结果" />
-
-                <RelativeLayout
-                    android:layout_toRightOf="@+id/tv_result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/appresult_tv"
-                        style="@style/detail_right"
-                        android:layout_centerVertical="true"
-                        android:text="-------" />
-                </RelativeLayout>
-
-                </RelativeLayout>
-
 
                 <Button
                     android:visibility="gone"
@@ -450,7 +463,7 @@
                             android:layout_marginBottom="@dimen/margin_12dp"
                             android:drawableLeft="@mipmap/fenxiang"
                             android:padding="8dp"
-                            android:text="生成邀请函" />
+                            android:text="评价一下" />
 
                         <Button
                             android:id="@+id/jiezhang_btn"
@@ -462,7 +475,7 @@
                             android:background="@drawable/detail_btn"
                             android:drawableLeft="@mipmap/complete"
                             android:paddingLeft="10dp"
-                            android:text="快速结账"
+                            android:text="邀请函"
                             android:textColor="#e6bb7c" />
                     </RelativeLayout>
 

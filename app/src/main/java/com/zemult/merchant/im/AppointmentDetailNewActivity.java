@@ -1,17 +1,30 @@
 package com.zemult.merchant.im;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
@@ -22,13 +35,22 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
+import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.SendRewardActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
+import com.zemult.merchant.activity.slash.dotask.DoTaskVoiceActivity;
+import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
+import com.zemult.merchant.aip.common.CommonRewardRequest;
+import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
+import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
+import com.zemult.merchant.aip.reservation.User2ReservationDelRequest;
+import com.zemult.merchant.aip.reservation.User2ReservationEditRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
@@ -36,16 +58,29 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Reservation;
+import com.zemult.merchant.model.apimodel.APIM_PresentList;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.util.sound.HttpOperateUtil;
+import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.PMNumView;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +92,8 @@ import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
+import static com.zemult.merchant.config.Constants.OSSENDPOINT;
+
 /**
  * Created by admin on 2017/1/19.
  */
@@ -64,6 +101,8 @@ import zema.volley.network.ResponseListener;
 public class AppointmentDetailNewActivity extends BaseActivity {
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
+    @Bind(R.id.lh_btn_right)
+    Button lhBtnRight;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
@@ -84,16 +123,20 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     TextView tvExtra;
     @Bind(R.id.tv_dingjin)
     TextView tvDingjin;
-    @Bind(R.id.appresult_tv)
-    TextView appresultTv;
-    @Bind(R.id.invite_btn)
-    Button inviteBtn;
+    @Bind(R.id.tv_dingjintips)
+    TextView tvDingjintips;
     @Bind(R.id.ordersuccess_btn_rl)
     RelativeLayout ordersuccessBtnRl;
-    @Bind(R.id.others_ll)
-    LinearLayout othersLl;
-    @Bind(R.id.appresultcommit_et)
-    EditText appresultcommitEt;
+    @Bind(R.id.rl_service)
+    RelativeLayout rlService;
+    @Bind(R.id.ll_zanshang)
+    LinearLayout llZanshang;
+    @Bind(R.id.rl_dingjin)
+    RelativeLayout rlDingjin;
+    @Bind(R.id.rl_ordertime)
+    RelativeLayout rlOrdertime;
+    @Bind(R.id.ll_state)
+    LinearLayout llState;
     @Bind(R.id.firstline)
     View firstline;
     @Bind(R.id.rlcustomer)
@@ -104,39 +147,59 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     EditText etCustomerremark;
     @Bind(R.id.pmnv_select_deadline)
     PMNumView pmnvSelectDeadline;
+    @Bind(R.id.play_btn)
+    Button playBtn;
+    @Bind(R.id.customerconfirm_btn)
+    Button customerconfirmBtn;
+    @Bind(R.id.sl_data)
+    ScrollView slData;
+    @Bind(R.id.tv_nodata)
+    TextView tvNodata;
+
+
+    private MediaPlayer mMediaPlayer;
+
 
     public static String INTENT_RESERVATIONID = "intent";
     public static String INTENT_TYPE = "type";
-    @Bind(R.id.v1)
-    View v1;
-    @Bind(R.id.yuyueresult_rl)
-    RelativeLayout yuyueresultRl;
     @Bind(R.id.yuyueresultcommit_rl)
     RelativeLayout yuyueresultcommitRl;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
-    @Bind(R.id.lookorder_btn)
-    Button lookorderBtn;
-    @Bind(R.id.jiezhang_btn)
-    Button jiezhangBtn;
     @Bind(R.id.btn_modify)
-    Button btnModify;
+    RoundTextView btnModify;
     @Bind(R.id.dinghaole_tv)
     TextView dinghaoleTv;
+    @Bind(R.id.v_user)
+    ImageView vUser;
+    @Bind(R.id.tv_name)
+    TextView tvName;
+    @Bind(R.id.serveraccount_btn)
+    TextView serveraccountBtn;
     String reservationId = "";
     int type;
     String replayNote;
-    int userPayId, merchantReviewstatus;
+    int  merchantReviewstatus;
     M_Reservation mReservation;
-    UserReservationInfoRequest userReservationInfoRequest;
-    UserReservationEditRequest userReservationEditRequest;
-    public static String REFLASH_MYAPPOINT = "reflash_myappoint";
-    @Bind(R.id.hongbao_tv)
-    TextView hongbaoTv;
-    int userId;
-    String userName="";
-    ImageManager mimageManager;
+    User2ReservationInfoRequest user2ReservationInfoRequest;
+    User2ReservationEditRequest user2ReservationEditRequest;
+    User2ReservationDelRequest  user2ReservationDelRequest;
+    User2ReservationPayRequest  user2ReservationPayRequest;
 
+    public static String REFLASH_MYAPPOINT = "reflash_myappoint";
+    int userId;
+    String userName="",fileUrl="";
+    ImageManager mimageManager;
+    @Bind(R.id.cb_reward)
+    CheckBox cbReward;
+    double  rewardMoney = 0;
+    Set<Integer> selectIdSet = new HashSet<Integer>();
+    Set<Integer> selectIdSetTemp = new HashSet<Integer>();
+    private SendRewardAdapter adapterReward;
+    List<M_Bill> moneyList = new ArrayList<M_Bill>();
+    CommonRewardRequest commonRewardRequest;
+    Dialog alertDialog;
+    int orderpeople;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_appointmentdetailnew);
@@ -148,10 +211,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         type = getIntent().getIntExtra(INTENT_TYPE, -1);
         EventBus.getDefault().register(this);
-        hongbaoTv.setText(Html.fromHtml("<u>觉得服务不错给个赞赏吧</u>"));
         showPd();
         userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
+        alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
     }
 
     @Override
@@ -161,13 +224,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     }
 
     private void userReservationInfo() {
-        if (userReservationInfoRequest != null) {
-            userReservationInfoRequest.cancel();
+        if (user2ReservationInfoRequest != null) {
+            user2ReservationInfoRequest.cancel();
         }
-        UserReservationInfoRequest.Input input = new UserReservationInfoRequest.Input();
+        User2ReservationInfoRequest.Input input = new User2ReservationInfoRequest.Input();
         input.reservationId = reservationId;
         input.convertJosn();
-        userReservationInfoRequest = new UserReservationInfoRequest(input, new ResponseListener() {
+        user2ReservationInfoRequest = new User2ReservationInfoRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
@@ -178,107 +241,130 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 dismissPd();
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
-                    userPayId = mReservation.userPayId;
                     userId=mReservation.saleUserId;
                     userName=mReservation.saleUserName;
+                    fileUrl=mReservation.replayNote;
+                    merchantReviewstatus = mReservation.merchantReviewstatus;
+                    slData.setVisibility(View.VISIBLE);
+                    tvNodata.setVisibility(View.GONE);
+
+                    if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
+                        rlDingjin.setVisibility(View.VISIBLE);
+                        tvDingjintips.setVisibility(View.VISIBLE);
+                    } else {
+                        rlDingjin.setVisibility(View.GONE);
+                        tvDingjintips.setVisibility(View.GONE);
+                    }
 
                     if (mReservation.saleUserId == SlashHelper.userManager().getUserId()) {
-                        type = 1;
+                        type = 1;//服务管家
                     } else {
-                        type = 0;
+                        type = 0;//客户
                     }
-
-                    if (type == 1) {//客户
+                    //显示用户头像,管家头像
+                    if (type == 1) {//服务管家
+                        llState.setVisibility(View.VISIBLE);
                         firstline.setVisibility(View.VISIBLE);
                         rlcustomer.setVisibility(View.VISIBLE);
-                    } else if (type == 0) {//服务管家
+                        rlService.setVisibility(View.GONE);
+                        tvName.setText(mReservation.name);
+                        mimageManager.loadCircleImage(mReservation.head, vUser);
+                        //语音信息
+                        if(!StringUtils.isBlank(mReservation.replayNote)){
+                            playBtn.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            playBtn.setVisibility(View.GONE);
+                        }
+                    } else if (type == 0) {//客户
+                        mimageManager.loadCircleImage(mReservation.saleUserHead, headIv);
+                        nameTv.setText(mReservation.saleUserName);
                         firstline.setVisibility(View.GONE);
                         rlcustomer.setVisibility(View.GONE);
+                        rlService.setVisibility(View.VISIBLE);
                     }
 
+                    //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     if (mReservation.state == 0) {
                         tvState.setText("待确认");
-                        appresultTv.setText("暂无");
+                        //修改撤销按钮   客户确认
                         if (type == 0) {//我是客户的状态下
-                            yuyueresultRl.setVisibility(View.GONE);
+                            yuyueresultcommitRl.setVisibility(View.GONE);
+                            customerconfirmBtn.setVisibility(View.VISIBLE);
+                            common_reward();
                         } else if (type == 1) {//我是管家的情况下
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
+                            customerconfirmBtn.setVisibility(View.GONE);
                         }
                     } else if (mReservation.state == 1) {
-
-                        //状态(0:待确认,1:预约成功,2:已支付,3:预约结束)
+                        //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                         tvState.setText("预约成功");
-                        yuyueresultRl.setVisibility(View.VISIBLE);
-                        appresultTv.setText(mReservation.replayNote);
-                        if (type == 0) {
+                        if (type == 0) {//客户
                             dinghaoleTv.setVisibility(View.VISIBLE);
-                            inviteBtn.setVisibility(View.VISIBLE);
-                            jiezhangBtn.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
+                            lhBtnRight.setVisibility(View.VISIBLE);
+                            lhBtnRight.setText("快捷买单");
                         }
-                        merchantReviewstatus = mReservation.merchantReviewstatus;
+
+
                         if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
-                            jiezhangBtn.setVisibility(View.VISIBLE);
+                            serveraccountBtn.setVisibility(View.VISIBLE);
                         } else {
-                            jiezhangBtn.setVisibility(View.GONE);
+                            serveraccountBtn.setVisibility(View.GONE);
                         }
 
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
-                        yuyueresultRl.setVisibility(View.VISIBLE);
-                        v1.setVisibility(View.VISIBLE);
-                        lookorderBtn.setVisibility(View.VISIBLE);
-                        appresultTv.setText(mReservation.replayNote);
+                        serveraccountBtn.setVisibility(View.VISIBLE);
                         //订单号
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
-                        yuyueresultRl.setVisibility(View.GONE);
-                        appresultTv.setText(mReservation.replayNote);
                     }
 
                     shopTv.setText(mReservation.merchantName);
                     pernumberTv.setText(mReservation.num + "人");
                     tvTime.setText(mReservation.reservationTime);
                     tvExtra.setText(mReservation.note);
-                    tvDingjin.setText(mReservation.userPhone);
+                    tvDingjin.setText(mReservation.reservationMoney+"");
+                    etCustomerremark.setText(mReservation.note);
 
-                    if (type == 0) {
-                        //服务管家的头像和姓名
-                        if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
-                            mimageManager.loadCircleImage(mReservation.saleUserHead, headIv);
-                        }
-                        nameTv.setText(mReservation.saleUserName);
-                    } else if (type == 1) {
-                        //客户的头像和姓名
-                        if (!TextUtils.isEmpty(mReservation.head)) {
-                            mimageManager.loadCircleImage(mReservation.head, headIv);
-                        }
-                        nameTv.setText(mReservation.name);
-                    }
+                    etDingjin.setText(mReservation.reservationMoney+"");
+                    orderpeople = mReservation.num  ;
+
                 } else {
+                    slData.setVisibility(View.GONE);
+                    tvNodata.setVisibility(View.VISIBLE);
                     ToastUtils.show(AppointmentDetailNewActivity.this, ((M_Reservation) response).info);
                 }
 
             }
         });
-        sendJsonRequest(userReservationInfoRequest);
+        sendJsonRequest(user2ReservationInfoRequest);
     }
 
 
-    //约客修改预约单(答复)
-    private void user_reservation_edit() {
+    //服务管家修改预约单(未确认的)
+    private void user2_reservation_edit() {
 
         try {
-            if (userReservationEditRequest != null) {
-                userReservationEditRequest.cancel();
+            if (user2ReservationEditRequest != null) {
+                user2ReservationEditRequest.cancel();
             }
-            UserReservationEditRequest.Input input = new UserReservationEditRequest.Input();
+            User2ReservationEditRequest.Input input = new User2ReservationEditRequest.Input();
             input.reservationId = reservationId;
-            input.replayNote = replayNote;
-            input.userId = SlashHelper.userManager().getUserId();
+            input.num = orderpeople;
+            input.note = etCustomerremark.getText().toString();
+            if(tvTime.getText().toString().length()<17){
+                input.reservationTime= tvTime.getText().toString()+ ":00";
+            }
+            else{
+                input.reservationTime= tvTime.getText().toString();
+            }
+
+            input.reservationMoney= etDingjin.getText().toString();
             input.convertJosn();
 
-            userReservationEditRequest = new UserReservationEditRequest(input, new ResponseListener() {
+            user2ReservationEditRequest = new User2ReservationEditRequest(input, new ResponseListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
@@ -294,7 +380,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[预约-已确认] 预约时间:" + mReservation.reservationTime + "预约地址:" + mReservation.merchantName);
+                            object.put("taskTitle", "[服务订单-修改] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
+                                    :tvTime.getText().toString().substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
                             object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId + "");
                         } catch (JSONException e) {
@@ -316,7 +403,87 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     }
                 }
             });
-            sendJsonRequest(userReservationEditRequest);
+            sendJsonRequest(user2ReservationEditRequest);
+        } catch (Exception e) {
+        }
+    }
+
+
+
+    //服务管家撤销预约单(未确认的)
+    private void user2_reservation_del() {
+        try {
+            if (user2ReservationDelRequest != null) {
+                user2ReservationDelRequest.cancel();
+            }
+            User2ReservationDelRequest.Input input = new User2ReservationDelRequest.Input();
+            input.reservationId = reservationId;
+            input.convertJosn();
+
+            user2ReservationDelRequest = new User2ReservationDelRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+                        ToastUtil.showMessage("撤销成功");
+                        finish();
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(user2ReservationDelRequest);
+        } catch (Exception e) {
+        }
+    }
+
+    //服务管家撤销预约单(未确认的)
+    private void user2_reservation_pay() {
+        try {
+            if (user2ReservationPayRequest != null) {
+                user2ReservationPayRequest.cancel();
+            }
+            User2ReservationPayRequest.Input input = new User2ReservationPayRequest.Input();
+            input.reservationId = mReservation.reservationId;
+            input.userId= userId;
+            input.merchantId= mReservation.merchantId;
+            input.saleUserId= mReservation.saleUserId;
+            input.money= mReservation.reservationMoney;//支付单金额(定金金额)
+            if (cbReward.isChecked()) {
+                input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+rewardMoney);//当次支付总金额(money+rewardMoney)
+                input.rewardMoney= rewardMoney;//打赏金额(没有为0)
+            }
+            else {
+                input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+0);//当次支付总金额(money+rewardMoney)
+                input.rewardMoney= 0;//打赏金额(没有为0)
+            }
+
+            input.convertJosn();
+
+            user2ReservationPayRequest = new User2ReservationPayRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+//                        number=  ((CommonResult) response).number;
+//                        userPayId= ((CommonResult) response).userPayId;
+
+
+
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(user2ReservationPayRequest);
         } catch (Exception e) {
         }
     }
@@ -341,7 +508,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lookorder_btn, R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.hongbao_tv})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lh_btn_right,R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -358,11 +525,16 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     IntentUtil.intStart_activity(this, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, mReservation.userId));
                 }
                 break;
-            case R.id.lookorder_btn:
-                //查看订单详情
-                IntentUtil.intStart_activity(this,
-                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", userPayId));
+//            case R.id.lookorder_btn:
+//                //查看订单详情
+//                IntentUtil.intStart_activity(this,
+//                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", userPayId));
+//                break;
+            case R.id.customerconfirm_btn:
+                //确认预约单
+                user2_reservation_pay();
                 break;
+
             case R.id.invite_btn:
                 //邀请好友
                 Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
@@ -388,21 +560,73 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
             case R.id.btn_cancel:
 
+                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this,null, "否", "是", "是否撤销服务单", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                        user2_reservation_del();
+                    }
+                });
+
                 break;
+
+            case R.id.play_btn:
+                if(!StringUtils.isBlank(fileUrl)){
+                    startPlay();
+                  }
+                break;
+
             case R.id.btn_modify:
                 if(btnModify.getText().toString().equals("修改")){
+                    btnModify.setText("完成并发送");
                     etDingjin.setVisibility(View.VISIBLE);
                     etCustomerremark.setVisibility(View.VISIBLE);
                     pmnvSelectDeadline.setVisibility(View.VISIBLE);
                     Drawable dra= getResources().getDrawable(R.mipmap.right_btn);
                     dra.setBounds( 0, 0, dra.getMinimumWidth(),dra.getMinimumHeight());
-                    tvTime.setCompoundDrawables(null, null, dra, null);
+                    tvTime.setCompoundDrawablePadding(10);
+                    tvTime.setCompoundDrawablesWithIntrinsicBounds(null, null, dra, null);
 
                     pernumberTv.setVisibility(View.GONE);
                     tvExtra.setVisibility(View.GONE);
                     tvDingjin.setVisibility(View.GONE);
+
+
+                    pmnvSelectDeadline.setMinNum(1);
+                    pmnvSelectDeadline.setMaxNum(99);
+                    pmnvSelectDeadline.setDefaultNum(orderpeople);
+                    pmnvSelectDeadline.setText(orderpeople+"");
+                    pmnvSelectDeadline.setFilter();
+
+                    pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
+                        @Override
+                        public void onNumChanged(int num) {
+                            orderpeople = num ;
+                            pmnvSelectDeadline.setDefaultNum(num);
+                            pernumberTv.setText(orderpeople+ "人");
+                        }
+                    });
+
+                    etCustomerremark.setText(tvExtra.getText().toString());
+                    etDingjin.setText(tvDingjin.getText().toString());
+                    rlOrdertime.setClickable(true);
+                    rlOrdertime.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+                                    AppointmentDetailNewActivity.this, tvTime.getText().toString(), "预约时间必须大于当前时间", 1);
+                            dateTimePicKDialog.dateTimePicKDialog(tvTime);
+                        }
+                    });
+
                 }
-                if(btnModify.getText().toString().equals("保存")){
+                else{
+                    btnModify.setText("修改");
                     etDingjin.setVisibility(View.GONE);
                     etCustomerremark.setVisibility(View.GONE);
                     pmnvSelectDeadline.setVisibility(View.GONE);
@@ -411,13 +635,206 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     pernumberTv.setVisibility(View.VISIBLE);
                     tvExtra.setVisibility(View.VISIBLE);
                     tvDingjin.setVisibility(View.VISIBLE);
+
+                    rlOrdertime.setClickable(false);
+                    tvExtra.setText(etCustomerremark.getText().toString());
+                    tvDingjin.setText(etDingjin.getText().toString());
+                    user2_reservation_edit();
                 }
+                break;
+            case R.id.lh_btn_right:
 
+                break;
 
+            case R.id.iv_reward:
+                showDialog();
+
+            case R.id.cb_reward:
+                if (cbReward.isChecked()) {
+                    rewardMoney = 0;
+                    if(selectIdSet.size()==0){
+                        selectIdSet.add(1);
+                    }
+                    for (Integer selectidposition : selectIdSet) {
+                        rewardMoney = rewardMoney + adapterReward.getItem(selectidposition).money;
+                    }
+                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
+//                    tvMoneyRealpay.setText("￥" +  rewardMoney);
+                } else {
+                    selectIdSet.clear();
+                    selectIdSetTemp.clear();
+                    selectIdSet.add(1);
+                    rewardMoney = moneyList.get(1).money;
+                    cbReward.setChecked(false);
+                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+//                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
+                    cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
+                }
                 break;
         }
     }
 
+    private void showDialog() {
+
+        View view = LayoutInflater.from(AppointmentDetailNewActivity.this).inflate(R.layout.dialog_reward, null);
+        FixedGridView gv = (FixedGridView) view.findViewById(R.id.gv);
+        TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        TextView tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
+
+        gv.setAdapter(adapterReward);
+
+        for (Integer selectIdPosition : selectIdSet) {
+            selectIdSetTemp.add(selectIdPosition);
+        }
+
+        if (!cbReward.isChecked()) {
+            selectIdSet.clear();
+            selectIdSetTemp.clear();
+        } else {
+            adapterReward.setSelected(selectIdSetTemp);
+        }
+
+        alertDialog.setContentView(view);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectIdSetTemp.clear();
+                alertDialog.dismiss();
+            }
+        });
+
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rewardMoney = 0;
+                selectIdSet.clear();
+                for (Integer selectIdPosition : selectIdSetTemp) {
+                    selectIdSet.add(selectIdPosition);
+                }
+                selectIdSetTemp.clear();
+
+                for (Integer selectIdPosition : selectIdSet) {
+                    rewardMoney = rewardMoney + adapterReward.getItem(selectIdPosition).money;
+                }
+
+                if (rewardMoney == 0) {
+                    selectIdSet.clear();
+                    selectIdSet.add(1);
+                    rewardMoney = moneyList.get(1).money;
+                    cbReward.setChecked(false);
+                    cbReward.setTextColor(getResources().getColor(R.color.font_black_999));
+//                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(getMoney()));
+                } else {
+                    cbReward.setTextColor(getResources().getColor(R.color.bg_head_red));
+                    cbReward.setChecked(true);
+//                    tvMoneyRealpay.setText("￥" + Convert.getMoneyString(rewardMoney + getMoney()));
+                }
+
+                cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
+
+                alertDialog.dismiss();
+            }
+        });
+
+
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (selectIdSetTemp.contains(position)) {
+                    selectIdSetTemp.remove(position);
+                } else {
+                    selectIdSetTemp.add(position);
+                }
+
+                adapterReward.setSelected(selectIdSetTemp);
+            }
+        });
+
+        Window dialogWindow = alertDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.dialog_style);
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT; // 高度
+        dialogWindow.setAttributes(lp);
+        alertDialog.show();
+    }
+
+    private void common_reward() {
+        if (commonRewardRequest != null) {
+            commonRewardRequest.cancel();
+        }
+        commonRewardRequest = new CommonRewardRequest(new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+
+                if (((APIM_PresentList) response).status == 1) {
+                    if (((APIM_PresentList) response).moneyList.size() > 0) {
+                        llZanshang.setVisibility(View.VISIBLE);
+                        moneyList = ((APIM_PresentList) response).moneyList;
+                        selectIdSet.add(1);
+                        rewardMoney = moneyList.get(1).money;
+                        adapterReward = new SendRewardAdapter(AppointmentDetailNewActivity.this, moneyList);
+                        cbReward.setText(String.format("赞赏%s", Convert.getMoneyString(rewardMoney)));
+                    }
+                } else {
+                    ToastUtils.show(AppointmentDetailNewActivity.this, ((APIM_PresentList) response).info);
+                }
+                dismissPd();
+            }
+        });
+
+        sendJsonRequest(commonRewardRequest);
+    }
+
+
+    public void startPlay() {
+        stopPlay();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                // TODO Auto-generated method stub
+
+                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
+                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
+
+                Log.i("keanbin", "fileName = " + fileName);
+                File file = new File(fileName);
+
+                if (!file.exists()) {
+//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
+//                            .show();
+                    return;
+                }
+                try{
+                    mMediaPlayer = MediaPlayer.create(AppointmentDetailNewActivity.this,
+                            Uri.parse(fileName));
+                    mMediaPlayer.setLooping(false);
+                    mMediaPlayer.start();
+                }catch (Exception e){
+                }
+                Looper.loop();
+            }
+        }).start();
+
+    }
+
+    ;
+
+    public void stopPlay() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+        }
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
