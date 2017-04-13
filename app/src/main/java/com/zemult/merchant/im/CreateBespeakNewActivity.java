@@ -204,6 +204,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
             input.num = orderpeople;
             input.note = note;
             input.userId = customerId;
+            input.reservationMoney =etDingjin.getText().toString() ;
+
             input.convertJosn();
 
             userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
@@ -221,21 +223,21 @@ public class CreateBespeakNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[预约-待确认] 预约时间:" + ordertime + "预约地址:" + shopname);
+                            object.put("taskTitle", "[服务订单-修改] " + ordertime + "  " + shopname+"(商户)");
                             object.put("serviceId",  SlashHelper.userManager().getUserId());
                             object.put("reservationId", ((CommonResult) response).reservationId);
                         } catch (JSONException e) {
 
                         }
                         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-                        messageBody.setSummary("[预约单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                        messageBody.setSummary("[服务订单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
                         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-                        IYWContact appContact = YWContactFactory.createAPPContact(SlashHelper.userManager().getUserId() + "", imKit.getIMCore().getAppKey());
+                        IYWContact appContact = YWContactFactory.createAPPContact(customerId+ "", imKit.getIMCore().getAppKey());
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
-                        startActivity(imKit.getChattingActivityIntent(SlashHelper.userManager().getUserId() + ""));
+                        startActivity(imKit.getChattingActivityIntent(customerId + ""));
                         finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -261,7 +263,6 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     return;
                 shopname = bespekShopname.getText().toString();
                 ordertime = bespekTime.getText().toString();
-                pmnvSelectDeadline.getText().toString();
                 note = AppUtils.replaceBlank(etCustomerRemark.getText().toString());
                 strdingjin = etDingjin.getText().toString();
                 strremark = etCustomerRemark.getText().toString();

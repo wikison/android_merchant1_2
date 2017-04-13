@@ -578,6 +578,7 @@
         <activity android:name=".activity.mine.MyAppointmentActivity" />
         <activity android:name=".activity.slash.TAMerchantListActivity" />
         <activity android:name=".activity.mine.AppointmentDetailActivity" />
+        <activity android:name=".im.AppointmentDetailNewActivity" />
         <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentActivity" />
         <activity android:name=".activity.slash.ChoosePayReservationActivity" />
