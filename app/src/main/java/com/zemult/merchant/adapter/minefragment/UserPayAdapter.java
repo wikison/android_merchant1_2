@@ -80,7 +80,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
         final M_Bill m = mDatas.get(position);
 
 
-        if (m.type == 0||m.type==6) {
+        if (m.type == 0 || m.type == 6) {
             holder.tvSaleName.setText("服务管家: " + m.saleUserName);
             if (!TextUtils.isEmpty(m.saleUserHead)) {
                 //加载带外边框的
@@ -88,35 +88,27 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
             }
             switch (m.state) {
                 case 0:
+//                    holder.tvState.setText("待支付");
+//                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
+//                    holder.rtvToPay.setText(String.format("去支付 (还剩%s)", DateTimeUtil.strLeftTime(m.createtime, 30)));
+//                    holder.llToPay.setVisibility(View.VISIBLE);
                     holder.tvState.setText("待支付");
                     holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                    holder.rtvToPay.setText(String.format("去支付 (还剩%s)", DateTimeUtil.strLeftTime(m.createtime, 30)));
-                    holder.llToPay.setVisibility(View.VISIBLE);
+                    holder.llToPay.setVisibility(View.GONE);
                     break;
                 case 1:
-                    if (pagePosition == 0) {
-                        if (m.payMoney >= 100 && m.isComment == 0) {
-                            holder.tvState.setText("待评价");
-                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                        } else {
-                            holder.tvState.setText("已完成");
-                            holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
-                        }
-                    } else {
+                    if (m.isComment == 0) {
                         holder.tvState.setText("待评价");
                         holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
+                    } else {
+                        holder.tvState.setText("已完成");
+                        holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                     }
-
                     holder.llToPay.setVisibility(View.GONE);
                     break;
                 case 2:
                     holder.tvState.setText("已失效");
                     holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
-                    holder.llToPay.setVisibility(View.GONE);
-                    break;
-                case 3:
-                    holder.tvState.setText("已取消");
-                    holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
                     holder.llToPay.setVisibility(View.GONE);
                     break;
             }
@@ -137,7 +129,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                 //加载带外边框的
                 mImageManager.loadCircleHasBorderImage(m.toUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
             }
-        }else if(m.type == 5){
+        } else if (m.type == 5) {
             holder.tvSaleName.setText("服务管家: " + m.saleUserName);
             holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_main));
             holder.tvState.setText("订金");
