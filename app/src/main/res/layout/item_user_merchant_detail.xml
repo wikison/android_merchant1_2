@@ -118,7 +118,7 @@
             android:layout_alignParentRight="true"
             android:drawablePadding="@dimen/margin_8dp"
             android:drawableRight="@mipmap/right_btn"
-            android:text="新动态"/>
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
