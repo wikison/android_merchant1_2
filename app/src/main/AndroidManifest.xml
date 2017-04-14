@@ -612,7 +612,9 @@
         <activity android:name=".activity.slash.SelfUserDetailActivity" />
         <activity android:name=".activity.mine.MyFansActivity" />
         <activity android:name=".activity.slash.ServiceTicketListActivity" />
-        <activity android:name=".activity.slash.SaleServiceTicketDetailActivity"></activity>
+        <activity android:name=".activity.slash.SaleServiceTicketDetailActivity" />
+        <activity
+            android:name=".activity.slash.MerchantAdminActivity"></activity>
     </application>
 
 </manifest>

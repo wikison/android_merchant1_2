@@ -151,6 +151,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private Context mContext;
     private Activity mActivity;
     public static int MODIFY_TAG = 111;
+    public static int EXIT_MERCHANT = 222;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -426,10 +427,9 @@ public class SelfUserDetailActivity extends BaseActivity {
             pagerUserMerchantDetailAdapter.setOnViewMerchantClickListener(new PagerUserMerchantAdapter.ViewMerchantClickListener() {
                 @Override
                 public void onMerchantManage(M_Merchant entity) {
-                    Intent intent = new Intent(SelfUserDetailActivity.this, MerchantDetailActivity.class);
-                    intent.putExtra("userSaleId", userId);
+                    Intent intent = new Intent(SelfUserDetailActivity.this, MerchantAdminActivity.class);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
-                    startActivity(intent);
+                    startActivityForResult(intent, EXIT_MERCHANT);
                 }
             });
 
@@ -570,7 +570,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MODIFY_TAG && resultCode == RESULT_OK) {
+        if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT) && resultCode == RESULT_OK) {
             getOtherMerchantList();
         }
 

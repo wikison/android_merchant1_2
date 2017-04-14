@@ -16,6 +16,8 @@ public class M_Ad {
     public   String	url			;	//	 图片对应连接
     @Expose
     public   String	name			;	//	 图片对应连接
+    @Expose
+    public   String	note			;	//	 图片描述
 
 
     public int getPageNum() {
@@ -40,6 +42,14 @@ public class M_Ad {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
 

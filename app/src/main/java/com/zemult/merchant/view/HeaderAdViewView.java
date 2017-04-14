@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.trinea.android.common.util.StringUtils;
 
 public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     @Bind(R.id.vp_ad)
@@ -37,7 +38,8 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     LinearLayout llIndexContainer;
     @Bind(R.id.tv_pic_num)
     RoundTextView tvPicNum;
-
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
     private static final int TYPE_CHANGE_AD = 0;
 
     public static final int TYPE_INDICATOR_DOT = 110;
@@ -56,7 +58,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     private int showType = 1;  //0  无操作，1  网页  2   跳转到图片展示  3 自定义
     private boolean rotate = true;
-    private boolean round = false;
+    private boolean round,showTitle;
 
 
     private Handler mHandler = new Handler() {
@@ -88,6 +90,9 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     public void setShowType(int showType) {
         this.showType = showType;
+    }
+    public void setShowTitle(boolean showTitle) {
+        this.showTitle = showTitle;
     }
 
     public void setRotate(boolean rotate) {
@@ -152,7 +157,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         ImageView imageView = new ImageView(mContext);
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(params);
-        if(!round)
+        if (!round)
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         else
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -167,8 +172,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 //                            new Pair<String, String>("titlename",mAd.name),new Pair<String, String>("url",mAd.getUrl()));
                 }
             });
-        }
-        else if (showType == 2) {//打开图片展示
+        } else if (showType == 2) {//打开图片展示
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -177,21 +181,26 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
                 }
             });
 
-        }
-        else if(showType == 3){
+        } else if (showType == 3) {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(imageOnClick != null)
+                    if (imageOnClick != null)
                         imageOnClick.imageOnclick(postion);
                 }
             });
         }
 
-        if(!round)
+        if (!round)
             mImageManager.loadUrlImage(mAd.getImg(), imageView, "@500h");
         else
             mImageManager.loadRoundImage2(mAd.getImg(), imageView, 24, "@450h");
+
+        if(showTitle && !StringUtils.isBlank(mAd.getNote())){
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(mAd.getNote());
+        }else
+            tvTitle.setVisibility(View.GONE);
 
         return imageView;
     }
@@ -297,9 +306,10 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         }
     }
 
-    public interface ImageOnClick{
+    public interface ImageOnClick {
         void imageOnclick(int postion);
     }
+
     private ImageOnClick imageOnClick;
 
     public void setImageOnClick(ImageOnClick imageOnClick) {
