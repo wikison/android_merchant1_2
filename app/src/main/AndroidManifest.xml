@@ -571,6 +571,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".activity.mine.MerchantEnter2Activity" />
         <activity android:name=".alipay.taskpay.AssessmentActivity" />
+        <activity android:name=".alipay.taskpay.Assessment4ServiceActivity" />
         <activity android:name=".activity.mine.ServiceHistoryDetailActivity" />
         <activity android:name=".activity.mine.AccountSafeActivity" />
         <activity android:name=".activity.mine.MyAppointmentActivity" />

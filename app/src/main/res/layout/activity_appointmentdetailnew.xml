@@ -17,7 +17,6 @@
 
     <ScrollView
         android:id="@+id/sl_data"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -274,7 +273,6 @@
 
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/rl_dingjin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -286,8 +284,8 @@
                     style="@style/detail_left"
                     android:text="订金" />
 
-
                 <TextView
+                    android:drawablePadding="5dp"
                     android:id="@+id/tv_dingjin"
                     android:textColor="@color/text_red"
                     style="@style/detail_right"
@@ -314,9 +312,73 @@
                     android:textColorHint="#999999"/>
             </RelativeLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/ll_weikuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="尾款支付" />
+
+
+                <TextView
+                    android:id="@+id/tv_weikuan"
+                    android:drawablePadding="5dp"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/ll_dingdanhaoma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:layout_centerVertical="true"
+                    android:text="订单号码" />
+
+
+                <TextView
+                    android:id="@+id/tv_dingdanhaoma"
+                    style="@style/detail_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            </LinearLayout>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_dingjintips"
                 android:padding="10dp"
                 android:layout_width="wrap_content"
@@ -417,6 +479,20 @@
                     android:text="发起收款"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
+
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/billdetails_btn"
+                    style="@style/common_btn_235"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="94dp"
+                    android:layout_marginTop="22dp"
+                    android:onClick="click"
+                    android:text="查看交易记录详情"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
 
                 <Button
                     android:visibility="gone"

@@ -52,6 +52,7 @@ import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationDelRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationEditRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
+import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
 import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Urls;
@@ -125,6 +126,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     TextView tvDingjin;
     @Bind(R.id.tv_dingjintips)
     TextView tvDingjintips;
+
+    @Bind(R.id.tv_dingdanhaoma)
+    TextView tvDingdanhaoma;
+    @Bind(R.id.tv_weikuan)
+    TextView tvWeikuan;
+
+
     @Bind(R.id.ordersuccess_btn_rl)
     RelativeLayout ordersuccessBtnRl;
     @Bind(R.id.rl_service)
@@ -151,6 +159,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Button playBtn;
     @Bind(R.id.customerconfirm_btn)
     Button customerconfirmBtn;
+    @Bind(R.id.billdetails_btn)
+    Button billdetailsBtn;
     @Bind(R.id.sl_data)
     ScrollView slData;
     @Bind(R.id.tv_nodata)
@@ -166,6 +176,11 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     RelativeLayout yuyueresultcommitRl;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.ll_weikuan)
+    LinearLayout llWeikuan;
+    @Bind(R.id.ll_dingdanhaoma)
+    LinearLayout llDingdanhaoma;
+
     @Bind(R.id.btn_modify)
     RoundTextView btnModify;
     @Bind(R.id.dinghaole_tv)
@@ -209,7 +224,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     public void init() {
         lhTvTitle.setText("预约详情");
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
-        type = getIntent().getIntExtra(INTENT_TYPE, -1);
         EventBus.getDefault().register(this);
         showPd();
         userReservationInfo();
@@ -251,6 +265,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                         rlDingjin.setVisibility(View.VISIBLE);
                         tvDingjintips.setVisibility(View.VISIBLE);
+                        Drawable drawable1 = getResources().getDrawable(R.mipmap.money_red);
+                        drawable1.setBounds(0, 0, 20, 20);
+                        tvDingjin.setCompoundDrawables(drawable1, null, null, null);
                     } else {
                         rlDingjin.setVisibility(View.GONE);
                         tvDingjintips.setVisibility(View.GONE);
@@ -312,10 +329,18 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         } else {
                             serveraccountBtn.setVisibility(View.GONE);
                         }
-
+                        //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
                         serveraccountBtn.setVisibility(View.VISIBLE);
+                        llWeikuan.setVisibility(View.VISIBLE);
+                        llDingdanhaoma.setVisibility(View.VISIBLE);
+                        tvDingdanhaoma.setText(mReservation.userPayNumber);
+                        tvWeikuan.setText(mReservation.userPayMoney+"");
+                        Drawable drawable1 = getResources().getDrawable(R.mipmap.money_gray);
+                        drawable1.setBounds(0, 0, 20, 20);
+                        tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
+                        billdetailsBtn.setVisibility(View.VISIBLE);
                         //订单号
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
@@ -508,7 +533,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lh_btn_right,R.id.invite_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -525,17 +550,31 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     IntentUtil.intStart_activity(this, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, mReservation.userId));
                 }
                 break;
-//            case R.id.lookorder_btn:
-//                //查看订单详情
-//                IntentUtil.intStart_activity(this,
-//                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", userPayId));
-//                break;
+            case R.id.billdetails_btn:
+                //查看订单详情
+                IntentUtil.intStart_activity(this,
+                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", mReservation.userPayId));
+                break;
             case R.id.customerconfirm_btn:
                 //确认预约单
                 user2_reservation_pay();
                 break;
 
             case R.id.invite_btn:
+
+                //快速结账
+                Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
+                intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+                intent2.putExtra("managerhead", Integer.valueOf(mReservation.saleUserHead));
+                intent2.putExtra("managername", Integer.valueOf(mReservation.saleUserName));
+                intent2.putExtra("merchantName", Integer.valueOf(mReservation.merchantName));
+                if (!TextUtils.isEmpty(reservationId))
+                    intent2.putExtra("reservationId", Integer.valueOf(reservationId));
+                startActivity(intent2);
+
+                break;
+            case R.id.jiezhang_btn:
+
                 //邀请好友
                 Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
                 urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
@@ -546,18 +585,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
 
                 break;
-            case R.id.jiezhang_btn:
-                //快速结账
-                Intent intent = new Intent(this, FindPayActivity.class);
-                intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
-                intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
-                intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
-                if (!TextUtils.isEmpty(reservationId))
-                    intent.putExtra("reservationId", Integer.valueOf(reservationId));
 
-                startActivity(intent);
 
-                break;
             case R.id.btn_cancel:
 
                 CommonDialog.showDialogListener(AppointmentDetailNewActivity.this,null, "否", "是", "是否撤销服务单", new View.OnClickListener() {
@@ -643,7 +672,15 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 }
                 break;
             case R.id.lh_btn_right:
+                //快速结账
+                Intent intent = new Intent(this, FindPayActivity.class);
+                intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+                intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
+                intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
+                if (!TextUtils.isEmpty(reservationId))
+                    intent.putExtra("reservationId", Integer.valueOf(reservationId));
 
+                startActivity(intent);
                 break;
 
             case R.id.iv_reward:
