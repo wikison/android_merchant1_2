@@ -91,6 +91,8 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
 
     }
 
+    
+
     //接收广播回调
     @Override
     protected void handleReceiver(Context context, Intent intent) {

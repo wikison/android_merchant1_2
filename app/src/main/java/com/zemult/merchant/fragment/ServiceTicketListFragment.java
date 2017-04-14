@@ -16,12 +16,14 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.mine.UserSaleReservationList;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.Convert;
@@ -138,10 +140,10 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                reservationId = mDatas.get(position - 1).reservationId;
-//                Intent intent = new Intent(mActivity, ServiceTicketDetailActivity.class);
-//                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, reservationId + "");
-//                startActivity(intent);
+                reservationId = mDatas.get(position - 1).reservationId;
+                Intent intent =new Intent(getActivity(),AppointmentDetailNewActivity.class);
+                intent.putExtra(AppointmentDetailNewActivity.INTENT_RESERVATIONID,reservationId+"");
+                getActivity().startActivity(intent);
             }
         });
 

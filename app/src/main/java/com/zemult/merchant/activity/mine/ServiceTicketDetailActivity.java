@@ -20,6 +20,7 @@ import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.Convert;
@@ -224,7 +225,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
                 intent.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivity(intent);
+                startActivityForResult(intent, 1000);
                 break;
         }
     }
@@ -246,4 +247,27 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 "，诚挚邀请，期待您的赴约。");
         startActivity(urlintent);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1000) {
+                setResult(RESULT_OK);
+                onBackPressed();
+
+            } else if (requestCode == 2000) {
+                userReservationInfo();
+                Intent intent = new Intent(Constants.BROCAST_REFRESH_MYSERVICETICKET);
+                intent.putExtra("userPayId", userPayId);
+                setResult(RESULT_OK, intent);
+                sendBroadcast(intent);
+            }
+        }
+    }
+
+
+
+
 }

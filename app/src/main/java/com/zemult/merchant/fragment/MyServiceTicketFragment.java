@@ -94,7 +94,20 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
         super.onCreate(savedInstanceState);
         //get page index
         pagePosition = getArguments().getInt("page_position");
-//        registerReceiver(new String[]{Constants.BROCAST_REFRESH_ORDER});
+        registerReceiver(new String[]{Constants.BROCAST_REFRESH_MYSERVICETICKET});
+    }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_REFRESH_MYSERVICETICKET.equals(intent.getAction())) {
+            onRefresh();
+        }
     }
 
 
