@@ -596,7 +596,7 @@
             android:layout_height="58dp"
             android:background="@drawable/ripple_item_clicked2"
             android:clickable="true"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <View
                 style="@style/divider_1px"
