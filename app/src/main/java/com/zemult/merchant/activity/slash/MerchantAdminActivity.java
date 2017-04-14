@@ -2,10 +2,9 @@ package com.zemult.merchant.activity.slash;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,38 +16,26 @@ import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Pic;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_PicList;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.HeaderAdViewView;
+import com.zemult.merchant.view.HeaderMerchantDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class MerchantAdminActivity extends BaseActivity {
-
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.iv)
-    ImageView iv;
-    @Bind(R.id.tv_address)
-    TextView tvAddress;
-    @Bind(R.id.tv_money)
-    TextView tvMoney;
-    @Bind(R.id.tv_num)
-    TextView tvNum;
     @Bind(R.id.btn_exit)
     Button btnExit;
     @Bind(R.id.lh_btn_back)
@@ -57,15 +44,14 @@ public class MerchantAdminActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.iv_cover)
-    ImageView ivCover;
-    @Bind(R.id.ll_ad_container)
-    LinearLayout llAdContainer;
+    @Bind(R.id.ll_head)
+    LinearLayout llHead;
 
     private int merchantId;
     private Context mContext;
     private Activity mActivity;
     private M_Merchant merchantInfo;
+    private HeaderMerchantDetailView headerMerchantDetailView;
 
     @Override
     public void setContentView() {
@@ -78,6 +64,17 @@ public class MerchantAdminActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
         lhTvTitle.setText("商户管理");
+
+        // 设置其他头部
+        headerMerchantDetailView = new HeaderMerchantDetailView(mActivity);
+        headerMerchantDetailView.fillView(new M_Merchant(), llHead);
+        headerMerchantDetailView.unShowLvTop(true);
+        headerMerchantDetailView.setImageOnClick(new HeaderMerchantDetailView.ImageOnClick() {
+            @Override
+            public void imageOnclick(M_Pic pic) {
+                merchant_pic_noteList(pic);
+            }
+        });
 
         merchant_info();
     }
@@ -105,14 +102,7 @@ public class MerchantAdminActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((APIM_MerchantGetinfo) response).status == 1) {
                     merchantInfo = ((APIM_MerchantGetinfo) response).merchant;
-                    // 名字
-                    if (!TextUtils.isEmpty(merchantInfo.name))
-                        tvName.setText(merchantInfo.name);
-                    // 详细地址
-                    if (!TextUtils.isEmpty(merchantInfo.address))
-                        tvAddress.setText(merchantInfo.address);
-                    tvNum.setText(merchantInfo.payNum + "人找人服务");
-                    tvMoney.setText((int) (merchantInfo.perMoney) + "");
+                    headerMerchantDetailView.dealWithTheView(merchantInfo);
                     merchant_picList();
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
@@ -148,51 +138,15 @@ public class MerchantAdminActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((APIM_PicList) response).status == 1) {
-                    dealWithTheView(merchantInfo, ((APIM_PicList) response).picList);
+                    headerMerchantDetailView.dealWithTheView(merchantInfo, ((APIM_PicList) response).picList);
                 } else {
                     ToastUtil.showMessage(((APIM_PicList) response).info);
-                    dealWithTheView(merchantInfo, null);
+                    headerMerchantDetailView.dealWithTheView(merchantInfo, null);
                 }
                 dismissPd();
             }
         });
         sendJsonRequest(merchantPicListRequest);
-    }
-
-    private void dealWithTheView(final M_Merchant merchantInfo, final List<M_Pic> picList) {
-        if (picList == null || picList.isEmpty()) {
-            ivCover.setVisibility(View.VISIBLE);
-            llAdContainer.setVisibility(View.GONE);
-            // 封面
-            if (!StringUtils.isBlank(merchantInfo.pic))
-                imageManager.loadUrlImageWithDefaultImg(merchantInfo.pic, ivCover, "@450h", R.mipmap.merchant_default_cover);
-            else
-                ivCover.setImageResource(R.mipmap.merchant_default_cover);
-        } else {
-            ivCover.setVisibility(View.GONE);
-            llAdContainer.setVisibility(View.VISIBLE);
-            // 设置广告数据 加入到smoothListView的headerView
-            List<M_Ad> advertList = new ArrayList<>();
-
-            for(M_Pic pic : picList){
-                M_Ad ad = new M_Ad();
-                ad.setImg(pic.picPath);
-                ad.setNote(pic.note);
-                advertList.add(ad);
-            }
-            HeaderAdViewView headerAdViewView = new HeaderAdViewView(mActivity, DensityUtil.dip2px(mContext, 200));
-            headerAdViewView.setShowType(3);
-            headerAdViewView.setRotate(false);
-            headerAdViewView.setShowTitle(true);
-            headerAdViewView.fillView(advertList, llAdContainer);
-
-            headerAdViewView.setImageOnClick(new HeaderAdViewView.ImageOnClick() {
-                @Override
-                public void imageOnclick(int postion) {
-                    merchant_pic_noteList(picList.get(postion));
-                }
-            });
-        }
     }
 
     /**
@@ -239,6 +193,7 @@ public class MerchantAdminActivity extends BaseActivity {
     }
 
     private UserSaleMerchantDelRequest userSaleMerchantDelRequest;
+
     public void userSaleMerchantDel() {
         showUncanclePd();
         if (userSaleMerchantDelRequest != null) {
@@ -282,5 +237,12 @@ public class MerchantAdminActivity extends BaseActivity {
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }
