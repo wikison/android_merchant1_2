@@ -50,7 +50,6 @@ import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
-import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -384,7 +383,11 @@ public class UserDetailActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
-                        if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
+                        if (!isStartRecord || recordTime > 110) {
+                            mDialogManager.tooShort();
+                            stopRecord();
+                            mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1000);// 延迟显示对话框
+                        } else if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
                             mDialogManager.dismissDialog();
                             recordVoice();
 
@@ -538,7 +541,7 @@ public class UserDetailActivity extends BaseActivity {
             // 停止录音
             stopRecord();
             File file = new File(URL_UPLOAD_FILEPATH);
-            if (file.exists() && recordTime < 110) {
+            if (file.exists() && recordTime <= 110) {
                 showPd();
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     ossFilename = "aduio/android_" + filename;
@@ -772,14 +775,14 @@ public class UserDetailActivity extends BaseActivity {
                     try {
                         object.put("customizeMessageType", "Task");
                         object.put("tasktype", "VOICE");
-                        object.put("taskTitle", "发了一个约服需求"+ DateTimeUtil.getCurrentTime2()+"如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
+                        object.put("taskTitle", "发了一个约服需求" + DateTimeUtil.getCurrentTime2() + "如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
                         object.put("merchantId", selectMerchant.merchantId);
-                        object.put("reviewstatus",selectMerchant.reviewstatus);
-                        object.put("merchantName",selectMerchant.merchantName);
-                        object.put("userId",SlashHelper.userManager().getUserId());
-                        object.put("fromuserName",SlashHelper.userManager().getUserinfo().name);
-                        object.put("fromuserHead",SlashHelper.userManager().getUserinfo().head);
-                        object.put("recordPath",fileUrl);
+                        object.put("reviewstatus", selectMerchant.reviewstatus);
+                        object.put("merchantName", selectMerchant.merchantName);
+                        object.put("userId", SlashHelper.userManager().getUserId());
+                        object.put("fromuserName", SlashHelper.userManager().getUserinfo().name);
+                        object.put("fromuserHead", SlashHelper.userManager().getUserinfo().head);
+                        object.put("recordPath", fileUrl);
                     } catch (JSONException e) {
 
                     }
@@ -787,11 +790,11 @@ public class UserDetailActivity extends BaseActivity {
                     messageBody.setSummary("[预约服务]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                     YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
                     YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-                    IYWContact appContact = YWContactFactory.createAPPContact(userId+ "", imKit.getIMCore().getAppKey());
+                    IYWContact appContact = YWContactFactory.createAPPContact(userId + "", imKit.getIMCore().getAppKey());
                     imKit.getConversationService()
                             .forwardMsgToContact(appContact
                                     , message, forwardCallBack);
-                        startActivity(imKit.getChattingActivityIntent(userId+""));
+                    startActivity(imKit.getChattingActivityIntent(userId + ""));
 
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);

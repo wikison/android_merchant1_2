@@ -1,6 +1,5 @@
 package com.zemult.merchant.activity.slash;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.zemult.merchant.adapter.minefragment.ServiceTicketListFragmentAdapter
 import com.zemult.merchant.app.BaseActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ServiceTicketListActivity extends BaseActivity {
@@ -76,7 +74,6 @@ public class ServiceTicketListActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
-
             case R.id.ll_back:
                 onBackPressed();
                 break;
