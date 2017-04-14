@@ -456,6 +456,10 @@ public class SelfUserDetailActivity extends BaseActivity {
                     Intent intent = new Intent(SelfUserDetailActivity.this, ServiceTicketListActivity.class);
                     intent.putExtra("saleUserId", userId);
                     intent.putExtra("merchantId", entity.merchantId);
+                    // 有待确认的服务单跳转到待确认列表
+                    if (entity.unSureOrderNum > 0) {
+                        intent.putExtra("page_position", 1);
+                    }
                     startActivity(intent);
                 }
             });
@@ -469,7 +473,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account,R.id.ll_scrm_head,  R.id.tv_scrm})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {

@@ -153,112 +153,112 @@ public class PayInfoActivity extends BaseActivity {
 //                        tvRealpay.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
 //                        tvRedmoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
 //                    }
-                    if (m.type == 5) {
-                        tvState.setText("订金");
+                    //支付单类型(0:买单--(直接买单/关联预约单无定金买单-包含合并赞赏金额),3:购买礼物,4:打赏,5:预约单定金,6有定金的预约单买单(包含合并赞赏金额))
+                    if (m.type == 0) {
                         havedingjinLl.setVisibility(View.GONE);
-                        llPay.setVisibility(View.GONE);
-                    } else {
                         switch (m.state) {
+                            //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
                             case 0:
                                 tvState.setText("待支付");
                                 llPayType.setVisibility(View.GONE);
-                                llPay.setVisibility(View.VISIBLE);
                                 rtvToPay.setVisibility(View.VISIBLE);
-                                if (m.type == 0) {
-                                    havedingjinLl.setVisibility(View.GONE);
-                                } else {
-                                    havedingjinLl.setVisibility(View.VISIBLE);
-                                    tvRestLeft.setText("应付尾款");
-                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
-                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
-                                }
                                 break;
                             case 1:
-                                if (m.type == 0) {
-                                    havedingjinLl.setVisibility(View.GONE);
-                                    if (m.isComment == 0 & m.payMoney >= 100) {
-                                        llPayType.setVisibility(View.VISIBLE);
-                                        tvState.setText("待评价");
-                                        rtvToRecom.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvState.setText("已完成");
-                                        llPay.setVisibility(View.GONE);
-                                    }
+                                // 是否评价(0:否,1:是)(type=0时有值)
+                                if (m.isComment==1) {
+                                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                    tvState.setText("已完成");
                                 } else {
-                                    havedingjinLl.setVisibility(View.VISIBLE);
-                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
-                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
-                                    if (m.isComment == 0 & m.payMoney >= 100) {
-                                        llPayType.setVisibility(View.VISIBLE);
-                                        tvState.setText("待评价");
-                                        rtvToRecom.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvState.setText("已完成");
-                                        llPay.setVisibility(View.GONE);
-                                    }
-
+                                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                    tvState.setText("待评价");
+                                    rtvToRecom.setVisibility(View.VISIBLE);
                                 }
+
                                 break;
                             case 2:
                                 tvState.setText("已失效");
                                 llPayType.setVisibility(View.GONE);
-                                llPay.setVisibility(View.GONE);
-                                if (m.type == 0) {
-                                    havedingjinLl.setVisibility(View.GONE);
+                                break;
+                        }
+
+                    } else if (m.type == 3) {
+
+                    } else if (m.type == 4) {
+
+                    } else if (m.type == 5) {
+                        tvState.setText("订金");
+                        havedingjinLl.setVisibility(View.GONE);
+                        llPay.setVisibility(View.GONE);
+
+                    } else if (m.type == 6) {
+                        havedingjinLl.setVisibility(View.VISIBLE);
+                        tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
+                        tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                        switch (m.state) {
+                            //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
+                            case 0:
+                                tvState.setText("待支付");
+                                llPayType.setVisibility(View.GONE);
+                                rtvToPay.setVisibility(View.VISIBLE);
+                                break;
+                            case 1:
+                                // 是否评价(0:否,1:是)(type=0时有值)
+                                tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                if (m.isComment == 1) {
+                                    tvState.setText("已完成");
                                 } else {
-                                    havedingjinLl.setVisibility(View.VISIBLE);
-                                    tvRestLeft.setText("应付尾款");
-                                    tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
-                                    tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                                    tvState.setText("待评价");
+                                    rtvToRecom.setVisibility(View.VISIBLE);
                                 }
 
                                 break;
-                            case 3:
-                                tvState.setText("已取消");
+                            case 2:
+                                tvState.setText("已失效");
                                 llPayType.setVisibility(View.GONE);
-                                llPay.setVisibility(View.GONE);
                                 break;
                         }
                     }
 
-                    switch (m.moneyType) {
-                        case 0:
-                            tvPayType.setText("账户余额");
-                            break;
-                        case 1:
-                            tvPayType.setText("支付宝支付");
-                            break;
-                        case 2:
-                            tvPayType.setText("微信支付");
-                            break;
-                    }
-                    tvMerchantName.setText(m.merchantName);
-                    if (!TextUtils.isEmpty(m.saleUserHead)) {
-                        mImageManager.loadCircleImage(m.saleUserHead, ivSaleHead);
-                    }
-                    tvSaleName.setText(m.saleUserName);
+
+                        switch (m.moneyType) {
+                            case 0:
+                                tvPayType.setText("账户余额");
+                                break;
+                            case 1:
+                                tvPayType.setText("支付宝支付");
+                                break;
+                            case 2:
+                                tvPayType.setText("微信支付");
+                                break;
+                        }
+                        tvMerchantName.setText(m.merchantName);
+                        if (!TextUtils.isEmpty(m.saleUserHead)) {
+                            mImageManager.loadCircleImage(m.saleUserHead, ivSaleHead);
+                        }
+                        tvSaleName.setText(m.saleUserName);
 //                    tvSaleMoney.setText("" + (m.allMoney == 0 ? "0.00" : Convert.getMoneyString(m.allMoney)));
 //                    tvPayMoney.setText("" + (m.payMoney == 0 ? "0.00" : Convert.getMoneyString(m.payMoney)));
-                    tvPayNum.setText(m.number);
-                    tvTradeTime.setText(m.createtime);
+                        tvPayNum.setText(m.number);
+                        tvTradeTime.setText(m.createtime);
 
-                } else {
-                    ToastUtils.show(PayInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                    } else {
+                        ToastUtils.show(PayInfoActivity.this, ((APIM_UserBillInfo) response).info);
+                    }
+                    dismissPd();
                 }
-                dismissPd();
-            }
-        });
-        sendJsonRequest(userPayInfoRequest);
-    }
+            });
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay, R.id.rtv_to_recom})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.lh_btn_back:
-            case R.id.ll_back:
-                EventBus.getDefault().post(TaskPayResultActivity.APPOINT_REFLASH);
-                finish();
-                break;
+            sendJsonRequest(userPayInfoRequest);
+        }
+
+        @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay, R.id.rtv_to_recom})
+        public void onClick (View view){
+            switch (view.getId()) {
+                case R.id.lh_btn_back:
+                case R.id.ll_back:
+                    EventBus.getDefault().post(TaskPayResultActivity.APPOINT_REFLASH);
+                    finish();
+                    break;
 //            case R.id.rtv_cancel:
 //                CommonDialog.showDialogListener(mContext, null, "否", "是", "是否取消订单", new View.OnClickListener() {
 //                    @Override
@@ -274,15 +274,15 @@ public class PayInfoActivity extends BaseActivity {
 //                    }
 //                });
 //                break;
-            case R.id.rtv_to_pay:
-                goPay();
-                break;
+                case R.id.rtv_to_pay:
+                    goPay();
+                    break;
 
-            case R.id.rtv_to_recom:
-                goAssessment();
-                break;
+                case R.id.rtv_to_recom:
+                    goAssessment();
+                    break;
+            }
         }
-    }
 
     private void cancelPay() {
         showPd();

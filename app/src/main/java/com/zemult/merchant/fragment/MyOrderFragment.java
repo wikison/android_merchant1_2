@@ -145,7 +145,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
         userPayAdapter.setOnItemRootClickListener(new UserPayAdapter.ItemRootClickListener() {
             @Override
             public void onItemClick(final M_Bill m_bill) {
-                if (m_bill.type == 0) {
+                if (m_bill.type == 0||m_bill.type ==5||m_bill.type ==6) {
                     IntentUtil.intStart_activity(mActivity,
                             PayInfoActivity.class, new Pair<String, Integer>("userPayId", m_bill.userPayId));
                 } else if (m_bill.type == 3) {
@@ -164,7 +164,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
         userPayAdapter.setOnItemSaleUserClickListener(new UserPayAdapter.ItemSaleUserClickListener() {
             @Override
             public void onItemClick(M_Bill m_bill) {
-                if (m_bill.type == 0) {
+                if (m_bill.type == 0||m_bill.type ==5||m_bill.type ==6) {
                     IntentUtil.intStart_activity(mActivity, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, m_bill.saleUserId));
                 } else if (m_bill.type == 3 || m_bill.type == 4) {
                     IntentUtil.intStart_activity(mActivity, UserDetailActivity.class, new Pair<String, Integer>(UserDetailActivity.USER_ID, m_bill.toUserId));
@@ -192,7 +192,7 @@ public class MyOrderFragment extends BaseFragment implements SmoothListView.ISmo
                 selectPosition = position - 1;
                 M_Bill m_bill = userPayAdapter.getItem(position - 1);
                 selectPayId = m_bill.userPayId;
-                if (m_bill.type == 0) {
+                if (m_bill.type == 0||m_bill.type ==5||m_bill.type ==6) {
                     Intent intent = new Intent(mContext, PayInfoActivity.class);
                     intent.putExtra("userPayId", m_bill.userPayId);
                     startActivity(intent);

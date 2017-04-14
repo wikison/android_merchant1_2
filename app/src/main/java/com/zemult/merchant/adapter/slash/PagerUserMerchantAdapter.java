@@ -145,8 +145,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder = (ViewHolderDetail) view.getTag();
         }
         // 商家名称
-        if (!TextUtils.isEmpty(entity.name))
-            holder.tvName.setText(entity.name);
+        if (!TextUtils.isEmpty(entity.merchantName))
+            holder.tvName.setText(entity.merchantName);
         // 人均消费
         holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
@@ -177,8 +177,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder = (ViewHolderSelfDetail) view.getTag();
         }
         // 商家名称
-        if (!TextUtils.isEmpty(entity.name))
-            holder.tvName.setText(entity.name);
+        if (!TextUtils.isEmpty(entity.merchantName))
+            holder.tvName.setText(entity.merchantName);
         // 人均消费
         holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
@@ -192,8 +192,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         holder.tvSeven.setText(entity.sumScore / 7 + "");
         holder.tvCommentNum.setText(entity.commentNum + "条评价");
         if (entity.unSureOrderNum > 0) {
+            holder.llServiceRecord.setVisibility(View.VISIBLE);
             holder.tvUnsureNum.setText("待确认服务单" + entity.unSureOrderNum + "条");
         } else {
+            holder.llServiceRecord.setVisibility(View.GONE);
             holder.tvUnsureNum.setText("");
         }
         initTags(holder, entity);
@@ -386,6 +388,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         RelativeLayout rlServiceComment;
         @Bind(R.id.tv_unsure_num)
         TextView tvUnsureNum;
+        @Bind(R.id.ll_service_record)
+        LinearLayout llServiceRecord;
         @Bind(R.id.iv_service_record)
         ImageView ivServiceRecord;
         @Bind(R.id.rl_service_record)
@@ -401,6 +405,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     public interface ViewClickListener {
         //查看详情
         void onDetail(M_Merchant entity);
+
         //查看服务单列表
         void onServiceList(M_Merchant entity);
     }

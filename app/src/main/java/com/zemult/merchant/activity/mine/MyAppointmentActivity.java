@@ -91,13 +91,13 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
 
         if (type == 0) {
             if (fromHome) {
-                lhTvTitle.setText("待结账预约单");
+                lhTvTitle.setText("待结账服务单");
             } else {
-                lhTvTitle.setText("我的预约单");
+                lhTvTitle.setText("我的服务单");
             }
             userReservationList();
         } else if (type == 1) {
-            lhTvTitle.setText("预约记录");
+            lhTvTitle.setText("服务记录");
             userSaleReservation();
         }
 
@@ -105,9 +105,8 @@ public class MyAppointmentActivity extends BaseActivity implements SmoothListVie
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Reservation mReservation = (M_Reservation) commonAdapter.getItem(position - 1);
-                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, mReservation.reservationId);
-                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, type);
+                Intent intent = new Intent(mContext, ServiceTicketDetailActivity.class);
+                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, mReservation.reservationId);
                 startActivity(intent);
             }
         });

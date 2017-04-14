@@ -106,7 +106,7 @@ public class ChooseReservationAdapter extends BaseListAdapter<M_Reservation> {
         holder.tvNo.setText("服务单号: " + m.number);
         holder.tvTime.setText("服务时间: " + m.reservationTime.substring(0, 16));
         if (!isQuick) {
-            holder.cb.setChecked(!m.isChecked());
+            holder.cb.setChecked(m.isChecked());
             holder.cb.setVisibility(View.VISIBLE);
         }else{
             holder.cb.setVisibility(View.GONE);
