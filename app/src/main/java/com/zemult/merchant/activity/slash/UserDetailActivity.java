@@ -397,6 +397,7 @@ public class UserDetailActivity extends BaseActivity {
                         reset();
                         break;
                     case MotionEvent.ACTION_CANCEL: // 首次开权限时会走这里，录音取消
+                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
                         mDialogManager.wantToCancel();
                         stopRecord();
                         break;

@@ -387,7 +387,6 @@ public class FindPayActivity extends BaseActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     dismissPd();
-                    System.out.print(error);
                 }
 
                 @Override
@@ -639,8 +638,12 @@ public class FindPayActivity extends BaseActivity {
             case R.id.btn_pay:
                 money = getMoney();
                 consumeMoney = getConsumeMoney();
-                if (mReservation != null && mReservation.reservationMoney > 0) {
-                    type = 6;
+                if (mReservation != null) {
+                    if (mReservation.reservationMoney > 0) {
+                        type = 6;
+                    } else {
+                        type = 0;
+                    }
                     reservationId = mReservation.reservationId;
                 } else {
                     type = 0;
