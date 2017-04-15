@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
+import com.zemult.merchant.activity.mine.ServiceTicketDetailActivity;
 import com.zemult.merchant.adapter.slash.ChooseReservationAdapter;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
@@ -210,9 +210,8 @@ public class FindPayActivity extends BaseActivity {
         adapter.setOnAllClickListener(new ChooseReservationAdapter.OnAllClickListener() {
             @Override
             public void onAllClick(int position) {
-                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, 0);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
+                Intent intent = new Intent(mContext, ServiceTicketDetailActivity.class);
+                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
                 startActivity(intent);
             }
         });
