@@ -49,6 +49,7 @@ import com.zemult.merchant.aip.common.CommonRewardRequest;
 import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
 import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
+import com.zemult.merchant.aip.mine.UserRewardPayAddRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationDelRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationEditRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationSureRequest;
@@ -205,6 +206,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     User2ReservationDelRequest  user2ReservationDelRequest;
     User2ReservationPayRequest  user2ReservationPayRequest;
     User2ReservationSureRequest user2ReservationSureRequest;
+    UserRewardPayAddRequest rewardPayAddRequest;
 
     public static String REFLASH_MYAPPOINT = "reflash_myappoint";
     String userName="",fileUrl="";
@@ -312,6 +314,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         if (type == 0) {//我是客户的状态下
                             yuyueresultcommitRl.setVisibility(View.GONE);
                             customerconfirmBtn.setVisibility(View.VISIBLE);
+                            llZanshang.setVisibility(View.VISIBLE);
                             common_reward();
                         } else if (type == 1) {//我是管家的情况下
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
@@ -321,10 +324,15 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                         tvState.setText("预约成功");
                         if (type == 0) {//客户
+                            customerconfirmBtn.setVisibility(View.GONE);
+                            llZanshang.setVisibility(View.GONE);
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
-                            lhBtnRight.setVisibility(View.VISIBLE);
-                            lhBtnRight.setText("快捷买单");
+                            if(mReservation.merchantReviewstatus==2){
+                                lhBtnRight.setVisibility(View.VISIBLE);
+                                lhBtnRight.setText("快捷买单");
+                            }
+
                             serveraccountBtn.setVisibility(View.GONE);
                         if(dialogShowCount==0){
                             dialogShowCount++;
@@ -372,7 +380,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
                         billdetailsBtn.setVisibility(View.VISIBLE);
-
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
                     }
@@ -527,7 +534,61 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     }
 
+    private void user_reward_pay_add() {
+        try {
+            showPd();
 
+            if (rewardPayAddRequest != null) {
+                rewardPayAddRequest.cancel();
+            }
+            UserRewardPayAddRequest.Input input = new UserRewardPayAddRequest.Input();
+            input.userId = SlashHelper.userManager().getUserId();
+            input.toUserId = mReservation.saleUserId;
+            input.money = rewardMoney;
+            input.convertJosn();
+
+            rewardPayAddRequest = new UserRewardPayAddRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    dismissPd();
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        Intent intent = new Intent(AppointmentDetailNewActivity.this, ChoosePayTypeActivity.class);
+                        intent.putExtra("consumeMoney", rewardMoney);
+                        intent.putExtra("order_sn", ((CommonResult) response).number);
+                        intent.putExtra("userPayId", ((CommonResult) response).userPayId);
+                        intent.putExtra("toUserId", mReservation.saleUserId);
+                        intent.putExtra("merchantName", "赞赏");
+                        String imMessageTitle = "";
+                        String imMessageContent = "";
+                        for (int i : selectIdSet) {
+                            imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
+                            imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
+                        }
+                        if (imMessageTitle.indexOf(",") != -1) {
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0, imMessageTitle.length() - 1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0, imMessageContent.length() - 1));
+                        }
+                        intent.putExtra("merchantHead", "");
+                        intent.putExtra("managerhead", "");
+                        intent.putExtra("managername", "");
+                        startActivityForResult(intent, 10001);
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(rewardPayAddRequest);
+        } catch (Exception e) {
+            dismissPd();
+        }
+    }
 
     //生成定金支付单(用户确认预约单)
     private void user2_reservation_pay() {
@@ -633,6 +694,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 }
                 if(mReservation.reservationMoney+rewardMoney==0){
                     user2_reservation_sure();
+                }
+                else if(mReservation.reservationMoney==0&&rewardMoney!=0){
+                    user2_reservation_sure();
+                    user_reward_pay_add();
                 }
                 else{
                     user2_reservation_pay();
@@ -892,7 +957,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                 if (((APIM_PresentList) response).status == 1) {
                     if (((APIM_PresentList) response).moneyList.size() > 0) {
-                        llZanshang.setVisibility(View.VISIBLE);
                         moneyList = ((APIM_PresentList) response).moneyList;
                         selectIdSet.add(1);
                         rewardMoney = moneyList.get(1).money;
@@ -955,6 +1019,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+           finish();
+        }
     }
 
     /**
