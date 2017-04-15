@@ -163,7 +163,8 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                                 success1Ll.setVisibility(View.VISIBLE);
                                 tvRight.setVisibility(View.VISIBLE);
                                 tvRight.setText("快捷买单");
-                                tvDingjinSuccess.setText("￥" + Convert.getMoneyString(mReservation.reservationMoney));
+                                tvDingjinSuccess.setText("￥" +(mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
+
                             } else {
                                 success2Ll.setVisibility(View.VISIBLE);
                             }
@@ -171,8 +172,8 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         case 2:
                             havepayedLl.setVisibility(View.VISIBLE);
                             tvState.setText("已支付");
-                            tvDingjinHaved.setText("￥" + Convert.getMoneyString(mReservation.reservationMoney));
-                            realmoneyTv.setText("￥" + Convert.getMoneyString(mReservation.userPayMoney));
+                            tvDingjinHaved.setText("￥" + (mReservation.reservationMoney == 0 ? "0" :Convert.getMoneyString(mReservation.reservationMoney)));
+                            realmoneyTv.setText("￥" +(mReservation.userPayMoney == 0 ? "0" : Convert.getMoneyString(mReservation.userPayMoney)));
                             ordernumTv.setText("" + mReservation.userPayNumber);
                             break;
                         case 3:
@@ -180,7 +181,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         case 4:
                             tvState.setText("已结束");
                             finishedLl.setVisibility(View.VISIBLE);
-                            tvRedingjinFinished.setText("￥" + Convert.getMoneyString(mReservation.reservationMoney));
+                            tvRedingjinFinished.setText("￥" + (mReservation.reservationMoney == 0 ? "0" :Convert.getMoneyString(mReservation.reservationMoney)));
                             break;
                     }
 

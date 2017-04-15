@@ -192,8 +192,8 @@ public class PayInfoActivity extends BaseActivity {
 
                     } else if (m.type == 6) {
                         havedingjinLl.setVisibility(View.VISIBLE);
-                        tvDingjin.setText("" + Convert.getMoneyString(m.reservationMoney));
-                        tvRestmoney.setText("" + Convert.getMoneyString(m.payMoney));
+                        tvDingjin.setText("" +(m.reservationMoney == 0 ? "0" : Convert.getMoneyString(m.reservationMoney)));
+                        tvRestmoney.setText("" +(m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                         switch (m.state) {
                             //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
                             case 0:
