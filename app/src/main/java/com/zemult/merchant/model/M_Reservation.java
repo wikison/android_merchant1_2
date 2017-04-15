@@ -38,6 +38,8 @@ public class M_Reservation implements Serializable {
 
     @Expose
     public String saleUserHead;//约客的头像
+    @Expose
+    public double saleUserExperience;//服务管家经验值
 
     @Expose
     public String reservationTime;//预约时间(格式为"yyyy-MM-dd HH:mm:ss")

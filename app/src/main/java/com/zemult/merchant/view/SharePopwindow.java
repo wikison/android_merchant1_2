@@ -61,6 +61,14 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
         this.setAnimationStyle(R.style.umeng_socialize_shareboard_animation);
     }
 
+    public void  showType(boolean weixin,boolean quan,boolean qq,boolean xinlang){
+            llSina.setVisibility(xinlang?View.VISIBLE:View.GONE);
+            llShareWechat.setVisibility(weixin?View.VISIBLE:View.GONE);
+            llShareWechatFriend.setVisibility(quan?View.VISIBLE:View.GONE);
+            llQQ.setVisibility(qq?View.VISIBLE:View.GONE);
+
+    }
+
     public void showResend(){
         llShareResend.setVisibility(View.VISIBLE);
     }

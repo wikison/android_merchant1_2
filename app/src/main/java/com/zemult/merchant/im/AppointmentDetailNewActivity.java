@@ -40,6 +40,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
+import com.zemult.merchant.activity.mine.SettingMoney4OrderActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.SendRewardActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
@@ -665,13 +666,28 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.serveraccount_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 EventBus.getDefault().post(REFLASH_MYAPPOINT);
                 onBackPressed();
+                break;
+
+            case R.id.serveraccount_btn:
+                Intent intentserver = new Intent(this, SettingMoney4OrderActivity.class);
+                intentserver.putExtra("reservationMoney",mReservation.reservationMoney);
+                intentserver.putExtra("experience",mReservation.saleUserExperience);
+                intentserver.putExtra("saleUserId",mReservation.saleUserId);
+                intentserver.putExtra("saleHead",mReservation.saleUserHead);
+                intentserver.putExtra("saleName",mReservation.saleUserName);
+                intentserver.putExtra("merchantName",mReservation.merchantName);
+                intentserver.putExtra("merchantId",mReservation.merchantId);
+                if (!TextUtils.isEmpty(reservationId))
+                    intentserver.putExtra("reservationId", Integer.valueOf(reservationId));
+                startActivity(intentserver);
+
                 break;
             case R.id.head_iv:
                 if (type == 0) {

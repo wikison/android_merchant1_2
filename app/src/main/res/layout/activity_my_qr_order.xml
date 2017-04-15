@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/ll_root"
+              android:background="@color/bg_67"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="@dimen/margin_12dp"
+        android:layout_marginRight="@dimen/margin_12dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="@dimen/j5dp">
+
+        <RelativeLayout
+            style="@style/margin_lr_12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_36dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="@dimen/j40dp"
+                android:layout_height="@dimen/j40dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/user_icon"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_14_black_28"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_toRightOf="@+id/iv_head"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="3333"/>
+
+            <TextView
+                android:id="@+id/tv_level"
+                style="@style/text_14_black_28"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_12dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:drawablePadding="@dimen/margin_6dp"
+                android:text="222"
+                android:textColor="@color/font_main"/>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_merchant_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_merchant_head"
+                android:layout_width="@dimen/length_88px"
+                android:layout_height="@dimen/length_88px"/>
+
+            <TextView
+                android:id="@+id/tv_merchant_name"
+                style="@style/text_14_black_46"
+                android:text="55"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:text="11"
+            android:textColor="@color/font_black_28"
+            android:textSize="30sp"/>
+
+
+        <ImageView
+            android:id="@+id/iv_qr"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"/>
+
+
+        <Button
+            android:id="@+id/set_btn"
+            style="@style/common_btn_235"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:background="@null"
+            android:textColor="@color/btn_normal"
+            android:text="分享交易链接"/>
+
+
+    </com.flyco.roundview.RoundLinearLayout>
+</LinearLayout>

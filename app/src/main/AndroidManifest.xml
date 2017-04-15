@@ -311,6 +311,7 @@
         <activity android:name=".activity.mine.MySettingActivity" />
         <activity android:name=".activity.mine.SafeSettingActivity" />
         <activity android:name=".activity.mine.MyQrActivity" />
+        <activity android:name=".activity.mine.MyQr4OrderActivity" />
         <activity android:name=".activity.mine.MyPhoneSecretActivity" />
         <activity android:name=".activity.ScanQrActivity" />
         <activity android:name=".activity.mine.message.SystemMessageActivity" />
@@ -588,6 +589,7 @@
         <activity android:name=".activity.slash.ChooseReservationMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentSuccessActivity" />
         <activity android:name=".activity.mine.SettingMoneyActivity" />
+        <activity android:name=".activity.mine.SettingMoney4OrderActivity" />
         <activity android:name=".activity.slash.SendRewardActivity" />
         <activity android:name=".activity.SendAppreciateRedActivity" />
         <activity android:name=".activity.ReceiveRedActivity" />
