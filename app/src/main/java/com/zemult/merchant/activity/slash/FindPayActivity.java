@@ -574,7 +574,7 @@ public class FindPayActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (s.toString().length() > 0) {
                 if (etPaymoney.getText().toString().length() > 0) {
-                    if (getMoney() > reservationMoney) {
+                    if (getMoney() > 0) {
                         etPaymoney.setHint("");
                         btnPay.setEnabled(true);
                         btnPay.setBackgroundResource(R.drawable.common_selector_btn);
