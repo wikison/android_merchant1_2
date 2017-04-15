@@ -769,7 +769,7 @@ public class UserDetailActivity extends BaseActivity {
             public void onResponse(Object response) {
                 dismissPd();
                 if (((CommonResult) response).status == 1) {
-//                    int remindIMId = ((CommonResult) response).remindIMId;
+                    int remindIMId = ((CommonResult) response).remindIMId;
                     YWCustomMessageBody messageBody = new YWCustomMessageBody();
                     //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
                     JSONObject object = new JSONObject();
@@ -784,6 +784,7 @@ public class UserDetailActivity extends BaseActivity {
                         object.put("fromuserName", SlashHelper.userManager().getUserinfo().name);
                         object.put("fromuserHead", SlashHelper.userManager().getUserinfo().head);
                         object.put("recordPath", fileUrl);
+                        object.put("remindIMId", remindIMId);
                     } catch (JSONException e) {
 
                     }
