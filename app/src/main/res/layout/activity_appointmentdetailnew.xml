@@ -313,6 +313,7 @@
             </RelativeLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:orientation="vertical"
             android:id="@+id/ll_weikuan"
             android:layout_width="match_parent"
@@ -346,6 +347,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:id="@+id/ll_dingdanhaoma"
                 android:layout_width="match_parent"
@@ -475,8 +477,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="94dp"
                     android:layout_marginTop="22dp"
-                    android:onClick="click"
                     android:text="发起收款"
+                    android:clickable="true"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -488,7 +490,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="94dp"
                     android:layout_marginTop="22dp"
-                    android:onClick="click"
+                    android:clickable="true"
                     android:text="查看交易记录详情"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
@@ -501,8 +503,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="94dp"
                     android:layout_marginTop="22dp"
-                    android:onClick="click"
                     android:text="确认"
+                    android:clickable="true"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

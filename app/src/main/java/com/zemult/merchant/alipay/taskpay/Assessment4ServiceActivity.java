@@ -83,7 +83,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
 
 
     // 用户添加关注
-    private void userMerchantPayCommont_1_1Request() {
+    private void user2_reservation_commont_add() {
         showPd();
         if (user2ReservationCommontAddRequest != null) {
             user2ReservationCommontAddRequest.cancel();
@@ -127,7 +127,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
                     ToastUtil.showMessage("您还没有打分");
                     return;
                 }
-                userMerchantPayCommont_1_1Request();
+                user2_reservation_commont_add();
                 break;
         }
     }

@@ -492,6 +492,7 @@
         <activity android:name=".activity.mine.BillInfoActivity" />
         <activity android:name=".alipay.taskpay.TaskPayInfoActivity" />
         <activity android:name=".alipay.taskpay.ChoosePayTypeActivity" />
+        <activity android:name=".alipay.taskpay.ChoosePayType4OrderActivity" />
         <activity android:name=".alipay.taskpay.TaskPayResultActivity" />
         <activity android:name=".activity.mine.MerchantFullNameActivity" />
         <activity
@@ -577,7 +578,9 @@
         <activity android:name=".activity.mine.MyAppointmentActivity" />
         <activity android:name=".activity.slash.TAMerchantListActivity" />
         <activity android:name=".activity.mine.AppointmentDetailActivity" />
-        <activity android:name=".im.AppointmentDetailNewActivity" />
+        <activity android:name=".im.AppointmentDetailNewActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentActivity" />
         <activity android:name=".activity.slash.ChoosePayReservationActivity" />

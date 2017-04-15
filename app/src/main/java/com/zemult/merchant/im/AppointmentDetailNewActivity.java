@@ -51,8 +51,11 @@ import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationDelRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationEditRequest;
+import com.zemult.merchant.aip.reservation.User2ReservationSureRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
+import com.zemult.merchant.alipay.taskpay.ChoosePayType4OrderActivity;
+import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Urls;
@@ -190,7 +193,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Bind(R.id.tv_name)
     TextView tvName;
     @Bind(R.id.serveraccount_btn)
-    TextView serveraccountBtn;
+    Button serveraccountBtn;
     String reservationId = "";
     int type;
     String replayNote;
@@ -200,9 +203,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     User2ReservationEditRequest user2ReservationEditRequest;
     User2ReservationDelRequest  user2ReservationDelRequest;
     User2ReservationPayRequest  user2ReservationPayRequest;
+    User2ReservationSureRequest user2ReservationSureRequest;
 
     public static String REFLASH_MYAPPOINT = "reflash_myappoint";
-    int userId;
     String userName="",fileUrl="";
     ImageManager mimageManager;
     @Bind(R.id.cb_reward)
@@ -255,7 +258,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 dismissPd();
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
-                    userId=mReservation.saleUserId;
                     userName=mReservation.saleUserName;
                     fileUrl=mReservation.replayNote;
                     merchantReviewstatus = mReservation.merchantReviewstatus;
@@ -266,7 +268,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         rlDingjin.setVisibility(View.VISIBLE);
                         tvDingjintips.setVisibility(View.VISIBLE);
                         Drawable drawable1 = getResources().getDrawable(R.mipmap.money_red);
-                        drawable1.setBounds(0, 0, 20, 20);
+                        drawable1.setBounds(0, 0, 40, 40);
                         tvDingjin.setCompoundDrawables(drawable1, null, null, null);
                     } else {
                         rlDingjin.setVisibility(View.GONE);
@@ -321,14 +323,39 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
                             lhBtnRight.setVisibility(View.VISIBLE);
                             lhBtnRight.setText("快捷买单");
-                        }
-
-
-                        if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
-                            serveraccountBtn.setVisibility(View.VISIBLE);
-                        } else {
                             serveraccountBtn.setVisibility(View.GONE);
+
+                            CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CommonDialog.DismissProgressDialog();
+                                }
+                            }, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CommonDialog.DismissProgressDialog();
+                                    // 用户删除自己的评论
+                                    //快速结账
+                                    Intent intent = new Intent(AppointmentDetailNewActivity.this, FindPayActivity.class);
+                                    intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+                                    intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
+                                    intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
+                                    if (!TextUtils.isEmpty(reservationId))
+                                        intent.putExtra("reservationId", Integer.valueOf(reservationId));
+                                    startActivity(intent);
+                                }
+                            });
                         }
+                        else{
+
+                            if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
+                                serveraccountBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                serveraccountBtn.setVisibility(View.GONE);
+                            }
+                        }
+
+
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
@@ -338,7 +365,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         tvDingdanhaoma.setText(mReservation.userPayNumber);
                         tvWeikuan.setText(mReservation.userPayMoney+"");
                         Drawable drawable1 = getResources().getDrawable(R.mipmap.money_gray);
-                        drawable1.setBounds(0, 0, 20, 20);
+                        drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
                         billdetailsBtn.setVisibility(View.VISIBLE);
                         //订单号
@@ -466,7 +493,39 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     }
 
-    //服务管家撤销预约单(未确认的)
+    //用户确认预约单
+    private void user2_reservation_sure() {
+        try {
+            if (user2ReservationSureRequest != null) {
+                user2ReservationSureRequest.cancel();
+            }
+            User2ReservationSureRequest.Input input = new User2ReservationSureRequest.Input();
+            input.reservationId = reservationId;
+            input.convertJosn();
+
+            user2ReservationSureRequest = new User2ReservationSureRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+                        userReservationInfo();
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(user2ReservationSureRequest);
+        } catch (Exception e) {
+        }
+    }
+
+
+
+    //生成定金支付单(用户确认预约单)
     private void user2_reservation_pay() {
         try {
             if (user2ReservationPayRequest != null) {
@@ -474,19 +533,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             }
             User2ReservationPayRequest.Input input = new User2ReservationPayRequest.Input();
             input.reservationId = mReservation.reservationId;
-            input.userId= userId;
+            input.userId= SlashHelper.userManager().getUserId();
             input.merchantId= mReservation.merchantId;
             input.saleUserId= mReservation.saleUserId;
             input.money= mReservation.reservationMoney;//支付单金额(定金金额)
-            if (cbReward.isChecked()) {
-                input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+rewardMoney);//当次支付总金额(money+rewardMoney)
-                input.rewardMoney= rewardMoney;//打赏金额(没有为0)
-            }
-            else {
-                input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+0);//当次支付总金额(money+rewardMoney)
-                input.rewardMoney= 0;//打赏金额(没有为0)
-            }
-
+            input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+rewardMoney);//当次支付总金额(money+rewardMoney)
+            input.rewardMoney= rewardMoney;//打赏金额(没有为0)
             input.convertJosn();
 
             user2ReservationPayRequest = new User2ReservationPayRequest(input, new ResponseListener() {
@@ -498,11 +550,26 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 @Override
                 public void onResponse(Object response) {
                     if (((CommonResult) response).status == 1) {
-//                        number=  ((CommonResult) response).number;
-//                        userPayId= ((CommonResult) response).userPayId;
-
-
-
+                        Intent intent = new Intent(AppointmentDetailNewActivity.this, ChoosePayType4OrderActivity.class);
+                        intent.putExtra("consumeMoney", (mReservation.reservationMoney+rewardMoney));
+                        intent.putExtra("order_sn", ((CommonResult) response).number);
+                        intent.putExtra("userPayId",  ((CommonResult) response).userPayId);
+                        intent.putExtra("reservationId", reservationId);
+                        intent.putExtra("rewardMoney", rewardMoney);
+                        intent.putExtra("toUserId", mReservation.saleUserId);
+                        intent.putExtra("money", mReservation.reservationMoney);
+                        intent.putExtra("saleName", mReservation.saleUserName);
+                        intent.putExtra("saleHead", mReservation.saleUserHead);
+                        String imMessageTitle="",imMessageContent="";
+                        for (int i : selectIdSet) {
+                            imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
+                            imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
+                        }
+                        if (imMessageTitle.indexOf(",") != -1) {
+                            intent.putExtra("imMessageTitle", imMessageTitle.substring(0, imMessageTitle.length() - 1));
+                            intent.putExtra("imMessageContent", imMessageContent.substring(0, imMessageContent.length() - 1));
+                        }
+                        startActivityForResult(intent, 1000);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -557,17 +624,26 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
             case R.id.customerconfirm_btn:
                 //确认预约单
-                user2_reservation_pay();
+                if (!cbReward.isChecked()) {
+                    rewardMoney=0;
+                }
+                if(mReservation.reservationMoney+rewardMoney==0){
+                    user2_reservation_sure();
+                }
+                else{
+                    user2_reservation_pay();
+                }
+
                 break;
 
             case R.id.invite_btn:
 
-                //快速结账
+                //评价
                 Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
                 intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
-                intent2.putExtra("managerhead", Integer.valueOf(mReservation.saleUserHead));
-                intent2.putExtra("managername", Integer.valueOf(mReservation.saleUserName));
-                intent2.putExtra("merchantName", Integer.valueOf(mReservation.merchantName));
+                intent2.putExtra("managerhead", mReservation.saleUserHead);
+                intent2.putExtra("managername",mReservation.saleUserName);
+                intent2.putExtra("merchantName", mReservation.merchantName);
                 if (!TextUtils.isEmpty(reservationId))
                     intent2.putExtra("reservationId", Integer.valueOf(reservationId));
                 startActivity(intent2);
@@ -679,7 +755,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
                 if (!TextUtils.isEmpty(reservationId))
                     intent.putExtra("reservationId", Integer.valueOf(reservationId));
-
                 startActivity(intent);
                 break;
 

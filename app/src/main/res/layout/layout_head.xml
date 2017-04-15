@@ -70,7 +70,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:textSize="14sp"
-        android:background="@color/white"
+        android:background="@null"
         android:textColor="@drawable/head_right_text_color"
         android:visibility="invisible" />
 
