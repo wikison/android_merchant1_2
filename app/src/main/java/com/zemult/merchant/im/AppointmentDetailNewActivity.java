@@ -96,6 +96,7 @@ import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
+
 import static com.zemult.merchant.config.Constants.OSSENDPOINT;
 
 /**
@@ -218,6 +219,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     CommonRewardRequest commonRewardRequest;
     Dialog alertDialog;
     int orderpeople;
+    int dialogShowCount;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_appointmentdetailnew);
@@ -324,7 +326,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             lhBtnRight.setVisibility(View.VISIBLE);
                             lhBtnRight.setText("快捷买单");
                             serveraccountBtn.setVisibility(View.GONE);
-
+                        if(dialogShowCount==0){
+                            dialogShowCount++;
                             CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -334,17 +337,16 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                                 @Override
                                 public void onClick(View v) {
                                     CommonDialog.DismissProgressDialog();
-                                    // 用户删除自己的评论
-                                    //快速结账
-                                    Intent intent = new Intent(AppointmentDetailNewActivity.this, FindPayActivity.class);
-                                    intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
-                                    intent.putExtra("merchantId", Integer.valueOf(mReservation.merchantId));
-                                    intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
-                                    if (!TextUtils.isEmpty(reservationId))
-                                        intent.putExtra("reservationId", Integer.valueOf(reservationId));
-                                    startActivity(intent);
+
+                                    Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                                    urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                                    urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                                    urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                                            "，诚挚邀请，期待您的赴约。");
+                                    startActivity(urlintent);
                                 }
                             });
+                        }
                         }
                         else{
 
@@ -360,6 +362,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
                         serveraccountBtn.setVisibility(View.VISIBLE);
+                        customerconfirmBtn.setVisibility(View.GONE);
+                        llZanshang.setVisibility(View.GONE);
                         llWeikuan.setVisibility(View.VISIBLE);
                         llDingdanhaoma.setVisibility(View.VISIBLE);
                         tvDingdanhaoma.setText(mReservation.userPayNumber);
@@ -368,7 +372,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
                         billdetailsBtn.setVisibility(View.VISIBLE);
-                        //订单号
+
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
                     }
