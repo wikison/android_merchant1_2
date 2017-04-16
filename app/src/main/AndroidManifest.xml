@@ -579,9 +579,9 @@
         <activity android:name=".activity.mine.MyAppointmentActivity" />
         <activity android:name=".activity.slash.TAMerchantListActivity" />
         <activity android:name=".activity.mine.AppointmentDetailActivity" />
-        <activity android:name=".im.AppointmentDetailNewActivity"
-            android:launchMode="singleTask"
-            />
+        <activity
+            android:name=".im.AppointmentDetailNewActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.slash.ChoosePayMerchantActivity" />
         <activity android:name=".activity.slash.SendPresentActivity" />
         <activity android:name=".activity.slash.ChoosePayReservationActivity" />
@@ -618,8 +618,8 @@
         <activity android:name=".activity.mine.MyFansActivity" />
         <activity android:name=".activity.slash.ServiceTicketListActivity" />
         <activity android:name=".activity.slash.SaleServiceTicketDetailActivity" />
-        <activity
-            android:name=".activity.slash.MerchantAdminActivity"></activity>
+        <activity android:name=".activity.slash.MerchantAdminActivity" />
+        <activity android:name=".activity.mine.SalemanInfoSettingActivity"></activity>
     </application>
 
 </manifest>

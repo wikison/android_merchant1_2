@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.activity.mine.SalemanInfoSettingActivity">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <RelativeLayout
+        android:id="@+id/mis_headgo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="头像" />
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon" />
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="19dp"
+            android:src="@mipmap/right_btn" />
+    </RelativeLayout>
+
+
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/mis_name_layout"
+        style="@style/layout_item_click">
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="昵称" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView1"
+            android:layout_marginRight="16dp"
+            android:drawablePadding="12dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="------" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/extra_help"
+        android:textColor="@color/font_black_999"
+        android:textSize="13sp" />
+
+
+</LinearLayout>
