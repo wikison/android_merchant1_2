@@ -46,6 +46,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     private ViewClickListener onViewClickListener;
     private ViewMerchantClickListener onViewMerchantClickListener;
     private ViewTagClickListener onViewTagClickListener;
+    private ViewStateClickListener onViewStateClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
@@ -57,6 +58,9 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public void setOnViewTagClickListener(ViewTagClickListener onViewTagClickListener) {
         this.onViewTagClickListener = onViewTagClickListener;
+    }
+    public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
+        this.onViewStateClickListener = onViewStateClickListener;
     }
 
 
@@ -255,7 +259,13 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             }
         });
 
-
+        holder.tvState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewStateClickListener != null)
+                    onViewStateClickListener.onStateManage(entity);
+            }
+        });
     }
 
 
@@ -472,6 +482,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public interface ViewTagClickListener {
         void onTagManage(M_Merchant entity);
+    }
+
+    public interface ViewStateClickListener {
+        void onStateManage(M_Merchant entity);
     }
 
 }

@@ -33,6 +33,7 @@ import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.slash.Merchant2SaleUserMerchantListRequest;
+import com.zemult.merchant.aip.slash.User2SaleMerchantEditRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
@@ -169,6 +170,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     UserEditStateRequest userEditStateRequest;
+    User2SaleMerchantEditRequest user2SaleMerchantEditRequest;
     User2SaleUserFanListRequest user2SaleUserFanListRequest;
     Merchant2SaleUserMerchantListRequest merchant2SaleUserMerchantListRequest; // 挂靠的商家
     private M_Userinfo userInfo;
@@ -549,6 +551,25 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
+            pagerUserMerchantDetailAdapter.setOnViewStateClickListener(new PagerUserMerchantAdapter.ViewStateClickListener() {
+                @Override
+                public void onStateManage(final M_Merchant entity) {
+                    MMAlert.showChooseStateDialog(mContext, new MMAlert.ChooseCallback() {
+                        @Override
+                        public void onfirstChoose() {
+                            state = 0;
+                            userEditInfo(entity);
+                        }
+
+                        @Override
+                        public void onthirdChoose() {
+                            state = 2;
+                            userEditInfo(entity);
+                        }
+                    });
+                }
+            });
+
             pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
                 @Override
                 public void onDetail(M_Merchant entity) {
@@ -611,22 +632,6 @@ public class SelfUserDetailActivity extends BaseActivity {
                 startActivityForResult(intent, ADD_MERCHANT);
 
                 break;
-//            case R.id.tv_state:
-//                MMAlert.showChooseStateDialog(this, new MMAlert.ChooseCallback() {
-//                    @Override
-//                    public void onfirstChoose() {
-//                        state = 0;
-//                        userEditState();
-//                    }
-//
-//                    @Override
-//                    public void onthirdChoose() {
-//                        state = 2;
-//                        userEditState();
-//                    }
-//                });
-//
-//                break;
             case R.id.tv_add_level:
                 break;
             case R.id.tv_level:
@@ -682,6 +687,38 @@ public class SelfUserDetailActivity extends BaseActivity {
         sendJsonRequest(userEditStateRequest);
     }
 
+    private void userEditInfo(M_Merchant m) {
+        if (user2SaleMerchantEditRequest != null) {
+            user2SaleMerchantEditRequest.cancel();
+        }
+        showPd();
+        User2SaleMerchantEditRequest.Input input = new User2SaleMerchantEditRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.merchantId = m.merchantId;
+        input.tags = m.tags;
+        input.state = state;
+        input.position = "";
+        input.convertJosn();
+        user2SaleMerchantEditRequest = new User2SaleMerchantEditRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    SlashHelper.userManager().getUserinfo().setState(state);
+                    getOtherMerchantList();
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(user2SaleMerchantEditRequest);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -689,8 +726,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) && resultCode == RESULT_OK) {
             getOtherMerchantList();
         }
-        if (requestCode==111&&resultCode==RESULT_OK)
-        {
+        if (requestCode == 111 && resultCode == RESULT_OK) {
             getUserInfo();
         }
     }
