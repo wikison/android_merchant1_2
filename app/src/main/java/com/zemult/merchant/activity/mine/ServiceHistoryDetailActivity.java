@@ -72,6 +72,12 @@ public class ServiceHistoryDetailActivity extends BaseActivity {
     RelativeLayout rlMyService;
     @Bind(R.id.comment_ll)
     LinearLayout commentLl;
+    @Bind(R.id.tv_dingjin)
+    TextView tvDingjin;
+    @Bind(R.id.tv_restmoney)
+    TextView tvRestmoney;
+    @Bind(R.id.havedingjin_ll)
+    LinearLayout havedingjinLl;
     private Context mContext;
     private Activity mActivity;
     UserPayInfoRequest userPayInfoRequest;
@@ -127,6 +133,16 @@ public class ServiceHistoryDetailActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(m.userHead)) {
                         mImageManager.loadCircleImage(m.userHead, ivUserHead);
                     }
+                    if(m.type==6){
+                        havedingjinLl.setVisibility(View.VISIBLE);
+                        tvDingjin.setText("" +(m.reservationMoney == 0 ? "0" : Convert.getMoneyString(m.reservationMoney)));
+                        tvRestmoney.setText("" +(m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                    }else{
+                        havedingjinLl.setVisibility(View.GONE);
+                    }
+
+
+
                     tvMoney.setText(Convert.getMoneyString(m.payMoney));
                     tvUserName.setText(m.userName);
                     tvMerchantName.setText(m.merchantName);

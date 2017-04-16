@@ -66,6 +66,7 @@ public class ServiceHistoryActivity extends BaseActivity implements SmoothListVi
     int page = 1;
     int selectPosition;
     int selectPayId;
+    int saleUserId,merchantId;
 
     @Override
     public void setContentView() {
@@ -76,6 +77,8 @@ public class ServiceHistoryActivity extends BaseActivity implements SmoothListVi
     public void init() {
         mContext = this;
         mActivity = this;
+        saleUserId = getIntent().getIntExtra("saleUserId",-1);
+        merchantId = getIntent().getIntExtra("merchantId",-1);
 
         initView();
         initListener();
@@ -102,7 +105,7 @@ public class ServiceHistoryActivity extends BaseActivity implements SmoothListVi
 
     private void initView() {
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("服务记录");
+        lhTvTitle.setText("交易单记录");
         mSmoothListView.setRefreshEnable(true);
         mSmoothListView.setLoadMoreEnable(false);
         mSmoothListView.setDividerHeight(DensityUtil.dp2px(mContext, 12));
@@ -120,7 +123,8 @@ public class ServiceHistoryActivity extends BaseActivity implements SmoothListVi
             userSalePayListRequest.cancel();
         }
         UserSalePayListRequest.Input input = new UserSalePayListRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId();
+        input.saleUserId = saleUserId;
+        input.merchantId= merchantId;
         input.page = isLoadMore ? ++page : (page = 1);
         input.rows = Constants.ROWS;
 

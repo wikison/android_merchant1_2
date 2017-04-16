@@ -524,8 +524,8 @@ public class Urls {
     public static String MERCHANT_REQUEST_LIST = "merchant_requestList";
     //客户列表
     public static String USER_SALE_USERLIST = "user_sale_userList.do";
-    //服务记录列表
-    public static String USER_SALE_PAYLIST = "user_sale_payList.do";
+    //服务管家的交易单记录列表
+    public static String USER_SALE_PAYLIST = "user2_saleUser_userPayList.do";
 
     //用户的预约单列表
     public static String USER_RESERVATION_LIST = "user2_reservation_list.do";
