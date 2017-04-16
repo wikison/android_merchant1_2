@@ -192,14 +192,9 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;*/
             case R.id.btn_saleuser:
-                if (isSaleUser == 1) {
-                    intent = new Intent(getActivity(), SelfUserDetailActivity.class);
-                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(getActivity(), BeManagerFirstActivity.class);
-                    startActivity(intent);
-                }
+                intent = new Intent(getActivity(), SelfUserDetailActivity.class);
+                intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                startActivity(intent);
                 break;
             case R.id.mtag_layout:
                 intent = new Intent(getActivity(), LabelHomeActivity.class);
