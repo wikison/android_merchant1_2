@@ -279,15 +279,78 @@
         android:layout_height="wrap_content"
         android:background="@color/bg_f2"
         android:gravity="bottom|center_horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="36dp"
         android:orientation="vertical"
         android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/j35dp"
+            android:layout_marginRight="@dimen/j35dp"
+            android:orientation="horizontal">
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll_im"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="visible"
+                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundPressColor="@color/btn_press"
+                app:rv_strokeColor="@color/font_main"
+                app:rv_strokeWidth="1dp"
+                app:rv_cornerRadius="18dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/xiaoxi_orange"/>
+
+                <TextView
+                    style="@style/text_18_black_28"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:text="聊天咨询"
+                    android:textColor="@color/font_main"/>
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/rll_call"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="visible"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundPressColor="@color/btn_press"
+                app:rv_strokeColor="@color/font_main"
+                app:rv_strokeWidth="1dp"
+                app:rv_cornerRadius="18dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/dadianhua_orange"/>
+
+                <TextView
+                    style="@style/text_18_black_28"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:text="电话咨询"
+                    android:textColor="@color/font_main"/>
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+        </LinearLayout>
 
 
         <com.flyco.roundview.RoundLinearLayout
             android:id="@+id/btn_service"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="36dp"
             android:layout_marginLeft="@dimen/j35dp"
             android:layout_marginRight="@dimen/j35dp"
             android:layout_marginTop="@dimen/margin_16dp"
@@ -305,7 +368,7 @@
             <TextView
                 style="@style/text_18_black_28"
                 android:layout_marginLeft="@dimen/margin_12dp"
-                android:text="按住说话 预约服务"
+                android:text="我要约服"
                 android:textColor="@color/white"/>
 
         </com.flyco.roundview.RoundLinearLayout>
@@ -324,50 +387,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_phone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked"
-                    android:drawablePadding="4dp"
-                    android:drawableTop="@mipmap/dadianhua_green"
 
-                    android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:text="打电话"
-                    android:textColor="@color/font_idle"
-                    android:textSize="@dimen/font_24px"/>
-
-
-                <TextView
-                    android:id="@+id/tv_buy"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked"
-                    android:drawablePadding="4dp"
-                    android:drawableTop="@mipmap/money_red"
-                    android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:text="找TA买单"
-                    android:textColor="@color/font_busy"
-                    android:textSize="@dimen/font_24px"
-                    android:visibility="visible"/>
-
-                <TextView
-                    android:id="@+id/tv_reward"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/ripple_item_clicked"
-                    android:drawablePadding="4dp"
-                    android:drawableTop="@mipmap/zanshang_gold"
-                    android:gravity="center"
-                    android:paddingBottom="4dp"
-                    android:text="赞赏"
-                    android:textColor="@color/font_main"
-                    android:textSize="@dimen/font_24px"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

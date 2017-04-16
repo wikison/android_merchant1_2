@@ -41,7 +41,6 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.activity.mine.RemarkNameActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
-import com.zemult.merchant.adapter.slash.TaMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
 import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
@@ -83,6 +82,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -116,17 +116,6 @@ public class UserDetailActivity extends BaseActivity {
     private static final int STATE_RECORDING = 2;// 正在录音
     private static final int STATE_WANT_TO_CANCEL = 3;// 希望取消
 
-    private int mCurrentState = STATE_NORMAL; // 当前的状态
-
-    private static final int DISTANCE_Y_CANCEL = 50;
-
-    private static final int MSG_AUDIO_PREPARED = 0x110;
-    private static final int MSG_VOICE_CHANGED = 0x111;
-    private static final int MSG_DIALOG_DISMISS = 0x112;
-    private static final int MSG_VOICE_FINISH = 0x113;
-
-    public static final String TAG = UserDetailActivity.class.getSimpleName();
-
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -135,6 +124,10 @@ public class UserDetailActivity extends BaseActivity {
     ImageView ivRight;
     @Bind(R.id.ll_right)
     LinearLayout llRight;
+    @Bind(R.id.iv_right2)
+    ImageView ivRight2;
+    @Bind(R.id.ll_right2)
+    LinearLayout llRight2;
     @Bind(R.id.tv_right)
     TextView tvRight;
     @Bind(R.id.lh_tv_title)
@@ -167,30 +160,39 @@ public class UserDetailActivity extends BaseActivity {
     LinkagePager bindPager;
     @Bind(R.id.ll_main)
     LinearLayout llMain;
+    @Bind(R.id.vertical_scrollview)
+    VerticalScrollView verticalScrollview;
     @Bind(R.id.iv_normal_head)
     ImageView ivNormalHead;
     @Bind(R.id.tv_normal_name)
     TextView tvNormalName;
+    @Bind(R.id.btn_contact)
+    Button btnContact;
     @Bind(R.id.ll_normal)
     LinearLayout llNormal;
+    @Bind(R.id.rll_im)
+    RoundLinearLayout rllIm;
+    @Bind(R.id.rll_call)
+    RoundLinearLayout rllCall;
     @Bind(R.id.btn_service)
     RoundLinearLayout btnService;
-    @Bind(R.id.tv_phone)
-    TextView tvPhone;
-    @Bind(R.id.tv_buy)
-    TextView tvBuy;
-    @Bind(R.id.tv_reward)
-    TextView tvReward;
     @Bind(R.id.ll_bottom_menu)
     LinearLayout llBottomMenu;
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
-    @Bind(R.id.vertical_scrollview)
-    VerticalScrollView verticalScrollview;
-    @Bind(R.id.btn_contact)
-    Button btnContact;
+
+    private int mCurrentState = STATE_NORMAL; // 当前的状态
+
+    private static final int DISTANCE_Y_CANCEL = 50;
+
+    private static final int MSG_AUDIO_PREPARED = 0x110;
+    private static final int MSG_VOICE_CHANGED = 0x111;
+    private static final int MSG_DIALOG_DISMISS = 0x112;
+    private static final int MSG_VOICE_FINISH = 0x113;
+
+    public static final String TAG = UserDetailActivity.class.getSimpleName();
 
 
     private Context mContext;
@@ -206,7 +208,6 @@ public class UserDetailActivity extends BaseActivity {
     private String userName, userHead;
     private M_Merchant merchant, selectMerchant;
     private int merchantId;
-    TaMerchantAdapter taMerchantAdapter;
     PagerUserMerchantAdapter pagerUserMerchantHeadAdapter;
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
@@ -677,15 +678,6 @@ public class UserDetailActivity extends BaseActivity {
             tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
 
-        // 电话
-        if (!TextUtils.isEmpty(userInfo.getPhoneNum())) {
-            if (userInfo.getIsOpen() == 1) {
-                tvPhone.setText("打电话");
-            } else {
-                tvPhone.setText("未公开");
-            }
-        }
-
         merchantNum = userInfo.saleUserNum;
 
         // 是否已经关注(0:未关注1:已关注)
@@ -803,8 +795,6 @@ public class UserDetailActivity extends BaseActivity {
      * 拨打电话
      */
     private void call() {
-        if (userInfo.getIsOpen() == 0)
-            return;
         final String[] phoneNoArray = userInfo.getPhoneNum().split(";");
         MMAlert.showAlert(this, null, phoneNoArray, null,
                 new MMAlert.OnAlertSelectId() {
@@ -828,7 +818,6 @@ public class UserDetailActivity extends BaseActivity {
             btnService.setVisibility(View.GONE);
             tvHint.setVisibility(View.VISIBLE);
             ivArrow.setVisibility(View.GONE);
-            tvBuy.setVisibility(View.GONE);
         } else {
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
@@ -905,17 +894,10 @@ public class UserDetailActivity extends BaseActivity {
 
     private void setBuyState(boolean isCan) {
         if (isCan) {
-            Drawable drawable = getResources().getDrawable(R.mipmap.money_red);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            tvBuy.setCompoundDrawables(null, drawable, null, null);
-            tvBuy.setTextColor(getResources().getColor(R.color.font_busy));
-            tvBuy.setEnabled(true);
+            llRight2.setVisibility(View.VISIBLE);
+            ivRight2.setImageResource(R.mipmap.zhaotamaidan);
         } else {
-            Drawable drawable = getResources().getDrawable(R.mipmap.money_gray);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            tvBuy.setCompoundDrawables(null, drawable, null, null);
-            tvBuy.setTextColor(getResources().getColor(R.color.font_black_999));
-            tvBuy.setEnabled(false);
+            llRight2.setVisibility(View.GONE);
         }
 
     }
@@ -984,7 +966,7 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.tv_phone, R.id.tv_buy, R.id.tv_reward, R.id.btn_contact})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.ll_right2, R.id.iv_right2, R.id.rll_call, R.id.rll_im})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -1001,9 +983,10 @@ public class UserDetailActivity extends BaseActivity {
                     doReport();
                 } else {
                     List<FilterEntity> list = new ArrayList<>();
-                    list.add(new FilterEntity("设置备注名", 0, R.mipmap.bianji_icon));
-                    list.add(new FilterEntity("推荐给朋友", 1, R.mipmap.fenxiang_icon));
-                    list.add(new FilterEntity("投诉举报", 2, R.mipmap.jubao_icon));
+                    list.add(new FilterEntity("送赞赏", 0, R.mipmap.zan_orange));
+                    list.add(new FilterEntity("投诉举报", 1, R.mipmap.jubao_icon));
+                    list.add(new FilterEntity("推荐给好友", 2, R.mipmap.fenxiang_icon));
+                    list.add(new FilterEntity("设置备注名", 3, R.mipmap.bianji_icon));
 
 
                     CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
@@ -1011,16 +994,26 @@ public class UserDetailActivity extends BaseActivity {
                         public void onClick(int pos) {
                             switch (pos) {
                                 case 0:
-                                    doEdit();
+                                    if (noLogin(mContext))
+                                        return;
+                                    Intent intent = new Intent(mContext, SendRewardActivity.class);
+                                    intent.putExtra(USER_ID, userId);
+                                    intent.putExtra(USER_NAME, userName);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    startActivity(intent);
                                     break;
                                 case 1:
+                                    doReport();
+                                    break;
+                                case 2:
                                     if (sharePopWindow.isShowing())
                                         sharePopWindow.dismiss();
                                     else
                                         sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
                                     break;
-                                case 2:
-                                    doReport();
+
+                                case 3:
+                                    doEdit();
                                     break;
                             }
                         }
@@ -1028,7 +1021,8 @@ public class UserDetailActivity extends BaseActivity {
                 }
 
                 break;
-            case R.id.tv_buy:
+            case R.id.ll_right2:
+            case R.id.iv_right2:
                 if (noLogin(mContext))
                     return;
                 intent = new Intent(UserDetailActivity.this, FindPayActivity.class);
@@ -1036,7 +1030,7 @@ public class UserDetailActivity extends BaseActivity {
                 intent.putExtra("merchantId", selectMerchant.merchantId);
                 startActivity(intent);
                 break;
-            case R.id.tv_phone:
+            case R.id.rll_call:
                 call();
                 break;
             case R.id.btn_focus:
@@ -1044,7 +1038,7 @@ public class UserDetailActivity extends BaseActivity {
                     return;
                 focus_operate();
                 break;
-            case R.id.btn_contact:
+            case R.id.rll_im:
                 if (noLogin(mContext))
                     return;
                 Intent IMkitintent = getIMkit().getChattingActivityIntent(userId + "", Urls.APP_KEY);
@@ -1052,15 +1046,6 @@ public class UserDetailActivity extends BaseActivity {
                 bundle.putInt("serviceId", userId);
                 IMkitintent.putExtras(bundle);
                 startActivity(IMkitintent);
-                break;
-            case R.id.tv_reward:
-                if (noLogin(mContext))
-                    return;
-                intent = new Intent(mContext, SendRewardActivity.class);
-                intent.putExtra(USER_ID, userId);
-                intent.putExtra(USER_NAME, userName);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
                 break;
 
         }
@@ -1122,6 +1107,13 @@ public class UserDetailActivity extends BaseActivity {
             ToastUtil.showMessage("分享取消");
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 
     /* 秒表计时器-Task */
     class MyTimerTask extends TimerTask {

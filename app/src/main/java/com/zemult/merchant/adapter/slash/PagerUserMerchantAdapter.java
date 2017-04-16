@@ -329,7 +329,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     //处理状态
     private void dealState(Object object, M_Merchant entity) {
-        if (object.getClass().isInstance(ViewHolderDetail.class)) {
+        if (object instanceof ViewHolderDetail) {
             ViewHolderDetail holder = (ViewHolderDetail) object;
             if (entity.state == 0) {
                 holder.ivState.setImageResource(R.mipmap.kongxian);
@@ -344,7 +344,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                 holder.tvState.setText("忙碌");
                 holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_busy));
             }
-        } else if (object.getClass().isInstance(ViewHolderDetail.class)) {
+        } else if (object instanceof ViewHolderSelfDetail) {
             ViewHolderSelfDetail holder = (ViewHolderSelfDetail) object;
             if (entity.state == 0) {
                 holder.ivState.setImageResource(R.mipmap.kongxian);

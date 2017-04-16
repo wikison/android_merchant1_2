@@ -73,7 +73,7 @@
 
                         <TextView
                             android:id="@+id/tv_unsure_num"
-                            style="@style/text_15_black_999"
+                            style="@style/text_12_black_999"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="完善资料"/>
@@ -97,6 +97,39 @@
 
                 <View style="@style/divider_dash"/>
 
+                <RelativeLayout
+                    style="@style/relative_layout_item">
+
+
+                    <TextView
+                        android:id="@+id/tv_text_account"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="收益账户"/>
+
+                    <TextView
+                        android:id="@+id/tv_add_money"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_text_account"
+                        android:text="@string/how_add_moeny"
+                        android:textColor="@color/font_new_blue"/>
+
+                    <TextView
+                        android:id="@+id/tv_account"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawablePadding="8dp"
+                        android:drawableRight="@mipmap/right_btn"
+                        android:text="￥1222元"
+                        android:textColor="@color/font_black_999"/>
+
+                </RelativeLayout>
+
+                <View style="@style/divider_dash"/>
                 <RelativeLayout
                     style="@style/relative_layout_item">
 
@@ -132,42 +165,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="4dp"
                         android:src="@mipmap/right_btn"/>
-                </RelativeLayout>
-
-                <View style="@style/divider_dash"/>
-
-                <RelativeLayout
-                    style="@style/relative_layout_item">
-
-
-                    <TextView
-                        android:id="@+id/tv_text_account"
-                        style="@style/text_15_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:text="收益账户"/>
-
-                    <TextView
-                        android:id="@+id/tv_add_money"
-                        style="@style/text_12_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin_16dp"
-                        android:layout_toRightOf="@+id/tv_text_account"
-                        android:text="@string/how_add_moeny"
-                        android:textColor="@color/font_new_blue"/>
-
-                    <TextView
-                        android:id="@+id/tv_account"
-                        style="@style/text_15_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:drawablePadding="8dp"
-                        android:drawableRight="@mipmap/right_btn"
-                        android:text="￥1222元"
-                        android:textColor="@color/font_black_999"/>
-
                 </RelativeLayout>
 
                 <View style="@style/divider_dash"/>

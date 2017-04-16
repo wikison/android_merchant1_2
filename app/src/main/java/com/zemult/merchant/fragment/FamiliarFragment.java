@@ -107,7 +107,7 @@ public class FamiliarFragment extends BaseFragment {
 
     public void initView() {
         llBack.setVisibility(View.GONE);
-        lhTvTitle.setText("熟人");
+        lhTvTitle.setText("我的管家");
         searchView.setMaxWordNum(11);
         searchView.setFilter();
 

@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -18,6 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
@@ -47,13 +51,13 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -174,6 +178,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     PagerUserMerchantAdapter pagerUserMerchantHeadAdapter;
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
+    private SharePopwindow sharePopWindow;
+
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
     List<M_Fan> listFan = new ArrayList<M_Fan>();
     int merchantNum = 0;
@@ -212,6 +218,8 @@ public class SelfUserDetailActivity extends BaseActivity {
 
     private void initView() {
         lhTvTitle.setText("我的管家详情");
+        llRight.setVisibility(View.VISIBLE);
+        ivRight.setImageResource(R.mipmap.fenxiang_icon);
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName)) {
@@ -240,8 +248,79 @@ public class SelfUserDetailActivity extends BaseActivity {
             }
         });
 
+        sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
+
+                switch (position) {
+                    case SharePopwindow.SINA:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.SINA)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.WECHAT:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+                    case SharePopwindow.WECHAT_FRIEND:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.QQ:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.QQ)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+                }
+            }
+        });
 
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享取消");
+        }
+    };
 
     private void getNetworkData() {
         showPd();
@@ -508,7 +587,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -563,6 +642,13 @@ public class SelfUserDetailActivity extends BaseActivity {
                 intent = new Intent(mActivity, MyFansActivity.class);
                 intent.putExtra(MyFansActivity.INTENT_USERID, userId);
                 startActivity(intent);
+                break;
+            case R.id.ll_right:
+            case R.id.iv_right:
+                if (sharePopWindow.isShowing())
+                    sharePopWindow.dismiss();
+                else
+                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
                 break;
         }
     }

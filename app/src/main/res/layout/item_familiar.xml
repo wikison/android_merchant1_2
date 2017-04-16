@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <TextView
-        android:visibility="gone"
-        style="@style/text_15_black_28"
-        android:textStyle="bold"
         android:id="@+id/header"
+        style="@style/text_15_black_28"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:background="@color/bg_f2"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="10dp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
 
-    <View style="@style/divider"
-        android:id="@+id/headline"/>
+    <View
+        android:id="@+id/headline"
+        style="@style/divider"/>
 
     <RelativeLayout
         style="@style/margin_lr_12dp"
@@ -29,15 +30,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="@dimen/margin_12dp"
-            android:src="@mipmap/user_icon" />
+            android:src="@mipmap/user_icon"/>
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/margin_12dp"
-            android:layout_toRightOf="@+id/iv_follow_head"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_toRightOf="@+id/iv_follow_head"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,50 +62,53 @@
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/font_black_333"
-                        android:textSize="@dimen/font_28px" />
+                        android:textSize="@dimen/font_28px"/>
 
                     <ImageView
-                        android:layout_marginLeft="16dp"
+                        android:id="@+id/iv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/iv_status"
-                        android:src="@mipmap/kongxian_icon"/>
+                        android:layout_marginLeft="16dp"
+                        android:src="@mipmap/kongxian_icon"
+                        android:visibility="gone"/>
+
                     <TextView
-                        android:layout_marginLeft="8dp"
                         android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:textColor="@color/font_black_333"
-                        android:textSize="@dimen/font_24px" />
+                        android:textSize="@dimen/font_24px"
+                        android:visibility="gone"/>
 
                     <ImageView
-                        android:layout_marginLeft="16dp"
+                        android:id="@+id/iv_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/iv_sex"
+                        android:layout_marginLeft="16dp"
                         android:src="@mipmap/xinshou_icon"/>
 
                     <TextView
-                        android:layout_marginLeft="8dp"
                         android:id="@+id/tv_describe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
                         android:textColor="@color/e6bb7c"
-                        android:textSize="@dimen/font_22px" />
+                        android:textSize="@dimen/font_22px"/>
 
 
                 </LinearLayout>
             </LinearLayout>
 
             <TextView
-                android:visibility="gone"
-                android:layout_marginTop="4dp"
-                android:text="备注名"
                 android:id="@+id/tv_rname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="备注名"
                 android:textColor="@color/font_black_999"
-                android:textSize="@dimen/font_24px" />
+                android:textSize="@dimen/font_24px"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </RelativeLayout>
