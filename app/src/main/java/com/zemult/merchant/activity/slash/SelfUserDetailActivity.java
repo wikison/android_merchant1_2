@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
+import com.zemult.merchant.activity.mine.SalemanInfoSettingActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.search.SearchActivity;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -100,8 +103,6 @@ public class SelfUserDetailActivity extends BaseActivity {
     TextView tvName;
     @Bind(R.id.tv_focus)
     TextView tvFocus;
-    @Bind(R.id.tv_unsure_num)
-    TextView tvUnsureNum;
     @Bind(R.id.ll_my_info)
     LinearLayout llMyInfo;
     @Bind(R.id.tv_my_info)
@@ -152,6 +153,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     LinearLayout llBottom;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.tv_unsure_num)
+    TextView tvUnsureNum;
 
     private Context mContext;
     private Activity mActivity;
@@ -505,13 +508,17 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.ll_my_info:
+                intent = new Intent(mActivity, SalemanInfoSettingActivity.class);
+                startActivityForResult(intent, 111);
                 break;
             case R.id.ll_add:
             case R.id.iv_add:
@@ -596,7 +603,17 @@ public class SelfUserDetailActivity extends BaseActivity {
         if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) && resultCode == RESULT_OK) {
             getOtherMerchantList();
         }
+        if (requestCode==111&&resultCode==RESULT_OK)
+        {
 
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 }
