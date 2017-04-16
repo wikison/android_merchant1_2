@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
@@ -360,10 +361,19 @@ public final class MMAlert {
                 R.layout.alert_dialog_statechoose_layout, null);
         final int cFullFillWidth = 10000;
         layout.setMinimumWidth(cFullFillWidth);
+        RelativeLayout rlfirst = (RelativeLayout) layout.findViewById(R.id.rl_kongxian);
         TextView tvfirst = (TextView) layout.findViewById(R.id.tv_kongxian);
-
+        RelativeLayout rlthird = (RelativeLayout) layout.findViewById(R.id.rl_manglu);
         TextView tvthird = (TextView) layout.findViewById(R.id.tv_manglu);
         TextView tvCancel = (TextView) layout.findViewById(R.id.tv_cancle);
+        rlfirst.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dlg.dismiss();
+                callback.onfirstChoose();
+
+            }
+        });
         tvfirst.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -373,7 +383,14 @@ public final class MMAlert {
 
             }
         });
+        rlthird.setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View arg0) {
+                dlg.dismiss();
+                callback.onthirdChoose();
+            }
+        });
         tvthird.setOnClickListener(new OnClickListener() {
 
             @Override

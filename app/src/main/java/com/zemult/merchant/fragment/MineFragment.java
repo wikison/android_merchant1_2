@@ -31,7 +31,6 @@ import com.zemult.merchant.activity.mine.MyinfoSetActivity;
 import com.zemult.merchant.activity.mine.SafeSettingActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
-import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.search.LabelHomeActivity;
 import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
@@ -356,6 +355,7 @@ public class MineFragment extends BaseFragment {
                         tvMyAccount.setText(mymoney + "元");
 
                         levelTv.setText(SlashHelper.userManager().getUserinfo().getExperienceText() + "服务");
+                        btnSaleuser.setText(((APIM_UserLogin) response).userInfo.isSaleUser == 0 ? "申请成为服务管家" : "我是服务管家");
                         experience = SlashHelper.userManager().getUserinfo().getExperience();
                         if (experience < 100) {
                             levelIv.setBackgroundResource(R.mipmap.xinshou_iconsj);

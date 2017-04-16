@@ -641,4 +641,6 @@ public class Urls {
     public static String MERCHANT2_SALEUSER_MERCHANTLIST = "merchant2_saleUser_merchantList";
     //用户发送语音预约消息
     public static String USER2_REMINDIM_ADD = "user2_remindIM_add";
+    //用户一键注册服务管家
+    public static String USER2_SALEUSER_LOGIN = "user2_saleUser_login";
 }

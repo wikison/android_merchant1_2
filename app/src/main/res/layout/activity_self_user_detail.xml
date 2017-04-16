@@ -63,56 +63,36 @@
                         android:text="-客户关注"
                         android:textColor="@color/font_new_red"/>
 
-                    <TextView
-                        android:id="@+id/tv_add_fan"
-                        style="@style/text_12_black_28"
+                    <LinearLayout
+                        android:id="@+id/ll_my_info"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin_16dp"
-                        android:layout_toRightOf="@+id/tv_focus"
-                        android:text="@string/how_add_focus"
-                        android:textColor="@color/font_new_blue"/>
+                        android:layout_toLeftOf="@+id/tv_my_info"
+                        android:orientation="horizontal"
+                        android:paddingRight="@dimen/margin_8dp">
+
+                        <TextView
+                            android:id="@+id/tv_unsure_num"
+                            style="@style/text_15_black_999"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="完善资料"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_16dp"
+                            android:src="@mipmap/tixing_icon"/>
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_my_info"
                         style="@style/text_12_black_28"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="@dimen/margin_16dp"
                         android:drawablePadding="@dimen/margin_8dp"
                         android:drawableRight="@mipmap/right_btn"
                         android:text=""/>
-                </RelativeLayout>
-
-                <View style="@style/divider_dash"/>
-
-                <RelativeLayout
-                    style="@style/relative_layout_item">
-
-
-                    <TextView
-                        android:id="@+id/tv_text_state"
-                        style="@style/text_15_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:text="状态"/>
-
-                    <ImageView
-                        android:id="@+id/iv_state"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="4dp"
-                        android:layout_toLeftOf="@+id/tv_state"
-                        android:src="@mipmap/manglu"/>
-
-                    <TextView
-                        android:id="@+id/tv_state"
-                        style="@style/text_15_black_28"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:drawablePadding="8dp"
-                        android:drawableRight="@mipmap/sanjiao_icon"
-                        android:text="忙碌"/>
-
                 </RelativeLayout>
 
                 <View style="@style/divider_dash"/>
@@ -234,10 +214,76 @@
                 android:background="@color/bg_f2"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/ll_add_merchant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/bg_f2">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:src="@mipmap/sanjiao"/>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/iv_add_merchant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/bg_add_merchant"/>
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/text_12_black_28"
+                            android:layout_width="match_parent"
+                            android:background="@color/white"
+                            android:paddingBottom="@dimen/margin_12dp"
+                            android:paddingLeft="@dimen/margin_16dp"
+                            android:paddingRight="@dimen/margin_16dp"
+                            android:paddingTop="@dimen/margin_12dp"
+                            android:text="暂未绑定任何商户(点击+号立即绑定)"
+                            android:textColor="@color/font_new_red"/>
+
+                        <View
+                            style="@style/divider"/>
+                    </LinearLayout>
+                </LinearLayout>
+
                 <FrameLayout
+                    android:id="@+id/fl_add_merchant"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="@color/bg_f2">
+                    android:background="@color/bg_f2"
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/iv_cover"
@@ -307,22 +353,6 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-
-        <Button
-            android:id="@+id/btn_service"
-            style="@style/common_btn_235"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="@dimen/j35dp"
-            android:layout_marginRight="@dimen/j35dp"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="发起服务订单"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_36px"
-            android:visibility="visible"/>
 
     </LinearLayout>
 </LinearLayout>

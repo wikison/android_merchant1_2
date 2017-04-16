@@ -1,8 +1,6 @@
 package com.zemult.merchant.adapter.slashfrgment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,11 +15,8 @@ import android.widget.TextView;
 
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.MerchantDetailActivity;
-import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.model.M_Merchant;
 
 import java.util.ArrayList;
@@ -117,14 +112,14 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
                 mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
             }
         });
-        holder.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
-                mContext.startActivity(intent);
-            }
-        });
+//        holder.banner.setOnBannerListener(new OnBannerListener() {
+//            @Override
+//            public void OnBannerClick(int position) {
+//                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+//                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
+//                mContext.startActivity(intent);
+//            }
+//        });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
 
         // 商家名称

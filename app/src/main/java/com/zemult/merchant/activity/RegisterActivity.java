@@ -376,6 +376,7 @@ public class RegisterActivity extends BaseActivity {
                             setResult(RESULT_OK);
                             ToastUtil.showMessage("注册成功");
                             Intent intent = new Intent(Constants.BROCAST_LOGIN);
+                            intent.putExtra("from_register", 1);
                             sendBroadcast(intent);
                             finish();
                         }
@@ -476,7 +477,7 @@ public class RegisterActivity extends BaseActivity {
             case R.id.tv_not_now:
                 if (from == 1) {
                     startActivity(new Intent(this, MainActivity.class));
-                    from=0;
+                    from = 0;
                 } else {
 
                     onBackPressed();

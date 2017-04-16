@@ -153,8 +153,6 @@ public class UserDetailActivity extends BaseActivity {
     TextView tvRname;
     @Bind(R.id.btn_focus)
     RoundTextView btnFocus;
-    @Bind(R.id.tv_buy_num)
-    TextView tvBuyNum;
     @Bind(R.id.tv_hint)
     TextView tvHint;
     @Bind(R.id.iv_cover)
@@ -672,7 +670,7 @@ public class UserDetailActivity extends BaseActivity {
         // 用户名
         if (!TextUtils.isEmpty(userInfo.getName()))
             tvName.setText(userInfo.getName());
-        tvLevel.setText(userInfo.getExperienceText());
+        tvLevel.setText(userInfo.getExperienceText() + "管家");
         if (userInfo.getExperienceImg() > 0) {
             drawable = getResources().getDrawable(userInfo.getExperienceImg());
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
@@ -689,31 +687,6 @@ public class UserDetailActivity extends BaseActivity {
         }
 
         merchantNum = userInfo.saleUserNum;
-
-        switch (userInfo.getState()) {
-            case 0:
-                drawable = getResources().getDrawable(R.mipmap.kongxian_icon);
-                // 这一步必须要做,否则不会显示.
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getResources().getColor(R.color.font_idle));
-                tvBuyNum.setText("空闲");
-                break;
-            case 1:
-                drawable = getResources().getDrawable(R.mipmap.xiuxi_icon);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getResources().getColor(R.color.font_black_999));
-                tvBuyNum.setText("休息");
-                break;
-            case 2:
-                drawable = getResources().getDrawable(R.mipmap.manglu_icon);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                tvBuyNum.setCompoundDrawables(drawable, null, null, null);
-                tvBuyNum.setTextColor(getResources().getColor(R.color.font_busy));
-                tvBuyNum.setText("忙碌");
-                break;
-        }
 
         // 是否已经关注(0:未关注1:已关注)
         tvRname.setVisibility(View.GONE);
@@ -912,6 +885,11 @@ public class UserDetailActivity extends BaseActivity {
 
                 @Override
                 public void onServiceList(M_Merchant entity) {
+
+                }
+
+                @Override
+                public void onServiceHistoryList(M_Merchant entity) {
 
                 }
             });

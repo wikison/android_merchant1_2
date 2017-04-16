@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,7 +20,9 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
+import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
+import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
@@ -97,14 +100,12 @@ public class SelfUserDetailActivity extends BaseActivity {
     TextView tvName;
     @Bind(R.id.tv_focus)
     TextView tvFocus;
-    @Bind(R.id.tv_add_fan)
-    TextView tvAddFan;
-    @Bind(R.id.tv_text_state)
-    TextView tvTextState;
-    @Bind(R.id.iv_state)
-    ImageView ivState;
-    @Bind(R.id.tv_state)
-    TextView tvState;
+    @Bind(R.id.tv_unsure_num)
+    TextView tvUnsureNum;
+    @Bind(R.id.ll_my_info)
+    LinearLayout llMyInfo;
+    @Bind(R.id.tv_my_info)
+    TextView tvMyInfo;
     @Bind(R.id.tv_text_level)
     TextView tvTextLevel;
     @Bind(R.id.tv_add_level)
@@ -122,9 +123,13 @@ public class SelfUserDetailActivity extends BaseActivity {
     @Bind(R.id.tv_text_scrm)
     TextView tvTextScrm;
     @Bind(R.id.ll_scrm_head)
-    LinearLayout llSCRMHead;
+    LinearLayout llScrmHead;
     @Bind(R.id.tv_scrm)
     TextView tvScrm;
+    @Bind(R.id.iv_add_merchant)
+    ImageView ivAddMerchant;
+    @Bind(R.id.ll_add_merchant)
+    LinearLayout llAddMerchant;
     @Bind(R.id.iv_cover)
     ImageView ivCover;
     @Bind(R.id.pager_container)
@@ -133,16 +138,16 @@ public class SelfUserDetailActivity extends BaseActivity {
     ImageView ivArrow;
     @Bind(R.id.rl_container)
     RelativeLayout rlContainer;
-    @Bind(R.id.ll_add)
-    LinearLayout llAdd;
     @Bind(R.id.iv_add)
     ImageView ivAdd;
+    @Bind(R.id.ll_add)
+    LinearLayout llAdd;
+    @Bind(R.id.fl_add_merchant)
+    FrameLayout flAddMerchant;
     @Bind(R.id.bind_pager)
     LinkagePager bindPager;
     @Bind(R.id.ll_main)
     LinearLayout llMain;
-    @Bind(R.id.btn_service)
-    Button btnService;
     @Bind(R.id.ll_bottom)
     LinearLayout llBottom;
     @Bind(R.id.ll_root)
@@ -152,6 +157,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private Activity mActivity;
     public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
+    public static int ADD_MERCHANT = 333;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -170,6 +176,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     int merchantNum = 0;
     LinkagePager pager;
     int state = 0;
+    int fromSaleLogin = 0;
+    int selectPosition = 0;
 
     @Override
     public void setContentView() {
@@ -193,21 +201,30 @@ public class SelfUserDetailActivity extends BaseActivity {
         userName = getIntent().getStringExtra(USER_NAME);
         userHead = getIntent().getStringExtra(USER_HEAD);
         state = SlashHelper.userManager().getUserinfo().state;
+        fromSaleLogin = getIntent().getIntExtra("user_sale_login", 0);
         mContext = this;
         mActivity = this;
 
     }
 
     private void initView() {
-        lhTvTitle.setText("管家详情");
+        lhTvTitle.setText("我的管家详情");
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName)) {
             tvName.setText(userName);
         }
-        dealState(state);
         tvAccount.setText("￥" + Convert.getMoneyString(SlashHelper.userManager().getUserinfo().money) + "元");
         tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "客户关注");
+
+        if (fromSaleLogin == 1) {
+            MMAlert.showConfirmDialog(mContext, "服务管家注册成功", getResources().getString(R.string.one_key_service_success), "我知道了", new MMAlert.OneOperateCallback() {
+                @Override
+                public void onOneOperate() {
+
+                }
+            });
+        }
     }
 
     private void initListener() {
@@ -328,13 +345,13 @@ public class SelfUserDetailActivity extends BaseActivity {
 
     private void setSCRMHeads(List<M_Fan> listFans) {
         if (listFans != null && listFans.size() > 0) {
-            llSCRMHead.removeAllViews();
+            llScrmHead.removeAllViews();
             for (int i = 0; i < listFans.size(); i++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(DensityUtil.dip2px(this, 40), DensityUtil.dip2px(this, 40)));
                 imageView.setPadding(0, 0, DensityUtil.dip2px(this, 12), 0);
                 imageManager.loadCircleHead(listFans.get(i).head, imageView, "@120w_120h");
-                llSCRMHead.addView(imageView);
+                llScrmHead.addView(imageView);
             }
         }
 
@@ -373,9 +390,14 @@ public class SelfUserDetailActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Merchant> list) {
         if (list == null || list.size() == 0) {
-            btnService.setVisibility(View.GONE);
-            ivArrow.setVisibility(View.GONE);
+            flAddMerchant.setVisibility(View.GONE);
+            bindPager.setVisibility(View.GONE);
+            llAddMerchant.setVisibility(View.VISIBLE);
         } else {
+            flAddMerchant.setVisibility(View.VISIBLE);
+            bindPager.setVisibility(View.VISIBLE);
+            llAddMerchant.setVisibility(View.GONE);
+
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
             pagerUserMerchantDetailAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 1, isSelf);
@@ -389,8 +411,8 @@ public class SelfUserDetailActivity extends BaseActivity {
 
             pager.setClipChildren(true);
             pager.setPageTransformer(false, new LinkageCoverTransformer(0.3f, 0f, 0f, 0f));
-            selectMerchant = listMerchant.get(0);
-            changeItem(0);
+            selectMerchant = listMerchant.get(selectPosition);
+            changeItem(selectPosition);
             pagerContainer.setPageItemClickListener(new PageItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -438,7 +460,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 public void onTagManage(M_Merchant merchant) {
                     Intent intent = new Intent(mActivity, TabManageActivity.class);
                     intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                    intent.putExtra(TabManageActivity.NAME, merchant.name);
+                    intent.putExtra(TabManageActivity.NAME, merchant.merchantName);
                     intent.putExtra(TabManageActivity.TAGS, merchant.tags);
                     intent.putExtra(TabManageActivity.COMEFROM, 2);
                     startActivityForResult(intent, MODIFY_TAG);
@@ -462,18 +484,28 @@ public class SelfUserDetailActivity extends BaseActivity {
                     }
                     startActivity(intent);
                 }
+
+                @Override
+                public void onServiceHistoryList(M_Merchant entity) {
+                    Intent intent = new Intent(SelfUserDetailActivity.this, ServiceHistoryActivity.class);
+                    intent.putExtra("saleUserId", userId);
+                    intent.putExtra("merchantId", entity.merchantId);
+                    startActivity(intent);
+                }
             });
         }
     }
 
     private void changeItem(int position) {
-        bindPager.setCurrentItem(position);
-        selectMerchant = listMerchant.get(position);
+        selectPosition = position;
+        pager.setCurrentItem(selectPosition);
+        bindPager.setCurrentItem(selectPosition);
+        selectMerchant = listMerchant.get(selectPosition);
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_state, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -483,27 +515,32 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_add:
             case R.id.iv_add:
+            case R.id.iv_add_merchant:
                 if (userInfo.getMaxMerchantNum() == listMerchant.size()) {
                     ToastUtil.showMessage(String.format("您当前服务等级只能申请%d家商户, 当前已经申请了%d家", userInfo.getMaxMerchantNum(), listMerchant.size()));
                     return;
                 }
-                break;
-            case R.id.tv_state:
-                MMAlert.showChooseStateDialog(this, new MMAlert.ChooseCallback() {
-                    @Override
-                    public void onfirstChoose() {
-                        state = 0;
-                        userEditState();
-                    }
-
-                    @Override
-                    public void onthirdChoose() {
-                        state = 2;
-                        userEditState();
-                    }
-                });
+                intent = new Intent(mActivity, SearchActivity.class);
+                intent.putExtra("be_service_manager", 1);
+                startActivityForResult(intent, ADD_MERCHANT);
 
                 break;
+//            case R.id.tv_state:
+//                MMAlert.showChooseStateDialog(this, new MMAlert.ChooseCallback() {
+//                    @Override
+//                    public void onfirstChoose() {
+//                        state = 0;
+//                        userEditState();
+//                    }
+//
+//                    @Override
+//                    public void onthirdChoose() {
+//                        state = 2;
+//                        userEditState();
+//                    }
+//                });
+//
+//                break;
             case R.id.tv_add_level:
                 break;
             case R.id.tv_level:
@@ -542,7 +579,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     SlashHelper.userManager().getUserinfo().setState(state);
-                    dealState(state);
+                    getOtherMerchantList();
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
@@ -552,31 +589,14 @@ public class SelfUserDetailActivity extends BaseActivity {
         sendJsonRequest(userEditStateRequest);
     }
 
-    //处理状态
-    private void dealState(int state) {
-        if (state == 0) {
-            ivState.setImageResource(R.mipmap.kongxian);
-            tvState.setText("空闲");
-            tvState.setTextColor(getResources().getColor(R.color.font_idle));
-        } else if (state == 1) {
-            ivState.setImageResource(R.mipmap.xiuxi_icon);
-            tvState.setText("休息");
-            tvState.setTextColor(getResources().getColor(R.color.font_black_999));
-        } else if (state == 2) {
-            ivState.setImageResource(R.mipmap.manglu);
-            tvState.setText("忙碌");
-            tvState.setTextColor(getResources().getColor(R.color.font_busy));
-        }
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT) && resultCode == RESULT_OK) {
+        if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) && resultCode == RESULT_OK) {
             getOtherMerchantList();
         }
 
     }
+
 }

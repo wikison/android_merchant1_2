@@ -56,13 +56,6 @@
 
             </LinearLayout>
 
-            <com.zemult.merchant.view.FNRadioGroup
-                android:id="@+id/rg_ta_service"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_16dp">
-
-            </com.zemult.merchant.view.FNRadioGroup>
         </LinearLayout>
 
         <RelativeLayout
@@ -77,15 +70,84 @@
                 android:layout_marginRight="@dimen/margin_16dp"
                 android:drawablePadding="@dimen/margin_8dp"
                 android:drawableRight="@mipmap/right_btn"
-                android:text="详情"/>
+                android:text=""/>
         </RelativeLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        style="@style/relative_layout_item"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_12dp"
+        android:paddingBottom="@dimen/margin_12dp">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:text="管家职位"/>
+
+        <TextView
+            android:id="@+id/tv_service_position"
+            style="@style/text_15_black_999"
+            android:layout_alignParentRight="true"
+            android:text=""/>
+    </RelativeLayout>
+
+    <View style="@style/divider"/>
+
+    <RelativeLayout
+        style="@style/relative_layout_item"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_service"
+            style="@style/text_12_black_28"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:text="管家服务"/>
+
+        <com.zemult.merchant.view.FNRadioGroup
+            android:id="@+id/rg_ta_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_service"
+            android:layout_marginBottom="@dimen/margin_16dp">
+
+        </com.zemult.merchant.view.FNRadioGroup>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/relative_layout_item"
+        android:layout_marginTop="@dimen/margin_12dp">
+
+        <TextView
+            android:id="@+id/tv_text_state"
+            style="@style/text_15_black_28"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:text="管家状态"/>
+
+        <ImageView
+            android:id="@+id/iv_state"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/tv_state"
+            android:src="@mipmap/manglu"/>
+
+        <TextView
+            android:id="@+id/tv_state"
+            style="@style/text_15_black_28"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="8dp"
+            android:text="忙碌"/>
+
+    </RelativeLayout>
 
     <View style="@style/divider"/>
 
     <View
         style="@style/divider"
-        android:layout_marginTop="@dimen/margin_16dp"/>
+        android:layout_marginTop="@dimen/margin_12dp"/>
 
     <RelativeLayout
         style="@style/relative_layout_item">
@@ -103,41 +165,5 @@
 
     <View style="@style/divider"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_activity"
-        style="@style/relative_layout_item"
-        android:layout_marginTop="@dimen/margin_16dp">
-
-        <TextView
-            style="@style/text_15_black_28"
-            android:text="管家动态"/>
-
-        <TextView
-            android:id="@+id/tv_activity"
-            style="@style/text_15_black_999"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/margin_8dp"
-            android:drawableRight="@mipmap/right_btn"
-            android:text=""/>
-    </RelativeLayout>
-
-    <View style="@style/divider"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_service_comment"
-        style="@style/relative_layout_item">
-
-        <TextView
-            style="@style/text_15_black_28"
-            android:text="服务评价"/>
-
-        <TextView
-            android:id="@+id/tv_comment_num"
-            style="@style/text_15_black_999"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/margin_8dp"
-            android:drawableRight="@mipmap/right_btn"
-            android:text="12条评价"/>
-    </RelativeLayout>
 
 </LinearLayout>
