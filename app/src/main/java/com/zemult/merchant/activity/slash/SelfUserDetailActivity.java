@@ -605,15 +605,8 @@ public class SelfUserDetailActivity extends BaseActivity {
         }
         if (requestCode==111&&resultCode==RESULT_OK)
         {
-
+            getUserInfo();
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
 }
