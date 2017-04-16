@@ -158,6 +158,7 @@
     <View style="@style/view1dp"/>
 
     <RelativeLayout
+        android:visibility="gone"
         style="@style/layout_item">
 
         <TextView
