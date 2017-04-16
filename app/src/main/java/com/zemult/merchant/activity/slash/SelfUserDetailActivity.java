@@ -697,7 +697,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         input.merchantId = m.merchantId;
         input.tags = m.tags;
         input.state = state;
-        input.position = "";
+        input.position = "无";
         input.convertJosn();
         user2SaleMerchantEditRequest = new User2SaleMerchantEditRequest(input, new ResponseListener() {
             @Override

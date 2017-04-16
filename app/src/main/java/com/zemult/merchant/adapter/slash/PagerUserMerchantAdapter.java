@@ -163,6 +163,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         }
 
         holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvServicePosition.setText(entity.position);
 
         initTags(holder, entity);
         dealState(holder, entity);
@@ -194,6 +195,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                 holder.tvDistance.setText(entity.distance + "m");
         }
         holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvServicePosition.setText(entity.position);
         if (entity.unSureOrderNum > 0) {
             holder.llServiceRecord.setVisibility(View.VISIBLE);
             holder.tvUnsureNum.setText("待确认服务单" + entity.unSureOrderNum + "条");

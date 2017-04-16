@@ -180,7 +180,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin_16dp"
             android:layout_toRightOf="@+id/tv_text_seven"
-            android:text="@string/how_add_level"
+            android:text="@string/how_add_seven"
             android:textColor="@color/font_new_blue"/>
 
         <TextView
