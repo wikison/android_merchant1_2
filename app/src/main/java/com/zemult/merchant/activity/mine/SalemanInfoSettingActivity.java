@@ -31,7 +31,7 @@ public class SalemanInfoSettingActivity extends BaseActivity {
     ImageView imageView;
     @Bind(R.id.tv_name)
     TextView tvName;
-    String nameString, headString;
+    String nameString="", headString="";
     UserEditinfoRequest userEditinfoRequest;
 
     @Override
