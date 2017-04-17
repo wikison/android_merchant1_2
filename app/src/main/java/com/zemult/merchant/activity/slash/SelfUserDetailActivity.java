@@ -452,8 +452,10 @@ public class SelfUserDetailActivity extends BaseActivity {
         // 头像
         if(!TextUtils.isEmpty(userInfo.getHead())&&!TextUtils.isEmpty(userInfo.getName())){
             llMyInfo.setVisibility(View.GONE);
+            tvMyInfo.setVisibility(View.GONE);
         }else{
             llMyInfo.setVisibility(View.VISIBLE);
+            tvMyInfo.setVisibility(View.VISIBLE);
         }
 
 
