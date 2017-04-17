@@ -523,7 +523,7 @@
                     android:textSize="15sp" />
 
                 <RelativeLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/ordersuccess_btn_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -542,22 +542,21 @@
                             style="@style/common_btn_235"
                             android:layout_width="130dp"
                             android:layout_marginBottom="@dimen/margin_12dp"
-                            android:drawableLeft="@mipmap/fenxiang"
                             android:padding="8dp"
+                            android:background="@drawable/detail_btn"
+                            android:textColor="#e6bb7c"
                             android:text="评价一下" />
 
                         <Button
                             android:id="@+id/jiezhang_btn"
                             style="@style/common_btn_235"
-                            android:layout_width="128dp"
+                            android:layout_width="130dp"
                             android:layout_marginBottom="@dimen/margin_12dp"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/invite_btn"
-                            android:background="@drawable/detail_btn"
-                            android:drawableLeft="@mipmap/complete"
-                            android:paddingLeft="10dp"
+                            android:padding="8dp"
                             android:text="邀请函"
-                            android:textColor="#e6bb7c" />
+                            />
                     </RelativeLayout>
 
                 </RelativeLayout>
