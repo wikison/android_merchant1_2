@@ -47,6 +47,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     private ViewMerchantClickListener onViewMerchantClickListener;
     private ViewTagClickListener onViewTagClickListener;
     private ViewStateClickListener onViewStateClickListener;
+    private ViewPositionClickListener onViewPositionClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
@@ -62,7 +63,9 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
         this.onViewStateClickListener = onViewStateClickListener;
     }
-
+    public void setOnViewPositionClickListener(ViewPositionClickListener onViewPositionClickListener) {
+        this.onViewPositionClickListener = onViewPositionClickListener;
+    }
 
     public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type, boolean isSelf) {
         mContext = context;
@@ -266,6 +269,14 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             public void onClick(View v) {
                 if (onViewStateClickListener != null)
                     onViewStateClickListener.onStateManage(entity);
+            }
+        });
+
+        holder.rlServicePosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewPositionClickListener != null)
+                    onViewPositionClickListener.onPositionManage(entity);
             }
         });
     }
@@ -488,6 +499,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public interface ViewStateClickListener {
         void onStateManage(M_Merchant entity);
+    }
+
+    public interface ViewPositionClickListener {
+        void onPositionManage(M_Merchant entity);
     }
 
 }

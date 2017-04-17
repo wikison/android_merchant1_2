@@ -168,6 +168,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     public static int EXIT_MERCHANT = 222;
 //    public static int ADD_MERCHANT = 333;
     public static int EDIT_USER_INFO = 444;
+    public static int MODIFY_POSITION = 555;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -191,6 +192,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     int state = 0;
     int fromSaleLogin = 0;
     int selectPosition = 0;
+
+    String strPosition;
 
     @Override
     public void setContentView() {
@@ -452,10 +455,10 @@ public class SelfUserDetailActivity extends BaseActivity {
     private void setUserInfo(M_Userinfo userInfo) {
         Drawable drawable;
         // 头像
-        if(!TextUtils.isEmpty(userInfo.getHead())&&!TextUtils.isEmpty(userInfo.getName())){
+        if (!TextUtils.isEmpty(userInfo.getHead()) && !TextUtils.isEmpty(userInfo.getName())) {
             llMyInfo.setVisibility(View.GONE);
             tvMyInfo.setVisibility(View.GONE);
-        }else{
+        } else {
             llMyInfo.setVisibility(View.VISIBLE);
             tvMyInfo.setVisibility(View.VISIBLE);
         }
@@ -565,19 +568,31 @@ public class SelfUserDetailActivity extends BaseActivity {
             pagerUserMerchantDetailAdapter.setOnViewStateClickListener(new PagerUserMerchantAdapter.ViewStateClickListener() {
                 @Override
                 public void onStateManage(final M_Merchant entity) {
+                    selectMerchant = entity;
                     MMAlert.showChooseStateDialog(mContext, new MMAlert.ChooseCallback() {
                         @Override
                         public void onfirstChoose() {
                             state = 0;
-                            userEditInfo(entity);
+                            userEditInfo();
                         }
 
                         @Override
                         public void onthirdChoose() {
                             state = 2;
-                            userEditInfo(entity);
+                            userEditInfo();
                         }
                     });
+                }
+            });
+
+            pagerUserMerchantDetailAdapter.setOnViewPositionClickListener(new PagerUserMerchantAdapter.ViewPositionClickListener() {
+                @Override
+                public void onPositionManage(M_Merchant entity) {
+                    strPosition = entity.position;
+                    selectMerchant = entity;
+                    Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
+                    intent.putExtra("position_name", entity.position);
+                    startActivityForResult(intent, MODIFY_POSITION);
                 }
             });
 
@@ -615,6 +630,8 @@ public class SelfUserDetailActivity extends BaseActivity {
         pager.setCurrentItem(selectPosition);
         bindPager.setCurrentItem(selectPosition);
         selectMerchant = listMerchant.get(selectPosition);
+        state = selectMerchant.state;
+        strPosition = selectMerchant.position;
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
     }
 
@@ -669,46 +686,18 @@ public class SelfUserDetailActivity extends BaseActivity {
         }
     }
 
-    private void userEditState() {
-        if (userEditStateRequest != null) {
-            userEditStateRequest.cancel();
-        }
-        showPd();
-        UserEditStateRequest.Input input = new UserEditStateRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId();
-        input.state = state;
-        input.convertJosn();
-        userEditStateRequest = new UserEditStateRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
 
-            @Override
-            public void onResponse(Object response) {
-                if (((CommonResult) response).status == 1) {
-                    SlashHelper.userManager().getUserinfo().setState(state);
-                    getOtherMerchantList();
-                } else {
-                    ToastUtil.showMessage(((CommonResult) response).info);
-                }
-                dismissPd();
-            }
-        });
-        sendJsonRequest(userEditStateRequest);
-    }
-
-    private void userEditInfo(M_Merchant m) {
+    private void userEditInfo() {
         if (user2SaleMerchantEditRequest != null) {
             user2SaleMerchantEditRequest.cancel();
         }
         showPd();
         User2SaleMerchantEditRequest.Input input = new User2SaleMerchantEditRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
-        input.merchantId = m.merchantId;
-        input.tags = m.tags;
+        input.merchantId = selectMerchant.merchantId;
+        input.tags = selectMerchant.tags;
         input.state = state;
-        input.position = "无";
+        input.position = strPosition;
         input.convertJosn();
         user2SaleMerchantEditRequest = new User2SaleMerchantEditRequest(input, new ResponseListener() {
             @Override
@@ -744,6 +733,12 @@ public class SelfUserDetailActivity extends BaseActivity {
             } else if (requestCode == EDIT_USER_INFO) {
                 getUserInfo();
 
+            } else if (requestCode == MODIFY_POSITION) {
+                String positionName = data.getStringExtra("position_name");
+                if (!strPosition.equals(positionName)) {
+                    strPosition = positionName;
+                    userEditInfo();
+                }
             }
         }
     }

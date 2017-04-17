@@ -181,6 +181,10 @@
         <item name="android:button">@drawable/checkboxreward</item>
     </style>
 
+    <style name="CheckboxPosition" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkboxposition</item>
+    </style>
+
     <style name="CheckboxEye" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkboxeye</item>
     </style>
