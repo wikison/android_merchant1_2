@@ -647,4 +647,6 @@ public class Urls {
     public static String USER2_SALE_MERCHANT_EDIT = "user2_sale_merchant_edit";
     //用户更新服务管家通讯录
     public static String USER2_REFRESH_SALEUSER = "user2_reflash_saleuser";
+    //获取职位
+    public static String COMMON_POSITION = "common_position";
 }

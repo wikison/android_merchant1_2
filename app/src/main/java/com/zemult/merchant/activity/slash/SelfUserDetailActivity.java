@@ -166,6 +166,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
     public static int ADD_MERCHANT = 333;
+    public static int EDIT_USER_INFO = 444;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -627,7 +628,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_my_info:
                 intent = new Intent(mActivity, SalemanInfoSettingActivity.class);
-                startActivityForResult(intent, 111);
+                startActivityForResult(intent, EDIT_USER_INFO);
                 break;
             case R.id.ll_add:
             case R.id.iv_add:
@@ -732,11 +733,17 @@ public class SelfUserDetailActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) && resultCode == RESULT_OK) {
-            getOtherMerchantList();
-        }
-        if (requestCode == 111 && resultCode == RESULT_OK) {
-            getUserInfo();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MODIFY_TAG) {
+                getOtherMerchantList();
+            } else if (requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) {
+                selectPosition = 0;
+                getOtherMerchantList();
+
+            } else if (requestCode == EDIT_USER_INFO) {
+                getUserInfo();
+
+            }
         }
     }
 
