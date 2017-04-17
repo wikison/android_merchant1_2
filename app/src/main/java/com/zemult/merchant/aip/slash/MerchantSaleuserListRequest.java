@@ -47,7 +47,7 @@ public class MerchantSaleuserListRequest extends PostStringRequest<Type> {
     }
 
     public MerchantSaleuserListRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.MERCHANT_SALEUSER_LIST_1_1,
+        super(Urls.BASIC_URL+Urls.MERCHANT2_SALEUSER_LIST,
                 input.ejson , new TypeToken<APIM_SearchUsersList>() {
         }.getType() , listener);
 

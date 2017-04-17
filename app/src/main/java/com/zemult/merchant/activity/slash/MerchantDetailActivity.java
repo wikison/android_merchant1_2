@@ -80,8 +80,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     RelativeLayout rlTop;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
-    @Bind(R.id.rl_first)
-    RelativeLayout rlFirst;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
 
@@ -133,12 +131,6 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     }
 
     private void initView() {
-        if (SPUtils.contains(mContext, "merchant_first_run"))
-            rlFirst.setVisibility(View.GONE);
-        else {
-            rlFirst.setVisibility(View.VISIBLE);
-            SPUtils.put(mContext, "merchant_first_run", false);
-        }
         // 设置其他头部
         headerMerchantDetailView = new HeaderMerchantDetailView(mActivity);
         headerMerchantDetailView.fillView(new M_Merchant(), lv);
@@ -454,15 +446,15 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     @Override
     public void onRefresh() {
         if (SlashHelper.userManager().getUserId() != 0)
-            merchant_saleuserList_fan();
+            merchant2_saleuserList_fan();
         else
-            merchant_saleuserList_all(false);
+            merchant2_saleuserList(false);
         merchant_info();
     }
 
     @Override
     public void onLoadMore() {
-        merchant_saleuserList_all(true);
+        merchant2_saleuserList(true);
     }
 
     private MerchantSaleuserListRequest allRequest;
@@ -471,7 +463,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     /**
      * 商家下的营销经理列表(我的关注-熟人)
      */
-    private void merchant_saleuserList_fan() {
+    private void merchant2_saleuserList_fan() {
         if (fanRequest != null) {
             fanRequest.cancel();
         }
@@ -486,7 +478,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
-                merchant_saleuserList_all(false);
+                merchant2_saleuserList(false);
             }
 
             @Override
@@ -497,16 +489,16 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     ToastUtils.show(mContext, ((APIM_SearchUsersList) response).info);
                 }
                 dismissPd();
-                merchant_saleuserList_all(false);
+                merchant2_saleuserList(false);
             }
         });
         sendJsonRequest(fanRequest);
     }
 
     /**
-     * 商家下的营销经理列表(全部)
+     * 商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
      */
-    private void merchant_saleuserList_all(final boolean isLoadMore) {
+    private void merchant2_saleuserList(final boolean isLoadMore) {
         if (allRequest != null) {
             allRequest.cancel();
         }
@@ -611,18 +603,23 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
-                        Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchantId);
-                        it.putExtra(TabManageActivity.NAME, name);
-                        startActivity(it);
-                    } else {
-                        Intent it = new Intent(mActivity, TabManageActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchantId);
-                        it.putExtra(TabManageActivity.NAME, name);
-                        it.putExtra(TabManageActivity.COMEFROM, 3);
-                        startActivity(it);
-                    }
+//                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
+//                        Intent it = new Intent(mActivity, BeManagerFirstActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchantId);
+//                        it.putExtra(TabManageActivity.NAME, name);
+//                        startActivity(it);
+//                    } else {
+//                        Intent it = new Intent(mActivity, TabManageActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchantId);
+//                        it.putExtra(TabManageActivity.NAME, name);
+//                        it.putExtra(TabManageActivity.COMEFROM, 1);
+//                        startActivity(it);
+//                    }
+                    Intent it = new Intent(mActivity, TabManageActivity.class);
+                    it.putExtra(TabManageActivity.TAG, merchantId);
+                    it.putExtra(TabManageActivity.NAME, name);
+                    it.putExtra(TabManageActivity.COMEFROM, 1);
+                    startActivity(it);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -632,7 +629,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         sendJsonRequest(checkSaleUser1_2_2Request);
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_more, R.id.rl_first})
+    @OnClick({R.id.iv_back, R.id.iv_more})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -651,10 +648,10 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                 else
                     list.add(new FilterEntity("收藏商户", 1, R.mipmap.shoucang_nor));
 
-                if (merchantInfo != null && merchantInfo.isCommission == 1)
-                    list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
-                else
-                    list.add(new FilterEntity("成为服务管家", 2, R.mipmap.shenqing_icon));
+//                if (merchantInfo != null && merchantInfo.isCommission == 1)
+//                    list.add(new FilterEntity("修改服务标签", 2, R.mipmap.xiugai_icon));
+//                else
+//                    list.add(new FilterEntity("成为服务管家", 2, R.mipmap.shenqing_icon));
 
 
                 CommonDialog.showPopupWindow(mContext, view, list, new CommonDialog.PopClickListener() {
@@ -676,25 +673,22 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
 
                                 break;
 
-                            case 2:
-                                if (merchantInfo != null && merchantInfo.isCommission == 1) { // 是服务管家
-                                    Intent intent = new Intent(mActivity, TabManageActivity.class);
-                                    intent.putExtra(TabManageActivity.TAG, merchantId);
-                                    intent.putExtra(TabManageActivity.NAME, name);
-                                    intent.putExtra(TabManageActivity.TAGS, tags);
-                                    intent.putExtra(TabManageActivity.COMEFROM, 2);
-                                    startActivity(intent);
-                                } else { // 不是服务管家
-                                    user_check_saleuser_1_2_2();
-                                }
-                                break;
+//                            case 2:
+//                                if (merchantInfo != null && merchantInfo.isCommission == 1) { // 是服务管家
+//                                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+//                                    intent.putExtra(TabManageActivity.TAG, merchantId);
+//                                    intent.putExtra(TabManageActivity.NAME, name);
+//                                    intent.putExtra(TabManageActivity.TAGS, tags);
+//                                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+//                                    startActivity(intent);
+//                                } else { // 不是服务管家
+//                                    user_check_saleuser_1_2_2();
+//                                }
+//                                break;
                         }
                     }
                 });
 
-                break;
-            case R.id.rl_first:
-                rlFirst.setVisibility(View.GONE);
                 break;
         }
     }

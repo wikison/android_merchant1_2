@@ -4,6 +4,17 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/layout_head"
+            />
+    </LinearLayout>
+
+
     <com.zemult.merchant.view.SearchView
         android:id="@+id/a_seach_searchview"
         android:layout_width="match_parent"

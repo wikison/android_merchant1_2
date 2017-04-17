@@ -460,12 +460,8 @@ public class Urls {
     public static String MERCHANT_INFO = "merchant_info";
     //获取自己的 商家(场景)详情(请求)
     public static String MERCHANT_INFO_REQUEST = "merchant_info_request";
-    //商家下的营销经理列表
-    public static String MERCHANT_SALEUSER_LIST_1_1 = "merchant_saleuserList_1_1";
     //商家下的营销经理列表-最近联系        有过交易的(时间倒排序)
     public static String MERCHANT_SALEUSER_LIST_LATEST_1_1 = "merchant_saleuserList_latest_1_1";
-    //商家下的营销经理列表（我的关注）
-    public static String MERCHANT_SALEUSER_LIST_FAN_1_1 = "merchant_saleuserList_fan_1_1";
     //用户申请成为商家的营销经理
     public static String USER_ADD_SALEUSER_1_1 = "user_add_saleuser_1_1.do";
     //删除商家下的某个营销经理 删除某个营销经理下的某个商家
@@ -645,6 +641,14 @@ public class Urls {
     public static String USER2_SALEUSER_LOGIN = "user2_saleUser_login";
     //修改服务管家信息(标签,状态,职位)
     public static String USER2_SALE_MERCHANT_EDIT = "user2_sale_merchant_edit";
+    //用户更新服务管家通讯录
+    public static String USER2_REFRESH_SALEUSER = "user2_reflash_saleuser";
+    //获取职位
+    public static String COMMON_POSITION = "common_position";
+    //商家下的服务管家列表-我关注的
+    public static String MERCHANT2_SALEUSER_LIST_FAN = "merchant2_saleuserList_fan";
+    //商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
+    public static String MERCHANT2_SALEUSER_LIST = "merchant2_saleuserList";
     //查看语音预约消息信息
     public static String USER2_REMINDIM_INFO = "user2_remindIM_info";
     //修改 语音预约消息为已读

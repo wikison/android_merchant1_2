@@ -3,7 +3,6 @@ package com.zemult.merchant.adapter.slashfrgment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.view.View;
@@ -145,7 +144,7 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         if (entity.showLatest || entity.showAll) {
             holder.llFenlei.setVisibility(View.VISIBLE);
             if (entity.showLatest)
-                holder.tvFenlei.setText("熟人");
+                holder.tvFenlei.setText("我关注的");
             else
                 holder.tvFenlei.setText("全部");
         } else
@@ -159,21 +158,23 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
             holder.llUser.setVisibility(View.VISIBLE);
         }
 
-        if (entity.commentNumber > 0) {
-            float starFloat = (float) entity.comment / (float) entity.commentNumber;
-            float starInt = (float) (entity.comment / entity.commentNumber);
-            holder.ratingbar.setStar(starFloat - starInt >= 0.5 ? starInt + 0.5f : starInt);
-        } else
-            holder.ratingbar.setStar(0);
-
-        holder.tvNum.setText("服务" + entity.saleNum + "人次");
-        holder.tvComment.setText(entity.commentNumber + "人评价");
-
-        holder.ivService.setImageResource(entity.getExperienceImg());
-        holder.tvService.setText(entity.getExperienceText());
+//        if (entity.commentNumber > 0) {
+//            float starFloat = (float) entity.comment / (float) entity.commentNumber;
+//            float starInt = (float) (entity.comment / entity.commentNumber);
+//            holder.ratingbar.setStar(starFloat - starInt >= 0.5 ? starInt + 0.5f : starInt);
+//        } else
+//            holder.ratingbar.setStar(0);
+//
+//        holder.tvNum.setText("服务" + entity.saleNum + "人次");
+//        holder.tvComment.setText(entity.commentNumber + "人评价");
+//
+//        holder.ivService.setImageResource(entity.getExperienceImg());
+//        holder.tvService.setText(entity.getExperienceText());
         holder.ivStatus.setImageResource(entity.getStatusImg(entity.getUserState()));
         holder.tvStatus.setTextColor(entity.getStatusTextColor(entity.getUserState()));
         holder.tvStatus.setText(entity.getStatusText(entity.getUserState()));
+
+        holder.tvServiceNum.setText("7天服务指数"+entity.sumScore/7);
     }
 
     /**
@@ -253,14 +254,16 @@ public class MerchantDetailAdpater extends BaseListAdapter<M_Userinfo> {
         ImageView ivHead;
         @Bind(R.id.tv_user_name)
         TextView tvUserName;
-        @Bind(R.id.iv_service)
-        ImageView ivService;
-        @Bind(R.id.tv_service)
-        TextView tvService;
         @Bind(R.id.iv_status)
         ImageView ivStatus;
         @Bind(R.id.tv_status)
         TextView tvStatus;
+        @Bind(R.id.iv_service)
+        ImageView ivService;
+        @Bind(R.id.tv_service)
+        TextView tvService;
+        @Bind(R.id.tv_service_num)
+        TextView tvServiceNum;
         @Bind(R.id.ratingbar)
         RatingBar ratingbar;
         @Bind(R.id.tv_comment)

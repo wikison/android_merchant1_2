@@ -165,7 +165,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     private Activity mActivity;
     public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
-    public static int ADD_MERCHANT = 333;
+//    public static int ADD_MERCHANT = 333;
+    public static int EDIT_USER_INFO = 444;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -215,7 +216,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         fromSaleLogin = getIntent().getIntExtra("user_sale_login", 0);
         mContext = this;
         mActivity = this;
-
+        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -450,6 +451,15 @@ public class SelfUserDetailActivity extends BaseActivity {
     private void setUserInfo(M_Userinfo userInfo) {
         Drawable drawable;
         // 头像
+        if(!TextUtils.isEmpty(userInfo.getHead())&&!TextUtils.isEmpty(userInfo.getName())){
+            llMyInfo.setVisibility(View.GONE);
+            tvMyInfo.setVisibility(View.GONE);
+        }else{
+            llMyInfo.setVisibility(View.VISIBLE);
+            tvMyInfo.setVisibility(View.VISIBLE);
+        }
+
+
         if (!TextUtils.isEmpty(userInfo.getHead())) {
             imageManager.loadCircleHead(userInfo.getHead(), ivHead, "@120w_120h");
         }
@@ -618,7 +628,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_my_info:
                 intent = new Intent(mActivity, SalemanInfoSettingActivity.class);
-                startActivityForResult(intent, 111);
+                startActivityForResult(intent, EDIT_USER_INFO);
                 break;
             case R.id.ll_add:
             case R.id.iv_add:
@@ -629,7 +639,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
                 intent = new Intent(mActivity, SearchActivity.class);
                 intent.putExtra("be_service_manager", 1);
-                startActivityForResult(intent, ADD_MERCHANT);
+                startActivity(intent);
 
                 break;
             case R.id.tv_add_level:
@@ -723,12 +733,33 @@ public class SelfUserDetailActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if ((requestCode == MODIFY_TAG || requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) && resultCode == RESULT_OK) {
-            getOtherMerchantList();
-        }
-        if (requestCode == 111 && resultCode == RESULT_OK) {
-            getUserInfo();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MODIFY_TAG) {
+                getOtherMerchantList();
+            } else if (requestCode == EXIT_MERCHANT) {
+                selectPosition = 0;
+                getOtherMerchantList();
+
+            } else if (requestCode == EDIT_USER_INFO) {
+                getUserInfo();
+
+            }
         }
     }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            selectPosition = 0;
+            getOtherMerchantList();
+        }
+    }
+
 
 }

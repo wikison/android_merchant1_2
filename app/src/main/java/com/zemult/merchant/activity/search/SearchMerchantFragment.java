@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
@@ -48,6 +49,8 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     SmoothListView smoothListView;
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
+    @Bind(R.id.ll_no_bind)
+    LinearLayout llNoBind;
 
     private MerchantFirstpageSearchListRequest request;
     private int page = 1, industryId;
@@ -102,32 +105,46 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Merchant merchant = mAdapter.getItem(position - 1);
-                if (iToAdd == 1) {
-                    if (merchant != null && merchant.isCommission == 1) { // 是服务管家
-                        Intent intent = new Intent(mContext, TabManageActivity.class);
-                        intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                        intent.putExtra(TabManageActivity.NAME, merchant.name);
-                        intent.putExtra(TabManageActivity.TAGS, merchant.tags);
-                        intent.putExtra(TabManageActivity.COMEFROM, 2);
-                        startActivity(intent);
-                    } else { // 不是服务管家
-                        user_check_saleuser_1_2_2(merchant);
-                    }
-                } else {
-                    Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchant.merchantId);
-                    startActivity(intent);
-                }
+                goTo(merchant);
+            }
+        });
+        mAdapter.setItemClickListener(new HomeChildNewAdapter.ItemClickListener() {
+            @Override
+            public void onBannerClick(M_Merchant merchant) {
+                goTo(merchant);
+            }
+
+            @Override
+            public void onRvHeadClick(int pos) {
 
             }
         });
+    }
 
+    private void goTo(M_Merchant merchant) {
+        if (iToAdd == 1) {
+            if (merchant != null && merchant.isCommission == 1) { // 是服务管家
+                Intent intent = new Intent(mContext, TabManageActivity.class);
+                intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                intent.putExtra(TabManageActivity.NAME, merchant.name);
+                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+                intent.putExtra(TabManageActivity.COMEFROM, 2);
+                startActivity(intent);
+            } else { // 不是服务管家
+                user_check_saleuser_1_2_2(merchant);
+            }
+        } else {
+            Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+            intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchant.merchantId);
+            startActivity(intent);
+        }
     }
 
     /**
      * 判断用户是否可以申请商家的服务管家
      */
     private UserCheckSaleUser1_2_2Request checkSaleUser1_2_2Request;
+
     private void user_check_saleuser_1_2_2(final M_Merchant merchant) {
         showPd();
         if (checkSaleUser1_2_2Request != null) {
@@ -147,18 +164,23 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
-                        Intent it = new Intent(mContext, BeManagerFirstActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                        it.putExtra(TabManageActivity.NAME, merchant.name);
-                        startActivity(it);
-                    } else {
-                        Intent it = new Intent(mContext, TabManageActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                        it.putExtra(TabManageActivity.NAME, merchant.name);
-                        it.putExtra(TabManageActivity.COMEFROM, 3);
-                        startActivity(it);
-                    }
+//                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
+//                        Intent it = new Intent(mContext, BeManagerFirstActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                        it.putExtra(TabManageActivity.NAME, merchant.name);
+//                        startActivity(it);
+//                    } else {
+//                        Intent it = new Intent(mContext, TabManageActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                        it.putExtra(TabManageActivity.NAME, merchant.name);
+//                        it.putExtra(TabManageActivity.COMEFROM, 1);
+//                        startActivity(it);
+//                    }
+                    Intent it = new Intent(mContext, TabManageActivity.class);
+                    it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                    it.putExtra(TabManageActivity.NAME, merchant.name);
+                    it.putExtra(TabManageActivity.COMEFROM, 1);
+                    startActivity(it);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -223,10 +245,15 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     private void fillAdapter(List<M_Merchant> list, int maxpage, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
             smoothListView.setVisibility(View.GONE);
-            rlNoData.setVisibility(View.VISIBLE);
+            if (iToAdd > 0)
+                llNoBind.setVisibility(View.VISIBLE);
+            else
+                rlNoData.setVisibility(View.VISIBLE);
+
         } else {
             smoothListView.setVisibility(View.VISIBLE);
             rlNoData.setVisibility(View.GONE);
+            llNoBind.setVisibility(View.GONE);
 
             smoothListView.setLoadMoreEnable(page < maxpage);
             mAdapter.setData(list, isLoadMore);

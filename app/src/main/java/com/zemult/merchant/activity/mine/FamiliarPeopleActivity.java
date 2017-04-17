@@ -269,7 +269,7 @@ public class FamiliarPeopleActivity extends BaseActivity implements SmoothListVi
                 onBackPressed();
                 break;
             case R.id.rel_invitepeople:
-                SPUtils.put(mContext, "has_req_contacts", true);
+//                SPUtils.put(mContext, "has_req_contacts", true);
                 ActivityCompat.requestPermissions(FamiliarPeopleActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
                 break;
         }

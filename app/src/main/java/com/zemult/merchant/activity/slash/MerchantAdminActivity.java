@@ -2,7 +2,11 @@ package com.zemult.merchant.activity.slash;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -10,22 +14,29 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.adapter.slashfrgment.HomePeopleAdapter;
 import com.zemult.merchant.aip.mine.MerchantPicListRequest;
 import com.zemult.merchant.aip.mine.MerchantPicNoteListRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
+import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Pic;
+import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_PicList;
+import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,6 +57,8 @@ public class MerchantAdminActivity extends BaseActivity {
     TextView lhTvTitle;
     @Bind(R.id.ll_head)
     LinearLayout llHead;
+    @Bind(R.id.recyclerview)
+    RecyclerView recyclerview;
 
     private int merchantId;
     private Context mContext;
@@ -77,6 +90,7 @@ public class MerchantAdminActivity extends BaseActivity {
         });
 
         merchant_info();
+        merchant2_saleuserList();
     }
 
     private MerchantInfoRequest request;
@@ -85,6 +99,7 @@ public class MerchantAdminActivity extends BaseActivity {
      * 商家详情
      */
     private void merchant_info() {
+        showPd();
         if (request != null) {
             request.cancel();
         }
@@ -103,6 +118,7 @@ public class MerchantAdminActivity extends BaseActivity {
                 if (((APIM_MerchantGetinfo) response).status == 1) {
                     merchantInfo = ((APIM_MerchantGetinfo) response).merchant;
                     headerMerchantDetailView.dealWithTheView(merchantInfo);
+
                     merchant_picList();
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
@@ -111,6 +127,64 @@ public class MerchantAdminActivity extends BaseActivity {
             }
         });
         sendJsonRequest(request);
+    }
+
+    /**
+     * 商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
+     */
+    private MerchantSaleuserListRequest allRequest;
+    private void merchant2_saleuserList() {
+        showPd();
+        if (allRequest != null) {
+            allRequest.cancel();
+        }
+        MerchantSaleuserListRequest.Input input = new MerchantSaleuserListRequest.Input();
+
+        input.operateUserId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantId;
+        input.page = 1;
+        input.rows = 4;
+        input.convertJosn();
+        allRequest = new MerchantSaleuserListRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_SearchUsersList) response).status == 1) {
+                    List<M_Userinfo> userList = ((APIM_SearchUsersList) response).userList;
+                    String saleUserHeads = "";
+                    if(userList!=null && !userList.isEmpty()){
+                        for(M_Userinfo userinfo : userList){
+                            saleUserHeads += userinfo.getUserHead() + ",";
+                        }
+                        // 营销经理们的头像
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        recyclerview.setLayoutManager(linearLayoutManager);
+                        //设置适配器
+                        HomePeopleAdapter adapter = new HomePeopleAdapter(mContext, saleUserHeads);
+                        recyclerview.setAdapter(adapter);
+
+                        recyclerview.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchantId);
+                                startActivity(intent);
+                                return true;
+                            }
+                        });
+                    }
+                } else {
+                    ToastUtils.show(mContext, ((APIM_SearchUsersList) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(allRequest);
     }
 
     /**
@@ -226,8 +300,9 @@ public class MerchantAdminActivity extends BaseActivity {
         sendJsonRequest(userSaleMerchantDelRequest);
     }
 
-    @OnClick({R.id.btn_exit, R.id.lh_btn_back, R.id.ll_back})
+    @OnClick({R.id.btn_exit, R.id.lh_btn_back, R.id.ll_back, R.id.ll_photo, R.id.ll_merchant})
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.btn_exit:
                 userSaleMerchantDel();
@@ -235,6 +310,23 @@ public class MerchantAdminActivity extends BaseActivity {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.ll_photo:
+                if(merchantInfo!=null){
+                    List<String> adList = new ArrayList<>();
+                    if (StringUtils.isBlank(merchantInfo.pics)) {
+                        adList.add(merchantInfo.pic);
+                    } else {
+                        adList = Arrays.asList(merchantInfo.pics.split(","));
+                    }
+
+                    AppUtils.toImageDetial(mActivity, 0, adList, new ArrayList<String>());
+                }
+                break;
+            case R.id.ll_merchant:
+                intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchantId);
+                startActivity(intent);
                 break;
         }
     }

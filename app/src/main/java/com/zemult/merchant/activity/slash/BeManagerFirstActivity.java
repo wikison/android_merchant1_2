@@ -355,7 +355,7 @@ public class BeManagerFirstActivity extends BaseActivity {
                     Intent intent = new Intent(mActivity, TabManageActivity.class);
                     intent.putExtra(TabManageActivity.TAG, merchantId);
                     intent.putExtra(TabManageActivity.NAME, name);
-                    intent.putExtra(TabManageActivity.COMEFROM, 3);
+                    intent.putExtra(TabManageActivity.COMEFROM, 1);
                     startActivity(intent);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);

@@ -40,7 +40,7 @@ public class MerchantSaleuserListFanRequest extends PostStringRequest<Type> {
     }
 
     public MerchantSaleuserListFanRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.MERCHANT_SALEUSER_LIST_FAN_1_1,input.ejson , new TypeToken<APIM_SearchUsersList>() {
+        super(Urls.BASIC_URL+Urls.MERCHANT2_SALEUSER_LIST_FAN,input.ejson , new TypeToken<APIM_SearchUsersList>() {
         }.getType() , listener);
 
     }

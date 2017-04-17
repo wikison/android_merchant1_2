@@ -990,7 +990,7 @@ public class UserDetailActivity extends BaseActivity {
                     doReport();
                 } else {
                     List<FilterEntity> list = new ArrayList<>();
-                    list.add(new FilterEntity("送赞赏", 0, R.mipmap.zan_orange));
+                    list.add(new FilterEntity("送赞赏", 0, R.mipmap.zanshang_white));
                     list.add(new FilterEntity("投诉举报", 1, R.mipmap.jubao_icon));
                     list.add(new FilterEntity("推荐给好友", 2, R.mipmap.fenxiang_icon));
                     list.add(new FilterEntity("设置备注名", 3, R.mipmap.bianji_icon));

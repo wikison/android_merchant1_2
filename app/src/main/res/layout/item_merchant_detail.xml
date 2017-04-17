@@ -81,7 +81,7 @@
                         android:gravity="bottom">
 
                         <TextView
-                            android:text="xxx"
+                            android:text="电风扇股份的双方各是梵"
                             android:id="@+id/tv_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -97,6 +97,7 @@
                             android:layout_height="wrap_content"
                             />
                         <TextView
+                            android:layout_weight="1"
                             android:layout_marginLeft="4dp"
                             android:id="@+id/tv_status"
                             android:layout_width="wrap_content"
@@ -106,6 +107,7 @@
                             />
 
                         <ImageView
+                            android:visibility="gone"
                             android:layout_marginBottom="1dp"
                             android:id="@+id/iv_service"
                             android:layout_marginLeft="12dp"
@@ -114,6 +116,7 @@
                             android:src="@mipmap/yin_icon2"
                             />
                         <TextView
+                            android:visibility="gone"
                             android:layout_marginLeft="4dp"
                             android:id="@+id/tv_service"
                             android:layout_width="wrap_content"
@@ -122,14 +125,19 @@
                             android:textSize="@dimen/font_24px"
                             android:text="新手"
                             />
-
-
+                        <TextView
+                            style="@style/text_12_black_999"
+                            android:layout_marginLeft="4dp"
+                            android:id="@+id/tv_service_num"
+                            android:text="7天服务指数"
+                            />
 
 
                     </LinearLayout>
 
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -190,6 +198,8 @@
 
 
     <View style="@style/divider"
-        android:id="@id/divider"/>
+        android:id="@id/divider"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
 
 </LinearLayout>

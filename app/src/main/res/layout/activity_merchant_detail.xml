@@ -57,20 +57,6 @@
 
 
 
-        <RelativeLayout
-            android:id="@+id/rl_first"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@mipmap/tishi">
-
-            <!--<ImageView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:src="@mipmap/tishi"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--/>-->
-        </RelativeLayout>
-
     </FrameLayout>
 
 
