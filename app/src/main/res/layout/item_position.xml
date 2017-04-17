@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginBottom="@dimen/margin_12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp">
+
+        <CheckBox
+            android:id="@+id/cb"
+            style="@style/CheckboxPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:checked="false"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text_15_black_28"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:text="营销经理"/>
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:id="@+id/rll_name"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_marginRight="@dimen/margin_12dp"
+            android:layout_marginTop="6dp"
+            app:rv_backgroundColor="@color/white"
+            app:rv_cornerRadius="16dp"
+            app:rv_strokeColor="@color/font_main"
+            app:rv_strokeWidth="1px">
+
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/text_15_black_28"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@null"
+                android:hint="输入您的职位"
+                android:gravity="center"/>
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
