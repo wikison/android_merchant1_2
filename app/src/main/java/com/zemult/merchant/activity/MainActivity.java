@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,6 +40,8 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.common.UmLog;
 import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
+import com.zemult.merchant.aip.common.User2SaleUserLoginRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.mine.UserMessageAllNumUnread_1_2Request;
 import com.zemult.merchant.aip.mine.UserMessageBillNumUnread_1_2_2Request;
@@ -49,8 +52,6 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.fragment.FamiliarFragment;
 import com.zemult.merchant.fragment.HomeFragment;
 import com.zemult.merchant.fragment.MineFragment;
-import com.zemult.merchant.fragment.MyFollowFragment;
-import com.zemult.merchant.fragment.SfriendFragment;
 import com.zemult.merchant.im.sample.CustomConversationHelper;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -58,11 +59,11 @@ import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.push.MyPushIntentService;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
-import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 import com.zemult.merchant.view.SlashMenuWindow;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -93,7 +94,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 //    private DiscoverFragment discoverFragment;      //发现
 //    private MyRoleFragment myRoleFragment;      //角色
     private MineFragment mineFragment;             //我的
-//    private MyFollowFragment myFollowFragment;
+    //    private MyFollowFragment myFollowFragment;
     private FamiliarFragment familiarFragment;
 
 
@@ -135,6 +136,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
     private LoginSampleHelper loginHelper;
     UserMessageAllNumUnread_1_2Request userMessageAllNumUnread_1_2Request;
     UserMessageBillNumUnread_1_2_2Request userMessageBillNumUnread_1_2_2Request;
+    User2SaleUserLoginRequest user2SaleUserLoginRequest;
 
     public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
 
@@ -226,6 +228,22 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
             initIM();
             exitRefresh("relogin");
+            if (intent.getIntExtra("from_register", 0) == 1) {
+                CommonDialog.showDialogListener(context, "一键注册服务管家", "暂不要", "一键注册", getResources().getString(R.string.one_key_service), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                        //调用一键注册服务管家接口
+                        user2SaleUserLogin();
+                    }
+                });
+            }
         }
         if (Constants.BROCAST_CLOSE_ACTIVITY_FORLABEL.equals(intent.getAction())) {
             mSlashMenuWindow.dismiss();
@@ -237,6 +255,33 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
         }
 
+    }
+
+    //一键注册成为服务管家
+    private void user2SaleUserLogin() {
+        if (user2SaleUserLoginRequest != null) {
+            user2SaleUserLoginRequest.cancel();
+        }
+        User2SaleUserLoginRequest.Input input = new User2SaleUserLoginRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+        }
+        input.convertJosn();
+        user2SaleUserLoginRequest = new User2SaleUserLoginRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    IntentUtil.intStart_activity(MainActivity.this, SelfUserDetailActivity.class, new Pair<String, Integer>("user_sale_login", 1));
+
+                }
+            }
+        });
+        sendJsonRequest(user2SaleUserLoginRequest);
     }
 
     /**
@@ -808,7 +853,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
                     }
 
-                    if(!StringUtils.isBlank(((CommonResult) response).note)){
+                    if (!StringUtils.isBlank(((CommonResult) response).note)) {
                         initOrderConversation(((CommonResult) response).note, ((CommonResult) response).num, datetime);
                     }
 //                    ToastUtil.showMessage("数量"+((CommonResult) response).num);

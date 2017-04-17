@@ -46,6 +46,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     private ViewClickListener onViewClickListener;
     private ViewMerchantClickListener onViewMerchantClickListener;
     private ViewTagClickListener onViewTagClickListener;
+    private ViewStateClickListener onViewStateClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
@@ -57,6 +58,9 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public void setOnViewTagClickListener(ViewTagClickListener onViewTagClickListener) {
         this.onViewTagClickListener = onViewTagClickListener;
+    }
+    public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
+        this.onViewStateClickListener = onViewStateClickListener;
     }
 
 
@@ -159,9 +163,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         }
 
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        holder.tvCommentNum.setText(entity.commentNum + "条评价");
+        holder.tvServicePosition.setText(entity.position);
 
         initTags(holder, entity);
+        dealState(holder, entity);
         initListener(holder, entity);
 
         return view;
@@ -190,7 +195,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                 holder.tvDistance.setText(entity.distance + "m");
         }
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        holder.tvCommentNum.setText(entity.commentNum + "条评价");
+        holder.tvServicePosition.setText(entity.position);
         if (entity.unSureOrderNum > 0) {
             holder.llServiceRecord.setVisibility(View.VISIBLE);
             holder.tvUnsureNum.setText("待确认服务单" + entity.unSureOrderNum + "条");
@@ -199,6 +204,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder.tvUnsureNum.setText("");
         }
         initTags(holder, entity);
+        dealState(holder, entity);
         initListener(holder, entity);
 
         return view;
@@ -247,7 +253,21 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             }
         });
 
+        holder.rlRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onServiceHistoryList(entity);
+            }
+        });
 
+        holder.tvState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewStateClickListener != null)
+                    onViewStateClickListener.onStateManage(entity);
+            }
+        });
     }
 
 
@@ -319,6 +339,43 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     }
 
+    //处理状态
+    private void dealState(Object object, M_Merchant entity) {
+        if (object instanceof ViewHolderDetail) {
+            ViewHolderDetail holder = (ViewHolderDetail) object;
+            if (entity.state == 0) {
+                holder.ivState.setImageResource(R.mipmap.kongxian);
+                holder.tvState.setText("空闲");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_idle));
+            } else if (entity.state == 1) {
+                holder.ivState.setImageResource(R.mipmap.xiuxi_icon);
+                holder.tvState.setText("休息");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+            } else if (entity.state == 2) {
+                holder.ivState.setImageResource(R.mipmap.manglu);
+                holder.tvState.setText("忙碌");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_busy));
+            }
+        } else if (object instanceof ViewHolderSelfDetail) {
+            ViewHolderSelfDetail holder = (ViewHolderSelfDetail) object;
+            if (entity.state == 0) {
+                holder.ivState.setImageResource(R.mipmap.kongxian);
+                holder.tvState.setText("空闲");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_idle));
+            } else if (entity.state == 1) {
+                holder.ivState.setImageResource(R.mipmap.xiuxi_icon);
+                holder.tvState.setText("休息");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_black_999));
+            } else if (entity.state == 2) {
+                holder.ivState.setImageResource(R.mipmap.manglu);
+                holder.tvState.setText("忙碌");
+                holder.tvState.setTextColor(mContext.getResources().getColor(R.color.font_busy));
+            }
+        }
+
+
+    }
+
     static class ViewHolder {
         @Bind(R.id.card_img)
         ImageView cardImg;
@@ -335,22 +392,24 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         TextView tvMoney;
         @Bind(R.id.tv_distance)
         TextView tvDistance;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
         @Bind(R.id.rl_detail)
         RelativeLayout rlDetail;
         @Bind(R.id.ll_detail)
         LinearLayout llDetail;
+        @Bind(R.id.tv_service_position)
+        TextView tvServicePosition;
+        @Bind(R.id.tv_service)
+        TextView tvService;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
+        @Bind(R.id.tv_text_state)
+        TextView tvTextState;
+        @Bind(R.id.iv_state)
+        ImageView ivState;
+        @Bind(R.id.tv_state)
+        TextView tvState;
         @Bind(R.id.tv_seven)
         TextView tvSeven;
-        @Bind(R.id.tv_activity)
-        TextView tvActivity;
-        @Bind(R.id.rl_activity)
-        RelativeLayout rlActivity;
-        @Bind(R.id.tv_comment_num)
-        TextView tvCommentNum;
-        @Bind(R.id.rl_service_comment)
-        RelativeLayout rlServiceComment;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
@@ -368,8 +427,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         RelativeLayout rlDetail;
         @Bind(R.id.ll_detail)
         LinearLayout llDetail;
-        @Bind(R.id.tv_seven)
-        TextView tvSeven;
+        @Bind(R.id.tv_service_position)
+        TextView tvServicePosition;
+        @Bind(R.id.rl_service_position)
+        RelativeLayout rlServicePosition;
         @Bind(R.id.tv_text_service)
         TextView tvTextService;
         @Bind(R.id.rg_ta_service)
@@ -378,14 +439,18 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         TextView tvService;
         @Bind(R.id.rl_service)
         RelativeLayout rlService;
-        @Bind(R.id.tv_activity)
-        TextView tvActivity;
-        @Bind(R.id.rl_activity)
-        RelativeLayout rlActivity;
-        @Bind(R.id.tv_comment_num)
-        TextView tvCommentNum;
-        @Bind(R.id.rl_service_comment)
-        RelativeLayout rlServiceComment;
+        @Bind(R.id.tv_text_state)
+        TextView tvTextState;
+        @Bind(R.id.iv_state)
+        ImageView ivState;
+        @Bind(R.id.tv_state)
+        TextView tvState;
+        @Bind(R.id.tv_text_seven)
+        TextView tvTextSeven;
+        @Bind(R.id.tv_add_seven)
+        TextView tvAddSeven;
+        @Bind(R.id.tv_seven)
+        TextView tvSeven;
         @Bind(R.id.tv_unsure_num)
         TextView tvUnsureNum;
         @Bind(R.id.ll_service_record)
@@ -408,6 +473,9 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
         //查看服务单列表
         void onServiceList(M_Merchant entity);
+
+        //查看交易记录
+        void onServiceHistoryList(M_Merchant entity);
     }
 
     public interface ViewMerchantClickListener {
@@ -416,6 +484,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public interface ViewTagClickListener {
         void onTagManage(M_Merchant entity);
+    }
+
+    public interface ViewStateClickListener {
+        void onStateManage(M_Merchant entity);
     }
 
 }

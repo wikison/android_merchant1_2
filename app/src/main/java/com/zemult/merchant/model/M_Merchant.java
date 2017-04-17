@@ -218,6 +218,8 @@ public class M_Merchant implements Serializable {
     public int saleUserFanNum;  // 服务管家的顾客数
     @Expose
     public int unSureOrderNum;  //待确认服务单数量
+    @Expose
+    public String position;  //管家在该商户下职位
 
     public String getExperienceText() {
         String result = "";
@@ -252,4 +254,6 @@ public class M_Merchant implements Serializable {
 
         return result;
     }
+
+
 }

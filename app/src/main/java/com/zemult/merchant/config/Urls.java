@@ -524,8 +524,8 @@ public class Urls {
     public static String MERCHANT_REQUEST_LIST = "merchant_requestList";
     //客户列表
     public static String USER_SALE_USERLIST = "user_sale_userList.do";
-    //服务记录列表
-    public static String USER_SALE_PAYLIST = "user_sale_payList.do";
+    //服务管家的交易单记录列表
+    public static String USER_SALE_PAYLIST = "user2_saleUser_userPayList.do";
 
     //用户的预约单列表
     public static String USER_RESERVATION_LIST = "user2_reservation_list.do";
@@ -641,4 +641,8 @@ public class Urls {
     public static String MERCHANT2_SALEUSER_MERCHANTLIST = "merchant2_saleUser_merchantList";
     //用户发送语音预约消息
     public static String USER2_REMINDIM_ADD = "user2_remindIM_add";
+    //用户一键注册服务管家
+    public static String USER2_SALEUSER_LOGIN = "user2_saleUser_login";
+    //修改服务管家信息(标签,状态,职位)
+    public static String USER2_SALE_MERCHANT_EDIT = "user2_sale_merchant_edit";
 }

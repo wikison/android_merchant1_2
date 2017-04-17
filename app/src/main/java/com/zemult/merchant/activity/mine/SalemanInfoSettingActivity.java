@@ -1,9 +1,11 @@
 package com.zemult.merchant.activity.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class SalemanInfoSettingActivity extends BaseActivity {
     ImageView imageView;
     @Bind(R.id.tv_name)
     TextView tvName;
-    String nameString, headString;
+    String nameString="", headString="";
     UserEditinfoRequest userEditinfoRequest;
 
     @Override
@@ -43,6 +45,7 @@ public class SalemanInfoSettingActivity extends BaseActivity {
     public void init() {
         lhTvTitle.setText("管家信息设置");
         initData();
+        registerReceiver(new String[]{Constants.BROCAST_EDITUSERINFO});
     }
 
     private void initData() {
@@ -53,6 +56,26 @@ public class SalemanInfoSettingActivity extends BaseActivity {
     }
 
 
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_EDITUSERINFO.equals(intent.getAction())) {
+            initData();
+//            if(provinceName.equals(cityName)){
+//                tvArea.setText(provinceName);
+//            }
+//            else{
+//                tvArea.setText(provinceName+" "+cityName);
+//            }
+        }
+    }
+
+
 
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.mis_headgo_layout, R.id.mis_name_layout})
@@ -60,6 +83,7 @@ public class SalemanInfoSettingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                setResult(RESULT_OK);
                 onBackPressed();
                 break;
             case R.id.mis_headgo_layout:
@@ -70,5 +94,22 @@ public class SalemanInfoSettingActivity extends BaseActivity {
                 startActivityForResult(intent, Constants.REQUESTCODE_CHANGENICKNAME);
                 break;
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUESTCODE_CHANGENICKNAME && resultCode == RESULT_OK) {
+            nameString = SlashHelper.userManager().getUserinfo().getName();
+            //修改用户资料信息
+            tvName.setText(SlashHelper.userManager().getUserinfo().getName());
+
+        } else if (requestCode == 110 && resultCode == RESULT_OK) {
+            headString = SlashHelper.userManager().getUserinfo().getHead();
+            imageManager.loadCircleHead(headString, ivHead);
+        }
+        initData();
+
     }
 }

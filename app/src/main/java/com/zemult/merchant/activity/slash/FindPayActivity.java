@@ -528,6 +528,9 @@ public class FindPayActivity extends BaseActivity {
     // 填充数据
     private void fillAdapter(List<M_Reservation> list, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
+            rllReservation.setVisibility(View.GONE);
+            reservationMoney = 0;
+            mReservation = null;
         } else {
             list.get(0).setChecked(true);
             showReservation(list.get(0).isChecked(), list.get(0));

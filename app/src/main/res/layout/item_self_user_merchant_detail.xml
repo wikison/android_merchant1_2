@@ -76,22 +76,21 @@
 
     <View style="@style/divider"/>
 
-    <View
-        style="@style/divider"
-        android:layout_marginTop="@dimen/margin_16dp"/>
-
     <RelativeLayout
+        android:id="@+id/rl_service_position"
         style="@style/relative_layout_item">
 
         <TextView
             style="@style/text_15_black_28"
-            android:text="7天服务指数"/>
+            android:text="管家职位"/>
 
         <TextView
-            android:id="@+id/tv_seven"
+            android:id="@+id/tv_service_position"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
-            android:text="98"/>
+            android:drawablePadding="@dimen/margin_8dp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
@@ -131,53 +130,78 @@
             android:text=""/>
     </RelativeLayout>
 
+    <View style="@style/divider"/>
 
     <RelativeLayout
-        android:id="@+id/rl_activity"
-        style="@style/relative_layout_item"
-        android:layout_marginTop="@dimen/margin_16dp">
+        style="@style/relative_layout_item">
 
         <TextView
+            android:id="@+id/tv_text_state"
             style="@style/text_15_black_28"
-            android:text="管家动态"/>
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:text="管家状态"/>
+
+        <ImageView
+            android:id="@+id/iv_state"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/tv_state"
+            android:src="@mipmap/manglu"/>
 
         <TextView
-            android:id="@+id/tv_activity"
+            android:id="@+id/tv_state"
+            style="@style/text_15_black_28"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="8dp"
+            android:drawableRight="@mipmap/sanjiao_icon"
+            android:text="忙碌"/>
+
+    </RelativeLayout>
+
+    <View style="@style/divider"/>
+
+
+    <RelativeLayout
+        style="@style/relative_layout_item">
+
+        <TextView
+            android:id="@+id/tv_text_seven"
+            style="@style/text_15_black_28"
+            android:layout_centerVertical="true"
+            android:text="7天服务指数"/>
+
+        <TextView
+            android:id="@+id/tv_add_seven"
+            style="@style/text_12_black_28"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_toRightOf="@+id/tv_text_seven"
+            android:text="@string/how_add_seven"
+            android:textColor="@color/font_new_blue"/>
+
+        <TextView
+            android:id="@+id/tv_seven"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/margin_8dp"
-            android:drawableRight="@mipmap/right_btn"
-            android:text=""/>
+
+            android:layout_centerVertical="true"
+            android:text="98"/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
 
     <RelativeLayout
-        android:id="@+id/rl_service_comment"
+        android:id="@+id/rl_service_record"
         style="@style/relative_layout_item">
 
         <TextView
             style="@style/text_15_black_28"
-            android:text="服务评价"/>
-
-        <TextView
-            android:id="@+id/tv_comment_num"
-            style="@style/text_15_black_999"
-            android:layout_alignParentRight="true"
-            android:drawablePadding="@dimen/margin_8dp"
-            android:drawableRight="@mipmap/right_btn"
-            android:text="12条评价"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_service_record"
-        style="@style/relative_layout_item"
-        android:layout_marginTop="@dimen/margin_16dp">
-
-        <TextView
-            style="@style/text_15_black_28"
             android:layout_height="match_parent"
-            android:text="服务单记录"/>
+            android:text="服务记录"/>
 
 
         <LinearLayout
@@ -219,7 +243,7 @@
 
         <TextView
             style="@style/text_15_black_28"
-            android:text="交易单记录"/>
+            android:text="交易记录"/>
 
         <TextView
             style="@style/text_15_black_999"

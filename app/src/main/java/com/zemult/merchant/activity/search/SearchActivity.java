@@ -4,38 +4,31 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.view.SearchView;
 
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by wikison on 2016/6/15.
  */
-public class SearchActivity extends BaseActivity implements SearchView.SearchViewListener {
+public class SearchActivity extends BaseActivity {
 
     public static final String INTENT_KEY = "key";
+    @Bind(R.id.a_seach_searchview)
+    SearchView searchview;
     @Bind(R.id.fl)
     FrameLayout fl;
-    @Bind(R.id.search_et_input)
-    TextView searchEtInput;
-    @Bind(R.id.tv_cancel)
-    TextView tvCancel;
-    @Bind(R.id.ll_search)
-    LinearLayout llSearch;
+
     private Context mContext;
     private Activity mActivity;
     private SearchMerchantFragment merchantFragment;
     private String key;
+
+    int iToAdd = 0;
 
 
     @Override
@@ -54,11 +47,19 @@ public class SearchActivity extends BaseActivity implements SearchView.SearchVie
         mContext = this;
         mActivity = this;
         key = getIntent().getStringExtra(INTENT_KEY);
-        searchEtInput.setText(key);
+        iToAdd = getIntent().getIntExtra("be_service_manager", -1);
+        searchview.setStrHint("");
+        searchview.setStrSearch(key);
 
         merchantFragment = new SearchMerchantFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(SearchActivity.INTENT_KEY, key);
+        if (iToAdd == 1) {
+            bundle.putString(SearchActivity.INTENT_KEY, "");
+        } else {
+            bundle.putString(SearchActivity.INTENT_KEY, key);
+
+        }
+        bundle.putInt("be_service_manager", iToAdd);
         merchantFragment.setArguments(bundle);
     }
 
@@ -70,32 +71,19 @@ public class SearchActivity extends BaseActivity implements SearchView.SearchVie
     }
 
     private void initListener() {
+        searchview.setSearchViewListener(new SearchView.SearchViewListener() {
+            @Override
+            public void onSearch(String text) {
+                merchantFragment.search(text);
+
+            }
+
+            @Override
+            public void onClear() {
+
+            }
+        });
     }
 
-    @Override
-    public void onSearch(String strSearchWord) {
-        merchantFragment.search(strSearchWord);
-    }
 
-    @Override
-    public void onClear() {
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    @OnClick({R.id.tv_cancel, R.id.ll_search})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_cancel:
-            case R.id.ll_search:
-                onBackPressed();
-                break;
-        }
-    }
 }
