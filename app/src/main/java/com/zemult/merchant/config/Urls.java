@@ -649,4 +649,11 @@ public class Urls {
     public static String MERCHANT2_SALEUSER_LIST_FAN = "merchant2_saleuserList_fan";
     //商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
     public static String MERCHANT2_SALEUSER_LIST = "merchant2_saleuserList";
+    //查看语音预约消息信息
+    public static String USER2_REMINDIM_INFO = "user2_remindIM_info";
+    //修改 语音预约消息为已读
+    public static String USER2_REMINDIM_READ = "user2_remindIM_read";
+
+
+
 }

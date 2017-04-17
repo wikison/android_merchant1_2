@@ -569,6 +569,11 @@
             android:name=".im.CreateBespeakActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
+            android:name=".im.CustomerCreateBespeakActivity" />
+        <activity
+            android:name=".im.CustomerCreateBespeakDetailsActivity" />
+
+        <activity
             android:name=".im.CreateBespeakNewActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".activity.mine.MerchantEnter2Activity" />

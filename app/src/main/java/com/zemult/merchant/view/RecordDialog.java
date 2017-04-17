@@ -2,9 +2,13 @@ package com.zemult.merchant.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
@@ -67,7 +71,7 @@ public class RecordDialog {
     public void tooShort() {
         if (dialog != null && dialog.isShowing()) { //显示状态
             mIcon.setImageResource(R.mipmap.dialog_recorder_short);
-            mLabel.setText("录音时间过短, 至少10秒");
+            mLabel.setText("录音时间过短, 至少3秒");
             mLabel.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
         }
     }

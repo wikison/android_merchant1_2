@@ -51,6 +51,9 @@ public class M_Reservation implements Serializable {
     public String userName;//联系人名称
 
     @Expose
+    public String userHead;//联系人头像
+
+    @Expose
     public String userPhone;//联系人电话
 
     @Expose
@@ -101,6 +104,15 @@ public class M_Reservation implements Serializable {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    @Expose
+    public String timeNum;//语音时长
+    @Expose
+    public String tags;//服务需求
+    @Expose
+    public double perMoney;//人均预算
+
+
 
 
 }
