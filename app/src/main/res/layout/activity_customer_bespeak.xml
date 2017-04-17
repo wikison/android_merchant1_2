@@ -115,7 +115,8 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="请输入人均预算"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
+                    android:maxLength="5"
                     android:textColor="#999999"
                     android:textColorHint="#999999"/>
 
@@ -154,6 +155,13 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_marginLeft="@dimen/margin_24dp"
                     android:layout_toRightOf="@+id/tv_my_service"/>
+                
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/right_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
 
             </RelativeLayout>
@@ -165,16 +173,6 @@
                 android:gravity="center"
                 android:text="不喜欢填单子，用语音描述需求也方便~"/>
 
-            <Button
-                android:id="@+id/btn_recordagain"
-                style="@style/common_btn_235"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_24dp"
-                android:layout_marginTop="30dp"
-                android:text="点击重录"
-                android:visibility="gone" />
 
 
             <LinearLayout
@@ -184,8 +182,6 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-
-
                 <RelativeLayout
                     android:id="@+id/rel_voice"
                     android:layout_width="match_parent"
@@ -193,63 +189,75 @@
                     android:visibility="invisible">
 
 
+                    <RelativeLayout
+                        android:id="@+id/rel_voice_sub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <com.flyco.roundview.RoundRelativeLayout
-                        android:id="@+id/rll_voice"
-                        android:layout_width="190dp"
-                        android:layout_height="32dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="12dp"
-                        app:rv_backgroundColor="@color/bg_head"
-                        app:rv_backgroundPressColor="@color/btn_press"
-                        app:rv_cornerRadius="8dp">
 
-                        <ImageView
-                            android:id="@+id/iv_voice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                        <com.flyco.roundview.RoundRelativeLayout
+                            android:id="@+id/rll_voice"
+                            android:layout_width="190dp"
+                            android:layout_height="32dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="12dp"
+                            app:rv_backgroundColor="@color/bg_head"
+                            app:rv_backgroundPressColor="@color/btn_press"
+                            app:rv_cornerRadius="8dp">
+
+                            <ImageView
+                                android:id="@+id/iv_voice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:src="@mipmap/luying_icon" />
+
+                            <TextView
+                                android:id="@+id/tv_length"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="1''"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/font_30px" />
+
+                        </com.flyco.roundview.RoundRelativeLayout>
+
+
+                        <Button
+                            android:id="@+id/btn_delete"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="12dp"
-                            android:src="@mipmap/luying_icon" />
+                            android:layout_marginLeft="16dp"
+                            android:layout_toRightOf="@+id/rll_voice"
+                            android:background="@mipmap/shan_icon_order" />
 
-                        <TextView
-                            android:id="@+id/tv_length"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="1''"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_30px" />
+                    </RelativeLayout>
 
-                    </com.flyco.roundview.RoundRelativeLayout>
-
-
-                    <Button
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/rll_voice"
-                        android:id="@+id/btn_delete"
-                        android:layout_height="wrap_content"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:background="@mipmap/delete_btn"
-                        />
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/rel_voice_sub"
+                        android:layout_centerHorizontal="true"
+                        android:text="点击可以播放您的语音" />
+
 
                 </RelativeLayout>
-
 
                 <ImageButton
                     android:id="@+id/imageButtonDial"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:background="@mipmap/btn_speak_normal" />
 
 
                 <TextView
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="12dp"
                     style="@style/text_16_black_999"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

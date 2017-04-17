@@ -645,4 +645,11 @@ public class Urls {
     public static String USER2_SALEUSER_LOGIN = "user2_saleUser_login";
     //修改服务管家信息(标签,状态,职位)
     public static String USER2_SALE_MERCHANT_EDIT = "user2_sale_merchant_edit";
+    //查看语音预约消息信息
+    public static String USER2_REMINDIM_INFO = "user2_remindIM_info";
+    //修改 语音预约消息为已读
+    public static String USER2_REMINDIM_READ = "user2_remindIM_read";
+
+
+
 }

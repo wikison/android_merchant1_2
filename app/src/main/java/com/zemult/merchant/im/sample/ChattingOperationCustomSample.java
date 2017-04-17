@@ -66,6 +66,7 @@ import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.CreateBespeakNewActivity;
+import com.zemult.merchant.im.CustomerCreateBespeakDetailsActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
@@ -572,14 +573,23 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                             intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
                             fragment.startActivity(intent);
                     }
-                    if("VOICE".equals(customizeObject.getString("tasktype"))&&!customizeObject.getString("userId").equals(SlashHelper.userManager().getUserId()+"")){
-                        Intent intent =new Intent(fragment.getActivity(),CreateBespeakNewActivity.class);
-                        intent.putExtra("customerId",Integer.parseInt(customizeObject.getString("userId")));
-                        intent.putExtra("customerVoice",customizeObject.getString("recordPath"));
-                        intent.putExtra("reviewstatus",customizeObject.getString("reviewstatus"));
-                        intent.putExtra("merchantName",customizeObject.getString("merchantName"));
-                        intent.putExtra("merchantId",customizeObject.getString("merchantId"));
-                        fragment.startActivity(intent);
+                    else if("VOICE".equals(customizeObject.getString("tasktype"))){
+                        if(customizeObject.getString("userId").equals(SlashHelper.userManager().getUserId()+"")){
+                            Intent intent =new Intent(fragment.getActivity(), CustomerCreateBespeakDetailsActivity.class);
+                            intent.putExtra("remindIMId",Integer.parseInt(customizeObject.getString("remindIMId")));
+                            intent.putExtra("userId",Integer.parseInt(customizeObject.getString("userId")));
+                            fragment.startActivity(intent);
+                        }
+                        else{
+                            Intent intent =new Intent(fragment.getActivity(),CreateBespeakNewActivity.class);
+                            intent.putExtra("customerId",Integer.parseInt(customizeObject.getString("userId")));
+                            intent.putExtra("customerVoice",customizeObject.getString("recordPath"));
+                            intent.putExtra("reviewstatus",customizeObject.getString("reviewstatus"));
+                            intent.putExtra("merchantName",customizeObject.getString("merchantName"));
+                            intent.putExtra("merchantId",customizeObject.getString("merchantId"));
+                            fragment.startActivity(intent);
+                        }
+
                     }
                     else if("GIFT".equals(customizeObject.getString("tasktype"))){
                         if(customizeObject.getString("serviceId").equals(SlashHelper.userManager().getUserId()+"")){//管家

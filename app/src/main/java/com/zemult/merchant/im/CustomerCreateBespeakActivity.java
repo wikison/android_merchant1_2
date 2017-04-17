@@ -59,6 +59,7 @@ import com.zemult.merchant.util.sound.HttpOperateUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
 import com.zemult.merchant.view.RecordDialog;
+import com.zemult.merchant.view.common.CommonDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,20 +98,18 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     LinearLayout llBack;
     @Bind(R.id.fn_my_service)
     FNRadioGroup fnMyService;
+    @Bind(R.id.iv_voice)
     ImageView voiceImageBtn;
     AnimationDrawable voiceAnimation;
-    @Bind(R.id.tv_leftsecond)
-    TextView tvLeftsecond;
     @Bind(R.id.rel_voice)
     RelativeLayout relVoice;
     @Bind(R.id.tv_length)
     TextView tvLength;
-    @Bind(R.id.imageButtonDial)
-    ImageButton imageButtonDial;
+
+
     private MediaPlayer mMediaPlayer;
 
-    UserReservationAddRequest userReservationAddRequest;
-    int serviceId,num;
+    int serviceId;
     String renjun,orderpeople,servicetag,ordertime;
     private static final int REQ_ALBUM = 0x110;
     private static final int REQ_REMARK_NAME = 0x120;
@@ -127,9 +126,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     private static final int MSG_VOICE_CHANGED = 0x111;
     private static final int MSG_DIALOG_DISMISS = 0x112;
     private static final int MSG_VOICE_FINISH = 0x113;
-    String reservationTime,tags;
-    double perMoney;
-    int merchantId,remindIMId;
+    String tags;
     int CHOOSESERVICE = 100;
     M_Merchant m_merchant;
     User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
@@ -139,10 +136,10 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     String URL_UPLOAD_FILEPATH = "";
     private OssFileService ossFileService;
     private MP3Recorder mRecorder = null;
-    String fileUrl = "";
+    String fileUrl = "",serviceTags="";
     private MyTimerTask timerTask;
     private boolean isStartRecord;
-
+    ImageButton imageButtonDial;
     private Timer timer;
     private int recordTime = 120;
 
@@ -180,11 +177,11 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                     break;
 
                 case 1:
-                    voiceImageBtn.setImageResource(R.mipmap.yuyan_icon);
+                    voiceImageBtn.setImageResource(R.mipmap.luying_icon);
                     voiceAnimation.stop();
                     break;
                 case 2:
-                    voiceImageBtn.setImageResource(R.drawable.voice_from_yellow_icon);
+                    voiceImageBtn.setImageResource(R.drawable.voice_from_icon);
                     voiceAnimation = (AnimationDrawable) voiceImageBtn.getDrawable();
                     voiceAnimation.start();
                     break;
@@ -203,7 +200,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     @Override
     public void init() {
 
-        serviceId = getIntent().getIntExtra("serviceId", 0);
+        serviceId = getIntent().getIntExtra("userSaleId", 0);
         m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
         pmnvSelectDeadline.setMinNum(1);
         pmnvSelectDeadline.setMaxNum(99);
@@ -221,13 +218,13 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             }
         });
         lhTvTitle.setText("线上约服");
-
+        imageButtonDial=(ImageButton)findViewById(R.id.imageButtonDial);
 
         imageButtonDial.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                imageButtonDial.setBackgroundColor(getResources().getColor(R.color.btn_press));
+                imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_pressed);
                 mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
                 changeState(STATE_RECORDING);
 
@@ -262,7 +259,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_normal);
-                        if (!isStartRecord || recordTime > 30) {
+                        if (!isStartRecord || recordTime > 117) {
                             mDialogManager.tooShort();
                             stopRecord();
                             mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1000);// 延迟显示对话框
@@ -319,66 +316,6 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    private void user_reservation_add() {
-
-        try {
-            if (userReservationAddRequest != null) {
-                userReservationAddRequest.cancel();
-            }
-            UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
-            input.merchantId = merchantId+"";
-            input.saleUserId = serviceId;
-            input.reservationTime = ordertime + ":00";
-            input.num = orderpeople;
-            input.userId = SlashHelper.userManager().getUserId();
-            input.convertJosn();
-
-            userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.print(error);
-                }
-
-                @Override
-                public void onResponse(Object response) {
-                    if (((CommonResult) response).status == 1) {
-                        YWCustomMessageBody messageBody = new YWCustomMessageBody();
-                        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
-                        JSONObject object = new JSONObject();
-                        try {
-                            object.put("customizeMessageType", "Task");
-                            object.put("tasktype", "VOICE");
-                            object.put("taskTitle", "发了一个约服需求" + DateTimeUtil.getCurrentTime2() + "如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
-                            object.put("merchantId", m_merchant.merchantId);
-                            object.put("reviewstatus", m_merchant.reviewstatus);
-                            object.put("merchantName", m_merchant.merchantName);
-                            object.put("userId", SlashHelper.userManager().getUserId());
-                            object.put("fromuserName", SlashHelper.userManager().getUserinfo().name);
-                            object.put("fromuserHead", SlashHelper.userManager().getUserinfo().head);
-                            object.put("recordPath", fileUrl);
-                            object.put("remindIMId", orderpeople);
-                        } catch (JSONException e) {
-
-                        }
-                        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-                        messageBody.setSummary("[预约服务]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
-                        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-                        IYWContact appContact = YWContactFactory.createAPPContact(serviceId + "", imKit.getIMCore().getAppKey());
-                        imKit.getConversationService()
-                                .forwardMsgToContact(appContact
-                                        , message, forwardCallBack);
-                        startActivity(imKit.getChattingActivityIntent(serviceId + ""));
-                        finish();
-                    } else {
-                        ToastUtil.showMessage(((CommonResult) response).info);
-                    }
-                }
-            });
-            sendJsonRequest(userReservationAddRequest);
-        } catch (Exception e) {
-        }
-    }
 
 
     private void initTags(String tags) {
@@ -425,7 +362,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordertime})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.btn_delete, R.id.rl_my_service,R.id.btn_bespeak_commit, R.id.rl_ordertime,R.id.rll_voice})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -437,21 +374,24 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                     return;
                 ordertime = bespekTime.getText().toString();
                 renjun=etCustomerrenjun.getText().toString();
-                if (StringUtils.isEmpty(orderpeople)) {
-                    ToastUtil.showMessage("请选择预约人数");
-                    return;
-                }
+                if(StringUtils.isBlank(fileUrl)){
+                    if (StringUtils.isEmpty(orderpeople)) {
+                        ToastUtil.showMessage("请选择预约人数");
+                        return;
+                    }
 
-                if (StringUtils.isEmpty(ordertime) || "请选择预约时间".equals(ordertime)) {
-                    ToastUtil.showMessage("请选择预约时间");
-                    return;
-                }
-                if (!StringMatchUtils.isMobileNO(renjun)) {
-                    ToastUtil.showMessage("请输入人均");
-                    return;
-                }
+                    if (StringUtils.isEmpty(ordertime) || "请选择预约时间".equals(ordertime)) {
+                        ToastUtil.showMessage("请选择预约时间");
+                        return;
+                    }
+                    if (StringUtils.isEmpty(renjun)) {
+                        ToastUtil.showMessage("请输入人均预算");
+                        return;
+                    }
 
-                user_reservation_add();
+
+                }
+                addRemindIM();
                 break;
 
             case R.id.rl_ordertime:
@@ -460,12 +400,35 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 dateTimePicKDialog.dateTimePicKDialog(bespekTime);
                 break;
 
-            case R.id.rel_voice:
+            case R.id.rll_voice:
                 startPlay();
 
                 break;
+            case R.id.rl_my_service:
 
 
+
+
+                break;
+
+            case R.id.btn_delete:
+
+                CommonDialog.showDialogListener(CustomerCreateBespeakActivity.this,null, "否", "是", "是否删除语音消息", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                        fileUrl="";
+                        recordTime=120;
+                        relVoice.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+                break;
         }
     }
 
@@ -525,7 +488,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             mMediaPlayer.stop();
         }
         if (voiceAnimation != null) {
-            voiceImageBtn.setImageResource(R.mipmap.yuyan_icon);
+            voiceImageBtn.setImageResource(R.mipmap.luying_icon);
             voiceAnimation.stop();
         }
 
@@ -545,17 +508,15 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         final User2RemindIMAddRequest.Input input = new User2RemindIMAddRequest.Input();
 
         input.userId = SlashHelper.userManager().getUserId();
-        input.merchantId = merchantId; //服务商户id
-        input.reservationTime = reservationTime;//预约时间
-        input.num = num;//人数
-        input.perMoney = perMoney;//人均预算
-        input.tags = tags;//服务管家id
+        input.merchantId = m_merchant.merchantId; //服务商户id
+        input.reservationTime =StringUtils.isBlank(ordertime)?"":ordertime+":00" ;//预约时间
+        input.num = ("1".equals(orderpeople)?"":orderpeople);//人数
+        input.perMoney =renjun ;//人均预算
+        input.tags =StringUtils.isBlank(tags)?"":tags ;//服务管家id
         input.saleUserId = serviceId;//服务管家id
         input.replayNote = fileUrl;//否	语音地址
+        input.timeNum = (120-recordTime)+"";//否	时间
         input.convertJosn();
-
-
-
         user2RemindIMAddRequest = new User2RemindIMAddRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -594,7 +555,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                             .forwardMsgToContact(appContact
                                     , message, forwardCallBack);
                     startActivity(imKit.getChattingActivityIntent(serviceId + ""));
-
+                    finish();
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
                 }
@@ -623,7 +584,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 fileUrl = OSSENDPOINT + ossFilename;
                 dismissPd();
                 relVoice.setVisibility(View.VISIBLE);
-                tvLength.setText(recordTime+"''");
+                tvLength.setText((120-recordTime)+"''");
             } else {
                 ToastUtils.show(this, intent.getStringExtra("info"));
             }
@@ -683,7 +644,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             // 停止录音
             stopRecord();
             File file = new File(URL_UPLOAD_FILEPATH);
-            if (file.exists() && recordTime <= 110) {
+            if (file.exists() && recordTime <= 117) {
                 showPd();
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     ossFilename = "aduio/android_" + filename;
@@ -730,11 +691,13 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
     }
 
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CHOOSESERVICE && resultCode == RESULT_OK) {
             initTags(data.getStringExtra("tags"));
-            merchantId = data.getIntExtra("merchantId", 0);
         }
     }
 
