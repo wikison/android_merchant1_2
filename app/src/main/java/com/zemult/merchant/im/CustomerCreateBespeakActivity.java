@@ -1,7 +1,10 @@
 package com.zemult.merchant.im;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +16,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -34,6 +40,7 @@ import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
+import com.alibaba.wxlib.util.RequestPermissionUtil;
 import com.android.volley.VolleyError;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundTextView;
@@ -46,6 +53,7 @@ import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
@@ -129,7 +137,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     private static final int MSG_DIALOG_DISMISS = 0x112;
     private static final int MSG_VOICE_FINISH = 0x113;
     String tags="";
-    int CHOOSESERVICE = 100;
+    int CHOOSESERVICE = 100,MY_PERMISSIONS_REQUEST_CALL_AUDIO=199;
     M_Merchant m_merchant;
     User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
 
@@ -200,6 +208,26 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+
+        if (requestCode == MY_PERMISSIONS_REQUEST_CALL_AUDIO)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+//                startRecord();
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(CustomerCreateBespeakActivity.this, "需要开启录音权限", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    @Override
     public void init() {
 
         serviceId = getIntent().getIntExtra("userSaleId", 0);
@@ -226,21 +254,35 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             public boolean onLongClick(View v) {
 
                 imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_pressed);
-                mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
-                changeState(STATE_RECORDING);
 
-                startRecord();
+                if (ContextCompat.checkSelfPermission(CustomerCreateBespeakActivity.this,
+                        Manifest.permission.RECORD_AUDIO)
+                        != PackageManager.PERMISSION_GRANTED)
+                {
 
-                //开始计时
-                if (timerTask != null) {
-                    timerTask.cancel();
-                    timer.cancel();
+                    ActivityCompat.requestPermissions(CustomerCreateBespeakActivity.this,
+                            new String[]{Manifest.permission.RECORD_AUDIO},
+                            MY_PERMISSIONS_REQUEST_CALL_AUDIO);
+                } else
+                {
+                    mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
+                    changeState(STATE_RECORDING);
+                    startRecord();
+                    //开始计时
+                    if (timerTask != null) {
+                        timerTask.cancel();
+                        timer.cancel();
+                    }
+
+                    recordTime = 120;
+                    timer = new Timer(true);
+                    timerTask = new MyTimerTask();
+                    timer.scheduleAtFixedRate(timerTask, 0, 1000);
                 }
 
-                recordTime = 120;
-                timer = new Timer(true);
-                timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
+
+
                 return true;
             }
         });
@@ -514,7 +556,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         input.reservationTime =StringUtils.isBlank(ordertime)?"":ordertime+":00" ;//预约时间
         input.num = ("1".equals(orderpeople)?"":orderpeople);//人数
         input.perMoney =renjun ;//人均预算
-        input.tags =StringUtils.isBlank(tags)?"":tags ;//服务管家id
+        input.tags =StringUtils.isBlank(selectTag)?"":selectTag ;//服务管家id
         input.saleUserId = serviceId;//服务管家id
         input.replayNote = fileUrl;//否	语音地址
         input.timeNum = (120-recordTime)+"";//否	时间

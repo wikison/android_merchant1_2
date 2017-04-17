@@ -144,10 +144,10 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(Object response) {
-                    if (((M_Reservation) response).status == 1) {
+                    if (((CommonResult) response).status == 1) {
                         ToastUtil.showMessage("已读消息");
                     } else {
-                        ToastUtil.showMessage(((M_Reservation) response).info);
+                        ToastUtil.showMessage(((CommonResult) response).info);
                     }
                 }
             });
