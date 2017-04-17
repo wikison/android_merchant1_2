@@ -1,8 +1,11 @@
 package com.zemult.merchant.activity.mine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +27,6 @@ import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -50,7 +52,8 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     ImageView ivHead;
     UserEditinfoRequest userEditinfoRequest;
 
-    String  headString="";
+    String headString = "";
+    Activity mActivity;
 
     @Override
     public void setContentView() {
@@ -66,6 +69,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     }
 
     private void initData() {
+        mActivity = this;
         etName.setText(SlashHelper.userManager().getUserinfo().getName());
         if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
             imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
@@ -87,7 +91,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_head,R.id.tongxunlu_tv, R.id.notice_tv, R.id.btn_save})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_head, R.id.tongxunlu_tv, R.id.notice_tv, R.id.btn_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -102,6 +106,19 @@ public class SaleManInfoImproveActivity extends BaseActivity {
             case R.id.tongxunlu_tv:
                 break;
             case R.id.notice_tv:
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("app_package", mActivity.getPackageName());
+                    intent.putExtra("app_uid", mActivity.getApplicationInfo().uid);
+                    startActivity(intent);
+                } else if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setData(Uri.parse("package:" + mActivity.getPackageName()));
+                    startActivity(intent);
+                }
                 break;
             case R.id.btn_save:
                 if (StringUtils.isBlank(etName.getText().toString())) {
@@ -152,7 +169,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      if (requestCode == 110 && resultCode == RESULT_OK) {
+        if (requestCode == 110 && resultCode == RESULT_OK) {
             headString = SlashHelper.userManager().getUserinfo().getHead();
             imageManager.loadCircleHead(headString, ivHead);
         }

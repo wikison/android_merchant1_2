@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -192,7 +190,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     int fromSaleLogin = 0;
     int selectPosition = 0;
 
-    String strPosition;
+    String strPosition = "";
 
     @Override
     public void setContentView() {
@@ -530,7 +528,6 @@ public class SelfUserDetailActivity extends BaseActivity {
             pagerUserMerchantDetailAdapter.setOnViewStateClickListener(new PagerUserMerchantAdapter.ViewStateClickListener() {
                 @Override
                 public void onStateManage(final M_Merchant entity) {
-                    selectMerchant = entity;
                     MMAlert.showChooseStateDialog(mContext, new MMAlert.ChooseCallback() {
                         @Override
                         public void onfirstChoose() {
@@ -550,8 +547,6 @@ public class SelfUserDetailActivity extends BaseActivity {
             pagerUserMerchantDetailAdapter.setOnViewPositionClickListener(new PagerUserMerchantAdapter.ViewPositionClickListener() {
                 @Override
                 public void onPositionManage(M_Merchant entity) {
-                    strPosition = entity.position;
-                    selectMerchant = entity;
                     Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
                     intent.putExtra("position_name", entity.position);
                     startActivityForResult(intent, MODIFY_POSITION);
@@ -593,7 +588,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         bindPager.setCurrentItem(selectPosition);
         selectMerchant = listMerchant.get(selectPosition);
         state = selectMerchant.state;
-        strPosition = selectMerchant.position;
+        strPosition = (selectMerchant.position == null ? "" : selectMerchant.position);
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
     }
 
