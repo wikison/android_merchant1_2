@@ -68,7 +68,7 @@ public class MyQr4OrderActivity extends BaseActivity {
     LinearLayout llMerchantHead;
     @Bind(R.id.iv_qr)
     ImageView ivQr;
-    int userSaleId, merchantId;
+    int userSaleId, merchantId,reservationId;
 
     String merchantHead, merchantName;
     Bitmap bitmap;
@@ -115,6 +115,7 @@ public class MyQr4OrderActivity extends BaseActivity {
     private void initData() {
         userSaleId= getIntent().getIntExtra("saleUserId", 0);
         merchantId= getIntent().getIntExtra("merchantId", 0);
+        reservationId= getIntent().getIntExtra("reservationId", 0);
         money=getIntent().getDoubleExtra("money",0);
         experience=getIntent().getDoubleExtra("experience",0);
         saleHead=getIntent().getStringExtra("saleHead");
@@ -141,8 +142,8 @@ public class MyQr4OrderActivity extends BaseActivity {
             qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + money;
             bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                     DensityUtil.dip2px(this, 240));
-
-            shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index_wx.do?client="+merchantId + "," + userSaleId+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
+        shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?reservationId="+reservationId+"&TargetPage=2&totalMoney="+money+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+//            shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index_wx.do?client="+merchantId + "," + userSaleId+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
 
 
         if (bitmap != null)

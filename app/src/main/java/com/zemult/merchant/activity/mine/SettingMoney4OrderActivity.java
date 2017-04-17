@@ -44,7 +44,7 @@ public class SettingMoney4OrderActivity extends BaseActivity {
     double reservationMoney;
     String saleHead,saleName,merchantName;
     double experience;
-    int merchantId,saleUserId;
+    int merchantId,saleUserId,reservationId;
 
 
     @Override
@@ -66,7 +66,7 @@ public class SettingMoney4OrderActivity extends BaseActivity {
         merchantName=getIntent().getStringExtra("merchantName");
         merchantId=getIntent().getIntExtra("merchantId",0);
         saleUserId=getIntent().getIntExtra("saleUserId",0);
-
+        reservationId=getIntent().getIntExtra("reservationId",0);
         if(reservationMoney!=0){
             rlDingjin.setVisibility(View.VISIBLE);
             tvDingjin.setText("-￥"+reservationMoney);
@@ -136,7 +136,7 @@ public class SettingMoney4OrderActivity extends BaseActivity {
                     intent.putExtra("merchantName",merchantName);
                     intent.putExtra("merchantId",merchantId);
                     intent.putExtra("saleUserId",saleUserId);
-
+                    intent.putExtra("reservationId",reservationId);
                     startActivityForResult(intent,1000);
                 }
 

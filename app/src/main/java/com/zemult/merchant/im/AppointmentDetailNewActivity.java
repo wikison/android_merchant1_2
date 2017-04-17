@@ -444,7 +444,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单-修改] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
+                            object.put("taskTitle", "[服务订单] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
                                     :tvTime.getText().toString().substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
                             object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId + "");
@@ -690,6 +690,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intentserver.putExtra("saleName",mReservation.saleUserName);
                 intentserver.putExtra("merchantName",mReservation.merchantName);
                 intentserver.putExtra("merchantId",mReservation.merchantId);
+                intentserver.putExtra("reservationId",mReservation.reservationId);
                 if (!TextUtils.isEmpty(reservationId))
                     intentserver.putExtra("reservationId", Integer.valueOf(reservationId));
                 startActivity(intentserver);
