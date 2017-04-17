@@ -53,6 +53,7 @@
                     />
 
                 <Button
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:id="@+id/play_btn"
                     style="@style/common_btn_235"
@@ -61,10 +62,11 @@
                     android:layout_height="25dp"
                     android:layout_marginBottom="@dimen/margin_12dp"
                     android:layout_marginLeft="20dp"
+                    android:drawablePadding="10dp"
                     android:background="@drawable/detail_white_btn"
-                    android:drawableLeft="@mipmap/volume_icon_loud"
+                    android:drawableLeft="@mipmap/icon_xuqiu"
                     android:paddingLeft="10dp"
-                    android:text="播放预约需求"
+                    android:text="线上约服需求"
                     android:paddingRight="20dp"
                     android:layout_alignParentRight="true"
                     android:textColor="#e6bb7c" />

@@ -624,6 +624,7 @@
         <activity android:name=".activity.mine.TabManageSecondActivity"></activity>
         <activity android:name=".activity.mine.SalemanInfoSettingActivity"></activity>
         <activity android:name=".activity.slash.PositionSetActivity"/>
+        <activity android:name=".activity.mine.SaleManInfoImproveActivity"></activity>
     </application>
 
 </manifest>

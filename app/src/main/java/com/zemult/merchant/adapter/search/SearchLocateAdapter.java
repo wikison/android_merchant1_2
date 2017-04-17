@@ -52,7 +52,7 @@ public class SearchLocateAdapter extends BaseListAdapter<PoiItem> {
         }
 
         PoiItem poiItem = mDatas.get(position);
-        holder.tvAddress.setText(poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet());
+        holder.tvAddress.setText(poiItem.getSnippet());
 
         if (showFirst) {
             if (position == 0) {
