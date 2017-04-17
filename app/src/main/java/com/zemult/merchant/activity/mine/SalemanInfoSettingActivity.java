@@ -34,8 +34,7 @@ public class SalemanInfoSettingActivity extends BaseActivity {
     @Bind(R.id.tv_name)
     TextView tvName;
     String nameString="", headString="";
-    UserEditinfoRequest userEditinfoRequest;
-
+    
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_saleman_info_setting);
@@ -66,17 +65,8 @@ public class SalemanInfoSettingActivity extends BaseActivity {
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_EDITUSERINFO.equals(intent.getAction())) {
             initData();
-//            if(provinceName.equals(cityName)){
-//                tvArea.setText(provinceName);
-//            }
-//            else{
-//                tvArea.setText(provinceName+" "+cityName);
-//            }
         }
     }
-
-
-
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.mis_headgo_layout, R.id.mis_name_layout})
     public void onClick(View view) {
@@ -104,12 +94,10 @@ public class SalemanInfoSettingActivity extends BaseActivity {
             nameString = SlashHelper.userManager().getUserinfo().getName();
             //修改用户资料信息
             tvName.setText(SlashHelper.userManager().getUserinfo().getName());
-
         } else if (requestCode == 110 && resultCode == RESULT_OK) {
             headString = SlashHelper.userManager().getUserinfo().getHead();
             imageManager.loadCircleHead(headString, ivHead);
         }
         initData();
-
     }
 }
