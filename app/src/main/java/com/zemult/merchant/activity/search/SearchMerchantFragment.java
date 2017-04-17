@@ -164,18 +164,23 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
-                        Intent it = new Intent(mContext, BeManagerFirstActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                        it.putExtra(TabManageActivity.NAME, merchant.name);
-                        startActivity(it);
-                    } else {
-                        Intent it = new Intent(mContext, TabManageActivity.class);
-                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                        it.putExtra(TabManageActivity.NAME, merchant.name);
-                        it.putExtra(TabManageActivity.COMEFROM, 1);
-                        startActivity(it);
-                    }
+//                    if (StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead())) {
+//                        Intent it = new Intent(mContext, BeManagerFirstActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                        it.putExtra(TabManageActivity.NAME, merchant.name);
+//                        startActivity(it);
+//                    } else {
+//                        Intent it = new Intent(mContext, TabManageActivity.class);
+//                        it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                        it.putExtra(TabManageActivity.NAME, merchant.name);
+//                        it.putExtra(TabManageActivity.COMEFROM, 1);
+//                        startActivity(it);
+//                    }
+                    Intent it = new Intent(mContext, TabManageActivity.class);
+                    it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+                    it.putExtra(TabManageActivity.NAME, merchant.name);
+                    it.putExtra(TabManageActivity.COMEFROM, 1);
+                    startActivity(it);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

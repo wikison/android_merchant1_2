@@ -265,23 +265,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 //                }
 //            }
 //        });
-
-        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
-
-    //接收广播回调
-    @Override
-    protected void handleReceiver(Context context, Intent intent) {
-
-        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
-            return;
-        }
-        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
-        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
-            finish();
-        }
-    }
-
 
     /**
      * 初始化布局
@@ -646,22 +630,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-//                        if (comefrom == 1)
-//                            user_add_saleuser();
-//                        else if(comefrom == 3){
-//                            Boolean hasReqContacts = (Boolean) SPUtils.get(mContext, "has_req_contacts", false);
-//                            if(hasReqContacts){
-//                                ActivityCompat.requestPermissions(TabManageActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
-//                            }
-//                            // 第一次请求权限 去关联通讯录界面
-//                            else{
-//                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-//                                it.putExtra(TabManageActivity.TAG, merchantId);
-//                                it.putExtra(TabManageActivity.NAME, name);
-//                                it.putExtra(TabManageActivity.TAGS, getTags());
-//                                startActivity(it);
-//                            }
-//                        }
                         user_add_saleuser();
                     }
                 } else if (comefrom == 2) {
@@ -715,9 +683,14 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
 
-                    Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
-                    it.putExtra(TabManageActivity.NAME, name);
-                    startActivity(it);
+//                    Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
+//                    it.putExtra(TabManageActivity.NAME, name);
+//                    startActivity(it);
+
+                    Intent intent = new Intent(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS);
+                    sendBroadcast(intent);
+
+                    finish();
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

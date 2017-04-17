@@ -2,8 +2,11 @@ package com.zemult.merchant.activity.search;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.view.SearchView;
 
 import butterknife.Bind;
@@ -67,7 +71,7 @@ public class SearchActivity extends BaseActivity {
             lhTvTitle.setText("绑定商户");
             searchview.setStrHint("搜索商户名称");
             searchview.setTvCancelVisible(View.GONE);
-            searchview.setBgColor(0xfff5f5f5);
+            searchview.setBgColor(0xffc1c1c1);
 
             bundle.putString(SearchActivity.INTENT_KEY, "");
         } else {
@@ -76,6 +80,8 @@ public class SearchActivity extends BaseActivity {
         }
         bundle.putInt("be_service_manager", iToAdd);
         merchantFragment.setArguments(bundle);
+
+        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -100,6 +106,18 @@ public class SearchActivity extends BaseActivity {
         });
     }
 
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

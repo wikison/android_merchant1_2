@@ -43,8 +43,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface2<M_Merchant> {
     TextView tvNum;
     @Bind(R.id.iv_cover)
     ImageView ivCover;
-    @Bind(R.id.tv_qianyue)
-    RoundTextView tvQianyue;
     @Bind(R.id.ll_ad_container)
     LinearLayout llAdContainer;
     @Bind(R.id.ll_lv_top)
@@ -76,8 +74,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface2<M_Merchant> {
             tvAddress.setText(merchantInfo.address);
         tvNum.setText(merchantInfo.payNum + "人找人服务");
         tvMoney.setText((int) (merchantInfo.perMoney) + "");
-        if (merchantInfo.reviewstatus == 2)
-            tvQianyue.setVisibility(View.VISIBLE);
     }
 
     public void unShowLvTop(boolean unshowLvTop) {

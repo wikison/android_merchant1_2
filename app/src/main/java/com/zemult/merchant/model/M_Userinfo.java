@@ -617,4 +617,6 @@ public class M_Userinfo implements Serializable {
     public void setIsOnBook(int isOnBook) {
         this.isOnBook = isOnBook;
     }
+    @Expose
+    public int sumScore; // 前7日的服务分总和
 }

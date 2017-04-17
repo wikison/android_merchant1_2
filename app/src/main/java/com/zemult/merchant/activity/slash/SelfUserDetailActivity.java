@@ -165,7 +165,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     private Activity mActivity;
     public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
-    public static int ADD_MERCHANT = 333;
+//    public static int ADD_MERCHANT = 333;
     public static int EDIT_USER_INFO = 444;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
@@ -216,7 +216,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         fromSaleLogin = getIntent().getIntExtra("user_sale_login", 0);
         mContext = this;
         mActivity = this;
-
+        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -639,7 +639,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
                 intent = new Intent(mActivity, SearchActivity.class);
                 intent.putExtra("be_service_manager", 1);
-                startActivityForResult(intent, ADD_MERCHANT);
+                startActivity(intent);
 
                 break;
             case R.id.tv_add_level:
@@ -736,7 +736,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == MODIFY_TAG) {
                 getOtherMerchantList();
-            } else if (requestCode == EXIT_MERCHANT || requestCode == ADD_MERCHANT) {
+            } else if (requestCode == EXIT_MERCHANT) {
                 selectPosition = 0;
                 getOtherMerchantList();
 
@@ -746,5 +746,20 @@ public class SelfUserDetailActivity extends BaseActivity {
             }
         }
     }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            selectPosition = 0;
+            getOtherMerchantList();
+        }
+    }
+
 
 }
