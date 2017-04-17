@@ -65,6 +65,7 @@
 
                     <LinearLayout
                         android:id="@+id/ll_my_info"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_toLeftOf="@+id/tv_my_info"
@@ -88,6 +89,7 @@
                     <TextView
                         android:id="@+id/tv_my_info"
                         style="@style/text_12_black_28"
+                        android:visibility="gone"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:drawablePadding="@dimen/margin_8dp"
