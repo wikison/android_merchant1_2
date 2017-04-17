@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.aip.slash.User2RefreshSaleUserRequest;
-import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -34,7 +34,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
-import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class BeManagerSuccessActivity extends BaseActivity {
@@ -49,6 +48,8 @@ public class BeManagerSuccessActivity extends BaseActivity {
     TextView lhTvTitle;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.iv_head)
+    ImageView ivHead;
     private SharePopwindow sharePopWindow;
     private String name;
     private String bookPhones;
@@ -62,9 +63,11 @@ public class BeManagerSuccessActivity extends BaseActivity {
     public void init() {
         lhTvTitle.setText("成为服务管家");
         name = getIntent().getStringExtra(TabManageActivity.NAME);
-        tvName.setText('"' + name + '"' );
-        if(name.length() > 10 )
+        tvName.setText('"' + name + '"');
+        if (name.length() > 10)
             tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
+        imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+
         sharePopWindow = new SharePopwindow(BeManagerSuccessActivity.this, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -75,7 +78,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                         new ShareAction(BeManagerSuccessActivity.this)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
-                                .withText("我刚刚申请了【"+ name+"】的服务管家,可以为您提供优质的消费服务,快来看看...")
+                                .withText("我刚刚申请了【" + name + "】的服务管家,可以为您提供优质的消费服务,快来看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("有人@你-为您提供优质的消费服务")
@@ -86,7 +89,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                         new ShareAction(BeManagerSuccessActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText("我刚刚申请了【"+ name+"】的服务管家,可以为您提供优质的消费服务,快来看看...")
+                                .withText("我刚刚申请了【" + name + "】的服务管家,可以为您提供优质的消费服务,快来看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("有人@你-为您提供优质的消费服务")
@@ -96,7 +99,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                         new ShareAction(BeManagerSuccessActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText("我刚刚申请了【"+ name+"】的服务管家,可以为您提供优质的消费服务,快来看看...")
+                                .withText("我刚刚申请了【" + name + "】的服务管家,可以为您提供优质的消费服务,快来看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("有人@你-为您提供优质的消费服务")
@@ -107,7 +110,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                         new ShareAction(BeManagerSuccessActivity.this)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
-                                .withText("我刚刚申请了【"+ name+"】的服务管家,可以为您提供优质的消费服务,快来看看...")
+                                .withText("我刚刚申请了【" + name + "】的服务管家,可以为您提供优质的消费服务,快来看看...")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("有人@你-为您提供优质的消费服务")
@@ -157,7 +160,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                 if (StringUtils.isBlank(bookPhones)) {
                     bookPhones = "";
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 bookPhones = "";
             }
             user2_reflash_saleuser();
@@ -217,4 +220,10 @@ public class BeManagerSuccessActivity extends BaseActivity {
         sendJsonRequest(refreshSaleUserRequest);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

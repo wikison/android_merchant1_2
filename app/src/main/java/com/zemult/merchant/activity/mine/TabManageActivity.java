@@ -714,16 +714,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-//                    if(comefrom == 3){
-//                        Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
-//                        it.putExtra(TabManageActivity.NAME, name);
-//                        startActivity(it);
-//                        return;
-//                    }
-//                    EventBus.getDefault().post(SaleManageActivity.REFLASH);
-//                    setResult(RESULT_OK);
-//                    finish();
-
 
                     Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
                     it.putExtra(TabManageActivity.NAME, name);

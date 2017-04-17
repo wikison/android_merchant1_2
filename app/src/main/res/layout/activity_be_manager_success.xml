@@ -23,6 +23,7 @@
 
 
             <ImageView
+                android:id="@+id/iv_head"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@mipmap/user_icon"/>
@@ -90,8 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
 
+
                     <Button
-                        android:id="@+id/btn_share"
+                        android:id="@+id/btn_ok"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/common_btn_height_35"
                         android:layout_marginLeft="35dp"
@@ -99,12 +101,12 @@
                         android:layout_weight="1"
                         android:background="@drawable/common_selector_btn_red"
                         android:gravity="center"
-                        android:text="分享给好友"
+                        android:text="完成"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/btn_ok"
+                        android:id="@+id/btn_share"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/common_btn_height_35"
                         android:layout_marginLeft="16dp"
@@ -112,9 +114,10 @@
                         android:layout_weight="1"
                         android:background="@drawable/common_selector_btn_red"
                         android:gravity="center"
-                        android:text="完成"
+                        android:text="分享给好友"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
+
 
                 </LinearLayout>
 

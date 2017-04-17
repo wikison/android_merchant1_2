@@ -158,14 +158,16 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         //设置适配器
         HomePeopleAdapter adapter = new HomePeopleAdapter(mContext, entity.saleUserHeads);
         holder.recyclerview.setAdapter(adapter);
-//        holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
+        holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 //                if (itemClickListener != null)
 //                    itemClickListener.onRvHeadClick(position);
-//                return true;
-//            }
-//        });
+                if (itemClickListener != null)
+                    itemClickListener.onBannerClick(entity);
+                return true;
+            }
+        });
 
         if (entity.reviewstatus == 2)
             holder.ivQianyue.setVisibility(View.VISIBLE);

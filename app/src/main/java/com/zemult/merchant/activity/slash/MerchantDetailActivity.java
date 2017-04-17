@@ -454,15 +454,15 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     @Override
     public void onRefresh() {
         if (SlashHelper.userManager().getUserId() != 0)
-            merchant_saleuserList_fan();
+            merchant2_saleuserList_fan();
         else
-            merchant_saleuserList_all(false);
+            merchant2_saleuserList(false);
         merchant_info();
     }
 
     @Override
     public void onLoadMore() {
-        merchant_saleuserList_all(true);
+        merchant2_saleuserList(true);
     }
 
     private MerchantSaleuserListRequest allRequest;
@@ -471,7 +471,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
     /**
      * 商家下的营销经理列表(我的关注-熟人)
      */
-    private void merchant_saleuserList_fan() {
+    private void merchant2_saleuserList_fan() {
         if (fanRequest != null) {
             fanRequest.cancel();
         }
@@ -486,7 +486,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
             @Override
             public void onErrorResponse(VolleyError error) {
                 dismissPd();
-                merchant_saleuserList_all(false);
+                merchant2_saleuserList(false);
             }
 
             @Override
@@ -497,16 +497,16 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                     ToastUtils.show(mContext, ((APIM_SearchUsersList) response).info);
                 }
                 dismissPd();
-                merchant_saleuserList_all(false);
+                merchant2_saleuserList(false);
             }
         });
         sendJsonRequest(fanRequest);
     }
 
     /**
-     * 商家下的营销经理列表(全部)
+     * 商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
      */
-    private void merchant_saleuserList_all(final boolean isLoadMore) {
+    private void merchant2_saleuserList(final boolean isLoadMore) {
         if (allRequest != null) {
             allRequest.cancel();
         }

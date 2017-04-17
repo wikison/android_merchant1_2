@@ -117,7 +117,6 @@ public class HeaderMerchantDetailView extends HeaderViewInterface2<M_Merchant> {
                 public void imageOnclick(int postion) {
                     if (imageOnClick != null)
                         imageOnClick.imageOnclick(picList.get(postion));
-
                 }
             });
         }

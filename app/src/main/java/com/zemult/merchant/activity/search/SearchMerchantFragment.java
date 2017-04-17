@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
@@ -48,6 +49,8 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     SmoothListView smoothListView;
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
+    @Bind(R.id.ll_no_bind)
+    LinearLayout llNoBind;
 
     private MerchantFirstpageSearchListRequest request;
     private int page = 1, industryId;
@@ -141,6 +144,7 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
      * 判断用户是否可以申请商家的服务管家
      */
     private UserCheckSaleUser1_2_2Request checkSaleUser1_2_2Request;
+
     private void user_check_saleuser_1_2_2(final M_Merchant merchant) {
         showPd();
         if (checkSaleUser1_2_2Request != null) {
@@ -236,10 +240,15 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     private void fillAdapter(List<M_Merchant> list, int maxpage, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
             smoothListView.setVisibility(View.GONE);
-            rlNoData.setVisibility(View.VISIBLE);
+            if (iToAdd > 0)
+                llNoBind.setVisibility(View.VISIBLE);
+            else
+                rlNoData.setVisibility(View.VISIBLE);
+
         } else {
             smoothListView.setVisibility(View.VISIBLE);
             rlNoData.setVisibility(View.GONE);
+            llNoBind.setVisibility(View.GONE);
 
             smoothListView.setLoadMoreEnable(page < maxpage);
             mAdapter.setData(list, isLoadMore);

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_f2"
     android:orientation="vertical">
 
@@ -22,149 +21,65 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>
 
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="200dp">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_cover"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="@color/bg_f2"-->
-                    <!--android:scaleType="centerCrop"/>-->
-
-                <!--<LinearLayout-->
-                    <!--android:visibility="gone"-->
-                    <!--android:id="@+id/ll_ad_container"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:orientation="vertical"></LinearLayout>-->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-                <!--&lt;!&ndash;<RelativeLayout&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="match_parent">&ndash;&gt;-->
+                <LinearLayout
+                    android:id="@+id/ll_photo"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
 
-                    <!--&lt;!&ndash;<com.flyco.roundview.RoundTextView&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:visibility="gone"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_marginRight="12dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:id="@+id/tv_qianyue"&ndash;&gt;-->
-                        <!--&lt;!&ndash;app:rv_backgroundColor="#dfD55D45"&ndash;&gt;-->
-                        <!--&lt;!&ndash;app:rv_cornerRadius="12dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:text="签约商户"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:paddingLeft="8dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:paddingRight="8dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:paddingTop="4dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:paddingBottom="4dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:textSize="@dimen/font_24px"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_marginBottom="8dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;/>&ndash;&gt;-->
+                    <TextView
+                        android:layout_weight="1"
+                        style="@style/text_15_black_28"
+                        android:text="封面相册"/>
 
-                <!--&lt;!&ndash;</RelativeLayout>&ndash;&gt;-->
-            <!--</FrameLayout>-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/right_btn"/>
+                </LinearLayout>
 
+                <View style="@style/divider"/>
 
+                <LinearLayout
+                    android:id="@+id/ll_merchant"
+                    android:background="@drawable/ripple_item_clicked2"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
 
+                    <TextView
+                        android:layout_weight="1"
+                        style="@style/text_15_black_28"
+                        android:text="更多管家"/>
 
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_toLeftOf="@+id/iv_right"
+                        android:clickable="false"
+                        android:id="@+id/recyclerview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-            <!--<LinearLayout-->
-                <!--android:background="@color/white"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical">-->
+                    </android.support.v7.widget.RecyclerView>
 
-                <!--<LinearLayout-->
-                    <!--android:layout_margin="16dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/tv_name"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@color/font_black_28"-->
-                        <!--android:textSize="@dimen/font_32px"/>-->
+                    <ImageView
+                        android:id="@+id/iv_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/right_btn"/>
+                </LinearLayout>
+            </LinearLayout>
 
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:paddingLeft="16dp"-->
-                    <!--android:paddingRight="16dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:visibility="gone"-->
-                        <!--android:id="@+id/iv"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:src="@mipmap/dingwei_icon" />-->
-
-                    <!--<TextView-->
-                        <!--android:layout_marginLeft="6dp"-->
-                        <!--android:id="@+id/tv_address"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@color/font_black_666"-->
-                        <!--android:textSize="@dimen/font_28px" />-->
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:layout_margin="16dp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center">-->
-
-
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="人均 ￥"-->
-                        <!--android:textColor="@color/font_black_666"-->
-                        <!--android:textSize="@dimen/font_28px" />-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/tv_money"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@color/font_black_666"-->
-                        <!--android:textSize="@dimen/font_28px"-->
-                        <!--android:text="0"/>-->
-
-                    <!--<View style="@style/divider"-->
-                        <!--android:background="#3b424c"-->
-                        <!--android:layout_width="1px"-->
-                        <!--android:layout_height="24dp"-->
-                        <!--android:layout_marginLeft="12dp"-->
-                        <!--android:layout_marginRight="12dp"/>-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/tv_num"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@color/font_black_666"-->
-                        <!--android:textSize="@dimen/font_28px"-->
-                        <!--android:text="0人到店消费"/>-->
-
-
-                <!--</LinearLayout>-->
-
-                <!--<View-->
-                    <!--style="@style/divider"-->
-                    <!--android:layout_marginTop="4dp"/>-->
-            <!--</LinearLayout>-->
-
-            <!--<View style="@style/divider12dp" />-->
 
             <Button
                 android:gravity="center"
