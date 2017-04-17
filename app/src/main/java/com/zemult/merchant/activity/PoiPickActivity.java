@@ -249,7 +249,7 @@ public class PoiPickActivity extends Activity {
             aMapLocationList.clear();
             searchLocateAdapter.notifyDataSetChanged();
         }
-        poiQuery = new PoiSearch.Query("", "地名地址信息|公司企业|公共设施|道路附属设施", cityCode);
+        poiQuery = new PoiSearch.Query("", "商务住宅|宾馆酒店|综合医院|运动场馆", cityCode);
         poiQuery.setPageSize(20);
         poiQuery.setPageNum(1);
 

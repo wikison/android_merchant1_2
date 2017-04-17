@@ -38,7 +38,6 @@ import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
-import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
@@ -74,9 +73,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
 /**

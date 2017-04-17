@@ -8,7 +8,6 @@ import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -26,7 +25,6 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManInfoImproveActivity;
-import com.zemult.merchant.activity.mine.SalemanInfoSettingActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.search.SearchActivity;
@@ -53,7 +51,6 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.MMAlert;
 
 import java.util.ArrayList;
@@ -183,8 +180,6 @@ public class SelfUserDetailActivity extends BaseActivity {
     PagerUserMerchantAdapter pagerUserMerchantHeadAdapter;
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
-    private SharePopwindow sharePopWindow;
-
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
     List<M_Fan> listFan = new ArrayList<M_Fan>();
     int merchantNum = 0;
@@ -255,76 +250,40 @@ public class SelfUserDetailActivity extends BaseActivity {
             }
         });
 
-        sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
+    }
 
-                switch (position) {
-                    case SharePopwindow.SINA:
-                        new ShareAction(mActivity)
-                                .setPlatform(SHARE_MEDIA.SINA)
-                                .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
-                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
-                                .withMedia(shareImage)
-                                .withTitle("约服-找个喜欢的人来服务")
-                                .share();
-                        break;
+    private void shareToWX() {
+        if (!AppUtils.isWeixinAvailable(this)) {
+            ToastUtil.showMessage("你还没有安装微信");
+            return;
+        }
+        UMImage shareImage;
+        shareImage = new UMImage(mContext, R.mipmap.icon_share);
 
-                    case SharePopwindow.WECHAT:
-                        new ShareAction(mActivity)
-                                .setPlatform(SHARE_MEDIA.WEIXIN)
-                                .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
-                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
-                                .withMedia(shareImage)
-                                .withTitle("约服-找个喜欢的人来服务")
-                                .share();
-                        break;
-                    case SharePopwindow.WECHAT_FRIEND:
-                        new ShareAction(mActivity)
-                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
-                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
-                                .withMedia(shareImage)
-                                .withTitle("约服-找个喜欢的人来服务")
-                                .share();
-                        break;
-
-                    case SharePopwindow.QQ:
-                        new ShareAction(mActivity)
-                                .setPlatform(SHARE_MEDIA.QQ)
-                                .setCallback(umShareListener)
-                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
-                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
-                                .withMedia(shareImage)
-                                .withTitle("约服-找个喜欢的人来服务")
-                                .share();
-                        break;
-                }
-            }
-        });
-
+        //分享到微信
+        new ShareAction(mActivity)
+                .setPlatform(SHARE_MEDIA.WEIXIN)
+                .setCallback(umShareListener)
+                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
+                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?userId="+SlashHelper.userManager().getUserId()+"&TargetPage=1&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect")
+                .withMedia(shareImage)
+                .withTitle("约服-找个喜欢的人来服务")
+                .share();
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            sharePopWindow.dismiss();
             ToastUtil.showMessage("分享成功");
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            sharePopWindow.dismiss();
             ToastUtil.showMessage("分享失败");
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            sharePopWindow.dismiss();
             ToastUtil.showMessage("分享取消");
         }
     };
@@ -678,10 +637,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_right:
             case R.id.iv_right:
-                if (sharePopWindow.isShowing())
-                    sharePopWindow.dismiss();
-                else
-                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
+                shareToWX();
                 break;
         }
     }
