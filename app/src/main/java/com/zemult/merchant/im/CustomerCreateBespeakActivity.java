@@ -406,7 +406,8 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 break;
             case R.id.rl_my_service:
 
-
+//                Intent  intent=new Intent();
+//                intent.putExtra("tags",m_merchant.tags);
 
 
                 break;
