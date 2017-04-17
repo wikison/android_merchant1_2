@@ -1,22 +1,15 @@
 package com.zemult.merchant.activity.mine;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.text.Html;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,30 +24,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
-import com.zemult.merchant.activity.slash.BeManagerSuccessActivity;
-import com.zemult.merchant.activity.slash.ConnectLocalPhoneActivity;
 import com.zemult.merchant.adapter.createroleadapter.DragAdapter;
 import com.zemult.merchant.adapter.createroleadapter.OtherAdapter;
 import com.zemult.merchant.aip.slash.CommonServiceTagListRequest;
-import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.aip.slash.UserSaleMerchantEditRequest;
-import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
-import com.zemult.merchant.bean.ChannelManage;
 import com.zemult.merchant.bean.IndusPreferItem;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Industry;
-import com.zemult.merchant.model.apimodel.APIM_CommonGetallindustry;
-import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.IntentUtil;
-import com.zemult.merchant.util.SPUtils;
-import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.DragGrid;
 import com.zemult.merchant.view.OtherGridView;
 
@@ -62,21 +42,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
-import de.greenrobot.event.EventBus;
-import zema.volley.network.ResponseListener;
 
-/**
- * Created by admin on 2016/12/26.
- */
-//标签管理
-public class TabManageActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class TabManageSecondActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     public static String TAG = "TabManageActivity";
     public static String NAME = "merchantname";
     public static String TAGS = "tags";
+    public static String SELECTEDTAGS = "selectedtags";
     public static String COMEFROM = "COMEFROM";
 
     /**
@@ -154,13 +127,14 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 
     private String name = "";
     private String tags = "";
+    public  String selectedtags="";
 
     //编辑服务标签
     UserSaleMerchantEditRequest userSaleMerchantEditRequest;
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.tabmanage_activity);
+        setContentView(R.layout.activity_tab_manage_second);
     }
 
     @Override
@@ -169,84 +143,61 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         mContext = this;
         textView = (TextView) findViewById(R.id.channel_edit);
         merchantId = getIntent().getIntExtra(TAG, -1);
-        comefrom = getIntent().getIntExtra(COMEFROM, 1);
+        comefrom = getIntent().getIntExtra(COMEFROM, 2);
         //tvProtocol.setText("<<服务管家协议>>");
         //  cbAgree.setChecked(true);
 
 
-        if (comefrom == 2) {
-            name = getIntent().getStringExtra(NAME);
-            shopnameTv.setVisibility(View.GONE);
+        name = getIntent().getStringExtra(NAME);
+        shopnameTv.setVisibility(View.GONE);
+        SpannableStringBuilder spannableString = new SpannableStringBuilder();
+        spannableString.append("选择您在  " + name + "  提供的服务");
+        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
+        spannableString.setSpan(styleSpan, 5, 4 + name.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        shopNameTv.setText(spannableString);
+
+        tags = getIntent().getStringExtra(TAGS);
+        selectedtags=getIntent().getStringExtra(SELECTEDTAGS);
+
+        otherChannelList.clear();
+        myCategoryTipText.setVisibility(View.VISIBLE);
+        chatdetail.setText("修改服务标签");
+        textView.setText("完成");
+        textView.setVisibility(View.INVISIBLE);
+        applyBtn.setVisibility(View.VISIBLE);
+        applyBtn.setText("保存");
+        myCategoryText.setText("已提供的服务");
 
 
-            SpannableStringBuilder spannableString  = new SpannableStringBuilder();
-            spannableString.append("选择您在  "+name+"  提供的服务");
-            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
-            spannableString.setSpan(styleSpan, 5, 4+name.length()+2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        initView();
+        initData();
+        userAdapter.setB(isFalse);
 
 
-            shopNameTv.setText( spannableString );
+        String[] res = tags.split(",");
+        if (!res[0].equals("")) {
+            for (int j = 0; j < res.length; j++) {
+                otherChannelList.add(new IndusPreferItem(0, res[j], j + 1, 0));//数组越界
+            }
+        }
+        String[] seleres = selectedtags.split(",");
+        if (!seleres[0].equals("")) {
+            for (int j = 0; j < seleres.length; j++) {
+                userChannelList.add(new IndusPreferItem(0, seleres[j], j + 1, 0));//数组越界
+            }
+        }
 
-
-
-            tags = getIntent().getStringExtra(TAGS);
-            otherChannelList.clear();
-            myCategoryTipText.setVisibility(View.VISIBLE);
-            chatdetail.setText("修改服务标签");
-            textView.setText("完成");
-            textView.setVisibility(View.INVISIBLE);
-            applyBtn.setVisibility(View.VISIBLE);
-            applyBtn.setText("保存");
-            myCategoryText.setText("已提供的服务");
-            String[] res = tags.split(",");
-
-            if (!res[0].equals("")) {
-                for (int j = 0; j < res.length; j++) {
-                    userChannelList.add(new IndusPreferItem(0, res[j], j + 1, 0));//数组越界
+        //从otherChannelList里面删除与userChannelList里面name参数相同的部分
+        for (int i = 0; i < userChannelList.size(); i++) {
+            for (int j = otherChannelList.size() - 1; j >= 0; j--) {
+                if (otherChannelList.get(j).getName().equals(userChannelList.get(i).getName())) {
+                    otherChannelList.remove(j);
                 }
             }
         }
 
-        commonServiceTagList();
-        initView();
-        initData();
-        if (comefrom == 1) {
-            userAdapter.setB(isFalse);
-            isvisibily = 0;
-            name = getIntent().getStringExtra(NAME);
-            shopnameTv.setVisibility(View.GONE);
-            myCategoryText.setText("已提供的服务");
-            // chooseYv.setText("选择您在  " + name + "  提供的服务");
-
-
-            SpannableStringBuilder spannableString  = new SpannableStringBuilder();
-            spannableString.append("选择您在  "+name+"  提供的服务");
-            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
-//
-//            AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(20);
-//            spannableString.setSpan(absoluteSizeSpan, 0, 8, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-//
-
-            spannableString.setSpan(styleSpan, 5, 4+name.length()+2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            shopNameTv.setText( spannableString );
-
-
-
-            myCategoryTipText.setVisibility(View.VISIBLE);
-            shopnameTv.setVisibility(View.GONE);
-            textView.setVisibility(View.GONE);
-            //   xieyiLl.setVisibility(View.VISIBLE);
-            applyBtn.setVisibility(View.VISIBLE);
-            applyBtn.setEnabled(false);
-            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
-
-        }
-        if (comefrom == 2) {
-            userAdapter.setB(isFalse);
-        }
-        if (comefrom == 1) {
-            applyBtn.setText("下一步");
-        }
+        userAdapter.setListDate(userChannelList);
+        otherAdapter.setListDate(otherChannelList);
     }
 
     /**
@@ -257,13 +208,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         otherGridView = (OtherGridView) findViewById(R.id.otherGridView);
     }
 
-
     /**
      * 初始化数据
      */
     private void initData() {
-//        userChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getUserChannel());
-//        otherChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getOtherChannel());
         if (comefrom == 1) {
             userChannelList.clear();
         }
@@ -278,12 +226,9 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
 
     }
 
-    /**
-     * GRIDVIEW对应的ITEM点击监听接口
-     */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//如果点击的时候，之前动画还没结束，那么就让点击事件无效
 
         if (textView.getText().toString().equals("完成") || isvisibily == 0) {
 
@@ -351,16 +296,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         }
     }
 
-
-    /**
-     * 点击ITEM移动动画
-     *
-     * @param moveView
-     * @param startLocation
-     * @param endLocation
-     * @param moveChannel
-     * @param clickGridView
-     */
     private void MoveAnim(View moveView, int[] startLocation, int[] endLocation, final IndusPreferItem moveChannel,
                           final GridView clickGridView) {
         int[] initLocation = new int[2];
@@ -418,14 +353,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         });
     }
 
-    /**
-     * 获取移动的VIEW，放入对应ViewGroup布局容器
-     *
-     * @param viewGroup
-     * @param view
-     * @param initLocation
-     * @return
-     */
     private View getMoveView(ViewGroup viewGroup, View view, int[] initLocation) {
         int x = initLocation[0];
         int y = initLocation[1];
@@ -437,9 +364,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         return view;
     }
 
-    /**
-     * 创建移动的ITEM对应的ViewGroup布局容器
-     */
     private ViewGroup getMoveViewGroup() {
         ViewGroup moveViewGroup = (ViewGroup) getWindow().getDecorView();
         LinearLayout moveLinearLayout = new LinearLayout(this);
@@ -448,12 +372,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         return moveLinearLayout;
     }
 
-    /**
-     * 获取点击的Item的对应View，
-     *
-     * @param view
-     * @return
-     */
     private ImageView getView(View view) {
         view.destroyDrawingCache();
         view.setDrawingCacheEnabled(true);
@@ -464,134 +382,11 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         return iv;
     }
 
-    /**
-     * 退出时候保存选择后数据库的设置
-     */
-    private void saveChannel() {
-        ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).deleteAllChannel();
-        ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).saveUserChannel(userAdapter.getChannnelLst());
-        ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).saveOtherChannel(otherAdapter.getChannnelLst());
-    }
-
     @Override
     public void onBackPressed() {
-//        if (userAdapter.isListChanged()) {
-//            saveChannel();
-//            Intent intent = new Intent(getApplicationContext(), CreateRoleActivity.class);
-//            setResult(CreateRoleActivity.CHANNELRESULT, intent);
-//            finish();
-//            Log.d(TAG, "数据发生改变");
-//        } else {
         super.onBackPressed();
-
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-
-
-    //编辑服务标签
-    private void userSaleMerchantEdit() {
-        if (userSaleMerchantEditRequest != null) {
-            userSaleMerchantEditRequest.cancel();
-        }
-        StringBuffer tagsname = new StringBuffer();
-        for (int i = 0; i < userChannelList.size(); i++) {
-            if (-1 != userChannelList.get(i).getId()) {
-                if (i == userChannelList.size() - 1) {
-                    tagsname.append(userChannelList.get(i).getName() + "");
-                } else {
-                    tagsname.append(userChannelList.get(i).getName() + ",");
-                }
-            }
-        }
-        UserSaleMerchantEditRequest.Input input = new UserSaleMerchantEditRequest.Input();
-        if (SlashHelper.userManager().getUserinfo() != null) {
-            input.userId = SlashHelper.userManager().getUserId();    //	用户id
-        }
-        input.merchantId = merchantId;
-        input.tags = tagsname.toString();
-        input.convertJosn();
-        userSaleMerchantEditRequest = new UserSaleMerchantEditRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(TabManageActivity.this, "修改成功");
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    ToastUtils.show(TabManageActivity.this, ((CommonResult) response).info);
-                }
-
-            }
-        });
-        sendJsonRequest(userSaleMerchantEditRequest);
-    }
-
-    //获取服务人员标签
-    public void commonServiceTagList() {
-        if (commonServiceTagListRequest != null) {
-            commonServiceTagListRequest.cancel();
-        }
-
-        commonServiceTagListRequest = new CommonServiceTagListRequest(new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                if (((APIM_CommonGetallindustry) response).status == 1) {
-                    dismissPd();
-                    sysdatalist = ((APIM_CommonGetallindustry) response).tagList;
-                    if (comefrom == 1) {
-                        //来源于申请
-                        if (otherChannelList.size() == 0) {
-                            for (int k = 0; k < sysdatalist.size(); k++) {
-                                otherChannelList.add(new IndusPreferItem(0, sysdatalist.get(k).name, 1 + k, 0));
-                                //ChannelManage.saveUserChannel(userChannelList);
-                                otherAdapter.setListDate(otherChannelList);
-                                //    ChannelManage.saveOtherChannel(otherChannelList);
-                            }
-                        }
-                    } else if (comefrom == 2) {
-                        //来源于修改
-                        for (int k = 0; k < sysdatalist.size(); k++) {
-                            otherChannelList.add(new IndusPreferItem(0, sysdatalist.get(k).name, 1 + k, 0));
-                            //ChannelManage.saveUserChannel(userChannelList);
-                            //    ChannelManage.saveOtherChannel(otherChannelList);
-                        }
-                        //从otherChannelList里面删除与userChannelList里面name参数相同的部分
-                        for (int i = 0; i < userChannelList.size(); i++) {
-                            for (int j = otherChannelList.size() - 1; j >= 0; j--) {
-                                if (otherChannelList.get(j).getName().equals(userChannelList.get(i).getName())) {
-                                    otherChannelList.remove(j);
-                                }
-                            }
-                        }
-                        //  otherChannelList.removeAll(userChannelList);//从userChannelList中删除和sysdatalist中相同的元素
-//                            for (int k = 0; k < sysdatalist.size(); k++) {
-//                                otherChannelList.add(new IndusPreferItem(sysdatalist.get(k).industryId, sysdatalist.get(k).name, 1 + k, 0));
-////                                ChannelManage.saveUserChannel(userChannelList);
-////                                ChannelManage.saveOtherChannel(otherChannelList);
-//                            }
-                        userAdapter.setListDate(userChannelList);
-                        otherAdapter.setListDate(otherChannelList);
-                    }
-
-                } else {
-                    ToastUtils.show(TabManageActivity.this, ((APIM_CommonGetallindustry) response).info);
-                }
-            }
-        });
-        sendJsonRequest(commonServiceTagListRequest);
-    }
-
 
     @OnClick({R.id.back, R.id.ll_back, R.id.tv_protocol, R.id.apply_btn})
     public void onClick(View view) {
@@ -602,25 +397,21 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 onBackPressed();
                 break;
 
-            case R.id.tv_protocol:
-
-                IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                        new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Constants.SERVICEXIEYI));
-                break;
+//            case R.id.tv_protocol:
+//
+//                IntentUtil.start_activity(this, BaseWebViewActivity.class,
+//                        new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Constants.SERVICEXIEYI));
+//                break;
             case R.id.apply_btn:
-                if (comefrom == 1) {
-                    if (userChannelList.size() == 0) {
-                        ToastUtils.show(this, "请选择服务标签才能申请服务管家");
-                    } else {
-                        user_add_saleuser();
-                    }
-                } else if (comefrom == 2) {
+
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "服务标签不能为空");
                     } else {
-                        userSaleMerchantEdit();
+                        Intent intent = new Intent();
+                        intent.putExtra("result",getTags());
+                        this.setResult(RESULT_OK);
                     }
-                }
+
                 break;
         }
     }
@@ -640,52 +431,4 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     }
 
 
-    /**
-     * 用户申请成为商家的营销经理
-     */
-    UserAddSaleUserRequest userAddSaleUserRequest;
-
-    private void user_add_saleuser() {
-        showPd();
-        if (userAddSaleUserRequest != null) {
-            userAddSaleUserRequest.cancel();
-        }
-        UserAddSaleUserRequest.Input input = new UserAddSaleUserRequest.Input();
-        input.userId = SlashHelper.userManager().getUserId();
-        input.merchantId = merchantId;
-        input.tags = getTags();
-        input.convertJosn();
-        userAddSaleUserRequest = new UserAddSaleUserRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                dismissPd();
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                if (((CommonResult) response).status == 1) {
-
-//                    Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
-//                    it.putExtra(TabManageActivity.NAME, name);
-//                    startActivity(it);
-
-                    Intent intent = new Intent(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS);
-                    sendBroadcast(intent);
-
-                    finish();
-                } else {
-                    ToastUtils.show(mContext, ((CommonResult) response).info);
-                }
-                dismissPd();
-            }
-        });
-        sendJsonRequest(userAddSaleUserRequest);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

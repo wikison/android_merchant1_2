@@ -1,5 +1,6 @@
 package com.zemult.merchant.im;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +31,8 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.TabManageActivity;
+import com.zemult.merchant.activity.mine.TabManageSecondActivity;
 import com.zemult.merchant.aip.mine.User2RemindIMInfoRequest;
 import com.zemult.merchant.aip.reservation.User2RemindIMReadRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
@@ -96,8 +100,9 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
     ImageView voiceImageBtn;
 
     AnimationDrawable voiceAnimation;
-    int remindIMId,userId;
-    String tags,fileUrl;
+    int remindIMId, userId;
+    String tags, fileUrl, name;
+    String selectTag = "";
     private MediaPlayer mMediaPlayer;
 
     @Override
@@ -109,9 +114,9 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
     @Override
     public void init() {
         lhTvTitle.setText("线上约服需求");
-            remindIMId = getIntent().getIntExtra("remindIMId", 0);
-            userId= getIntent().getIntExtra("userId", 0);
-        if(userId!=SlashHelper.userManager().getUserId()){
+        remindIMId = getIntent().getIntExtra("remindIMId", 0);
+        userId = getIntent().getIntExtra("userId", 0);
+        if (userId != SlashHelper.userManager().getUserId()) {
             user2RemindIMReadRequest();
         }
         user2RemindIMInfoRequest();
@@ -121,9 +126,6 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-
-
 
 
     private void user2RemindIMReadRequest() {
@@ -175,21 +177,22 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                 @Override
                 public void onResponse(Object response) {
                     if (((M_Reservation) response).status == 1) {
-                        M_Reservation m_reservation= ((M_Reservation) response);
+                        M_Reservation m_reservation = ((M_Reservation) response);
                         initTags(m_reservation.tags);
                         tvShopname.setText(m_reservation.merchantName);
                         tvName.setText(m_reservation.userName);
-                        imageManager.loadCircleImage(m_reservation.userHead,vUser);
+                        tags = m_reservation.tags;
+                        name = m_reservation.userName;
+                        imageManager.loadCircleImage(m_reservation.userHead, vUser);
                         tvShijian.setText(m_reservation.reservationTime);
-                        tvRenshu.setText(m_reservation.num+"人");
-                        tvRenjun.setText(m_reservation.perMoney+"元");
-                        fileUrl=m_reservation.replayNote;
-                        if(StringUtils.isBlank(m_reservation.replayNote)){
+                        tvRenshu.setText(m_reservation.num + "人");
+                        tvRenjun.setText(m_reservation.perMoney + "元");
+                        fileUrl = m_reservation.replayNote;
+                        if (StringUtils.isBlank(m_reservation.replayNote)) {
                             rlMyVoice.setVisibility(View.GONE);
-                        }
-                        else{
+                        } else {
                             rlMyVoice.setVisibility(View.VISIBLE);
-                            tvLength.setText(m_reservation.timeNum+"''");
+                            tvLength.setText(m_reservation.timeNum + "''");
                         }
                     } else {
                         ToastUtil.showMessage(((M_Reservation) response).info);
@@ -246,7 +249,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rll_voice})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rll_voice, R.id.rl_my_service})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -255,8 +258,16 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                 break;
 
             case R.id.rll_voice:
-            if(!StringUtils.isEmpty(fileUrl))
-                startPlay();
+                if (!StringUtils.isEmpty(fileUrl))
+                    startPlay();
+                break;
+            case R.id.rl_my_service:
+                Intent intent = new Intent(this, TabManageSecondActivity.class);
+                intent.putExtra(TabManageSecondActivity.COMEFROM, 2);
+                intent.putExtra(TabManageSecondActivity.NAME, name);
+                intent.putExtra(TabManageSecondActivity.SELECTEDTAGS, selectTag);
+                intent.putExtra(TabManageActivity.TAGS, tags);
+                startActivityForResult(intent, 111);
                 break;
 
         }
@@ -296,7 +307,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                 Message message = new Message();
                 message.what = 2;
                 mHandler.sendMessage(message);
-                try{
+                try {
                     mMediaPlayer = MediaPlayer.create(CustomerCreateBespeakDetailsActivity.this,
                             Uri.parse(fileName));
                     mMediaPlayer.setLooping(false);
@@ -309,7 +320,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                             mHandler.sendMessage(message);
                         }
                     });
-                }catch (Exception e){
+                } catch (Exception e) {
                     Message message1 = new Message();
                     message1.what = 1;
                 }
@@ -318,6 +329,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
         }).start();
 
     }
+
     private Handler mHandler = new Handler() {
 
         @Override
@@ -344,4 +356,16 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==111&&resultCode==RESULT_OK){
+            selectTag = data.getExtras().getString("result");
+
+            initTags(selectTag);
+
+        }
+
+
+    }
 }
