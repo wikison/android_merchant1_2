@@ -129,7 +129,7 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         if (!TextUtils.isEmpty(entity.address))
             holder.tvAddress.setText(entity.address);
         // 人均消费
-        holder.tvMoney.setText("人均" + (int) (entity.perMoney) + "元");
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
         if (!StringUtils.isEmpty(entity.distance)) {
             if (entity.distance.length() > 3) {

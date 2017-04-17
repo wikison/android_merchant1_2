@@ -51,6 +51,14 @@ public class M_Ad {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
 

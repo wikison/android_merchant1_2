@@ -196,9 +196,9 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         else
             mImageManager.loadRoundImage2(mAd.getImg(), imageView, 24, "@450h");
 
-        if(showTitle && !StringUtils.isBlank(mAd.getNote())){
+        if(showTitle && !StringUtils.isBlank(mAd.getName())){
             tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText(mAd.getNote());
+            tvTitle.setText(mAd.getName());
         }else
             tvTitle.setVisibility(View.GONE);
 
