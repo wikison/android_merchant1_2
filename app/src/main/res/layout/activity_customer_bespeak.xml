@@ -165,26 +165,34 @@
                 android:gravity="center"
                 android:text="不喜欢填单子，用语音描述需求也方便~"/>
 
+            <Button
+                android:id="@+id/btn_recordagain"
+                style="@style/common_btn_235"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_24dp"
+                android:layout_marginTop="30dp"
+                android:text="点击重录"
+                android:visibility="gone" />
+
+
             <LinearLayout
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_leftsecond"
-                    style="@style/text_16_black_999"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1''"
-                    android:visibility="invisible" />
+
 
                 <RelativeLayout
                     android:id="@+id/rel_voice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="invisible">
+
+
 
                     <com.flyco.roundview.RoundRelativeLayout
                         android:id="@+id/rll_voice"
@@ -217,6 +225,17 @@
 
                     </com.flyco.roundview.RoundRelativeLayout>
 
+
+                    <Button
+                        android:layout_marginLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/rll_voice"
+                        android:id="@+id/btn_delete"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:background="@mipmap/delete_btn"
+                        />
+
                 </RelativeLayout>
 
 
@@ -228,19 +247,16 @@
                     android:layout_margin="10dp"
                     android:background="@mipmap/btn_speak_normal" />
 
+
+                <TextView
+                    android:layout_marginBottom="32dp"
+                    style="@style/text_16_black_999"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="按住说话，描述需求"
+                    />
+
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_recordagain"
-                style="@style/common_btn_235"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_24dp"
-                android:layout_marginTop="30dp"
-                android:text="点击重录"
-                android:visibility="gone" />
-
 
             <com.flyco.roundview.RoundTextView
                 android:layout_marginTop="30dp"

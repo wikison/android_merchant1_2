@@ -1,5 +1,6 @@
 package com.zemult.merchant.im;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -12,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -24,7 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -37,7 +38,7 @@ import com.android.volley.VolleyError;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.dotask.DoTaskVoiceActivity;
+import com.zemult.merchant.activity.slash.dotask.NewDoTaskVoiceActivity;
 import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -57,6 +58,7 @@ import com.zemult.merchant.util.oss.OssHelper;
 import com.zemult.merchant.util.sound.HttpOperateUtil;
 import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
+import com.zemult.merchant.view.RecordDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +74,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
+import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 import static com.zemult.merchant.config.Constants.OSSENDPOINT;
@@ -102,107 +105,104 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     RelativeLayout relVoice;
     @Bind(R.id.tv_length)
     TextView tvLength;
+    @Bind(R.id.imageButtonDial)
+    ImageButton imageButtonDial;
+    private MediaPlayer mMediaPlayer;
+
     UserReservationAddRequest userReservationAddRequest;
     int serviceId,num;
-    String renjun,orderpeople,servicetag,ordertime,fileUrl;
+    String renjun,orderpeople,servicetag,ordertime;
+    private static final int REQ_ALBUM = 0x110;
+    private static final int REQ_REMARK_NAME = 0x120;
 
+    private static final int STATE_NORMAL = 1;// 默认的状态
+    private static final int STATE_RECORDING = 2;// 正在录音
+    private static final int STATE_WANT_TO_CANCEL = 3;// 希望取消
+
+    private int mCurrentState = STATE_NORMAL; // 当前的状态
+
+    private static final int DISTANCE_Y_CANCEL = 50;
+
+    private static final int MSG_AUDIO_PREPARED = 0x110;
+    private static final int MSG_VOICE_CHANGED = 0x111;
+    private static final int MSG_DIALOG_DISMISS = 0x112;
+    private static final int MSG_VOICE_FINISH = 0x113;
     String reservationTime,tags;
     double perMoney;
     int merchantId,remindIMId;
     int CHOOSESERVICE = 100;
     M_Merchant m_merchant;
     User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
+
+    RecordDialog mDialogManager;
     String ossFilename = "", filename = "";
     String URL_UPLOAD_FILEPATH = "";
-    long lastDownTime;
-    long thisEventTime;
-
-
-    private boolean isStartRecord;
-    private ImageButton imageButton = null;
-    private MediaPlayer mMediaPlayer;
     private OssFileService ossFileService;
     private MP3Recorder mRecorder = null;
-    //计时器
+    String fileUrl = "";
     private MyTimerTask timerTask;
-    private Timer timer;
-    private int recordTime = 60;
+    private boolean isStartRecord;
 
-    {
-        filename= SlashHelper.userManager().getUserId()+System.currentTimeMillis()+".mp3";
-        File downloadFile = new File(Constants.SOUND_CACHE_DIR);
-        AppUtils.deleteAllFiles(downloadFile);
-        if (!downloadFile.exists()) {
-            downloadFile.mkdirs();
-        }
-        URL_UPLOAD_FILEPATH= Constants.SOUND_CACHE_DIR+filename;
-        mRecorder=new MP3Recorder(new File(URL_UPLOAD_FILEPATH));
-    }
-    Handler handler = new Handler() {
+    private Timer timer;
+    private int recordTime = 120;
+
+    private Handler mHandler = new Handler() {
+
+        @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1:
-                    voiceImageBtn.setImageResource(R.mipmap.chatfrom_voice_playing_f3);
-                    voiceAnimation.stop();
+                case MSG_AUDIO_PREPARED:
+                    // 开始录音后显示对话框
+                    mDialogManager.showRecordingDialog();
+                    isStartRecord = true;
                     break;
-                case 2:
-                    voiceImageBtn.setImageResource(R.drawable.voice_from_icon);
-                    voiceAnimation = (AnimationDrawable) voiceImageBtn.getDrawable();
-                    voiceAnimation.start();
-                    break;
-                case 3:
-                    if(imageButton.isPressed()){
+                case MSG_VOICE_CHANGED:
+                    if (isStartRecord) {
                         recordTime--;
-                        tvLeftsecond.setText("剩余秒数"+recordTime+"''");
-                    }
-                    else{
-                        if(timerTask != null){
+                        System.out.println("recordTime left" + recordTime + "");
+                    } else {
+                        if (timerTask != null) {
                             timerTask.cancel();
                             timer.cancel();
-                            tvLeftsecond.setVisibility(View.INVISIBLE);
                         }
                     }
                     break;
-                case 4:
+
+                case MSG_DIALOG_DISMISS:
+                    mDialogManager.dismissDialog();
+                    break;
+                case MSG_VOICE_FINISH:
                     if (timerTask != null) {
                         timerTask.cancel();
                         timer.cancel();
                     }
                     recordVoice();
                     break;
+
+                case 1:
+                    voiceImageBtn.setImageResource(R.mipmap.yuyan_icon);
+                    voiceAnimation.stop();
+                    break;
+                case 2:
+                    voiceImageBtn.setImageResource(R.drawable.voice_from_yellow_icon);
+                    voiceAnimation = (AnimationDrawable) voiceImageBtn.getDrawable();
+                    voiceAnimation.start();
+                    break;
             }
+
             super.handleMessage(msg);
-        }
-
-    };
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.rel_voice:
-                    if (isStartRecord) {
-                        stopRecord();
-                    }
-                    startPlay();
-                    break;
-
-
-                default:
-                    break;
-            }
         }
     };
 
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_customer_bespeak);
-
     }
 
 
     @Override
     public void init() {
+
         serviceId = getIntent().getIntExtra("serviceId", 0);
         m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
         pmnvSelectDeadline.setMinNum(1);
@@ -223,22 +223,14 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         lhTvTitle.setText("线上约服");
 
 
-
-        ossFileService = OssHelper.initFileOSS(this);
-        // initView
-        imageButton = (ImageButton) findViewById(R.id.imageButtonDial);
-        imageButton.setBackgroundResource(R.mipmap.btn_speak_normal);
-
-        imageButton.setOnLongClickListener(new View.OnLongClickListener() {
+        imageButtonDial.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                relVoice.setVisibility(View.INVISIBLE);
-                Log.i("keanbin", "onLongClick()");
-                lastDownTime = System.currentTimeMillis();
-                setTalkBtnBackground(true);
-                // 停止播放声音
-                stopPlay();
-                // 开始录音
+
+                imageButtonDial.setBackgroundColor(getResources().getColor(R.color.btn_press));
+                mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
+                changeState(STATE_RECORDING);
+
                 startRecord();
 
                 //开始计时
@@ -247,40 +239,80 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                     timer.cancel();
                 }
 
-
-                recordTime = 60;
+                recordTime = 120;
                 timer = new Timer(true);
                 timerTask = new MyTimerTask();
                 timer.scheduleAtFixedRate(timerTask, 0, 1000);
-                tvLeftsecond.setVisibility(View.VISIBLE);
                 return true;
             }
         });
-        imageButton.setOnTouchListener(new MyClickListener());
 
-        relVoice.setOnClickListener(mOnClickListener);
+        imageButtonDial.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                int x = (int) event.getX();// 获得x轴坐标
+                int y = (int) event.getY();// 获得y轴坐标
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_pressed);
+                        if (noLogin(CustomerCreateBespeakActivity.this)) {
+                            return true;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_normal);
+                        if (!isStartRecord || recordTime > 30) {
+                            mDialogManager.tooShort();
+                            stopRecord();
+                            mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1000);// 延迟显示对话框
+                        } else if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
+                            mDialogManager.dismissDialog();
+                            recordVoice();
 
+                        } else if (mCurrentState == STATE_WANT_TO_CANCEL) { // 想要取消
+                            mDialogManager.dismissDialog();
+                        }
+                        reset();
+                        break;
+                    case MotionEvent.ACTION_CANCEL: // 首次开权限时会走这里，录音取消
+                        imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_normal);
+                        mDialogManager.wantToCancel();
+                        stopRecord();
+                        break;
+
+                    case MotionEvent.ACTION_MOVE: // 滑动手指
+                        imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_pressed);
+                        if (isStartRecord) {
+                            // 如果想要取消，根据x,y的坐标看是否需要取消
+                            if (wantToCancel(x, y)) {
+                                changeState(STATE_WANT_TO_CANCEL);
+                            } else {
+                                changeState(STATE_RECORDING);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+                return false;
+            }
+        });
+
+        mDialogManager = new RecordDialog(this);
+        ossFileService = OssHelper.initFileOSS(this);
+        filename = SlashHelper.userManager().getUserId() + System.currentTimeMillis() + ".mp3";
+        File downloadFile = new File(Constants.SOUND_CACHE_DIR);
+        AppUtils.deleteAllFiles(downloadFile);
+        if (!downloadFile.exists()) {
+            downloadFile.mkdirs();
+        }
+        URL_UPLOAD_FILEPATH = Constants.SOUND_CACHE_DIR + filename;
+        mRecorder = new MP3Recorder(new File(URL_UPLOAD_FILEPATH));
         registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADSOUND});
-
-        voiceImageBtn = ((ImageView) findViewById(R.id.iv_voice));
     }
 
-
-    public void startRecord() {
-        if (!Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(this, "请插入SD卡！", Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
-        isStartRecord = true;
-
-        try {
-            mRecorder.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -393,7 +425,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordertime})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -428,9 +460,83 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 dateTimePicKDialog.dateTimePicKDialog(bespekTime);
                 break;
 
+            case R.id.rel_voice:
+                startPlay();
+
+                break;
+
+
         }
     }
 
+
+    public void startPlay() {
+        stopPlay();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                // TODO Auto-generated method stub
+                if(StringUtils.isEmpty(fileUrl)){
+                    fileUrl = OSSENDPOINT + ossFilename;
+                }
+                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
+                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
+
+                Log.i("keanbin", "fileName = " + fileName);
+                File file = new File(fileName);
+
+                if (!file.exists()) {
+//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
+//                            .show();
+                    return;
+                }
+                Message message = new Message();
+                message.what = 2;
+                mHandler.sendMessage(message);
+                try{
+                    mMediaPlayer = MediaPlayer.create(CustomerCreateBespeakActivity.this,
+                            Uri.parse(fileName));
+                    mMediaPlayer.setLooping(false);
+                    mMediaPlayer.start();
+                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            Message message = new Message();
+                            message.what = 1;
+                            mHandler.sendMessage(message);
+                        }
+                    });
+                }catch (Exception e){
+                    Message message1 = new Message();
+                    message1.what = 1;
+                }
+                Looper.loop();
+            }
+        }).start();
+
+    }
+
+    ;
+
+    public void stopPlay() {
+
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+        }
+        if (voiceAnimation != null) {
+            voiceImageBtn.setImageResource(R.mipmap.yuyan_icon);
+            voiceAnimation.stop();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopPlay();
+        stopRecord();
+        super.onDestroy();
+    }
 
     private void addRemindIM() {
         if (user2RemindIMAddRequest != null) {
@@ -500,162 +606,129 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
 
 
-    /* 秒表计时器-Task */
-    class MyTimerTask extends TimerTask {
-        @Override
-        public void run() {
-            Message msg = new Message();
-            if (recordTime != 0) {
-                msg.what = 3;
-            } else {
-                msg.what = 4;
-            }
-            handler.sendMessage(msg);
+
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
         }
-
-    }
-
-
-
-    public void stopPlay() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-        }
-        if (voiceAnimation != null) {
-            voiceImageBtn.setImageResource(R.mipmap.chatfrom_voice_playing_f3);
-            voiceAnimation.stop();
-        }
-
-    }
-
-    class MyClickListener implements View.OnTouchListener {
-        public boolean onTouch(View v, MotionEvent event) {
-            Log.i("keanbin", "event.getAction() = " + event.getAction());
-            switch (event.getAction()) {
-//				case MotionEvent.ACTION_DOWN:
-//
-//					break;
-                case MotionEvent.ACTION_UP:
-                    recordVoice();
-                    break;
-
-                case MotionEvent.ACTION_CANCEL:
-                    setTalkBtnBackground(false);
-                    // TODO 异常放开，接下来一般做以下事情：删除录音文件
-
-                    // 停止录音
-//					stopRecord();
-                    break;
-
-                default:
-                    break;
-            }
-            return false;
-        }
-
-    }
-
-
-    void recordVoice() {
-
-        setTalkBtnBackground(false);
-        thisEventTime = System.currentTimeMillis();
-        tvLength.setText((60 - recordTime) + "''");
-
-        //结束计时器
-        if (timerTask != null) {
-            timerTask.cancel();
-            timer.cancel();
-        }
-
-
-        tvLeftsecond.setVisibility(View.INVISIBLE);
-        if (isStartRecord) {
-            // 停止录音
-            showPd();
-            stopRecord();
-            File file = new File(URL_UPLOAD_FILEPATH);
-            if (file.exists() && recordTime < 55) {
-                if (SlashHelper.userManager().getUserinfo() != null) {
-                    ossFilename = "aduio/android_" + filename;
-                    ossFileService.asyncPutFile(ossFilename, URL_UPLOAD_FILEPATH);
-                    Log.d(getClass().getName(), ossFilename);
-                }
-            } else {
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_OSS_UPLOADSOUND.equals(intent.getAction())) {
+            if (intent.getStringExtra("status").equals("ok")) {
+                Log.d(getClass().getName(), ossFilename);
+//                ToastUtils.show(this, intent.getStringExtra("info"));
+                fileUrl = OSSENDPOINT + ossFilename;
                 dismissPd();
-                Toast.makeText(CustomerCreateBespeakActivity.this, "您的语音时间太短！",
-                        Toast.LENGTH_SHORT).show();
+                relVoice.setVisibility(View.VISIBLE);
+                tvLength.setText(recordTime+"''");
+            } else {
+                ToastUtils.show(this, intent.getStringExtra("info"));
             }
         }
-
     }
 
-    public void stopRecord() {
+
+    /**
+     * 恢复状态及标志位
+     */
+    private void reset() {
+        isStartRecord = false;
+    }
+
+    private boolean wantToCancel(int x, int y) {
+        if (x < 0 || x > imageButtonDial.getWidth()) { // 超过按钮的宽度
+            return true;
+        }
+        // 超过按钮的高度
+        if (y < -DISTANCE_Y_CANCEL) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void startRecord() {
+        if (!Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            ToastUtil.showMessage("请插入SD卡！");
+            return;
+        }
+        isStartRecord = true;
+
+        try {
+            mRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopRecord() {
         if (null != mRecorder) {
             mRecorder.stop();
         }
         isStartRecord = false;
     }
 
-    public void startPlay() {
-        stopPlay();
+    private void recordVoice() {
+        //结束计时器
+        if (timerTask != null) {
+            timerTask.cancel();
+            timer.cancel();
+        }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                // TODO Auto-generated method stub
-                fileUrl = OSSENDPOINT + ossFilename;
-
-                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
-                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
-
-                Log.i("keanbin", "fileName = " + fileName);
-                File file = new File(fileName);
-
-                if (!file.exists()) {
-//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
-//                            .show();
-                    return;
+        if (isStartRecord) {
+            // 停止录音
+            stopRecord();
+            File file = new File(URL_UPLOAD_FILEPATH);
+            if (file.exists() && recordTime <= 110) {
+                showPd();
+                if (SlashHelper.userManager().getUserinfo() != null) {
+                    ossFilename = "aduio/android_" + filename;
+                    ossFileService.asyncPutFile(ossFilename, URL_UPLOAD_FILEPATH);
                 }
-                Message message = new Message();
-                message.what = 2;
-                handler.sendMessage(message);
-                try{
-                    mMediaPlayer = MediaPlayer.create(CustomerCreateBespeakActivity.this,
-                            Uri.parse(fileName));
-                    mMediaPlayer.setLooping(false);
-                    mMediaPlayer.start();
-                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            Message message = new Message();
-                            message.what = 1;
-                            handler.sendMessage(message);
-                        }
-                    });
-                }catch (Exception e){
-                    Message message1 = new Message();
-                    message1.what = 1;
-                }
-                Looper.loop();
+            } else {
+                mDialogManager.tooShort();
+                // 延迟显示对话框
+                mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 500);
             }
-        }).start();
-
-    }
-
-
-
-
-    public void setTalkBtnBackground(boolean isTalk) {
-        if (isTalk) {
-            imageButton.setBackgroundResource(R.mipmap.btn_speak_pressed);
-        } else {
-            imageButton.setBackgroundResource(R.mipmap.btn_speak_normal);
         }
 
     }
 
+    private void changeState(int state) {
+        if (mCurrentState != state) {
+            mCurrentState = state;
+            switch (state) {
+                case STATE_NORMAL:
+                    break;
+
+                case STATE_RECORDING:
+                    if (isStartRecord) {
+                        mDialogManager.recording();
+                    }
+                    break;
+
+                case STATE_WANT_TO_CANCEL:
+                    mDialogManager.wantToCancel();
+                    break;
+            }
+        }
+    }
+    /* 秒表计时器-Task */
+    class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            if (recordTime != 0) {
+                mHandler.sendEmptyMessage(MSG_VOICE_CHANGED);
+            } else {
+                mHandler.sendEmptyMessage(MSG_VOICE_FINISH);
+            }
+        }
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

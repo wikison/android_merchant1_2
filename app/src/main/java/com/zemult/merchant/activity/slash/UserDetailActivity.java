@@ -50,6 +50,7 @@ import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.CustomerCreateBespeakActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -1006,13 +1007,20 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.tv_phone, R.id.tv_buy, R.id.tv_reward, R.id.btn_contact})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.lh_tv_title, R.id.iv_right, R.id.ll_right, R.id.btn_focus, R.id.tv_phone, R.id.tv_buy, R.id.tv_reward, R.id.btn_contact})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.lh_tv_title:
+                intent = new Intent(UserDetailActivity.this, CustomerCreateBespeakActivity.class);
+                intent.putExtra("userSaleId", userId);
+                intent.putExtra("m_merchant", selectMerchant);
+                startActivity(intent);
+
                 break;
             case R.id.iv_right:
             case R.id.ll_right:
