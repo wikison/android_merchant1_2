@@ -158,10 +158,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     //编辑服务标签
     UserSaleMerchantEditRequest userSaleMerchantEditRequest;
 
-
-    private int isOnBook;
-    private String bookPhones;
-
     @Override
     public void setContentView() {
         setContentView(R.layout.tabmanage_activity);
@@ -214,7 +210,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         commonServiceTagList();
         initView();
         initData();
-        if (comefrom == 1 || comefrom == 3) {
+        if (comefrom == 1) {
             userAdapter.setB(isFalse);
             isvisibily = 0;
             name = getIntent().getStringExtra(NAME);
@@ -248,7 +244,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (comefrom == 2) {
             userAdapter.setB(isFalse);
         }
-        if (comefrom == 3) {
+        if (comefrom == 1) {
             applyBtn.setText("下一步");
         }
 
@@ -302,7 +298,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
     private void initData() {
 //        userChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getUserChannel());
 //        otherChannelList = ((ArrayList<IndusPreferItem>) ChannelManage.getManage(AppApplication.getApp().getSQLHelper()).getOtherChannel());
-        if (comefrom == 1 || comefrom == 3) {
+        if (comefrom == 1) {
             userChannelList.clear();
         }
         userAdapter = new DragAdapter(this, userChannelList);
@@ -587,7 +583,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 if (((APIM_CommonGetallindustry) response).status == 1) {
                     dismissPd();
                     sysdatalist = ((APIM_CommonGetallindustry) response).tagList;
-                    if (comefrom == 1 || comefrom == 3) {
+                    if (comefrom == 1) {
                         //来源于申请
                         if (otherChannelList.size() == 0) {
                             for (int k = 0; k < sysdatalist.size(); k++) {
@@ -646,26 +642,27 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                         new Pair<String, String>("titlename", "服务管家协议"), new Pair<String, String>("url", Constants.SERVICEXIEYI));
                 break;
             case R.id.apply_btn:
-                if (comefrom == 1 || comefrom == 3) {
+                if (comefrom == 1) {
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-                        if (comefrom == 1)
-                            user_add_saleuser();
-                        else if(comefrom == 3){
-                            Boolean hasReqContacts = (Boolean) SPUtils.get(mContext, "has_req_contacts", false);
-                            if(hasReqContacts){
-                                ActivityCompat.requestPermissions(TabManageActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
-                            }
-                            // 第一次请求权限 去关联通讯录界面
-                            else{
-                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-                                it.putExtra(TabManageActivity.TAG, merchantId);
-                                it.putExtra(TabManageActivity.NAME, name);
-                                it.putExtra(TabManageActivity.TAGS, getTags());
-                                startActivity(it);
-                            }
-                        }
+//                        if (comefrom == 1)
+//                            user_add_saleuser();
+//                        else if(comefrom == 3){
+//                            Boolean hasReqContacts = (Boolean) SPUtils.get(mContext, "has_req_contacts", false);
+//                            if(hasReqContacts){
+//                                ActivityCompat.requestPermissions(TabManageActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+//                            }
+//                            // 第一次请求权限 去关联通讯录界面
+//                            else{
+//                                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
+//                                it.putExtra(TabManageActivity.TAG, merchantId);
+//                                it.putExtra(TabManageActivity.NAME, name);
+//                                it.putExtra(TabManageActivity.TAGS, getTags());
+//                                startActivity(it);
+//                            }
+//                        }
+                        user_add_saleuser();
                     }
                 } else if (comefrom == 2) {
                     if (userChannelList.size() == 0) {
@@ -676,43 +673,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                 }
                 break;
         }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100 && grantResults.length > 0) {
-//           if(grantResults[0] == PackageManager.PERMISSION_GRANTED) //经测试，对于vivo和redmi永远返回0
-//               getContactsYes();
-//            else
-//               getContactsNo();
-
-            try {
-                bookPhones = AppUtils.getPhoneNumbers(mContext);
-                // 只能用这种折中的方法了
-                if (StringUtils.isBlank(bookPhones)) {
-                    isOnBook = 0;
-                } else {
-                    isOnBook = 1;
-                }
-            }catch (Exception e){
-                isOnBook = 0;
-            }
-
-            if(isOnBook == 1)
-                user_add_saleuser();
-            else {
-                Intent it = new Intent(TabManageActivity.this, ConnectLocalPhoneActivity.class);
-                it.putExtra(TabManageActivity.TAG, merchantId);
-                it.putExtra(TabManageActivity.NAME, name);
-                it.putExtra(TabManageActivity.TAGS, getTags());
-                it.putExtra("refuse", true);
-                startActivity(it);
-            }
-
-        }
-
     }
 
     private String getTags() {
@@ -740,23 +700,10 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
         if (userAddSaleUserRequest != null) {
             userAddSaleUserRequest.cancel();
         }
-
-//        StringBuffer tagsname = new StringBuffer();
-//        for (int i = 0; i < userChannelList.size(); i++) {
-//            if (-1 != userChannelList.get(i).getId()) {
-//                if (i == userChannelList.size() - 1) {
-//                    tagsname.append(userChannelList.get(i).getName() + "");
-//                } else {
-//                    tagsname.append(userChannelList.get(i).getName() + ",");
-//                }
-//            }
-//        }
         UserAddSaleUserRequest.Input input = new UserAddSaleUserRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
         input.merchantId = merchantId;
         input.tags = getTags();
-        input.isOnBook = isOnBook;
-        input.bookPhones = bookPhones;
         input.convertJosn();
         userAddSaleUserRequest = new UserAddSaleUserRequest(input, new ResponseListener() {
             @Override
@@ -767,16 +714,20 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    if(comefrom == 3){
-                        Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
-                        it.putExtra(TabManageActivity.NAME, name);
-                        startActivity(it);
-                        return;
-                    }
-                  //  ToastUtil.showMessage("申请成功");
-                    EventBus.getDefault().post(SaleManageActivity.REFLASH);
-                    setResult(RESULT_OK);
-                    finish();
+//                    if(comefrom == 3){
+//                        Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
+//                        it.putExtra(TabManageActivity.NAME, name);
+//                        startActivity(it);
+//                        return;
+//                    }
+//                    EventBus.getDefault().post(SaleManageActivity.REFLASH);
+//                    setResult(RESULT_OK);
+//                    finish();
+
+
+                    Intent it = new Intent(TabManageActivity.this, BeManagerSuccessActivity.class);
+                    it.putExtra(TabManageActivity.NAME, name);
+                    startActivity(it);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 import com.zemult.merchant.R;
 import com.zemult.merchant.model.M_Merchant;
@@ -112,14 +113,13 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
                 mImageManager.loadRoundImage((String) path, imageView, 24, "@450h");
             }
         });
-//        holder.banner.setOnBannerListener(new OnBannerListener() {
-//            @Override
-//            public void OnBannerClick(int position) {
-//                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-//                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
-//                mContext.startActivity(intent);
-//            }
-//        });
+        holder.banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (itemClickListener != null)
+                    itemClickListener.onBannerClick(entity);
+            }
+        });
         holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
 
         // 商家名称
@@ -158,14 +158,14 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
         //设置适配器
         HomePeopleAdapter adapter = new HomePeopleAdapter(mContext, entity.saleUserHeads);
         holder.recyclerview.setAdapter(adapter);
-        holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (userClickListener != null)
-                    userClickListener.onUserClick(position);
-                return true;
-            }
-        });
+//        holder.recyclerview.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (itemClickListener != null)
+//                    itemClickListener.onRvHeadClick(position);
+//                return true;
+//            }
+//        });
 
         if (entity.reviewstatus == 2)
             holder.ivQianyue.setVisibility(View.VISIBLE);
@@ -173,14 +173,15 @@ public class HomeChildNewAdapter extends BaseListAdapter<M_Merchant> {
             holder.ivQianyue.setVisibility(View.GONE);
     }
 
-    public interface UserClickListener {
-        void onUserClick(int pos);
+    public interface ItemClickListener {
+        void onBannerClick(M_Merchant m_merchant);
+        void onRvHeadClick(int pos);
     }
 
-    private UserClickListener userClickListener;
+    private ItemClickListener itemClickListener;
 
-    public void setUserClickListener(UserClickListener userClickListener) {
-        this.userClickListener = userClickListener;
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     static class ViewHolder {

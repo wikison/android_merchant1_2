@@ -620,7 +620,7 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
                         Intent it = new Intent(mActivity, TabManageActivity.class);
                         it.putExtra(TabManageActivity.TAG, merchantId);
                         it.putExtra(TabManageActivity.NAME, name);
-                        it.putExtra(TabManageActivity.COMEFROM, 3);
+                        it.putExtra(TabManageActivity.COMEFROM, 1);
                         startActivity(it);
                     }
                 } else {

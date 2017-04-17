@@ -182,7 +182,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -502,7 +501,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -571,17 +569,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             }
         }
     }
-
-
-    @Subscribe(threadMode = ThreadMode.MainThread)
-    public void refreshEvent(String s) {
-        //从商户管理返回刷新
-        if (s.equals(SaleManageActivity.REFLASH)) {
-            onRefresh();
-        }
-
-    }
-
 
     private void requestCameraPermission() {
         AndPermission.with(this)

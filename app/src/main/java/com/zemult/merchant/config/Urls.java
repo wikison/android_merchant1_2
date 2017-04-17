@@ -645,4 +645,6 @@ public class Urls {
     public static String USER2_SALEUSER_LOGIN = "user2_saleUser_login";
     //修改服务管家信息(标签,状态,职位)
     public static String USER2_SALE_MERCHANT_EDIT = "user2_sale_merchant_edit";
+    //用户更新服务管家通讯录
+    public static String USER2_REFRESH_SALEUSER = "user2_reflash_saleuser";
 }

@@ -1,22 +1,31 @@
 package com.zemult.merchant.activity.slash;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
+import com.zemult.merchant.aip.slash.User2RefreshSaleUserRequest;
+import com.zemult.merchant.aip.slash.UserAddSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SharePopwindow;
@@ -24,6 +33,9 @@ import com.zemult.merchant.view.SharePopwindow;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
+import cn.trinea.android.common.util.ToastUtils;
+import zema.volley.network.ResponseListener;
 
 public class BeManagerSuccessActivity extends BaseActivity {
 
@@ -39,6 +51,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
     LinearLayout llRoot;
     private SharePopwindow sharePopWindow;
     private String name;
+    private String bookPhones;
 
     @Override
     public void setContentView() {
@@ -52,7 +65,6 @@ public class BeManagerSuccessActivity extends BaseActivity {
         tvName.setText('"' + name + '"' );
         if(name.length() > 10 )
             tvName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-
         sharePopWindow = new SharePopwindow(BeManagerSuccessActivity.this, new SharePopwindow.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -104,6 +116,15 @@ public class BeManagerSuccessActivity extends BaseActivity {
                 }
             }
         });
+
+        //view加载完成时回调
+        llRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // TODO Auto-generated method stub
+                ActivityCompat.requestPermissions(BeManagerSuccessActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+            }
+        });
     }
 
     private UMShareListener umShareListener = new UMShareListener() {
@@ -127,13 +148,21 @@ public class BeManagerSuccessActivity extends BaseActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+            try {
+                bookPhones = AppUtils.getPhoneNumbers(BeManagerSuccessActivity.this);
+                // 只能用这种折中的方法了
+                if (StringUtils.isBlank(bookPhones)) {
+                    bookPhones = "";
+                }
+            }catch (Exception e){
+                bookPhones = "";
+            }
+            user2_reflash_saleuser();
+        }
     }
-
-
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_share, R.id.btn_ok})
     public void onClick(View view) {
@@ -144,7 +173,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
                 Intent intent = new Intent(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS);
                 sendBroadcast(intent);
 
-                onBackPressed();
+                finish();
                 break;
             case R.id.btn_share:
                 if (sharePopWindow.isShowing())
@@ -155,4 +184,37 @@ public class BeManagerSuccessActivity extends BaseActivity {
 
         }
     }
+
+    /**
+     * 用户申请成为商家的营销经理
+     */
+    User2RefreshSaleUserRequest refreshSaleUserRequest;
+
+    private void user2_reflash_saleuser() {
+        showPd();
+        if (refreshSaleUserRequest != null) {
+            refreshSaleUserRequest.cancel();
+        }
+        User2RefreshSaleUserRequest.Input input = new User2RefreshSaleUserRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.bookPhones = bookPhones;
+        input.convertJosn();
+        refreshSaleUserRequest = new User2RefreshSaleUserRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(refreshSaleUserRequest);
+    }
+
 }
