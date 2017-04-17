@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.zemult.merchant.activity.mine.SaleManInfoImproveActivity">
+    <include layout="@layout/layout_head"></include>
+    
+    <TextView
+        android:layout_marginTop="40dp"
+        android:textSize="15sp"
+        android:textColor="#464646"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_improve"/>
+    
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/toxiang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:textColor="@color/font_black_999"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/toxiang"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="35dp">
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_30px"/>
+
+
+        <EditText
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="60dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/selector_drawable_line"
+            android:hint="@string/realname"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/font_black_28"
+            android:textColorHint="@color/font_black_999"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv1"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:text="绑定手机通讯录"
+            android:textColor="#464646"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tongxunlu_tv"
+            android:text="去设置"
+            android:layout_marginLeft="6dp"
+            android:textSize="14sp"
+            android:textColor="#576b95"
+            android:layout_toRightOf="@id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:text="@string/forfastfind"
+        android:textSize="12sp"
+        android:textColor="@color/font_black_999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv2"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:text="打开系统通知"
+            android:textColor="#464646"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/notice_tv"
+            android:text="去设置"
+            android:layout_marginLeft="6dp"
+            android:textSize="14sp"
+            android:textColor="#576b95"
+            android:layout_toRightOf="@id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="3dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:text="@string/forfastreceive"
+        android:textSize="12sp"
+        android:textColor="@color/font_black_999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/btn_save"
+        android:layout_width="@dimen/common_btn_width_235"
+        android:layout_height="@dimen/common_btn_height_35"
+        android:background="@drawable/common_selector_btn"
+        android:text="保存"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+</LinearLayout>

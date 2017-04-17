@@ -621,8 +621,12 @@
         <activity android:name=".activity.slash.ServiceTicketListActivity" />
         <activity android:name=".activity.slash.SaleServiceTicketDetailActivity" />
         <activity android:name=".activity.slash.MerchantAdminActivity" />
-        <activity android:name=".activity.mine.SalemanInfoSettingActivity" />
         <activity android:name=".activity.mine.TabManageSecondActivity"></activity>
+        <activity android:name=".activity.mine.SalemanInfoSettingActivity"></activity>
+        <activity android:name=".activity.slash.PositionSetActivity"/>
+        <activity android:name=".activity.mine.SalemanInfoSettingActivity" />
+        <activity android:name=".activity.mine.TabManageSecondActivity" />
+        <activity android:name=".activity.mine.SaleManInfoImproveActivity"></activity>
     </application>
 
 </manifest>

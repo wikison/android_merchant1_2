@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
+              android:orientation="vertical">
 
-    <include layout="@layout/layout_head" />
+    <include layout="@layout/layout_head"/>
 
-    <ListView
+    <com.zemult.merchant.view.BounceScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-    </ListView>
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </com.zemult.merchant.view.BounceScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_f2"
-        android:gravity="bottom|center_horizontal">
+        android:layout_marginTop="@dimen/margin_12dp"
+        android:gravity="top|center_horizontal">
 
         <Button
-            android:id="@+id/btn_contact"
+            android:id="@+id/btn_confirm"
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
             android:clickable="true"
             android:gravity="center"
-            android:text="发消息"
+            android:text="@string/confirm"
             android:textColor="@color/white"
             android:textSize="@dimen/font_36px"
             android:visibility="visible"/>
