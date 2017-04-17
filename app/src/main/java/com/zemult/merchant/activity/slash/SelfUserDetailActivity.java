@@ -450,6 +450,13 @@ public class SelfUserDetailActivity extends BaseActivity {
     private void setUserInfo(M_Userinfo userInfo) {
         Drawable drawable;
         // 头像
+        if(!TextUtils.isEmpty(userInfo.getHead())&&!TextUtils.isEmpty(userInfo.getName())){
+            llMyInfo.setVisibility(View.GONE);
+        }else{
+            llMyInfo.setVisibility(View.VISIBLE);
+        }
+
+
         if (!TextUtils.isEmpty(userInfo.getHead())) {
             imageManager.loadCircleHead(userInfo.getHead(), ivHead, "@120w_120h");
         }
