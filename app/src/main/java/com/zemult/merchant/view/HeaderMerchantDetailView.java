@@ -99,7 +99,7 @@ public class HeaderMerchantDetailView extends HeaderViewInterface2<M_Merchant> {
             for (M_Pic pic : picList) {
                 M_Ad ad = new M_Ad();
                 ad.setImg(pic.picPath);
-                ad.setNote(pic.note);
+                ad.setName(pic.picName);
                 advertList.add(ad);
             }
             HeaderAdViewView headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 200));
