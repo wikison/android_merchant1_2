@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -158,12 +160,14 @@ public class SelfUserDetailActivity extends BaseActivity {
     LinearLayout llRoot;
     @Bind(R.id.tv_unsure_num)
     TextView tvUnsureNum;
+    @Bind(R.id.yuandianj)
+    ImageView yuandianj;
 
     private Context mContext;
     private Activity mActivity;
     public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
-//    public static int ADD_MERCHANT = 333;
+    //    public static int ADD_MERCHANT = 333;
     public static int EDIT_USER_INFO = 444;
     public static int MODIFY_POSITION = 555;
     private int userId;// 用户id(要查看的用户)
@@ -215,7 +219,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         fromSaleLogin = getIntent().getIntExtra("user_sale_login", 0);
         mContext = this;
         mActivity = this;
-        registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
+        registerReceiver(new String[]{Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -265,7 +269,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
                 .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在约服平台上做服务管家, 帮忙关注一下...")
-                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?userId="+SlashHelper.userManager().getUserId()+"&TargetPage=1&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect")
+                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?userId=" + SlashHelper.userManager().getUserId() + "&TargetPage=1&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect")
                 .withMedia(shareImage)
                 .withTitle("约服-找个喜欢的人来服务")
                 .share();
@@ -415,13 +419,12 @@ public class SelfUserDetailActivity extends BaseActivity {
         Drawable drawable;
         // 头像
         if (!TextUtils.isEmpty(userInfo.getHead()) && !TextUtils.isEmpty(userInfo.getName())) {
-            llMyInfo.setVisibility(View.GONE);
-            tvMyInfo.setVisibility(View.GONE);
+            tvUnsureNum.setVisibility(View.INVISIBLE);
+            yuandianj.setVisibility(View.INVISIBLE);
         } else {
-            llMyInfo.setVisibility(View.VISIBLE);
-            tvMyInfo.setVisibility(View.VISIBLE);
+            yuandianj.setVisibility(View.VISIBLE);
+            tvUnsureNum.setVisibility(View.VISIBLE);
         }
-
 
         if (!TextUtils.isEmpty(userInfo.getHead())) {
             imageManager.loadCircleHead(userInfo.getHead(), ivHead, "@120w_120h");
@@ -595,7 +598,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -603,7 +606,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.ll_back:
                 onBackPressed();
                 break;
-            case R.id.ll_my_info:
+            case R.id.infoimprove_rl:
                 intent = new Intent(mActivity, SaleManInfoImproveActivity.class);
                 startActivityForResult(intent, EDIT_USER_INFO);
                 break;
@@ -707,11 +710,10 @@ public class SelfUserDetailActivity extends BaseActivity {
             return;
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
-        if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+        if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             selectPosition = 0;
             getOtherMerchantList();
         }
     }
-
 
 }

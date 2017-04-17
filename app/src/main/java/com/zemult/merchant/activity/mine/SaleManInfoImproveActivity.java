@@ -66,7 +66,10 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     }
 
     private void initData() {
-        imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
+            imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        }
+
     }
 
     //接收广播回调
@@ -89,6 +92,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
             case R.id.lh_btn_back:
 
             case R.id.ll_back:
+
                 onBackPressed();
                 break;
             case R.id.iv_head:
@@ -132,6 +136,9 @@ public class SaleManInfoImproveActivity extends BaseActivity {
                 if (((CommonResult) response).status == 1) {
                     SlashHelper.userManager().getUserinfo().setName(etName.getText().toString());
                     SlashHelper.userManager().saveUserinfo(SlashHelper.userManager().getUserinfo());
+                    setResult(RESULT_OK);
+                    SaleManInfoImproveActivity.this.finish();
+
                 } else {
                     ToastUtils.show(SaleManInfoImproveActivity.this, ((CommonResult) response).info);
                 }

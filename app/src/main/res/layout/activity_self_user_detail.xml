@@ -31,6 +31,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/infoimprove_rl"
                     style="@style/relative_layout_item">
 
                     <ImageView
@@ -65,7 +66,6 @@
 
                     <LinearLayout
                         android:id="@+id/ll_my_info"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_toLeftOf="@+id/tv_my_info"
@@ -80,6 +80,7 @@
                             android:text="完善资料"/>
 
                         <ImageView
+                            android:id="@+id/yuandianj"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_16dp"
@@ -89,7 +90,6 @@
                     <TextView
                         android:id="@+id/tv_my_info"
                         style="@style/text_12_black_28"
-                        android:visibility="gone"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:drawablePadding="@dimen/margin_8dp"
