@@ -66,6 +66,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     }
 
     private void initData() {
+        etName.setText(SlashHelper.userManager().getUserinfo().getName());
         if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
             imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         }
