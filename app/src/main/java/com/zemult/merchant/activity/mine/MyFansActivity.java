@@ -155,7 +155,7 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                                         holder.setViewGone(R.id.iv_sex);
                                         holder.setViewGone(R.id.iv_status);
 
-                                        holder.setOnclickListener(R.id.iv_follow_head, new View.OnClickListener() {
+                                        holder.setOnclickListener(R.id.ll_root, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mDatas.get(position).userId + "", Urls.APP_KEY);
