@@ -294,7 +294,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         tvName.setText(mReservation.name);
                         mimageManager.loadCircleImage(mReservation.head, vUser);
                         //语音信息
-                        if(!StringUtils.isBlank(mReservation.replayNote)){
+                        if(mReservation.remindIMId!=0){
                             playBtn.setVisibility(View.VISIBLE);
                         }
                         else{
@@ -494,6 +494,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     if (((CommonResult) response).status == 1) {
                         ToastUtil.showMessage("撤销成功");
+                        YWMessage message = YWMessageChannel.createTextMessage("您的服务单已经取消");
+                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.userId + "", imKit.getIMCore().getAppKey());
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        , message, forwardCallBack);
                         finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -766,9 +772,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
 
             case R.id.play_btn:
-                if(!StringUtils.isBlank(fileUrl)){
-                    startPlay();
-                  }
+                if(mReservation.remindIMId!=0){
+                    Intent intent =new Intent(AppointmentDetailNewActivity.this, CustomerCreateBespeakDetailsActivity.class);
+                    intent.putExtra("remindIMId",mReservation.remindIMId);
+                    intent.putExtra("userId",mReservation.userId);
+                    startActivity(intent);
+                }
+
                 break;
 
             case R.id.btn_modify:
@@ -990,47 +1000,47 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     }
 
 
-    public void startPlay() {
-        stopPlay();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                // TODO Auto-generated method stub
-
-                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
-                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
-
-                Log.i("keanbin", "fileName = " + fileName);
-                File file = new File(fileName);
-
-                if (!file.exists()) {
-//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
-//                            .show();
-                    return;
-                }
-                try{
-                    mMediaPlayer = MediaPlayer.create(AppointmentDetailNewActivity.this,
-                            Uri.parse(fileName));
-                    mMediaPlayer.setLooping(false);
-                    mMediaPlayer.start();
-                }catch (Exception e){
-                }
-                Looper.loop();
-            }
-        }).start();
-
-    }
-
-    ;
-
-    public void stopPlay() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-        }
-
-    }
+//    public void startPlay() {
+//        stopPlay();
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Looper.prepare();
+//                // TODO Auto-generated method stub
+//
+//                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
+//                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
+//
+//                Log.i("keanbin", "fileName = " + fileName);
+//                File file = new File(fileName);
+//
+//                if (!file.exists()) {
+////                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
+////                            .show();
+//                    return;
+//                }
+//                try{
+//                    mMediaPlayer = MediaPlayer.create(AppointmentDetailNewActivity.this,
+//                            Uri.parse(fileName));
+//                    mMediaPlayer.setLooping(false);
+//                    mMediaPlayer.start();
+//                }catch (Exception e){
+//                }
+//                Looper.loop();
+//            }
+//        }).start();
+//
+//    }
+//
+//    ;
+//
+//    public void stopPlay() {
+//        if (mMediaPlayer != null) {
+//            mMediaPlayer.stop();
+//        }
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

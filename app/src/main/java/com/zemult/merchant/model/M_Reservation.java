@@ -113,6 +113,7 @@ public class M_Reservation implements Serializable {
     public double perMoney;//人均预算
 
 
-
+    @Expose
+    public int  remindIMId;//需求单id
 
 }

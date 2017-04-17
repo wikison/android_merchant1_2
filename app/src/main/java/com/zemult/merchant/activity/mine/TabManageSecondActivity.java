@@ -123,14 +123,10 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
      */
     private OtherGridView otherGridView;
     //获取服务人员标签
-    CommonServiceTagListRequest commonServiceTagListRequest;
 
-    private String name = "";
     private String tags = "";
     public  String selectedtags="";
 
-    //编辑服务标签
-    UserSaleMerchantEditRequest userSaleMerchantEditRequest;
 
     @Override
     public void setContentView() {
@@ -139,7 +135,6 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
 
     @Override
     public void init() {
-        showPd();
         mContext = this;
         textView = (TextView) findViewById(R.id.channel_edit);
         merchantId = getIntent().getIntExtra(TAG, -1);
@@ -148,12 +143,11 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
         //  cbAgree.setChecked(true);
 
 
-        name = getIntent().getStringExtra(NAME);
         shopnameTv.setVisibility(View.GONE);
         SpannableStringBuilder spannableString = new SpannableStringBuilder();
-        spannableString.append("选择您在  " + name + "  提供的服务");
-        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
-        spannableString.setSpan(styleSpan, 5, 4 + name.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.append("选择您要提供的服务");
+//        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
+//        spannableString.setSpan(styleSpan, 5, 4 + name.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         shopNameTv.setText(spannableString);
 
         tags = getIntent().getStringExtra(TAGS);
@@ -409,7 +403,8 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
                     } else {
                         Intent intent = new Intent();
                         intent.putExtra("result",getTags());
-                        this.setResult(RESULT_OK);
+                        this.setResult(RESULT_OK,intent);
+                        finish();
                     }
 
                 break;

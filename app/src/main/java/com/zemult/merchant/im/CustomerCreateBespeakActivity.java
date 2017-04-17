@@ -38,6 +38,8 @@ import com.android.volley.VolleyError;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.TabManageActivity;
+import com.zemult.merchant.activity.mine.TabManageSecondActivity;
 import com.zemult.merchant.activity.slash.dotask.NewDoTaskVoiceActivity;
 import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
@@ -106,7 +108,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     @Bind(R.id.tv_length)
     TextView tvLength;
 
-
+    String selectTag = "";
     private MediaPlayer mMediaPlayer;
 
     int serviceId;
@@ -126,7 +128,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     private static final int MSG_VOICE_CHANGED = 0x111;
     private static final int MSG_DIALOG_DISMISS = 0x112;
     private static final int MSG_VOICE_FINISH = 0x113;
-    String tags;
+    String tags="";
     int CHOOSESERVICE = 100;
     M_Merchant m_merchant;
     User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
@@ -208,8 +210,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());
         orderpeople = "" + pmnvSelectDeadline.getDefaultNum();
         pmnvSelectDeadline.setFilter();
-
-
+        tags=m_merchant.tags;
         pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
             @Override
             public void onNumChanged(int num) {
@@ -405,11 +406,11 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
                 break;
             case R.id.rl_my_service:
-
-//                Intent  intent=new Intent();
-//                intent.putExtra("tags",m_merchant.tags);
-
-
+                Intent intent = new Intent(this, TabManageSecondActivity.class);
+                intent.putExtra(TabManageSecondActivity.COMEFROM, 2);
+                intent.putExtra(TabManageSecondActivity.SELECTEDTAGS, selectTag);
+                intent.putExtra(TabManageActivity.TAGS, tags);
+                startActivityForResult(intent, 111);
                 break;
 
             case R.id.btn_delete:
@@ -692,15 +693,15 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
     }
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CHOOSESERVICE && resultCode == RESULT_OK) {
-            initTags(data.getStringExtra("tags"));
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==111&&resultCode==RESULT_OK){
+            selectTag = data.getStringExtra("result");
+            initTags(selectTag);
         }
     }
+
 
     final IWxCallback forwardCallBack = new IWxCallback() {
 

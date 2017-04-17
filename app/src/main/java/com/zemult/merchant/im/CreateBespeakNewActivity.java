@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
+import com.zemult.merchant.aip.mine.User2RemindIMInfoRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -38,6 +39,7 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
@@ -94,15 +96,14 @@ public class CreateBespeakNewActivity extends BaseActivity {
     RelativeLayout rlCustomerphone;
     @Bind(R.id.tv_dingjin_tpis)
     TextView tvDingjinTpis;
-    private MediaPlayer mMediaPlayer;
-
+    User2RemindIMInfoRequest user2RemindIMInfoRequest;
 
     UserInfoOwnerRequest userInfoOwnerRequest;
     UserReservationAddRequest userReservationAddRequest;
     int customerId;
-    String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note,customerName,customerHead,customerVoice;
+    String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note,customerName,customerHead;
     String merchantId,reviewstatus;
-    int CHOOSEMERCHANT = 100;
+    int CHOOSEMERCHANT = 100,remindIMId;
     boolean isFromMerchant;
 
     int showOrderState;//1 生成预约单(有语音)  2 生成预约单（无语音）
@@ -122,12 +123,13 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
         customerId = getIntent().getIntExtra("customerId", 0);
 
-        customerVoice= getIntent().getStringExtra("customerVoice");
+        remindIMId= getIntent().getIntExtra("remindIMId", 0);
         merchantId= getIntent().getStringExtra("merchantId");
         reviewstatus= getIntent().getStringExtra("reviewstatus");
 
-        if(null!=customerVoice){
+        if(0!=remindIMId){
             playBtn.setVisibility(View.VISIBLE);
+            user2RemindIMInfoRequest();
         }
         else{
             playBtn.setVisibility(View.GONE                         );
@@ -207,6 +209,42 @@ public class CreateBespeakNewActivity extends BaseActivity {
         sendJsonRequest(userInfoOwnerRequest);
     }
 
+    private void user2RemindIMInfoRequest() {
+
+        try {
+            if (user2RemindIMInfoRequest != null) {
+                user2RemindIMInfoRequest.cancel();
+            }
+            User2RemindIMInfoRequest.Input input = new User2RemindIMInfoRequest.Input();
+            input.remindIMId = remindIMId;
+            input.convertJosn();
+
+            user2RemindIMInfoRequest = new User2RemindIMInfoRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((M_Reservation) response).status == 1) {
+                        M_Reservation m_reservation= ((M_Reservation) response);
+                        bespekTime.setText(StringUtils.isBlank(m_reservation.reservationTime)?"选择时间":m_reservation.reservationTime);
+                        int ordernum=m_reservation.num;
+                        if(ordernum!=0){
+                            pmnvSelectDeadline.setDefaultNum(ordernum);
+                            pmnvSelectDeadline.setText("" + ordernum);
+                            orderpeople = "" +ordernum;
+                        }
+                    } else {
+                        ToastUtil.showMessage(((M_Reservation) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(user2RemindIMInfoRequest);
+        } catch (Exception e) {
+        }
+    }
 
     private void user_reservation_add() {
 
@@ -217,12 +255,17 @@ public class CreateBespeakNewActivity extends BaseActivity {
             UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
             input.merchantId = merchantId;
             input.saleUserId = SlashHelper.userManager().getUserId();
-            input.reservationTime = ordertime + ":00";
+            if(ordertime.length()<17){
+                input.reservationTime= ordertime+ ":00";
+            }
+            else{
+                input.reservationTime= ordertime;
+            }
             input.num = orderpeople;
             input.note = note;
             input.userId = customerId;
             input.reservationMoney =etDingjin.getText().toString() ;
-            input.replayNote=customerVoice;
+            input.remindIMId=remindIMId;
             input.convertJosn();
 
             userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
@@ -324,9 +367,11 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 dateTimePicKDialog.dateTimePicKDialog(bespekTime);
                 break;
             case R.id.play_btn:
-
-                if(!StringUtils.isBlank(customerVoice)){
-                    startPlay();
+                if(remindIMId!=0){
+                    Intent intent =new Intent(CreateBespeakNewActivity.this, CustomerCreateBespeakDetailsActivity.class);
+                    intent.putExtra("remindIMId",remindIMId);
+                    intent.putExtra("userId",SlashHelper.userManager().getUserId());
+                    startActivity(intent);
                 }
 
                 break;
@@ -336,47 +381,6 @@ public class CreateBespeakNewActivity extends BaseActivity {
     }
 
 
-    public void startPlay() {
-        stopPlay();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                // TODO Auto-generated method stub
-
-                String fileName = HttpOperateUtil.downLoadFile(customerVoice,
-                        customerVoice.substring(customerVoice.lastIndexOf("/") + 1));
-
-                Log.i("keanbin", "fileName = " + fileName);
-                File file = new File(fileName);
-
-                if (!file.exists()) {
-//                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
-//                            .show();
-                    return;
-                }
-                try{
-                    mMediaPlayer = MediaPlayer.create(CreateBespeakNewActivity.this,
-                            Uri.parse(fileName));
-                    mMediaPlayer.setLooping(false);
-                    mMediaPlayer.start();
-                }catch (Exception e){
-                }
-                Looper.loop();
-            }
-        }).start();
-
-    }
-
-    ;
-
-    public void stopPlay() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-        }
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

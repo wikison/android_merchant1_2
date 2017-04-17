@@ -583,7 +583,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                         else{
                             Intent intent =new Intent(fragment.getActivity(),CreateBespeakNewActivity.class);
                             intent.putExtra("customerId",Integer.parseInt(customizeObject.getString("userId")));
-                            intent.putExtra("customerVoice",customizeObject.getString("recordPath"));
+                            intent.putExtra("remindIMId",Integer.parseInt(customizeObject.getString("remindIMId")));
                             intent.putExtra("reviewstatus",customizeObject.getString("reviewstatus"));
                             intent.putExtra("merchantName",customizeObject.getString("merchantName"));
                             intent.putExtra("merchantId",customizeObject.getString("merchantId"));
