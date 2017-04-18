@@ -219,7 +219,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
             llIndexContainer.removeAllViews();
             for (int i = 0; i < size; i++) {
                 ImageView iv = new ImageView(mContext);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtil.dip2px(mContext, 5), DensityUtil.dip2px(mContext, 5));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtil.dip2px(mContext, 6), DensityUtil.dip2px(mContext, 6));
                 if (i != 0) {
                     lp.leftMargin = DensityUtil.dip2px(mContext, 7);
                 }
