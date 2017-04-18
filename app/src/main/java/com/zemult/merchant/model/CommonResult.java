@@ -115,5 +115,37 @@ public class CommonResult {
     @Expose
     public int remindIMId;
 
+    //首页 用户自己所在的服务指数最高的商家
+    @Expose
+    public int isSaleUser;  // 是否有服务管家(0:否,1:是)
+    @Expose
+    public int isHaveInfo;  // 是否有商家信息(0:否,1:是，没有时商家信息字段没有值)
+    @Expose
+    public String pic;
+    @Expose
+    public String pics;
+    @Expose
+    public double perMoney; // 人均消费
+    @Expose
+    public String address;    //	详细地址
+    @Expose
+    public String distance;    //	距中心点距离(米)
+    @Expose
+    public int reviewstatus;    //	商家审核状态(0未审核,1待审核,2审核通过)
+    @Expose
+    public int saleUserId;
+    @Expose
+    public String saleUserName;  // 服务管家的用户昵称
+    @Expose
+    public String saleUserHead;  // 服务管家的用户头像
+    @Expose
+    public String saleUserTags;  // 服务管家的标签(","分隔)
+    @Expose
+    public double saleUserExperience;  // 服务管家的经验值
+    @Expose
+    public int saleUserSumScore;  // 前7日的服务分总和
+    @Expose
+    public int saleUserFanNum;  // 服务管家的顾客数
+
 
 }

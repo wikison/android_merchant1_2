@@ -114,13 +114,13 @@ public class HomeChildFragment extends BaseFragment implements SmoothListView.IS
 
     @Override
     public void onRefresh() {
-        homePresenter.merchant_firstpage_List(-2, page = 1, Constants.ROWS, false);
+        homePresenter.merchant_firstpage(-2, page = 1, Constants.ROWS, false);
     }
 
 
     @Override
     public void onLoadMore() {
-        homePresenter.merchant_firstpage_List(-2, ++page, Constants.ROWS, true);
+        homePresenter.merchant_firstpage(-2, ++page, Constants.ROWS, true);
     }
 
     @Override

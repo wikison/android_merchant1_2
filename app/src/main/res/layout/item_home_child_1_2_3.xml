@@ -88,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/font_black_999"
                     android:textSize="@dimen/font_26px"
+                    android:text="暂无"
                     />
 
                 <TextView
@@ -111,6 +112,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <com.youth.banner.Banner
             android:id="@+id/banner"
             android:layout_width="match_parent"
@@ -119,7 +122,13 @@
             app:image_scale_type="fit_xy"
             app:is_auto_play="false" />
 
-
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_no_merchant"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@mipmap/zanwushanghu"
+            android:scaleType="fitXY"/>
         <com.flyco.roundview.RoundLinearLayout
             android:layout_gravity="right"
             android:gravity="center"
@@ -138,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_distance"
-                android:text="xxm"/>
+                android:text="暂无"/>
 
             <View android:background="@color/white"
                 android:layout_marginLeft="6dp"
@@ -151,7 +160,7 @@
                 style="@style/text_12_wtite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cxc"/>
+                android:text="暂无"/>
         </com.flyco.roundview.RoundLinearLayout>
 
         <RelativeLayout
@@ -199,7 +208,7 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="4dp"
             android:id="@+id/tv_zhishu"
-            android:text="7天服务指数"
+            android:text="7天服务指数暂无"
            />
 
     </LinearLayout>
