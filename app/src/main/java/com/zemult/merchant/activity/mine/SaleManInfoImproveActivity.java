@@ -78,7 +78,10 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         registerReceiver(new String[]{Constants.BROCAST_EDITUSERINFO});
         EditFilter.WordFilter(etName, 6);
         etName.setText(SlashHelper.userManager().getUserinfo().getName());
-
+        if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
+            imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+        }
+        
         //view加载完成时回调
         llRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
