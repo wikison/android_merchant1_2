@@ -78,6 +78,7 @@
     <Button
         android:id="@+id/btn_topinjia"
         style="@style/common_btn_235"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="120dp"
         android:text="提交评价"/>

@@ -408,7 +408,8 @@ public class MyinfoSetActivity extends MAppCompatActivity {
             SlashHelper.userManager().getUserinfo().setIsOpen(isOpenInt);
             user_editinfo();
         }
-
+        Intent in = new Intent(Constants.BROCAST_LOGIN);
+        sendBroadcast(in);
         super.onBackPressed();
     }
 
