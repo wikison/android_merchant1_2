@@ -89,6 +89,7 @@
                 android:layout_height="@dimen/common_btn_height_35"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="@dimen/margin_12dp"
                 android:background="@drawable/common_selector_btn"
                 android:text="退出商户"
                 android:textColor="@color/white"

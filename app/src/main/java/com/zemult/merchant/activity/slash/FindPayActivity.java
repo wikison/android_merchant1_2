@@ -693,7 +693,7 @@ public class FindPayActivity extends BaseActivity {
     private double getConsumeMoney() {
         double result = 0;
         if (!StringUtils.isBlank(etPaymoney.getText().toString())) {
-            result = Double.parseDouble(etPaymoney.getText().toString());
+            result = getMoney() + (cbReward.isChecked() ? rewardMoney : 0);
         }
         return result;
     }
