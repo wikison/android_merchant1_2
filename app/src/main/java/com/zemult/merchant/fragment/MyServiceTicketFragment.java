@@ -221,7 +221,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                         }
                                         //状态(1:预约成功,2:已支付,3:预约结束)
                                         if (mReservation.state == 1) {
-                                            holder.setText(R.id.tv_state, "已确认");
+                                            holder.setText(R.id.tv_state, "已确定");
                                             holder.setViewGone(R.id.money_ll);
                                         } else if (mReservation.state == 2) {
                                             holder.setText(R.id.tv_state, "已支付");
