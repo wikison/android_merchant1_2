@@ -14,7 +14,7 @@ import com.zemult.merchant.fragment.MyServiceTicketFragment;
 
 public class MyServiceTicketFragmentAdapter extends FragmentStatePagerAdapter  {
     private Context context;
-    private String[] titles = new String[]{"全部", "已确认", "已支付", "已结束"};
+    private String[] titles = new String[]{"全部", "已确定", "已支付", "已结束"};
     MyServiceTicketFragment myServiceTicketFragment;
 
     public MyServiceTicketFragmentAdapter(FragmentManager fm, Context context) {
