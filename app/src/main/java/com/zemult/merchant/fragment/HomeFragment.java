@@ -606,9 +606,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         tvCity.setText(c.getName());
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+//    }
 
 }
