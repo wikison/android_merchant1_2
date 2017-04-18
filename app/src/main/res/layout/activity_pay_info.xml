@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_f2"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/layout_head"/>
+    <include layout="@layout/layout_head" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,14 +26,14 @@
                 style="@style/text_16_black_28"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:text="等待付款"/>
+                android:text="等待付款" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="15dp"
-                android:background="@color/divider_c1"/>
+                android:background="@color/divider_c1" />
 
         </RelativeLayout>
 
@@ -49,7 +48,7 @@
                 style="@style/text_16_black_28"
                 android:padding="20dp"
                 android:text="-￥--"
-                android:textSize="40sp"/>
+                android:textSize="40sp" />
         </LinearLayout>
 
 
@@ -72,7 +71,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="订金"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_dingjin"
@@ -81,7 +80,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="-------"/>
+                    android:text="-------" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +95,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="尾款支付"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_restmoney"
@@ -105,7 +104,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="-------"/>
+                    android:text="-------" />
             </LinearLayout>
         </LinearLayout>
 
@@ -129,7 +128,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
                     android:text="服务管家"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -142,7 +141,7 @@
                     <ImageView
                         android:id="@+id/iv_sale_head"
                         android:layout_width="@dimen/j30dp"
-                        android:layout_height="@dimen/j30dp"/>
+                        android:layout_height="@dimen/j30dp" />
 
                     <TextView
                         android:id="@+id/tv_sale_name"
@@ -150,7 +149,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
-                        android:text="----"/>
+                        android:text="----" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -168,7 +167,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
                     android:text="商户"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -180,9 +179,9 @@
 
                     <ImageView
                         android:id="@+id/iv_merchant_head"
-                        android:visibility="gone"
                         android:layout_width="@dimen/j20dp"
-                        android:layout_height="@dimen/j20dp"/>
+                        android:layout_height="@dimen/j20dp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_merchant_name"
@@ -190,7 +189,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="12dp"
-                        android:text="交易商户"/>
+                        android:text="交易商户" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -209,7 +208,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
                     android:text="消费金额"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_sale_money"
@@ -218,7 +217,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="消费金额"/>
+                    android:text="消费金额" />
             </LinearLayout>
 
             <LinearLayout
@@ -233,7 +232,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="实付"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_pay_money"
@@ -242,7 +241,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="实付"/>
+                    android:text="实付" />
             </LinearLayout>
 
         </LinearLayout>
@@ -266,7 +265,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="支付方式"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_pay_type"
@@ -275,7 +274,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="--------"/>
+                    android:text="--------" />
             </LinearLayout>
 
             <LinearLayout
@@ -289,7 +288,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="交易时间"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_trade_time"
@@ -298,7 +297,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="交易时间"/>
+                    android:text="交易时间" />
             </LinearLayout>
 
             <LinearLayout
@@ -312,7 +311,7 @@
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
                     android:text="订单号码"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_pay_num"
@@ -321,7 +320,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="订单号"/>
+                    android:text="订单号" />
             </LinearLayout>
 
 
@@ -332,10 +331,10 @@
         android:id="@+id/ll_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_12dp"
         android:layout_marginBottom="@dimen/margin_24dp"
         android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_10dp"
         android:visibility="visible">
 
         <com.flyco.roundview.RoundTextView
@@ -345,12 +344,12 @@
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_marginLeft="@dimen/margin_12dp"
             android:gravity="center"
-            android:visibility="gone"
             android:text="@string/go_recom"
             android:textColor="@color/white"
+            android:visibility="gone"
             app:rv_backgroundColor="@color/font_main"
             app:rv_backgroundPressColor="@color/orange"
-            app:rv_cornerRadius="35dp"/>
+            app:rv_cornerRadius="35dp" />
 
         <com.flyco.roundview.RoundTextView
             android:id="@+id/rtv_to_pay"
@@ -359,16 +358,13 @@
             android:layout_height="@dimen/common_btn_height_35"
             android:layout_marginLeft="@dimen/margin_12dp"
             android:gravity="center"
-            android:visibility="gone"
             android:text="@string/go_pay"
             android:textColor="@color/white"
+            android:visibility="gone"
             app:rv_backgroundColor="@color/font_main"
             app:rv_backgroundPressColor="@color/orange"
-            app:rv_cornerRadius="35dp"/>
+            app:rv_cornerRadius="35dp" />
     </LinearLayout>
-
-
-
 
 
 </LinearLayout>
