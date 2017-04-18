@@ -362,6 +362,6 @@
     <string name="info_improve">完善个人资料,让更多消费客户关注你</string>
     <string name="toxiang">建议上传优质的真实头像</string>
     <string name="realname">建议使用真实姓名</string>
-    <string name="forfastfind">为了让曾经的客户可以快速找到你</string>
+    <string name="forfastfind">为了让曾经的客户可以快速找到你,\n请在手机权限管理中设置。</string>
     <string name="forfastreceive">为了可以第一时间收到客户的约服需求</string>
 </resources>
