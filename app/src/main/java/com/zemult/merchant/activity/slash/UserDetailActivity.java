@@ -6,15 +6,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,14 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
-import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.contact.IYWContact;
-import com.alibaba.mobileim.contact.YWContactFactory;
-import com.alibaba.mobileim.conversation.YWCustomMessageBody;
-import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
-import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundLinearLayout;
 import com.flyco.roundview.RoundTextView;
 import com.umeng.socialize.ShareAction;
@@ -43,14 +31,12 @@ import com.zemult.merchant.activity.mine.RemarkNameActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
-import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
 import com.zemult.merchant.aip.slash.Merchant2SaleUserMerchantListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.CustomerCreateBespeakActivity;
-import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.FilterEntity;
@@ -59,28 +45,17 @@ import com.zemult.merchant.model.M_Userinfo;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.util.oss.OssFileService;
-import com.zemult.merchant.util.oss.OssHelper;
-import com.zemult.merchant.view.RecordDialog;
 import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.VerticalScrollView;
 import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,8 +65,6 @@ import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
 import me.crosswall.lib.coverflow.core.LinkagePagerContainer;
 import me.crosswall.lib.coverflow.core.PageItemClickListener;
 import zema.volley.network.ResponseListener;
-
-import static com.zemult.merchant.config.Constants.OSSENDPOINT;
 
 /**
  * 012111用户详情
@@ -184,17 +157,7 @@ public class UserDetailActivity extends BaseActivity {
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
 
-    private int mCurrentState = STATE_NORMAL; // 当前的状态
-
-    private static final int DISTANCE_Y_CANCEL = 50;
-
-    private static final int MSG_AUDIO_PREPARED = 0x110;
-    private static final int MSG_VOICE_CHANGED = 0x111;
-    private static final int MSG_DIALOG_DISMISS = 0x112;
-    private static final int MSG_VOICE_FINISH = 0x113;
-
-    public static final String TAG = UserDetailActivity.class.getSimpleName();
-
+   public static final String TAG = UserDetailActivity.class.getSimpleName();
 
     private Context mContext;
     private Activity mActivity;
@@ -219,55 +182,6 @@ public class UserDetailActivity extends BaseActivity {
     private SharePopwindow sharePopWindow;
     boolean isNormal = false;
 
-//    RecordDialog mDialogManager;
-//    String ossFilename = "", filename = "";
-//    String URL_UPLOAD_FILEPATH = "";
-//    private OssFileService ossFileService;
-//    private MP3Recorder mRecorder = null;
-//    String fileUrl = "";
-//    private MyTimerTask timerTask;
-//    private boolean isStartRecord;
-//
-//    private Timer timer;
-//    private int recordTime = 120;
-
-//    private Handler mHandler = new Handler() {
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case MSG_AUDIO_PREPARED:
-//                    // 开始录音后显示对话框
-//                    mDialogManager.showRecordingDialog();
-//                    isStartRecord = true;
-//                    break;
-//                case MSG_VOICE_CHANGED:
-//                    if (isStartRecord) {
-//                        recordTime--;
-//                        System.out.println("recordTime left" + recordTime + "");
-//                    } else {
-//                        if (timerTask != null) {
-//                            timerTask.cancel();
-//                            timer.cancel();
-//                        }
-//                    }
-//                    break;
-//
-//                case MSG_DIALOG_DISMISS:
-//                    mDialogManager.dismissDialog();
-//                    break;
-//                case MSG_VOICE_FINISH:
-//                    if (timerTask != null) {
-//                        timerTask.cancel();
-//                        timer.cancel();
-//                    }
-//                    recordVoice();
-//                    break;
-//            }
-//
-//            super.handleMessage(msg);
-//        }
-//    };
 
     @Override
     public void setContentView() {
@@ -300,22 +214,9 @@ public class UserDetailActivity extends BaseActivity {
 
         mContext = this;
         mActivity = this;
-
-//        ossFileService = OssHelper.initFileOSS(this);
-//        filename = SlashHelper.userManager().getUserId() + System.currentTimeMillis() + ".mp3";
-//        File downloadFile = new File(Constants.SOUND_CACHE_DIR);
-//        AppUtils.deleteAllFiles(downloadFile);
-//        if (!downloadFile.exists()) {
-//            downloadFile.mkdirs();
-//        }
-//        URL_UPLOAD_FILEPATH = Constants.SOUND_CACHE_DIR + filename;
-//        mRecorder = new MP3Recorder(new File(URL_UPLOAD_FILEPATH));
-//        registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADSOUND});
-
     }
 
     private void initView() {
-//        mDialogManager = new RecordDialog(this);
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
         // 用户名
         if (!TextUtils.isEmpty(userName))
@@ -344,81 +245,6 @@ public class UserDetailActivity extends BaseActivity {
                 AppUtils.toImageDetial(mActivity, 0, list, null, false, false, true, 0, 0);
             }
         });
-
-//        btnService.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//
-//                btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_press));
-//                mHandler.sendEmptyMessage(MSG_AUDIO_PREPARED);
-//                changeState(STATE_RECORDING);
-//
-//                startRecord();
-//
-//                //开始计时
-//                if (timerTask != null) {
-//                    timerTask.cancel();
-//                    timer.cancel();
-//                }
-//
-//                recordTime = 120;
-//                timer = new Timer(true);
-//                timerTask = new MyTimerTask();
-//                timer.scheduleAtFixedRate(timerTask, 0, 1000);
-//                return true;
-//            }
-//        });
-//
-//        btnService.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                int x = (int) event.getX();// 获得x轴坐标
-//                int y = (int) event.getY();// 获得y轴坐标
-//                switch (action) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        if (noLogin(mContext)) {
-//                            return true;
-//                        }
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
-//                        if (!isStartRecord || recordTime > 110) {
-//                            mDialogManager.tooShort();
-//                            stopRecord();
-//                            mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1000);// 延迟显示对话框
-//                        } else if (mCurrentState == STATE_RECORDING) { // 正在录音的时候，结束
-//                            mDialogManager.dismissDialog();
-//                            recordVoice();
-//
-//                        } else if (mCurrentState == STATE_WANT_TO_CANCEL) { // 想要取消
-//                            mDialogManager.dismissDialog();
-//                        }
-//                        reset();
-//                        break;
-//                    case MotionEvent.ACTION_CANCEL: // 首次开权限时会走这里，录音取消
-//                        btnService.getDelegate().setBackgroundColor(getResources().getColor(R.color.btn_normal));
-//                        mDialogManager.wantToCancel();
-//                        stopRecord();
-//                        break;
-//
-//                    case MotionEvent.ACTION_MOVE: // 滑动手指
-//                        if (isStartRecord) {
-//                            // 如果想要取消，根据x,y的坐标看是否需要取消
-//                            if (wantToCancel(x, y)) {
-//                                changeState(STATE_WANT_TO_CANCEL);
-//                            } else {
-//                                changeState(STATE_RECORDING);
-//                            }
-//                        }
-//                        break;
-//                    default:
-//                        break;
-//
-//                }
-//                return false;
-//            }
-//        });
 
         sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
             @Override
@@ -472,110 +298,6 @@ public class UserDetailActivity extends BaseActivity {
             }
         });
     }
-
-    //接收广播回调
-//    @Override
-//    protected void handleReceiver(Context context, Intent intent) {
-//        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
-//            return;
-//        }
-//        if (Constants.BROCAST_OSS_UPLOADSOUND.equals(intent.getAction())) {
-//            if (intent.getStringExtra("status").equals("ok")) {
-//                Log.d(getClass().getName(), ossFilename);
-//                fileUrl = OSSENDPOINT + ossFilename;
-//                addRemindIM();
-//            } else {
-//                ToastUtil.showMessage(intent.getStringExtra("info"));
-//            }
-//        }
-//    }
-
-    /**
-     * 恢复状态及标志位
-     */
-//    private void reset() {
-//        isStartRecord = false;
-//    }
-
-//    private boolean wantToCancel(int x, int y) {
-//        if (x < 0 || x > btnService.getWidth()) { // 超过按钮的宽度
-//            return true;
-//        }
-//        // 超过按钮的高度
-//        if (y < -DISTANCE_Y_CANCEL) {
-//            return true;
-//        }
-//
-//        return false;
-//    }
-//
-//    private void startRecord() {
-//        if (!Environment.getExternalStorageState().equals(
-//                Environment.MEDIA_MOUNTED)) {
-//            ToastUtil.showMessage("请插入SD卡！");
-//            return;
-//        }
-//        isStartRecord = true;
-//
-//        try {
-//            mRecorder.start();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private void stopRecord() {
-//        if (null != mRecorder) {
-//            mRecorder.stop();
-//        }
-//        isStartRecord = false;
-//    }
-//
-//    private void recordVoice() {
-//        //结束计时器
-//        if (timerTask != null) {
-//            timerTask.cancel();
-//            timer.cancel();
-//        }
-//
-//        if (isStartRecord) {
-//            // 停止录音
-//            stopRecord();
-//            File file = new File(URL_UPLOAD_FILEPATH);
-//            if (file.exists() && recordTime <= 110) {
-//                showPd();
-//                if (SlashHelper.userManager().getUserinfo() != null) {
-//                    ossFilename = "aduio/android_" + filename;
-//                    ossFileService.asyncPutFile(ossFilename, URL_UPLOAD_FILEPATH);
-//                }
-//            } else {
-//                mDialogManager.tooShort();
-//                // 延迟显示对话框
-//                mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 500);
-//            }
-//        }
-//
-//    }
-
-//    private void changeState(int state) {
-//        if (mCurrentState != state) {
-//            mCurrentState = state;
-//            switch (state) {
-//                case STATE_NORMAL:
-//                    break;
-//
-//                case STATE_RECORDING:
-//                    if (isStartRecord) {
-//                        mDialogManager.recording();
-//                    }
-//                    break;
-//
-//                case STATE_WANT_TO_CANCEL:
-//                    mDialogManager.wantToCancel();
-//                    break;
-//            }
-//        }
-//    }
 
     private void getNetworkData() {
         showPd();
@@ -714,83 +436,6 @@ public class UserDetailActivity extends BaseActivity {
         }
 
     }
-
-//    private void addRemindIM() {
-//        if (user2RemindIMAddRequest != null) {
-//            user2RemindIMAddRequest.cancel();
-//        }
-//        final User2RemindIMAddRequest.Input input = new User2RemindIMAddRequest.Input();
-//
-//        input.userId = SlashHelper.userManager().getUserId();
-//        input.saleUserId = userId;
-//        input.convertJosn();
-//
-//        user2RemindIMAddRequest = new User2RemindIMAddRequest(input, new ResponseListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                dismissPd();
-//            }
-//
-//            @Override
-//            public void onResponse(Object response) {
-//                dismissPd();
-//                if (((CommonResult) response).status == 1) {
-//                    int remindIMId = ((CommonResult) response).remindIMId;
-//                    YWCustomMessageBody messageBody = new YWCustomMessageBody();
-//                    //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
-//                    JSONObject object = new JSONObject();
-//                    try {
-//                        object.put("customizeMessageType", "Task");
-//                        object.put("tasktype", "VOICE");
-//                        object.put("taskTitle", "发了一个约服需求" + DateTimeUtil.getCurrentTime2() + "如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
-//                        object.put("merchantId", selectMerchant.merchantId);
-//                        object.put("reviewstatus", selectMerchant.reviewstatus);
-//                        object.put("merchantName", selectMerchant.merchantName);
-//                        object.put("userId", SlashHelper.userManager().getUserId());
-//                        object.put("fromuserName", SlashHelper.userManager().getUserinfo().name);
-//                        object.put("fromuserHead", SlashHelper.userManager().getUserinfo().head);
-//                        object.put("recordPath", fileUrl);
-//                        object.put("remindIMId", remindIMId);
-//                    } catch (JSONException e) {
-//
-//                    }
-//                    messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-//                    messageBody.setSummary("[预约服务]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
-//                    YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
-//                    YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-//                    IYWContact appContact = YWContactFactory.createAPPContact(userId + "", imKit.getIMCore().getAppKey());
-//                    imKit.getConversationService()
-//                            .forwardMsgToContact(appContact
-//                                    , message, forwardCallBack);
-//                    startActivity(imKit.getChattingActivityIntent(userId + ""));
-//
-//                } else {
-//                    ToastUtil.showMessage(((CommonResult) response).info);
-//                }
-//
-//            }
-//        });
-//        sendJsonRequest(user2RemindIMAddRequest);
-//    }
-
-//    final IWxCallback forwardCallBack = new IWxCallback() {
-//
-//        @Override
-//        public void onSuccess(Object... result) {
-//            Notification.showToastMsg(UserDetailActivity.this, "forward succeed!");
-//        }
-//
-//        @Override
-//        public void onError(int code, String info) {
-//            Notification.showToastMsg(UserDetailActivity.this, "forward fail!");
-//        }
-//
-//        @Override
-//        public void onProgress(int progress) {
-//
-//        }
-//    };
-
 
     /**
      * 拨打电话
@@ -1122,16 +767,4 @@ public class UserDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-//    /* 秒表计时器-Task */
-//    class MyTimerTask extends TimerTask {
-//        @Override
-//        public void run() {
-//            if (recordTime != 0) {
-//                mHandler.sendEmptyMessage(MSG_VOICE_CHANGED);
-//            } else {
-//                mHandler.sendEmptyMessage(MSG_VOICE_FINISH);
-//            }
-//        }
-//
-//    }
 }

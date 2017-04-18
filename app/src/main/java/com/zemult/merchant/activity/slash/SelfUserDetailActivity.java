@@ -593,7 +593,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -654,7 +654,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         input.merchantId = selectMerchant.merchantId;
         input.tags = selectMerchant.tags;
         input.state = state;
-        input.position = strPosition;
+        input.position = strPosition.equals("") ? "无" : strPosition;
         input.convertJosn();
         user2SaleMerchantEditRequest = new User2SaleMerchantEditRequest(input, new ResponseListener() {
             @Override

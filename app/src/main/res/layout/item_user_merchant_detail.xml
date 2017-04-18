@@ -37,9 +37,9 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_money"
+                        android:id="@+id/tv_distance"
                         style="@style/text_12_black_999"
-                        android:text="人均100元"/>
+                        android:text="300m"/>
 
                     <View
                         android:layout_width="1px"
@@ -48,10 +48,11 @@
                         android:background="@color/divider_c1"/>
 
                     <TextView
-                        android:id="@+id/tv_distance"
+                        android:id="@+id/tv_money"
                         style="@style/text_12_black_999"
                         android:layout_marginLeft="@dimen/margin_8dp"
-                        android:text="300m"/>
+                        android:text="人均100元"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -77,8 +78,8 @@
     <RelativeLayout
         style="@style/relative_layout_item"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin_12dp"
-        android:paddingBottom="@dimen/margin_12dp">
+        android:paddingBottom="@dimen/margin_12dp"
+        android:paddingTop="@dimen/margin_12dp">
 
         <TextView
             style="@style/text_15_black_28"
