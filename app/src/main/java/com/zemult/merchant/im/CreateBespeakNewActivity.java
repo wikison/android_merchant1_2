@@ -167,7 +167,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 pmnvSelectDeadline.setDefaultNum(num);
             }
         });
-        lhTvTitle.setText("找TA约服");
+        lhTvTitle.setText("生成服务订单");
 
         get_user_info_owner_request();
 
@@ -283,7 +283,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单-修改] " + ordertime + "  " + shopname+"(商户)");
+                            object.put("taskTitle", "[服务订单] " + ordertime + "  " + shopname+"(商户)");
                             object.put("serviceId",  SlashHelper.userManager().getUserId());
                             object.put("reservationId", ((CommonResult) response).reservationId);
                         } catch (JSONException e) {

@@ -230,7 +230,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
     @Override
     public void init() {
-        lhTvTitle.setText("预约详情");
+        lhTvTitle.setText("服务订单");
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         EventBus.getDefault().register(this);
         showPd();
@@ -310,6 +310,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                     //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     if (mReservation.state == 0) {
+                        lhTvTitle.setText("服务订单");
                         tvState.setText("待确认");
                         //修改撤销按钮   客户确认
                         if (type == 0) {//我是客户的状态下
@@ -322,6 +323,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             customerconfirmBtn.setVisibility(View.GONE);
                         }
                     } else if (mReservation.state == 1) {
+                        lhTvTitle.setText("服务定单");
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                         tvState.setText("预约成功");
                         if (type == 0) {//客户
@@ -444,7 +446,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单-修改] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
+                            object.put("taskTitle", "[服务订单] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
                                     :tvTime.getText().toString().substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
                             object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId + "");
@@ -690,6 +692,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intentserver.putExtra("saleName",mReservation.saleUserName);
                 intentserver.putExtra("merchantName",mReservation.merchantName);
                 intentserver.putExtra("merchantId",mReservation.merchantId);
+                intentserver.putExtra("reservationId",mReservation.reservationId);
                 if (!TextUtils.isEmpty(reservationId))
                     intentserver.putExtra("reservationId", Integer.valueOf(reservationId));
                 startActivity(intentserver);
