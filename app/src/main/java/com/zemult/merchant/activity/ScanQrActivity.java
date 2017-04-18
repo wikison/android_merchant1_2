@@ -12,18 +12,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyQrActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
+import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import cn.trinea.android.common.util.StringUtils;
+import zema.volley.network.ResponseListener;
 
 /**
  * Created by wikison on 2016/6/21.
@@ -46,9 +51,10 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
     TextView tvMine;
 
     //商家id, 营销经理id, 用户id;
-    String merchantId = "", userSaleId = "", userId = "",scanMoney="";
+    String merchantId = "", userSaleId = "", userId = "", scanMoney = "", reservationId = "";
     String merchantIdPrefix = "merchantId=", userSaleIdPrefix = "userId=", userIdPrefix = "userId=";
-
+    User2ReservationInfoRequest user2ReservationInfoRequest;
+    M_Reservation mReservation;
 
     @Override
     public void setContentView() {
@@ -105,21 +111,16 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
         if (!StringUtils.isBlank(text)) {
-            // pay://merchantId=300757&userId=111057&price=0.01
+            // pay://doScan?merchantId=300757&userId=111057&price=0.01&reservationId=1111
             if (text.startsWith(Constants.QR_PAY_PREFIX)) {
                 Uri uri = Uri.parse(text);
                 merchantId = uri.getQueryParameter("merchantId");
                 userSaleId = uri.getQueryParameter("userId");
-                scanMoney= uri.getQueryParameter("price");
+                scanMoney = uri.getQueryParameter("price");
+                reservationId = uri.getQueryParameter("reservationId");
                 try {
                     qrvView.getCameraManager().stopPreview();
-                    Intent intent = new Intent(ScanQrActivity.this, FindPayActivity.class);
-                    intent.putExtra("merchantId", Integer.valueOf(merchantId));
-                    intent.putExtra("userSaleId", Integer.valueOf(userSaleId));
-                    intent.putExtra("scanMoney", scanMoney);
-
-                    startActivity(intent);
-
+                    userReservationInfo();
 
                 } catch (Exception e) {
                     System.out.println(TAG + "----->" + e.getMessage());
@@ -130,7 +131,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
             // userInfo://userId=11111
             else if (text.startsWith(Constants.QR_USER_PREFIX)) {
                 String info = text.substring(Constants.QR_USER_PREFIX.length());
-                if(!userId.equals(info.substring(userIdPrefix.length()))){
+                if (!userId.equals(info.substring(userIdPrefix.length()))) {
                     userId = info.substring(userIdPrefix.length());
                     try {
                         qrvView.getCameraManager().stopPreview();
@@ -145,6 +146,43 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
             } else
                 ToastUtil.showMessage("期待您使用" + Constants.APP_CHINESE_NAME + "APP");
         }
+    }
+
+    private void userReservationInfo() {
+        if (user2ReservationInfoRequest != null) {
+            user2ReservationInfoRequest.cancel();
+        }
+        User2ReservationInfoRequest.Input input = new User2ReservationInfoRequest.Input();
+        input.reservationId = reservationId + "";
+        input.convertJosn();
+        user2ReservationInfoRequest = new User2ReservationInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                dismissPd();
+                if (((M_Reservation) response).status == 1) {
+                    mReservation = (M_Reservation) response;
+                    if(mReservation.userId== SlashHelper.userManager().getUserId()){
+                        Intent intent = new Intent(ScanQrActivity.this, FindPayActivity.class);
+                        intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+                        intent.putExtra("merchantId", Integer.valueOf(merchantId));
+                        intent.putExtra("userSaleId", Integer.valueOf(userSaleId));
+                        intent.putExtra("reservationId", Integer.valueOf(reservationId));
+                        intent.putExtra("scanMoney", scanMoney);
+                        startActivity(intent);
+                    }else{
+                        ToastUtil.showMessage("该预约单不是您的预约单, 无法买单");
+                    }
+
+                }
+
+            }
+        });
+        sendJsonRequest(user2ReservationInfoRequest);
     }
 
 
