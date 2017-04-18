@@ -13,15 +13,6 @@
         android:background="@color/transparent" />
 
 
-    <ImageView
-        android:layout_marginTop="5dp"
-        android:visibility="gone"
-        android:id="@+id/small_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@mipmap/volume_icon_loud_black" />
 
     <TextView
         android:id="@+id/name"

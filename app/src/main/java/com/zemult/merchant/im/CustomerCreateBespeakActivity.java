@@ -578,7 +578,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                     try {
                         object.put("customizeMessageType", "Task");
                         object.put("tasktype", "VOICE");
-                        object.put("taskTitle", "发了一个约服需求" + DateTimeUtil.getCurrentTime2() + "如管家2分钟未回复，约服将帮您联系管家并在5分钟内给您回复，请稍等...");
+                        object.put("taskTitle", "【线上约服】我发起了一个线上约服需求，快来看一看吧！");
                         object.put("merchantId", m_merchant.merchantId);
                         object.put("reviewstatus", m_merchant.reviewstatus);
                         object.put("merchantName", m_merchant.merchantName);
@@ -591,7 +591,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
                     }
                     messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
-                    messageBody.setSummary("[预约服务]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                    messageBody.setSummary("[线上约服]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                     YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
                     YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
                     IYWContact appContact = YWContactFactory.createAPPContact(serviceId+"", imKit.getIMCore().getAppKey());

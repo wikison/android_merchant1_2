@@ -1195,7 +1195,6 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                 convertView = View.inflate(fragment.getActivity(), R.layout.demo_custom_msg_layout_without_head, null);
                 holder.head = (ImageView) convertView.findViewById(R.id.head);
                 holder.name = (TextView) convertView.findViewById(R.id.name);
-                holder.small_head = (ImageView) convertView.findViewById(R.id.small_head);
                 convertView.setTag(holder);
                 YWLog.i(TAG, "getCustomView, convertView == null");
             } else {
@@ -1210,8 +1209,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_liwu_icon,null);
             }
             else if("VOICE".equals(tasktype)){
-                holder.small_head.setVisibility(View.VISIBLE);
-                holder.head.setVisibility(View.GONE);
+                headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chat_laba_icon,null);
             }
             else {
                 headLoadHelper.setCustomOrTribeHeadView(holder.head, R.mipmap.chart_hongbao_icon,null);
@@ -1233,7 +1231,6 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
     public class ViewHolder2 {
         ImageView head;
-        ImageView small_head;
         TextView name;
     }
 

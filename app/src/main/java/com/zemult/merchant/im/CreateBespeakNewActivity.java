@@ -292,11 +292,19 @@ public class CreateBespeakNewActivity extends BaseActivity {
                         messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
                         messageBody.setSummary("[服务订单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                        YWMessage message2 = YWMessageChannel.createTextMessage("您好，已经按照你的要求订好了，你看一下，没问题就确认一下，谢谢~");
                         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
                         IYWContact appContact = YWContactFactory.createAPPContact(customerId+ "", imKit.getIMCore().getAppKey());
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
+
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        , message2, forwardCallBack);
+
+
+
 //                        startActivity(imKit.getChattingActivityIntent(customerId + ""));
                         finish();
                     } else {
