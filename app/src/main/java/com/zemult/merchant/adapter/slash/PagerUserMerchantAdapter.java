@@ -60,9 +60,11 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     public void setOnViewTagClickListener(ViewTagClickListener onViewTagClickListener) {
         this.onViewTagClickListener = onViewTagClickListener;
     }
+
     public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
         this.onViewStateClickListener = onViewStateClickListener;
     }
+
     public void setOnViewPositionClickListener(ViewPositionClickListener onViewPositionClickListener) {
         this.onViewPositionClickListener = onViewPositionClickListener;
     }
@@ -166,7 +168,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         }
 
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        holder.tvServicePosition.setText(entity.position);
+        String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
+        holder.tvServicePosition.setText(strPosition);
 
         initTags(holder, entity);
         dealState(holder, entity);
@@ -198,7 +201,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                 holder.tvDistance.setText(entity.distance + "m");
         }
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        holder.tvServicePosition.setText(entity.position);
+        String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
+        holder.tvServicePosition.setText(strPosition);
         if (entity.unSureOrderNum > 0) {
             holder.llServiceRecord.setVisibility(View.VISIBLE);
             holder.tvUnsureNum.setText("待确认服务单" + entity.unSureOrderNum + "条");

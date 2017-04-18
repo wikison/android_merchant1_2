@@ -179,7 +179,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                         initTags(m_reservation.tags);
                         tvShopname.setText(m_reservation.merchantName);
                         tvName.setText(m_reservation.userName);
-                        imageManager.loadCircleImage(m_reservation.userHead,vUser);
+                        imageManager.loadCircleHead(m_reservation.userHead,vUser);
                         tvShijian.setText(m_reservation.reservationTime);
                         tvRenshu.setText(m_reservation.num+"人");
                         tvRenjun.setText(m_reservation.perMoney+"元");
