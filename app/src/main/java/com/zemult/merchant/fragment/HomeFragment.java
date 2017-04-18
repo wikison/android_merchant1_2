@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,10 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundLinearLayout;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
@@ -62,7 +67,9 @@ import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.ModelUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.HeaderHomeView;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 import com.zemult.merchant.view.common.CommonDialog;
 
@@ -84,6 +91,8 @@ import zema.volley.network.ResponseListener;
 public class HomeFragment extends BaseFragment implements SmoothListView.ISmoothListViewListener, IHomeView {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
     @Bind(R.id.tv_city)
     TextView tvCity;
     @Bind(R.id.ll_city)
@@ -121,6 +130,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private AllIndustryAdapter industryAdapter;
     private LinearLayoutManager linearLayoutManager;
     private int industryId = -1;
+    private SharePopwindow sharePopWindow;
 
     @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
@@ -161,7 +171,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                                 startActivity(intent);
                                 break;
                             case 3:
-                                startActivity(new Intent(mActivity, InviteFriendActivity.class));
+                                if (sharePopWindow.isShowing())
+                                    sharePopWindow.dismiss();
+                                else
+                                    sharePopWindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0);
                                 break;
                         }
                     }
@@ -301,8 +314,78 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             }
         });
 
+        sharePopWindow = new SharePopwindow(mContext, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                UMImage shareImage = new UMImage(mContext, R.mipmap.icon_share);
 
+                switch (position) {
+                    case SharePopwindow.SINA:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.SINA)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.WECHAT:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+                    case SharePopwindow.WECHAT_FRIEND:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+
+                    case SharePopwindow.QQ:
+                        new ShareAction(mActivity)
+                                .setPlatform(SHARE_MEDIA.QQ)
+                                .setCallback(umShareListener)
+                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withTargetUrl(Constants.APP_DOWNLOAD_URL)
+                                .withMedia(shareImage)
+                                .withTitle("约服-找个喜欢的人来服务")
+                                .share();
+                        break;
+                }
+            }
+        });
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
+            ToastUtil.showMessage("分享取消");
+        }
+    };
 
     private void initLocation() {
         boolean bLocationPermission = AndPermission.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
