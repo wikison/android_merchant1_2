@@ -192,8 +192,11 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
 
         userAdapter.setListDate(userChannelList);
         otherAdapter.setListDate(otherChannelList);
-        applyBtn.setEnabled(false);
-        applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+        if(userChannelList.size()==0){
+            applyBtn.setEnabled(false);
+            applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+        }
+
 
     }
 

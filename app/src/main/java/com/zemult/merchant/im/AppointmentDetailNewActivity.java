@@ -538,6 +538,27 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 @Override
                 public void onResponse(Object response) {
                     if (((CommonResult) response).status == 1) {
+                        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+                        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("customizeMessageType", "Task");
+                            object.put("tasktype", "ORDER");
+                            object.put("taskTitle", "[服务定单] " + mReservation.reservationTime + "  " + mReservation.merchantName+"(商户)");
+                            object.put("serviceId",  mReservation.saleUserId+ "");
+                            object.put("reservationId", reservationId);
+                        } catch (JSONException e) {
+
+                        }
+                        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+                        messageBody.setSummary("[服务定单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.saleUserId+ "", imKit.getIMCore().getAppKey());
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        , message, forwardCallBack);
+
                         userReservationInfo();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -640,6 +661,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         intent.putExtra("money", mReservation.reservationMoney);
                         intent.putExtra("saleName", mReservation.saleUserName);
                         intent.putExtra("saleHead", mReservation.saleUserHead);
+                        intent.putExtra("merchantName", mReservation.merchantName);
+                        intent.putExtra("reservationTime", mReservation.reservationTime);
                         String imMessageTitle="",imMessageContent="";
                         for (int i : selectIdSet) {
                             imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";

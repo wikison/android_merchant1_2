@@ -68,8 +68,6 @@ import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class ChoosePayType4OrderActivity extends BaseActivity {
-    public static final String MERCHANT_INFO = "merchantInfo";
-    public static final String USER_INFO = "userInfo";
     private static final int SDK_PAY_FLAG = 1;
     // 商户订单号
     public String ORDER_SN = "";
@@ -110,7 +108,7 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
     UserPaySetWxRequest userPaySetWxRequest;
     WxPayApplyPayRequest wxPayApplyPayRequest;
     double paymoney, money,rewardMoney;
-    String saleName = "",  saleHead="",reservationId="";
+    String saleName = "",  saleHead="",reservationId="",reservationTime, merchantName;
     int payType, toUserId;
     private IWXAPI api;
 
@@ -132,6 +130,8 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         saleHead = getIntent().getStringExtra("saleHead");
         saleName = getIntent().getStringExtra("saleName");
         reservationId=getIntent().getStringExtra("reservationId");
+        reservationTime =getIntent().getStringExtra("reservationTime");
+        merchantName=getIntent().getStringExtra("merchantName");
 
         pay.setText("确认支付  ￥" + Convert.getMoneyString(paymoney));
         lhTvTitle.setText("支付订单");
@@ -202,8 +202,31 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
 //        intent.putExtra("billId", userPayId);
 //        startActivity(intent);
         finish();
+    }
 
 
+    private void  sendOrderSureMessage (){
+
+        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+        JSONObject object = new JSONObject();
+        try {
+            object.put("customizeMessageType", "Task");
+            object.put("tasktype", "ORDER");
+            object.put("taskTitle", "[服务定单] " + reservationTime + "  " + merchantName+"(商户)");
+            object.put("serviceId",  toUserId+ "");
+            object.put("reservationId",reservationId);
+        } catch (JSONException e) {
+
+        }
+        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+        messageBody.setSummary("[服务定单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+ "", imKit.getIMCore().getAppKey());
+        imKit.getConversationService()
+                .forwardMsgToContact(appContact
+                        , message, forwardCallBack);
     }
 
 
@@ -443,6 +466,7 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
             return;
         }
         if (Constants.BROCAST_WX_PAY_SUCCESS.equals(intent.getAction())) {
+            sendOrderSureMessage ();
             if(rewardMoney!=0){
                 sendPayMoneyMsg();
             }
@@ -500,7 +524,7 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
                         if(rewardMoney!=0){
                             sendPayMoneyMsg();
                         }
-
+                        sendOrderSureMessage ();
                         Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
                         intent1.putExtra("reservationId", reservationId);
                         startActivity(intent1);

@@ -14,8 +14,10 @@ import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWCrossContactProfileCallback;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.lib.model.contact.Contact;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.im.common.Notification;
+import com.zemult.merchant.util.SlashHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,13 +53,18 @@ public class UserProfileSampleHelper {
             public void onUserHeadClick(Fragment fragment, YWConversation conversation, String userId, String appKey, boolean isConversationListPage) {
 //                Notification.showToastMsg(fragment.getActivity(), "你点击了用户 " + userId + " 的头像");
                 try{
-                    Intent intent =new Intent(fragment.getActivity(), UserDetailActivity.class);
-                    intent.putExtra("userId",Integer.parseInt(userId));
-                    fragment.getActivity().startActivity(intent);
+                    if(SlashHelper.userManager().getUserinfo().saleUserNum!=0&&SlashHelper.userManager().getUserId()==Integer.parseInt(userId)){
+                        Intent   intent = new Intent(fragment.getActivity(), SelfUserDetailActivity.class);
+                        intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                        fragment.getActivity().startActivity(intent);
+                    }
+                    else{
+                        Intent intent =new Intent(fragment.getActivity(), UserDetailActivity.class);
+                        intent.putExtra("userId",Integer.parseInt(userId));
+                        fragment.getActivity().startActivity(intent);
+                    }
                 }catch (Exception e){
-
                 }
-
             }
 
             @Override
