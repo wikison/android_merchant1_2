@@ -178,6 +178,7 @@
     </RelativeLayout>
 
     <TextView
+        android:visibility="gone"
         style="@style/text_13_black_999"
         android:padding="@dimen/margin_16dp"
         android:text="@string/text_phone_isopen"/>
