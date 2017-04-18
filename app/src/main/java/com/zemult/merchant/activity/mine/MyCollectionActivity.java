@@ -163,6 +163,18 @@ public class MyCollectionActivity extends BaseActivity implements SmoothListView
                 startActivity(intent);
             }
         });
+        mAdapter.setItemClickListener(new HomeChildNewAdapter.ItemClickListener() {
+            @Override
+            public void onBannerClick(M_Merchant m_merchant) {
+                Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+                intent.putExtra(MerchantDetailActivity.MERCHANT_ID, m_merchant.merchantId);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onRvHeadClick(int pos) {
+            }
+        });
 //        searchEtInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 //                if (actionId == EditorInfo.IME_ACTION_SEARCH
