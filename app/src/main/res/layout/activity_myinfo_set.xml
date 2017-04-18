@@ -57,7 +57,7 @@
             style="@style/text_15_black_28"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:text="名字"/>
+            android:text="昵称"/>
 
         <TextView
             android:id="@+id/tv_name"
