@@ -157,7 +157,11 @@ public class UserDetailActivity extends BaseActivity {
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
 
-   public static final String TAG = UserDetailActivity.class.getSimpleName();
+    public static final String TAG = UserDetailActivity.class.getSimpleName();
+    @Bind(R.id.tv_call)
+    TextView tvCall;
+    @Bind(R.id.iv_call)
+    ImageView ivCall;
 
     private Context mContext;
     private Activity mActivity;
@@ -165,7 +169,7 @@ public class UserDetailActivity extends BaseActivity {
     private boolean isSelf = false; //用户是否是自己
     UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
     Merchant2SaleUserMerchantListRequest merchant2SaleUserMerchantListRequest; // 挂靠的商家
-//    User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
+    //    User2RemindIMAddRequest user2RemindIMAddRequest;  //用户发送语音预约消息
     UserAttractAddRequest attractAddRequest; // 添加关注
     UserAttractDelRequest attractDelRequest; // 取消关注
     private M_Userinfo userInfo;
@@ -435,6 +439,18 @@ public class UserDetailActivity extends BaseActivity {
             ivRight.setImageResource(R.mipmap.jubao_icon);
         }
 
+        String[] phoneNoArray = userInfo.getPhoneNum().split(";");
+        if (phoneNoArray[0] != null && phoneNoArray[0].length() == 11) {
+            rllCall.setEnabled(true);
+
+        } else {
+            rllCall.setEnabled(false);
+            rllCall.getDelegate().setStrokeColor(getResources().getColor(R.color.font_black_999));
+            tvCall.setTextColor(getResources().getColor(R.color.font_black_999));
+            ivCall.setImageResource(R.mipmap.dadianhua_hui);
+        }
+
+
     }
 
     /**
@@ -612,7 +628,7 @@ public class UserDetailActivity extends BaseActivity {
         sendJsonRequest(attractDelRequest);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right,R.id.lh_tv_title, R.id.ll_right, R.id.btn_focus, R.id.ll_right2, R.id.iv_right2, R.id.rll_call, R.id.rll_im,R.id.btn_service})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_right, R.id.lh_tv_title, R.id.ll_right, R.id.btn_focus, R.id.ll_right2, R.id.iv_right2, R.id.rll_call, R.id.rll_im, R.id.btn_service})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -760,11 +776,11 @@ public class UserDetailActivity extends BaseActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
 }

@@ -49,8 +49,8 @@
 
                         <ImageView
                             android:id="@+id/iv_head"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:background="@color/transparent"
                             android:scaleType="centerCrop"
                             android:src="@mipmap/user_icon"/>
@@ -99,7 +99,7 @@
                                         android:drawablePadding="@dimen/margin_6dp"
                                         android:paddingBottom="2dp"
                                         android:paddingTop="2dp"
-                                        android:text="金牌"
+                                        android:text=""
                                         android:textColor="@color/bg_head"/>
 
                                 </RelativeLayout>
@@ -332,11 +332,13 @@
                 app:rv_cornerRadius="18dp">
 
                 <ImageView
+                    android:id="@+id/iv_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/dadianhua_orange"/>
 
                 <TextView
+                    android:id="@+id/tv_call"
                     style="@style/text_18_black_28"
                     android:layout_marginLeft="@dimen/margin_12dp"
                     android:text="电话咨询"
