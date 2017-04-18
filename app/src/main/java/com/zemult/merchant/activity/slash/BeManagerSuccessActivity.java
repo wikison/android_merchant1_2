@@ -189,7 +189,7 @@ public class BeManagerSuccessActivity extends BaseActivity {
     }
 
     /**
-     * 用户申请成为商家的营销经理
+     * 用户更新服务管家通讯录
      */
     User2RefreshSaleUserRequest refreshSaleUserRequest;
 

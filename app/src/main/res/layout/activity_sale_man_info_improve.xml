@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:id="@+id/ll_root"
     tools:context="com.zemult.merchant.activity.mine.SaleManInfoImproveActivity">
     <include layout="@layout/layout_head"></include>
     
@@ -82,6 +82,7 @@
             android:textColor="#464646"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
             android:id="@+id/tongxunlu_tv"
             android:text="去设置"
             android:layout_marginLeft="6dp"
@@ -96,6 +97,7 @@
     <TextView
         android:layout_marginTop="3dp"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_centerVertical="true"
         android:text="@string/forfastfind"
         android:textSize="12sp"

@@ -1,14 +1,18 @@
 package com.zemult.merchant.activity.mine;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,11 +24,14 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.HeadManageActivity;
 import com.zemult.merchant.aip.mine.UserEditinfoRequest;
+import com.zemult.merchant.aip.slash.User2RefreshSaleUserRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -50,10 +57,14 @@ public class SaleManInfoImproveActivity extends BaseActivity {
     Button btnSave;
     @Bind(R.id.iv_head)
     ImageView ivHead;
+    @Bind(R.id.ll_root)
+    LinearLayout llRoot;
+
     UserEditinfoRequest userEditinfoRequest;
 
-    String headString = "";
+    String headString = "", bookPhones;
     Activity mActivity;
+    private boolean hasload;
 
     @Override
     public void setContentView() {
@@ -62,19 +73,25 @@ public class SaleManInfoImproveActivity extends BaseActivity {
 
     @Override
     public void init() {
+        mActivity = this;
         lhTvTitle.setText("完善资料");
-        initData();
         registerReceiver(new String[]{Constants.BROCAST_EDITUSERINFO});
         EditFilter.WordFilter(etName, 6);
-    }
-
-    private void initData() {
-        mActivity = this;
         etName.setText(SlashHelper.userManager().getUserinfo().getName());
         if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
             imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         }
-
+        
+        //view加载完成时回调
+        llRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(!hasload){
+                    hasload = true;
+                    ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+                }
+            }
+        });
     }
 
     //接收广播回调
@@ -86,16 +103,64 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_EDITUSERINFO.equals(intent.getAction())) {
-            initData();
+            if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
+                imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+            }
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults.length > 0) {
+            try {
+                bookPhones = AppUtils.getPhoneNumbers(mActivity);
+                // 只能用这种折中的方法了
+                if (StringUtils.isBlank(bookPhones)) {
+                    bookPhones = "";
+                }
+            } catch (Exception e) {
+                bookPhones = "";
+            }
+            user2_reflash_saleuser();
+        }
+    }
+    /**
+     * 用户更新服务管家通讯录
+     */
+    User2RefreshSaleUserRequest refreshSaleUserRequest;
+
+    private void user2_reflash_saleuser() {
+        showPd();
+        if (refreshSaleUserRequest != null) {
+            refreshSaleUserRequest.cancel();
+        }
+        User2RefreshSaleUserRequest.Input input = new User2RefreshSaleUserRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.bookPhones = bookPhones;
+        input.convertJosn();
+        refreshSaleUserRequest = new User2RefreshSaleUserRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(refreshSaleUserRequest);
+    }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.iv_head, R.id.tongxunlu_tv, R.id.notice_tv, R.id.btn_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
-
             case R.id.ll_back:
                 setResult(RESULT_OK);
                 onBackPressed();

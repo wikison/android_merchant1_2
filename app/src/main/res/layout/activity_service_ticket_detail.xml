@@ -286,10 +286,11 @@
 
             <LinearLayout
                 android:id="@+id/success1_ll"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -346,14 +347,15 @@
                             android:layout_width="130dp"
                             android:background="@drawable/detail_btn"
                             android:text="评价一下"
+                            android:visibility="gone"
                             android:layout_marginBottom="8dp"
                             android:textColor="#e6bb7c"/>
 
                         <Button
                             android:id="@+id/invite_btn"
                             style="@style/common_btn_235"
-                            android:layout_width="128dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_width="130dp"
+
                             android:layout_toRightOf="@+id/recom_btn"
                             android:layout_marginBottom="8dp"
                             android:text="邀请函"/>
