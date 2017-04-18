@@ -137,6 +137,7 @@ public class SettingMoney4OrderActivity extends BaseActivity {
                     intent.putExtra("merchantId",merchantId);
                     intent.putExtra("saleUserId",saleUserId);
                     intent.putExtra("reservationId",reservationId);
+                    intent.putExtra("reservationMoney",reservationMoney);
                     startActivityForResult(intent,1000);
                 }
 
