@@ -523,7 +523,7 @@
                     android:textSize="15sp" />
 
                 <RelativeLayout
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:id="@+id/ordersuccess_btn_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
