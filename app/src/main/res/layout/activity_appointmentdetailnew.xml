@@ -550,7 +550,7 @@
                     android:textSize="15sp" />
 
                 <RelativeLayout
-                    android:visibility="gone"
+                   android:visibility="gone"
                     android:id="@+id/ordersuccess_btn_rl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -580,7 +580,7 @@
                             style="@style/common_btn_235"
                             android:layout_width="130dp"
                             android:layout_marginBottom="@dimen/margin_12dp"
-                            android:layout_marginLeft="20dp"
+
                             android:layout_toRightOf="@+id/invite_btn"
                             android:padding="8dp"
                             android:text="邀请函"
