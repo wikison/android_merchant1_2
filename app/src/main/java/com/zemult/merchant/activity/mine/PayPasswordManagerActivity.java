@@ -10,15 +10,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.app.BaseActivity;
-import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 
 public class PayPasswordManagerActivity extends BaseActivity {
     private static final int REQ_BIND_BANK = 0x120;
@@ -41,6 +40,7 @@ public class PayPasswordManagerActivity extends BaseActivity {
     int isSetPaypwd;
     private String smsCode, oldPassWord; //短信验证码
     private Context context;
+    private String title, content;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_pay_password_manager);
@@ -158,6 +158,9 @@ public class PayPasswordManagerActivity extends BaseActivity {
         else if (requestCode == ValidatePayPwdActivity.REQUEST_CONFIRM_PASSWORD) {
             if (resultCode == RESULT_OK) {
                 ToastUtil.showMessage("设置成功");
+                if (isSetPaypwd==0) {
+                    SlashHelper.userManager().getUserinfo().setIsSetPaypwd(1);
+                }
                 finish();
             }
             if (isSetPaypwd==0) {
@@ -186,24 +189,44 @@ public class PayPasswordManagerActivity extends BaseActivity {
     }
 
     private void toEditNewPwd() {
+        // 是否设置过安全密码  0否  1是
+        if(isSetPaypwd == 0){
+            title = "安全密码";
+            String phone = SlashHelper.userManager().getUserinfo().getPhoneNum();
+            if(!StringUtils.isBlank(phone)
+                    && phone.length() > 10)
+                content = "请" + phone.substring(0,3) + "****" + phone.substring(phone.length()-4,phone.length()) + "设置安全密码";
+        }else {
+            title = "修改安全密码";
+            content = "请输入新的安全密码";
+        }
+
         Intent intent = new Intent(this, ValidatePayPwdActivity.class);
         intent.putExtra(ValidatePayPwdActivity.OPERATION,
                 ValidatePayPwdActivity.REQUEST_NEW_PASSWORD);
-        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
+        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, title);
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
-        intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请输入新的安全密码");
+        intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, content);
         intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "");//下一步
         startActivityForResult(intent,
                 ValidatePayPwdActivity.REQUEST_NEW_PASSWORD);
     }
 
     private void toConfirmNewPwd(Intent data) {
+        // 是否设置过安全密码  0否  1是
+        if(isSetPaypwd == 0){
+            title = "安全密码";
+            content = "请再次输入以确认";
+        }else {
+            title = "修改安全密码";
+            content = "请再次输入新的安全密码";
+        }
         Intent intent = new Intent(this, ValidatePayPwdActivity.class);
         intent.putExtra(ValidatePayPwdActivity.OPERATION,
                 ValidatePayPwdActivity.REQUEST_CONFIRM_PASSWORD);
-        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, "修改安全密码");
+        intent.putExtra(ValidatePayPwdActivity.TITLE_TV_TEXT, title);
         intent.putExtra(ValidatePayPwdActivity.TIP_TV_TEXT, "");
-        intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, "请再次输入新的安全密码");
+        intent.putExtra(ValidatePayPwdActivity.CONTENT_TV_TEXT, content);
         intent.putExtra(ValidatePayPwdActivity.CONFIRM_BTN_TEXT, "完成");//下一步
         intent.putExtra(ValidatePayPwdActivity.PASSWORD,
                 data.getStringExtra(ValidatePayPwdActivity.PASSWORD));
