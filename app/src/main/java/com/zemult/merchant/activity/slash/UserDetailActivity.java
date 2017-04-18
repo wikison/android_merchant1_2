@@ -732,7 +732,7 @@ public class UserDetailActivity extends BaseActivity {
     private void doEdit() {
         if (noLogin(mContext))
             return;
-        if (btnFocus.getText().toString().contains("＋")) {
+        if ("关注管家".equals(btnFocus.getText().toString())) {
             ToastUtil.showMessage("请先关注管家");
             return;
         }
