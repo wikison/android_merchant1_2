@@ -378,7 +378,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
-                        serveraccountBtn.setVisibility(View.VISIBLE);
+                        serveraccountBtn.setVisibility(View.GONE);
                         customerconfirmBtn.setVisibility(View.GONE);
                         llZanshang.setVisibility(View.GONE);
                         llWeikuan.setVisibility(View.VISIBLE);
@@ -391,13 +391,15 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         billdetailsBtn.setVisibility(View.VISIBLE);
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
+                        serveraccountBtn.setVisibility(View.GONE);
+
                     }
 
                     shopTv.setText(mReservation.merchantName);
                     pernumberTv.setText(mReservation.num + "人");
                     tvTime.setText(mReservation.reservationTime);
                     tvExtra.setText(mReservation.note);
-                    tvDingjin.setText(mReservation.reservationMoney+"");
+                    tvDingjin.setText(Convert.getMoneyString(mReservation.reservationMoney));
                     etCustomerremark.setText(mReservation.note);
 
                     etDingjin.setText(mReservation.reservationMoney+"");

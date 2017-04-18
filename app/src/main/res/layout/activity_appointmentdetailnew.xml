@@ -188,7 +188,35 @@
                     android:text="------" />
             </RelativeLayout>
 
-            <View style="@style/divider1dp"></View>
+            <View style="@style/divider1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                ></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_ordertime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    style="@style/detail_left"
+                    android:text="时间" />
+
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/detail_right"
+                    android:layout_centerVertical="true"
+                    android:text="------" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -217,29 +245,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <View
-                style="@style/view1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"></View>
-
-            <RelativeLayout
-                android:id="@+id/rl_ordertime"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/ripple_item_clicked2">
-
-                <TextView
-                    style="@style/detail_left"
-                    android:text="时间" />
-
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    style="@style/detail_right"
-                    android:layout_centerVertical="true"
-                    android:text="------" />
             </RelativeLayout>
 
             <View
