@@ -653,7 +653,8 @@ public class Urls {
     public static String USER2_REMINDIM_INFO = "user2_remindIM_info";
     //修改 语音预约消息为已读
     public static String USER2_REMINDIM_READ = "user2_remindIM_read";
-
+    //首页 用户自己所在的服务指数最高的商家
+    public static String USER2_FIRST_SALEUSER = "user2_first_saleUser";
 
 
 }

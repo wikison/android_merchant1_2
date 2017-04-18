@@ -107,66 +107,86 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             holder.tvUserName.setText(entity.saleUserName);
         // 服务管家的用户头像
         mImageManager.loadCircleHead(entity.saleUserHead, holder.ivHead);
-        // 商家名称
-        if (!TextUtils.isEmpty(entity.name))
-            holder.tvMerchantName.setText(entity.name);
-        // 人均消费
-        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
-        // 距中心点距离(米)
-        if (!StringUtils.isEmpty(entity.distance)) {
-            if (entity.distance.length() > 3) {
-                double d = Double.valueOf(entity.distance);
-                holder.tvDistance.setText(d / 1000 + "km");
-            } else
-                holder.tvDistance.setText(entity.distance + "m");
-        }
+
         // 服务管家的顾客数
         holder.tvNum.setText(entity.saleUserFanNum + "关注");
         holder.ivService.setImageResource(entity.getExperienceImg());
         holder.tvService.setText(entity.getExperienceText() + "管家");
-        // 前7日的服务分总和
-        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+
         // 签约商户
         if (entity.reviewstatus == 2)
             holder.ivQianyue.setVisibility(View.VISIBLE);
         else
             holder.ivQianyue.setVisibility(View.GONE);
-        // 设置广告数据
-        List<String> adList = new ArrayList<>();
-        if (StringUtils.isBlank(entity.pics)) {
-            adList.add(entity.pic);
-        } else {
-            adList = Arrays.asList(entity.pics.split(","));
-        }
 
-        holder.banner.setImages(adList);
-        holder.banner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                mImageManager.loadRoundImage2((String) path, imageView, 24, "@450h");
+
+        if(entity.merchantId != 0){
+            // 商家名称
+            if (!TextUtils.isEmpty(entity.name))
+                holder.tvMerchantName.setText(entity.name);
+            // 人均消费
+            holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
+            // 距中心点距离(米)
+            if (!StringUtils.isEmpty(entity.distance)) {
+                if (entity.distance.length() > 3) {
+                    double d = Double.valueOf(entity.distance);
+                    holder.tvDistance.setText(d / 1000 + "km");
+                } else
+                    holder.tvDistance.setText(entity.distance + "m");
             }
-        });
-        holder.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Intent intent;
-                if (SlashHelper.userManager().getUserId() == entity.saleUserId) {
-                    intent = new Intent(mContext, SelfUserDetailActivity.class);
-                } else {
-                    intent = new Intent(mContext, UserDetailActivity.class);
+            // 前7日的服务分总和
+            holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+
+            // 设置广告数据
+            List<String> adList = new ArrayList<>();
+            if (StringUtils.isBlank(entity.pics)) {
+                adList.add(entity.pic);
+            } else {
+                adList = Arrays.asList(entity.pics.split(","));
+            }
+
+            holder.ivNoMerchant.setVisibility(View.GONE);
+            holder.banner.setVisibility(View.VISIBLE);
+            holder.banner.setImages(adList);
+            holder.banner.setImageLoader(new ImageLoader() {
+                @Override
+                public void displayImage(Context context, Object path, ImageView imageView) {
+                    mImageManager.loadRoundImage2((String) path, imageView, 24, "@450h");
                 }
-                intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
-                intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
-                mContext.startActivity(intent);
-            }
-        });
-        holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
+            });
+            holder.banner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+                    Intent intent;
+                    if (SlashHelper.userManager().getUserId() == entity.saleUserId) {
+                        intent = new Intent(mContext, SelfUserDetailActivity.class);
+                    } else {
+                        intent = new Intent(mContext, UserDetailActivity.class);
+                    }
+                    intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
+                    intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
+                    mContext.startActivity(intent);
+                }
+            });
+            holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
+        }else {
+            // 商家名称
+            holder.tvMerchantName.setText("暂无");
+            // 人均消费
+            holder.tvMoney.setText("暂无");
+            // 距中心点距离(米)
+            holder.tvDistance.setText("暂无");
+            // 前7日的服务分总和
+            holder.tvZhishu.setText("7天服务指数暂无");
+            holder.ivNoMerchant.setVisibility(View.VISIBLE);
+            holder.banner.setVisibility(View.GONE);
+        }
     }
 
 
     private void initTags(ViewHolder holder, M_Merchant entity) {
         if (TextUtils.isEmpty(entity.saleUserTags))
-            holder.rgTaService.setVisibility(View.GONE);
+            holder.rgTaService.setVisibility(View.INVISIBLE);
         else {
             holder.rgTaService.setVisibility(View.VISIBLE);
             holder.rgTaService.setChildMargin(0, 0, 24, 36);
@@ -211,12 +231,14 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         TextView tvMerchantName;
         @Bind(R.id.tv_job)
         TextView tvJob;
+        @Bind(R.id.iv_no_merchant)
+        ImageView ivNoMerchant;
+        @Bind(R.id.banner)
+        Banner banner;
         @Bind(R.id.tv_distance)
         TextView tvDistance;
         @Bind(R.id.tv_money)
         TextView tvMoney;
-        @Bind(R.id.banner)
-        Banner banner;
         @Bind(R.id.iv_qianyue)
         ImageView ivQianyue;
         @Bind(R.id.rg_ta_service)

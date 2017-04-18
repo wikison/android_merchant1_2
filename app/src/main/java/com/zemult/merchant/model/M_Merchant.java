@@ -255,5 +255,491 @@ public class M_Merchant implements Serializable {
         return result;
     }
 
+    public String getMerchantName() {
+        return merchantName;
+    }
 
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public String getMerchantPic() {
+        return merchantPic;
+    }
+
+    public void setMerchantPic(String merchantPic) {
+        this.merchantPic = merchantPic;
+    }
+
+    public String getIndustryNames() {
+        return industryNames;
+    }
+
+    public void setIndustryNames(String industryNames) {
+        this.industryNames = industryNames;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public int getPersonNum() {
+        return personNum;
+    }
+
+    public void setPersonNum(int personNum) {
+        this.personNum = personNum;
+    }
+
+    public List<M_Merchant> getMerchantList() {
+        return merchantList;
+    }
+
+    public void setMerchantList(List<M_Merchant> merchantList) {
+        this.merchantList = merchantList;
+    }
+
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
+
+    public int getIndustryId() {
+        return industryId;
+    }
+
+    public void setIndustryId(int industryId) {
+        this.industryId = industryId;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEast() {
+        return east;
+    }
+
+    public void setEast(String east) {
+        this.east = east;
+    }
+
+    public String getWest() {
+        return west;
+    }
+
+    public void setWest(String west) {
+        this.west = west;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getIndustryName() {
+        return industryName;
+    }
+
+    public void setIndustryName(String industryName) {
+        this.industryName = industryName;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public String getIDphotos() {
+        return IDphotos;
+    }
+
+    public void setIDphotos(String IDphotos) {
+        this.IDphotos = IDphotos;
+    }
+
+    public double getCommissionDiscount() {
+        return commissionDiscount;
+    }
+
+    public void setCommissionDiscount(double commissionDiscount) {
+        this.commissionDiscount = commissionDiscount;
+    }
+
+    public double getPerMoney() {
+        return perMoney;
+    }
+
+    public void setPerMoney(double perMoney) {
+        this.perMoney = perMoney;
+    }
+
+    public double getSaleMoney() {
+        return saleMoney;
+    }
+
+    public void setSaleMoney(double saleMoney) {
+        this.saleMoney = saleMoney;
+    }
+
+    public int getSaleNum() {
+        return saleNum;
+    }
+
+    public void setSaleNum(int saleNum) {
+        this.saleNum = saleNum;
+    }
+
+    public int getPayNum() {
+        return payNum;
+    }
+
+    public void setPayNum(int payNum) {
+        this.payNum = payNum;
+    }
+
+    public double getSaleUserMoney() {
+        return saleUserMoney;
+    }
+
+    public void setSaleUserMoney(double saleUserMoney) {
+        this.saleUserMoney = saleUserMoney;
+    }
+
+    public int getSaleuserNum() {
+        return saleuserNum;
+    }
+
+    public void setSaleuserNum(int saleuserNum) {
+        this.saleuserNum = saleuserNum;
+    }
+
+    public String getSaleUserHeads() {
+        return saleUserHeads;
+    }
+
+    public void setSaleUserHeads(String saleUserHeads) {
+        this.saleUserHeads = saleUserHeads;
+    }
+
+    public int getIsFan() {
+        return isFan;
+    }
+
+    public void setIsFan(int isFan) {
+        this.isFan = isFan;
+    }
+
+    public int getFromType() {
+        return fromType;
+    }
+
+    public void setFromType(int fromType) {
+        this.fromType = fromType;
+    }
+
+    public String getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
+    }
+
+    public double getFMoney() {
+        return FMoney;
+    }
+
+    public void setFMoney(double FMoney) {
+        this.FMoney = FMoney;
+    }
+
+    public String getAliAccount() {
+        return aliAccount;
+    }
+
+    public void setAliAccount(String aliAccount) {
+        this.aliAccount = aliAccount;
+    }
+
+    public int getMoneyType() {
+        return moneyType;
+    }
+
+    public void setMoneyType(int moneyType) {
+        this.moneyType = moneyType;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankUser() {
+        return bankUser;
+    }
+
+    public void setBankUser(String bankUser) {
+        this.bankUser = bankUser;
+    }
+
+    public int getReviewstatus() {
+        return reviewstatus;
+    }
+
+    public void setReviewstatus(int reviewstatus) {
+        this.reviewstatus = reviewstatus;
+    }
+
+    public String getCheckNote() {
+        return checkNote;
+    }
+
+    public void setCheckNote(String checkNote) {
+        this.checkNote = checkNote;
+    }
+
+    public int getIsCommission() {
+        return isCommission;
+    }
+
+    public void setIsCommission(int isCommission) {
+        this.isCommission = isCommission;
+    }
+
+    public int getPicNum() {
+        return picNum;
+    }
+
+    public void setPicNum(int picNum) {
+        this.picNum = picNum;
+    }
+
+    public boolean isDaiqiyue() {
+        return daiqiyue;
+    }
+
+    public void setDaiqiyue(boolean daiqiyue) {
+        this.daiqiyue = daiqiyue;
+    }
+
+    public int getComment() {
+        return comment;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
+    }
+
+    public int getCommentNumber() {
+        return commentNumber;
+    }
+
+    public void setCommentNumber(int commentNumber) {
+        this.commentNumber = commentNumber;
+    }
+
+    public int getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    public int getIsSaleUser() {
+        return isSaleUser;
+    }
+
+    public void setIsSaleUser(int isSaleUser) {
+        this.isSaleUser = isSaleUser;
+    }
+
+    public int getSaleUserId() {
+        return saleUserId;
+    }
+
+    public void setSaleUserId(int saleUserId) {
+        this.saleUserId = saleUserId;
+    }
+
+    public String getSaleUserName() {
+        return saleUserName;
+    }
+
+    public void setSaleUserName(String saleUserName) {
+        this.saleUserName = saleUserName;
+    }
+
+    public String getSaleUserHead() {
+        return saleUserHead;
+    }
+
+    public void setSaleUserHead(String saleUserHead) {
+        this.saleUserHead = saleUserHead;
+    }
+
+    public String getSaleUserTags() {
+        return saleUserTags;
+    }
+
+    public void setSaleUserTags(String saleUserTags) {
+        this.saleUserTags = saleUserTags;
+    }
+
+    public double getSaleUserExperience() {
+        return saleUserExperience;
+    }
+
+    public void setSaleUserExperience(double saleUserExperience) {
+        this.saleUserExperience = saleUserExperience;
+    }
+
+    public int getSaleUserSumScore() {
+        return saleUserSumScore;
+    }
+
+    public void setSaleUserSumScore(int saleUserSumScore) {
+        this.saleUserSumScore = saleUserSumScore;
+    }
+
+    public int getSumScore() {
+        return sumScore;
+    }
+
+    public void setSumScore(int sumScore) {
+        this.sumScore = sumScore;
+    }
+
+    public int getSaleUserFanNum() {
+        return saleUserFanNum;
+    }
+
+    public void setSaleUserFanNum(int saleUserFanNum) {
+        this.saleUserFanNum = saleUserFanNum;
+    }
+
+    public int getUnSureOrderNum() {
+        return unSureOrderNum;
+    }
+
+    public void setUnSureOrderNum(int unSureOrderNum) {
+        this.unSureOrderNum = unSureOrderNum;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }

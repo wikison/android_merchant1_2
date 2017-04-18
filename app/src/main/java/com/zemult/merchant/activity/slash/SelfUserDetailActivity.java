@@ -548,7 +548,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 @Override
                 public void onPositionManage(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
-                    intent.putExtra("position_name", entity.position);
+                    intent.putExtra("position_name", strPosition);
                     startActivityForResult(intent, MODIFY_POSITION);
                 }
             });
@@ -588,7 +588,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         bindPager.setCurrentItem(selectPosition);
         selectMerchant = listMerchant.get(selectPosition);
         state = selectMerchant.state;
-        strPosition = (selectMerchant.position == null ? "" : selectMerchant.position);
+        strPosition = (selectMerchant.position == null ? "无" : selectMerchant.position);
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
     }
 

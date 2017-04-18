@@ -138,7 +138,7 @@ public class UserPayAdapter extends BaseListAdapter<M_Bill> {
                 mImageManager.loadCircleHasBorderImage(m.saleUserHead, holder.ivSaleCover, mContext.getResources().getColor(R.color.gainsboro), 1);
             }
         }
-        holder.tvMoney.setText("-" + Convert.getMoneyString(m.allMoney));
+        holder.tvMoney.setText("-" + Convert.getMoneyString(m.payMoney));
         holder.tvDate.setText(m.createtime.substring(5, 10));
         holder.tvTime.setText(m.createtime.substring(11, 16));
 
