@@ -73,6 +73,28 @@
                     android:layout_alignParentRight="true"
                     android:textColor="#e6bb7c" />
 
+
+
+                <Button
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/call_btn"
+                    style="@style/common_btn_235"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginBottom="@dimen/margin_12dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/detail_white_btn"
+                    android:drawableLeft="@mipmap/order_call_icon"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="电话提醒"
+                    android:paddingRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#e6bb7c" />
+
+
             </RelativeLayout>
 
 
@@ -528,7 +550,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="35dp"
                     >
 
                     <RelativeLayout
@@ -538,6 +560,7 @@
                         android:layout_centerInParent="true">
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/invite_btn"
                             style="@style/common_btn_235"
                             android:layout_width="130dp"

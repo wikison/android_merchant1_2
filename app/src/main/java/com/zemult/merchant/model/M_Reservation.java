@@ -57,6 +57,9 @@ public class M_Reservation implements Serializable {
     public String userPhone;//联系人电话
 
     @Expose
+    public String phoneNum;//联系人电话
+
+    @Expose
     public int userSex;//联系人性别((0男,1女))
 
     @Expose

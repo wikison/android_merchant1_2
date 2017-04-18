@@ -78,6 +78,7 @@ import com.zemult.merchant.util.sound.HttpOperateUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.PMNumView;
 import com.zemult.merchant.view.common.CommonDialog;
+import com.zemult.merchant.view.common.MMAlert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,6 +168,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Button customerconfirmBtn;
     @Bind(R.id.billdetails_btn)
     Button billdetailsBtn;
+    @Bind(R.id.call_btn)
+    Button callBtn;
     @Bind(R.id.sl_data)
     ScrollView slData;
     @Bind(R.id.tv_nodata)
@@ -234,7 +237,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         EventBus.getDefault().register(this);
         showPd();
-        userReservationInfo();
+//        userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
         alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
     }
@@ -360,7 +363,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         }
                         }
                         else{
-
+                            if(!StringUtils.isBlank(mReservation.phoneNum)){
+                                playBtn.setVisibility(View.GONE);
+                                callBtn.setVisibility(View.VISIBLE);
+                            }
                             if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                                 serveraccountBtn.setVisibility(View.VISIBLE);
                             } else {
@@ -674,7 +680,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -682,7 +688,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 EventBus.getDefault().post(REFLASH_MYAPPOINT);
                 onBackPressed();
                 break;
-
+            case R.id.call_btn:
+                if(!StringUtils.isBlank(mReservation.phoneNum)){
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse("tel:" + mReservation.phoneNum);
+                    intent.setData(data);
+                    startActivity(intent);
+                }
+                break;
             case R.id.serveraccount_btn:
                 Intent intentserver = new Intent(this, SettingMoney4OrderActivity.class);
                 intentserver.putExtra("reservationMoney",mReservation.reservationMoney);
@@ -884,6 +897,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
         }
     }
+
 
     private void showDialog() {
 
