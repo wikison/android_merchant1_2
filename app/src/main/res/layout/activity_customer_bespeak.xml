@@ -276,7 +276,7 @@
                 android:layout_marginRight="@dimen/j70dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="预约服务"
+                android:text="发送约服需求"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_36px"
                 app:rv_backgroundColor="@color/font_main"
