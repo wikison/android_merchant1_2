@@ -295,7 +295,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         rlcustomer.setVisibility(View.VISIBLE);
                         rlService.setVisibility(View.GONE);
                         tvName.setText(mReservation.name);
-                        mimageManager.loadCircleImage(mReservation.head, vUser);
+                        if(!TextUtils.isEmpty(mReservation.head)){
+                            mimageManager.loadCircleImage(mReservation.head, vUser);
+                        }
+
                         //语音信息
                         if(mReservation.remindIMId!=0){
                             playBtn.setVisibility(View.VISIBLE);
