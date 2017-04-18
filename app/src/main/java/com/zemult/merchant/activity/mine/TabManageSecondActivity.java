@@ -145,7 +145,7 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
 
         shopnameTv.setVisibility(View.GONE);
         SpannableStringBuilder spannableString = new SpannableStringBuilder();
-        spannableString.append("选择您要提供的服务");
+        spannableString.append("选择您需要的服务内容");
 //        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
 //        spannableString.setSpan(styleSpan, 5, 4 + name.length() + 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         shopNameTv.setText(spannableString);
@@ -155,12 +155,12 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
 
         otherChannelList.clear();
         myCategoryTipText.setVisibility(View.VISIBLE);
-        chatdetail.setText("修改服务标签");
+        chatdetail.setText("选择服务需求");
         textView.setText("完成");
         textView.setVisibility(View.INVISIBLE);
         applyBtn.setVisibility(View.VISIBLE);
         applyBtn.setText("保存");
-        myCategoryText.setText("已提供的服务");
+        myCategoryText.setText("已选择的服务");
 
 
         initView();
@@ -192,6 +192,9 @@ public class TabManageSecondActivity extends BaseActivity implements AdapterView
 
         userAdapter.setListDate(userChannelList);
         otherAdapter.setListDate(otherChannelList);
+        applyBtn.setEnabled(false);
+        applyBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
+
     }
 
     /**

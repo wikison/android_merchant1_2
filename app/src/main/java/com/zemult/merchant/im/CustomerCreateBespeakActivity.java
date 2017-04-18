@@ -151,7 +151,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
     private boolean isStartRecord;
     ImageButton imageButtonDial;
     private Timer timer;
-    private int recordTime = 120;
+    private int recordTime = 60;
 
     private Handler mHandler = new Handler() {
 
@@ -274,7 +274,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                         timer.cancel();
                     }
 
-                    recordTime = 120;
+                    recordTime = 60;
                     timer = new Timer(true);
                     timerTask = new MyTimerTask();
                     timer.scheduleAtFixedRate(timerTask, 0, 1000);
@@ -302,7 +302,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         imageButtonDial.setBackgroundResource(R.mipmap.btn_speak_normal);
-                        if (!isStartRecord || recordTime > 117) {
+                        if (!isStartRecord || recordTime > 57) {
                             mDialogManager.tooShort();
                             stopRecord();
                             mHandler.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1000);// 延迟显示对话框
@@ -427,10 +427,10 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                         ToastUtil.showMessage("请选择预约时间");
                         return;
                     }
-                    if (StringUtils.isEmpty(renjun)) {
-                        ToastUtil.showMessage("请输入人均预算");
-                        return;
-                    }
+//                    if (StringUtils.isEmpty(renjun)) {
+//                        ToastUtil.showMessage("请输入人均预算");
+//                        return;
+//                    }
 
 
                 }
@@ -467,7 +467,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                     public void onClick(View v) {
                         CommonDialog.DismissProgressDialog();
                         fileUrl="";
-                        recordTime=120;
+                        recordTime=60;
                         relVoice.setVisibility(View.INVISIBLE);
                     }
                 });
@@ -559,7 +559,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         input.tags =StringUtils.isBlank(selectTag)?"":selectTag ;//服务管家id
         input.saleUserId = serviceId;//服务管家id
         input.replayNote = fileUrl;//否	语音地址
-        input.timeNum = (120-recordTime)+"";//否	时间
+        input.timeNum = (60-recordTime)+"";//否	时间
         input.convertJosn();
         user2RemindIMAddRequest = new User2RemindIMAddRequest(input, new ResponseListener() {
             @Override
@@ -628,7 +628,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 fileUrl = OSSENDPOINT + ossFilename;
                 dismissPd();
                 relVoice.setVisibility(View.VISIBLE);
-                tvLength.setText((120-recordTime)+"''");
+                tvLength.setText((60-recordTime)+"''");
             } else {
                 ToastUtils.show(this, intent.getStringExtra("info"));
             }
@@ -688,7 +688,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             // 停止录音
             stopRecord();
             File file = new File(URL_UPLOAD_FILEPATH);
-            if (file.exists() && recordTime <= 117) {
+            if (file.exists() && recordTime <= 57) {
                 showPd();
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     ossFilename = "aduio/android_" + filename;
