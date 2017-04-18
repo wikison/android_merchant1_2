@@ -159,7 +159,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
-
+                setResult(RESULT_OK);
                 onBackPressed();
                 break;
             case R.id.iv_head:
@@ -217,6 +217,8 @@ public class SaleManInfoImproveActivity extends BaseActivity {
                     SlashHelper.userManager().getUserinfo().setName(etName.getText().toString());
                     SlashHelper.userManager().saveUserinfo(SlashHelper.userManager().getUserinfo());
                     setResult(RESULT_OK);
+                    Intent in = new Intent(Constants.BROCAST_LOGIN);
+                    sendBroadcast(in);
                     SaleManInfoImproveActivity.this.finish();
 
                 } else {
