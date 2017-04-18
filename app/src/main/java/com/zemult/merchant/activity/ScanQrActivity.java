@@ -167,6 +167,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
                     if(mReservation.userId== SlashHelper.userManager().getUserId()){
+                        qrvView.getCameraManager().stopPreview();
                         Intent intent = new Intent(ScanQrActivity.this, FindPayActivity.class);
                         intent.putExtra(FindPayActivity.M_RESERVATION, mReservation);
                         intent.putExtra("merchantId", Integer.valueOf(merchantId));
@@ -176,6 +177,7 @@ public class ScanQrActivity extends BaseActivity implements QRCodeReaderView.OnQ
                         startActivity(intent);
                     }else{
                         ToastUtil.showMessage("该预约单不是您的预约单, 无法买单");
+                        qrvView.getCameraManager().startPreview();
                     }
 
                 }

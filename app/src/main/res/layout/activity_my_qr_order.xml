@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_root"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/ll_root"
               android:background="@color/bg_67"
               android:orientation="vertical">
 
@@ -67,10 +67,10 @@
             android:visibility="visible">
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/iv_merchant_head"
                 android:layout_width="@dimen/length_88px"
-                android:layout_height="@dimen/length_88px"/>
+                android:layout_height="@dimen/length_88px"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_merchant_name"
@@ -85,13 +85,14 @@
             android:layout_marginTop="@dimen/margin_12dp"
             android:text="11"
             android:textColor="@color/font_black_28"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:visibility="gone"/>
 
 
         <ImageView
             android:id="@+id/iv_qr"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:layout_gravity="center"/>
 
 
@@ -100,8 +101,8 @@
             style="@style/common_btn_235"
             android:layout_marginTop="@dimen/margin_12dp"
             android:background="@null"
-            android:textColor="@color/btn_normal"
-            android:text="分享交易链接"/>
+            android:text="分享交易链接"
+            android:textColor="@color/btn_normal"/>
 
 
     </com.flyco.roundview.RoundLinearLayout>

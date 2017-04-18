@@ -6,11 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.Message;
-import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,23 +34,18 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
+import com.zemult.merchant.activity.mine.MyQr4OrderActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
-import com.zemult.merchant.activity.mine.SettingMoney4OrderActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
-import com.zemult.merchant.activity.slash.SendRewardActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
-import com.zemult.merchant.activity.slash.dotask.DoTaskVoiceActivity;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
 import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
 import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
-import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.mine.UserRewardPayAddRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationDelRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationEditRequest;
 import com.zemult.merchant.aip.reservation.User2ReservationSureRequest;
-import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
 import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayType4OrderActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
@@ -67,23 +58,19 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
-import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.util.sound.HttpOperateUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.PMNumView;
 import com.zemult.merchant.view.common.CommonDialog;
-import com.zemult.merchant.view.common.MMAlert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -98,9 +85,6 @@ import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
-
-
-import static com.zemult.merchant.config.Constants.OSSENDPOINT;
 
 /**
  * Created by admin on 2017/1/19.
@@ -725,18 +709,18 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 }
                 break;
             case R.id.serveraccount_btn:
-                Intent intentserver = new Intent(this, SettingMoney4OrderActivity.class);
-                intentserver.putExtra("reservationMoney",mReservation.reservationMoney);
-                intentserver.putExtra("experience",mReservation.saleUserExperience);
-                intentserver.putExtra("saleUserId",mReservation.saleUserId);
-                intentserver.putExtra("saleHead",mReservation.saleUserHead);
-                intentserver.putExtra("saleName",mReservation.saleUserName);
-                intentserver.putExtra("merchantName",mReservation.merchantName);
-                intentserver.putExtra("merchantId",mReservation.merchantId);
-                intentserver.putExtra("reservationId",mReservation.reservationId);
+                Intent intentServer = new Intent(this, MyQr4OrderActivity.class);
+                intentServer.putExtra("reservationMoney",mReservation.reservationMoney);
+                intentServer.putExtra("experience",mReservation.saleUserExperience);
+                intentServer.putExtra("saleUserId",mReservation.saleUserId);
+                intentServer.putExtra("saleHead",mReservation.saleUserHead);
+                intentServer.putExtra("saleName",mReservation.saleUserName);
+                intentServer.putExtra("merchantName",mReservation.merchantName);
+                intentServer.putExtra("merchantId",mReservation.merchantId);
+                intentServer.putExtra("reservationId",mReservation.reservationId);
                 if (!TextUtils.isEmpty(reservationId))
-                    intentserver.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivity(intentserver);
+                    intentServer.putExtra("reservationId", Integer.valueOf(reservationId));
+                startActivity(intentServer);
 
                 break;
             case R.id.head_iv:

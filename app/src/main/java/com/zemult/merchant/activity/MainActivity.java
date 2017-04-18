@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -276,8 +275,10 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    IntentUtil.intStart_activity(MainActivity.this, SelfUserDetailActivity.class, new Pair<String, Integer>("user_sale_login", 1));
-
+                    Intent intent = new Intent(MainActivity.this, SelfUserDetailActivity.class);
+                    intent.putExtra("user_sale_login", 1);
+                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                    startActivity(intent);
                 }
             }
         });

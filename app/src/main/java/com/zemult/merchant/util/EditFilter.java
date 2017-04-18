@@ -60,6 +60,7 @@ public final class EditFilter {
         });
 
     }
+
     /**
      * 限制输入金额, 精确到小数点后两位, 最大金额
      */
@@ -128,6 +129,37 @@ public final class EditFilter {
                         editText.setText("");
                         return;
                     } else if (Integer.valueOf(s.toString()) > MAX_VALUE) {
+                        editText.setError("最大值不能超过" + Convert.getMoneyString(MAX_VALUE));
+                        s = s.toString().subSequence(0, s.toString().length() - 1);
+                        editText.setText(s);
+                        editText.setSelection(s.length());
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+    }
+
+    /**
+     * 限制输入整数 最大值
+     */
+    public static void IntegerFilter(final EditText editText, final int MIN_Value, final int MAX_VALUE) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (s.toString().length() >= 1) {
+                    if (Integer.valueOf(s.toString()) > MAX_VALUE) {
                         editText.setError("最大值不能超过" + Convert.getMoneyString(MAX_VALUE));
                         s = s.toString().subSequence(0, s.toString().length() - 1);
                         editText.setText(s);
@@ -253,13 +285,13 @@ public final class EditFilter {
         editText.setFilters(filters);
     }
 
-    private  static boolean isChineseA1(CharSequence source){
-            Pattern p = Pattern.compile("^[a-zA-Z0-9\u4E00-\u9FA5]+$");
-            Matcher matcher = p.matcher(source);
-            if (matcher.find()) {
-                return true;
-            }
-            return false;
+    private static boolean isChineseA1(CharSequence source) {
+        Pattern p = Pattern.compile("^[a-zA-Z0-9\u4E00-\u9FA5]+$");
+        Matcher matcher = p.matcher(source);
+        if (matcher.find()) {
+            return true;
+        }
+        return false;
 
     }
 

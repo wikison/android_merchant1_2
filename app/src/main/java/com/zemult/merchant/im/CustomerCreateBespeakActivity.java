@@ -1,7 +1,6 @@
 package com.zemult.merchant.im;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,28 +39,22 @@ import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
-import com.alibaba.wxlib.util.RequestPermissionUtil;
 import com.android.volley.VolleyError;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.mine.TabManageSecondActivity;
-import com.zemult.merchant.activity.slash.dotask.NewDoTaskVoiceActivity;
 import com.zemult.merchant.aip.reservation.User2RemindIMAddRequest;
-import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.common.Notification;
-import com.zemult.merchant.im.privateimage.PreviewImageActivity;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
-import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.oss.OssFileService;
 import com.zemult.merchant.util.oss.OssHelper;
@@ -232,7 +225,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
         serviceId = getIntent().getIntExtra("userSaleId", 0);
         m_merchant = (M_Merchant) getIntent().getExtras().getSerializable("m_merchant");
-        pmnvSelectDeadline.setMinNum(1);
+        pmnvSelectDeadline.setMinNum(0);
         pmnvSelectDeadline.setMaxNum(99);
         pmnvSelectDeadline.setDefaultNum(1);
         pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());
@@ -554,7 +547,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         input.userId = SlashHelper.userManager().getUserId();
         input.merchantId = m_merchant.merchantId; //服务商户id
         input.reservationTime =StringUtils.isBlank(ordertime)?"":ordertime+":00" ;//预约时间
-        input.num = ("1".equals(orderpeople)?"":orderpeople);//人数
+        input.num = orderpeople;//人数
         input.perMoney =renjun ;//人均预算
         input.tags =StringUtils.isBlank(selectTag)?"":selectTag ;//服务管家id
         input.saleUserId = serviceId;//服务管家id

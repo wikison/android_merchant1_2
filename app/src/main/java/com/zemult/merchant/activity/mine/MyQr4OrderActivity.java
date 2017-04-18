@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,18 +67,19 @@ public class MyQr4OrderActivity extends BaseActivity {
     LinearLayout llMerchantHead;
     @Bind(R.id.iv_qr)
     ImageView ivQr;
-    int userSaleId, merchantId,reservationId;
+    int userSaleId, merchantId, reservationId;
 
     String merchantHead, merchantName;
     Bitmap bitmap;
     String qrInfo;
-    String saleHead,saleName,shareUrl;
-    double money,experience;
+    String saleHead, saleName, shareUrl;
+    double money, experience;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
-    String sharecontent,sharetitle;
+    String sharecontent, sharetitle;
     SharePopwindow sharePopWindow;
     double reservationMoney;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_my_qr_order);
@@ -109,22 +109,22 @@ public class MyQr4OrderActivity extends BaseActivity {
                 }
             }
         });
-        sharePopWindow.showType(true,false,false,false);
+        sharePopWindow.showType(true, false, false, false);
     }
 
 
     private void initData() {
-        userSaleId= getIntent().getIntExtra("saleUserId", 0);
-        merchantId= getIntent().getIntExtra("merchantId", 0);
-        reservationId= getIntent().getIntExtra("reservationId", 0);
-        money=getIntent().getDoubleExtra("money",0);
-        experience=getIntent().getDoubleExtra("experience",0);
-        saleHead=getIntent().getStringExtra("saleHead");
-        saleName=getIntent().getStringExtra("saleName");
-        merchantName=getIntent().getStringExtra("merchantName");
-        reservationMoney=getIntent().getDoubleExtra("reservationMoney",0);
+        userSaleId = getIntent().getIntExtra("saleUserId", 0);
+        merchantId = getIntent().getIntExtra("merchantId", 0);
+        reservationId = getIntent().getIntExtra("reservationId", 0);
+        money = getIntent().getDoubleExtra("money", 0);
+        experience = getIntent().getDoubleExtra("experience", 0);
+        saleHead = getIntent().getStringExtra("saleHead");
+        saleName = getIntent().getStringExtra("saleName");
+        merchantName = getIntent().getStringExtra("merchantName");
+        reservationMoney = getIntent().getDoubleExtra("reservationMoney", 0);
 
-        setBtn.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        setBtn.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void initView() {
@@ -132,20 +132,20 @@ public class MyQr4OrderActivity extends BaseActivity {
         lhTvTitle.setVisibility(View.VISIBLE);
         imageManager.loadCircleImage(saleHead, ivHead);
         tvName.setText(saleName);
-        tvLevel.setText(Convert.getExperienceText(experience));
+        tvLevel.setText(Convert.getExperienceText(experience)+"管家");
         Drawable drawable = getResources().getDrawable(Convert.getExperienceImg(SlashHelper.userManager().getUserinfo().getExperience()));
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvLevel.setCompoundDrawables(drawable, null, null, null);
-            llMerchantHead.setVisibility(View.VISIBLE);
-            setBtn.setVisibility(View.VISIBLE);
-            lhTvTitle.setText("交易二维码");
-            moneyTv.setVisibility(View.VISIBLE);
-            moneyTv.setText("￥ " + money);
-            tvMerchantName.setText(merchantName);
-            qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + money+"&reservationId="+reservationId+"&reservationMoney="+reservationMoney;
-            bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
-                    DensityUtil.dip2px(this, 240));
-        shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?reservationId="+reservationId+"&TargetPage=2&totalMoney="+money+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+        llMerchantHead.setVisibility(View.VISIBLE);
+        setBtn.setVisibility(View.VISIBLE);
+        lhTvTitle.setText("交易二维码");
+        moneyTv.setVisibility(View.GONE);
+        moneyTv.setText("￥ " + money);
+        tvMerchantName.setText(merchantName);
+        qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + money + "&reservationId=" + reservationId + "&reservationMoney=" + reservationMoney;
+        bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
+                DensityUtil.dip2px(this, 240));
+        shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?reservationId=" + reservationId + "&TargetPage=2&totalMoney=" + money + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
 //            shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index_wx.do?client="+merchantId + "," + userSaleId+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
 
 
@@ -164,8 +164,8 @@ public class MyQr4OrderActivity extends BaseActivity {
             case R.id.set_btn:
 //                https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index_wx.do?client=xx1,xx2&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect
 //                说明:xx1为merchantId,xx2为saleUserId
-                sharecontent="我是" + merchantName + "的服务管家【" +saleName + "】, 我为您提供更快捷的结账服务...";
-                sharetitle="约服-找个喜欢的人来服务";
+                sharecontent = "我是" + merchantName + "的服务管家【" + saleName + "】, 我为您提供更快捷的结账服务...";
+                sharetitle = "约服-找个喜欢的人来服务";
 
 
                 if (sharePopWindow.isShowing())
@@ -176,7 +176,6 @@ public class MyQr4OrderActivity extends BaseActivity {
                 break;
         }
     }
-
 
 
     UMShareListener umShareListener = new UMShareListener() {

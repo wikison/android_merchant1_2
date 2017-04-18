@@ -83,7 +83,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         View view = View.inflate(context, R.layout.view_num_plus_minus, null);
         decrease = (RoundTextView) view.findViewById(R.id.decrease);
         plus = (RoundTextView) view.findViewById(R.id.plus);
-        rllTaskDescribe= (RoundRelativeLayout) view.findViewById(R.id.rll_task_describe);
+        rllTaskDescribe = (RoundRelativeLayout) view.findViewById(R.id.rll_task_describe);
         etNum = (EditText) view.findViewById(R.id.et_num);
         decrease.setOnClickListener(this);
         plus.setOnClickListener(this);
@@ -145,7 +145,7 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
     }
 
     public void setFilter() {
-        EditFilter.IntegerFilter(etNum, maxNum);
+        EditFilter.IntegerFilter(etNum, 0, maxNum);
     }
 
 
@@ -198,12 +198,12 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.toString().length() >= 1) {
-            if (s.toString().substring(0).equals("0")) {
-                etNum.setText("");
-                return;
-            }
-        }
+//        if (s.toString().length() >= 1) {
+//            if (s.toString().substring(0).equals("0")) {
+//                etNum.setText("");
+//                return;
+//            }
+//        }
     }
 
     @Override
