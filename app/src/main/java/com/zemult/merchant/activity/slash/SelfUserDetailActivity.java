@@ -601,6 +601,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.ll_back:
                 onBackPressed();
                 break;
+            case R.id.ll_my_info:
             case R.id.infoimprove_rl:
                 intent = new Intent(mActivity, SaleManInfoImproveActivity.class);
                 startActivityForResult(intent, EDIT_USER_INFO);
