@@ -178,9 +178,12 @@ public class MerchantDetailActivity extends BaseActivity implements SmoothListVi
         mAdapter.setOnMerchantDetailClick(new MerchantDetailAdpater.OnMerchantDetailClick() {
             @Override
             public void onUserClick(int position) {
-//                if (mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
-//                    return;
-                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                Intent intent;
+                if (mAdapter.getItem(position).getUserId() == SlashHelper.userManager().getUserId())
+                    intent = new Intent(mContext, SelfUserDetailActivity.class);
+                else
+                    intent = new Intent(mContext, UserDetailActivity.class);
+
                 intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position).getUserId());
                 intent.putExtra(UserDetailActivity.USER_NAME, mAdapter.getItem(position).getUserName());
                 intent.putExtra(UserDetailActivity.USER_HEAD, mAdapter.getItem(position).getUserHead());
