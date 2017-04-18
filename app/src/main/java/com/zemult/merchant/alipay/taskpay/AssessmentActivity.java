@@ -1,6 +1,7 @@
 package com.zemult.merchant.alipay.taskpay;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,7 +59,9 @@ public class AssessmentActivity extends BaseActivity {
         merchantName = getIntent().getStringExtra("merchantName") == null ? "" : getIntent().getStringExtra("merchantName");
         tvUsername.setText(managername);
         tvShopname.setText(merchantName);
-        imageManager.loadCircleImage(managerhead, ivUserhead);
+        if (!TextUtils.isEmpty(managerhead)) {
+            imageManager.loadCircleImage(managerhead, ivUserhead);
+        }
 
         ratingbar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
