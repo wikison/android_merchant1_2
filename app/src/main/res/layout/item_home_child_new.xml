@@ -48,8 +48,8 @@
                 android:text="0m"/>
 
             <View style="@style/divider"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
                 android:layout_width="2px"
                 android:layout_height="15dp"
                 android:background="@color/divider_c1"/>
