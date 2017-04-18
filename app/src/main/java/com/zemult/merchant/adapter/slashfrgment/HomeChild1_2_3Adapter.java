@@ -146,6 +146,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             }
 
             holder.ivNoMerchant.setVisibility(View.GONE);
+            holder.banner.setVisibility(View.VISIBLE);
             holder.banner.setImages(adList);
             holder.banner.setImageLoader(new ImageLoader() {
                 @Override
@@ -169,7 +170,16 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             });
             holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
         }else {
+            // 商家名称
+            holder.tvMerchantName.setText("暂无");
+            // 人均消费
+            holder.tvMoney.setText("暂无");
+            // 距中心点距离(米)
+            holder.tvDistance.setText("暂无");
+            // 前7日的服务分总和
+            holder.tvZhishu.setText("7天服务指数暂无");
             holder.ivNoMerchant.setVisibility(View.VISIBLE);
+            holder.banner.setVisibility(View.GONE);
         }
     }
 
