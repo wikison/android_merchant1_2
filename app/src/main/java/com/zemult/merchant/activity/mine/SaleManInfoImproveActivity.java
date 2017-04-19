@@ -76,8 +76,8 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         mActivity = this;
         lhTvTitle.setText("完善资料");
         registerReceiver(new String[]{Constants.BROCAST_EDITUSERINFO});
-        EditFilter.WordFilter(etName, 6);
         etName.setText(SlashHelper.userManager().getUserinfo().getName());
+        EditFilter.WordFilter(etName, 6);
         if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
             imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         }
