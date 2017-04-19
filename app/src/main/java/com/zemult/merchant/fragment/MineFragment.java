@@ -32,7 +32,7 @@ import com.zemult.merchant.activity.mine.SafeSettingActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.search.LabelHomeActivity;
-import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
+import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
@@ -140,6 +140,7 @@ public class MineFragment extends BaseFragment {
 
     int isSaleUser;
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -165,7 +166,7 @@ public class MineFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mImageManager = new ImageManager(getActivity());
-        registerReceiver(new String[]{Constants.BROCAST_UPDATEMYINFO});
+        registerReceiver(new String[]{Constants.BROCAST_UPDATEMYINFO, Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     @Override
@@ -191,9 +192,16 @@ public class MineFragment extends BaseFragment {
                 startActivity(intent);
                 break;*/
             case R.id.btn_saleuser:
-                intent = new Intent(getActivity(), SelfUserDetailActivity.class);
-                intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
-                startActivity(intent);
+                if (isSaleUser == 1) {
+                    intent = new Intent(getActivity(), SelfUserDetailActivity.class);
+                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), SearchActivity.class);
+                    intent.putExtra("be_service_manager", 1);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.mtag_layout:
                 intent = new Intent(getActivity(), LabelHomeActivity.class);
@@ -312,6 +320,10 @@ public class MineFragment extends BaseFragment {
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_UPDATEMYINFO.equals(intent.getAction())) {
+            get_user_info_owner_request();
+        }
+
+        if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             get_user_info_owner_request();
         }
     }
