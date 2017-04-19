@@ -475,7 +475,7 @@ public class Urls {
     //选择支付(找TA买单)
     public static String USER_MERCHANT_PAY_DO = "user_merchant_pay_do";
     //用户对单笔买单评价
-    public static String USER_MERCHANT_PAY_COMMONT_1_1 = "user_merchant_pay_commont_1_1";
+    public static String USER_MERCHANT_PAY_COMMONT_1_1 = "user2_pay_commont_add.do";
     //生成支付单(找TA买单)
     public static String USER_MERCHANT_PAY_ADD = "user_merchant_pay_add";
     //生成支付宝签名字符串

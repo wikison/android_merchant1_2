@@ -145,7 +145,7 @@ public class PayInfoActivity extends BaseActivity {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
 
-                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
 //                    if (m.rewardMoney == 0) {
 //                        haveredLl.setVisibility(View.GONE);
 //                    } else {
@@ -166,10 +166,10 @@ public class PayInfoActivity extends BaseActivity {
                             case 1:
                                 // 是否评价(0:否,1:是)(type=0时有值)
                                 if (m.isComment==1) {
-                                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                                     tvState.setText("已完成");
                                 } else {
-                                    tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                    tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                                     tvState.setText("待评价");
                                     rtvToRecom.setVisibility(View.VISIBLE);
                                 }
@@ -203,7 +203,7 @@ public class PayInfoActivity extends BaseActivity {
                                 break;
                             case 1:
                                 // 是否评价(0:否,1:是)(type=0时有值)
-                                tvMoney.setText("-" + (m.allMoney == 0 ? "0" : Convert.getMoneyString(m.allMoney)));
+                                tvMoney.setText("-" + (Convert.getMoneyString(m.payMoney+m.reservationMoney)));
                                 if (m.isComment == 1) {
                                     tvState.setText("已完成");
                                 } else {
