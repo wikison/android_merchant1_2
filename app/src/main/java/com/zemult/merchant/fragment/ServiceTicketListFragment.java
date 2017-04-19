@@ -237,7 +237,7 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
 
                                                 } else {
                                                     holder.setViewGone(R.id.money_ll);
-                                                    holder.setText(R.id.tv_state, "已确认");
+                                                    holder.setText(R.id.tv_state, "已确定");
 
                                                 }
                                                 break;
