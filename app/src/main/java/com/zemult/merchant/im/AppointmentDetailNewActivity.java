@@ -159,10 +159,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Bind(R.id.tv_nodata)
     TextView tvNodata;
 
-
-    private MediaPlayer mMediaPlayer;
-
-
     public static String INTENT_RESERVATIONID = "intent";
     public static String INTENT_TYPE = "type";
     @Bind(R.id.yuyueresultcommit_rl)
@@ -210,6 +206,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Dialog alertDialog;
     int orderpeople;
     int dialogShowCount;
+    boolean isActivityRunning=true;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_appointmentdetailnew);
@@ -230,6 +227,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         userReservationInfo();
+    }
+
+
+    @Override
+    protected void onPause() {
+        isActivityRunning=false;
+        super.onPause();
     }
 
     private void userReservationInfo() {
@@ -334,24 +338,28 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             serveraccountBtn.setVisibility(View.GONE);
                         if(dialogShowCount==0){
                             dialogShowCount++;
-                            CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    CommonDialog.DismissProgressDialog();
-                                }
-                            }, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    CommonDialog.DismissProgressDialog();
 
-                                    Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
-                                    urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
-                                    urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
-                                    urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
-                                            "，诚挚邀请，期待您的赴约。");
-                                    startActivity(urlintent);
-                                }
-                            });
+                            if(isActivityRunning){
+                                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        CommonDialog.DismissProgressDialog();
+                                    }
+                                }, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        CommonDialog.DismissProgressDialog();
+
+                                        Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                                        urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                                        urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                                        urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                                                "，诚挚邀请，期待您的赴约。");
+                                        startActivity(urlintent);
+                                    }
+                                });
+
+                            }
                         }
                         }
                         else{

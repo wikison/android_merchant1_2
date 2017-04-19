@@ -97,9 +97,14 @@ public class RedRecordDetailActivity extends BaseActivity {
 
         } else {
 
-                tvMoney.setText("+" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
+            if(m.type==0||m.type==5||m.type==6){
+                tvMoney.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)+ "元"));
+            }
+            if(m.type==4){
+                tvMoney.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+ "元"));
+            }
 
-            //   tvMoney.setText("+" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+
             fromTv.setText("来自");
             if (!TextUtils.isEmpty(m.userHead)) {
                 imageManager.loadCircleImage(m.userHead, ivUserHead);
