@@ -381,6 +381,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         if (type == 0) {//客户
                             cusBilldetailsBtn.setVisibility(View.VISIBLE);
                             billdetailsBtn.setVisibility(View.GONE);
+                            lhBtnRight.setVisibility(View.GONE);
                         }
                         else{
                             billdetailsBtn.setVisibility(View.VISIBLE);

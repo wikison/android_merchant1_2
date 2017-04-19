@@ -336,6 +336,7 @@
                     android:gravity="right"
                     android:drawableRight="@mipmap/bianji_black_icon"
                     android:drawablePadding="5dp"
+                    android:maxLength="5"
                     android:hint="如需收取订金请输入金额"
                     android:inputType="phone"
                     android:textColor="#999999"
