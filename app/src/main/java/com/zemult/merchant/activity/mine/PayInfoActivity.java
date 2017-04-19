@@ -166,11 +166,16 @@ public class PayInfoActivity extends BaseActivity {
                             case 1:
                                 // 是否评价(0:否,1:是)(type=0时有值)
                                 if (m.isComment==1) {
+                                    llPayType.setVisibility(View.VISIBLE);
+                                    rtvToRecom.setVisibility(View.GONE);
+                                    rtvToPay.setVisibility(View.GONE);
                                     tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                                     tvState.setText("已完成");
                                 } else {
                                     tvMoney.setText("-" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                                     tvState.setText("待评价");
+                                    rtvToPay.setVisibility(View.GONE);
+                                    llPayType.setVisibility(View.VISIBLE);
                                     rtvToRecom.setVisibility(View.VISIBLE);
                                 }
 
@@ -206,8 +211,13 @@ public class PayInfoActivity extends BaseActivity {
                                 tvMoney.setText("-" + (Convert.getMoneyString(m.payMoney+m.reservationMoney)));
                                 if (m.isComment == 1) {
                                     tvState.setText("已完成");
+                                    llPayType.setVisibility(View.VISIBLE);
+                                    rtvToPay.setVisibility(View.GONE);
+                                    rtvToRecom.setVisibility(View.GONE);
                                 } else {
                                     tvState.setText("待评价");
+                                    llPayType.setVisibility(View.VISIBLE);
+                                    rtvToPay.setVisibility(View.GONE);
                                     rtvToRecom.setVisibility(View.VISIBLE);
                                 }
 
