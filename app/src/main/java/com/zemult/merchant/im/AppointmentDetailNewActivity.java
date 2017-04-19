@@ -325,8 +325,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                             tvState.setText("待买单");
                         } else {
-                            tvState.setText("已确定" +
-                                    "");
+                            tvState.setText("已确定");
                         }
                         if (type == 0) {//客户
                             customerconfirmBtn.setVisibility(View.GONE);
@@ -382,6 +381,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             cusBilldetailsBtn.setVisibility(View.VISIBLE);
                             billdetailsBtn.setVisibility(View.GONE);
                             lhBtnRight.setVisibility(View.GONE);
+                            dinghaoleTv.setVisibility(View.GONE);
+                            ordersuccessBtnRl.setVisibility(View.GONE);
                         }
                         else{
                             billdetailsBtn.setVisibility(View.VISIBLE);
