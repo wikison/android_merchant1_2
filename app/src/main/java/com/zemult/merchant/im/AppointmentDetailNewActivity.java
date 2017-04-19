@@ -280,7 +280,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         rlService.setVisibility(View.GONE);
                         tvName.setText(mReservation.name);
                         if(!TextUtils.isEmpty(mReservation.head)){
-                            mimageManager.loadCircleImage(mReservation.head, vUser);
+                            mimageManager.loadCircleHead(mReservation.head, vUser);
                         }
 
                         //语音信息
@@ -291,7 +291,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             playBtn.setVisibility(View.GONE);
                         }
                     } else if (type == 0) {//客户
-                        mimageManager.loadCircleImage(mReservation.saleUserHead, headIv);
+                        mimageManager.loadCircleHead(mReservation.saleUserHead, headIv);
                         nameTv.setText(mReservation.saleUserName);
                         firstline.setVisibility(View.GONE);
                         rlcustomer.setVisibility(View.GONE);
@@ -315,7 +315,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     } else if (mReservation.state == 1) {
                         lhTvTitle.setText("服务定单");
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
-                        tvState.setText("预约成功");
+
+                        if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
+                            tvState.setText("待买单");
+                        } else {
+                            tvState.setText("已确定");
+                        }
                         if (type == 0) {//客户
                             customerconfirmBtn.setVisibility(View.GONE);
                             llZanshang.setVisibility(View.GONE);
@@ -376,6 +381,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
                         billdetailsBtn.setVisibility(View.VISIBLE);
+                        lhTvTitle.setText("服务定单");
+                        llState.setVisibility(View.VISIBLE);
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
                         serveraccountBtn.setVisibility(View.GONE);

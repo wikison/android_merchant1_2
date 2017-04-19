@@ -119,7 +119,7 @@ public class ReceiveRedActivity extends BaseActivity {
 //                    if(m.type==0){
 //                        moneyTv.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)+ "元"));
 //                    }else{
-                        moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)+ "元"));
+                        moneyTv.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)+ "元"));
 //                    }
 
                     if (!TextUtils.isEmpty(m.userHead)) {

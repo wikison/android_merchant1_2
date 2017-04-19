@@ -91,7 +91,7 @@ public class SendAppreciateRedActivity extends BaseActivity {
                     m = ((APIM_UserBillInfo) response).userPayInfo;
                     //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
 
-                    moneyTv.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                    moneyTv.setText("" + (m.rewardMoney == 0 ? "0" : Convert.getMoneyString(m.rewardMoney)));
 
                     if (!TextUtils.isEmpty(m.toUserHead)) {
                         imageManager.loadCircleImage(m.toUserHead, headIv);
