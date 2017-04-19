@@ -108,6 +108,17 @@ public class RedRecordDetailActivity extends BaseActivity {
                 imageManager.loadCircleImage(m.userHead, ivUserHead);
             }
             tvUserName.setText(m.userName);
+            switch (m.moneyType) {
+                case 0:
+                    tvPayType.setText("账户余额");
+                    break;
+                case 1:
+                    tvPayType.setText("支付宝支付");
+                    break;
+                case 2:
+                    tvPayType.setText("微信支付");
+                    break;
+            }
         }
         tvTradeNumber.setText(m.number);
         tvPayTime.setText(m.createtime);

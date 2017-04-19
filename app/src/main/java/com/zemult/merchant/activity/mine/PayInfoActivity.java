@@ -183,6 +183,8 @@ public class PayInfoActivity extends BaseActivity {
                             case 2:
                                 tvState.setText("已失效");
                                 llPayType.setVisibility(View.GONE);
+                                rtvToPay.setVisibility(View.GONE);
+                                rtvToRecom.setVisibility(View.GONE);
                                 break;
                         }
 
@@ -225,6 +227,8 @@ public class PayInfoActivity extends BaseActivity {
                             case 2:
                                 tvState.setText("已失效");
                                 llPayType.setVisibility(View.GONE);
+                                rtvToPay.setVisibility(View.GONE);
+                                rtvToRecom.setVisibility(View.GONE);
                                 break;
                         }
                     }
