@@ -97,7 +97,6 @@ public class AssessmentActivity extends BaseActivity {
     @Override
     public void init() {
         initData();
-        getNetworkData();
         initView();
         initListener();
     }
@@ -108,11 +107,6 @@ public class AssessmentActivity extends BaseActivity {
         managerhead = getIntent().getStringExtra("managerhead");
         managername = getIntent().getStringExtra("managername");
         merchantName = getIntent().getStringExtra("merchantName");
-    }
-
-    private void getNetworkData() {
-        if (userPayId > 0)
-            user_pay_info();
     }
 
     private void initView() {
@@ -129,6 +123,7 @@ public class AssessmentActivity extends BaseActivity {
             llSuccess.setVisibility(View.GONE);
             tvRight.setVisibility(View.GONE);
         } else {
+            user_pay_info();
             llSuccess.setVisibility(View.VISIBLE);
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText("完成");
@@ -255,7 +250,7 @@ public class AssessmentActivity extends BaseActivity {
         sendJsonRequest(userMerchantPayCommont_1_1Request);
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_detail, R.id.btn_topinjia})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_detail, R.id.btn_topinjia, R.id.tv_right})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
