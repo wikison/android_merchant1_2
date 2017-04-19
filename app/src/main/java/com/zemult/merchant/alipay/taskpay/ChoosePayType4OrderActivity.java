@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,31 +29,22 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.FindPayActivity;
-import com.zemult.merchant.activity.slash.SendPresentActivity;
-import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.common.CommonSignNumberRequest;
 import com.zemult.merchant.aip.common.WxPayApplyPayRequest;
 import com.zemult.merchant.aip.mine.UserMerchantPayRequest;
 import com.zemult.merchant.aip.mine.UserPaySetWxRequest;
-import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.alipay.PayResult;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.model.M_WxData;
-import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.view.BalancePayAlertView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,8 +53,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.StringUtils;
-import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class ChoosePayType4OrderActivity extends BaseActivity {
@@ -97,7 +85,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
     TextView tvServicename;
 
 
-
     @Bind(R.id.cb_wx)
     CheckBox cbWx;
     @Bind(R.id.pay)
@@ -107,8 +94,8 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
     CommonSignNumberRequest commonSignNumberRequest;
     UserPaySetWxRequest userPaySetWxRequest;
     WxPayApplyPayRequest wxPayApplyPayRequest;
-    double paymoney, money,rewardMoney;
-    String saleName = "",  saleHead="",reservationId="",reservationTime, merchantName;
+    double paymoney, money, rewardMoney;
+    String saleName = "", saleHead = "", reservationId = "", reservationTime, merchantName;
     int payType, toUserId;
     private IWXAPI api;
 
@@ -126,31 +113,29 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         userPayId = getIntent().getIntExtra("userPayId", 0);
         toUserId = getIntent().getIntExtra("toUserId", 0);
         rewardMoney = getIntent().getDoubleExtra("rewardMoney", 0);//打赏金额
-        money= getIntent().getDoubleExtra("money", 0);//订金
+        money = getIntent().getDoubleExtra("money", 0);//订金
         saleHead = getIntent().getStringExtra("saleHead");
         saleName = getIntent().getStringExtra("saleName");
-        reservationId=getIntent().getStringExtra("reservationId");
-        reservationTime =getIntent().getStringExtra("reservationTime");
-        merchantName=getIntent().getStringExtra("merchantName");
+        reservationId = getIntent().getStringExtra("reservationId");
+        reservationTime = getIntent().getStringExtra("reservationTime");
+        merchantName = getIntent().getStringExtra("merchantName");
 
         pay.setText("确认支付  ￥" + Convert.getMoneyString(paymoney));
         lhTvTitle.setText("支付订单");
 
-        if (money!=0) {
+        if (money != 0) {
             llReward.setVisibility(View.VISIBLE);
-            tvBuyMoney1.setText("￥"+Convert.getMoneyString(money));
-            tvNum1.setText(ORDER_SN+"");
-        }
-        else{
+            tvBuyMoney1.setText("￥" + Convert.getMoneyString(money));
+            tvNum1.setText(ORDER_SN + "");
+        } else {
             llReward.setVisibility(View.GONE);
         }
-        if (rewardMoney!=0) {
+        if (rewardMoney != 0) {
             llBuy.setVisibility(View.VISIBLE);
-            tvBuyMoney.setText("赞赏 ￥"+Convert.getMoneyString(rewardMoney));
+            tvBuyMoney.setText("赞赏 ￥" + Convert.getMoneyString(rewardMoney));
             imageManager.loadCircleImage(saleHead, ivServiceHead);
             tvServicename.setText(saleName);
-        }
-        else{
+        } else {
             llBuy.setVisibility(View.GONE);
         }
 
@@ -171,8 +156,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
     }
-
-
 
 
     private void sendPayMoneyMsg() {
@@ -205,7 +188,7 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
     }
 
 
-    private void  sendOrderSureMessage (){
+    private void sendOrderSureMessage() {
 
         YWCustomMessageBody messageBody = new YWCustomMessageBody();
         //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
@@ -213,9 +196,9 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         try {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "ORDER");
-            object.put("taskTitle", "[服务定单] " + reservationTime + "  " + merchantName+"(商户)");
-            object.put("serviceId",  toUserId+ "");
-            object.put("reservationId",reservationId);
+            object.put("taskTitle", "[服务定单] " + reservationTime + "  " + merchantName + "(商户)");
+            object.put("serviceId", toUserId + "");
+            object.put("reservationId", reservationId);
         } catch (JSONException e) {
 
         }
@@ -223,7 +206,7 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         messageBody.setSummary("[服务定单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-        IYWContact appContact = YWContactFactory.createAPPContact(toUserId+ "", imKit.getIMCore().getAppKey());
+        IYWContact appContact = YWContactFactory.createAPPContact(toUserId + "", imKit.getIMCore().getAppKey());
         imKit.getConversationService()
                 .forwardMsgToContact(appContact
                         , message, forwardCallBack);
@@ -466,8 +449,8 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
             return;
         }
         if (Constants.BROCAST_WX_PAY_SUCCESS.equals(intent.getAction())) {
-            sendOrderSureMessage ();
-            if(rewardMoney!=0){
+            sendOrderSureMessage();
+            if (rewardMoney != 0) {
                 sendPayMoneyMsg();
             }
             Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
@@ -478,7 +461,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         }
 
     }
-
 
 
     /**
@@ -521,10 +503,10 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(ChoosePayType4OrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        if(rewardMoney!=0){
+                        if (rewardMoney != 0) {
                             sendPayMoneyMsg();
                         }
-                        sendOrderSureMessage ();
+                        sendOrderSureMessage();
                         Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
                         intent1.putExtra("reservationId", reservationId);
                         startActivity(intent1);

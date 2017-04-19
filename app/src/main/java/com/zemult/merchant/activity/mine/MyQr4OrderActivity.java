@@ -180,7 +180,7 @@ public class MyQr4OrderActivity extends BaseActivity {
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-
+            sharePopWindow.dismiss();
             com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(MyQr4OrderActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
@@ -191,11 +191,13 @@ public class MyQr4OrderActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
+            sharePopWindow.dismiss();
             Toast.makeText(MyQr4OrderActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
+            sharePopWindow.dismiss();
             Toast.makeText(MyQr4OrderActivity.this, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };

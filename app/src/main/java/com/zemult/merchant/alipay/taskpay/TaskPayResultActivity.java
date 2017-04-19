@@ -19,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
-import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
@@ -28,10 +27,7 @@ import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.M_Bill;
-import com.zemult.merchant.model.M_Merchant;
-import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
-import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -95,7 +91,6 @@ public class TaskPayResultActivity extends BaseActivity {
     int saleUserId = 0;
     String managerhead, managername, merchantName;
     double paymoney;
-    public static String APPOINT_REFLASH = "appointreflash";
 
     @Override
     public void setContentView() {
@@ -117,11 +112,6 @@ public class TaskPayResultActivity extends BaseActivity {
 
         user_pay_info();
 
-        if (paymoney < 50) {
-            btnTopinjia.setVisibility(View.GONE);
-        } else {
-            btnTopinjia.setVisibility(View.VISIBLE);
-        }
 
     }
 
@@ -258,7 +248,7 @@ public class TaskPayResultActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
-                EventBus.getDefault().post(APPOINT_REFLASH);
+                EventBus.getDefault().post(AssessmentActivity.APPOINT_REFLASH);
 
                 onBackPressed();
                 break;

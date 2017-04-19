@@ -304,7 +304,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
             if ("赞赏".equals(merchantName)) {
                 sendPayMoneyMsg();
             } else {
-                Intent intent1 = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                Intent intent1 = new Intent(ChoosePayTypeActivity.this, AssessmentActivity.class);
                 intent1.putExtra("managerhead", managerhead);
                 intent1.putExtra("paymoney", paymoney);
                 intent1.putExtra("managername", managername);
@@ -460,7 +460,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                                 if ("赞赏".equals(merchantName)) {
                                     sendPayMoneyMsg();
                                 } else {
-                                    Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                    Intent intent = new Intent(ChoosePayTypeActivity.this, AssessmentActivity.class);
                                     intent.putExtra("userPayId", userPayId);
                                     intent.putExtra("payTime", ((CommonResult) response).payTime);
                                     intent.putExtra("paymoney", paymoney);
@@ -649,7 +649,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                             if ("赞赏".equals(merchantName)) {
                                 sendPayMoneyMsg();
                             } else {
-                                Intent intent = new Intent(ChoosePayTypeActivity.this, TaskPayResultActivity.class);
+                                Intent intent = new Intent(ChoosePayTypeActivity.this, AssessmentActivity.class);
                                 intent.putExtra("managerhead", managerhead);
                                 intent.putExtra("paymoney", paymoney);
                                 intent.putExtra("managername", managername);

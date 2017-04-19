@@ -1,27 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_assessment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.zemult.merchant.alipay.taskpay.AssessmentActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_root"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              tools:context="com.zemult.merchant.alipay.taskpay.AssessmentActivity">
 
 
     <include
         android:id="@+id/layout_head"
-        layout="@layout/layout_head" />
+        layout="@layout/layout_head"/>
 
+    <LinearLayout
+        android:id="@+id/ll_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/bg_f2"
+        android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp"
+                android:paddingTop="30dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/bg_finish"/>
+
+                <TextView
+                    style="@style/text_15_black_28"
+                    android:layout_marginLeft="@dimen/margin_12dp"
+                    android:text="恭喜! 支付成功!"/>
+            </LinearLayout>
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/rtv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/margin_12dp"
+                android:paddingRight="@dimen/margin_12dp"
+                android:text="查看消费单详情"
+                android:textColor="@color/font_main"
+                app:rv_cornerRadius="16dp"
+                app:rv_strokeColor="@color/font_main"
+                app:rv_strokeWidth="1px"/>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_userhead"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:src="@mipmap/user_icon" />
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/user_icon"/>
 
     <TextView
         android:id="@+id/tv_username"
@@ -30,15 +74,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="18dp"
-        android:text="" />
+        android:text=""/>
 
     <TextView
         android:id="@+id/tv_shopname"
         style="@style/text_15_black_46"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
-        android:text="" />
-
+        android:text=""/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -50,14 +93,14 @@
 
         <View
             style="@style/divider1dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"/>
 
         <TextView
-            style="@style/text_15_black_46"
+            style="@style/text_15_black_28"
             android:layout_gravity="center_horizontal"
             android:background="@color/white"
-            android:padding="24dp"
-            android:text="为他的服务打分" />
+            android:padding="12dp"
+            android:text="为TA的服务打分"/>
 
     </FrameLayout>
 
@@ -74,15 +117,15 @@
         hedgehog:starHalf="@mipmap/pl_banxing_icon"
         hedgehog:starImageHeight="45dp"
         hedgehog:starImagePadding="3dp"
-        hedgehog:starImageWidth="45dp" />
+        hedgehog:starImageWidth="45dp"/>
 
     <Button
         android:id="@+id/btn_topinjia"
         style="@style/common_btn_235"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="120dp"
-        android:text="提交评价" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="60dp"
+        android:text="提交评价"/>
 
 
 </LinearLayout>

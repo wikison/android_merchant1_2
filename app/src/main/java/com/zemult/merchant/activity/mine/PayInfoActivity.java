@@ -18,7 +18,6 @@ import com.zemult.merchant.aip.mine.UserPayDelRequest;
 import com.zemult.merchant.aip.mine.UserPayInfoRequest;
 import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
-import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -165,7 +164,7 @@ public class PayInfoActivity extends BaseActivity {
                                 break;
                             case 1:
                                 // 是否评价(0:否,1:是)(type=0时有值)
-                                if (m.isComment==1) {
+                                if (m.isComment == 1) {
                                     llPayType.setVisibility(View.VISIBLE);
                                     rtvToRecom.setVisibility(View.GONE);
                                     rtvToPay.setVisibility(View.GONE);
@@ -199,8 +198,8 @@ public class PayInfoActivity extends BaseActivity {
 
                     } else if (m.type == 6) {
                         havedingjinLl.setVisibility(View.VISIBLE);
-                        tvDingjin.setText("" +(m.reservationMoney == 0 ? "0" : Convert.getMoneyString(m.reservationMoney)));
-                        tvRestmoney.setText("" +(m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
+                        tvDingjin.setText("" + (m.reservationMoney == 0 ? "0" : Convert.getMoneyString(m.reservationMoney)));
+                        tvRestmoney.setText("" + (m.payMoney == 0 ? "0" : Convert.getMoneyString(m.payMoney)));
                         switch (m.state) {
                             //订单状态(0:未付款,1:已付款,2:已失效(超时未支付))
                             case 0:
@@ -234,45 +233,45 @@ public class PayInfoActivity extends BaseActivity {
                     }
 
 
-                        switch (m.moneyType) {
-                            case 0:
-                                tvPayType.setText("账户余额");
-                                break;
-                            case 1:
-                                tvPayType.setText("支付宝支付");
-                                break;
-                            case 2:
-                                tvPayType.setText("微信支付");
-                                break;
-                        }
-                        tvMerchantName.setText(m.merchantName);
-                        if (!TextUtils.isEmpty(m.saleUserHead)) {
-                            mImageManager.loadCircleImage(m.saleUserHead, ivSaleHead);
-                        }
-                        tvSaleName.setText(m.saleUserName);
+                    switch (m.moneyType) {
+                        case 0:
+                            tvPayType.setText("账户余额");
+                            break;
+                        case 1:
+                            tvPayType.setText("支付宝支付");
+                            break;
+                        case 2:
+                            tvPayType.setText("微信支付");
+                            break;
+                    }
+                    tvMerchantName.setText(m.merchantName);
+                    if (!TextUtils.isEmpty(m.saleUserHead)) {
+                        mImageManager.loadCircleImage(m.saleUserHead, ivSaleHead);
+                    }
+                    tvSaleName.setText(m.saleUserName);
 //                    tvSaleMoney.setText("" + (m.allMoney == 0 ? "0.00" : Convert.getMoneyString(m.allMoney)));
 //                    tvPayMoney.setText("" + (m.payMoney == 0 ? "0.00" : Convert.getMoneyString(m.payMoney)));
-                        tvPayNum.setText(m.number);
-                        tvTradeTime.setText(m.createtime);
+                    tvPayNum.setText(m.number);
+                    tvTradeTime.setText(m.createtime);
 
-                    } else {
-                        ToastUtils.show(PayInfoActivity.this, ((APIM_UserBillInfo) response).info);
-                    }
-                    dismissPd();
+                } else {
+                    ToastUtils.show(PayInfoActivity.this, ((APIM_UserBillInfo) response).info);
                 }
-            });
+                dismissPd();
+            }
+        });
 
-            sendJsonRequest(userPayInfoRequest);
-        }
+        sendJsonRequest(userPayInfoRequest);
+    }
 
-        @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay, R.id.rtv_to_recom})
-        public void onClick (View view){
-            switch (view.getId()) {
-                case R.id.lh_btn_back:
-                case R.id.ll_back:
-                    EventBus.getDefault().post(TaskPayResultActivity.APPOINT_REFLASH);
-                    finish();
-                    break;
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rtv_to_pay, R.id.rtv_to_recom})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lh_btn_back:
+            case R.id.ll_back:
+                EventBus.getDefault().post(AssessmentActivity.APPOINT_REFLASH);
+                finish();
+                break;
 //            case R.id.rtv_cancel:
 //                CommonDialog.showDialogListener(mContext, null, "否", "是", "是否取消订单", new View.OnClickListener() {
 //                    @Override
@@ -288,15 +287,15 @@ public class PayInfoActivity extends BaseActivity {
 //                    }
 //                });
 //                break;
-                case R.id.rtv_to_pay:
-                    goPay();
-                    break;
+            case R.id.rtv_to_pay:
+                goPay();
+                break;
 
-                case R.id.rtv_to_recom:
-                    goAssessment();
-                    break;
-            }
+            case R.id.rtv_to_recom:
+                goAssessment();
+                break;
         }
+    }
 
     private void cancelPay() {
         showPd();
@@ -336,6 +335,7 @@ public class PayInfoActivity extends BaseActivity {
         intent.putExtra("managerhead", m.saleUserHead);
         intent.putExtra("managername", m.saleUserName);
         intent.putExtra("merchantName", m.merchantName);
+        intent.putExtra("toComment", 1);
         startActivityForResult(intent, 2000);
     }
 

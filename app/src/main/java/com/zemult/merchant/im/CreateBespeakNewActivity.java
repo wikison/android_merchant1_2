@@ -1,22 +1,12 @@
 package com.zemult.merchant.im;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,32 +28,20 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
-import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
-import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.StringMatchUtils;
 import com.zemult.merchant.util.ToastUtil;
-import com.zemult.merchant.util.UserManager;
-import com.zemult.merchant.util.sound.HttpOperateUtil;
-import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.PMNumView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
-import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class CreateBespeakNewActivity extends BaseActivity {
@@ -152,7 +130,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
             bespekShopname.setText("请选择商户");
         }
 
-        pmnvSelectDeadline.setMinNum(1);
+        pmnvSelectDeadline.setMinNum(0);
         pmnvSelectDeadline.setMaxNum(99);
         pmnvSelectDeadline.setDefaultNum(1);
         pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());

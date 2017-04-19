@@ -28,7 +28,7 @@ import com.zemult.merchant.activity.slash.SendRewardActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.aip.reservation.UserReservationEditRequest;
-import com.zemult.merchant.alipay.taskpay.TaskPayResultActivity;
+import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
@@ -409,7 +409,7 @@ public class AppointmentDetailActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void refreshEvent(String s) {
-        if (TaskPayResultActivity.APPOINT_REFLASH.equals(s))
+        if (AssessmentActivity.APPOINT_REFLASH.equals(s))
             userReservationInfo();
     }
 
