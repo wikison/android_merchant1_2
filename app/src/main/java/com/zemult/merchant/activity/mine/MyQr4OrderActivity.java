@@ -132,7 +132,7 @@ public class MyQr4OrderActivity extends BaseActivity {
         lhTvTitle.setVisibility(View.VISIBLE);
         imageManager.loadCircleImage(saleHead, ivHead);
         tvName.setText(saleName);
-        tvLevel.setText(Convert.getExperienceText(experience)+"管家");
+        tvLevel.setText(Convert.getExperienceText(experience) + "管家");
         Drawable drawable = getResources().getDrawable(Convert.getExperienceImg(SlashHelper.userManager().getUserinfo().getExperience()));
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvLevel.setCompoundDrawables(drawable, null, null, null);
@@ -145,9 +145,8 @@ public class MyQr4OrderActivity extends BaseActivity {
         qrInfo = "merchantId=" + merchantId + "&userId=" + userSaleId + "&price=" + money + "&reservationId=" + reservationId + "&reservationMoney=" + reservationMoney;
         bitmap = QrImageUtil.createQRImage(Constants.QR_PAY_PREFIX + qrInfo, DensityUtil.dip2px(this, 240),
                 DensityUtil.dip2px(this, 240));
-        shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?reservationId=" + reservationId + "&TargetPage=2&totalMoney=" + money + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
-//            shareUrl="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index_wx.do?client="+merchantId + "," + userSaleId+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
-
+        //shareUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/weixinpress_bindphone.do?reservationId=" + reservationId + "&TargetPage=2&totalMoney=" + money + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+        shareUrl = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/wappay/wappay_index2_wx.do?client=%d,%d,%d&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect", merchantId, userSaleId, reservationId);
 
         if (bitmap != null)
             ivQr.setImageBitmap(bitmap);
