@@ -528,6 +528,19 @@
 
                 <Button
                     android:visibility="gone"
+                    android:id="@+id/cus_billdetails_btn"
+                    style="@style/common_btn_235"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="94dp"
+                    android:layout_marginTop="22dp"
+                    android:clickable="true"
+                    android:text="查看详情"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+
+                <Button
+                    android:visibility="gone"
                     android:id="@+id/customerconfirm_btn"
                     style="@style/common_btn_235"
                     android:layout_gravity="center_horizontal"

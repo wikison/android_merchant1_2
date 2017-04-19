@@ -36,6 +36,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.mine.MyQr4OrderActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
+import com.zemult.merchant.activity.mine.ServiceHistoryDetailActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
@@ -152,6 +153,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Button customerconfirmBtn;
     @Bind(R.id.billdetails_btn)
     Button billdetailsBtn;
+    @Bind(R.id.cus_billdetails_btn)
+    Button cusBilldetailsBtn;
     @Bind(R.id.call_btn)
     Button callBtn;
     @Bind(R.id.sl_data)
@@ -323,7 +326,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                             tvState.setText("待买单");
                         } else {
-                            tvState.setText("已确定");
+                            tvState.setText("已确定" +
+                                    "");
                         }
                         if (type == 0) {//客户
                             customerconfirmBtn.setVisibility(View.GONE);
@@ -378,6 +382,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
+                        if (type == 0) {//客户
+                            cusBilldetailsBtn.setVisibility(View.VISIBLE);
+                            billdetailsBtn.setVisibility(View.GONE);
+                        }
+                        else{
+                            billdetailsBtn.setVisibility(View.VISIBLE);
+                            cusBilldetailsBtn.setVisibility(View.GONE);
+                        }
                         serveraccountBtn.setVisibility(View.GONE);
                         customerconfirmBtn.setVisibility(View.GONE);
                         llZanshang.setVisibility(View.GONE);
@@ -388,7 +400,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         Drawable drawable1 = getResources().getDrawable(R.mipmap.money_gray);
                         drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
-                        billdetailsBtn.setVisibility(View.VISIBLE);
+
                         lhTvTitle.setText("服务定单");
                         llState.setVisibility(View.VISIBLE);
                     } else if (mReservation.state == 3||mReservation.state == 4) {
@@ -707,7 +719,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,
+            R.id.cus_billdetails_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -750,8 +763,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             case R.id.billdetails_btn:
                 //查看订单详情
                 IntentUtil.intStart_activity(this,
-                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", mReservation.userPayId));
+                        ServiceHistoryDetailActivity.class, new Pair<String, Integer>("userPayId", mReservation.userPayId));
                 break;
+
+            case R.id.cus_billdetails_btn:
+                IntentUtil.intStart_activity(this,
+                        PayInfoActivity.class, new Pair<String, Integer>("userPayId", mReservation.userPayId));
+            break;
+
             case R.id.customerconfirm_btn:
                 //确认预约单
                 if (!cbReward.isChecked()) {

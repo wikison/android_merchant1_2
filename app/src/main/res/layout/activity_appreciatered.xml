@@ -84,6 +84,7 @@
             android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
             android:layout_toRightOf="@+id/money_tv"
             android:layout_width="wrap_content"
             android:text="元"
