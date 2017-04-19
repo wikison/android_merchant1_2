@@ -157,7 +157,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         case 0:
                             break;
                         case 1:
-                            tvState.setText("已确认");
+                            tvState.setText("已确定");
                             if (mReservation.merchantReviewstatus == 2) {
                                 //商家审核状态(0未审核,1待审核,2审核通过)
                                 success1Ll.setVisibility(View.VISIBLE);
