@@ -210,7 +210,7 @@ public class PayInfoActivity extends BaseActivity {
                                 break;
                             case 1:
                                 // 是否评价(0:否,1:是)(type=0时有值)
-                                tvMoney.setText("-" + (Convert.getMoneyString(m.payMoney+m.reservationMoney)));
+                                tvMoney.setText("-" + (Convert.getMoneyString(m.payMoney)));
                                 if (m.isComment == 1) {
                                     tvState.setText("已完成");
                                     llPayType.setVisibility(View.VISIBLE);
