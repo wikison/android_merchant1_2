@@ -208,7 +208,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     CommonRewardRequest commonRewardRequest;
     Dialog alertDialog;
     int orderpeople;
-    int dialogShowCount;
     boolean isActivityRunning=true;
     @Override
     public void setContentView() {
@@ -338,32 +337,29 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                                 lhBtnRight.setVisibility(View.VISIBLE);
                                 lhBtnRight.setText("快捷买单");
                             }
-
                             serveraccountBtn.setVisibility(View.GONE);
-                        if(dialogShowCount==0){
-                            dialogShowCount++;
-
                             if(isActivityRunning){
-                                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        CommonDialog.DismissProgressDialog();
-                                    }
-                                }, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        CommonDialog.DismissProgressDialog();
+                                if(!SlashHelper.getSettingBoolean(reservationId+"",false)){
+                                    CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            CommonDialog.DismissProgressDialog();
+                                        }
+                                    }, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            CommonDialog.DismissProgressDialog();
 
-                                        Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
-                                        urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
-                                        urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
-                                        urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
-                                                "，诚挚邀请，期待您的赴约。");
-                                        startActivity(urlintent);
-                                    }
-                                });
-
-                            }
+                                            Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                                            urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                                            urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                                            urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                                                    "，诚挚邀请，期待您的赴约。");
+                                            startActivity(urlintent);
+                                        }
+                                    });
+                                    SlashHelper.setSettingBoolean(reservationId+"",true);
+                                }
                         }
                         }
                         else{
