@@ -183,6 +183,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+    List<M_Merchant> listMerchantTemp = new ArrayList<M_Merchant>();
     List<M_Fan> listFan = new ArrayList<M_Fan>();
     int merchantNum = 0;
     LinkagePager pager;
@@ -348,8 +349,8 @@ public class SelfUserDetailActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    listMerchant = ((APIM_MerchantList) response).merchantList;
-
+                    listMerchantTemp = ((APIM_MerchantList) response).merchantList;
+                    listMerchant = sortList(listMerchantTemp);
                     fillAdapter(listMerchant);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
@@ -442,6 +443,22 @@ public class SelfUserDetailActivity extends BaseActivity {
         this.userInfo = userInfo;
         this.userInfo.setUserId(userId);
         this.userInfo.setUserName(userName);
+    }
+
+    private List<M_Merchant> sortList(List<M_Merchant> tList) {
+        List<M_Merchant> result = new ArrayList<>();
+        for (M_Merchant m : tList) {
+            if (m.merchantId == merchantId) {
+                result.add(m);
+                break;
+            }
+        }
+        for (M_Merchant m : tList) {
+            if (m.merchantId != merchantId) {
+                result.add(m);
+            }
+        }
+        return result;
     }
 
 

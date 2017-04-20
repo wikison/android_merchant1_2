@@ -180,6 +180,7 @@ public class UserDetailActivity extends BaseActivity {
     PagerUserMerchantAdapter pagerUserMerchantDetailAdapter;
 
     List<M_Merchant> listMerchant = new ArrayList<M_Merchant>();
+    List<M_Merchant> listMerchantTemp = new ArrayList<M_Merchant>();
     int merchantNum = 0;
     boolean isFromMerchant;
     LinkagePager pager;
@@ -372,8 +373,8 @@ public class UserDetailActivity extends BaseActivity {
             @Override
             public void onResponse(Object response) {
                 if (((APIM_MerchantList) response).status == 1) {
-                    listMerchant = ((APIM_MerchantList) response).merchantList;
-
+                    listMerchantTemp = ((APIM_MerchantList) response).merchantList;
+                    listMerchant = sortList(listMerchantTemp);
                     fillAdapter(listMerchant);
                 } else {
                     ToastUtils.show(mContext, ((APIM_MerchantList) response).info);
@@ -474,8 +475,25 @@ public class UserDetailActivity extends BaseActivity {
     }
 
 
+    private List<M_Merchant> sortList(List<M_Merchant> tList) {
+        List<M_Merchant> result = new ArrayList<>();
+        for (M_Merchant m : tList) {
+            if (m.merchantId == merchantId) {
+                result.add(m);
+                break;
+            }
+        }
+        for (M_Merchant m : tList) {
+            if (m.merchantId != merchantId) {
+                result.add(m);
+            }
+        }
+        return result;
+    }
+
     // 填充数据
     private void fillAdapter(List<M_Merchant> list) {
+
         if (list == null || list.size() == 0) {
             btnService.setVisibility(View.GONE);
             tvHint.setVisibility(View.VISIBLE);

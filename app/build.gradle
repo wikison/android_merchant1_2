@@ -16,7 +16,7 @@ allprojects {
 android {
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.2'
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
 
@@ -26,9 +26,9 @@ android {
         applicationId "com.zemult.merchant"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.2.3"
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v1.2.3", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
+        versionCode 7
+        versionName "2.0"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.0", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
 
     signingConfigs {
@@ -82,7 +82,7 @@ android {
 
 
     productFlavors {
-        d00 {}//泽马
+//        d00 {}//泽马
 //        d01 {}//华为
 //        d02 {}//OPPO
 //        d03 {}//小米
@@ -93,7 +93,7 @@ android {
 //        d08 {}//海信
 //        d09 {}//联想
 //        d10 {}//百度
-//        d11 {}//360
+        d11 {}//360
 //        d12 {}//应用宝
     }
 
@@ -208,6 +208,5 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
