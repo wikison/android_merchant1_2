@@ -126,6 +126,7 @@ public class NewVersionUpdateService extends Service {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					break;
 				case DOWN_ERROR:
 
 					Notification.Builder builder = new Notification.Builder(NewVersionUpdateService.this)
