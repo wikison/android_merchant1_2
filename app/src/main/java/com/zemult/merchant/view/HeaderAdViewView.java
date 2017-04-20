@@ -50,7 +50,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     private Thread mThread;
     private List<ImageView> ivList;
     private List<String> ivurlList = new ArrayList<String>();
-    ;
+    private List<M_Ad> adList;
     private boolean isStopThread = false;
     private ImageManager mImageManager;
     private int height;
@@ -129,6 +129,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     }
 
     private void dealWithTheView(List<M_Ad> list) {
+        this.adList = list;
         ivList.clear();
         ivurlList.clear();
         int size = list.size();
@@ -196,11 +197,6 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
         else
             mImageManager.loadRoundImage2(mAd.getImg(), imageView, 24, "@450h");
 
-        if(showTitle && !StringUtils.isBlank(mAd.getName())){
-            tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText(mAd.getName());
-        }else
-            tvTitle.setVisibility(View.GONE);
 
         return imageView;
     }
@@ -236,6 +232,12 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
             tvPicNum.setVisibility(View.VISIBLE);
             setNum(1);
         }
+
+        if(showTitle && !StringUtils.isBlank(adList.get(0).getName())){
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(adList.get(0).getName());
+        }else
+            tvTitle.setVisibility(View.GONE);
     }
 
     public void setNum(int currentNum) {
@@ -261,6 +263,11 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
                         setNum(newPosition + 1);
                     }
 
+                    if(showTitle && !StringUtils.isBlank(adList.get(newPosition).getName())){
+                        tvTitle.setVisibility(View.VISIBLE);
+                        tvTitle.setText(adList.get(newPosition).getName());
+                    }else
+                        tvTitle.setVisibility(View.GONE);
                 }
             }
 
