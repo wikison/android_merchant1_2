@@ -481,6 +481,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 } else {
                     // 如果MessageFragment不为空，则直接将它显示出来
                     transaction.show(slashFragment);
+                    slashFragment.scrollToTop();
                 }
                 transaction.commitAllowingStateLoss();
                 break;

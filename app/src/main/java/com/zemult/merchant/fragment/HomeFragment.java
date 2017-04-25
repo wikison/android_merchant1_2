@@ -41,7 +41,6 @@ import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.db.DBManager;
 import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
-import com.zemult.merchant.activity.mine.InviteFriendActivity;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
@@ -324,7 +323,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("约服-找个喜欢的人来服务")
@@ -335,7 +334,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("约服-找个喜欢的人来服务")
@@ -345,7 +344,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("约服-找个喜欢的人来服务")
@@ -356,7 +355,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         new ShareAction(mActivity)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
-                                .withText("您的好友【"+ SlashHelper.userManager().getUserinfo().getName()+"】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
+                                .withText("您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】正在使用YOVOLL约服APP，商务消费、找人服务首选平台，赶快也下载一个用用~")
                                 .withTargetUrl(Constants.APP_DOWNLOAD_URL)
                                 .withMedia(shareImage)
                                 .withTitle("约服-找个喜欢的人来服务")
@@ -693,5 +692,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 //    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 //        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
 //    }
+
+    public void scrollToTop() {
+        smoothListView.setSelection(0);
+    }
 
 }
