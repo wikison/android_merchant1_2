@@ -658,5 +658,16 @@ public class Urls {
     //服务管家的评价列表
     public static String USER2_SALEUSER_COMMENTLIST="user2_saleUser_commentList.do";
 
+    //服务方案库列表
+    public static String USER2_PLAN_LIST = "user2_planList";
+    //发布服务方案
+    public static String USER2_PLAN_ADD = "user2_plan_add";
+    //修改服务方案
+    public static String USER2_PLAN_EDIT = "user2_plan_edit";
+    //发布服务方案
+    public static String USER2_PLAN_DEL = "user2_plan_del";
+    //发布服务方案
+    public static String USER2_PLAN_INFO = "user2_plan_info";
+
 
 }

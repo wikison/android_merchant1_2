@@ -131,7 +131,7 @@ public class ImagePickerAdapter extends CommonBaseAdapter {
                 mViewHolder.imageButton.setVisibility(View.GONE);
             } else {
 //                ImageLoader.getInstance().displayImage("file://" +paths.get(arg0), mViewHolder.imageView, options);
-                imageManager.loadLocalRoundImage(paths.get(arg0), mViewHolder.imageView, 10);
+                imageManager.loadLocalImage(paths.get(arg0), mViewHolder.imageView);
                 mViewHolder.imageButton.setVisibility(View.VISIBLE);
             }
         } else {
