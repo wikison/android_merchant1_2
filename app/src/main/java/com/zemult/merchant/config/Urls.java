@@ -8,12 +8,12 @@ public class Urls {
 
     public static String MAIN_URL = "http://www.yovoll.com/";
 //正式
-    public static String URL = "http://www.yovoll.com/dzyx/";
-    public static  String APP_KEY = "23630707";
+//    public static String URL = "http://www.yovoll.com/dzyx/";
+//    public static  String APP_KEY = "23630707";
 
     //测试
-//    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
-//    public static String APP_KEY = "23521799";
+    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
+    public static String APP_KEY = "23521799";
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -655,6 +655,8 @@ public class Urls {
     public static String USER2_REMINDIM_READ = "user2_remindIM_read";
     //首页 用户自己所在的服务指数最高的商家
     public static String USER2_FIRST_SALEUSER = "user2_first_saleUser";
+    //服务管家的评价列表
+    public static String USER2_SALEUSER_COMMENTLIST="user2_saleUser_commentList.do";
 
 
 }
