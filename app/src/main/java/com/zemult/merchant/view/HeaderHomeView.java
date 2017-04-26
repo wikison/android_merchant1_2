@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.FindOneRecommandActivity;
@@ -14,6 +18,7 @@ import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
+import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.DensityUtil;
 
 import java.io.Serializable;
@@ -40,12 +45,24 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     LinearLayout llPeople;
     @Bind(R.id.rv)
     RecyclerView rv;
+    @Bind(R.id.iv_head)
+    ImageView ivHead;
+    @Bind(R.id.tv_user_name)
+    TextView tvUserName;
+    @Bind(R.id.iv_service)
+    ImageView ivService;
+    @Bind(R.id.tv_service)
+    TextView tvService;
+    @Bind(R.id.tv_num)
+    TextView tvNum;
+    @Bind(R.id.rl_me)
+    RelativeLayout rlMe;
     private Intent it;
 
 
     private HeaderAdViewView headerAdViewView; // 广告视图
     private AllIndustryAdapter mAdapter;
-//    private ArrayList<View> pageViews;
+    //    private ArrayList<View> pageViews;
 //    private List<HomeIndustryAdapter> industryAdapters;
     private LinearLayoutManager linearLayoutManager;
 
@@ -64,6 +81,18 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         // 设置广告数据 加入到smoothListView的headerView
         headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 194));
         headerAdViewView.fillView(advertList, llAdContainer);
+    }
+    public void setMyInfo(M_Merchant entity) {
+        // 服务管家的用户昵称
+        if (!TextUtils.isEmpty(entity.saleUserName))
+            tvUserName.setText(entity.saleUserName);
+        // 服务管家的用户头像
+        mImageManager.loadCircleHead(entity.saleUserHead, ivHead);
+
+        // 服务管家的顾客数
+        tvNum.setText(entity.saleUserFanNum + "关注");
+        ivService.setImageResource(entity.getExperienceImg());
+        tvService.setText(entity.getExperienceText() + "管家");
     }
 
     public void setVpIndustrys(final List<M_Industry> industryList) {
@@ -84,7 +113,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         mAdapter.setOnItemClickLitener(new AllIndustryAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(int industryId) {
-                if(onIndustryListener!=null)
+                if (onIndustryListener != null)
                     onIndustryListener.onIndustryClick(industryId);
             }
         });
@@ -93,11 +122,11 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int position = linearLayoutManager.findFirstVisibleItemPosition();
                     View current = linearLayoutManager.findViewByPosition(position);
 
-                    if(onIndustryListener!=null)
+                    if (onIndustryListener != null)
                         onIndustryListener.onIndustryMove(position, current.getLeft());
 
                 }
@@ -118,6 +147,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     public void setSelectedId(int id) {
         mAdapter.setSelectedId(id);
     }
+
     public void onMove(int pos, int offsetLeft) {
         linearLayoutManager.scrollToPositionWithOffset(pos, offsetLeft);
     }
@@ -167,14 +197,14 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
             case R.id.ll_merchant:
                 break;
             case R.id.ll_people:
-                it= new Intent(mContext, FindOneRecommandActivity.class);
+                it = new Intent(mContext, FindOneRecommandActivity.class);
                 mContext.startActivity(it);
 
                 break;
         }
     }
 
-//    class ViewPagerAdapter extends PagerAdapter {
+    //    class ViewPagerAdapter extends PagerAdapter {
 //
 //        private List<View> pageViews;
 //
@@ -214,6 +244,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
 //
     public interface OnIndustryListener {
         void onIndustryClick(int industryId);
+
         void onIndustryMove(int pos, int offsetLeft);
     }
 

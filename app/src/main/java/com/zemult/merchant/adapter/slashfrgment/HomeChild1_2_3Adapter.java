@@ -119,68 +119,54 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         else
             holder.ivQianyue.setVisibility(View.GONE);
 
-
-        if(entity.merchantId != 0){
-            // 商家名称
-            if (!TextUtils.isEmpty(entity.name))
-                holder.tvMerchantName.setText(entity.name);
-            // 人均消费
-            holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
-            // 距中心点距离(米)
-            if (!StringUtils.isEmpty(entity.distance)) {
-                if (entity.distance.length() > 3) {
-                    double d = Double.valueOf(entity.distance);
-                    holder.tvDistance.setText(d / 1000 + "km");
-                } else
-                    holder.tvDistance.setText(entity.distance + "m");
-            }
-            // 前7日的服务分总和
-            holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
-
-            // 设置广告数据
-            List<String> adList = new ArrayList<>();
-            if (StringUtils.isBlank(entity.pics)) {
-                adList.add(entity.pic);
-            } else {
-                adList = Arrays.asList(entity.pics.split(","));
-            }
-
-            holder.ivNoMerchant.setVisibility(View.GONE);
-            holder.banner.setVisibility(View.VISIBLE);
-            holder.banner.setImages(adList);
-            holder.banner.setImageLoader(new ImageLoader() {
-                @Override
-                public void displayImage(Context context, Object path, ImageView imageView) {
-                    mImageManager.loadRoundImage2((String) path, imageView, 24, "@450h");
-                }
-            });
-            holder.banner.setOnBannerListener(new OnBannerListener() {
-                @Override
-                public void OnBannerClick(int position) {
-                    Intent intent;
-                    if (SlashHelper.userManager().getUserId() == entity.saleUserId) {
-                        intent = new Intent(mContext, SelfUserDetailActivity.class);
-                    } else {
-                        intent = new Intent(mContext, UserDetailActivity.class);
-                    }
-                    intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
-                    intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
-                    mContext.startActivity(intent);
-                }
-            });
-            holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
-        }else {
-            // 商家名称
-            holder.tvMerchantName.setText("暂无");
-            // 人均消费
-            holder.tvMoney.setText("暂无");
-            // 距中心点距离(米)
-            holder.tvDistance.setText("暂无");
-            // 前7日的服务分总和
-            holder.tvZhishu.setText("7天服务指数暂无");
-            holder.ivNoMerchant.setVisibility(View.VISIBLE);
-            holder.banner.setVisibility(View.GONE);
+        // 商家名称
+        if (!TextUtils.isEmpty(entity.name))
+            holder.tvMerchantName.setText(entity.name);
+        // 人均消费
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
+        // 距中心点距离(米)
+        if (!StringUtils.isEmpty(entity.distance)) {
+            if (entity.distance.length() > 3) {
+                double d = Double.valueOf(entity.distance);
+                holder.tvDistance.setText(d / 1000 + "km");
+            } else
+                holder.tvDistance.setText(entity.distance + "m");
         }
+        // 前7日的服务分总和
+        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+
+        // 设置广告数据
+        List<String> adList = new ArrayList<>();
+        if (StringUtils.isBlank(entity.pics)) {
+            adList.add(entity.pic);
+        } else {
+            adList = Arrays.asList(entity.pics.split(","));
+        }
+
+        holder.ivNoMerchant.setVisibility(View.GONE);
+        holder.banner.setVisibility(View.VISIBLE);
+        holder.banner.setImages(adList);
+        holder.banner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                mImageManager.loadRoundImage2((String) path, imageView, 24, "@450h");
+            }
+        });
+        holder.banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent;
+                if (SlashHelper.userManager().getUserId() == entity.saleUserId) {
+                    intent = new Intent(mContext, SelfUserDetailActivity.class);
+                } else {
+                    intent = new Intent(mContext, UserDetailActivity.class);
+                }
+                intent.putExtra(UserDetailActivity.USER_ID, entity.saleUserId);
+                intent.putExtra(UserDetailActivity.MERCHANT_ID, entity.merchantId);
+                mContext.startActivity(intent);
+            }
+        });
+        holder.banner.setIndicatorGravity(BannerConfig.CENTER).start();
     }
 
 

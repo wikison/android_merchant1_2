@@ -45,6 +45,7 @@ import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
+import com.zemult.merchant.activity.slash.User2FirstSaleUserRequest;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
@@ -53,6 +54,7 @@ import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.slash.CommonFirstpageIndustryListRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_CommonGetadvertList;
@@ -439,6 +441,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private void getNetworkData() {
         common_getadvertList(); // 获取广告
         common_firstpage_industryList(); // 获取所有行业分类
+        if(SlashHelper.userManager().getUserId() != 0)
+            user2_first_saleUser();
         onRefresh();
     }
 
@@ -449,6 +453,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
+            if(SlashHelper.userManager().getUserId() != 0)
+                user2_first_saleUser();
             onRefresh();
         }
     }
@@ -535,6 +541,54 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     }
 
 
+    private User2FirstSaleUserRequest firstSaleUserRequest;
+
+    private void user2_first_saleUser() {
+        if (firstSaleUserRequest != null) {
+            firstSaleUserRequest.cancel();
+        }
+        User2FirstSaleUserRequest.Input input = new User2FirstSaleUserRequest.Input();
+        input.operateUserId = SlashHelper.userManager().getUserId();
+        input.center = Constants.CENTER;
+        input.convertJosn();
+
+        firstSaleUserRequest = new User2FirstSaleUserRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    CommonResult result = (CommonResult) response;
+                    M_Merchant myMerchant = null;
+                    if(result.isSaleUser == 1){
+                        myMerchant = new M_Merchant();
+                        myMerchant.setName(result.name);
+                        myMerchant.setSaleUserId(result.saleUserId);
+                        myMerchant.setSaleUserName(result.saleUserName);
+                        myMerchant.setSaleUserHead(result.saleUserHead);
+                        myMerchant.setSaleUserFanNum(result.saleUserFanNum);
+//                        myMerchant.setPerMoney(result.perMoney);
+//                        myMerchant.setDistance(result.distance);
+//                        myMerchant.setSaleUserExperience(result.saleUserExperience);
+//                        myMerchant.setSaleUserSumScore(result.saleUserSumScore);
+//                        myMerchant.setReviewstatus(result.reviewstatus);
+//                        myMerchant.setPic(result.pic);
+//                        myMerchant.setPics(result.pics);
+//                        myMerchant.setSaleUserTags(result.saleUserTags);
+
+                        headerHomeView.setMyInfo(myMerchant);
+                    }
+                } else {
+                    ToastUtils.show(mContext, ((CommonResult) response).info);
+                }
+            }
+        });
+        sendJsonRequest(firstSaleUserRequest);
+    }
+
+
     private UserReservationListRequest userReservationListRequest;
 
     private void userReservationList() {
@@ -583,13 +637,13 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
     @Override
     public void onRefresh() {
-        homePresenter.merchant_firstpage(industryId, page = 1, Constants.ROWS, false);
+        homePresenter.merchant_firstpage_List(industryId, page = 1, Constants.ROWS, false);
     }
 
 
     @Override
     public void onLoadMore() {
-        homePresenter.merchant_firstpage(industryId, ++page, Constants.ROWS, true);
+        homePresenter.merchant_firstpage_List(industryId, ++page, Constants.ROWS, true);
     }
 
     @Override
