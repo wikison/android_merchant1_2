@@ -140,8 +140,7 @@ public class ImageManager {
                 .placeholder(R.color.font_black_e0)
                 .error(R.mipmap.tupiansilie_icon)
                 .crossFade()
-//                .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
-                .bitmapTransform(new RoundedCornersTransformation(mContext, roundPx, 0))
+                .transform(new GlideRoundTransform(mContext, roundPx))
                 .into(imageView);
     }
 
@@ -161,8 +160,7 @@ public class ImageManager {
                 .placeholder(R.color.font_black_e0)
                 .error(R.mipmap.tupiansilie_icon)
                 .crossFade()
-//                .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
-                .bitmapTransform(new RoundedCornersTransformation(mContext, roundPx, 0))
+                .transform(new GlideRoundTransform(mContext, roundPx))
                 .into(imageView);
     }
 
