@@ -5,13 +5,12 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:background="@color/white"
     >
 
     <ImageView
         android:id="@+id/ivSend"
-        android:layout_width="@dimen/j70dp"
-        android:layout_height="@dimen/j70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:clickable="true"
@@ -20,12 +19,11 @@
 
     <ImageButton
         android:id="@+id/ibDelete"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_alignRight="@+id/ivSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivSend"
         android:background="@null"
         android:scaleType="centerCrop"
-        android:src="@mipmap/xx_btn"
-        android:visibility="gone" />
+        android:src="@mipmap/xx_btn" />
 
 </RelativeLayout>

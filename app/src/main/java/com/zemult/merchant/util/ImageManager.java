@@ -133,6 +133,17 @@ public class ImageManager {
                 .crossFade()
                 .into(imageView);
     }
+    // 加载drawable图片
+    public void loadResRoundImage(int resId, ImageView imageView, int roundPx) {
+        Glide.with(mContext)
+                .load(resourceIdToUri(resId))
+                .placeholder(R.color.font_black_e0)
+                .error(R.mipmap.tupiansilie_icon)
+                .crossFade()
+//                .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
+                .bitmapTransform(new RoundedCornersTransformation(mContext, roundPx, 0))
+                .into(imageView);
+    }
 
     // 加载本地图片
     public void loadLocalImage(String path, ImageView imageView) {
@@ -141,6 +152,17 @@ public class ImageManager {
                 .placeholder(R.color.font_black_e0)
                 .error(R.mipmap.tupiansilie_icon)
                 .crossFade()
+                .into(imageView);
+    }
+    // 加载本地图片
+    public void loadLocalRoundImage(String path, ImageView imageView, int roundPx) {
+        Glide.with(mContext)
+                .load("file://" + path)
+                .placeholder(R.color.font_black_e0)
+                .error(R.mipmap.tupiansilie_icon)
+                .crossFade()
+//                .bitmapTransform(new GlideRoundTransform(mContext, roundPx))
+                .bitmapTransform(new RoundedCornersTransformation(mContext, roundPx, 0))
                 .into(imageView);
     }
 

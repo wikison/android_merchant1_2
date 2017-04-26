@@ -185,7 +185,7 @@ public final class EditFilter {
      * 限制内容长度, 显示可输入剩余字数
      */
     public static void WordFilter(final EditText editText, final int MAX_CN, final TextView textView) {
-        textView.setText(MAX_CN + "");
+        textView.setText("0/" +MAX_CN);
         TextWatcher textWatcher = new TextWatcher() {
             private CharSequence temp;
             private int selectionStart;
@@ -205,7 +205,8 @@ public final class EditFilter {
             @Override
             public void afterTextChanged(Editable s) {
                 int number = MAX_CN - s.length();
-                textView.setText("" + number);
+//                textView.setText("" + number);
+                textView.setText(s.length() + "/" + MAX_CN);
                 selectionStart = editText.getSelectionStart();
                 selectionEnd = editText.getSelectionEnd();
                 if (temp.length() > MAX_CN) {

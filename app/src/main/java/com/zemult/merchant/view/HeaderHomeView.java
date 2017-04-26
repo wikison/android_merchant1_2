@@ -55,8 +55,8 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     TextView tvService;
     @Bind(R.id.tv_num)
     TextView tvNum;
-    @Bind(R.id.rl_me)
-    RelativeLayout rlMe;
+    @Bind(R.id.ll_me)
+    LinearLayout llMe;
     private Intent it;
 
 
@@ -83,6 +83,12 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         headerAdViewView.fillView(advertList, llAdContainer);
     }
     public void setMyInfo(M_Merchant entity) {
+        if(entity == null){
+            llMe.setVisibility(View.GONE);
+            return;
+        }
+
+        llMe.setVisibility(View.VISIBLE);
         // 服务管家的用户昵称
         if (!TextUtils.isEmpty(entity.saleUserName))
             tvUserName.setText(entity.saleUserName);
