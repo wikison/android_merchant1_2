@@ -39,7 +39,7 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="16dp"
-                    android:paddingRight="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_12dp"
                     android:paddingTop="@dimen/margin_16dp">
 
                     <RelativeLayout
@@ -106,6 +106,14 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tv_focus"
+                                style="@style/text_12_black_28"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/margin_6dp"
+                                android:text="-客户关注"
+                                android:textColor="@color/font_new_red"/>
+
+                            <TextView
                                 android:id="@+id/tv_rname"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -119,19 +127,23 @@
 
                         <com.flyco.roundview.RoundTextView
                             android:id="@+id/btn_focus"
-                            android:layout_width="80dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="25dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:clickable="true"
+                            android:drawableLeft="@mipmap/weiguanzhu"
+                            android:drawablePadding="2dp"
                             android:gravity="center"
+                            android:paddingLeft="@dimen/margin_8dp"
+                            android:paddingRight="@dimen/margin_8dp"
                             android:text="@string/add_focus_yogouser"
-                            android:textColor="@color/font_main"
+                            android:textColor="@color/not_now"
                             android:textSize="@dimen/font_28px"
                             app:rv_backgroundColor="@color/white"
                             app:rv_backgroundPressColor="@color/bg_ce"
                             app:rv_cornerRadius="18dp"
-                            app:rv_strokeColor="@color/font_main"
+                            app:rv_strokeColor="@color/not_now"
                             app:rv_strokeWidth="1px"/>
 
                     </RelativeLayout>
@@ -279,9 +291,9 @@
         android:layout_height="wrap_content"
         android:background="@color/bg_f2"
         android:gravity="bottom|center_horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="36dp"
         android:orientation="vertical"
+        android:paddingBottom="36dp"
+        android:paddingTop="20dp"
         android:visibility="visible">
 
         <LinearLayout
@@ -298,11 +310,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:visibility="visible"
-                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundColor="@color/transparent"
                 app:rv_backgroundPressColor="@color/btn_press"
+                app:rv_cornerRadius="18dp"
                 app:rv_strokeColor="@color/font_main"
-                app:rv_strokeWidth="1px"
-                app:rv_cornerRadius="18dp">
+                app:rv_strokeWidth="1px">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -321,15 +333,15 @@
                 android:id="@+id/rll_call"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/common_btn_height_35"
+                android:layout_marginLeft="@dimen/margin_16dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:visibility="visible"
-                android:layout_marginLeft="@dimen/margin_16dp"
-                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundColor="@color/transparent"
                 app:rv_backgroundPressColor="@color/btn_press"
+                app:rv_cornerRadius="18dp"
                 app:rv_strokeColor="@color/font_main"
-                app:rv_strokeWidth="1px"
-                app:rv_cornerRadius="18dp">
+                app:rv_strokeWidth="1px">
 
                 <ImageView
                     android:id="@+id/iv_call"

@@ -156,12 +156,15 @@ public class UserDetailActivity extends BaseActivity {
     LinearLayout llBottom;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
-
-    public static final String TAG = UserDetailActivity.class.getSimpleName();
     @Bind(R.id.tv_call)
     TextView tvCall;
     @Bind(R.id.iv_call)
     ImageView ivCall;
+    @Bind(R.id.tv_focus)
+    TextView tvFocus;
+
+    public static final String TAG = UserDetailActivity.class.getSimpleName();
+
 
     private Context mContext;
     private Activity mActivity;
@@ -405,6 +408,7 @@ public class UserDetailActivity extends BaseActivity {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
+        tvFocus.setText(userInfo.fansNum + "人已关注");
 
         merchantNum = userInfo.saleUserNum;
 
@@ -605,6 +609,10 @@ public class UserDetailActivity extends BaseActivity {
                 if (((CommonResult) response).status == 1) {
                     // 显示已关注
                     btnFocus.setText(R.string.has_focus);
+                    Drawable drawable = getResources().getDrawable(R.mipmap.guanzhu);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    btnFocus.setCompoundDrawables(drawable, null, null, null);
+
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -638,6 +646,10 @@ public class UserDetailActivity extends BaseActivity {
                     btnFocus.setText(R.string.add_focus_yogouser);
                     tvRname.setVisibility(View.GONE);
                     userInfo.remarkName = "";
+                    Drawable drawable = getResources().getDrawable(R.mipmap.weiguanzhu);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    btnFocus.setCompoundDrawables(drawable, null, null, null);
+
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

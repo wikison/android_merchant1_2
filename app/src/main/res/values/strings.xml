@@ -364,4 +364,6 @@
     <string name="realname">建议使用真实姓名</string>
     <string name="forfastfind">为了让曾经的客户可以快速找到你,\n请在手机权限管理中设置。</string>
     <string name="forfastreceive">为了可以第一时间收到客户的约服需求</string>
+    <string name="member_privilege">会员特权?</string>
+    <string name="how_design">如何设计?</string>
 </resources>

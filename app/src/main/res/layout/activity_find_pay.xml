@@ -161,6 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:enabled="false"
                     android:gravity="center_vertical|right"
                     android:inputType="numberDecimal"
                     android:paddingRight="@dimen/margin_16dp"

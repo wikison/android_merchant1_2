@@ -54,7 +54,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     int isOpen;       //	是否公开手机号(0:否,1:是)
     @Expose
-    int fansNum;    //	粉丝数
+    public int fansNum;    //	粉丝数
     @Expose
     String provinceName;    //	所属省份 名称
     @Expose
