@@ -173,6 +173,35 @@
                 <RelativeLayout style="@style/relative_layout_item">
 
                     <TextView
+                        android:id="@+id/tv_text_member"
+                        style="@style/text_15_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:text="会员" />
+
+                    <TextView
+                        android:id="@+id/tv_member_privilege"
+                        style="@style/text_12_black_28"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:layout_toRightOf="@+id/tv_text_member"
+                        android:text="@string/member_privilege"
+                        android:textColor="@color/font_new_blue" />
+
+                    <ImageView
+                        android:id="@+id/iv_member"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/right_btn" />
+                </RelativeLayout>
+
+                <View style="@style/divider_dash" />
+
+                <RelativeLayout style="@style/relative_layout_item">
+
+                    <TextView
                         android:id="@+id/tv_text_scrm"
                         style="@style/text_15_black_28"
                         android:layout_height="match_parent"

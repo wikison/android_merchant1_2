@@ -26,7 +26,6 @@ import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManInfoImproveActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
-import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
@@ -530,17 +529,17 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
-            pagerUserMerchantDetailAdapter.setOnViewTagClickListener(new PagerUserMerchantAdapter.ViewTagClickListener() {
-                @Override
-                public void onTagManage(M_Merchant merchant) {
-                    Intent intent = new Intent(mActivity, TabManageActivity.class);
-                    intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                    intent.putExtra(TabManageActivity.NAME, merchant.merchantName);
-                    intent.putExtra(TabManageActivity.TAGS, merchant.tags);
-                    intent.putExtra(TabManageActivity.COMEFROM, 2);
-                    startActivityForResult(intent, MODIFY_TAG);
-                }
-            });
+//            pagerUserMerchantDetailAdapter.setOnViewTagClickListener(new PagerUserMerchantAdapter.ViewTagClickListener() {
+//                @Override
+//                public void onTagManage(M_Merchant merchant) {
+//                    Intent intent = new Intent(mActivity, TabManageActivity.class);
+//                    intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                    intent.putExtra(TabManageActivity.NAME, merchant.merchantName);
+//                    intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+//                    intent.putExtra(TabManageActivity.COMEFROM, 2);
+//                    startActivityForResult(intent, MODIFY_TAG);
+//                }
+//            });
 
             pagerUserMerchantDetailAdapter.setOnViewStateClickListener(new PagerUserMerchantAdapter.ViewStateClickListener() {
                 @Override
@@ -561,14 +560,14 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
-            pagerUserMerchantDetailAdapter.setOnViewPositionClickListener(new PagerUserMerchantAdapter.ViewPositionClickListener() {
-                @Override
-                public void onPositionManage(M_Merchant entity) {
-                    Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
-                    intent.putExtra("position_name", strPosition);
-                    startActivityForResult(intent, MODIFY_POSITION);
-                }
-            });
+//            pagerUserMerchantDetailAdapter.setOnViewPositionClickListener(new PagerUserMerchantAdapter.ViewPositionClickListener() {
+//                @Override
+//                public void onPositionManage(M_Merchant entity) {
+//                    Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
+//                    intent.putExtra("position_name", strPosition);
+//                    startActivityForResult(intent, MODIFY_POSITION);
+//                }
+//            });
 
             pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
                 @Override

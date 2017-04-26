@@ -45,9 +45,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     LayoutInflater inflater = null;
     private ViewClickListener onViewClickListener;
     private ViewMerchantClickListener onViewMerchantClickListener;
-    private ViewTagClickListener onViewTagClickListener;
     private ViewStateClickListener onViewStateClickListener;
-    private ViewPositionClickListener onViewPositionClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
@@ -57,16 +55,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         this.onViewMerchantClickListener = onViewMerchantClickListener;
     }
 
-    public void setOnViewTagClickListener(ViewTagClickListener onViewTagClickListener) {
-        this.onViewTagClickListener = onViewTagClickListener;
-    }
-
     public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
         this.onViewStateClickListener = onViewStateClickListener;
-    }
-
-    public void setOnViewPositionClickListener(ViewPositionClickListener onViewPositionClickListener) {
-        this.onViewPositionClickListener = onViewPositionClickListener;
     }
 
     public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type, boolean isSelf) {
@@ -130,16 +120,32 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
 
     private View initHeadView(View view, M_Merchant entity) {
-        ViewHolder viewHolder = null;
+        ViewHolder holder = null;
         if (view == null) {
             view = inflater.inflate(R.layout.item_user_merchant_head, null);
-            viewHolder = new ViewHolder(view);
-            view.setTag(viewHolder);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
         } else {
-            viewHolder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag();
         }
         if (!TextUtils.isEmpty(entity.merchantPic))
-            imageManager.loadRoundImage(entity.merchantPic, viewHolder.cardImg, 24, Color.WHITE, 10, "@300h");
+            imageManager.loadRoundImage(entity.merchantPic, holder.cardImg, 24, Color.WHITE, 10, "@300h");
+
+        // 人均消费
+        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
+        // 距中心点距离(米)
+        if (!StringUtils.isEmpty(entity.distance)) {
+            if (entity.distance.length() > 3) {
+                double d = Double.valueOf(entity.distance);
+                holder.tvDistance.setText(d / 1000 + "km");
+            } else
+                holder.tvDistance.setText(entity.distance + "m");
+        }
+        // 签约商户
+        if (entity.reviewstatus == 2)
+            holder.ivQianyue.setVisibility(View.VISIBLE);
+        else
+            holder.ivQianyue.setVisibility(View.GONE);
 
         return view;
     }
@@ -156,16 +162,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         // 商家名称
         if (!TextUtils.isEmpty(entity.merchantName))
             holder.tvName.setText(entity.merchantName);
-        // 人均消费
-        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
-        // 距中心点距离(米)
-        if (!StringUtils.isEmpty(entity.distance)) {
-            if (entity.distance.length() > 3) {
-                double d = Double.valueOf(entity.distance);
-                holder.tvDistance.setText(d / 1000 + "km");
-            } else
-                holder.tvDistance.setText(entity.distance + "m");
-        }
+
 
         holder.tvSeven.setText(entity.sumScore / 7 + "");
         String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
@@ -190,16 +187,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         // 商家名称
         if (!TextUtils.isEmpty(entity.merchantName))
             holder.tvName.setText(entity.merchantName);
-        // 人均消费
-        holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
-        // 距中心点距离(米)
-        if (!StringUtils.isEmpty(entity.distance)) {
-            if (entity.distance.length() > 3) {
-                double d = Double.valueOf(entity.distance);
-                holder.tvDistance.setText(d / 1000 + "km");
-            } else
-                holder.tvDistance.setText(entity.distance + "m");
-        }
         holder.tvSeven.setText(entity.sumScore / 7 + "");
         String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
         holder.tvServicePosition.setText(strPosition);
@@ -244,14 +231,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             }
         });
 
-        holder.rlService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onViewTagClickListener != null)
-                    onViewTagClickListener.onTagManage(entity);
-            }
-        });
-
         holder.rlServiceRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,14 +252,6 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             public void onClick(View v) {
                 if (onViewStateClickListener != null)
                     onViewStateClickListener.onStateManage(entity);
-            }
-        });
-
-        holder.rlServicePosition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onViewPositionClickListener != null)
-                    onViewPositionClickListener.onPositionManage(entity);
             }
         });
     }
@@ -391,40 +362,30 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     }
 
-    static class ViewHolder {
-        @Bind(R.id.card_img)
-        ImageView cardImg;
-
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
 
     class ViewHolderDetail {
         @Bind(R.id.tv_name)
         TextView tvName;
-        @Bind(R.id.tv_money)
-        TextView tvMoney;
-        @Bind(R.id.tv_distance)
-        TextView tvDistance;
+        @Bind(R.id.tv_service_position)
+        TextView tvServicePosition;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
         @Bind(R.id.rl_detail)
         RelativeLayout rlDetail;
         @Bind(R.id.ll_detail)
         LinearLayout llDetail;
-        @Bind(R.id.tv_service_position)
-        TextView tvServicePosition;
-        @Bind(R.id.tv_service)
-        TextView tvService;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
         @Bind(R.id.tv_text_state)
         TextView tvTextState;
         @Bind(R.id.iv_state)
         ImageView ivState;
         @Bind(R.id.tv_state)
         TextView tvState;
+        @Bind(R.id.tv_service_plan)
+        TextView tvServicePlan;
         @Bind(R.id.tv_seven)
         TextView tvSeven;
+        @Bind(R.id.tv_comment)
+        TextView tvComment;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
@@ -434,32 +395,28 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     class ViewHolderSelfDetail {
         @Bind(R.id.tv_name)
         TextView tvName;
-        @Bind(R.id.tv_money)
-        TextView tvMoney;
-        @Bind(R.id.tv_distance)
-        TextView tvDistance;
+        @Bind(R.id.tv_service_position)
+        TextView tvServicePosition;
+        @Bind(R.id.rg_ta_service)
+        FNRadioGroup rgTaService;
         @Bind(R.id.rl_detail)
         RelativeLayout rlDetail;
         @Bind(R.id.ll_detail)
         LinearLayout llDetail;
-        @Bind(R.id.tv_service_position)
-        TextView tvServicePosition;
-        @Bind(R.id.rl_service_position)
-        RelativeLayout rlServicePosition;
-        @Bind(R.id.tv_text_service)
-        TextView tvTextService;
-        @Bind(R.id.rg_ta_service)
-        FNRadioGroup rgTaService;
-        @Bind(R.id.tv_service)
-        TextView tvService;
-        @Bind(R.id.rl_service)
-        RelativeLayout rlService;
         @Bind(R.id.tv_text_state)
         TextView tvTextState;
         @Bind(R.id.iv_state)
         ImageView ivState;
         @Bind(R.id.tv_state)
         TextView tvState;
+        @Bind(R.id.tv_text_service_plan)
+        TextView tvTextServicePlan;
+        @Bind(R.id.tv_design_plan)
+        TextView tvDesignPlan;
+        @Bind(R.id.tv_service_plan)
+        TextView tvServicePlan;
+        @Bind(R.id.tv_comment)
+        TextView tvComment;
         @Bind(R.id.tv_text_seven)
         TextView tvTextSeven;
         @Bind(R.id.tv_add_seven)
@@ -507,6 +464,21 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public interface ViewPositionClickListener {
         void onPositionManage(M_Merchant entity);
+    }
+
+    static class ViewHolder {
+        @Bind(R.id.card_img)
+        ImageView cardImg;
+        @Bind(R.id.tv_distance)
+        TextView tvDistance;
+        @Bind(R.id.tv_money)
+        TextView tvMoney;
+        @Bind(R.id.iv_qianyue)
+        ImageView ivQianyue;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 }
