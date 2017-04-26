@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bg_f2">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_margin="16dp"
+            app:rv_backgroundColor="@color/white"
+            app:rv_cornerRadius="8dp">
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_weight="1"
+                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:background="@color/transparent"
+                android:hint="发布你的最新方案标题..."
+                android:textColorHint="@color/font_black_999"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_30px"
+                android:maxLength="10"/>
+            <TextView
+                style="@style/text_15_black_28"
+                android:id="@+id/tv_title_length"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/20"/>
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            app:rv_backgroundColor="@color/white"
+            android:orientation="vertical"
+            app:rv_cornerRadius="8dp">
+
+
+
+            <EditText
+                android:textColorHint="@color/font_black_999"
+                android:textColor="@color/font_black_28"
+                android:textSize="@dimen/font_30px"
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="top|left"
+                android:background="@color/transparent"
+                android:hint="发布你的最新方案..."
+                android:scrollHorizontally="true"
+                android:maxLength="100"/>
+
+            <TextView
+                android:layout_marginTop="6dp"
+                style="@style/text_15_black_28"
+                android:id="@+id/tv_content_length"
+                android:layout_width="match_parent"
+                android:text="0/100"
+                android:gravity="right|bottom"
+                />
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="80dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include
+                layout="@layout/include_choose_imgs"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    </ScrollView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="16dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/text_15_black_28"
+                    android:textSize="@dimen/font_36px"
+                    android:layout_width="match_parent"
+                    android:text="启动该方案"
+                    />
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/sc_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>

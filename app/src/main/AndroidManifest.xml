@@ -626,6 +626,7 @@
         <activity android:name=".activity.slash.PositionSetActivity" />
         <activity android:name=".activity.mine.SaleManInfoImproveActivity" />
         <activity android:name=".activity.slash.ServiceCommentActivity"></activity>
+        <activity android:name=".activity.slash.NewServicePlanActivity"/>
     </application>
 
 </manifest>
