@@ -13,7 +13,7 @@ public class M_Comment {
     @Expose
     public int	commentId		;	//	评论id
     @Expose
-    public int	type		;	//	类型(0:正常评论;1:回复别人的评论 )
+    public int	type		;	//	类型(0:服务评价,1:消费评价)
     @Expose
     public int	userId		;	//	评论用户id
     @Expose
@@ -47,5 +47,19 @@ public class M_Comment {
     public int	isGood			;	//	操作用户是否赞过该评论(0:否1:是)
     @Expose
     public int	goodNum			;	//	点赞数
+
+    @Expose
+    public String name;   //用户昵称
+
+    @Expose
+    public String head;//用户头像
+
+    @Expose
+    public int comment;//评分
+
+    @Expose
+    public String createTime;//时间(格式为"yyyy-MM-dd HH:mm:ss")
+
+
 
 }

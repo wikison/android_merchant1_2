@@ -12,6 +12,7 @@ import java.util.List;
  */
 
 public class APIM_ManagerNewsCommentList extends CommonResult {
+
     @Expose
     public List<M_Comment> commentList;
     @Expose
