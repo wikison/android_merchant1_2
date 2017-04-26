@@ -129,8 +129,10 @@ public class ImagePickerAdapter extends CommonBaseAdapter {
 //                ImageLoader.getInstance().displayImage("drawable://" + R.mipmap.common_ic1_public_gray, mViewHolder.imageView);
                 imageManager.loadResRoundImage(R.mipmap.dotask_tianjia,mViewHolder.imageView, 10);
                 mViewHolder.imageButton.setVisibility(View.GONE);
-            } else {
-//                ImageLoader.getInstance().displayImage("file://" +paths.get(arg0), mViewHolder.imageView, options);
+            } else if(paths.get(arg0).startsWith("http://")){
+                imageManager.loadUrlImage(paths.get(arg0), mViewHolder.imageView);
+                mViewHolder.imageButton.setVisibility(View.VISIBLE);
+            }else {
                 imageManager.loadLocalImage(paths.get(arg0), mViewHolder.imageView);
                 mViewHolder.imageButton.setVisibility(View.VISIBLE);
             }

@@ -36,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:background="@color/transparent"
-                android:hint="发布你的最新方案标题..."
+                android:hint="方案标题..."
                 android:textColorHint="@color/font_black_999"
                 android:textColor="@color/font_black_28"
                 android:textSize="@dimen/font_30px"
@@ -75,7 +75,7 @@
                 android:layout_height="200dp"
                 android:gravity="top|left"
                 android:background="@color/transparent"
-                android:hint="发布你的最新方案..."
+                android:hint="方案内容..."
                 android:scrollHorizontally="true"
                 android:maxLength="100"/>
 
