@@ -18,6 +18,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
+import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
 import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -232,12 +233,17 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
     private void goAssessment() {
-        Intent intent = new Intent(mActivity, AssessmentActivity.class);
-        intent.putExtra("userPayId", userPayId);
-        intent.putExtra("managerhead", mReservation.saleUserHead);
-        intent.putExtra("managername", mReservation.saleUserName);
-        intent.putExtra("merchantName", mReservation.merchantName);
-        startActivityForResult(intent, 2000);
+
+
+        Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
+        intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+        intent2.putExtra("managerhead", mReservation.saleUserHead);
+        intent2.putExtra("managername",mReservation.saleUserName);
+        intent2.putExtra("merchantName", mReservation.merchantName);
+        if (!TextUtils.isEmpty(reservationId))
+            intent2.putExtra("reservationId", Integer.valueOf(reservationId));
+        startActivityForResult(intent2, 2000);
+
     }
 
     private void invite() {

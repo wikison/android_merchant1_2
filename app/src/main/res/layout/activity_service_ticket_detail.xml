@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_root"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_f2"
-              android:orientation="vertical">
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
 
     <include layout="@layout/layout_head"></include>
 
@@ -27,7 +27,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="服务单状态"/>
+                    android:text="服务单状态" />
 
 
                 <TextView
@@ -35,7 +35,7 @@
                     style="@style/detail_right"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="------"/>
+                    android:text="------" />
             </RelativeLayout>
 
             <View style="@style/divider12dp"></View>
@@ -49,7 +49,7 @@
                     android:id="@+id/object_tv"
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="-------"/>
+                    android:text="-------" />
 
                 <ImageView
                     android:id="@+id/head_iv"
@@ -58,13 +58,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="16dp"
                     android:layout_toLeftOf="@+id/name_tv"
-                    android:src="@mipmap/user_icon"/>
+                    android:src="@mipmap/user_icon" />
 
                 <TextView
                     android:id="@+id/name_tv"
                     style="@style/detail_right"
                     android:layout_alignParentRight="true"
-                    android:text="------"/>
+                    android:text="------" />
 
             </RelativeLayout>
 
@@ -81,7 +81,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="商户"/>
+                    android:text="商户" />
 
 
                 <TextView
@@ -89,7 +89,7 @@
                     style="@style/detail_right"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="------"/>
+                    android:text="------" />
             </RelativeLayout>
 
             <View
@@ -104,14 +104,14 @@
 
                 <TextView
                     style="@style/detail_left"
-                    android:text="时间"/>
+                    android:text="时间" />
 
 
                 <TextView
                     android:id="@+id/tv_time"
                     style="@style/detail_right"
                     android:layout_centerVertical="true"
-                    android:text="------"/>
+                    android:text="------" />
             </RelativeLayout>
 
             <View
@@ -127,7 +127,7 @@
                 <TextView
                     style="@style/detail_left"
                     android:layout_centerVertical="true"
-                    android:text="人数"/>
+                    android:text="人数" />
 
 
                 <TextView
@@ -135,7 +135,7 @@
                     style="@style/detail_right"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="------"/>
+                    android:text="------" />
             </RelativeLayout>
 
             <View
@@ -157,20 +157,20 @@
                     android:id="@+id/tv_beizhu"
                     style="@style/detail_left"
                     android:layout_gravity="center"
-                    android:text="包厢/房间号"/>
+                    android:text="包厢/房间号" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true">
+                    android:layout_alignParentTop="true">
 
                     <TextView
                         android:id="@+id/tv_room"
                         style="@style/detail_right"
                         android:maxEms="15"
-                        android:text="------"/>
+                        android:text="------" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -183,8 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -199,7 +198,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="订金"/>
+                        android:text="订金" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -210,7 +209,7 @@
                             android:id="@+id/tv_dingjin_haved"
                             style="@style/detail_right"
                             android:layout_centerVertical="true"
-                            android:text="-------"/>
+                            android:text="-------" />
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -236,7 +235,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="实付金额"/>
+                        android:text="实付金额" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -247,7 +246,7 @@
                             android:id="@+id/realmoney_tv"
                             style="@style/detail_right"
                             android:layout_centerVertical="true"
-                            android:text="-------"/>
+                            android:text="-------" />
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -261,13 +260,13 @@
 
                     <TextView
                         style="@style/detail_left"
-                        android:text="订单号码"/>
+                        android:text="订单号码" />
 
                     <TextView
                         android:id="@+id/ordernum_tv"
                         style="@style/detail_right"
                         android:layout_centerVertical="true"
-                        android:text="------"/>
+                        android:text="------" />
                 </RelativeLayout>
 
                 <Button
@@ -279,18 +278,17 @@
                     android:onClick="click"
                     android:text="查看详情"
                     android:textColor="@color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
 
             <LinearLayout
                 android:id="@+id/success1_ll"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                >
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -305,7 +303,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="订金"/>
+                        android:text="订金" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -316,7 +314,7 @@
                             android:id="@+id/tv_dingjin_success"
                             style="@style/detail_right"
                             android:layout_centerVertical="true"
-                            android:text="-------"/>
+                            android:text="-------" />
 
                     </RelativeLayout>
 
@@ -327,7 +325,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/dingjin_discuss"/>
+                    android:text="@string/dingjin_discuss" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -345,20 +343,19 @@
                             android:id="@+id/recom_btn"
                             style="@style/common_btn_235"
                             android:layout_width="130dp"
+                            android:layout_marginBottom="8dp"
                             android:background="@drawable/detail_btn"
                             android:text="评价一下"
-                            android:visibility="gone"
-                            android:layout_marginBottom="8dp"
-                            android:textColor="#e6bb7c"/>
+                            android:textColor="#e6bb7c" />
 
                         <Button
                             android:id="@+id/invite_btn"
                             style="@style/common_btn_235"
                             android:layout_width="130dp"
-
-                            android:layout_toRightOf="@+id/recom_btn"
                             android:layout_marginBottom="8dp"
-                            android:text="邀请函"/>
+                            android:layout_marginLeft="@dimen/margin_16dp"
+                            android:layout_toRightOf="@+id/recom_btn"
+                            android:text="邀请函" />
                     </RelativeLayout>
 
                     <TextView
@@ -368,7 +365,7 @@
                         android:layout_marginBottom="12dp"
                         android:gravity="center"
                         android:text="@string/dinghaole"
-                        android:textColor="@color/not_now"/>
+                        android:textColor="@color/not_now" />
 
                 </RelativeLayout>
 
@@ -380,8 +377,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -395,7 +391,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="60dp"
                         android:layout_marginLeft="20dp"
-                        android:text="生成邀请函"/>
+                        android:text="生成邀请函" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -404,7 +400,7 @@
                         android:layout_marginBottom="12dp"
                         android:gravity="center"
                         android:text="@string/dinghaole"
-                        android:textColor="@color/not_now"/>
+                        android:textColor="@color/not_now" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -414,8 +410,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -430,7 +425,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="预约定金"/>
+                        android:text="预约定金" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -441,7 +436,7 @@
                             android:id="@+id/tv_redingjin_finished"
                             style="@style/detail_right"
                             android:layout_centerVertical="true"
-                            android:text="-------"/>
+                            android:text="-------" />
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -451,7 +446,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/dingjin_discuss"/>
+                    android:text="@string/dingjin_discuss" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
