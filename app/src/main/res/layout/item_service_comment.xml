@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:padding="16dp">
 
         <ImageView
@@ -60,7 +61,6 @@
         <TextView
             android:id="@+id/time_tv"
             android:textSize="12sp"
-            android:text="2017-4-26"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:textColor="@color/font_black_999"
@@ -76,6 +76,7 @@
        android:text="--------------------------------------------------------------------------------------------------"
        android:paddingRight="16dp"
        android:paddingBottom="16dp"
+       android:background="@color/white"
        android:textColor="@color/font_black_28"
        android:layout_width="match_parent"
        android:layout_height="wrap_content" />

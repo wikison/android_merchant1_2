@@ -1,9 +1,11 @@
 package com.zemult.merchant.alipay.taskpay;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import de.greenrobot.event.EventBus;
@@ -81,6 +84,10 @@ public class AssessmentActivity extends BaseActivity {
 
     int comment = 0;
     int userPayId;
+    @Bind(R.id.et_pingjia)
+    EditText etPingjia;
+    @Bind(R.id.editnum)
+    TextView editnum;
     private String managerhead, managername, merchantName;
     int iToComment = 0;
 
@@ -228,6 +235,7 @@ public class AssessmentActivity extends BaseActivity {
         input.userId = SlashHelper.userManager().getUserId(); // 用户id
         input.userPayId = userPayId;
         input.comment = comment;
+        input.note = etPingjia.getText().toString();
         input.convertJosn();
         userMerchantPayCommont_1_1Request = new UserMerchantPayCommont_1_1Request(input, new ResponseListener() {
             @Override
@@ -283,5 +291,12 @@ public class AssessmentActivity extends BaseActivity {
         setResult(RESULT_OK, intent);
         sendBroadcast(intent);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

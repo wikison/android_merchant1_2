@@ -18,12 +18,15 @@ public class UserMerchantPayCommont_1_1Request extends PostStringRequest<Type>  
         public int userPayId;       //订单id
         public int comment;       //评分(1-5)
         public int userId;       //用户id(申请的)
+        public String note;//评价内容
         public String ejson;
 
 
         public void convertJosn(){
             ejson=Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("userId", userId+""),new Pair<String, String>("comment", comment+""),
+                    new Pair<String, String>("userId", userId+""),
+                    new Pair<String, String>("comment", comment+""),
+                    new Pair<String, String>("note", note+""),
                     new Pair<String, String>("userPayId", userPayId+"")));
         }
 

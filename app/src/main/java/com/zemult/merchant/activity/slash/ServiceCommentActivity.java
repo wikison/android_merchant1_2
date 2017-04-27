@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Comment;
 import com.zemult.merchant.model.apimodel.APIM_ManagerNewsCommentList;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -59,13 +62,15 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
 
     @Override
     public void init() {
-        lhTvTitle.setText("服务评价");
+        lhTvTitle.setText("评价");
         mContext = this;
         saleUserId = getIntent().getIntExtra(INTENT_SALEUSERID, 0);
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, 0);
         commentLv.setRefreshEnable(true);
         commentLv.setLoadMoreEnable(false);
         commentLv.setSmoothListViewListener(this);
+        commentLv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         if (saleUserId > 0) {
             commentsList();
         }
@@ -95,58 +100,65 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
                 dismissPd();
                 if (((APIM_ManagerNewsCommentList) response).status == 1) {
                     if (page == 1) {
-                        mDatas = ((APIM_ManagerNewsCommentList) response).commentList;//这边是获取到的list
-
+                        mDatas = ((APIM_ManagerNewsCommentList) response).commentList;
                         if (mDatas == null || mDatas.size() == 0) {
                             commentLv.setVisibility(View.GONE);
                             rlNoData.setVisibility(View.VISIBLE);
                         } else {
                             commentLv.setVisibility(View.VISIBLE);
                             rlNoData.setVisibility(View.GONE);
-
                             if (mDatas != null && !mDatas.isEmpty()) {
-                                commentLv.setAdapter(commonAdapter = new CommonAdapter<M_Comment>(mContext, R.layout.item_service_comment, mDatas) {
+                                commentLv.setAdapter(commonAdapter = new CommonAdapter<M_Comment>(ServiceCommentActivity.this, R.layout.item_service_comment, mDatas) {
                                     @Override
-                                    public void convert(CommonViewHolder holder, M_Comment mcomment, final int position) {
-                                        if (!TextUtils.isEmpty(mcomment.head)) {
-                                            holder.setCircleImage(R.id.head_iv, mcomment.head);
+                                    public void convert(CommonViewHolder holder, final M_Comment mComment, final int position) {
+                                        if (!TextUtils.isEmpty(mComment.head)) {
+                                            holder.setCircleImage(R.id.head_iv, mComment.head);
+                                            holder.setOnclickListener(R.id.head_iv, new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    List<String> list = new ArrayList<String>();
+                                                    list.add(mComment.head);
+                                                    AppUtils.toImageDetial(ServiceCommentActivity.this, 0, list, null, false, false, true, 0, 0);
+
+                                                }
+                                            });
                                         }
+                                        holder.setText(R.id.name_tv, mComment.name);
 
-                                        holder.setText(R.id.name_tv, mcomment.name);
-
-                                        if (mcomment.type == 0) {
+                                        if (mComment.type == 0) {
                                             holder.setText(R.id.type_tv, "服务评价");
                                         } else {
                                             holder.setText(R.id.type_tv, "消费评价");
                                         }
-
                                         RatingBar ratingbar = holder.getView(R.id.ratingbar);
-                                        ratingbar.setStar(mcomment.comment);
-                                        holder.setText(R.id.time_tv, mcomment.createtime);
-                                        holder.setText(R.id.note_tv, mcomment.note);
-
+                                        ratingbar.setStar(mComment.comment);
+                                        if (!TextUtils.isEmpty(mComment.createTime)) {
+                                            holder.setText(R.id.time_tv, mComment.createTime.substring(0, 10));
+                                        }
+                                        holder.setText(R.id.note_tv, mComment.note);
                                     }
-                                });
 
+                                });
                             }
+
                         }
                     } else {
                         mDatas.addAll(((APIM_ManagerNewsCommentList) response).commentList);
                         commonAdapter.notifyDataSetChanged();
-
                     }
+
                     if (((APIM_ManagerNewsCommentList) response).maxpage <= page) {
                         commentLv.setLoadMoreEnable(false);
                     } else {
                         commentLv.setLoadMoreEnable(true);
                         page++;
                     }
-
                 } else {
-                    ToastUtils.show(mContext, ((APIM_ManagerNewsCommentList) response).info);
+                    ToastUtils.show(ServiceCommentActivity.this, ((APIM_ManagerNewsCommentList) response).info);
                 }
                 commentLv.stopRefresh();
                 commentLv.stopLoadMore();
+
 
             }
         });

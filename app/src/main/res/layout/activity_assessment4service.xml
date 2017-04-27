@@ -86,6 +86,7 @@
 
 
     <com.flyco.roundview.RoundRelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginBottom="12dp"
@@ -123,7 +124,7 @@
     </com.flyco.roundview.RoundRelativeLayout>
 
     <Button
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="120dp"
         android:id="@+id/btn_topinjia"
         style="@style/common_btn_235"
         android:layout_gravity="center_horizontal"
