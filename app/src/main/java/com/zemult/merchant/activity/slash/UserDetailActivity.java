@@ -565,6 +565,19 @@ public class UserDetailActivity extends BaseActivity {
                 public void onServiceHistoryList(M_Merchant entity) {
 
                 }
+
+                @Override
+                public void onCommentList(M_Merchant entity) {
+                    Intent intent = new Intent(UserDetailActivity.this, ServiceCommentActivity.class);
+                    intent.putExtra(ServiceCommentActivity.INTENT_SALEUSERID, userId);
+                    intent.putExtra(ServiceCommentActivity.INTENT_MERCHANTID, entity.merchantId);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onServicePlanList(M_Merchant entity) {
+
+                }
             });
         }
     }

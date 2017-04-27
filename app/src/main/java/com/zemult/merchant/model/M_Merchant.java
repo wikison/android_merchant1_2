@@ -742,4 +742,9 @@ public class M_Merchant implements Serializable {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    @Expose
+    public int planId;  //服务方案id
+    @Expose
+    public String planName; //服务方案标题
 }

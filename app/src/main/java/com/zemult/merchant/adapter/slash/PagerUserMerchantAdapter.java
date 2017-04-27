@@ -165,8 +165,11 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
 
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
+        String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
         holder.tvServicePosition.setText(strPosition);
+
+        holder.tvServicePlan.setText(entity.planName);
+        holder.tvComment.setText(entity.commentNum + "条评价");
 
         initTags(holder, entity);
         dealState(holder, entity);
@@ -188,7 +191,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         if (!TextUtils.isEmpty(entity.merchantName))
             holder.tvName.setText(entity.merchantName);
         holder.tvSeven.setText(entity.sumScore / 7 + "");
-        String strPosition = (entity.position == null ? "无" : (entity.position.equals("") ? "无" : entity.position));
+        String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
         holder.tvServicePosition.setText(strPosition);
         if (entity.unSureOrderNum > 0) {
             holder.llServiceRecord.setVisibility(View.VISIBLE);
@@ -197,6 +200,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder.llServiceRecord.setVisibility(View.GONE);
             holder.tvUnsureNum.setText("");
         }
+        holder.tvServicePlan.setText(entity.planName);
+        holder.tvComment.setText(entity.commentNum + "条评价");
         initTags(holder, entity);
         dealState(holder, entity);
         initListener(holder, entity);
@@ -212,11 +217,28 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                     onViewClickListener.onDetail(entity);
             }
         });
+
         holder.llDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onViewClickListener != null)
                     onViewClickListener.onDetail(entity);
+            }
+        });
+
+        holder.rlComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onCommentList(entity);
+            }
+        });
+
+        holder.rlServicePlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onServicePlanList(entity);
             }
         });
 
@@ -254,6 +276,23 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                     onViewStateClickListener.onStateManage(entity);
             }
         });
+
+        holder.rlComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onCommentList(entity);
+            }
+        });
+
+        holder.rlServicePlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewClickListener != null)
+                    onViewClickListener.onServicePlanList(entity);
+            }
+        });
+
     }
 
 
@@ -362,6 +401,20 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     }
 
+    static class ViewHolder {
+        @Bind(R.id.card_img)
+        ImageView cardImg;
+        @Bind(R.id.tv_distance)
+        TextView tvDistance;
+        @Bind(R.id.tv_money)
+        TextView tvMoney;
+        @Bind(R.id.iv_qianyue)
+        ImageView ivQianyue;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
 
     class ViewHolderDetail {
         @Bind(R.id.tv_name)
@@ -382,10 +435,16 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         TextView tvState;
         @Bind(R.id.tv_service_plan)
         TextView tvServicePlan;
+        @Bind(R.id.rl_service_plan)
+        RelativeLayout rlServicePlan;
         @Bind(R.id.tv_seven)
         TextView tvSeven;
+        @Bind(R.id.rl_seven)
+        RelativeLayout rlSeven;
         @Bind(R.id.tv_comment)
         TextView tvComment;
+        @Bind(R.id.rl_comment)
+        RelativeLayout rlComment;
 
         ViewHolderDetail(View view) {
             ButterKnife.bind(this, view);
@@ -415,8 +474,12 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         TextView tvDesignPlan;
         @Bind(R.id.tv_service_plan)
         TextView tvServicePlan;
+        @Bind(R.id.rl_service_plan)
+        RelativeLayout rlServicePlan;
         @Bind(R.id.tv_comment)
         TextView tvComment;
+        @Bind(R.id.rl_comment)
+        RelativeLayout rlComment;
         @Bind(R.id.tv_text_seven)
         TextView tvTextSeven;
         @Bind(R.id.tv_add_seven)
@@ -448,37 +511,20 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
         //查看交易记录
         void onServiceHistoryList(M_Merchant entity);
+
+        //评价
+        void onCommentList(M_Merchant entity);
+
+        //服务方案
+        void onServicePlanList(M_Merchant entity);
     }
 
     public interface ViewMerchantClickListener {
         void onMerchantManage(M_Merchant entity);
     }
 
-    public interface ViewTagClickListener {
-        void onTagManage(M_Merchant entity);
-    }
-
     public interface ViewStateClickListener {
         void onStateManage(M_Merchant entity);
-    }
-
-    public interface ViewPositionClickListener {
-        void onPositionManage(M_Merchant entity);
-    }
-
-    static class ViewHolder {
-        @Bind(R.id.card_img)
-        ImageView cardImg;
-        @Bind(R.id.tv_distance)
-        TextView tvDistance;
-        @Bind(R.id.tv_money)
-        TextView tvMoney;
-        @Bind(R.id.iv_qianyue)
-        ImageView ivQianyue;
-
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
     }
 
 }

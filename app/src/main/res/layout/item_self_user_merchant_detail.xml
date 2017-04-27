@@ -107,6 +107,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_service_plan"
         style="@style/relative_layout_item">
 
         <TextView
@@ -137,6 +138,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_comment"
         style="@style/relative_layout_item">
 
         <TextView
