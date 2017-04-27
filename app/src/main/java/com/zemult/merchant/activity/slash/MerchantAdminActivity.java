@@ -3,23 +3,30 @@ package com.zemult.merchant.activity.slash;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomePeopleAdapter;
 import com.zemult.merchant.aip.mine.MerchantPicListRequest;
 import com.zemult.merchant.aip.mine.MerchantPicNoteListRequest;
 import com.zemult.merchant.aip.mine.UserSaleMerchantDelRequest;
 import com.zemult.merchant.aip.slash.MerchantInfoRequest;
 import com.zemult.merchant.aip.slash.MerchantSaleuserListRequest;
+import com.zemult.merchant.aip.slash.User2SaleMerchantEditRequest;
+import com.zemult.merchant.aip.slash.User2SaleUserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -30,17 +37,17 @@ import com.zemult.merchant.model.apimodel.APIM_MerchantGetinfo;
 import com.zemult.merchant.model.apimodel.APIM_PicList;
 import com.zemult.merchant.model.apimodel.APIM_SearchUsersList;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.FNRadioGroup;
 import com.zemult.merchant.view.HeaderMerchantDetailView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -59,12 +66,36 @@ public class MerchantAdminActivity extends BaseActivity {
     LinearLayout llHead;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
+    @Bind(R.id.tv_service_position)
+    TextView tvServicePosition;
+    @Bind(R.id.rl_service_position)
+    RelativeLayout rlServicePosition;
+    @Bind(R.id.rg_ta_service)
+    FNRadioGroup rgTaService;
+    @Bind(R.id.tv_service)
+    TextView tvService;
+    @Bind(R.id.rl_service)
+    RelativeLayout rlService;
+
+    public static int MODIFY_TAG = 111;
+    public static int MODIFY_POSITION = 555;
+
 
     private int merchantId;
     private Context mContext;
     private Activity mActivity;
-    private M_Merchant merchantInfo;
+    private M_Merchant merchantInfo, merchant;
     private HeaderMerchantDetailView headerMerchantDetailView;
+
+    MerchantInfoRequest request;
+    User2SaleUserInfoRequest user2SaleUserInfoRequest;
+    UserSaleMerchantDelRequest userSaleMerchantDelRequest;
+    MerchantPicNoteListRequest picNoteListRequest;
+    MerchantPicListRequest merchantPicListRequest;
+    MerchantSaleuserListRequest allRequest;
+    User2SaleMerchantEditRequest user2SaleMerchantEditRequest;
+
+    String strPosition = "";
 
     @Override
     public void setContentView() {
@@ -74,9 +105,12 @@ public class MerchantAdminActivity extends BaseActivity {
     @Override
     public void init() {
         merchantId = getIntent().getIntExtra(MerchantDetailActivity.MERCHANT_ID, -1);
+        merchant = (M_Merchant) getIntent().getSerializableExtra(UserDetailActivity.MERCHANT_INFO);
         mContext = this;
         mActivity = this;
         lhTvTitle.setText("商户管理");
+
+        setSaleMerchantInfo(merchant);
 
         // 设置其他头部
         headerMerchantDetailView = new HeaderMerchantDetailView(mActivity);
@@ -93,7 +127,15 @@ public class MerchantAdminActivity extends BaseActivity {
         merchant2_saleuserList();
     }
 
-    private MerchantInfoRequest request;
+    private void setSaleMerchantInfo(M_Merchant merchant) {
+        if (merchant != null) {
+            strPosition = (merchant.position == null ? "" : (merchant.position.equals("无") ? "" : merchant.position));
+            tvServicePosition.setText(strPosition);
+
+            initTags(merchant);
+        }
+    }
+
 
     /**
      * 商家详情
@@ -129,10 +171,38 @@ public class MerchantAdminActivity extends BaseActivity {
         sendJsonRequest(request);
     }
 
+    private void user_saleUser_info() {
+        if (user2SaleUserInfoRequest != null) {
+            user2SaleUserInfoRequest.cancel();
+        }
+        User2SaleUserInfoRequest.Input input = new User2SaleUserInfoRequest.Input();
+        input.operateUserId = SlashHelper.userManager().getUserId();
+        input.saleUserId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantInfo.merchantId;
+        input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
+        input.convertJosn();
+        user2SaleUserInfoRequest = new User2SaleUserInfoRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((APIM_MerchantGetinfo) response).status == 1) {
+                    merchant = ((APIM_MerchantGetinfo) response).saleUserInfo;
+                    setSaleMerchantInfo(merchant);
+                } else {
+                    ToastUtils.show(mContext, ((APIM_MerchantGetinfo) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(user2SaleUserInfoRequest);
+    }
+
     /**
      * 商家下的服务管家列表-全部          1:去掉熟人和自己,2:排序规则：最近有交易的在前，等级高的在前
      */
-    private MerchantSaleuserListRequest allRequest;
     private void merchant2_saleuserList() {
         showPd();
         if (allRequest != null) {
@@ -156,8 +226,8 @@ public class MerchantAdminActivity extends BaseActivity {
                 if (((APIM_SearchUsersList) response).status == 1) {
                     List<M_Userinfo> userList = ((APIM_SearchUsersList) response).userList;
                     String saleUserHeads = "";
-                    if(userList!=null && !userList.isEmpty()){
-                        for(M_Userinfo userinfo : userList){
+                    if (userList != null && !userList.isEmpty()) {
+                        for (M_Userinfo userinfo : userList) {
                             saleUserHeads += userinfo.getUserHead() + ",";
                         }
                         // 营销经理们的头像
@@ -190,8 +260,6 @@ public class MerchantAdminActivity extends BaseActivity {
     /**
      * 获取商家详情的图片列表(非证件照)
      */
-    private MerchantPicListRequest merchantPicListRequest;
-
     private void merchant_picList() {
         showPd();
         if (merchantPicListRequest != null) {
@@ -226,7 +294,6 @@ public class MerchantAdminActivity extends BaseActivity {
     /**
      * 获取商家详情的图片对应的描述列表
      */
-    private MerchantPicNoteListRequest picNoteListRequest;
 
     private void merchant_pic_noteList(final M_Pic pic) {
         showPd();
@@ -266,8 +333,6 @@ public class MerchantAdminActivity extends BaseActivity {
         sendJsonRequest(picNoteListRequest);
     }
 
-    private UserSaleMerchantDelRequest userSaleMerchantDelRequest;
-
     public void userSaleMerchantDel() {
         showUncanclePd();
         if (userSaleMerchantDelRequest != null) {
@@ -300,7 +365,38 @@ public class MerchantAdminActivity extends BaseActivity {
         sendJsonRequest(userSaleMerchantDelRequest);
     }
 
-    @OnClick({R.id.btn_exit, R.id.lh_btn_back, R.id.ll_back, R.id.ll_photo, R.id.ll_merchant})
+    private void userEditInfo() {
+        if (user2SaleMerchantEditRequest != null) {
+            user2SaleMerchantEditRequest.cancel();
+        }
+        showPd();
+        User2SaleMerchantEditRequest.Input input = new User2SaleMerchantEditRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.merchantId = merchantId;
+        input.tags = merchant.tags;
+        input.state = merchant.state;
+        input.position = strPosition.equals("") ? "无" : strPosition;
+        input.convertJosn();
+        user2SaleMerchantEditRequest = new User2SaleMerchantEditRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dismissPd();
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    user_saleUser_info();
+                } else {
+                    ToastUtil.showMessage(((CommonResult) response).info);
+                }
+                dismissPd();
+            }
+        });
+        sendJsonRequest(user2SaleMerchantEditRequest);
+    }
+
+    @OnClick({R.id.btn_exit, R.id.lh_btn_back, R.id.ll_back, R.id.ll_photo, R.id.ll_merchant, R.id.rl_service_position, R.id.rl_service})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -312,7 +408,7 @@ public class MerchantAdminActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.ll_photo:
-                if(merchantInfo!=null){
+                if (merchantInfo != null) {
                     List<String> adList = new ArrayList<>();
                     if (StringUtils.isBlank(merchantInfo.pics)) {
                         adList.add(merchantInfo.pic);
@@ -328,13 +424,75 @@ public class MerchantAdminActivity extends BaseActivity {
                 intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchantId);
                 startActivity(intent);
                 break;
+            case R.id.rl_service:
+                intent = new Intent(mActivity, TabManageActivity.class);
+                intent.putExtra(TabManageActivity.TAG, merchantInfo.merchantId);
+                intent.putExtra(TabManageActivity.NAME, merchantInfo.name);
+                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+                intent.putExtra(TabManageActivity.COMEFROM, 2);
+                startActivityForResult(intent, MODIFY_TAG);
+                break;
+            case R.id.rl_service_position:
+                intent = new Intent(mActivity, PositionSetActivity.class);
+                intent.putExtra("position_name", strPosition);
+                startActivityForResult(intent, MODIFY_POSITION);
+                break;
+        }
+    }
+
+    private void initTags(M_Merchant entity) {
+        rgTaService.setChildMargin(0, 24, 24, 0);
+        rgTaService.removeAllViews();
+        if (!StringUtils.isBlank(entity.tags)) {
+            List<String> tagList = new ArrayList<String>(Arrays.asList(entity.tags.split(",")));
+            int iShowSize = tagList.size();
+            if (iShowSize > 0) {
+                rgTaService.setVisibility(View.VISIBLE);
+
+                for (int i = 0; i < iShowSize; i++) {
+                    GradientDrawable drawable = new GradientDrawable();
+                    drawable = new GradientDrawable();
+                    drawable.setShape(GradientDrawable.RECTANGLE); // 画框
+                    drawable.setCornerRadii(new float[]{50,
+                            50, 50, 50, 50, 50, 50, 50});
+                    drawable.setColor(0xffe8e8e8);  // 边框内部颜色
+                    RadioButton rbTag = new RadioButton(mContext);
+                    rbTag.setBackgroundDrawable(drawable); // 设置背景（效果就是有边框及底色）
+                    rbTag.setTextSize(12);
+                    rbTag.setPadding(22, 8, 22, 8);
+                    rbTag.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    rbTag.setTextColor(0xff464646);
+                    rbTag.setText(tagList.get(i).toString());
+
+                    rgTaService.addView(rbTag);
+
+                }
+            } else {
+                rgTaService.setVisibility(View.GONE);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MODIFY_TAG) {
+                user_saleUser_info();
+            } else if (requestCode == MODIFY_POSITION) {
+                String positionName = data.getStringExtra("position_name");
+                if (!strPosition.equals(positionName)) {
+                    strPosition = positionName;
+                    userEditInfo();
+                }
+            }
         }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
     }
 }

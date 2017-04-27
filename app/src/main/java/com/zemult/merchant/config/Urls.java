@@ -671,6 +671,8 @@ public class Urls {
     //管家保存服务数据到临时表
     public static String MERCHANT2_SAVERESORDERTMP = "merchant2_saveResOrderTmp";
 
+    //查看服务管家详情
+    public static String USER2_SALEUSER_INFO = "user2_saleUser_info";
 
 
 }

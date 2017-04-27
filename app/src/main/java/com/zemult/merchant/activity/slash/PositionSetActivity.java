@@ -81,6 +81,7 @@ public class PositionSetActivity extends BaseActivity {
     private void initData() {
         mContext = this;
         positionName = getIntent().getStringExtra("position_name");
+        positionName = (positionName.equals("") ? "无" : positionName);
         commonPosition();
 
     }
@@ -219,4 +220,9 @@ public class PositionSetActivity extends BaseActivity {
         return result;
     }
 
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+    }
 }

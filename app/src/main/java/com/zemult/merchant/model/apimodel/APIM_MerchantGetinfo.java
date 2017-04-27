@@ -12,5 +12,7 @@ import com.zemult.merchant.model.M_Merchant;
 public class APIM_MerchantGetinfo extends CommonResult {
     @Expose
     public M_Merchant merchant;
+    @Expose
+    public M_Merchant saleUserInfo;
 
 }

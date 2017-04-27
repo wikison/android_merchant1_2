@@ -163,11 +163,9 @@ public class SelfUserDetailActivity extends BaseActivity {
 
     private Context mContext;
     private Activity mActivity;
-    public static int MODIFY_TAG = 111;
     public static int EXIT_MERCHANT = 222;
     //    public static int ADD_MERCHANT = 333;
     public static int EDIT_USER_INFO = 444;
-    public static int MODIFY_POSITION = 555;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -526,6 +524,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 public void onMerchantManage(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, MerchantAdminActivity.class);
                     intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
+                    intent.putExtra(UserDetailActivity.MERCHANT_INFO, entity);
                     startActivityForResult(intent, EXIT_MERCHANT);
                 }
             });
@@ -606,7 +605,10 @@ public class SelfUserDetailActivity extends BaseActivity {
 
                 @Override
                 public void onServicePlanList(M_Merchant entity) {
-
+                    Intent intent = new Intent(SelfUserDetailActivity.this, ServicePlanActivity.class);
+                    intent.putExtra(ServicePlanActivity.INTENT_SALEUSER_ID, userId);
+                    intent.putExtra(ServicePlanActivity.INTENT_MERCHANT_ID, entity.merchantId);
+                    startActivity(intent);
                 }
             });
         }
@@ -719,21 +721,13 @@ public class SelfUserDetailActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == MODIFY_TAG) {
-                getOtherMerchantList();
-            } else if (requestCode == EXIT_MERCHANT) {
+            if (requestCode == EXIT_MERCHANT) {
                 selectPosition = 0;
                 getOtherMerchantList();
 
             } else if (requestCode == EDIT_USER_INFO) {
                 getUserInfo();
 
-            } else if (requestCode == MODIFY_POSITION) {
-                String positionName = data.getStringExtra("position_name");
-                if (!strPosition.equals(positionName)) {
-                    strPosition = positionName;
-                    userEditInfo();
-                }
             }
         }
     }
