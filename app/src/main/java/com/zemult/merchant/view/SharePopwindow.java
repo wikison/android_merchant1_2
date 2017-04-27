@@ -19,6 +19,9 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
     LinearLayout llShareWechatFriend;
     LinearLayout llQQ;
     LinearLayout llShareResend;
+
+    LinearLayout llShareYuefu;
+    LinearLayout llShareLianxiren;
     RelativeLayout llCancle;
     View viewBlack;
     private View view;
@@ -29,6 +32,8 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
     public static final int WECHAT_FRIEND = 3;
     public static final int QQ = 4;
     public static final int RESEND = 5;
+    public static final int LXR = 6;
+    public static final int YUEFU = 7;
 
     public SharePopwindow(Context context, OnItemClickListener onItemClickListener) {
         setOnItemClickListener(onItemClickListener);
@@ -39,6 +44,8 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
         llShareWechat = (LinearLayout) view.findViewById(R.id.ll_share_wechat);
         llShareWechatFriend = (LinearLayout) view.findViewById(R.id.ll_share_wechat_friend);
         llQQ = (LinearLayout) view.findViewById(R.id.ll_share_qq);
+        llShareYuefu= (LinearLayout) view.findViewById(R.id.ll_share_yuefu);
+        llShareLianxiren= (LinearLayout) view.findViewById(R.id.ll_share_lianxiren);
         llShareResend = (LinearLayout) view.findViewById(R.id.ll_share_resend);
         llCancle = (RelativeLayout) view.findViewById(R.id.ll_cancle);
         viewBlack = (View) view.findViewById(R.id.view);
@@ -46,6 +53,8 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
         llSina.setOnClickListener(this);
         llShareWechat.setOnClickListener(this);
         llShareWechatFriend.setOnClickListener(this);
+        llShareLianxiren.setOnClickListener(this);
+        llShareYuefu.setOnClickListener(this);
         llQQ.setOnClickListener(this);
         llShareResend.setOnClickListener(this);
         llCancle.setOnClickListener(this);
@@ -61,11 +70,13 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
         this.setAnimationStyle(R.style.umeng_socialize_shareboard_animation);
     }
 
-    public void  showType(boolean weixin,boolean quan,boolean qq,boolean xinlang){
+    public void  showType(boolean weixin,boolean quan,boolean qq,boolean xinlang,boolean yuefu,boolean lxr){
             llSina.setVisibility(xinlang?View.VISIBLE:View.GONE);
             llShareWechat.setVisibility(weixin?View.VISIBLE:View.GONE);
             llShareWechatFriend.setVisibility(quan?View.VISIBLE:View.GONE);
             llQQ.setVisibility(qq?View.VISIBLE:View.GONE);
+            llShareLianxiren.setVisibility(lxr?View.VISIBLE:View.GONE);
+            llShareYuefu.setVisibility(yuefu?View.VISIBLE:View.GONE);
 
     }
 
@@ -94,6 +105,15 @@ public class SharePopwindow extends PopupWindow implements View.OnClickListener 
             case R.id.ll_share_resend:
                 if(onItemClickListener != null)
                     onItemClickListener.onItemClick(RESEND);
+                break;
+
+            case R.id.ll_share_yuefu:
+                if(onItemClickListener != null)
+                    onItemClickListener.onItemClick(YUEFU);
+                break;
+            case R.id.ll_share_lianxiren:
+                if(onItemClickListener != null)
+                    onItemClickListener.onItemClick(LXR);
                 break;
             case R.id.ll_cancle:
                 //销毁弹出框

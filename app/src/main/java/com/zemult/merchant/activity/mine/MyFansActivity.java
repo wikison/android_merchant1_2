@@ -12,23 +12,47 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.contact.IYWContact;
+import com.alibaba.mobileim.contact.YWContactFactory;
+import com.alibaba.mobileim.conversation.YWCustomMessageBody;
+import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserAttractAddRequest;
 import com.zemult.merchant.aip.mine.UserAttractDelRequest;
+import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.CreateBespeakNewActivity;
+import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.apimodel.APIM_UserFansList;
 import com.zemult.merchant.util.ImageManager;
+import com.zemult.merchant.util.ShareText;
+import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SearchView;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +70,7 @@ import zema.volley.network.ResponseListener;
 public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmoothListViewListener {
     public ImageManager imageManager;
     CommonAdapter commonAdapter;
-
+    UserReservationAddRequest userReservationAddRequest;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
@@ -69,8 +93,8 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     private UserAttractAddRequest attractAddRequest; // 添加关注
     private UserAttractDelRequest attractDelRequest; // 取消关注
     public static final String INTENT_USERID = "userid";
-    private int userId;
-    private String name;
+    private int userId,planId;
+    private String name,fromAct,merchantId,ordertime,reservationMoney,shopname,note,orderpeople;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +108,15 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
     public void init() {
         mContext = this;
         imageManager = new ImageManager(this);
+        fromAct=getIntent().getStringExtra("fromAct");
+
+        merchantId=getIntent().getStringExtra("merchantId");
+        ordertime=getIntent().getStringExtra("ordertime");
+        reservationMoney=getIntent().getStringExtra("reservationMoney");
+        shopname=getIntent().getStringExtra("shopname");
+        note=getIntent().getStringExtra("note");
+        orderpeople=getIntent().getStringExtra("orderpeople");
+        planId=getIntent().getIntExtra("planId",0);
 
         userId = getIntent().getIntExtra(INTENT_USERID, -1);
         lhTvTitle.setText("SCRM客户管理");
@@ -108,6 +141,9 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                 onRefresh();
             }
         });
+
+
+
     }
 
     private User2SaleUserFanListRequest userFansListRequest;
@@ -158,11 +194,17 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                                         holder.setOnclickListener(R.id.ll_root, new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mDatas.get(position).userId + "", Urls.APP_KEY);
-                                                Bundle bundle=new Bundle();
-                                                bundle.putInt("serviceId", mDatas.get(position).userId);
-                                                IMkitintent.putExtras(bundle);
-                                                startActivity(IMkitintent);
+                                                if(null!=fromAct){
+                                                    user_reservation_add(mDatas.get(position).userId);
+                                                }
+                                                else{
+                                                    Intent IMkitintent = LoginSampleHelper.getInstance().getIMKit().getChattingActivityIntent(mDatas.get(position).userId + "", Urls.APP_KEY);
+                                                    Bundle bundle=new Bundle();
+                                                    bundle.putInt("serviceId", mDatas.get(position).userId);
+                                                    IMkitintent.putExtras(bundle);
+                                                    startActivity(IMkitintent);
+                                                }
+
                                             }
                                         });
                                     }
@@ -197,6 +239,75 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         sendJsonRequest(userFansListRequest);
     }
 
+
+    private void user_reservation_add(final int customerId) {
+
+        try {
+            if (userReservationAddRequest != null) {
+                userReservationAddRequest.cancel();
+            }
+            UserReservationAddRequest.Input input = new UserReservationAddRequest.Input();
+            input.merchantId = merchantId;
+            input.saleUserId = SlashHelper.userManager().getUserId();
+            if(ordertime.length()<17){
+                input.reservationTime= ordertime+ ":00";
+            }
+            else{
+                input.reservationTime= ordertime;
+            }
+            input.num = orderpeople;
+            input.note = note;
+            input.userId = customerId;
+            input.reservationMoney =reservationMoney ;
+            input.planId=planId;
+            input.convertJosn();
+
+            userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+                        YWCustomMessageBody messageBody = new YWCustomMessageBody();
+                        //定义自定义消息协议，用户可以根据自己的需求完整自定义消息协议，不一定要用JSON格式，这里纯粹是为了演示的需要
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("customizeMessageType", "Task");
+                            object.put("tasktype", "ORDER");
+                            object.put("taskTitle", "[服务订单] " + ordertime + "  " + shopname+"(商户)");
+                            object.put("serviceId",  SlashHelper.userManager().getUserId());
+                            object.put("reservationId", ((CommonResult) response).reservationId);
+                        } catch (JSONException e) {
+
+                        }
+                        messageBody.setContent(object.toString()); // 用户要发送的自定义消息，SDK不关心具体的格式，比如用户可以发送JSON格式
+                        messageBody.setSummary("[服务订单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
+                        YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
+                        YWMessage message2 = YWMessageChannel.createTextMessage("您好，已经按照你的要求订好了，你看一下，没问题就确认一下，谢谢~");
+                        YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+                        IYWContact appContact = YWContactFactory.createAPPContact(customerId+ "", imKit.getIMCore().getAppKey());
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        , message, forwardCallBack);
+
+                        imKit.getConversationService()
+                                .forwardMsgToContact(appContact
+                                        , message2, forwardCallBack);
+                        startActivity(imKit.getChattingActivityIntent(customerId + ""));
+                        finish();
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(userReservationAddRequest);
+        } catch (Exception e) {
+        }
+    }
+
     @OnClick({R.id.ll_back, R.id.lh_btn_back})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -207,6 +318,24 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
         }
     }
 
+    final IWxCallback forwardCallBack = new IWxCallback() {
+
+        @Override
+        public void onSuccess(Object... result) {
+            Notification.showToastMsg(MyFansActivity.this, "forward succeed!");
+        }
+
+        @Override
+        public void onError(int code, String info) {
+            Notification.showToastMsg(MyFansActivity.this, "forward fail!");
+
+        }
+
+        @Override
+        public void onProgress(int progress) {
+
+        }
+    };
     @Override
     public void onRefresh() {
         user2_saleUser_fansList();

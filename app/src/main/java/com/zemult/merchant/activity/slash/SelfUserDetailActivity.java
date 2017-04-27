@@ -36,6 +36,7 @@ import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.CreateBespeakNewActivity;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Fan;
 import com.zemult.merchant.model.M_Merchant;
@@ -622,7 +623,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_contact,R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -631,6 +632,14 @@ public class SelfUserDetailActivity extends BaseActivity {
                 Intent in = new Intent(Constants.BROCAST_LOGIN);
                 sendBroadcast(in);
                 onBackPressed();
+                break;
+            case R.id.btn_contact:
+                Intent cbintent =new Intent(SelfUserDetailActivity.this,CreateBespeakNewActivity.class);
+                cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus);
+                cbintent.putExtra("merchantName",selectMerchant.merchantName);
+                cbintent.putExtra("merchantId",selectMerchant.merchantId);
+                startActivity(cbintent);
+
                 break;
             case R.id.ll_my_info:
             case R.id.infoimprove_rl:

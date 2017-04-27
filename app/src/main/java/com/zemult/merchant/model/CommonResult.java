@@ -147,5 +147,8 @@ public class CommonResult {
     @Expose
     public int saleUserFanNum;  // 服务管家的顾客数
 
+    @Expose
+    public int  tmpid;//临时表id
+
 
 }

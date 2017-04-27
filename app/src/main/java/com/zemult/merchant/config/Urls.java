@@ -668,6 +668,9 @@ public class Urls {
     public static String USER2_PLAN_DEL = "user2_plan_del";
     //发布服务方案
     public static String USER2_PLAN_INFO = "user2_plan_info";
+    //管家保存服务数据到临时表
+    public static String MERCHANT2_SAVERESORDERTMP = "merchant2_saveResOrderTmp";
+
 
 
 }

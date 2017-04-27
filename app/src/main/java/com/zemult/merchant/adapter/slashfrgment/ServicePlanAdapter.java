@@ -106,6 +106,13 @@ public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
                     return true;
                 }
             });
+            holder.llRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClickListener != null)
+                        onItemClickListener.onChooseClick(plan);
+                }
+            });
         }else {
             holder.tvClose.setVisibility(View.GONE);
             holder.tvOpen.setVisibility(View.GONE);
@@ -152,6 +159,7 @@ public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
 
     public interface OnItemClickListener{
         void onEditClick(M_Plan plan);
+        void onChooseClick(M_Plan plan);
         void onLongClick(int planId, int pos);
     }
     private OnItemClickListener onItemClickListener;

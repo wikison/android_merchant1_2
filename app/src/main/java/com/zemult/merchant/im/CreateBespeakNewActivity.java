@@ -2,6 +2,7 @@ package com.zemult.merchant.im;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -19,11 +21,18 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
+import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.aip.mine.User2RemindIMInfoRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
+import com.zemult.merchant.aip.slash.Merchant2SaveResOrderTmp;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -32,9 +41,11 @@ import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.PMNumView;
+import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +73,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
     Button lhBtnBack;
     @Bind(R.id.lh_tv_title)
     TextView lhTvTitle;
+    @Bind(R.id.bespek_plan)
+    TextView bespekPlan;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
     @Bind(R.id.play_btn)
@@ -72,8 +85,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
     ImageView vUser;
     @Bind(R.id.rl_customerphone)
     RelativeLayout rlCustomerphone;
+    @Bind(R.id.rl_plan)
+    RelativeLayout rlPlan;
+    @Bind(R.id.activity_bespeak)
+    LinearLayout llRoot;
     @Bind(R.id.tv_dingjin_tpis)
     TextView tvDingjinTpis;
+
+    @Bind(R.id.rl_orderuser)
+    RelativeLayout rlOrderuser;
+    @Bind(R.id.view_line1)
+    View viewLine1;
+
     User2RemindIMInfoRequest user2RemindIMInfoRequest;
 
     UserInfoOwnerRequest userInfoOwnerRequest;
@@ -81,13 +104,10 @@ public class CreateBespeakNewActivity extends BaseActivity {
     int customerId;
     String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note,customerName,customerHead;
     String merchantId,reviewstatus;
-    int CHOOSEMERCHANT = 100,remindIMId;
+    int CHOOSEMERCHANT = 100,planId,CHOOSEPLAN=101,remindIMId;
     boolean isFromMerchant;
-
-    int showOrderState;//1 生成预约单(有语音)  2 生成预约单（无语音）
-                       // 3 预约单 （待确定  服务管家） 4 预约单 （待确定  客户）
-                       //5  已确认（服务管家）  6  已确认（客户）
-
+    SharePopwindow popwindow;
+    Merchant2SaveResOrderTmp merchant2SaveResOrderTmp;
 
     @Override
     public void setContentView() {
@@ -102,15 +122,23 @@ public class CreateBespeakNewActivity extends BaseActivity {
         customerId = getIntent().getIntExtra("customerId", 0);
 
         remindIMId= getIntent().getIntExtra("remindIMId", 0);
-        merchantId= getIntent().getStringExtra("merchantId");
-        reviewstatus= getIntent().getStringExtra("reviewstatus");
-
+        merchantId= getIntent().getIntExtra("merchantId", 0)+"";
+        reviewstatus= getIntent().getIntExtra("reviewstatus", 0)+"";
+        shopname= getIntent().getStringExtra("merchantName");
         if(0!=remindIMId){
             playBtn.setVisibility(View.VISIBLE);
             user2RemindIMInfoRequest();
         }
         else{
             playBtn.setVisibility(View.GONE                         );
+        }
+
+        if(customerId==0){
+            rlOrderuser.setVisibility(View.GONE);
+            viewLine1.setVisibility(View.GONE);
+        }
+        else{
+            get_user_info_owner_request();
         }
 
         if (null!=merchantId&&null!=reviewstatus) {
@@ -147,7 +175,38 @@ public class CreateBespeakNewActivity extends BaseActivity {
         });
         lhTvTitle.setText("生成服务订单");
 
-        get_user_info_owner_request();
+
+        popwindow = new SharePopwindow(CreateBespeakNewActivity.this, new SharePopwindow.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                switch (position) {
+                    case SharePopwindow.WECHAT:
+                        popwindow.dismiss();
+                        merchant2_saveResOrderTmp();
+                        break;
+                    case SharePopwindow.LXR:
+
+
+
+                        break;
+                    case SharePopwindow.YUEFU:
+                        popwindow.dismiss();
+                        Intent    intent = new Intent(CreateBespeakNewActivity.this, MyFansActivity.class);
+                        intent.putExtra(MyFansActivity.INTENT_USERID, SlashHelper.userManager().getUserId());
+                        intent.putExtra("merchantId",merchantId);
+                        intent.putExtra("ordertime",ordertime);
+                        intent.putExtra("reservationMoney",etDingjin.getText().toString());
+                        intent.putExtra("shopname",shopname);
+                        intent.putExtra("note",note);
+                        intent.putExtra("orderpeople",orderpeople);
+                        intent.putExtra("planId",planId);
+                        intent.putExtra("fromAct","CreateBespeakNewActivity");
+                        startActivity(intent);
+
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -244,6 +303,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
             input.userId = customerId;
             input.reservationMoney =etDingjin.getText().toString() ;
             input.remindIMId=remindIMId;
+            input.planId=planId;
             input.convertJosn();
 
             userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
@@ -296,14 +356,73 @@ public class CreateBespeakNewActivity extends BaseActivity {
     }
 
 
+    private void merchant2_saveResOrderTmp() {
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime,R.id.play_btn})
+        try {
+            if (merchant2SaveResOrderTmp != null) {
+                merchant2SaveResOrderTmp.cancel();
+            }
+            Merchant2SaveResOrderTmp.Input input = new Merchant2SaveResOrderTmp.Input();
+            input.planId = planId;
+            input.merchantId = merchantId;
+            input.saleUserId = SlashHelper.userManager().getUserId();
+            if(ordertime.length()<17){
+                input.reservationTime= ordertime+ ":00";
+            }
+            else{
+                input.reservationTime= ordertime;
+            }
+            input.num = orderpeople;
+            input.note = note;
+            input.reservationMoney =etDingjin.getText().toString() ;
+            input.planId=planId;
+            input.convertJosn();
+
+            merchant2SaveResOrderTmp = new Merchant2SaveResOrderTmp(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+                        UMImage shareImage = new UMImage(CreateBespeakNewActivity.this, R.mipmap.icon_share);
+                        new ShareAction(CreateBespeakNewActivity.this)
+                                .setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener)
+                                .withText("[服务订单] " + ordertime + "  " + shopname+"(商户)")
+                                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/wxsharepay_index.do?preId="+((CommonResult) response).tmpid+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect")
+                                .withMedia(shareImage).withTitle("服务订单")
+                                .share();
+
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(merchant2SaveResOrderTmp);
+        } catch (Exception e) {
+        }
+    }
+
+
+
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 finish();
                 break;
+            case R.id.rl_plan:
+                //选择方案
+                Intent planintent = new Intent(CreateBespeakNewActivity.this,ServicePlanActivity.class);
+                planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
+                planintent.putExtra("merchantId",Integer.parseInt(merchantId));
+                startActivityForResult(planintent, CHOOSEPLAN);
+                break;
+
             case R.id.btn_bespeak_commit:
                 if (noLogin(CreateBespeakNewActivity.this))
                     return;
@@ -334,7 +453,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     return;
                 }
 
-                user_reservation_add();
+                if(customerId==0){
+                    popwindow.showType(true,false,false,false,true,false);
+                    if (popwindow.isShowing())
+                        popwindow.dismiss();
+                    else
+                        popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
+
+                }
+                else{
+                    user_reservation_add();
+                }
+
 
                 break;
 
@@ -374,7 +504,40 @@ public class CreateBespeakNewActivity extends BaseActivity {
             bespekShopname.setText(data.getStringExtra("shopName"));
             merchantId = data.getIntExtra("merchantId", 0)+"";
         }
+        if (requestCode == CHOOSEPLAN && resultCode == RESULT_OK) {
+            bespekPlan.setText(data.getStringExtra("planName"));
+            planId = data.getIntExtra("planId", 0);
+        }
+
     }
+
+
+    UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+
+            com.umeng.socialize.utils.Log.d("plat", "platform" + platform);
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
+            } else {
+                user_reservation_add();
+                Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
+            }
+            popwindow.dismiss();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败", Toast.LENGTH_SHORT).show();
+            popwindow.dismiss();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
+            popwindow.dismiss();
+        }
+    };
 
     final IWxCallback forwardCallBack = new IWxCallback() {
 

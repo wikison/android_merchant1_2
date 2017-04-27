@@ -20,12 +20,10 @@ import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.slash.MerchantOtherMerchantListRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
-import com.zemult.merchant.im.CreateBespeakActivity;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.apimodel.APIM_MerchantList;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
-import com.zemult.merchant.util.ToastUtil;
 
 import java.util.List;
 
@@ -96,15 +94,15 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }
-                if (null != actionFrom && actionFrom.equals("UserDetailActivity")) {
-                    Intent intent = new Intent(mContext, CreateBespeakActivity.class);
-                    intent.putExtra("serviceId", userId);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable("m_merchant", m_merchant);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                    finish();
-                }
+//                if (null != actionFrom && actionFrom.equals("UserDetailActivity")) {
+//                    Intent intent = new Intent(mContext, CreateBespeakActivity.class);
+//                    intent.putExtra("serviceId", userId);
+//                    Bundle mBundle = new Bundle();
+//                    mBundle.putSerializable("m_merchant", m_merchant);
+//                    intent.putExtras(mBundle);
+//                    startActivity(intent);
+//                    finish();
+//                }
             }
         });
     }

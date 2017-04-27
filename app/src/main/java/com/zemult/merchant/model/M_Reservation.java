@@ -114,8 +114,10 @@ public class M_Reservation implements Serializable {
     public String tags;//服务需求
     @Expose
     public double perMoney;//人均预算
-
-
+    @Expose
+    public int  planId		;	//服务方案id
+    @Expose
+    public String planName		;	//服务方案标题
     @Expose
     public int  remindIMId;//需求单id
 

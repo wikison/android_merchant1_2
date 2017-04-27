@@ -109,7 +109,7 @@ public class MyQr4OrderActivity extends BaseActivity {
                 }
             }
         });
-        sharePopWindow.showType(true, false, false, false);
+        sharePopWindow.showType(true, false, false, false,false,false);
     }
 
 

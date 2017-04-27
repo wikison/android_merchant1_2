@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -32,12 +33,18 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
+import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyQr4OrderActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryDetailActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
+import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
@@ -63,10 +70,12 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
+import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.PMNumView;
+import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import org.json.JSONException;
@@ -172,7 +181,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     LinearLayout llWeikuan;
     @Bind(R.id.ll_dingdanhaoma)
     LinearLayout llDingdanhaoma;
-
+    @Bind(R.id.rl_plan)
+    RelativeLayout rlPlan;
+    @Bind(R.id.bespek_plan)
+    TextView bespekPlan;
     @Bind(R.id.btn_modify)
     RoundTextView btnModify;
     @Bind(R.id.dinghaole_tv)
@@ -186,7 +198,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     String reservationId = "";
     int type;
     String replayNote;
-    int  merchantReviewstatus;
+    int  merchantReviewstatus,planId,CHOOSEPLAN=101;
     M_Reservation mReservation;
     User2ReservationInfoRequest user2ReservationInfoRequest;
     User2ReservationEditRequest user2ReservationEditRequest;
@@ -209,6 +221,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Dialog alertDialog;
     int orderpeople;
     boolean isActivityRunning=true;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_appointmentdetailnew);
@@ -223,6 +236,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 //        userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
         alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
+
     }
 
     @Override
@@ -261,6 +275,15 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     merchantReviewstatus = mReservation.merchantReviewstatus;
                     slData.setVisibility(View.VISIBLE);
                     tvNodata.setVisibility(View.GONE);
+
+                    if(!StringUtils.isBlank(mReservation.planName)){
+                        planId=mReservation.planId;
+                        bespekPlan.setText(mReservation.planName);
+                        rlPlan.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        rlPlan.setVisibility(View.GONE);
+                    }
 
                     if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                         rlDingjin.setVisibility(View.VISIBLE);
@@ -317,6 +340,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         } else if (type == 1) {//我是管家的情况下
                             yuyueresultcommitRl.setVisibility(View.VISIBLE);
                             customerconfirmBtn.setVisibility(View.GONE);
+//                            bespekPlan.setText(mReservation);
+//                            planId=mReservation;
                         }
                     } else if (mReservation.state == 1) {
                         lhTvTitle.setText("服务定单");
@@ -439,6 +464,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             User2ReservationEditRequest.Input input = new User2ReservationEditRequest.Input();
             input.reservationId = reservationId;
             input.num = orderpeople;
+            input.planId = planId;
             input.note = etCustomerremark.getText().toString();
             if(tvTime.getText().toString().length()<17){
                 input.reservationTime= tvTime.getText().toString()+ ":00";
@@ -717,7 +743,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.rl_plan,
             R.id.cus_billdetails_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -725,6 +751,32 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             case R.id.ll_back:
                 EventBus.getDefault().post(REFLASH_MYAPPOINT);
                 onBackPressed();
+                break;
+            case R.id.rl_plan:
+                //选择方案
+                if (type == 0) {//我是客户的状态下
+                    //查看
+                    Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
+                    planintent.putExtra("planId",mReservation.planId);
+                    startActivity(planintent);
+                }
+
+                if (type == 1) {//我是管家的状态下
+                    if(btnModify.getText().toString().equals("修改")){
+                        //查看
+                        Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
+                        planintent.putExtra("planId",mReservation.planId);
+                        startActivity(planintent);
+                    }
+                    else{
+                        //修改
+                        Intent planintent = new Intent(AppointmentDetailNewActivity.this,ServicePlanActivity.class);
+                        planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
+                        planintent.putExtra("merchantId",mReservation.merchantId);
+                        startActivityForResult(planintent, CHOOSEPLAN);
+                    }
+
+                }
                 break;
             case R.id.call_btn:
                 if(!StringUtils.isBlank(mReservation.phoneNum)){
@@ -1061,6 +1113,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     }
 
 
+
 //    public void startPlay() {
 //        stopPlay();
 //
@@ -1109,6 +1162,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         if (requestCode == 1001 && resultCode == RESULT_OK) {
            finish();
         }
+        if (requestCode == CHOOSEPLAN && resultCode == RESULT_OK) {
+            bespekPlan.setText(data.getStringExtra("planName"));
+            planId = data.getIntExtra("planId", 0);
+        }
+
+
     }
 
     /**

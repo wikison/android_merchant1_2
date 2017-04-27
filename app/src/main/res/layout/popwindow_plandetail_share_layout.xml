@@ -123,6 +123,57 @@
                     android:textColor="#222222" />
             </LinearLayout>
 
+
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_lianxiren"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/lianxiren_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="手机联系人"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_yuefu"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/yuefukehu_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="约服客户"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
             <LinearLayout
                 android:visibility="gone"
                 android:background="@drawable/ripple_item_clicked2"

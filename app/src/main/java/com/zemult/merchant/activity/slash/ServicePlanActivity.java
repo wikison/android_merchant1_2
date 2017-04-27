@@ -58,7 +58,6 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
     private ServicePlanAdapter mAdapter;
     private Context mContext;
 
-
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_service_plan);
@@ -239,6 +238,22 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
                     Intent intent = new Intent(mContext, NewServicePlanActivity.class);
                     intent.putExtra(INTENT_PLAN_ID, plan.planId);
                     startActivityForResult(intent, REQ_EDIT);
+                }
+
+                @Override
+                public void onChooseClick(M_Plan plan) {
+//                    状态(0:未启用,1:已启用)
+                    if(plan.state==0){
+                        ToastUtil.showMessage("方案未启用不能选择");
+                    }
+                    else{
+                        Intent intent =new Intent();
+                        intent.putExtra("planId",plan.planId);
+                        intent.putExtra("planName",plan.name);
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
+
                 }
 
                 @Override

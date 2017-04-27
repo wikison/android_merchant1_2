@@ -13,7 +13,7 @@ import zema.volley.network.PostStringRequest;
 import zema.volley.network.ResponseListener;
 
 
-//用户发送语音预约消息
+//修改 语音预约消息为已读
 public class User2RemindIMReadRequest extends PostStringRequest<Type> {
 
     public static class Input {

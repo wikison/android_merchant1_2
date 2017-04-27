@@ -25,6 +25,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
         public String note;		//		否	备注
         public String reservationMoney;		//定金
         public int remindIMId;		//语音地址
+        public int planId;		//服务方案id
 
 
         public void convertJosn(){
@@ -35,6 +36,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
                         new Pair<String, String>("saleUserId", saleUserId+""),
                         new Pair<String, String>("reservationTime", reservationTime),
                         new Pair<String, String>("num", num+""),
+                        new Pair<String, String>("planId", "0".equals(planId+"")?"":planId+""),
                         new Pair<String, String>("reservationMoney", reservationMoney),
                         new Pair<String, String>("note", note)));
             }
@@ -45,6 +47,7 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
                         new Pair<String, String>("saleUserId", saleUserId+""),
                         new Pair<String, String>("reservationTime", reservationTime),
                         new Pair<String, String>("num", num+""),
+                        new Pair<String, String>("planId", "0".equals(planId+"")?"":planId+""),
                         new Pair<String, String>("reservationMoney", reservationMoney),
                         new Pair<String, String>("remindIMId", remindIMId+""),
                         new Pair<String, String>("note", note)));
