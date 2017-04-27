@@ -15,11 +15,14 @@ import android.widget.TextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.FindOneRecommandActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.DensityUtil;
+import com.zemult.merchant.util.SlashHelper;
 
 import java.io.Serializable;
 import java.util.List;
@@ -57,6 +60,8 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     TextView tvNum;
     @Bind(R.id.ll_me)
     LinearLayout llMe;
+    @Bind(R.id.rl_me)
+    RelativeLayout rlMe;
     private Intent it;
 
 
@@ -82,8 +87,9 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         headerAdViewView = new HeaderAdViewView(mContext, DensityUtil.dip2px(mContext, 194));
         headerAdViewView.fillView(advertList, llAdContainer);
     }
+
     public void setMyInfo(M_Merchant entity) {
-        if(entity == null){
+        if (entity == null) {
             llMe.setVisibility(View.GONE);
             return;
         }
@@ -99,6 +105,14 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         tvNum.setText(entity.saleUserFanNum + "关注");
         ivService.setImageResource(entity.getExperienceImg());
         tvService.setText(entity.getExperienceText() + "管家");
+        rlMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                it = new Intent(mContext, SelfUserDetailActivity.class);
+                it.putExtra(UserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                mContext.startActivity(it);
+            }
+        });
     }
 
     public void setVpIndustrys(final List<M_Industry> industryList) {

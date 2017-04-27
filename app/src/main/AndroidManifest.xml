@@ -625,10 +625,12 @@
         <activity android:name=".activity.mine.SalemanInfoSettingActivity" />
         <activity android:name=".activity.slash.PositionSetActivity" />
         <activity android:name=".activity.mine.SaleManInfoImproveActivity" />
-        <activity android:name=".activity.slash.ServiceCommentActivity"></activity>
-        <activity android:name=".activity.slash.NewServicePlanActivity"
+        <activity android:name=".activity.slash.ServiceCommentActivity" />
+        <activity
+            android:name=".activity.slash.NewServicePlanActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.slash.ServicePlanActivity"></activity>
     </application>
 
 </manifest>

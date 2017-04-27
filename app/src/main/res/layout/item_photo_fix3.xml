@@ -6,9 +6,8 @@
 
     <ImageView
         android:id="@+id/iv_photo"
-        android:layout_width="50dp"
-        android:layout_marginLeft="@dimen/margin_12dp"
-        android:layout_height="50dp"
+        android:layout_width="79dp"
+        android:layout_height="79dp"
         android:scaleType="centerCrop"
         android:src="@color/font_black_e0" />
 

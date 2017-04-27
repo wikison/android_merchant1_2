@@ -16,7 +16,6 @@ import zema.volley.network.ResponseListener;
 public class User2PlanDelRequest extends PostStringRequest<Type> {
     public static class Input {
         public int planId;       //  方案id
-        public String pics;       // 图片，多张","分隔
         public String ejson;
 
     public void convertJosn(){

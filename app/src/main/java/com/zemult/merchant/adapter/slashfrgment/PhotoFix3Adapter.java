@@ -29,6 +29,7 @@ public class PhotoFix3Adapter extends BaseAdapter {
     private int width;
     private boolean round;
     private String rule;
+    private int MAX_NUM = 3;
 
     public void setWidth(int width){
         this.width = width;
@@ -47,14 +48,21 @@ public class PhotoFix3Adapter extends BaseAdapter {
         initPhotos(pic);
     }
 
+    public PhotoFix3Adapter(Context context, String pic, int maxNum) {
+        mContext = context;
+        imageManager = new ImageManager(context);
+        this.MAX_NUM = maxNum;
+        initPhotos(pic);
+    }
+
     private void initPhotos(String pic){
         photos = new ArrayList<>();
 
         if (pic.contains(",")) {
             String[] photosarray = pic.split(",");
 
-            if (photosarray.length > 3) {
-                for (int i = 0; i < 3; i++) {
+            if (photosarray.length > MAX_NUM) {
+                for (int i = 0; i < MAX_NUM; i++) {
                     photos.add(photosarray[i]);
                 }
             } else {
@@ -102,7 +110,7 @@ public class PhotoFix3Adapter extends BaseAdapter {
         if(round)
             imageManager.loadCircleImage(url, holder.ivPhoto, rule);
         else
-            imageManager.loadUrlImage(url, holder.ivPhoto, rule);
+            imageManager.loadUrlImage(url, holder.ivPhoto);
 
         if(onImageClickListener != null)
             holder.ivPhoto.setOnClickListener(new View.OnClickListener() {

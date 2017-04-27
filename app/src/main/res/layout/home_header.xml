@@ -114,6 +114,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_me"
                 android:clickable="true"
                 android:background="@drawable/ripple_item_clicked2"
                 android:paddingBottom="12dp"

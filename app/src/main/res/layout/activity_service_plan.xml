@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_f2">
+
+    <include layout="@layout/layout_head"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <include layout="@layout/item_no_data_layout"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.zemult.merchant.view.SmoothListView.SmoothListView
+                android:layout_above="@+id/ll_add_new_plan"
+                android:id="@+id/smoothListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:scrollbars="none">
+
+            </com.zemult.merchant.view.SmoothListView.SmoothListView>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_add_new_plan"
+                android:background="@color/font_black_999"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_marginRight="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/add2"/>
+                
+                <TextView
+                    style="@style/text_18_white"
+                    android:text="添加新方案"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

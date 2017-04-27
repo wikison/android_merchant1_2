@@ -245,9 +245,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 intent.putExtra(UserDetailActivity.USER_ID, mAdapter.getItem(position - 2).saleUserId);
                 intent.putExtra(UserDetailActivity.MERCHANT_ID, mAdapter.getItem(position - 2).merchantId);
                 startActivity(intent);
-
-//                startActivity(new Intent(mContext, NewServicePlanActivity.class));
-
             }
 
         });

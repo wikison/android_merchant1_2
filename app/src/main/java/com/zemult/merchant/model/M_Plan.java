@@ -14,6 +14,8 @@ import java.util.List;
 
 public class M_Plan implements Serializable{
     @Expose
+    public int 	planId			;	//	方案id
+    @Expose
     public String	name			;	//	标题
     @Expose
     public String	note			;	//	内容

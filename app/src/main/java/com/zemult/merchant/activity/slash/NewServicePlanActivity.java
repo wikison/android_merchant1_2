@@ -206,7 +206,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
             return;
         }
         showPd();
-        if (photos.size() > 0) {
+        if (!photos.isEmpty()) {
             //有图片
             ossService = OssHelper.initOSS(this);
             for (int i = 0; i < photos.size(); i++) {
@@ -218,6 +218,8 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
                     Log.d(getClass().getName(), ossImgname);
                 }
             }
+            if(ossImgnameList.isEmpty())
+                doSth();
         } else {
             //没图片
             doSth();

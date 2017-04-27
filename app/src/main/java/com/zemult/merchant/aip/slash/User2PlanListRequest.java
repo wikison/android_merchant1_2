@@ -3,6 +3,8 @@ import android.util.Pair;
 
 import com.google.gson.reflect.TypeToken;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.model.apimodel.APIM_PicList;
+import com.zemult.merchant.model.apimodel.APIM_PlanList;
 import com.zemult.merchant.model.apimodel.APIM_TaskSearchIndustryRecordList;
 import com.zemult.merchant.util.Convert;
 
@@ -34,7 +36,7 @@ public class User2PlanListRequest extends PostStringRequest<Type>  {
     }
 
     public User2PlanListRequest(Input input, ResponseListener listener) {
-        super(Urls.BASIC_URL+Urls.USER2_PLAN_LIST,input.ejson , new TypeToken<User2PlanListRequest>() {
+        super(Urls.BASIC_URL+Urls.USER2_PLAN_LIST,input.ejson , new TypeToken<APIM_PlanList>() {
         }.getType() , listener);
 
     }

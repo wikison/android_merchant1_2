@@ -19,7 +19,7 @@ public class User2PlanEditRequest extends PostStringRequest<Type> {
         public int state;       //  状态(0:未启用,1:已启用)
         public String name;       //  标题
         public String note;       //  内容
-        public String pics;       // 图片，多张","分隔
+        public String pics = "";       // 图片，多张","分隔
         public String ejson;
 
     public void convertJosn(){
