@@ -36,7 +36,7 @@ import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
 public class ServicePlanActivity extends BaseActivity implements SmoothListView.ISmoothListViewListener {
-    // 查看单个详情 仅传planId
+    // 查看单个方案 仅传planId
     public static final String INTENT_PLAN_ID = "planId";
     // 查看服务方案列表 传saleUserId merchantId
     public static final String INTENT_MERCHANT_ID = "merchantId";
@@ -68,8 +68,6 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
     public void init() {
         lhTvTitle.setText("服务方案");
         mContext = this;
-
-//        SlashHelper.userManager().getUserinfo().setUserId(1);
 
         saleUserId = getIntent().getIntExtra(INTENT_SALEUSER_ID, -1);
         merchantId = getIntent().getIntExtra(INTENT_MERCHANT_ID, -1);
