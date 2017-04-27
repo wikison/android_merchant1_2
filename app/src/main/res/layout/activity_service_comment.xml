@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zemult.merchant.activity.slash.ServiceCommentActivity">
+    android:background="@color/bg_f2"
+    android:orientation="vertical"
+    tools:context="com.zemult.merchant.activity.mine.MyInviteActivity">
 
-    <include layout="@layout/layout_head" />
-
+    <include layout="@layout/layout_head"/>
     <com.zemult.merchant.view.SmoothListView.SmoothListView
         android:id="@+id/comment_lv"
         android:layout_width="match_parent"
@@ -16,9 +17,10 @@
         android:dividerHeight="0dp"
         android:fadingEdge="none"
         android:overScrollMode="never"
-        android:scrollbars="none"></com.zemult.merchant.view.SmoothListView.SmoothListView>
+        android:scrollbars="none">
+    </com.zemult.merchant.view.SmoothListView.SmoothListView>
 
-    <include layout="@layout/item_no_data_layout" />
+    <include layout="@layout/item_no_data_layout"/>
 
 
 </LinearLayout>
