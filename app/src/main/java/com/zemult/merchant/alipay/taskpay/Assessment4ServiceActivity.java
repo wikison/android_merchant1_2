@@ -92,7 +92,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
         input.userId = SlashHelper.userManager().getUserId(); // 用户id
         input.reservationId = reservationId;
         input.comment = comment;
-        input.note = etPingjia.getText().toString();;
+        input.note = etPingjia.getText().toString();
 
         input.convertJosn();
         user2ReservationCommontAddRequest = new User2ReservationCommontAddRequest(input, new ResponseListener() {
