@@ -594,6 +594,19 @@ public class SelfUserDetailActivity extends BaseActivity {
                     intent.putExtra("merchantId", entity.merchantId);
                     startActivity(intent);
                 }
+
+                @Override
+                public void onCommentList(M_Merchant entity) {
+                    Intent intent = new Intent(SelfUserDetailActivity.this, ServiceCommentActivity.class);
+                    intent.putExtra(ServiceCommentActivity.INTENT_SALEUSERID, userId);
+                    intent.putExtra(ServiceCommentActivity.INTENT_MERCHANTID, entity.merchantId);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onServicePlanList(M_Merchant entity) {
+
+                }
             });
         }
     }

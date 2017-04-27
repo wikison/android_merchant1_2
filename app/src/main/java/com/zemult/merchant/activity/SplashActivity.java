@@ -66,7 +66,7 @@ public class SplashActivity extends BaseActivity {
             if (iTime == 2) {
                 initDebugVersion();
             }
-            if (iTime > 4) {
+            if (iTime > 3) {
                 if (null != mTimer) {
                     mTimer.cancel();
                 }

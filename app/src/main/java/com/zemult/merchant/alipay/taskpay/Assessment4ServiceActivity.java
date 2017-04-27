@@ -106,6 +106,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
                 dismissPd();
                 if (((CommonResult) response).status == 1) {
                     ToastUtil.showMessage("感谢您的评价");
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
