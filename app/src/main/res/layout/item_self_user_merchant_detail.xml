@@ -132,7 +132,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/margin_12dp"
             android:drawableRight="@mipmap/right_btn"
-            android:text="98"/>
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
@@ -182,7 +182,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/margin_12dp"
             android:drawableRight="@mipmap/right_btn"
-            android:text="98"/>
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>

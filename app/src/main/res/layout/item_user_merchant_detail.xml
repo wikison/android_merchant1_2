@@ -119,7 +119,7 @@
             android:layout_alignParentRight="true"
             android:drawablePadding="@dimen/margin_12dp"
             android:drawableRight="@mipmap/right_btn"
-            android:text="98"/>
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
@@ -136,7 +136,7 @@
             android:id="@+id/tv_seven"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
-            android:text="98"/>
+            android:text=""/>
     </RelativeLayout>
 
     <View style="@style/divider"/>
