@@ -16,6 +16,8 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.PermissionTest;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.imagepicker.Bimp;
 import com.zemult.merchant.util.imagepicker.ChoosePicRec;
 import com.zemult.merchant.util.imagepicker.EditImageReciver;
@@ -132,8 +134,13 @@ public abstract class BaseImageChooseActivity extends MBaseActivity implements O
 
     @Override
     public void takePic() {
-        tackPhotoName = AppUtils.getStringToday() + ".jpg";
-        AppUtils.tackPic(this, tackPhotoName, Constants.TACKPHOTO);
+        PermissionTest pt = new PermissionTest();
+        if (pt.isCameraPermission()) {
+            tackPhotoName = AppUtils.getStringToday() + ".jpg";
+            AppUtils.tackPic(this, tackPhotoName, Constants.TACKPHOTO);
+        } else {
+            ToastUtil.showMessage("需要允许使用相机权限");
+        }
     }
     
     @Override

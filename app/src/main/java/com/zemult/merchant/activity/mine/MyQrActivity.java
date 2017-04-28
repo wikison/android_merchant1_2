@@ -97,7 +97,7 @@ public class MyQrActivity extends BaseActivity {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
         if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
-            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+            imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
 
         tvName.setText(SlashHelper.userManager().getUserinfo().getName());
         tvLevel.setText(Convert.getExperienceText(SlashHelper.userManager().getUserinfo().getExperience()));
