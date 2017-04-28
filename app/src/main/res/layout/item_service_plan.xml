@@ -15,8 +15,7 @@
         android:orientation="vertical"
         android:id="@+id/ll_root">
 
-        <LinearLayout
-            android:gravity="center"
+        <RelativeLayout
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="12dp"
@@ -25,17 +24,19 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/iv_edit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView style="@style/text_15_black_28"
-                    android:text="xx"
-                    android:id="@+id/tv_name"/>
+                    android:text="xdssssssssddddd"
+                    android:id="@+id/tv_name"
+                    android:layout_marginRight="12dp"/>
 
                 <com.flyco.roundview.RoundTextView
+                    android:visibility="gone"
                     android:id="@+id/tv_open"
                     android:gravity="center"
-                    android:layout_marginLeft="12dp"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="3dp"
@@ -66,11 +67,12 @@
 
 
             <ImageView
+                android:layout_alignParentRight="true"
                 android:id="@+id/iv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/bianji_black_icon"/>
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView style="@style/text_12_black_999"
             android:paddingLeft="16dp"
