@@ -90,7 +90,7 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
                     intent.putExtra("tags", m_merchant.tags);
                     intent.putExtra("shopName", m_merchant.name);
                     intent.putExtra("merchantId", m_merchant.merchantId);
-
+                    intent.putExtra("reviewstatus", m_merchant.reviewstatus);
                     setResult(RESULT_OK, intent);
                     finish();
                 }

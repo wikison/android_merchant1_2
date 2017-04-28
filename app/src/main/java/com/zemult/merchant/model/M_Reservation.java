@@ -121,4 +121,8 @@ public class M_Reservation implements Serializable {
     @Expose
     public int  remindIMId;//需求单id
 
+    @Expose
+    public int isComment;//是否评价(0:否,1:是)
+
+
 }
