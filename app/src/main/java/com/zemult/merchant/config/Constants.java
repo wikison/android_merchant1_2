@@ -40,6 +40,7 @@ public class Constants {
             + File.separatorChar;
 
     // 广播oss上传头像图片
+    public final static String BROCAST_DISABLE_PLAN = "BROCAST_DISABLE_PLAN";
     public final static String BROCAST_OSS_UPLOADIMAGE = "BROCAST_OSS_UPLOADIMAGE";
     public final static String BROCAST_EDITUSERINFO = "BROCAST_EDITUSERINFO";
     public final static String BROCAST_OSS_UPLOADSOUND = "BROCAST_OSS_UPLOADSOUND";

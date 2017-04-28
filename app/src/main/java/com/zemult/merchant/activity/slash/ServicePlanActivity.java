@@ -111,8 +111,14 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK)
+        if(resultCode == RESULT_OK){
+            Intent intent =new Intent(Constants.BROCAST_DISABLE_PLAN);
+            intent.putExtra("planId", data.getIntExtra("planId",0));
+            intent.putExtra("state", data.getIntExtra("state",0));
+            sendBroadcast(intent);
             use2_plan_list(false);
+        }
+
     }
 
     // 服务方案详情

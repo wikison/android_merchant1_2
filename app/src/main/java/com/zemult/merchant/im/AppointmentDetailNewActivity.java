@@ -1,12 +1,14 @@
 package com.zemult.merchant.im;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -59,6 +61,7 @@ import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayType4OrderActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
@@ -236,15 +239,33 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         reservationId = getIntent().getStringExtra(INTENT_RESERVATIONID);
         EventBus.getDefault().register(this);
         showPd();
-//        userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
         alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
         userReservationInfo();
+        registerReceiver(new String[]{Constants.BROCAST_DISABLE_PLAN});
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_DISABLE_PLAN.equals(intent.getAction())) {
+            if(intent.getIntExtra("planId",0)==planId&&0==intent.getIntExtra("state",0)){
+                planId=0;
+                bespekPlan.setText("选择服务方案");
+            }
+
+
+        }
     }
 
 
@@ -1167,8 +1188,11 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
+        if (requestCode == 10001 && resultCode == RESULT_OK) {
            finish();
+        }
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            finish();
         }
         if (requestCode == CHOOSEPLAN && resultCode == RESULT_OK) {
             bespekPlan.setText(data.getStringExtra("planName"));

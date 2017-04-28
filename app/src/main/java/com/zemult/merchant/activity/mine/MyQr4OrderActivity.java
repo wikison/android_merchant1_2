@@ -130,7 +130,7 @@ public class MyQr4OrderActivity extends BaseActivity {
     private void initView() {
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
-        imageManager.loadCircleImage(saleHead, ivHead);
+        imageManager.loadCircleHead(saleHead, ivHead);
         tvName.setText(saleName);
         tvLevel.setText(Convert.getExperienceText(experience) + "管家");
         Drawable drawable = getResources().getDrawable(Convert.getExperienceImg(SlashHelper.userManager().getUserinfo().getExperience()));

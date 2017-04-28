@@ -110,6 +110,7 @@
         style="@style/relative_layout_item">
 
         <TextView
+            android:id="@+id/tv_text_service_plan"
             style="@style/text_15_black_28"
             android:text="服务方案"/>
 
@@ -117,8 +118,12 @@
             android:id="@+id/tv_service_plan"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_toRightOf="@+id/tv_text_service_plan"
             android:drawablePadding="@dimen/margin_12dp"
             android:drawableRight="@mipmap/right_btn"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text=""/>
     </RelativeLayout>
 
