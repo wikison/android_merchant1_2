@@ -453,10 +453,10 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
             if (rewardMoney != 0) {
                 sendPayMoneyMsg();
             }
+            setResult(RESULT_OK);
             Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
             intent1.putExtra("reservationId", reservationId);
             startActivity(intent1);
-
 
         }
 
@@ -507,6 +507,8 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
                             sendPayMoneyMsg();
                         }
                         sendOrderSureMessage();
+
+                        setResult(RESULT_OK);
                         Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
                         intent1.putExtra("reservationId", reservationId);
                         startActivity(intent1);
@@ -532,12 +534,4 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         ;
     };
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000 && resultCode == RESULT_OK) {
-            setResult(RESULT_OK);
-            finish();
-        }
-    }
 }

@@ -1,7 +1,10 @@
 package com.zemult.merchant.im;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +37,7 @@ import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.reservation.UserReservationAddRequest;
 import com.zemult.merchant.aip.slash.Merchant2SaveResOrderTmp;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
@@ -118,7 +122,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
     @Override
     public void init() {
-
+        registerReceiver(new String[]{Constants.BROCAST_DISABLE_PLAN});
         customerId = getIntent().getIntExtra("customerId", 0);
 
         remindIMId= getIntent().getIntExtra("remindIMId", 0);
@@ -208,6 +212,26 @@ public class CreateBespeakNewActivity extends BaseActivity {
             }
         });
 
+
+    }
+
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_DISABLE_PLAN.equals(intent.getAction())) {
+            if(intent.getIntExtra("planId",0)==planId&&0==intent.getIntExtra("state",0)){
+                planId=0;
+                bespekPlan.setText("选择服务方案");
+            }
+
+
+        }
     }
 
     @Override
