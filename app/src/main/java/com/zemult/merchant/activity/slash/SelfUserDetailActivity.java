@@ -523,6 +523,20 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
+            pagerUserMerchantHeadAdapter.setOnViewImageClickListener(new PagerUserMerchantAdapter.ViewImageClickListener() {
+                @Override
+                public void onMerchantDetail(M_Merchant entity) {
+                    if (entity.merchantId == selectMerchant.merchantId) {
+                        Intent intent = new Intent(SelfUserDetailActivity.this, MerchantAdminActivity.class);
+                        intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
+                        intent.putExtra(UserDetailActivity.MERCHANT_INFO, entity);
+                        startActivityForResult(intent, EXIT_MERCHANT);
+                    }
+
+                }
+            });
+
+
             pagerUserMerchantDetailAdapter.setOnViewMerchantClickListener(new PagerUserMerchantAdapter.ViewMerchantClickListener() {
                 @Override
                 public void onMerchantManage(M_Merchant entity) {

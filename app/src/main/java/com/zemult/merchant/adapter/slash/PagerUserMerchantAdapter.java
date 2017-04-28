@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -49,6 +50,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     private ViewClickListener onViewClickListener;
     private ViewMerchantClickListener onViewMerchantClickListener;
     private ViewStateClickListener onViewStateClickListener;
+    private ViewImageClickListener onViewImageClickListener;
 
     public void setOnViewClickListener(ViewClickListener onViewClickListener) {
         this.onViewClickListener = onViewClickListener;
@@ -60,6 +62,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public void setOnViewStateClickListener(ViewStateClickListener onViewStateClickListener) {
         this.onViewStateClickListener = onViewStateClickListener;
+    }
+
+    public void setOnViewImageClickListener(ViewImageClickListener onViewImageClickListener) {
+        this.onViewImageClickListener = onViewImageClickListener;
     }
 
     public PagerUserMerchantAdapter(Context context, List<M_Merchant> merchantList, int type, boolean isSelf) {
@@ -122,7 +128,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     }
 
 
-    private View initHeadView(View view, M_Merchant entity) {
+    private View initHeadView(View view, final M_Merchant entity) {
         ViewHolder holder = null;
         if (view == null) {
             view = inflater.inflate(R.layout.item_user_merchant_head, null);
@@ -150,6 +156,14 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         else
             holder.ivQianyue.setVisibility(View.GONE);
 
+        holder.flRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onViewImageClickListener != null)
+                    onViewImageClickListener.onMerchantDetail(entity);
+
+            }
+        });
         return view;
     }
 
@@ -442,6 +456,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
     }
 
     static class ViewHolder {
+        @Bind(R.id.fl_root)
+        FrameLayout flRoot;
         @Bind(R.id.card_img)
         ImageView cardImg;
         @Bind(R.id.tv_distance)
@@ -567,6 +583,10 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
 
     public interface ViewStateClickListener {
         void onStateManage(M_Merchant entity);
+    }
+
+    public interface ViewImageClickListener {
+        void onMerchantDetail(M_Merchant entity);
     }
 
 }

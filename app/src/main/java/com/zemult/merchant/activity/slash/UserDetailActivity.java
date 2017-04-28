@@ -554,6 +554,19 @@ public class UserDetailActivity extends BaseActivity {
                 }
             });
 
+            pagerUserMerchantHeadAdapter.setOnViewImageClickListener(new PagerUserMerchantAdapter.ViewImageClickListener() {
+                @Override
+                public void onMerchantDetail(M_Merchant entity) {
+                    if (entity.merchantId == selectMerchant.merchantId) {
+                        Intent intent = new Intent(UserDetailActivity.this, MerchantDetailActivity.class);
+                        intent.putExtra("userSaleId", userId);
+                        intent.putExtra(MerchantDetailActivity.MERCHANT_ID, entity.merchantId);
+                        startActivity(intent);
+                    }
+
+                }
+            });
+
             pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
                 @Override
                 public void onDetail(M_Merchant entity) {
