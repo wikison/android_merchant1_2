@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_f2"
-    android:orientation="vertical">
+              android:id="@+id/ll_root"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f2"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/include_layout_head"
-        layout="@layout/layout_head" />
+        layout="@layout/layout_head"/>
 
     <com.zemult.merchant.view.BounceScrollView
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                         android:layout_centerVertical="true"
                         android:background="@color/transparent"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/user_icon" />
+                        android:src="@mipmap/user_icon"/>
 
 
                     <TextView
@@ -52,7 +52,7 @@
                         android:ellipsize="end"
                         android:maxEms="6"
                         android:maxLines="1"
-                        android:text="" />
+                        android:text=""/>
 
                     <TextView
                         android:id="@+id/tv_focus"
@@ -61,7 +61,7 @@
                         android:layout_marginLeft="@dimen/margin_16dp"
                         android:layout_toRightOf="@+id/tv_name"
                         android:text="-客户关注"
-                        android:textColor="@color/font_new_red" />
+                        android:textColor="@color/font_new_red"/>
 
                     <LinearLayout
                         android:id="@+id/ll_my_info"
@@ -76,14 +76,14 @@
                             style="@style/text_12_black_999"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="完善资料" />
+                            android:text="完善资料"/>
 
                         <ImageView
                             android:id="@+id/yuandianj"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_16dp"
-                            android:src="@mipmap/tixing_icon" />
+                            android:src="@mipmap/tixing_icon"/>
                     </LinearLayout>
 
                     <TextView
@@ -93,10 +93,10 @@
                         android:layout_alignParentRight="true"
                         android:drawablePadding="@dimen/margin_8dp"
                         android:drawableRight="@mipmap/right_btn"
-                        android:text="" />
+                        android:text=""/>
                 </RelativeLayout>
 
-                <View style="@style/divider_dash" />
+                <View style="@style/divider_dash"/>
 
                 <RelativeLayout style="@style/relative_layout_item">
 
@@ -106,7 +106,7 @@
                         style="@style/text_15_black_28"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:text="收益账户" />
+                        android:text="收益账户"/>
 
                     <TextView
                         android:id="@+id/tv_add_money"
@@ -115,7 +115,7 @@
                         android:layout_marginLeft="@dimen/margin_16dp"
                         android:layout_toRightOf="@+id/tv_text_account"
                         android:text="@string/how_add_moeny"
-                        android:textColor="@color/font_new_blue" />
+                        android:textColor="@color/font_new_blue"/>
 
                     <TextView
                         android:id="@+id/tv_account"
@@ -125,11 +125,11 @@
                         android:drawablePadding="8dp"
                         android:drawableRight="@mipmap/right_btn"
                         android:text="￥1222元"
-                        android:textColor="@color/font_black_999" />
+                        android:textColor="@color/font_black_999"/>
 
                 </RelativeLayout>
 
-                <View style="@style/divider_dash" />
+                <View style="@style/divider_dash"/>
 
                 <RelativeLayout style="@style/relative_layout_item">
 
@@ -138,7 +138,7 @@
                         style="@style/text_15_black_28"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:text="等级" />
+                        android:text="等级"/>
 
                     <TextView
                         android:id="@+id/tv_add_level"
@@ -147,7 +147,7 @@
                         android:layout_marginLeft="@dimen/margin_16dp"
                         android:layout_toRightOf="@+id/tv_text_level"
                         android:text="@string/how_add_level"
-                        android:textColor="@color/font_new_blue" />
+                        android:textColor="@color/font_new_blue"/>
 
                     <TextView
                         android:id="@+id/tv_level"
@@ -157,7 +157,7 @@
                         android:layout_toLeftOf="@+id/iv_level"
                         android:drawablePadding="4dp"
                         android:text=""
-                        android:textColor="@color/font_main" />
+                        android:textColor="@color/font_main"/>
 
                     <ImageView
                         android:id="@+id/iv_level"
@@ -165,19 +165,21 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/right_btn" />
+                        android:src="@mipmap/right_btn"/>
                 </RelativeLayout>
 
-                <View style="@style/divider_dash" />
+                <View style="@style/divider_dash"/>
 
-                <RelativeLayout style="@style/relative_layout_item">
+                <RelativeLayout
+                    android:id="@+id/rl_member"
+                    style="@style/relative_layout_item">
 
                     <TextView
                         android:id="@+id/tv_text_member"
                         style="@style/text_15_black_28"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:text="会员" />
+                        android:text="会员"/>
 
                     <TextView
                         android:id="@+id/tv_member_privilege"
@@ -186,7 +188,7 @@
                         android:layout_marginLeft="@dimen/margin_16dp"
                         android:layout_toRightOf="@+id/tv_text_member"
                         android:text="@string/member_privilege"
-                        android:textColor="@color/font_new_blue" />
+                        android:textColor="@color/font_new_blue"/>
 
                     <ImageView
                         android:id="@+id/iv_member"
@@ -194,10 +196,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/right_btn" />
+                        android:src="@mipmap/right_btn"/>
                 </RelativeLayout>
 
-                <View style="@style/divider_dash" />
+                <View style="@style/divider_dash"/>
 
                 <RelativeLayout style="@style/relative_layout_item">
 
@@ -206,7 +208,7 @@
                         style="@style/text_15_black_28"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:text="SCRM" />
+                        android:text="SCRM"/>
 
                     <LinearLayout
                         android:id="@+id/ll_scrm_head"
@@ -227,7 +229,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:drawablePadding="8dp"
-                        android:drawableRight="@mipmap/right_btn" />
+                        android:drawableRight="@mipmap/right_btn"/>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -255,7 +257,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -266,7 +268,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
-                                android:src="@mipmap/sanjiao" />
+                                android:src="@mipmap/sanjiao"/>
                         </RelativeLayout>
 
                         <LinearLayout
@@ -279,7 +281,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:src="@mipmap/bg_add_merchant" />
+                                android:src="@mipmap/bg_add_merchant"/>
                         </LinearLayout>
                     </FrameLayout>
 
@@ -297,9 +299,9 @@
                             android:paddingRight="@dimen/margin_16dp"
                             android:paddingTop="@dimen/margin_12dp"
                             android:text="暂未绑定任何商户(点击+号立即绑定)"
-                            android:textColor="@color/font_new_red" />
+                            android:textColor="@color/font_new_red"/>
 
-                        <View style="@style/divider" />
+                        <View style="@style/divider"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -314,7 +316,7 @@
                         android:id="@+id/iv_cover"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"/>
 
                     <RelativeLayout
                         android:id="@+id/rl_container"
@@ -330,7 +332,7 @@
                             <android.support.v4.view.LinkagePager
                                 android:layout_width="145dp"
                                 android:layout_height="75dp"
-                                android:layout_gravity="center" />
+                                android:layout_gravity="center"/>
                         </me.crosswall.lib.coverflow.core.LinkagePagerContainer>
 
                         <ImageView
@@ -339,7 +341,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:src="@mipmap/sanjiao" />
+                            android:src="@mipmap/sanjiao"/>
                     </RelativeLayout>
 
                     <LinearLayout
@@ -353,14 +355,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="35dp"
-                            android:src="@mipmap/bg_add_merchant" />
+                            android:src="@mipmap/bg_add_merchant"/>
                     </LinearLayout>
                 </FrameLayout>
 
                 <android.support.v4.view.LinkagePager
                     android:id="@+id/bind_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp" />
+                    android:layout_height="500dp"/>
 
             </LinearLayout>
 
@@ -383,10 +385,10 @@
             style="@style/common_btn_235"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_btn_height_35"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
+            android:layout_marginTop="20dp"
             android:clickable="true"
             android:gravity="center"
             android:text="发起服务订单"

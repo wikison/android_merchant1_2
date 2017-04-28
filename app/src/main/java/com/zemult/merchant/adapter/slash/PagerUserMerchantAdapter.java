@@ -1,6 +1,7 @@
 package com.zemult.merchant.adapter.slash;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -17,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.view.FNRadioGroup;
@@ -200,7 +203,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder.llServiceRecord.setVisibility(View.GONE);
             holder.tvUnsureNum.setText("");
         }
-        holder.tvServicePlan.setText(entity.planName);
+//        holder.tvServicePlan.setText(entity.planName);
         holder.tvComment.setText(entity.commentNum + "条评价");
         initTags(holder, entity);
         dealState(holder, entity);
@@ -292,6 +295,37 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
                     onViewClickListener.onServicePlanList(entity);
             }
         });
+
+        holder.tvAddSeven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                intent.putExtra("titlename", "如何提高服务指数");
+                intent.putExtra("url", Constants.HOW_TO_IMPROVE_SEVEN);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.rlSeven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                intent.putExtra("titlename", "7天服务指数介绍");
+                intent.putExtra("url", Constants.SEVEN_INTRODUCTION);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.tvDesignPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                intent.putExtra("titlename", "如何设计方案");
+                intent.putExtra("url", Constants.HOW_TO_DESIGN);
+                mContext.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -486,6 +520,8 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         TextView tvAddSeven;
         @Bind(R.id.tv_seven)
         TextView tvSeven;
+        @Bind(R.id.rl_seven)
+        RelativeLayout rlSeven;
         @Bind(R.id.tv_unsure_num)
         TextView tvUnsureNum;
         @Bind(R.id.ll_service_record)

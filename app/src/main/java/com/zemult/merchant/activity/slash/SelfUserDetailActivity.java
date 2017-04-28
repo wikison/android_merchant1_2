@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -160,6 +162,8 @@ public class SelfUserDetailActivity extends BaseActivity {
     TextView tvUnsureNum;
     @Bind(R.id.yuandianj)
     ImageView yuandianj;
+    @Bind(R.id.rl_member)
+    RelativeLayout rlMember;
 
     private Context mContext;
     private Activity mActivity;
@@ -529,18 +533,6 @@ public class SelfUserDetailActivity extends BaseActivity {
                 }
             });
 
-//            pagerUserMerchantDetailAdapter.setOnViewTagClickListener(new PagerUserMerchantAdapter.ViewTagClickListener() {
-//                @Override
-//                public void onTagManage(M_Merchant merchant) {
-//                    Intent intent = new Intent(mActivity, TabManageActivity.class);
-//                    intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
-//                    intent.putExtra(TabManageActivity.NAME, merchant.merchantName);
-//                    intent.putExtra(TabManageActivity.TAGS, merchant.tags);
-//                    intent.putExtra(TabManageActivity.COMEFROM, 2);
-//                    startActivityForResult(intent, MODIFY_TAG);
-//                }
-//            });
-
             pagerUserMerchantDetailAdapter.setOnViewStateClickListener(new PagerUserMerchantAdapter.ViewStateClickListener() {
                 @Override
                 public void onStateManage(final M_Merchant entity) {
@@ -559,15 +551,6 @@ public class SelfUserDetailActivity extends BaseActivity {
                     });
                 }
             });
-
-//            pagerUserMerchantDetailAdapter.setOnViewPositionClickListener(new PagerUserMerchantAdapter.ViewPositionClickListener() {
-//                @Override
-//                public void onPositionManage(M_Merchant entity) {
-//                    Intent intent = new Intent(SelfUserDetailActivity.this, PositionSetActivity.class);
-//                    intent.putExtra("position_name", strPosition);
-//                    startActivityForResult(intent, MODIFY_POSITION);
-//                }
-//            });
 
             pagerUserMerchantDetailAdapter.setOnViewClickListener(new PagerUserMerchantAdapter.ViewClickListener() {
                 @Override
@@ -625,7 +608,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_contact,R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_contact, R.id.infoimprove_rl, R.id.ll_my_info, R.id.ll_add, R.id.iv_add, R.id.tv_add_level, R.id.tv_level, R.id.iv_level, R.id.tv_account, R.id.ll_scrm_head, R.id.tv_scrm, R.id.iv_add_merchant, R.id.ll_right, R.id.iv_right, R.id.tv_add_money, R.id.rl_member, R.id.tv_member_privilege})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -636,10 +619,10 @@ public class SelfUserDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_contact:
-                Intent cbintent =new Intent(SelfUserDetailActivity.this,CreateBespeakNewActivity.class);
-                cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus);
-                cbintent.putExtra("merchantName",selectMerchant.merchantName);
-                cbintent.putExtra("merchantId",selectMerchant.merchantId+"");
+                Intent cbintent = new Intent(SelfUserDetailActivity.this, CreateBespeakNewActivity.class);
+                cbintent.putExtra("reviewstatus", selectMerchant.reviewstatus);
+                cbintent.putExtra("merchantName", selectMerchant.merchantName);
+                cbintent.putExtra("merchantId", selectMerchant.merchantId);
                 startActivity(cbintent);
 
                 break;
@@ -661,7 +644,6 @@ public class SelfUserDetailActivity extends BaseActivity {
 
                 break;
             case R.id.tv_add_level:
-                break;
             case R.id.tv_level:
             case R.id.iv_level:
                 IntentUtil.start_activity(this, BaseWebViewActivity.class,
@@ -679,6 +661,15 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.ll_right:
             case R.id.iv_right:
                 shareToWX();
+                break;
+            case R.id.tv_add_money:
+                IntentUtil.start_activity(mActivity, BaseWebViewActivity.class,
+                        new Pair<String, String>("titlename", "如何赚钱"), new Pair<String, String>("url", Constants.HOW_TO_EARN));
+                break;
+            case R.id.rl_member:
+            case R.id.tv_member_privilege:
+                IntentUtil.start_activity(mActivity, BaseWebViewActivity.class,
+                        new Pair<String, String>("titlename", "会员特权"), new Pair<String, String>("url", Constants.MEMBER_PRIVILEGE));
                 break;
         }
     }

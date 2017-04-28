@@ -157,6 +157,7 @@
     <View style="@style/divider"/>
 
     <RelativeLayout
+        android:id="@+id/rl_seven"
         style="@style/relative_layout_item">
 
         <TextView
@@ -178,8 +179,9 @@
             android:id="@+id/tv_seven"
             style="@style/text_15_black_999"
             android:layout_alignParentRight="true"
-
             android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/margin_12dp"
+            android:drawableRight="@mipmap/right_btn"
             android:text="98"/>
     </RelativeLayout>
 

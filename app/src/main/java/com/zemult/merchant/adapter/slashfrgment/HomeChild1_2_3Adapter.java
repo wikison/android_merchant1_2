@@ -145,6 +145,8 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         }
         // 前7日的服务分总和
         holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+        String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
+        holder.tvJob.setText(strPosition);
 
         // 设置广告数据
         List<String> adList = new ArrayList<>();
