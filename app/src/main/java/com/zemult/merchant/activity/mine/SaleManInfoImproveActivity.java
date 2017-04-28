@@ -81,12 +81,12 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
             imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
         }
-        
+
         //view加载完成时回调
         llRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(!hasload){
+                if (!hasload) {
                     hasload = true;
                     ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_CONTACTS}, 100);
                 }
@@ -104,7 +104,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_EDITUSERINFO.equals(intent.getAction())) {
             if (!TextUtils.isEmpty(SlashHelper.userManager().getUserinfo().getHead())) {
-                imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
+                imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(), ivHead);
             }
         }
     }
@@ -125,6 +125,7 @@ public class SaleManInfoImproveActivity extends BaseActivity {
             user2_reflash_saleuser();
         }
     }
+
     /**
      * 用户更新服务管家通讯录
      */
@@ -238,7 +239,10 @@ public class SaleManInfoImproveActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 110 && resultCode == RESULT_OK) {
             headString = SlashHelper.userManager().getUserinfo().getHead();
-            imageManager.loadCircleHead(headString, ivHead);
+
+            if (!TextUtils.isEmpty(headString)) {
+                imageManager.loadCircleImage(headString, ivHead);
+            }
         }
     }
 

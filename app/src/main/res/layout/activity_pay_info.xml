@@ -140,6 +140,7 @@
 
                     <ImageView
                         android:id="@+id/iv_sale_head"
+                        android:src="@mipmap/user_icon"
                         android:layout_width="@dimen/j30dp"
                         android:layout_height="@dimen/j30dp" />
 

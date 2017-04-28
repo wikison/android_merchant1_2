@@ -205,6 +205,12 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         }
 //        holder.tvServicePlan.setText(entity.planName);
         holder.tvComment.setText(entity.commentNum + "条评价");
+
+        // 签约商户显示交易记录
+        if (entity.reviewstatus == 2)
+            holder.rlRecord.setVisibility(View.VISIBLE);
+        else
+            holder.rlRecord.setVisibility(View.GONE);
         initTags(holder, entity);
         dealState(holder, entity);
         initListener(holder, entity);
