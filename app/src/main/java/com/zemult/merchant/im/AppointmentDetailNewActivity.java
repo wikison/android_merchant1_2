@@ -170,6 +170,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     ScrollView slData;
     @Bind(R.id.tv_nodata)
     TextView tvNodata;
+    @Bind(R.id.invite_btn)
+    Button inviteBtn;
+
 
     public static String INTENT_RESERVATIONID = "intent";
     public static String INTENT_TYPE = "type";
@@ -356,6 +359,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             llZanshang.setVisibility(View.GONE);
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
+                            if(mReservation.isComment==1){//是否评价(0:否,1:是)
+                                inviteBtn.setVisibility(View.GONE);
+                            }
+                            else{
+                                inviteBtn.setVisibility(View.VISIBLE);
+                            }
                             if(mReservation.merchantReviewstatus==2){
                                 lhBtnRight.setVisibility(View.VISIBLE);
                                 lhBtnRight.setText("快捷买单");
