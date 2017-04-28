@@ -1,5 +1,6 @@
 package com.zemult.merchant.util.imagepicker;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -28,7 +29,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
+import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.ImageManager;
 //import com.nostra13.universalimageloader.core.DisplayImageOptions;
 //import com.nostra13.universalimageloader.core.ImageLoader;
@@ -198,11 +203,37 @@ public class SelectPictureActivity extends Activity {
             return;
         }
 
+        boolean cameraPermission = AndPermission.hasPermission(this, Manifest.permission.CAMERA);
+        if (cameraPermission) {
+            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Uri imageUri = getOutputMediaFileUri();
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        } else {
+            requestCameraPermission();
+        }
+    }
+
+    private void requestCameraPermission() {
+        AndPermission.with(this)
+                .requestCode(100)
+                .permission(Manifest.permission.CAMERA)
+                .send();
+    }
+
+    @PermissionYes(100)
+    private void getCameraYes() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri imageUri = getOutputMediaFileUri();
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
+
+    @PermissionNo(100)
+    private void getCameraNo() {
+        Toast.makeText(this, "无摄像头权限, 请前往设置中心开启摄像头权限", Toast.LENGTH_SHORT).show();
+    }
+
 
     /**
      * 用于拍照时获取输出的Uri

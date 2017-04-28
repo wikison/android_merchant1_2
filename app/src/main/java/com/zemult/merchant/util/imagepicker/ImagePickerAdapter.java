@@ -1,6 +1,10 @@
 package com.zemult.merchant.util.imagepicker;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,9 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.yanzhenjie.permission.AndPermission;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.app.base.CommonBaseAdapter;
 //import com.inroids.slash.app.common.ImageLoaderOptions;
+import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.PermissionTest;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.common.MMAlert;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 
