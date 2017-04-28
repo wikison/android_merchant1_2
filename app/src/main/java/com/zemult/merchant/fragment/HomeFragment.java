@@ -126,7 +126,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
-    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 135, tvHeight = 38, noDataViewHeight, page = 1;
+    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 130, tvHeight = 38, meHeight,noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
@@ -235,6 +235,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(mAdapter.isNoData())
+                    return;
+
                 int userId = mAdapter.getItem(position - 2).saleUserId;
                 Intent intent;
                 if (SlashHelper.userManager().getUserId() == userId) {
@@ -288,7 +291,12 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                     rllSearchBg.getDelegate().setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.half_transparent_white, R.color.white));
 
                     //吸顶效果
-                    if (headerTopMargin <= -((float) DensityUtil.dip2px(mContext, adHeight + tabHeight + tvHeight - titleHeight)))
+                    if(headerHomeView.showMe())
+                        meHeight = 86;
+                    else
+                        meHeight = 0;
+
+                    if (headerTopMargin <= -((float) DensityUtil.dip2px(mContext, adHeight + tabHeight + tvHeight + meHeight - titleHeight)))
                         rlTop.setVisibility(View.VISIBLE);
                     else
                         rlTop.setVisibility(View.GONE);
