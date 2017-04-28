@@ -639,7 +639,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 Intent cbintent =new Intent(SelfUserDetailActivity.this,CreateBespeakNewActivity.class);
                 cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus);
                 cbintent.putExtra("merchantName",selectMerchant.merchantName);
-                cbintent.putExtra("merchantId",selectMerchant.merchantId);
+                cbintent.putExtra("merchantId",selectMerchant.merchantId+"");
                 startActivity(cbintent);
 
                 break;

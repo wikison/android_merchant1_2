@@ -236,13 +236,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 //        userReservationInfo();
         mimageManager = new ImageManager(getApplicationContext());
         alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
-
+        userReservationInfo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        userReservationInfo();
     }
 
 

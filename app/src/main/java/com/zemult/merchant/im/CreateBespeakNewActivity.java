@@ -122,7 +122,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
         customerId = getIntent().getIntExtra("customerId", 0);
 
         remindIMId= getIntent().getIntExtra("remindIMId", 0);
-        merchantId= getIntent().getIntExtra("merchantId", 0)+"";
+        merchantId= getIntent().getStringExtra("merchantId");
         reviewstatus= getIntent().getIntExtra("reviewstatus", 0)+"";
         shopname= getIntent().getStringExtra("merchantName");
         if(0!=remindIMId){
