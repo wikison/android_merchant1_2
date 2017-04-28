@@ -274,4 +274,8 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         this.onIndustryListener = onIndustryListener;
     }
 
+    public boolean showMe(){
+        return rlMe.getVisibility() == View.VISIBLE;
+    }
+
 }

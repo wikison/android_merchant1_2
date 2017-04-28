@@ -65,6 +65,14 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
         notifyDataSetChanged();
     }
 
+    public boolean isNoData() {
+        return isNoData;
+    }
+
+    public void setNoData(boolean noData) {
+        isNoData = noData;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 暂无数据
@@ -103,7 +111,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
      */
     private void initData(ViewHolder holder, final M_Merchant entity, final int position) {
         // 服务管家的用户昵称
-        if (!TextUtils.isEmpty(entity.saleUserName))
+        if (!StringUtils.isBlank(entity.saleUserName))
             holder.tvUserName.setText(entity.saleUserName);
         // 服务管家的用户头像
         mImageManager.loadCircleHead(entity.saleUserHead, holder.ivHead);
@@ -120,12 +128,15 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
             holder.ivQianyue.setVisibility(View.GONE);
 
         // 商家名称
-        if (!TextUtils.isEmpty(entity.name))
+        if (!StringUtils.isBlank(entity.name))
             holder.tvMerchantName.setText(entity.name);
+        // 商家名称
+        if (!StringUtils.isBlank(entity.position))
+            holder.tvJob.setText(entity.position);
         // 人均消费
         holder.tvMoney.setText("人均￥" + (int) (entity.perMoney));
         // 距中心点距离(米)
-        if (!StringUtils.isEmpty(entity.distance)) {
+        if (!StringUtils.isBlank(entity.distance)) {
             if (entity.distance.length() > 3) {
                 double d = Double.valueOf(entity.distance);
                 holder.tvDistance.setText(d / 1000 + "km");
@@ -171,7 +182,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
 
 
     private void initTags(ViewHolder holder, M_Merchant entity) {
-        if (TextUtils.isEmpty(entity.saleUserTags))
+        if (StringUtils.isBlank(entity.saleUserTags))
             holder.rgTaService.setVisibility(View.INVISIBLE);
         else {
             holder.rgTaService.setVisibility(View.VISIBLE);
