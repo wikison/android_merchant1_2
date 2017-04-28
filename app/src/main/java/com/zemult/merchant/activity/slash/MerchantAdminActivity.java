@@ -354,7 +354,9 @@ public class MerchantAdminActivity extends BaseActivity {
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     ToastUtils.show(mContext, "退出成功");
-                    setResult(RESULT_OK);
+                    Intent data = new Intent();
+                    data.putExtra("exit_success", 1);
+                    setResult(RESULT_OK, data);
                     finish();
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
@@ -492,7 +494,9 @@ public class MerchantAdminActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_OK);
+        Intent data = new Intent();
+        data.putExtra("exit_success", 0);
+        setResult(RESULT_OK, data);
         super.onBackPressed();
     }
 }

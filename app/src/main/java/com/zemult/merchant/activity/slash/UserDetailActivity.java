@@ -576,7 +576,10 @@ public class UserDetailActivity extends BaseActivity {
 
                 @Override
                 public void onServicePlanList(M_Merchant entity) {
-
+                    Intent intent = new Intent(UserDetailActivity.this, ServicePlanActivity.class);
+                    intent.putExtra(ServicePlanActivity.INTENT_SALEUSER_ID, userId);
+                    intent.putExtra(ServicePlanActivity.INTENT_MERCHANT_ID, entity.merchantId);
+                    startActivity(intent);
                 }
             });
         }
