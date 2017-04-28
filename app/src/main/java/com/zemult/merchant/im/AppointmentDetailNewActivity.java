@@ -854,7 +854,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intent2.putExtra("merchantName", mReservation.merchantName);
                 if (!TextUtils.isEmpty(reservationId))
                     intent2.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivity(intent2);
+                startActivityForResult(intent2,10002);
 
                 break;
             case R.id.jiezhang_btn:
@@ -1148,7 +1148,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10001 ) {//赞赏-生成支付单
+        if (requestCode == 10001||requestCode ==10002 ) {//赞赏-生成支付单
             userReservationInfo();
         }
         if (requestCode == 1000 ) {//支付定金
