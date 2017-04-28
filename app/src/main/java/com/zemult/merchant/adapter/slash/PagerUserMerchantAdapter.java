@@ -167,7 +167,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder.tvName.setText(entity.merchantName);
 
 
-        holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvSeven.setText(entity.sumScore / 7 + "分");
         String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
         holder.tvServicePosition.setText(strPosition);
 
@@ -193,7 +193,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
         // 商家名称
         if (!TextUtils.isEmpty(entity.merchantName))
             holder.tvName.setText(entity.merchantName);
-        holder.tvSeven.setText(entity.sumScore / 7 + "");
+        holder.tvSeven.setText(entity.sumScore / 7 + "分");
         String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
         holder.tvServicePosition.setText(strPosition);
         if (entity.unSureOrderNum > 0) {

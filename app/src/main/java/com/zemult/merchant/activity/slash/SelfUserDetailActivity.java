@@ -468,10 +468,12 @@ public class SelfUserDetailActivity extends BaseActivity {
             flAddMerchant.setVisibility(View.GONE);
             bindPager.setVisibility(View.GONE);
             llAddMerchant.setVisibility(View.VISIBLE);
+            llBottom.setVisibility(View.GONE);
         } else {
             flAddMerchant.setVisibility(View.VISIBLE);
             bindPager.setVisibility(View.VISIBLE);
             llAddMerchant.setVisibility(View.GONE);
+            llBottom.setVisibility(View.VISIBLE);
 
             pager = pagerContainer.getViewPager();
             pagerUserMerchantHeadAdapter = new PagerUserMerchantAdapter(mContext, listMerchant, 0, isSelf);
@@ -603,11 +605,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         state = selectMerchant.state;
         strPosition = (selectMerchant.position == null ? "无" : selectMerchant.position);
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
-        if(selectMerchant.reviewstatus==2){
-            llBottom.setVisibility(View.VISIBLE);
-        }else{
-            llBottom.setVisibility(View.GONE);
-        }
+
     }
 
 
@@ -622,10 +620,10 @@ public class SelfUserDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.btn_contact:
-                Intent cbintent =new Intent(SelfUserDetailActivity.this,CreateBespeakNewActivity.class);
-                cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus+"");
-                cbintent.putExtra("merchantName",selectMerchant.merchantName);
-                cbintent.putExtra("merchantId",selectMerchant.merchantId+"");
+                Intent cbintent = new Intent(SelfUserDetailActivity.this, CreateBespeakNewActivity.class);
+                cbintent.putExtra("reviewstatus", selectMerchant.reviewstatus + "");
+                cbintent.putExtra("merchantName", selectMerchant.merchantName);
+                cbintent.putExtra("merchantId", selectMerchant.merchantId + "");
                 startActivity(cbintent);
 
                 break;
@@ -740,6 +738,9 @@ public class SelfUserDetailActivity extends BaseActivity {
         if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             selectPosition = 0;
             getOtherMerchantList();
+
+            Intent intent1 = new Intent(Constants.BROCAST_LOGIN);
+            sendBroadcast(intent);
         }
     }
 

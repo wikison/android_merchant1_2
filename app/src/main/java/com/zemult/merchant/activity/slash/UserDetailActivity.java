@@ -416,8 +416,15 @@ public class UserDetailActivity extends BaseActivity {
         tvRname.setVisibility(View.GONE);
         if (userInfo.getIsFan() == 0) {
             btnFocus.setText(R.string.add_focus_yogouser);
+            drawable = getResources().getDrawable(R.mipmap.weiguanzhu);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            btnFocus.setCompoundDrawables(drawable, null, null, null);
         } else {
             btnFocus.setText(R.string.has_focus);
+            drawable = getResources().getDrawable(R.mipmap.guanzhu);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            btnFocus.setCompoundDrawables(drawable, null, null, null);
+
             if (!TextUtils.isEmpty(userInfo.remarkName)) {
                 tvRname.setVisibility(View.VISIBLE);
                 tvRname.setText("备注名：" + userInfo.remarkName);
@@ -628,7 +635,7 @@ public class UserDetailActivity extends BaseActivity {
                     Drawable drawable = getResources().getDrawable(R.mipmap.guanzhu);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     btnFocus.setCompoundDrawables(drawable, null, null, null);
-
+                    getUserInfo();
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }
@@ -665,6 +672,7 @@ public class UserDetailActivity extends BaseActivity {
                     Drawable drawable = getResources().getDrawable(R.mipmap.weiguanzhu);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     btnFocus.setCompoundDrawables(drawable, null, null, null);
+                    getUserInfo();
 
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
