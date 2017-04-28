@@ -509,6 +509,17 @@ public class CreateBespeakNewActivity extends BaseActivity {
         if (requestCode == CHOOSEMERCHANT && resultCode == RESULT_OK) {
             bespekShopname.setText(data.getStringExtra("shopName"));
             merchantId = data.getIntExtra("merchantId", 0)+"";
+            reviewstatus= data.getIntExtra("reviewstatus", 0)+"";
+            if(reviewstatus.equals("2")){
+                rlCustomerphone.setVisibility(View.VISIBLE);
+                tvDingjinTpis.setVisibility(View.VISIBLE);
+            }
+            else {
+                rlCustomerphone.setVisibility(View.GONE);
+                tvDingjinTpis.setVisibility(View.GONE);
+            }
+
+
         }
         if (requestCode == CHOOSEPLAN && resultCode == RESULT_OK) {
             bespekPlan.setText(data.getStringExtra("planName"));
