@@ -246,6 +246,9 @@
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
                     android:text="选择服务方案"
+                    android:maxWidth="250dp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textColor="#999999"
                     />
 
