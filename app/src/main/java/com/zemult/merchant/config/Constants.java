@@ -136,7 +136,18 @@ public class Constants {
 
     public static final String APP_ID = "wx0e6067b5bc878112";
 
-
+    //如何赚钱
+    public static String HOW_TO_EARN = Urls.MAIN_URL + "html/dzyx_common/rhzq.html";
+    //如何提升等级
+    public static String HOW_TO_IMPROVE_LEVEL = Urls.MAIN_URL + "html/dzyx_common/rhtg.html";
+    //会员特权
+    public static String MEMBER_PRIVILEGE = Urls.MAIN_URL + "html/dzyx_gg/yfhy.html";
+    //如何设计
+    public static String HOW_TO_DESIGN = Urls.MAIN_URL + "html/dzyx_common/fwfa.html";
+    //如何提高7天服务指数
+    public static String HOW_TO_IMPROVE_SEVEN = Urls.MAIN_URL + "html/dzyx_common/rhtg.html";
+    //服务指数介绍
+    public static String SEVEN_INTRODUCTION = Urls.MAIN_URL + "html/dzyx_common/jdjs.html";
 }
 
 
