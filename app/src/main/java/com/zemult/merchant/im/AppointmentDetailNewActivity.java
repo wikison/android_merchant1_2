@@ -226,7 +226,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     CommonRewardRequest commonRewardRequest;
     Dialog alertDialog;
     int orderpeople;
-    boolean isActivityRunning=true;
 
     @Override
     public void setContentView() {
@@ -271,7 +270,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        isActivityRunning=false;
         super.onPause();
     }
 
@@ -391,29 +389,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                                 lhBtnRight.setText("快捷买单");
                             }
                             serveraccountBtn.setVisibility(View.GONE);
-                            if(isActivityRunning){
-                                if(!SlashHelper.getSettingBoolean(reservationId+"",false)){
-                                    CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            CommonDialog.DismissProgressDialog();
-                                        }
-                                    }, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            CommonDialog.DismissProgressDialog();
-
-                                            Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
-                                            urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
-                                            urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
-                                            urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
-                                                    "，诚挚邀请，期待您的赴约。");
-                                            startActivity(urlintent);
-                                        }
-                                    });
-                                    SlashHelper.setSettingBoolean(reservationId+"",true);
-                                }
-                        }
                         }
                         else{
                             if(!StringUtils.isBlank(mReservation.phoneNum)){
@@ -629,6 +604,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                                         , message, forwardCallBack);
 
                         userReservationInfo();
+                        showInviteDialog();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -638,7 +614,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         } catch (Exception e) {
         }
     }
-
+    //用户打/赞赏-生成支付单（支付宝）
     private void user_reward_pay_add() {
         try {
             showPd();
@@ -1143,56 +1119,41 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
 
 
-//    public void startPlay() {
-//        stopPlay();
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                // TODO Auto-generated method stub
-//
-//                String fileName = HttpOperateUtil.downLoadFile(fileUrl,
-//                        fileUrl.substring(fileUrl.lastIndexOf("/") + 1));
-//
-//                Log.i("keanbin", "fileName = " + fileName);
-//                File file = new File(fileName);
-//
-//                if (!file.exists()) {
-////                    Toast.makeText(DoTaskVoiceActivity.this, "没有语音文件！", Toast.LENGTH_SHORT)
-////                            .show();
-//                    return;
-//                }
-//                try{
-//                    mMediaPlayer = MediaPlayer.create(AppointmentDetailNewActivity.this,
-//                            Uri.parse(fileName));
-//                    mMediaPlayer.setLooping(false);
-//                    mMediaPlayer.start();
-//                }catch (Exception e){
-//                }
-//                Looper.loop();
-//            }
-//        }).start();
-//
-//    }
-//
-//    ;
-//
-//    public void stopPlay() {
-//        if (mMediaPlayer != null) {
-//            mMediaPlayer.stop();
-//        }
-//
-//    }
+     void showInviteDialog() {
+            if(!SlashHelper.getSettingBoolean(reservationId+"",false)){
+                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonDialog.DismissProgressDialog();
+
+                        Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                        urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                        urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                        urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                                "，诚挚邀请，期待您的赴约。");
+                        startActivity(urlintent);
+                    }
+                });
+                SlashHelper.setSettingBoolean(reservationId+"",true);
+            }
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10001 && resultCode == RESULT_OK) {
-           finish();
+        if (requestCode == 10001 ) {//赞赏-生成支付单
+            userReservationInfo();
         }
-        if (requestCode == 1000 && resultCode == RESULT_OK) {
-            finish();
+        if (requestCode == 1000 ) {//支付定金
+            showInviteDialog();
+            userReservationInfo();
         }
         if (requestCode == CHOOSEPLAN && resultCode == RESULT_OK) {
             bespekPlan.setText(data.getStringExtra("planName"));

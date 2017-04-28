@@ -341,6 +341,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                 .forwardMsgToContact(appContact
                         , message, forwardCallBack);
         startActivity(imKit.getChattingActivityIntent(toUserId + "", Urls.APP_KEY));
+        setResult(RESULT_OK);
 //        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
 //        intent.putExtra("billId", userPayId);
 //        startActivity(intent);

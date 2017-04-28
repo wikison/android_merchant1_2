@@ -184,7 +184,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
 //        Intent intent = new Intent(ChoosePayTypeActivity.this, SendAppreciateRedActivity.class);
 //        intent.putExtra("billId", userPayId);
 //        startActivity(intent);
-        finish();
     }
 
 
@@ -210,6 +209,14 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         imKit.getConversationService()
                 .forwardMsgToContact(appContact
                         , message, forwardCallBack);
+
+
+
+        setResult(RESULT_OK);
+        finish();
+//        Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
+//        intent1.putExtra("reservationId", reservationId);
+//        startActivity(intent1);
     }
 
 
@@ -453,10 +460,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
             if (rewardMoney != 0) {
                 sendPayMoneyMsg();
             }
-            setResult(RESULT_OK);
-            Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
-            intent1.putExtra("reservationId", reservationId);
-            startActivity(intent1);
 
         }
 
@@ -507,11 +510,6 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
                             sendPayMoneyMsg();
                         }
                         sendOrderSureMessage();
-
-                        setResult(RESULT_OK);
-                        Intent intent1 = new Intent(ChoosePayType4OrderActivity.this, AppointmentDetailNewActivity.class);
-                        intent1.putExtra("reservationId", reservationId);
-                        startActivity(intent1);
 
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
