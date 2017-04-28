@@ -445,6 +445,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     Intent planintent = new Intent(CreateBespeakNewActivity.this,ServicePlanActivity.class);
                     planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
                     planintent.putExtra("merchantId",Integer.parseInt(merchantId));
+                    planintent.putExtra("choosePlan",true);
                     startActivityForResult(planintent, CHOOSEPLAN);
                 }
                 else {

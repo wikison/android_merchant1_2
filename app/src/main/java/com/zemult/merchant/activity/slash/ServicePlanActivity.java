@@ -56,6 +56,7 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
 
     private ServicePlanAdapter mAdapter;
     private Context mContext;
+    boolean choosePlan;
 
     @Override
     public void setContentView() {
@@ -70,7 +71,7 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
         saleUserId = getIntent().getIntExtra(INTENT_SALEUSER_ID, -1);
         merchantId = getIntent().getIntExtra(INTENT_MERCHANT_ID, -1);
         planId = getIntent().getIntExtra(INTENT_PLAN_ID, -1);
-
+        choosePlan= getIntent().getBooleanExtra("choosePlan", false);
         smoothListView.setRefreshEnable(true);
         smoothListView.setLoadMoreEnable(false);
         smoothListView.setSmoothListViewListener(this);
@@ -240,7 +241,7 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
     private void fillAdapter(List<M_Plan> list, int maxpage, boolean isLoadMore) {
         if (mAdapter == null) {
             mAdapter = new ServicePlanAdapter(mContext, new ArrayList<M_Plan>());
-            mAdapter.setSaleUserId(saleUserId);
+            mAdapter.setSaleUserId(saleUserId,choosePlan);
             mAdapter.setOnItemClickListener(new ServicePlanAdapter.OnItemClickListener() {
                 @Override
                 public void onEditClick(M_Plan plan) {

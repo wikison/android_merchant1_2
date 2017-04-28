@@ -762,7 +762,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 if (type == 0) {//我是客户的状态下
                     //查看
                     Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
-                    planintent.putExtra("planId",mReservation.planId);
+                    planintent.putExtra("choosePlan",true);
                     startActivity(planintent);
                 }
 
@@ -771,6 +771,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         //查看
                         Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
                         planintent.putExtra("planId",mReservation.planId);
+
                         startActivity(planintent);
                     }
                     else{
@@ -778,6 +779,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         Intent planintent = new Intent(AppointmentDetailNewActivity.this,ServicePlanActivity.class);
                         planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
                         planintent.putExtra("merchantId",mReservation.merchantId);
+                        planintent.putExtra("choosePlan",true);
                         startActivityForResult(planintent, CHOOSEPLAN);
                     }
 

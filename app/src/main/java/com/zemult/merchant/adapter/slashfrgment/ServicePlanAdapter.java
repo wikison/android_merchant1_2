@@ -37,13 +37,14 @@ import cn.trinea.android.common.util.StringUtils;
  */
 public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
     private int saleUserId;
-
+    boolean isChoose;
     public ServicePlanAdapter(Context context, List<M_Plan> list) {
         super(context, list);
     }
 
-    public void setSaleUserId(int saleUserId) {
+    public void setSaleUserId(int saleUserId,boolean ischoose) {
         this.saleUserId = saleUserId;
+        this.isChoose = ischoose;
     }
 
     public void setData(List<M_Plan> list, boolean isLoadMore) {
@@ -110,7 +111,7 @@ public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
             holder.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(onItemClickListener != null)
+                    if(onItemClickListener != null&&isChoose)
                         onItemClickListener.onChooseClick(plan);
                 }
             });
