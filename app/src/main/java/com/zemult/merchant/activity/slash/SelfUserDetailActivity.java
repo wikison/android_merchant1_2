@@ -637,7 +637,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.btn_contact:
                 Intent cbintent =new Intent(SelfUserDetailActivity.this,CreateBespeakNewActivity.class);
-                cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus);
+                cbintent.putExtra("reviewstatus",selectMerchant.reviewstatus+"");
                 cbintent.putExtra("merchantName",selectMerchant.merchantName);
                 cbintent.putExtra("merchantId",selectMerchant.merchantId+"");
                 startActivity(cbintent);

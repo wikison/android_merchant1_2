@@ -30,6 +30,7 @@ import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.sample.LoginSampleHelper;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.apimodel.APIM_UserBillInfo;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -135,7 +136,7 @@ public class AssessmentActivity extends BaseActivity {
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText("完成");
         }
-
+        EditFilter.WordFilter(etPingjia, 100, editnum);
     }
 
     private void initListener() {

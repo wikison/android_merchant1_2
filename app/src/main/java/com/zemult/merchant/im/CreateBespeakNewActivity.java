@@ -123,7 +123,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
         remindIMId= getIntent().getIntExtra("remindIMId", 0);
         merchantId= getIntent().getStringExtra("merchantId");
-        reviewstatus= getIntent().getIntExtra("reviewstatus", 0)+"";
+        reviewstatus= getIntent().getStringExtra("reviewstatus");
         shopname= getIntent().getStringExtra("merchantName");
         if(0!=remindIMId){
             playBtn.setVisibility(View.VISIBLE);
@@ -417,10 +417,16 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 break;
             case R.id.rl_plan:
                 //选择方案
-                Intent planintent = new Intent(CreateBespeakNewActivity.this,ServicePlanActivity.class);
-                planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
-                planintent.putExtra("merchantId",Integer.parseInt(merchantId));
-                startActivityForResult(planintent, CHOOSEPLAN);
+                if(null!=merchantId){
+                    Intent planintent = new Intent(CreateBespeakNewActivity.this,ServicePlanActivity.class);
+                    planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
+                    planintent.putExtra("merchantId",Integer.parseInt(merchantId));
+                    startActivityForResult(planintent, CHOOSEPLAN);
+                }
+                else {
+                    ToastUtil.showMessage("请先选择商户");
+                }
+
                 break;
 
             case R.id.btn_bespeak_commit:

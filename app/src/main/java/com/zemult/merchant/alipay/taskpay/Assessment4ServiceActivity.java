@@ -15,6 +15,7 @@ import com.zemult.merchant.aip.reservation.User2ReservationCommontAddRequest;
 import com.zemult.merchant.aip.slash.UserMerchantPayCommont_1_1Request;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
@@ -43,6 +44,9 @@ public class Assessment4ServiceActivity extends BaseActivity {
     TextView lhTvTitle;
     @Bind(R.id.et_pingjia)
     EditText etPingjia;
+    @Bind(R.id.editnum)
+    TextView editNum;
+
 
     int comment = 0;
     int reservationId;
@@ -64,7 +68,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
         merchantName = getIntent().getStringExtra("merchantName") == null ? "" : getIntent().getStringExtra("merchantName");
         tvUsername.setText(managername);
         tvShopname.setText(merchantName);
-        imageManager.loadCircleImage(managerhead, ivUserhead);
+        imageManager.loadCircleHead(managerhead, ivUserhead);
 
         ratingbar.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
             @Override
@@ -72,7 +76,7 @@ public class Assessment4ServiceActivity extends BaseActivity {
                 comment = (int) RatingCount;
             }
         });
-
+        EditFilter.WordFilter(etPingjia, 100, editNum);
     }
 
     @Override

@@ -306,7 +306,6 @@
 
             <RelativeLayout
                 android:id="@+id/rl_plan"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/ripple_item_clicked2"
@@ -331,6 +330,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:drawablePadding="10dp"
+                    android:maxWidth="250dp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:drawableRight="@mipmap/right_btn"
                     android:text="------"
                     android:textColor="#999999"
