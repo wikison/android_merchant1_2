@@ -40,7 +40,7 @@
                 android:textColorHint="@color/font_black_999"
                 android:textColor="@color/font_black_28"
                 android:textSize="@dimen/font_30px"
-                android:maxLength="10"/>
+                android:maxLength="15"/>
             <TextView
                 style="@style/text_15_black_28"
                 android:id="@+id/tv_title_length"
@@ -48,7 +48,7 @@
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0/20"/>
+                android:text="0/15"/>
 
         </com.flyco.roundview.RoundLinearLayout>
 

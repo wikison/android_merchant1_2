@@ -92,7 +92,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
         appMainView.addView(appView, layoutParams);
 
         EditFilter.WordFilter(etContent, 100, tvContentLength);
-        EditFilter.WordFilter(etTitle, 20, tvTitleLength);
+        EditFilter.WordFilter(etTitle, 15, tvTitleLength);
     }
 
     @Override

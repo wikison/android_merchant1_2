@@ -117,7 +117,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
 
     public void setVpIndustrys(final List<M_Industry> industryList) {
         final M_Industry industry = new M_Industry();
-        industry.name = "全部";
+        industry.name = "人气推荐";
         industry.id = -1;
 
         industryList.add(0, industry);

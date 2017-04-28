@@ -175,6 +175,10 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
                 if (((CommonResult) response).status == 1) {
                     ToastUtil.showMessage("删除成功");
                     mAdapter.delOneRecord(pos);
+                    if (mAdapter.getCount() == 0) {
+                        smoothListView.setVisibility(View.GONE);
+                        rlNoData.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

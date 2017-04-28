@@ -214,7 +214,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         homePresenter = new HomePresenter(listJsonRequest, this);
 
         noDataViewHeight = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, titleHeight + bottomHeight + 38);
-        registerReceiver(new String[]{Constants.BROCAST_LOGIN});
+        registerReceiver(new String[]{Constants.BROCAST_LOGIN, Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -464,6 +464,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             if(SlashHelper.userManager().getUserId() != 0)
                 user2_first_saleUser();
             onRefresh();
+        }else if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+            user2_first_saleUser();
         }
     }
 

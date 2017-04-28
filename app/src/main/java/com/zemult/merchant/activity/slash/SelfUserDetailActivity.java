@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.v4.view.LinkagePager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import me.crosswall.lib.coverflow.core.LinkageCoverTransformer;
@@ -605,6 +603,11 @@ public class SelfUserDetailActivity extends BaseActivity {
         state = selectMerchant.state;
         strPosition = (selectMerchant.position == null ? "无" : selectMerchant.position);
         imageManager.loadBlurImage(selectMerchant.merchantPic, ivCover, 60);
+        if(selectMerchant.reviewstatus==2){
+            llBottom.setVisibility(View.VISIBLE);
+        }else{
+            llBottom.setVisibility(View.GONE);
+        }
     }
 
 
@@ -713,9 +716,12 @@ public class SelfUserDetailActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == EXIT_MERCHANT) {
-                selectPosition = 0;
+                int exit = data.getIntExtra("exit_success", 0);
+                if (exit == 1) {
+                    //退出成功
+                    selectPosition = 0;
+                }
                 getOtherMerchantList();
-
             } else if (requestCode == EDIT_USER_INFO) {
                 getUserInfo();
 

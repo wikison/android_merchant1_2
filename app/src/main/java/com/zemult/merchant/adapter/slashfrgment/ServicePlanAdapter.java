@@ -16,6 +16,7 @@ import com.zemult.merchant.app.view.MeasuredGridView;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Plan;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.DensityUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.imagepicker.ImagePickerAdapter;
 import com.zemult.merchant.view.FixedGridView;
@@ -121,6 +122,15 @@ public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
 
         if(!StringUtils.isBlank(plan.pics)){
             holder.gridview.setVisibility(View.VISIBLE);
+
+            if(Arrays.asList(plan.pics.split(",")).size() == 4){
+                holder.gridview.setNumColumns(2);
+
+                holder.gridview.getLayoutParams().width = DensityUtil.dip2px(mContext, 165);
+            }else{
+                holder.gridview.setNumColumns(3);
+                holder.gridview.getLayoutParams().width = DensityUtil.dip2px(mContext, 250);
+            }
 
             PhotoFix3Adapter adapter = new PhotoFix3Adapter(mContext, plan.pics, 9);
             adapter.setOnImageClickListener(new PhotoFix3Adapter.OnImageClickListener() {
