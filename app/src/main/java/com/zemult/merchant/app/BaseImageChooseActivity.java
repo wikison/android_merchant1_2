@@ -1,5 +1,6 @@
 package com.zemult.merchant.app;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,9 +11,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.AppUtils;
@@ -134,13 +140,8 @@ public abstract class BaseImageChooseActivity extends MBaseActivity implements O
 
     @Override
     public void takePic() {
-        PermissionTest pt = new PermissionTest();
-        if (pt.isCameraPermission()) {
-            tackPhotoName = AppUtils.getStringToday() + ".jpg";
-            AppUtils.tackPic(this, tackPhotoName, Constants.TACKPHOTO);
-        } else {
-            ToastUtil.showMessage("需要允许使用相机权限");
-        }
+        tackPhotoName = AppUtils.getStringToday() + ".jpg";
+        AppUtils.tackPic(this, tackPhotoName, Constants.TACKPHOTO);
     }
     
     @Override

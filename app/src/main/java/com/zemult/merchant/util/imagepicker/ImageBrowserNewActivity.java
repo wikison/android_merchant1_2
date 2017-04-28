@@ -178,9 +178,9 @@ public class ImageBrowserNewActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("coverPic", coverPic);
-        setResult(RESULT_OK, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra("coverPic", coverPic);
+//        setResult(RESULT_OK, intent);
         super.onBackPressed();
     }
 

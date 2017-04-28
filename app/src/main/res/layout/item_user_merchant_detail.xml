@@ -123,6 +123,7 @@
             android:drawablePadding="@dimen/margin_12dp"
             android:drawableRight="@mipmap/right_btn"
             android:ellipsize="end"
+            android:gravity="center_vertical|right"
             android:maxLines="1"
             android:text=""/>
     </RelativeLayout>
