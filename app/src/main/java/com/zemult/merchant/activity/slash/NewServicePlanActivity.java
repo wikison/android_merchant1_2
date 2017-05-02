@@ -262,6 +262,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
                     ToastUtil.showMessage("发布成功");
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     ToastUtil.showMessage(((CommonResult) response).info);
