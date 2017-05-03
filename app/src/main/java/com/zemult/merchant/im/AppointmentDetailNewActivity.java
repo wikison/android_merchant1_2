@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -35,13 +33,8 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
 import com.flyco.roundview.RoundTextView;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
-import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyQr4OrderActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryDetailActivity;
@@ -73,12 +66,10 @@ import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
-import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.FixedGridView;
 import com.zemult.merchant.view.PMNumView;
-import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.CommonDialog;
 
 import org.json.JSONException;
@@ -433,6 +424,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     } else if (mReservation.state == 3||mReservation.state == 4) {
                         tvState.setText("已结束");
                         serveraccountBtn.setVisibility(View.GONE);
+                        lhTvTitle.setText("服务定单");
 
                     }
 
