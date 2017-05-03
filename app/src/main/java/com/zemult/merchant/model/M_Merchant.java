@@ -166,8 +166,9 @@ public class M_Merchant implements Serializable {
     @Expose
     public int commentNumber;  // 被评价的总次数
     @Expose
+    public int newCommentNum;  // 新评价数量
+    @Expose
     public int commentNum;  // 被评价的总次数
-
     @Expose
     public String createTime;  // 时间"yyyy-MM-dd HH:mm:ss"
     @Expose

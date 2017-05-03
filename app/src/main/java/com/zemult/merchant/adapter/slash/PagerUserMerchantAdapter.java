@@ -218,7 +218,7 @@ public class PagerUserMerchantAdapter extends PagerAdapter {
             holder.tvUnsureNum.setText("");
         }
 //        holder.tvServicePlan.setText(entity.planName);
-        holder.tvComment.setText(entity.commentNum + "条评价");
+        holder.tvComment.setText(entity.newCommentNum + "条新评价");
 
         // 签约商户显示交易记录
         if (entity.reviewstatus == 2)
