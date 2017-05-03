@@ -662,7 +662,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             case R.id.tv_level:
             case R.id.iv_level:
                 IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                        new Pair<String, String>("titlename", "服务等级"), new Pair<String, String>("url", Constants.SERVICELEVEL));
+                        new Pair<String, String>("titlename", "管家等级"), new Pair<String, String>("url", Constants.SERVICELEVEL));
                 break;
             case R.id.tv_account:
                 startActivity(new Intent(SelfUserDetailActivity.this, MyWalletActivity.class));
@@ -754,7 +754,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             getOtherMerchantList();
 
             Intent intent1 = new Intent(Constants.BROCAST_LOGIN);
-            sendBroadcast(intent);
+            sendBroadcast(intent1);
         }
     }
 
