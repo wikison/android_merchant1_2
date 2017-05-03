@@ -1,10 +1,7 @@
 package com.zemult.merchant.activity.slash;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,19 +14,19 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.slash.CommentsListRequest;
+import com.zemult.merchant.aip.slash.User2SaleUserCommentSetReadRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Comment;
 import com.zemult.merchant.model.apimodel.APIM_ManagerNewsCommentList;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -45,13 +42,17 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
     CommentsListRequest commentsListRequest;
+    User2SaleUserCommentSetReadRequest user2SaleUserCommentSetReadRequest;
     List<M_Comment> mDatas = new ArrayList<M_Comment>();
     CommonAdapter commonAdapter;
     private int page = 1;
     int saleUserId;
     int merchantId;
+    int newCommentNum;
     public static final String INTENT_SALEUSERID = "saleUserId";
     public static final String INTENT_MERCHANTID = "merchantId";
+    public static final String INTENT_NEW_COMMENT_NUM = "newCommentNum";
+
 
     private Context mContext;
 
@@ -66,6 +67,7 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
         mContext = this;
         saleUserId = getIntent().getIntExtra(INTENT_SALEUSERID, 0);
         merchantId = getIntent().getIntExtra(INTENT_MERCHANTID, 0);
+        newCommentNum = getIntent().getIntExtra(INTENT_NEW_COMMENT_NUM, 0);
         commentLv.setRefreshEnable(true);
         commentLv.setLoadMoreEnable(false);
         commentLv.setSmoothListViewListener(this);
@@ -99,6 +101,9 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
             public void onResponse(Object response) {
                 dismissPd();
                 if (((APIM_ManagerNewsCommentList) response).status == 1) {
+                    if (newCommentNum > 0) {
+                        setCommentHasRead();
+                    }
                     if (page == 1) {
                         mDatas = ((APIM_ManagerNewsCommentList) response).commentList;
                         if (mDatas == null || mDatas.size() == 0) {
@@ -153,6 +158,7 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
                         commentLv.setLoadMoreEnable(true);
                         page++;
                     }
+
                 } else {
                     ToastUtils.show(ServiceCommentActivity.this, ((APIM_ManagerNewsCommentList) response).info);
                 }
@@ -168,11 +174,39 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
     }
 
 
+    private void setCommentHasRead() {
+        if (user2SaleUserCommentSetReadRequest != null) {
+            user2SaleUserCommentSetReadRequest.cancel();
+        }
+        User2SaleUserCommentSetReadRequest.Input input = new User2SaleUserCommentSetReadRequest.Input();
+        input.saleUserId = saleUserId;
+        input.merchantId = merchantId;
+
+        input.convertJosn();
+        user2SaleUserCommentSetReadRequest = new User2SaleUserCommentSetReadRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                } else {
+                    ToastUtils.show(ServiceCommentActivity.this, ((CommonResult) response).info);
+                }
+
+            }
+        });
+        sendJsonRequest(user2SaleUserCommentSetReadRequest);
+
+
+    }
+
+
     @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
-
             case R.id.ll_back:
                 onBackPressed();
                 break;
@@ -189,5 +223,13 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
     public void onLoadMore() {
         commentsList();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (newCommentNum > 0) {
+            setResult(RESULT_OK);
+        }
+        super.onBackPressed();
     }
 }
