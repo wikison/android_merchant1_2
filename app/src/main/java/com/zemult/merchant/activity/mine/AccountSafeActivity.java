@@ -287,7 +287,7 @@ public class AccountSafeActivity extends BaseActivity {
     private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            user_band_wx( data.get("openid"), data.get("nickname"), data.get("headimgurl"));
+            user_band_wx( data.get("unionid"), data.get("nickname"), data.get("headimgurl"));
         }
 
         @Override
