@@ -109,7 +109,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     M_Reservation mReservation;
     protected ImageManager mImageManager;
     UserReservationInfoRequest userReservationInfoRequest;
-    int  merchantReviewstatus,planId,CHOOSEPLAN=101;
+    int merchantReviewstatus, planId, CHOOSEPLAN = 101;
 
     @Override
     public void setContentView() {
@@ -136,8 +136,8 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_DISABLE_PLAN.equals(intent.getAction())) {
-            if(intent.getIntExtra("planId",0)==planId&&0==intent.getIntExtra("state",0)){
-                planId=0;
+            if (intent.getIntExtra("planId", 0) == planId && 0 == intent.getIntExtra("state", 0)) {
+                planId = 0;
                 bespekPlan.setText("选择服务方案");
             }
 
@@ -195,13 +195,19 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                             break;
                         case 1:
                             tvState.setText("已确定");
+
+                            if (mReservation.isComment == 1) {
+                                recomBtn.setVisibility(View.GONE);
+                            } else {
+                                recomBtn.setVisibility(View.VISIBLE);
+                            }
+
                             if (mReservation.merchantReviewstatus == 2) {
                                 //商家审核状态(0未审核,1待审核,2审核通过)
                                 success1Ll.setVisibility(View.VISIBLE);
                                 tvRight.setVisibility(View.VISIBLE);
                                 tvRight.setText("快捷买单");
                                 tvDingjinSuccess.setText("￥" + (mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
-
                             } else {
                                 success2Ll.setVisibility(View.VISIBLE);
                             }
@@ -233,7 +239,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back,R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right})
+    @OnClick({R.id.lh_btn_back, R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -243,7 +249,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
-                planintent.putExtra("choosePlan",true);
+                planintent.putExtra("choosePlan", true);
                 startActivity(planintent);
                 break;
             case R.id.lookorder_btn:
