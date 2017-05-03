@@ -90,9 +90,10 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
                 R.layout.activity_new_service_plan, null);
         ButterKnife.bind(this, appView);
         appMainView.addView(appView, layoutParams);
-
-        EditFilter.WordFilter(etContent, 100, tvContentLength);
         EditFilter.WordFilter(etTitle, 15, tvTitleLength);
+        EditFilter.WordFilter(etContent, 100, tvContentLength);
+
+
     }
 
     @Override
@@ -132,7 +133,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
                 if (((APIM_PlanInfo) response).status == 1) {
                     M_Plan plan = ((APIM_PlanInfo) response).planInfo;
                     etTitle.setText(plan.name);
-                    etContent.setText(plan.note);
+                    etContent.setText(plan.note.replace("[回车]", "\n"));
                     if (plan.state == 0)
                         scOpen.setChecked(false);
                     else
@@ -241,7 +242,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
         input.merchantId = merchantId;
         input.state = scOpen.isChecked() ? 1 : 0;
         input.name = etTitle.getText().toString().trim();
-        input.note = etContent.getText().toString().trim();
+        input.note = etContent.getText().toString().trim().replace("\n", "[回车]");
 
         for (int i = 0; i < ossImgnameList.size(); i++) {
             input.pics += ossImgnameList.get(i) + ",";
@@ -284,7 +285,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
         input.planId = planId;
         input.state = scOpen.isChecked() ? 1 : 0;
         input.name = etTitle.getText().toString().trim();
-        input.note = etContent.getText().toString().trim();
+        input.note = etContent.getText().toString().trim().replace("\n", "[回车]");
 
         for (int i = 0; i < photos.size(); i++) {
             if(photos.get(i).startsWith("http://")){

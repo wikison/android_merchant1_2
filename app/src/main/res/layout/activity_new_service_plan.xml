@@ -40,7 +40,10 @@
                 android:textColorHint="@color/font_black_999"
                 android:textColor="@color/font_black_28"
                 android:textSize="@dimen/font_30px"
-                android:maxLength="15"/>
+                android:maxLength="15"
+                android:singleLine="true"
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
             <TextView
                 style="@style/text_15_black_28"
                 android:id="@+id/tv_title_length"
@@ -77,6 +80,7 @@
                 android:background="@color/transparent"
                 android:hint="方案内容..."
                 android:scrollHorizontally="true"
+                android:inputType="textMultiLine"
                 android:maxLength="100"/>
 
             <TextView

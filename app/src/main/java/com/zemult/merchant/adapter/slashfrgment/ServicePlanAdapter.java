@@ -78,7 +78,7 @@ public class ServicePlanAdapter extends BaseListAdapter<M_Plan> {
             holder.tvName.setText(plan.name);
         // 内容
         if (!StringUtils.isBlank(plan.note)){
-            holder.tvContent.setText(plan.note);
+            holder.tvContent.setText(plan.note.replace("[回车]", "\n"));
             holder.tvContent.setVisibility(View.VISIBLE);
         } else
             holder.tvContent.setVisibility(View.GONE);
