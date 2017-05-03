@@ -283,12 +283,55 @@
             </LinearLayout>
 
 
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rl_plan"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2"
+                >
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    style="@style/text_15_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="服务方案"
+                    />
+
+
+                <TextView
+                    android:id="@+id/bespek_plan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:drawablePadding="10dp"
+                    android:maxWidth="250dp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:drawableRight="@mipmap/right_btn"
+                    android:text="------"
+                    android:textColor="#999999"
+                    />
+
+            </RelativeLayout>
+
+
+            <View
+                style="@style/divider1dp"/>
+
             <LinearLayout
                 android:id="@+id/success1_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+               >
 
                 <RelativeLayout
                     android:layout_width="match_parent"

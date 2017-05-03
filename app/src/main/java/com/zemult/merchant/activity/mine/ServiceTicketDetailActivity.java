@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +18,9 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
+import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
-import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
@@ -32,6 +33,7 @@ import com.zemult.merchant.util.SlashHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -98,11 +100,16 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     String reservationId = "";
     @Bind(R.id.tv_right)
     TextView tvRight;
+    @Bind(R.id.bespek_plan)
+    TextView bespekPlan;
+    @Bind(R.id.rl_plan)
+    RelativeLayout rlPlan;
     private Context mContext;
     private Activity mActivity;
     M_Reservation mReservation;
     protected ImageManager mImageManager;
     UserReservationInfoRequest userReservationInfoRequest;
+    int  merchantReviewstatus,planId,CHOOSEPLAN=101;
 
     @Override
     public void setContentView() {
@@ -119,6 +126,25 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         userReservationInfo();
 
     }
+
+    //接收广播回调
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_DISABLE_PLAN.equals(intent.getAction())) {
+            if(intent.getIntExtra("planId",0)==planId&&0==intent.getIntExtra("state",0)){
+                planId=0;
+                bespekPlan.setText("选择服务方案");
+            }
+
+
+        }
+    }
+
 
     private void userReservationInfo() {
         showPd();
@@ -148,6 +174,16 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(mReservation.saleUserHead)) {
                         mImageManager.loadCircleImage(mReservation.saleUserHead, headIv);
                     }
+
+                    if (!StringUtils.isBlank(mReservation.planName)) {
+                        planId = mReservation.planId;
+                        bespekPlan.setText(mReservation.planName);
+                        rlPlan.setVisibility(View.VISIBLE);
+                    } else {
+                        rlPlan.setVisibility(View.GONE);
+                    }
+
+
                     nameTv.setText(mReservation.saleUserName);
                     shopTv.setText(mReservation.merchantName);
                     tvTime.setText(mReservation.reservationTime);
@@ -164,7 +200,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                                 success1Ll.setVisibility(View.VISIBLE);
                                 tvRight.setVisibility(View.VISIBLE);
                                 tvRight.setText("快捷买单");
-                                tvDingjinSuccess.setText("￥" +(mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
+                                tvDingjinSuccess.setText("￥" + (mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
 
                             } else {
                                 success2Ll.setVisibility(View.VISIBLE);
@@ -173,8 +209,8 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         case 2:
                             havepayedLl.setVisibility(View.VISIBLE);
                             tvState.setText("已支付");
-                            tvDingjinHaved.setText("￥" + (mReservation.reservationMoney == 0 ? "0" :Convert.getMoneyString(mReservation.reservationMoney)));
-                            realmoneyTv.setText("￥" +(mReservation.userPayMoney == 0 ? "0" : Convert.getMoneyString(mReservation.userPayMoney)));
+                            tvDingjinHaved.setText("￥" + (mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
+                            realmoneyTv.setText("￥" + (mReservation.userPayMoney == 0 ? "0" : Convert.getMoneyString(mReservation.userPayMoney)));
                             ordernumTv.setText("" + mReservation.userPayNumber);
                             break;
                         case 3:
@@ -182,7 +218,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         case 4:
                             tvState.setText("已结束");
                             finishedLl.setVisibility(View.VISIBLE);
-                            tvRedingjinFinished.setText("￥" + (mReservation.reservationMoney == 0 ? "0" :Convert.getMoneyString(mReservation.reservationMoney)));
+                            tvRedingjinFinished.setText("￥" + (mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
                             break;
                     }
 
@@ -197,13 +233,18 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right})
+    @OnClick({R.id.lh_btn_back,R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
 
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.rl_plan:
+                Intent planintent = new Intent(this, ServicePlanActivity.class);//
+                planintent.putExtra("choosePlan",true);
+                startActivity(planintent);
                 break;
             case R.id.lookorder_btn:
                 IntentUtil.intStart_activity(this,
@@ -238,7 +279,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
         intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
         intent2.putExtra("managerhead", mReservation.saleUserHead);
-        intent2.putExtra("managername",mReservation.saleUserName);
+        intent2.putExtra("managername", mReservation.saleUserName);
         intent2.putExtra("merchantName", mReservation.merchantName);
         if (!TextUtils.isEmpty(reservationId))
             intent2.putExtra("reservationId", Integer.valueOf(reservationId));
@@ -275,6 +316,10 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
 
-
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
