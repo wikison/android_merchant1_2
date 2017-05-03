@@ -362,7 +362,7 @@ public class LoginActivity extends BaseActivity {
     private UMAuthListener getPlatformInfoListener = new UMAuthListener() {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            user_wx_band_user(data.get("openid"), data.get("nickname"), data.get("headimgurl"));
+            user_wx_band_user(data.get("unionid"), data.get("nickname"), data.get("headimgurl"));
         }
 
         @Override
