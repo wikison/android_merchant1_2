@@ -146,16 +146,26 @@
         android:text="*密码长度6~20位, 密码不能为纯数字"/>
 
     <Button
-        android:id="@+id/btn_next"
-        android:layout_width="@dimen/common_btn_width_235"
-        android:layout_height="@dimen/common_btn_height_35"
+        android:id="@+id/btn_login"
+        style="@style/text_15_white"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/common_selector_btn"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/next_bg_btn_select"
         android:gravity="center"
-        android:text="@string/register_and_login"
-        android:textColor="@color/white"
-        android:textSize="18sp"/>
+        android:text="我是消费者,仅注册并登录"/>
+
+    <Button
+        android:id="@+id/btn_be_manager"
+        style="@style/text_15_black_999"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/next_bg_btn_select2"
+        android:gravity="center"
+        android:text="我是服务者,同时注册服务管家"/>
 
 
     <LinearLayout

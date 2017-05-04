@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -230,7 +228,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         AndPermission.with(this)
                 .requestCode(100)
                 .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .send();
+                .callback(this)
+                .start();
     }
 
     @PermissionYes(100)
@@ -240,11 +239,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @PermissionNo(100)
     private void getWriteNo() {
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 
     @Override

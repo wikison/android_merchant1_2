@@ -24,8 +24,10 @@ import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
+import com.zemult.merchant.aip.common.User2SaleUserLoginRequest;
 import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserRegisterRequest;
@@ -85,8 +87,10 @@ public class RegisterActivity extends BaseActivity {
     EditText etPwd;
     @Bind(R.id.cb_look_pwd)
     CheckBox cbLookPwd;
-    @Bind(R.id.btn_next)
-    Button btnNext;
+    @Bind(R.id.btn_login)
+    Button btnLogin;
+    @Bind(R.id.btn_be_manager)
+    Button btnBeManager;
     @Bind(R.id.cb_agree)
     CheckBox cbAgree;
     @Bind(R.id.tv_protocol)
@@ -102,6 +106,7 @@ public class RegisterActivity extends BaseActivity {
     UserRegisterRequest userRegisterRequest;
     UserLoginRequest userLoginRequest;
     int from;
+    int registerType = 0;
 
     @Override
     public void setContentView() {
@@ -125,8 +130,8 @@ public class RegisterActivity extends BaseActivity {
         lhTvTitle.setText(getResources().getString(R.string.btn_register));
         cbAgree.setChecked(true);
 
-        btnNext.setEnabled(false);
-        btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);
+        btnLogin.setEnabled(false);
+        btnBeManager.setEnabled(false);
         etPhone.addTextChangedListener(watcher);
         etCode.addTextChangedListener(watcher);
         etPwd.addTextChangedListener(watcher);
@@ -144,12 +149,18 @@ public class RegisterActivity extends BaseActivity {
             if (etCode.getText().toString().length() > 0
                     && etPhone.getText().toString().length() == 11
                     && etPwd.getText().toString().length() >= 6) {
-                btnNext.setEnabled(true);
-                btnNext.setBackgroundResource(R.drawable.common_selector_btn);
+                btnLogin.setEnabled(true);
+                btnLogin.setBackgroundResource(R.drawable.common_selector_btn);
+                btnBeManager.setEnabled(true);
+                btnBeManager.setBackgroundResource(R.drawable.common_selector_btn2);
+                btnBeManager.setTextColor(0xffd6a864);
 
             } else {
-                btnNext.setEnabled(false);
-                btnNext.setBackgroundResource(R.drawable.next_bg_btn_select);
+                btnLogin.setEnabled(false);
+                btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
+                btnBeManager.setEnabled(false);
+                btnBeManager.setBackgroundResource(R.drawable.next_bg_btn_select2);
+                btnBeManager.setTextColor(0xff999999);
             }
         }
 
@@ -316,7 +327,7 @@ public class RegisterActivity extends BaseActivity {
             UserRegisterRequest.Input input = new UserRegisterRequest.Input();
             input.phone = strPhone;
             input.password = DigestUtils.md5(strPwd).toUpperCase();
-            input.name = "nc" + strPhone;
+            input.name = "nc" + strPhone.substring(7);
             input.convertJosn();
 
             userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {
@@ -376,9 +387,12 @@ public class RegisterActivity extends BaseActivity {
                             setResult(RESULT_OK);
                             ToastUtil.showMessage("注册成功");
                             Intent intent = new Intent(Constants.BROCAST_LOGIN);
-                            intent.putExtra("from_register", 1);
                             sendBroadcast(intent);
+                            if (registerType == 1) {
+                                user2SaleUserLogin();
+                            }
                             finish();
+
                         }
 
                         @Override
@@ -405,6 +419,37 @@ public class RegisterActivity extends BaseActivity {
             }
         });
         sendJsonRequest(userLoginRequest);
+    }
+
+    //一键注册成为服务管家
+    User2SaleUserLoginRequest user2SaleUserLoginRequest;
+
+    private void user2SaleUserLogin() {
+        if (user2SaleUserLoginRequest != null) {
+            user2SaleUserLoginRequest.cancel();
+        }
+        User2SaleUserLoginRequest.Input input = new User2SaleUserLoginRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+        }
+        input.convertJosn();
+        user2SaleUserLoginRequest = new User2SaleUserLoginRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    Intent intent = new Intent(RegisterActivity.this, SelfUserDetailActivity.class);
+                    intent.putExtra("user_sale_login", 1);
+                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                    startActivity(intent);
+                }
+            }
+        });
+        sendJsonRequest(user2SaleUserLoginRequest);
     }
 
     // 倒计时60s
@@ -458,7 +503,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.tv_sendcode, R.id.btn_next, R.id.tv_protocol, R.id.tv_not_now})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.tv_sendcode, R.id.btn_login, R.id.btn_be_manager, R.id.tv_protocol, R.id.tv_not_now})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -468,7 +513,12 @@ public class RegisterActivity extends BaseActivity {
             case R.id.tv_sendcode:
                 onBtnCodeClick();
                 break;
-            case R.id.btn_next:
+            case R.id.btn_login:
+                registerType = 0;
+                onBtnRegisterClick();
+                break;
+            case R.id.btn_be_manager:
+                registerType = 1;
                 onBtnRegisterClick();
                 break;
             case R.id.tv_protocol:

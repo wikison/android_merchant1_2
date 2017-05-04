@@ -44,7 +44,6 @@ import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
 import com.zemult.merchant.activity.slash.PreInviteActivity;
-import com.zemult.merchant.activity.slash.NewServicePlanActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.activity.slash.User2FirstSaleUserRequest;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
@@ -126,7 +125,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private HeaderHomeView headerHomeView;
     private HomePresenter homePresenter;
     private DBManager dbManager;
-    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 130, tvHeight = 38, meHeight,noDataViewHeight, page = 1;
+    private int titleHeight = 44, bottomHeight = 50, adHeight = 194, tabHeight = 130, tvHeight = 38, meHeight, noDataViewHeight, page = 1;
     private float mTopViewHeight, fraction, headerTopMargin, headerTopHeight;
     private boolean showRedDot;
     private AllIndustryAdapter industryAdapter;
@@ -235,7 +234,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         smoothListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(mAdapter.isNoData())
+                if (mAdapter.isNoData())
                     return;
 
                 int userId = mAdapter.getItem(position - 2).saleUserId;
@@ -291,7 +290,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                     rllSearchBg.getDelegate().setBackgroundColor(ColorUtil.getNewColorByStartEndColor(mContext, fraction, R.color.half_transparent_white, R.color.white));
 
                     //吸顶效果
-                    if(headerHomeView.showMe())
+                    if (headerHomeView.showMe())
                         meHeight = 86;
                     else
                         meHeight = 0;
@@ -449,7 +448,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private void getNetworkData() {
         common_getadvertList(); // 获取广告
         common_firstpage_industryList(); // 获取所有行业分类
-        if(SlashHelper.userManager().getUserId() != 0)
+        if (SlashHelper.userManager().getUserId() != 0)
             user2_first_saleUser();
         onRefresh();
     }
@@ -461,10 +460,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
-            if(SlashHelper.userManager().getUserId() != 0)
+            if (SlashHelper.userManager().getUserId() != 0)
                 user2_first_saleUser();
             onRefresh();
-        }else if(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())){
+        } else if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             user2_first_saleUser();
         }
     }
@@ -572,7 +571,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                 if (((CommonResult) response).status == 1) {
                     CommonResult result = (CommonResult) response;
                     M_Merchant myMerchant = null;
-                    if(result.isSaleUser == 1){
+                    if (result.isSaleUser == 1) {
                         myMerchant = new M_Merchant();
                         myMerchant.setName(result.name);
                         myMerchant.setSaleUserId(result.saleUserId);
@@ -709,7 +708,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         AndPermission.with(this)
                 .requestCode(100)
                 .permission(Manifest.permission.CAMERA)
-                .send();
+                .callback(this)
+                .start();
     }
 
     @PermissionYes(100)
@@ -728,7 +728,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         AndPermission.with(this)
                 .requestCode(101)
                 .permission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .send();
+                .callback(this)
+                .start();
     }
 
     @PermissionYes(101)
@@ -745,10 +746,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         tvCity.setText(c.getName());
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-//    }
 
     public void scrollToTop() {
         smoothListView.setSelection(0);
