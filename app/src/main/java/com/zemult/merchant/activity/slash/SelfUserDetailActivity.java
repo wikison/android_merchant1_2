@@ -235,7 +235,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "客户关注");
 
         if (fromSaleLogin == 1) {
-            MMAlert.showConfirmDialog(mContext, "服务管家注册成功", getResources().getString(R.string.one_key_service_success), "我知道了", new MMAlert.OneOperateCallback() {
+            MMAlert.showMultiConfirmDialog(mContext, "服务管家注册成功", getResources().getString(R.string.one_key_service_success), "我知道了", new MMAlert.OneOperateCallback() {
                 @Override
                 public void onOneOperate() {
 

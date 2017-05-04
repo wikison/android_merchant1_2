@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/transparent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="50dp">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/aliceblue"
+        app:rv_cornerRadius="8dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="标题"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_32px"/>
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_12dp"
+            android:text="恭喜您申请成功"
+            android:textColor="@color/font_black_28"
+            android:textSize="@dimen/font_28px"/>
+
+        <View style="@style/divider"/>
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#007aff"
+            android:textSize="@dimen/font_34px"
+            android:textStyle="bold"/>
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+
+</LinearLayout>
