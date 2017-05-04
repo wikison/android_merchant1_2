@@ -628,8 +628,9 @@
         <activity android:name=".activity.slash.ServiceCommentActivity" />
         <activity
             android:name=".activity.slash.NewServicePlanActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"  />
-        <activity android:name=".activity.slash.ServicePlanActivity"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.slash.ServicePlanActivity" />
+        <activity android:name=".activity.mine.ThirdBandPhoneSetPwdActivity"></activity>
     </application>
 
 </manifest>

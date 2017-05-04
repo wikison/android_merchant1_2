@@ -1,11 +1,14 @@
 package com.zemult.merchant.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +57,6 @@ import zema.volley.network.ResponseListener;
 public class LoginActivity extends BaseActivity {
 
     private static final int REQ_FIND_PWD = 0x110;
-    private static final int REQ_THIRD_LOGIN = 0x120;
     @Bind(R.id.al_et_name)
     EditText etName;
     @Bind(R.id.al_et_pwd)
@@ -98,6 +100,17 @@ public class LoginActivity extends BaseActivity {
 
 
     @Override
+    protected void handleReceiver(Context context, Intent intent) {
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
+            finish();
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -105,8 +118,6 @@ public class LoginActivity extends BaseActivity {
                 etName.setText(data.getStringExtra("phone"));
                 etPwd.setText(data.getStringExtra("password"));
                 login();
-            } else if (requestCode == REQ_THIRD_LOGIN) {
-                finish();
             }
         }
         umShareAPI.onActivityResult(requestCode, resultCode, data);
@@ -123,6 +134,7 @@ public class LoginActivity extends BaseActivity {
         from=getIntent().getIntExtra("guide_login",0);
         loginHelper = LoginSampleHelper.getInstance();
         umShareAPI = UMShareAPI.get(this);
+        registerReceiver(new String[]{Constants.BROCAST_LOGIN});
     }
 
     private void initViews() {
@@ -404,7 +416,7 @@ public class LoginActivity extends BaseActivity {
                         intent.putExtra("nickname", nickname);
                         intent.putExtra("head", head);
                         intent.putExtra("openid", openid);
-                        startActivityForResult(intent, REQ_THIRD_LOGIN);
+                        startActivity(intent);
                     } else {
                         // 直接获取信息
                         user_get_pwd(((CommonResult) response).userId);
