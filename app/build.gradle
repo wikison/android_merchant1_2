@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 
-def releaseTime() {
+def static releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
@@ -15,8 +15,8 @@ allprojects {
 
 android {
     useLibrary 'org.apache.http.legacy'
-    compileSdkVersion 23
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.3'
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
 
@@ -25,10 +25,10 @@ android {
         multiDexEnabled true
         applicationId "com.zemult.merchant"
         minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 8
-        versionName "2.1"
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.1", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
+        targetSdkVersion 25
+        versionCode 9
+        versionName "2.1.1"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.1.1", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
 
     signingConfigs {
@@ -82,7 +82,7 @@ android {
 
 
     productFlavors {
-//        d00 {}//泽马
+        d00 {}//泽马
 //        d01 {}//华为
 //        d02 {}//OPPO
 //        d03 {}//小米
@@ -93,7 +93,7 @@ android {
 //        d08 {}//海信
 //        d09 {}//联想
 //        d10 {}//百度
-        d11 {}//360
+//        d11 {}//360
 //        d12 {}//应用宝
     }
 
@@ -177,7 +177,7 @@ dependencies {
 
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.belerweb:pinyin4j:2.5.0'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0'
@@ -187,10 +187,10 @@ dependencies {
     compile 'cn.trinea.android.common:trinea-android-common:4.2.15'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
     compile 'com.wang.avi:library:1.0.0'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'
@@ -198,7 +198,7 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     compile 'in.srain.cube:grid-view-with-header-footer:1.0.12'
     compile 'co.lujun:androidtagview:1.0.3'
-    compile 'com.yanzhenjie:permission:1.0.5'
+    compile 'com.yanzhenjie:permission:1.0.7'
     compile 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.bugtags.library:bugtags-lib:latest.integration'
     compile 'com.alibaba.mobileim:IMCore:2.0.2.1@aar'

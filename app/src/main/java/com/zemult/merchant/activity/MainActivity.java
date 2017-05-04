@@ -39,7 +39,6 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.common.UmLog;
 import com.umeng.message.common.UmengMessageDeviceConfig;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.aip.common.User2SaleUserLoginRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.aip.mine.UserMessageAllNumUnread_1_2Request;
@@ -62,7 +61,6 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 import com.zemult.merchant.view.SlashMenuWindow;
-import com.zemult.merchant.view.common.CommonDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -227,22 +225,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
             initIM();
             exitRefresh("relogin");
-            if (intent.getIntExtra("from_register", 0) == 1) {
-                CommonDialog.showDialogListener(context, "一键注册服务管家", "暂不要", "一键注册", getResources().getString(R.string.one_key_service), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-                        //调用一键注册服务管家接口
-                        user2SaleUserLogin();
-                    }
-                });
-            }
         }
         if (Constants.BROCAST_CLOSE_ACTIVITY_FORLABEL.equals(intent.getAction())) {
             mSlashMenuWindow.dismiss();
@@ -254,35 +236,6 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
 
         }
 
-    }
-
-    //一键注册成为服务管家
-    private void user2SaleUserLogin() {
-        if (user2SaleUserLoginRequest != null) {
-            user2SaleUserLoginRequest.cancel();
-        }
-        User2SaleUserLoginRequest.Input input = new User2SaleUserLoginRequest.Input();
-        if (SlashHelper.userManager().getUserinfo() != null) {
-            input.userId = SlashHelper.userManager().getUserId();
-        }
-        input.convertJosn();
-        user2SaleUserLoginRequest = new User2SaleUserLoginRequest(input, new ResponseListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-            @Override
-            public void onResponse(Object response) {
-                if (((CommonResult) response).status == 1) {
-                    Intent intent = new Intent(MainActivity.this, SelfUserDetailActivity.class);
-                    intent.putExtra("user_sale_login", 1);
-                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
-                    startActivity(intent);
-                }
-            }
-        });
-        sendJsonRequest(user2SaleUserLoginRequest);
     }
 
     /**

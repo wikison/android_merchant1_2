@@ -33,11 +33,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
-import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.ImageManager;
-//import com.nostra13.universalimageloader.core.DisplayImageOptions;
-//import com.nostra13.universalimageloader.core.ImageLoader;
-//import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -45,6 +41,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+//import com.nostra13.universalimageloader.core.DisplayImageOptions;
+//import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class SelectPictureActivity extends Activity {
 
@@ -66,7 +66,7 @@ public class SelectPictureActivity extends Activity {
     private HashMap<String, Integer> tmpDir = new HashMap<String, Integer>();
     private ArrayList<ImageFloder> mDirPaths = new ArrayList<ImageFloder>();
 
-//    private ImageLoader loader;
+    //    private ImageLoader loader;
 //    private DisplayImageOptions options;
     private ContentResolver mContentResolver;
     private Button btn_select, btn_ok;
@@ -80,6 +80,7 @@ public class SelectPictureActivity extends Activity {
     private ArrayList<String> selectedPicture = new ArrayList<String>();
     private String cameraPath = null;
     ImageManager imageManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +88,14 @@ public class SelectPictureActivity extends Activity {
         setContentView(R.layout.activity_select_picture);
         MAX_NUM = getIntent().getIntExtra(INTENT_MAX_NUM, 9);
         context = this;
-        imageManager=new ImageManager(context);
+        imageManager = new ImageManager(context);
         mContentResolver = getContentResolver();
 //        loader = ImageLoader.getInstance();
 //        options = new DisplayImageOptions.Builder().showImageOnLoading(R.mipmap.ic_loading)
 //                .showImageForEmptyUri(R.mipmap.ic_loading).showImageOnFail(R.mipmap.ic_loading)
 //                .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true)
 //                .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
-        bottom=(RelativeLayout)findViewById(R.id.bottom);
+        bottom = (RelativeLayout) findViewById(R.id.bottom);
         bottom.setAlpha(96);
         initView();
     }
@@ -137,15 +138,15 @@ public class SelectPictureActivity extends Activity {
 
     /**
      * 点击完成按钮
-     * 
+     *
+     * @param v
      * @version 1.0
      * @author zyh
-     * @param v
      */
     public void ok(View v) {
         Intent data = new Intent();
-        for(int i =0;i<selectedPicture.size();i++){
-        	selectedPicture.set(i, selectedPicture.get(i));
+        for (int i = 0; i < selectedPicture.size(); i++) {
+            selectedPicture.set(i, selectedPicture.get(i));
         }
         data.putExtra(INTENT_SELECTED_PICTURE, selectedPicture);
         setResult(RESULT_OK, data);
@@ -159,7 +160,7 @@ public class SelectPictureActivity extends Activity {
         mDirPaths.add(imageAll);
         btn_ok = (Button) findViewById(R.id.btn_ok);
         btn_select = (Button) findViewById(R.id.btn_select);
-        btn_ok.setText("完成   (0/" + MAX_NUM+")");
+        btn_ok.setText("完成   (0/" + MAX_NUM + ")");
 
         gridview = (GridView) findViewById(R.id.gridview);
         adapter = new PictureAdapter();
@@ -193,7 +194,7 @@ public class SelectPictureActivity extends Activity {
 
     /**
      * 使用相机拍照
-     * 
+     *
      * @version 1.0
      * @author zyh
      */
@@ -218,7 +219,8 @@ public class SelectPictureActivity extends Activity {
         AndPermission.with(this)
                 .requestCode(100)
                 .permission(Manifest.permission.CAMERA)
-                .send();
+                .callback(this)
+                .start();
     }
 
     @PermissionYes(100)
@@ -237,10 +239,10 @@ public class SelectPictureActivity extends Activity {
 
     /**
      * 用于拍照时获取输出的Uri
-     * 
+     *
+     * @return
      * @version 1.0
      * @author zyh
-     * @return
      */
     protected Uri getOutputMediaFileUri() {
         File mediaStorageDir = new File(
@@ -324,8 +326,8 @@ public class SelectPictureActivity extends Activity {
                         } else {
                             selectedPicture.add(item.path);
                         }
-                        btn_ok.setEnabled(selectedPicture.size()>0);
-                        btn_ok.setText("完成   (" + selectedPicture.size() + "/" + MAX_NUM+")");
+                        btn_ok.setEnabled(selectedPicture.size() > 0);
+                        btn_ok.setText("完成   (" + selectedPicture.size() + "/" + MAX_NUM + ")");
                         v.setSelected(selectedPicture.contains(item.path));
                     }
                 });
@@ -393,7 +395,7 @@ public class SelectPictureActivity extends Activity {
      */
     private void getThumbnail() {
         Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Images.ImageColumns.DATA }, "", null,
+                new String[]{MediaStore.Images.ImageColumns.DATA}, "", null,
                 MediaStore.MediaColumns.DATE_ADDED + " DESC");
         // Log.e("TAG", mCursor.getCount() + "");
         if (mCursor.moveToFirst()) {

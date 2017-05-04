@@ -192,7 +192,8 @@ public class PoiPickActivity extends Activity {
         AndPermission.with(this)
                 .requestCode(101)
                 .permission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .send();
+                .callback(this)
+                .start();
     }
 
     @PermissionYes(101)
@@ -348,10 +349,5 @@ public class PoiPickActivity extends Activity {
                 this.finish();
                 break;
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 }

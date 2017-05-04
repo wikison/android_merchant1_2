@@ -609,6 +609,44 @@ public final class MMAlert {
         return dlg;
     }
 
+    public static Dialog showMultiConfirmDialog(Context context, String title, String msg, String operate, final OneOperateCallback callback) {
+        ImageManager imageManager = new ImageManager(context);
+        final Dialog dlg = new Dialog(context, R.style.MMTheme_DataSheet);
+        dlg.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                        | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout layout = (LinearLayout) inflater.inflate(
+                R.layout.alert_dialog_multi_confirm_layout, null);
+        final int cFullFillWidth = 10000;
+        layout.setMinimumWidth(cFullFillWidth);
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
+        TextView tvMsg = (TextView) layout.findViewById(R.id.tv_msg);
+        TextView tvOk = (TextView) layout.findViewById(R.id.tv_ok);
+
+        if (!StringUtils.isBlank(title))
+            tvTitle.setText(title);
+        if (!StringUtils.isBlank(msg))
+            tvMsg.setText(msg);
+        if (!StringUtils.isBlank(operate))
+            tvOk.setText(operate);
+
+        tvOk.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                dlg.dismiss();
+                callback.onOneOperate();
+            }
+        });
+        dlg.setCanceledOnTouchOutside(false);
+        dlg.setContentView(layout);
+        dlg.show();
+
+        return dlg;
+    }
+
 
     public interface ChoosefromcameraCallback {
         void cameraCallback();

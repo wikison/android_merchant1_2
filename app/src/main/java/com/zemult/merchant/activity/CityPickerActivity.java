@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -264,7 +263,8 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
                 .requestCode(100)
                 .permission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .rationale(rationaleListener)
-                .send();
+                .callback(this)
+                .start();
     }
 
     private RationaleListener rationaleListener = new RationaleListener() {
@@ -302,8 +302,4 @@ public class CityPickerActivity extends AppCompatActivity implements View.OnClic
         Toast.makeText(this, "获取定位权限失败", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
 }

@@ -134,7 +134,7 @@ public class SearchLocationActivity extends BaseActivity {
             aMapLocationList.clear();
             searchLocateAdapter.notifyDataSetChanged();
         }
-        poiQuery = new PoiSearch.Query(text, "商务住宅|宾馆酒店|综合医院|运动场馆", cityCode);
+        poiQuery = new PoiSearch.Query(text, "商务住宅|宾馆酒店|综合医院|运动场馆|地名地址信息", cityCode);
         poiQuery.setPageSize(15);
         poiQuery.setPageNum(2);
         PoiSearch poiSearch = new PoiSearch(this, poiQuery);
