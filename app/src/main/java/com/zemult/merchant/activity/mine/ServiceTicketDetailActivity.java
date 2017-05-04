@@ -140,7 +140,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 planId = 0;
                 bespekPlan.setText("选择服务方案");
             }
-
+            if(intent.getIntExtra("planId",0)==planId&&1==intent.getIntExtra("state",0)){
+                bespekPlan.setText(intent.getStringExtra("planName"));
+            }
 
         }
     }
@@ -249,6 +251,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
+                planintent.putExtra("planId",mReservation.planId);
                 planintent.putExtra("choosePlan", true);
                 startActivity(planintent);
                 break;
@@ -289,7 +292,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         intent2.putExtra("merchantName", mReservation.merchantName);
         if (!TextUtils.isEmpty(reservationId))
             intent2.putExtra("reservationId", Integer.valueOf(reservationId));
-        startActivityForResult(intent2, 2000);
+        startActivityForResult(intent2, 10002);
 
     }
 
@@ -311,7 +314,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 setResult(RESULT_OK);
                 onBackPressed();
 
-            } else if (requestCode == 2000) {
+            } else if (requestCode == 10002) {
                 userReservationInfo();
                 Intent intent = new Intent(Constants.BROCAST_REFRESH_MYSERVICETICKET);
                 intent.putExtra("userPayId", userPayId);

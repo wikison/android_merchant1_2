@@ -313,6 +313,7 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
                     ToastUtil.showMessage("修改成功");
                     Intent intent =new Intent();
                     intent.putExtra("planId",planId);
+                    intent.putExtra("planName",etTitle.getText().toString().trim());
                     intent.putExtra("state", scOpen.isChecked() ? 1 : 0);
                     setResult(RESULT_OK,intent);
                     finish();

@@ -6,9 +6,11 @@
         <layer-list>
             <item>
                 <shape>
-                    <stroke android:width="1.0dip" android:color="@color/font_black_999" android:dashWidth="4.0dip" android:dashGap="2.0dip" />
-                    <solid android:color="@color/shopcircle_bg_color" />
-                    <corners android:radius="50px"/>
+
+                    <solid android:color="@color/white" />
+                    <stroke android:width="0.5dp"
+                        android:color="@color/font_black_999" />
+                    <corners android:radius="50px" />
                 </shape>
             </item>
         </layer-list>
@@ -17,36 +19,39 @@
 
     <item android:state_selected="true">
         <shape>
-            <stroke android:width="1.0dip" android:color="#ffcc3131" />
-            <solid android:color="@color/shopcircle_bg_color" />
-            <corners android:radius="50px"/>
+            <stroke android:width="0.5dp" android:color="#ffcc3131" />
+            <solid android:color="@color/white" />
+            <corners android:radius="50px" />
         </shape>
     </item>
 
 
     <item android:state_enabled="false">
         <shape>
-
-            <solid android:color="@color/shopcircle_bg_color" />
-            <corners android:radius="50px"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/font_black_999" />
+            <solid android:color="@color/white" />
+            <corners android:radius="50px" />
         </shape>
     </item>
 
 
     <item android:state_pressed="true">
         <shape>
-
-            <solid android:color="@color/shopcircle_bg_color" />
-            <corners android:radius="50px"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/font_black_999" />
+            <solid android:color="@color/white" />
+            <corners android:radius="50px" />
         </shape>
     </item>
 
 
     <item>
         <shape>
-
-            <solid android:color="@color/shopcircle_bg_color" />
-            <corners android:radius="50px"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/font_black_999" />
+            <solid android:color="@color/white" />
+            <corners android:radius="50px" />
         </shape>
     </item>
 </selector>
