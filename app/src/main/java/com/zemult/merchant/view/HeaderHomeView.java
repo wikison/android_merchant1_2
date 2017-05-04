@@ -12,12 +12,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flyco.roundview.RoundLinearLayout;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.FindOneRecommandActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
+import com.zemult.merchant.im.CreateBespeakNewActivity;
 import com.zemult.merchant.model.M_Ad;
 import com.zemult.merchant.model.M_Industry;
 import com.zemult.merchant.model.M_Merchant;
@@ -62,6 +64,8 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     LinearLayout llMe;
     @Bind(R.id.rl_me)
     RelativeLayout rlMe;
+    @Bind(R.id.rl_fast_order)
+    RoundLinearLayout rlFastOrder;
     private Intent it;
 
 
@@ -88,7 +92,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         headerAdViewView.fillView(advertList, llAdContainer);
     }
 
-    public void setMyInfo(M_Merchant entity) {
+    public void setMyInfo(final M_Merchant entity) {
         if (entity == null) {
             llMe.setVisibility(View.GONE);
             return;
@@ -113,6 +117,21 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
                 mContext.startActivity(it);
             }
         });
+        if(entity.isHaveInfo == 0){
+            rlFastOrder.setVisibility(View.GONE);
+        }else {
+            rlFastOrder.setVisibility(View.VISIBLE);
+            rlFastOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent cbintent = new Intent(mContext, CreateBespeakNewActivity.class);
+                    cbintent.putExtra("reviewstatus", entity.reviewstatus + "");
+                    cbintent.putExtra("merchantName", entity.name);
+                    cbintent.putExtra("merchantId", entity.merchantId + "");
+                    mContext.startActivity(cbintent);
+                }
+            });
+        }
     }
 
     public void setVpIndustrys(final List<M_Industry> industryList) {
@@ -274,7 +293,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         this.onIndustryListener = onIndustryListener;
     }
 
-    public boolean showMe(){
+    public boolean showMe() {
         return rlMe.getVisibility() == View.VISIBLE;
     }
 

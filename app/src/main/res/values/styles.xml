@@ -422,6 +422,8 @@
     </style>
 
     <style name="text_14_white">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
