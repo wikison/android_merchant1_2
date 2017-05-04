@@ -236,7 +236,7 @@ public class AssessmentActivity extends BaseActivity {
         input.userId = SlashHelper.userManager().getUserId(); // 用户id
         input.userPayId = userPayId;
         input.comment = comment;
-        input.note = etPingjia.getText().toString().trim().replace("\n", "[回车]");
+        input.note = etPingjia.getText().toString().trim();
         input.convertJosn();
         userMerchantPayCommont_1_1Request = new UserMerchantPayCommont_1_1Request(input, new ResponseListener() {
             @Override
