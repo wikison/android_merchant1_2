@@ -97,12 +97,14 @@
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             style="@style/divider"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             />
 
         <LinearLayout
+            android:visibility="gone"
             style="@style/binding_linearLayout">
 
             <TextView
@@ -145,6 +147,7 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         style="@style/text_12_black_999"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="12dp"
@@ -159,5 +162,5 @@
         android:layout_marginTop="60dp"
         android:background="@drawable/common_selector_btn"
         android:gravity="center"
-        android:text="绑定并登录"/>
+        android:text="下一步"/>
 </LinearLayout>

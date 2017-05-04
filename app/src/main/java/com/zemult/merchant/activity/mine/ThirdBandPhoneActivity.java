@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity.mine;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -34,6 +36,7 @@ import com.zemult.merchant.aip.common.UserIsRegisterRequest;
 import com.zemult.merchant.aip.common.UserLoginRequest;
 import com.zemult.merchant.aip.common.UserLoginWxRequest;
 import com.zemult.merchant.aip.common.UserRegisterRequest;
+import com.zemult.merchant.aip.common.UserWxBandPhoneRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
@@ -73,10 +76,6 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     TextView tvSendcode;
     @Bind(R.id.et_code)
     EditText etCode;
-    @Bind(R.id.et_pwd)
-    EditText etPwd;
-    @Bind(R.id.cb_look_pwd)
-    CheckBox cbLookPwd;
     @Bind(R.id.btn_bangding)
     Button btnBangding;
 
@@ -84,6 +83,17 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     private Thread mThread = null;
     private String nickname, head, openid;
     private LoginSampleHelper loginHelper;
+
+    @Override
+    protected void handleReceiver(Context context, Intent intent) {
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
+        if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
+            finish();
+        }
+    }
 
     private TextWatcher watcher = new TextWatcher() {
         @Override
@@ -94,8 +104,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (s.toString().length() > 0) {
                 if (etCode.getText().toString().length() > 0
-                        && etPhone.getText().toString().length() > 0
-                        && etPwd.getText().toString().length() > 0) {
+                        && etPhone.getText().toString().length() > 0) {
                     btnBangding.setEnabled(true);
                     btnBangding.setBackgroundResource(R.drawable.common_selector_btn);
                 }
@@ -129,21 +138,10 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
         etPhone.addTextChangedListener(watcher);
         etCode.addTextChangedListener(watcher);
-        etPwd.addTextChangedListener(watcher);
         tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
         tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
 
-        cbLookPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    etPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                else
-                    etPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-                etPwd.setSelection(etPwd.length());
-            }
-        });
+        registerReceiver(new String[]{Constants.BROCAST_LOGIN});
     }
 
     @Override
@@ -169,21 +167,12 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                         ToastUtil.showMessage("请输入正确的手机号码");
                         return;
                     }
-
                     user_band_wx_info_phone();
                 }
                 break;
             case R.id.btn_bangding:
                 if(!StringMatchUtils.isMobileNO(etPhone.getText().toString()))
                     ToastUtil.showMessage("请输入正确的手机号码");
-                if (etPwd.getText().toString().length() < 6) {
-                    ToastUtil.showMessage("密码格式错误");
-                    return;
-                }
-                if (StringMatchUtils.isAllNum(etPwd.getText().toString())) {
-                    ToastUtil.showMessage("密码格式错误");
-                    return;
-                }
 
                 checkCode();
                 break;
@@ -215,7 +204,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                         if(((CommonResult) response).isBand == 0)// 是否已经绑定了微信账号(0:否,1:是)
                             getCode();
                         else
-                            ToastUtil.showMessage("手机号码已绑定，请先解绑");
+                            ToastUtil.showMessage(((CommonResult) response).info);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
@@ -286,10 +275,9 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        user_login_wx();
+                        isRegister();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
-
                     }
                 }
             });
@@ -297,34 +285,65 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e("COMMON_CHECKCODE", e.toString());
         }
-
     }
 
-
-    //微信授权并绑定手机号登陆(注册)
-    private UserLoginWxRequest userLoginWxRequest;
-    private void user_login_wx() {
-        showUncanclePd();
+    private UserIsRegisterRequest request_user_is_register;
+    private void isRegister() {
         try {
-            if (userLoginWxRequest != null) {
-                userLoginWxRequest.cancel();
+            if (request_user_is_register != null) {
+                request_user_is_register.cancel();
             }
-            final UserLoginWxRequest.Input input = new UserLoginWxRequest.Input();
+            final UserIsRegisterRequest.Input input = new UserIsRegisterRequest.Input();
             input.phone = etPhone.getText().toString();
-            input.password = DigestUtils.md5(etPwd.getText().toString()).toUpperCase();
-            input.name = nickname;
-            input.pic = head;
-            input.openid = openid;
             input.convertJosn();
 
-            userLoginWxRequest = new UserLoginWxRequest(input, new ResponseListener() {
+            request_user_is_register = new UserIsRegisterRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    // 返回结果状态值,值为0或1.(0表示已经有该手机号；1表示新手机号码)
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        Intent intent = new Intent(ThirdBandPhoneActivity.this, ThirdBandPhoneSetPwdActivity.class);
+                        intent.putExtra("nickname", nickname);
+                        intent.putExtra("head", head);
+                        intent.putExtra("openid", openid);
+                        intent.putExtra("phone", etPhone.getText().toString());
+                        startActivity(intent);
+                    } else {
+                        user_wx_band_phone();
+                    }
+                }
+            });
+            sendJsonRequest(request_user_is_register);
+        } catch (Exception e) {
+            Log.e("USER_IS_REGISTER", e.toString());
+        }
+    }
+    //微信绑定手机号登陆(注册)
+    private UserWxBandPhoneRequest wxBandPhoneRequest;
+    private void user_wx_band_phone(){
+        showUncanclePd();
+        try {
+            if (wxBandPhoneRequest != null) {
+                wxBandPhoneRequest.cancel();
+            }
+            final UserWxBandPhoneRequest.Input input = new UserWxBandPhoneRequest.Input();
+            input.openid = openid;
+            input.phone = etPhone.getText().toString();
+            input.convertJosn();
+
+            wxBandPhoneRequest = new UserWxBandPhoneRequest(input, new ResponseListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.print(error);
                     dismissPd();
                 }
-
 
                 @Override
                 public void onResponse(Object response) {
@@ -337,7 +356,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     dismissPd();
                 }
             });
-            sendJsonRequest(userLoginWxRequest);
+            sendJsonRequest(wxBandPhoneRequest);
         } catch (Exception e) {
             Log.e("USER_REGISTER", e.toString());
         }
@@ -346,7 +365,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     //根据用户id获取密码
     private UserGetPwdRequest userGetPwdRequest;
     private void user_get_pwd(final int userId) {
-        loadingDialog.show();
+        showUncanclePd();
         if (userGetPwdRequest != null) {
             userGetPwdRequest.cancel();
         }
@@ -366,6 +385,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     M_Userinfo userInfo = new M_Userinfo();
                     userInfo.setUserId(userId);
                     userInfo.setPassword(((CommonResult) response).password);
+                    userInfo.setPhoneNum(etPhone.getText().toString());
                     UserManager.instance().saveUserinfo(userInfo);
 
                     AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
@@ -376,7 +396,6 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                             SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
                             sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
                             sendBroadcast(new Intent(Constants.BROCAST_LOGIN));
-                            setResult(RESULT_OK);
                             finish();
                         }
 

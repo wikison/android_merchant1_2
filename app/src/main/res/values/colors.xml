@@ -354,7 +354,7 @@
 
     <!--按钮正常点击不可用状态-->
     <color name="btn_normal">#E6BB7C</color>
-    <color name="btn_press">#DDC9A9</color>
+    <color name="btn_press">#d6a864</color>
     <color name="btn_unable">#E4CFB0</color>
     <color name="font_fff">#ffffff</color>
     <color name="bg_67">#676767</color>

@@ -675,6 +675,6 @@ public class Urls {
     public static String USER2_SALEUSER_INFO = "user2_saleUser_info";
     //设置服务管家的评价列表为已读
     public static String USER2_SALEUSER_COMMENT_SETREAD = "user2_saleUser_comment_setRead";
-
-
+    //手机号绑定微信并且登录
+    public static String USER_WX_BAND_PHONE = "user_wx_band_phone";
 }
