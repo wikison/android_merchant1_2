@@ -292,7 +292,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         intent2.putExtra("merchantName", mReservation.merchantName);
         if (!TextUtils.isEmpty(reservationId))
             intent2.putExtra("reservationId", Integer.valueOf(reservationId));
-        startActivityForResult(intent2, 2000);
+        startActivityForResult(intent2, 10002);
 
     }
 
@@ -314,7 +314,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 setResult(RESULT_OK);
                 onBackPressed();
 
-            } else if (requestCode == 2000) {
+            } else if (requestCode == 10002) {
                 userReservationInfo();
                 Intent intent = new Intent(Constants.BROCAST_REFRESH_MYSERVICETICKET);
                 intent.putExtra("userPayId", userPayId);
