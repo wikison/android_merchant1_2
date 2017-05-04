@@ -14,6 +14,9 @@ import android.util.Pair;
 
 import com.zemult.merchant.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -210,16 +213,29 @@ public abstract class Convert {
     }
 
     public static String pairsToJson(Pair<String, String>... pairs) {
-        String result = "";
-        result = "{";
-        for (int i = 0; i < pairs.length; i++) {
-            result += "\"" + pairs[i].first + "\"";
-            result += ":";
-            result += "\"" + pairs[i].second + "\"";
-            result += ",";
+//        String result = "";
+//        result = "{";
+//        for (int i = 0; i < pairs.length; i++) {
+//            result += "\"" + pairs[i].first + "\"";
+//            result += ":";
+//            result += "\"" + pairs[i].second + "\"";
+//            result += ",";
+//        }
+//        result = result.length() == 1 ? result + "}" : result.substring(0, result.length() - 1) + "}";
+//        return result;
+
+        JSONObject obj = new JSONObject();
+
+        try {
+            for (int i = 0; i < pairs.length; i++) {
+                obj.put(pairs[i].first, pairs[i].second);
+            }
+            return obj.toString();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        result = result.length() == 1 ? result + "}" : result.substring(0, result.length() - 1) + "}";
-        return result;
+        return "";
     }
 
     //加密json
