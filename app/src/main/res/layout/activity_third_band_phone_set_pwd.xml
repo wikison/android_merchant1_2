@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:src="@mipmap/phone_icon_bang"/>
+
+
+
+        <LinearLayout
+            android:layout_marginTop="46dp"
+            style="@style/binding_linearLayout">
+
+            <TextView
+                style="@style/text_15_black_28"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="密码"
+                android:textSize="15sp"/>
+
+
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请设置登录密码"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/font_black_28"
+                android:textColorHint="@color/font_black_999"
+                android:textSize="@dimen/font_30px"/>
+
+            <CheckBox
+                android:id="@+id/cb_look_pwd"
+                style="@style/CheckboxEye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:checked="false"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_12_black_999"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:text="*密码长度6~20位, 密码不能为纯数字"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/text_15_white"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/next_bg_btn_select"
+        android:gravity="center"
+        android:text="我是消费者,仅注册并登录"/>
+    <Button
+        android:id="@+id/btn_be_manager"
+        style="@style/text_15_black_999"
+        android:layout_width="250dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/next_bg_btn_select2"
+        android:gravity="center"
+        android:text="我是服务者,同时注册服务管家"/>
+
+    <TextView
+        style="@style/text_12_black_999"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="今后也可到“我的”-“我是服务管家”注册"/>
+</LinearLayout>
+
