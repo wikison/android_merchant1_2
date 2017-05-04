@@ -116,6 +116,7 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
             if(requestCode == REQ_EDIT){
                 Intent intent =new Intent(Constants.BROCAST_DISABLE_PLAN);
                 intent.putExtra("planId", data.getIntExtra("planId",0));
+                intent.putExtra("planName", data.getStringExtra("planName"));
                 intent.putExtra("state", data.getIntExtra("state",0));
                 sendBroadcast(intent);
                 use2_plan_list(false);
@@ -165,7 +166,7 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
     // 服务方案详情
     private User2PlanDelRequest planDelRequest;
 
-    private void use2_plan_del(int planId, final int pos) {
+    private void use2_plan_del(final int planId, final int pos) {
         showPd();
         if (planDelRequest != null) {
             planDelRequest.cancel();
@@ -189,6 +190,11 @@ public class ServicePlanActivity extends BaseActivity implements SmoothListView.
                         smoothListView.setVisibility(View.GONE);
                         rlNoData.setVisibility(View.VISIBLE);
                     }
+
+                    Intent intent =new Intent(Constants.BROCAST_DISABLE_PLAN);
+                    intent.putExtra("planId", planId);
+                    intent.putExtra("state", 0);
+                    sendBroadcast(intent);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);
                 }

@@ -253,7 +253,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 planId=0;
                 bespekPlan.setText("选择服务方案");
             }
-
+            if(intent.getIntExtra("planId",0)==planId&&1==intent.getIntExtra("state",0)){
+                bespekPlan.setText(intent.getStringExtra("planName"));
+            }
 
         }
     }
@@ -754,6 +756,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 if (type == 0) {//我是客户的状态下
                     //查看
                     Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
+                    planintent.putExtra("planId",mReservation.planId);
                     planintent.putExtra("choosePlan",true);
                     startActivity(planintent);
                 }
@@ -1145,7 +1148,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         if (requestCode == 10001||requestCode ==10002 ) {//赞赏-生成支付单
             userReservationInfo();
         }
-        if (requestCode == 1000 ) {//支付定金
+        if (requestCode == 1000&&RESULT_OK==resultCode ) {//支付定金
             showInviteDialog();
             userReservationInfo();
         }

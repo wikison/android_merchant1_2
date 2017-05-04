@@ -140,7 +140,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 planId = 0;
                 bespekPlan.setText("选择服务方案");
             }
-
+            if(intent.getIntExtra("planId",0)==planId&&1==intent.getIntExtra("state",0)){
+                bespekPlan.setText(intent.getStringExtra("planName"));
+            }
 
         }
     }
@@ -249,6 +251,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
+                planintent.putExtra("planId",mReservation.planId);
                 planintent.putExtra("choosePlan", true);
                 startActivity(planintent);
                 break;
