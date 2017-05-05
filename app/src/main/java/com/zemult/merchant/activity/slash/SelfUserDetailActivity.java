@@ -25,6 +25,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManInfoImproveActivity;
+import com.zemult.merchant.activity.mine.SalemanInfoSettingActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
@@ -651,7 +652,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                 break;
             case R.id.ll_my_info:
             case R.id.infoimprove_rl:
-                intent = new Intent(mActivity, SaleManInfoImproveActivity.class);
+                intent = new Intent(mActivity, SalemanInfoSettingActivity.class);
                 startActivityForResult(intent, EDIT_USER_INFO);
                 break;
             case R.id.ll_add:

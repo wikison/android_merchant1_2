@@ -357,12 +357,12 @@
     <string name="dingjin_discuss">订金如需退款请线下和商户协商</string>
     <string name="dinghaole">定好了,就立即邀请好友吧~</string>
 
-    <string name="extra_help">一个漂亮的头像和好听的昵称会帮助你更好的吸引到他人的注意哦!</string>
+    <string name="extra_help">一个漂亮的头像和好听易记的名字会吸引更多消费客户的关注</string>
     <string name="info_improve">完善个人资料,让更多消费客户关注你</string>
     <string name="toxiang">建议上传优质的真实头像</string>
     <string name="realname">建议使用真实姓名</string>
-    <string name="forfastfind">为了让曾经的客户可以快速找到你,\n请在手机权限管理中设置。</string>
-    <string name="forfastreceive">为了可以第一时间收到客户的约服需求</string>
+    <string name="forfastfind">为了让曾经的客户第一时间找到你</string>
+    <string name="forfastreceive">为了第一时间收到客户的服务需求</string>
     <string name="member_privilege">会员特权?</string>
     <string name="how_design">如何设计?</string>
 </resources>

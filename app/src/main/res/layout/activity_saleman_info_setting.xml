@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
+    android:id="@+id/ll_root"
     android:orientation="vertical"
     tools:context="com.zemult.merchant.activity.mine.SalemanInfoSettingActivity">
 
@@ -59,7 +60,7 @@
             style="@style/text_15_black_28"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:text="昵称" />
+            android:text="名字" />
 
         <TextView
             android:id="@+id/tv_name"
@@ -81,6 +82,89 @@
         android:text="@string/extra_help"
         android:textColor="@color/font_black_999"
         android:textSize="13sp" />
+
+    <RelativeLayout
+        android:id="@+id/notice_layout"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="打开系统设置"
+                android:textColor="@color/font_black_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv1"
+                android:textColor="@color/font_black_999"
+                android:layout_marginTop="6dp"
+                android:text="@string/forfastreceive" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:drawablePadding="12dp"
+            android:textColor="#E3A03E"
+            android:textSize="14sp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="去打开" />
+    </RelativeLayout>
+    <View style="@style/view1dp"></View>
+
+    <RelativeLayout
+        android:id="@+id/tongxulu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="@drawable/ripple_item_clicked2">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绑定手机通讯录"
+                android:textColor="@color/font_black_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv2"
+                android:textColor="@color/font_black_999"
+                android:layout_marginTop="6dp"
+                android:text="@string/forfastfind" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:drawablePadding="12dp"
+            android:textColor="#E3A03E"
+            android:textSize="14sp"
+            android:drawableRight="@mipmap/right_btn"
+            android:text="去设置" />
+    </RelativeLayout>
 
 
 </LinearLayout>
