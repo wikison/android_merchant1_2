@@ -144,7 +144,7 @@ public class HomeChild1_2_3Adapter extends BaseListAdapter<M_Merchant> {
                 holder.tvDistance.setText(entity.distance + "m");
         }
         // 前7日的服务分总和
-        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7));
+        holder.tvZhishu.setText("7天服务指数" + (entity.saleUserSumScore / 7) + "分");
         String strPosition = (entity.position == null ? "" : (entity.position.equals("无") ? "" : entity.position));
         holder.tvJob.setText(strPosition);
 

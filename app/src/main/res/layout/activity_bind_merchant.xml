@@ -58,9 +58,8 @@
                         android:text="管家服务"/>
 
                     <com.zemult.merchant.view.FNRadioGroup
-                        android:layout_centerVertical="true"
                         android:id="@+id/rg_ta_service"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/margin_16dp"
