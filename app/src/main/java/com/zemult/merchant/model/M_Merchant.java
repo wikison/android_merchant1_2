@@ -750,4 +750,6 @@ public class M_Merchant implements Serializable {
     public String planName; //服务方案标题
     @Expose
     public int isHaveInfo;    //	是否有商家信息(0:否,1:是，没有时商家信息字段没有值)
+    @Expose
+    public double money; // 收益账户
 }

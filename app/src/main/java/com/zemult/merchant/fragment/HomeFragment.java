@@ -587,6 +587,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         myMerchant.setSaleUserName(result.saleUserName);
                         myMerchant.setSaleUserHead(result.saleUserHead);
                         myMerchant.setSaleUserFanNum(result.saleUserFanNum);
+                        myMerchant.money = result.money;
                         myMerchant.isHaveInfo = result.isHaveInfo;
                         myMerchant.reviewstatus = result.reviewstatus;
                     }
