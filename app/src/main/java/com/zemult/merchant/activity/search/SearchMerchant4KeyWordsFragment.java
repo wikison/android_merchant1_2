@@ -9,19 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.TabManageActivity;
+import com.zemult.merchant.activity.mine.MerchantEnter2Activity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.BindMerchantActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNew4KeyWordsAdapter;
-import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
-import com.zemult.merchant.adapter.slashfrgment.HomeChildNewSimpleAdapter;
 import com.zemult.merchant.aip.mine.UserCheckSaleUser1_2_2Request;
-import com.zemult.merchant.aip.slash.Merchant2SearchListBandRequest;
 import com.zemult.merchant.aip.slash.MerchantFirstpageSearchListRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
@@ -36,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -49,10 +47,10 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
 
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
-    @Bind(R.id.rl_no_data)
-    RelativeLayout rlNoData;
     @Bind(R.id.ll_no_bind)
     LinearLayout llNoBind;
+    @Bind(R.id.tv_ruzhu)
+    TextView tvRuzhu;
 
     private MerchantFirstpageSearchListRequest request;
     private int page = 1, industryId;
@@ -62,7 +60,6 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
     private Context mContext;
 
     private String key;
-    private int iToAdd = -1;
 
     @Override
     protected void lazyLoad() {
@@ -90,7 +87,6 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
     private void initData() {
         key = getArguments().getString(SearchActivity.INTENT_KEY);
         industryId = getArguments().getInt(AllChangjingActivity.INTENT_INDUSTYR_ID, -1);
-        iToAdd = getArguments().getInt("be_service_manager", -1);
         mContext = getActivity();
     }
 
@@ -112,6 +108,8 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
                 startActivity(it);
 
 //                goTo(merchant);
+
+//                user_check_saleuser_1_2_2(merchant);
             }
         });
 //        mAdapter.setItemClickListener(new HomeChildNew4KeyWordsAdapter.ItemClickListener() {
@@ -255,14 +253,10 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
     private void fillAdapter(List<M_Merchant> list, int maxpage, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
             smoothListView.setVisibility(View.GONE);
-            if (iToAdd > 0)
-                llNoBind.setVisibility(View.VISIBLE);
-            else
-                rlNoData.setVisibility(View.VISIBLE);
+            llNoBind.setVisibility(View.VISIBLE);
 
         } else {
             smoothListView.setVisibility(View.VISIBLE);
-            rlNoData.setVisibility(View.GONE);
             llNoBind.setVisibility(View.GONE);
 
             smoothListView.setLoadMoreEnable(page < maxpage);
@@ -293,5 +287,10 @@ public class SearchMerchant4KeyWordsFragment extends BaseFragment implements Smo
         this.industryId = industryId;
         showPd();
         merchant_firstpage_search_List(false);
+    }
+
+    @OnClick(R.id.tv_ruzhu)
+    public void onClick() {
+        startActivity(new Intent(mContext, MerchantEnter2Activity.class));
     }
 }

@@ -125,6 +125,7 @@ public class MerchantAdminActivity extends BaseActivity {
 
         merchant_info();
         merchant2_saleuserList();
+        user_saleUser_info();
     }
 
     private void setSaleMerchantInfo(M_Merchant merchant) {
@@ -178,7 +179,7 @@ public class MerchantAdminActivity extends BaseActivity {
         User2SaleUserInfoRequest.Input input = new User2SaleUserInfoRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.saleUserId = SlashHelper.userManager().getUserId();
-        input.merchantId = merchantInfo.merchantId;
+        input.merchantId =merchantId;
         input.center = (String) SPUtils.get(mContext, Constants.SP_CENTER, "119.971736,31.829737");
         input.convertJosn();
         user2SaleUserInfoRequest = new User2SaleUserInfoRequest(input, new ResponseListener() {

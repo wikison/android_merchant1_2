@@ -11,7 +11,7 @@
         android:dividerHeight="0dp"
         android:scrollbars="none"/>
 
-    <include layout="@layout/item_no_search_data_layout"
+    <include layout="@layout/item_no_data_layout"
         android:visibility="gone"/>
 
     <LinearLayout
@@ -46,10 +46,22 @@
             android:layout_marginTop="12dp"
             style="@style/text_12_black_999"
             android:text="•继续尝试搜索其他商户"/>
-        <TextView
-            android:layout_marginLeft="57dp"
-            android:layout_marginTop="12dp"
-            style="@style/text_12_black_999"
-            android:text="•今后到“我的”-“我是服务管家”中再尝试搜索"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="57dp"
+                android:layout_marginTop="12dp"
+                style="@style/text_12_black_999"
+                android:text="•推荐商户上线"/>
+            <TextView
+                android:id="@+id/tv_ruzhu"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="12dp"
+                style="@style/text_12_black_999"
+                android:textColor="@color/bg_head_red"
+                android:text="立即推荐"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

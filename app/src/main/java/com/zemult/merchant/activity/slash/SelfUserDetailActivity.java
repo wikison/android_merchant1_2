@@ -665,7 +665,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                     return;
                 }
                 intent = new Intent(mActivity, SearchSimpleActivity.class);
-                intent.putExtra("be_service_manager", 1);
+//                intent.putExtra("be_service_manager", 1);
                 startActivity(intent);
 
                 break;

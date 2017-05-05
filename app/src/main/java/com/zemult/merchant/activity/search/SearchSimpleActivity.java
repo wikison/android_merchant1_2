@@ -39,9 +39,7 @@ public class SearchSimpleActivity extends BaseActivity {
     private Context mContext;
     private Activity mActivity;
     private SearchMerchantSimpleFragment merchantFragment;
-    private String key;
 
-    int iToAdd = 0;
 
 
     @Override
@@ -59,26 +57,17 @@ public class SearchSimpleActivity extends BaseActivity {
     private void initData() {
         mContext = this;
         mActivity = this;
-        key = getIntent().getStringExtra(INTENT_KEY);
-        iToAdd = getIntent().getIntExtra("be_service_manager", -1);
         searchview.setStrHint("");
-        searchview.setStrSearch(key);
 
         merchantFragment = new SearchMerchantSimpleFragment();
         Bundle bundle = new Bundle();
-        if (iToAdd == 1) {
-            llHead.setVisibility(View.VISIBLE);
-            lhTvTitle.setText("绑定商户");
-            searchview.setStrHint("搜索商户名称");
-            searchview.setTvCancelVisible(View.GONE);
-            searchview.setBgColor(0xffc1c1c1);
+        llHead.setVisibility(View.VISIBLE);
+        lhTvTitle.setText("绑定商户");
+        searchview.setStrHint("搜索商户名称");
+        searchview.setTvCancelVisible(View.GONE);
+        searchview.setBgColor(0xffc1c1c1);
 
-            bundle.putString(SearchSimpleActivity.INTENT_KEY, "");
-        } else {
-            bundle.putString(SearchSimpleActivity.INTENT_KEY, key);
-
-        }
-        bundle.putInt("be_service_manager", iToAdd);
+        bundle.putString(SearchSimpleActivity.INTENT_KEY, "");
         merchantFragment.setArguments(bundle);
 
         registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});

@@ -58,7 +58,6 @@ public class SearchMerchantSimpleFragment extends BaseFragment implements Smooth
     private Context mContext;
 
     private String key;
-    private int iToAdd = -1;
 
     @Override
     protected void lazyLoad() {
@@ -86,7 +85,6 @@ public class SearchMerchantSimpleFragment extends BaseFragment implements Smooth
     private void initData() {
         key = getArguments().getString(SearchActivity.INTENT_KEY);
         industryId = getArguments().getInt(AllChangjingActivity.INTENT_INDUSTYR_ID, -1);
-        iToAdd = getArguments().getInt("be_service_manager", -1);
         mContext = getActivity();
     }
 
@@ -250,14 +248,10 @@ public class SearchMerchantSimpleFragment extends BaseFragment implements Smooth
     private void fillAdapter(List<M_Merchant> list, int maxpage, boolean isLoadMore) {
         if (list == null || list.size() == 0) {
             smoothListView.setVisibility(View.GONE);
-            if (iToAdd > 0)
-                llNoBind.setVisibility(View.VISIBLE);
-            else
-                rlNoData.setVisibility(View.VISIBLE);
+            llNoBind.setVisibility(View.VISIBLE);
 
         } else {
             smoothListView.setVisibility(View.VISIBLE);
-            rlNoData.setVisibility(View.GONE);
             llNoBind.setVisibility(View.GONE);
 
             smoothListView.setLoadMoreEnable(page < maxpage);

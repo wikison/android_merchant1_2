@@ -229,6 +229,7 @@ public class BindMerchantActivity extends BaseActivity {
         UserAddSaleUserRequest.Input input = new UserAddSaleUserRequest.Input();
         input.userId = SlashHelper.userManager().getUserId();
         input.merchantId = merchantId;
+        input.position = positionName;
         input.tags = tags;
 
         input.convertJosn();

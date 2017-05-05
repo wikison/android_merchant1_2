@@ -41,8 +41,6 @@ public class Search4KeyWordsActivity extends BaseActivity {
     private SearchMerchant4KeyWordsFragment merchantFragment;
     private String key;
 
-    int iToAdd = 0;
-
 
     @Override
     public void setContentView() {
@@ -60,25 +58,17 @@ public class Search4KeyWordsActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
         key = getIntent().getStringExtra(INTENT_KEY);
-        iToAdd = getIntent().getIntExtra("be_service_manager", -1);
-        searchview.setStrHint(key);
         searchview.setStrSearch(key);
 
         merchantFragment = new SearchMerchant4KeyWordsFragment();
         Bundle bundle = new Bundle();
-        if (iToAdd == 1) {
-            llHead.setVisibility(View.VISIBLE);
-            lhTvTitle.setText("绑定商户");
-            searchview.setStrHint("搜索商户名称");
-            searchview.setTvCancelVisible(View.GONE);
-            searchview.setBgColor(0xffc1c1c1);
+        llHead.setVisibility(View.VISIBLE);
+        lhTvTitle.setText("绑定商户");
+        searchview.setStrHint("搜索商户名称");
+        searchview.setTvCancelVisible(View.GONE);
+        searchview.setBgColor(0xffc1c1c1);
 
-            bundle.putString(Search4KeyWordsActivity.INTENT_KEY, "");
-        } else {
-            bundle.putString(Search4KeyWordsActivity.INTENT_KEY, key);
-
-        }
-        bundle.putInt("be_service_manager", iToAdd);
+        bundle.putString(Search4KeyWordsActivity.INTENT_KEY, key);
         merchantFragment.setArguments(bundle);
 
         registerReceiver(new String[]{ Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
