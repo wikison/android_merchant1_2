@@ -551,6 +551,9 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         AppApplication.getContext().startActivity(intent);
+
+                        Intent intent1 = new Intent(Constants.BROCAST_ACCOUNT_OCCUPIED);
+                        sendBroadcast(intent1);
                     } else {
                     }
 
