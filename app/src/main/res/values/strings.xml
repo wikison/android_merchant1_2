@@ -120,7 +120,7 @@
     <string name="del_friend_tip">是否删除好友</string>
     <string name="not_login_tip">您现在还未登录，是否登录</string>
     <string name="one_key_service">若您是服务从业人员, 可以继续注册服务管家\n也可以到"我的-我是服务管家"继续注册</string>
-    <string name="one_key_service_success">为确保使用, 请立即完善完成管家初始化: \n●完善个人资料\n●绑定商家</string>
+    <string name="one_key_service_success">为确保使用, 请立即完善完成管家初始化: \n1、完善个人资料\n2、绑定商家</string>
     <string name="login_out_tip">是否退出账号</string>
 
     <string name="umeng_openshare">打开分享面板</string>

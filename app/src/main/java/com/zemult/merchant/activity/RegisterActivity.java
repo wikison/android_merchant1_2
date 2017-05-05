@@ -327,7 +327,7 @@ public class RegisterActivity extends BaseActivity {
             UserRegisterRequest.Input input = new UserRegisterRequest.Input();
             input.phone = strPhone;
             input.password = DigestUtils.md5(strPwd).toUpperCase();
-            input.name = "nc" + strPhone.substring(7);
+            input.name = "nc" + strPhone;
             input.convertJosn();
 
             userRegisterRequest = new UserRegisterRequest(input, new ResponseListener() {
