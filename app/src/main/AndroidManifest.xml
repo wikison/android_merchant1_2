@@ -327,6 +327,14 @@
         <activity
             android:name=".activity.search.SearchActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity
+            android:name=".activity.search.Search4KeyWordsActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name=".activity.search.SearchSimpleActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <activity android:name=".activity.mine.MySlashMerchantActivity" />
         <activity android:name=".activity.mine.MyCollectionActivity" />
         <activity android:name=".activity.mine.MyBillActivity" />

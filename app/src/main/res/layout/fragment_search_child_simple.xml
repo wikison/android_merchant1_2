@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center"
+        style="@style/text_15_black_28"
+        android:textSize="17sp"
+        android:text="推荐商家"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        />
+
+    <com.zemult.merchant.view.SmoothListView.SmoothListView
+        android:id="@+id/smoothListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none"/>
+
+    <include layout="@layout/item_no_search_data_layout"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_no_bind"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginTop="110dp"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:src="@mipmap/zanwushuju"/>
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_gravity  ="center"
+            style="@style/text_15_black_28"
+            android:textSize="@dimen/font_26px"
+            android:text="非常抱歉，您搜索的商户暂未上线"/>
+
+        <TextView
+            android:layout_marginLeft="57dp"
+            android:layout_marginTop="62dp"
+            style="@style/text_12_black_999"
+            android:text="如果没有搜到，您可以："/>
+        <TextView
+            android:layout_marginLeft="57dp"
+            android:layout_marginTop="12dp"
+            style="@style/text_12_black_999"
+            android:text="•继续尝试搜索其他商户"/>
+        <TextView
+            android:layout_marginLeft="57dp"
+            android:layout_marginTop="12dp"
+            style="@style/text_12_black_999"
+            android:text="•今后到“我的”-“我是服务管家”中再尝试搜索"/>
+    </LinearLayout>
+</LinearLayout>

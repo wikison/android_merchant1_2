@@ -15,12 +15,10 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
-import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
-import com.zemult.merchant.activity.slash.BindMerchantActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
-import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
+import com.zemult.merchant.adapter.slashfrgment.HomeChildNewSimpleAdapter;
 import com.zemult.merchant.aip.mine.UserCheckSaleUser1_2_2Request;
-import com.zemult.merchant.aip.slash.MerchantFirstpageSearchListRequest;
+import com.zemult.merchant.aip.slash.Merchant2SearchListBandRequest;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
@@ -34,7 +32,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -42,9 +39,9 @@ import zema.volley.network.ResponseListener;
  * Created by wikison on 2016/6/15.
  * 搜索场景
  */
-public class SearchMerchantFragment extends BaseFragment implements SmoothListView.ISmoothListViewListener {
+public class SearchMerchantSimpleFragment extends BaseFragment implements SmoothListView.ISmoothListViewListener {
 
-    public static final String TAG = SearchMerchantFragment.class.getSimpleName();
+    public static final String TAG = SearchMerchantSimpleFragment.class.getSimpleName();
 
     @Bind(R.id.smoothListView)
     SmoothListView smoothListView;
@@ -53,10 +50,10 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     @Bind(R.id.ll_no_bind)
     LinearLayout llNoBind;
 
-    private MerchantFirstpageSearchListRequest request;
+    private Merchant2SearchListBandRequest request;
     private int page = 1, industryId;
 
-    private HomeChildNewAdapter mAdapter; // 主页数据
+    private HomeChildNewSimpleAdapter mAdapter; // 主页数据
 
     private Context mContext;
 
@@ -70,7 +67,7 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_child, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_child_simple, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -94,7 +91,7 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
     }
 
     private void initView() {
-        mAdapter = new HomeChildNewAdapter(mContext, new ArrayList<M_Merchant>());
+        mAdapter = new HomeChildNewSimpleAdapter(mContext, new ArrayList<M_Merchant>());
         smoothListView.setAdapter(mAdapter);
     }
 
@@ -106,40 +103,44 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Merchant merchant = mAdapter.getItem(position - 1);
-                goTo(merchant);
-            }
-        });
-        mAdapter.setItemClickListener(new HomeChildNewAdapter.ItemClickListener() {
-            @Override
-            public void onBannerClick(M_Merchant merchant) {
-                goTo(merchant);
-            }
-
-            @Override
-            public void onRvHeadClick(int pos) {
-
-            }
-        });
-    }
-
-    private void goTo(M_Merchant merchant) {
-        if (iToAdd == 1) {
-            if (merchant != null && merchant.isCommission == 1) { // 操作用户是否已经是该商户的服务管家(0:否,1:是)
-                Intent intent = new Intent(mContext, TabManageActivity.class);
-                intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                intent.putExtra(TabManageActivity.NAME, merchant.name);
-                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
-                intent.putExtra(TabManageActivity.COMEFROM, 2);
+                Intent intent = new Intent(mContext, Search4KeyWordsActivity.class);
+                intent.putExtra("key", merchant.name);
                 startActivity(intent);
-            } else { // 不是该商户的服务管家
-                user_check_saleuser_1_2_2(merchant);
+
+//                goTo(merchant);
             }
-        } else {
-            Intent intent = new Intent(mContext, MerchantDetailActivity.class);
-            intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchant.merchantId);
-            startActivity(intent);
-        }
+        });
+//        mAdapter.setItemClickListener(new HomeChildNewSimpleAdapter.ItemClickListener() {
+//            @Override
+//            public void onBannerClick(M_Merchant merchant) {
+//                goTo(merchant);
+//            }
+//
+//            @Override
+//            public void onRvHeadClick(int pos) {
+//
+//            }
+//        });
     }
+
+//    private void goTo(M_Merchant merchant) {
+//        if (iToAdd == 1) {
+//            if (merchant != null && merchant.isCommission == 1) { // 是服务管家
+//                Intent intent = new Intent(mContext, TabManageActivity.class);
+//                intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                intent.putExtra(TabManageActivity.NAME, merchant.name);
+//                intent.putExtra(TabManageActivity.TAGS, merchant.tags);
+//                intent.putExtra(TabManageActivity.COMEFROM, 2);
+//                startActivity(intent);
+//            } else { // 不是服务管家
+//                user_check_saleuser_1_2_2(merchant);
+//            }
+//        } else {
+//            Intent intent = new Intent(mContext, MerchantDetailActivity.class);
+//            intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchant.merchantId);
+//            startActivity(intent);
+//        }
+//    }
 
     /**
      * 判断用户是否可以申请商家的服务管家
@@ -195,9 +196,12 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
         if (key.equals(this.key))
             return;
 
-        showPd();
-        this.key = key;
-        merchant_firstpage_search_List(false);
+        Intent intent =new Intent(getActivity(),Search4KeyWordsActivity.class);
+        intent.putExtra("key",key);
+        startActivity(intent);
+//        showPd();
+//        this.key = key;
+//        merchant_firstpage_search_List(false);
     }
 
     //搜索方案列表
@@ -206,7 +210,7 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
             request.cancel();
         }
 
-        MerchantFirstpageSearchListRequest.Input input = new MerchantFirstpageSearchListRequest.Input();
+        Merchant2SearchListBandRequest.Input input = new Merchant2SearchListBandRequest.Input();
         input.operateUserId = SlashHelper.userManager().getUserId();
         input.industryId = industryId;
         input.name = key;
@@ -216,7 +220,7 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
         input.rows = Constants.ROWS;
 
         input.convertJosn();
-        request = new MerchantFirstpageSearchListRequest(input, new ResponseListener() {
+        request = new Merchant2SearchListBandRequest(input, new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 smoothListView.stopLoadMore();

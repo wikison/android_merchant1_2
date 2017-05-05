@@ -27,7 +27,9 @@ import com.zemult.merchant.activity.mine.MyWalletActivity;
 import com.zemult.merchant.activity.mine.SaleManInfoImproveActivity;
 import com.zemult.merchant.activity.mine.SalemanInfoSettingActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
+import com.zemult.merchant.activity.search.Search4KeyWordsActivity;
 import com.zemult.merchant.activity.search.SearchActivity;
+import com.zemult.merchant.activity.search.SearchSimpleActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
@@ -662,7 +664,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                     ToastUtil.showMessage(String.format("您当前服务等级只能申请%d家商户, 当前已经申请了%d家", userInfo.getMaxMerchantNum(), listMerchant.size()));
                     return;
                 }
-                intent = new Intent(mActivity, SearchActivity.class);
+                intent = new Intent(mActivity, SearchSimpleActivity.class);
                 intent.putExtra("be_service_manager", 1);
                 startActivity(intent);
 

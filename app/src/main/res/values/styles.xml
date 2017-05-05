@@ -474,6 +474,17 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="text_15_text_blue_28">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+
+
     <style name="text_16_black_28">
         <item name="android:textColor">@color/font_black_28</item>
         <item name="android:textSize">16sp</item>

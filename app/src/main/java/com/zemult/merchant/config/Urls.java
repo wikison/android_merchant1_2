@@ -456,6 +456,8 @@ public class Urls {
     public static String MERCHANT_FIRSTPAGE_LIST_1_2_3 = "merchant_firstpage_List_1_2_3";
     //搜索商家列表          全是已上线的
     public static String MERCHANT_FIRSTPAGE_SEARCH_LIST = "merchant_firstpage_search_List.do";
+    //推荐商家列表          签约商家
+    public static String MERCHANT2_SEARCH_LIST_BAND = "merchant2_search_List_band.do";
     //商家详情
     public static String MERCHANT_INFO = "merchant_info";
     //获取自己的 商家(场景)详情(请求)
