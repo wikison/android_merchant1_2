@@ -1,12 +1,15 @@
 package com.zemult.merchant.activity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -83,7 +86,7 @@ public class HeadManageActivity extends BaseActivity {
         registerReceiver(new String[]{Constants.BROCAST_OSS_UPLOADIMAGE});
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.gengduo_icon);
-        if(!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
+        if (!StringUtils.isBlank(SlashHelper.userManager().getUserinfo().getHead()))
             imageManager.loadUrlImage(SlashHelper.userManager().getUserinfo().getHead(), ivBg);
 
         headString = SlashHelper.userManager().getUserinfo().getHead();
@@ -179,11 +182,11 @@ public class HeadManageActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // 拍照
-            if (resultCode == RESULT_OK && requestCode == Constants.TACKPHOTO){
+            if (resultCode == RESULT_OK && requestCode == Constants.TACKPHOTO) {
                 AppUtils.tackPickResult(tackPhotoName, chooseImgHandler);
             }
             // 裁剪
-            else if(resultCode == RESULT_OK && requestCode == Constants.PHOTO_CROP){
+            else if (resultCode == RESULT_OK && requestCode == Constants.PHOTO_CROP) {
                 if (data != null) {
                     if (imageUri != null) {
                         Bitmap bitmap = decodeUriAsBitmap(imageUri);
@@ -267,7 +270,6 @@ public class HeadManageActivity extends BaseActivity {
     }
 
 
-
     protected Handler chooseImgHandler = new Handler() {
 
         @Override
@@ -309,7 +311,7 @@ public class HeadManageActivity extends BaseActivity {
         dismissPd();
     }
 
-    private void crop(String path){
+    private void crop(String path) {
         imageUrl = Constants.SAVE_IMAGE_PATH_IMGS + new SimpleDateFormat("yyMMddHHmmss")
                 .format(new Date()) + ".jpg";
         imageUri = Uri.fromFile(new File(imageUrl));
@@ -317,7 +319,12 @@ public class HeadManageActivity extends BaseActivity {
         Intent intent = new Intent();
 
         intent.setAction("com.android.camera.action.CROP");
-        intent.setDataAndType(Uri.fromFile(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
+        if (Build.VERSION.SDK_INT < 24) {
+            intent.setDataAndType(Uri.fromFile(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
+        } else {
+            intent.setDataAndType(getImageContentUri(new File(path.replace("file://", ""))), "image/*");// mUri是已经选择的图片Uri
+
+        }
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 400);// 裁剪框比例
         intent.putExtra("aspectY", 400);
@@ -329,6 +336,32 @@ public class HeadManageActivity extends BaseActivity {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
         HeadManageActivity.this.startActivityForResult(intent, Constants.PHOTO_CROP);
+    }
+
+
+    public Uri getImageContentUri(File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID},
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
     }
 
 }
