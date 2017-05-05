@@ -18,6 +18,7 @@ public class UserAddSaleUserRequest extends PostStringRequest<Type> {
         public int userId;       //  用户id
         public int merchantId;       //  商家(场景)的id
         public String tags;       //服务标签(多个用“,”分隔)
+        public String position;       //服务职位
         public int isOnBook;       //  是否关联 通讯录(作为服务管家 0:否,1:是)
         public String bookPhones;       // 通讯录手机号(多个用","分隔)
         public String ejson;
@@ -27,6 +28,7 @@ public class UserAddSaleUserRequest extends PostStringRequest<Type> {
             ejson= Convert.securityJson(Convert.pairsToJson(
                     new Pair<String, String>("userId", userId + ""),
                     new Pair<String, String>("merchantId", merchantId + ""),
+                    new Pair<String, String>("position", position),
                     new Pair<String, String>("tags", tags)
             ));
         }else {

@@ -16,6 +16,7 @@ import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.TabManageActivity;
 import com.zemult.merchant.activity.slash.AllChangjingActivity;
 import com.zemult.merchant.activity.slash.BeManagerFirstActivity;
+import com.zemult.merchant.activity.slash.BindMerchantActivity;
 import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeChildNewAdapter;
 import com.zemult.merchant.aip.mine.UserCheckSaleUser1_2_2Request;
@@ -123,14 +124,14 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
 
     private void goTo(M_Merchant merchant) {
         if (iToAdd == 1) {
-            if (merchant != null && merchant.isCommission == 1) { // 是服务管家
+            if (merchant != null && merchant.isCommission == 1) { // 操作用户是否已经是该商户的服务管家(0:否,1:是)
                 Intent intent = new Intent(mContext, TabManageActivity.class);
                 intent.putExtra(TabManageActivity.TAG, merchant.merchantId);
                 intent.putExtra(TabManageActivity.NAME, merchant.name);
                 intent.putExtra(TabManageActivity.TAGS, merchant.tags);
                 intent.putExtra(TabManageActivity.COMEFROM, 2);
                 startActivity(intent);
-            } else { // 不是服务管家
+            } else { // 不是该商户的服务管家
                 user_check_saleuser_1_2_2(merchant);
             }
         } else {
@@ -176,10 +177,13 @@ public class SearchMerchantFragment extends BaseFragment implements SmoothListVi
 //                        it.putExtra(TabManageActivity.COMEFROM, 1);
 //                        startActivity(it);
 //                    }
-                    Intent it = new Intent(mContext, TabManageActivity.class);
-                    it.putExtra(TabManageActivity.TAG, merchant.merchantId);
-                    it.putExtra(TabManageActivity.NAME, merchant.name);
-                    it.putExtra(TabManageActivity.COMEFROM, 1);
+//                    Intent it = new Intent(mContext, TabManageActivity.class);
+//                    it.putExtra(TabManageActivity.TAG, merchant.merchantId);
+//                    it.putExtra(TabManageActivity.NAME, merchant.name);
+//                    it.putExtra(TabManageActivity.COMEFROM, 1);
+//                    startActivity(it);
+                    Intent it = new Intent(mContext, BindMerchantActivity.class);
+                    it.putExtra(MerchantDetailActivity.MERCHANT_ID, merchant.merchantId);
                     startActivity(it);
                 } else {
                     ToastUtils.show(mContext, ((CommonResult) response).info);

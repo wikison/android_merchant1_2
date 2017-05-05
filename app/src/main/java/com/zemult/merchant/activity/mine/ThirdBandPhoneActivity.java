@@ -204,7 +204,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                         if(((CommonResult) response).isBand == 0)// 是否已经绑定了微信账号(0:否,1:是)
                             getCode();
                         else
-                            ToastUtil.showMessage(((CommonResult) response).info);
+                            ToastUtil.showMessage("手机号码已绑定请先解绑");
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }

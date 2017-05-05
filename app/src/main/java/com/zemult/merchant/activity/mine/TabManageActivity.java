@@ -245,7 +245,7 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             userAdapter.setB(isFalse);
         }
         if (comefrom == 1) {
-            applyBtn.setText("下一步");
+            applyBtn.setText("完成");
         }
     }
 
@@ -612,7 +612,11 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
                     if (userChannelList.size() == 0) {
                         ToastUtils.show(this, "请选择服务标签才能申请服务管家");
                     } else {
-                        user_add_saleuser();
+//                        user_add_saleuser();
+                        Intent i = new Intent();
+                        i.putExtra("tags", getTags());
+                        setResult(RESULT_OK, i);
+                        finish();
                     }
                 } else if (comefrom == 2) {
                     if (userChannelList.size() == 0) {
