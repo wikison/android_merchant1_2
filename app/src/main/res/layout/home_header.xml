@@ -80,36 +80,13 @@
 
         <View style="@style/divider"/>
 
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:gravity="center"
-            android:background="@color/bg_f2">
-            <View style="@style/divider"
-                android:layout_width="12dp"
-                android:layout_height="2px"
-                android:background="#e6bb7c"/>
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                style="@style/text_15_black_28"
-                android:text="优选服务管家 "
-                android:textStyle="bold"
-                android:textColor="@color/bg_head"/>
-
-            <View style="@style/divider"
-                android:layout_width="12dp"
-                android:layout_height="2px"
-                android:background="#e6bb7c"/>
-        </LinearLayout>
-
-
-        <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
 
             <RelativeLayout
                 android:id="@+id/rl_me"
@@ -128,7 +105,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@mipmap/user_icon"/>
-                
+
                 <com.flyco.roundview.RoundLinearLayout
                     android:id="@+id/rl_fast_order"
                     android:layout_centerVertical="true"
@@ -209,9 +186,34 @@
 
             </RelativeLayout>
 
-            <View style="@style/divider12dp"
-                android:layout_alignParentBottom="true"/>
         </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:background="@color/bg_f2">
+            <View style="@style/divider"
+                android:layout_width="12dp"
+                android:layout_height="2px"
+                android:background="#e6bb7c"/>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                style="@style/text_15_black_28"
+                android:text="优选服务管家 "
+                android:textStyle="bold"
+                android:textColor="@color/bg_head"/>
+
+            <View style="@style/divider"
+                android:layout_width="12dp"
+                android:layout_height="2px"
+                android:background="#e6bb7c"/>
+        </LinearLayout>
+
 
 
 
