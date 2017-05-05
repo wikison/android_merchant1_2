@@ -48,24 +48,24 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
     LinearLayout llMerchant;
     @Bind(R.id.ll_people)
     LinearLayout llPeople;
-    @Bind(R.id.rv)
-    RecyclerView rv;
     @Bind(R.id.iv_head)
     ImageView ivHead;
+    @Bind(R.id.rl_fast_order)
+    RoundLinearLayout rlFastOrder;
     @Bind(R.id.tv_user_name)
     TextView tvUserName;
-    @Bind(R.id.iv_service)
-    ImageView ivService;
     @Bind(R.id.tv_service)
     TextView tvService;
     @Bind(R.id.tv_num)
     TextView tvNum;
-    @Bind(R.id.ll_me)
-    LinearLayout llMe;
+    @Bind(R.id.tv_money)
+    TextView tvMoney;
     @Bind(R.id.rl_me)
     RelativeLayout rlMe;
-    @Bind(R.id.rl_fast_order)
-    RoundLinearLayout rlFastOrder;
+    @Bind(R.id.ll_me)
+    LinearLayout llMe;
+    @Bind(R.id.rv)
+    RecyclerView rv;
     private Intent it;
 
 
@@ -101,14 +101,14 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         llMe.setVisibility(View.VISIBLE);
         // 服务管家的用户昵称
         if (!TextUtils.isEmpty(entity.saleUserName))
-            tvUserName.setText(entity.saleUserName);
+            tvUserName.setText("我是服务管家");
+//            tvUserName.setText(entity.saleUserName);
         // 服务管家的用户头像
         mImageManager.loadCircleHead(entity.saleUserHead, ivHead);
 
-        // 服务管家的顾客数
-        tvNum.setText(entity.saleUserFanNum + "关注");
-        ivService.setImageResource(entity.getExperienceImg());
         tvService.setText(entity.getExperienceText() + "管家");
+        tvNum.setText(" · "+entity.saleUserFanNum + "关注");
+        tvMoney.setText(" · "+SlashHelper.userManager().getUserinfo().money + "元收益");
         rlMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,9 +117,9 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
                 mContext.startActivity(it);
             }
         });
-        if(entity.isHaveInfo == 0){
+        if (entity.isHaveInfo == 0) {
             rlFastOrder.setVisibility(View.GONE);
-        }else {
+        } else {
             rlFastOrder.setVisibility(View.VISIBLE);
             rlFastOrder.setOnClickListener(new View.OnClickListener() {
                 @Override

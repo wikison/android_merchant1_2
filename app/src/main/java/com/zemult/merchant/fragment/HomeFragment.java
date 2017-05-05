@@ -36,6 +36,8 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.PoiPickActivity;
 import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.db.DBManager;
@@ -81,6 +83,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import zema.volley.network.ResponseListener;
 
 /**
@@ -214,6 +219,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
         noDataViewHeight = DensityUtil.getWindowHeight(mActivity) - DensityUtil.dip2px(mContext, titleHeight + bottomHeight + 38);
         registerReceiver(new String[]{Constants.BROCAST_LOGIN, Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -685,6 +691,18 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
     public enum HomeEnum {
         TASK, MOOD
+    }
+
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void exitRefresh(String s) {
+        if ("exit".equals(s)) {
+            headerHomeView.setMyInfo(null);
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**

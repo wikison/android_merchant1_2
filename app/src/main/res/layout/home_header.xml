@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_marginTop="10dp"
                     style="@style/text_15_black_28"
-                    android:text="进店找人"/>
+                    android:text="进店找管家"/>
                 <TextView
                     android:layout_marginTop="8dp"
                     style="@style/text_12_black_999"
@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_marginTop="10dp"
                     style="@style/text_15_black_28"
-                    android:text="找人推荐"/>
+                    android:text="智能找管家"/>
                 <TextView
                     android:layout_marginTop="8dp"
                     style="@style/text_12_black_999"
@@ -106,7 +106,6 @@
 
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,13 +143,8 @@
                     android:paddingBottom="8dp"
                     app:rv_cornerRadius="12px">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/kuaijie_icon"/>
 
                     <TextView
-                        android:layout_marginLeft="8dp"
                         style="@style/text_14_white"
                         android:textSize="@dimen/font_24px"
                         android:text="快捷订单"/>
@@ -161,6 +155,7 @@
                 <LinearLayout
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_head"
+                    android:layout_toLeftOf="@+id/rl_fast_order"
                     android:layout_marginLeft="21dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -172,41 +167,43 @@
                         android:gravity="bottom">
 
                         <TextView
-                            android:text="xxx"
+                            android:text="我是服务管家"
                             android:id="@+id/tv_user_name"
                             style="@style/text_15_black_28"
                             />
 
+                    </LinearLayout>
 
-                        <ImageView
-                            android:layout_marginBottom="1dp"
-                            android:id="@+id/iv_service"
-                            android:layout_marginLeft="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/yin_icon2"
+
+                    <LinearLayout
+                        android:layout_marginTop="3dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom">
+
+                        <TextView
+                            style="@style/text_12_black_999"
+                            android:id="@+id/tv_service"
+                            android:text="新手"
                             />
                         <TextView
-                            android:layout_weight="1"
-                            android:layout_marginLeft="4dp"
-                            android:id="@+id/tv_service"
+                            android:id="@+id/tv_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#e6bb7c"
+                            android:textColor="@color/font_black_999"
                             android:textSize="@dimen/font_24px"
-                            android:text="新手"
+                            />
+                        <TextView
+                            android:id="@+id/tv_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/font_black_999"
+                            android:textSize="@dimen/font_24px"
                             />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_black_999"
-                        android:textSize="@dimen/font_24px"
-                        android:text="0客户"
-                        />
+
 
                 </LinearLayout>
 
