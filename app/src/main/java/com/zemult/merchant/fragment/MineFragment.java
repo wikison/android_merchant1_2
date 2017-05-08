@@ -386,7 +386,7 @@ public class MineFragment extends BaseFragment {
                             btnSaleuser.setText("我是服务管家");
                         } else {
                             isSaleUser = 0;
-                            btnSaleuser.setText("申请服务管家");
+                            btnSaleuser.setText("申请成为服务管家");
                         }
                         if (((APIM_UserLogin) response).userInfo.getManagerUserNum() == 0) {
                             dividerLl.setVisibility(View.GONE);

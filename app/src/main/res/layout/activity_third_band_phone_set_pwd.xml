@@ -98,6 +98,6 @@
         style="@style/text_12_black_999"
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
-        android:text="今后也可到“我的”-“我是服务管家”注册"/>
+        android:text="今后也可以到“我的”-“申请成为服务管家”注册"/>
 </LinearLayout>
 

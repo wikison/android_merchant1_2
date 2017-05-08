@@ -168,6 +168,12 @@
         android:text="我是服务者,同时注册服务管家"/>
 
 
+    <TextView
+        style="@style/text_12_black_999"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="今后也可以到“我的”-“申请成为服务管家”注册"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
