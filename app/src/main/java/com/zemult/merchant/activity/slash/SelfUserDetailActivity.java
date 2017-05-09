@@ -24,11 +24,8 @@ import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
-import com.zemult.merchant.activity.mine.SaleManInfoImproveActivity;
 import com.zemult.merchant.activity.mine.SalemanInfoSettingActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
-import com.zemult.merchant.activity.search.Search4KeyWordsActivity;
-import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.activity.search.SearchSimpleActivity;
 import com.zemult.merchant.adapter.slash.PagerUserMerchantAdapter;
 import com.zemult.merchant.aip.mine.User2SaleUserFanListRequest;
@@ -238,6 +235,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "客户关注");
 
         if (fromSaleLogin == 1) {
+            sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
             MMAlert.showMultiConfirmDialog(mContext, "服务管家注册成功", getResources().getString(R.string.one_key_service_success), "我知道了", new MMAlert.OneOperateCallback() {
                 @Override
                 public void onOneOperate() {

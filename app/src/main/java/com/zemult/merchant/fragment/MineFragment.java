@@ -370,7 +370,6 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    mContext.sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
                     Intent intent = new Intent(getActivity(), SelfUserDetailActivity.class);
                     intent.putExtra("user_sale_login", 1);
                     intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
