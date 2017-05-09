@@ -32,8 +32,8 @@ import com.zemult.merchant.activity.mine.SafeSettingActivity;
 import com.zemult.merchant.activity.mine.SaleManageActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryActivity;
 import com.zemult.merchant.activity.search.LabelHomeActivity;
-import com.zemult.merchant.activity.search.SearchActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
+import com.zemult.merchant.aip.common.User2SaleUserLoginRequest;
 import com.zemult.merchant.aip.mine.UserEditStateRequest;
 import com.zemult.merchant.aip.mine.UserInfoOwnerRequest;
 import com.zemult.merchant.app.BaseFragment;
@@ -43,6 +43,7 @@ import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.UserManager;
+import com.zemult.merchant.view.common.CommonDialog;
 import com.zemult.merchant.view.common.MMAlert;
 
 import butterknife.Bind;
@@ -140,6 +141,10 @@ public class MineFragment extends BaseFragment {
 
     int isSaleUser;
 
+    private Context mContext;
+
+    User2SaleUserLoginRequest user2SaleUserLoginRequest;
+
 
     @Override
     public void onResume() {
@@ -160,6 +165,13 @@ public class MineFragment extends BaseFragment {
         if (!hidden) {
             get_user_info_owner_request();
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mContext = getActivity();
+
     }
 
     @Override
@@ -197,9 +209,20 @@ public class MineFragment extends BaseFragment {
                     intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
                     startActivity(intent);
                 } else {
-                    intent = new Intent(getActivity(), SearchActivity.class);
-                    intent.putExtra("be_service_manager", 1);
-                    startActivity(intent);
+                    CommonDialog.showDialogListener(mContext, "一键注册服务管家", "暂不要", "一键注册", getResources().getString(R.string.one_key_service), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CommonDialog.DismissProgressDialog();
+
+                        }
+                    }, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CommonDialog.DismissProgressDialog();
+                            //调用一键注册服务管家接口
+                            user2SaleUserLogin();
+                        }
+                    });
                 }
 
                 break;
@@ -326,6 +349,36 @@ public class MineFragment extends BaseFragment {
         if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             get_user_info_owner_request();
         }
+    }
+
+    //一键注册成为服务管家
+    private void user2SaleUserLogin() {
+        if (user2SaleUserLoginRequest != null) {
+            user2SaleUserLoginRequest.cancel();
+        }
+        User2SaleUserLoginRequest.Input input = new User2SaleUserLoginRequest.Input();
+        if (SlashHelper.userManager().getUserinfo() != null) {
+            input.userId = SlashHelper.userManager().getUserId();
+        }
+        input.convertJosn();
+        user2SaleUserLoginRequest = new User2SaleUserLoginRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                    mContext.sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+                    Intent intent = new Intent(getActivity(), SelfUserDetailActivity.class);
+                    intent.putExtra("user_sale_login", 1);
+                    intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
+                    startActivity(intent);
+                }
+            }
+        });
+        sendJsonRequest(user2SaleUserLoginRequest);
     }
 
 

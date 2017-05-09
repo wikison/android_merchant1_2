@@ -76,7 +76,7 @@ public class AllChangjingActivity extends BaseActivity {
     }
 
     private void initView() {
-        lhTvTitle.setText("进店找人");
+        lhTvTitle.setText("进店找管家");
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.fangdajin_icon);
         // 开启Fragment事务

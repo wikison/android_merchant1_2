@@ -133,7 +133,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_head"
                     android:layout_toLeftOf="@+id/rl_fast_order"
-                    android:layout_marginLeft="21dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

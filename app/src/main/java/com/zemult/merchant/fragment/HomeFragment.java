@@ -36,8 +36,6 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
-import com.zemult.merchant.activity.MainActivity;
 import com.zemult.merchant.activity.PoiPickActivity;
 import com.zemult.merchant.activity.ScanQrActivity;
 import com.zemult.merchant.activity.city.db.DBManager;
@@ -649,6 +647,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
 
     @Override
     public void onRefresh() {
+        mContext.sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
         user2_first_saleUser();
         homePresenter.merchant_firstpage_List(industryId, page = 1, Constants.ROWS, false);
     }

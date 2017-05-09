@@ -519,7 +519,6 @@ public class TabManageActivity extends BaseActivity implements AdapterView.OnIte
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
-                    ToastUtils.show(TabManageActivity.this, "修改成功");
                     setResult(RESULT_OK);
                     finish();
                 } else {
