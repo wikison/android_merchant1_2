@@ -58,7 +58,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     private int showType = 1;  //0  无操作，1  网页  2   跳转到图片展示  3 自定义
     private boolean rotate = true;
-    private boolean round,showTitle;
+    private boolean round, showTitle;
 
 
     private Handler mHandler = new Handler() {
@@ -91,6 +91,7 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
     public void setShowType(int showType) {
         this.showType = showType;
     }
+
     public void setShowTitle(boolean showTitle) {
         this.showTitle = showTitle;
     }
@@ -203,6 +204,13 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
 
     // 添加指示图标
     private void addIndicatorImageViews(int size) {
+
+        if (showTitle && !StringUtils.isBlank(adList.get(0).getName())) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(adList.get(0).getName());
+        } else
+            tvTitle.setVisibility(View.GONE);
+
         // 只有一张图片时不显示指示器
         if (size == 1) {
             llIndexContainer.setVisibility(View.GONE);
@@ -233,11 +241,6 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
             setNum(1);
         }
 
-        if(showTitle && !StringUtils.isBlank(adList.get(0).getName())){
-            tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText(adList.get(0).getName());
-        }else
-            tvTitle.setVisibility(View.GONE);
     }
 
     public void setNum(int currentNum) {
@@ -263,10 +266,10 @@ public class HeaderAdViewView extends HeaderViewInterface2<List<M_Ad>> {
                         setNum(newPosition + 1);
                     }
 
-                    if(showTitle && !StringUtils.isBlank(adList.get(newPosition).getName())){
+                    if (showTitle && !StringUtils.isBlank(adList.get(newPosition).getName())) {
                         tvTitle.setVisibility(View.VISIBLE);
                         tvTitle.setText(adList.get(newPosition).getName());
-                    }else
+                    } else
                         tvTitle.setVisibility(View.GONE);
                 }
             }
