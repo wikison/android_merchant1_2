@@ -338,7 +338,7 @@
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="130dp">
 
             <LinearLayout
                 android:id="@+id/ll_share_wechat"
