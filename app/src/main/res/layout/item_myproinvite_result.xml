@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<View
+   style="@style/divider12dp"></View>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_describe"
+            style="@style/text_15_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="主题:" />
+
+        <ImageView
+            android:id="@+id/iv_headimage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="12dp"
+            android:clickable="false"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_icon" />
+
+
+        <TextView
+            android:id="@+id/theme_tv"
+            style="@style/text_15_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:paddingRight="5dp"
+            android:text="12345" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_15_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="邀请时间:" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_15_black_999"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:paddingRight="5dp"
+            android:text="12345" />
+    </LinearLayout>
+    <View style="@style/divider1dp"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:drawableRight="@mipmap/back_right_btn_mini"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="15dp"
+        android:text="查看详情"
+        android:textColor="@color/font_black_28"
+        android:textSize="14sp" />
+
+</LinearLayout>
+
+
+
+</LinearLayout>

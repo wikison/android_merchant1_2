@@ -330,11 +330,9 @@
         <activity
             android:name=".activity.search.Search4KeyWordsActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity
             android:name=".activity.search.SearchSimpleActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity android:name=".activity.mine.MySlashMerchantActivity" />
         <activity android:name=".activity.mine.MyCollectionActivity" />
         <activity android:name=".activity.mine.MyBillActivity" />
@@ -640,7 +638,8 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".activity.slash.ServicePlanActivity" />
         <activity android:name=".activity.mine.ThirdBandPhoneSetPwdActivity" />
-        <activity android:name=".activity.slash.BindMerchantActivity"></activity>
+        <activity android:name=".activity.slash.BindMerchantActivity" />
+        <activity android:name=".activity.mine.MyProInviteActivity"></activity>
     </application>
 
 </manifest>

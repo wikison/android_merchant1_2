@@ -24,6 +24,7 @@ import com.zemult.merchant.activity.mine.MyCardsActivity;
 import com.zemult.merchant.activity.mine.MyCollectionActivity;
 import com.zemult.merchant.activity.mine.MyInviteActivity;
 import com.zemult.merchant.activity.mine.MyOrderActivity;
+import com.zemult.merchant.activity.mine.MyProInviteActivity;
 import com.zemult.merchant.activity.mine.MyServiceTicketActivity;
 import com.zemult.merchant.activity.mine.MySettingActivity;
 import com.zemult.merchant.activity.mine.MyWalletActivity;
@@ -135,6 +136,8 @@ public class MineFragment extends BaseFragment {
     Button btnSaleuser;
     @Bind(R.id.divider_ll)
     LinearLayout dividerLl;
+    @Bind(R.id.rl_my_invite)
+    RelativeLayout rlMyInvite;
 
     private boolean hasStarted = false;
     int state;
@@ -189,7 +192,7 @@ public class MineFragment extends BaseFragment {
 
     @OnClick({R.id.btn_saleuser, R.id.state_iv, R.id.servicerecord_iv, R.id.businessmanage_tv, R.id.incomeaccount_iv, R.id.tv_state, R.id.rl_record, R.id.mtag_layout,
             R.id.rl_wallet, R.id.mygo_layout, R.id.rl_my_order, R.id.rl_sale_manage,
-            R.id.mshop_layout, R.id.msafe_layout,
+            R.id.mshop_layout, R.id.msafe_layout,R.id.rl_my_invite,
             R.id.mhead_iv, R.id.rl_my_prorder, R.id.rl_my_gift, R.id.incomeaccount, R.id.servicerecord, R.id.businessmanage, R.id.rl_my_oriprorder, R.id.rl_my_collect, R.id.rl_my_setting})
     public void onClick(View view) {
         Intent intent;
@@ -285,6 +288,10 @@ public class MineFragment extends BaseFragment {
             case R.id.rl_my_prorder:
                 startActivity(new Intent(getActivity(), MyServiceTicketActivity.class));
                 //我的预约
+                break;
+
+            case R.id.rl_my_invite:
+                startActivity(new Intent(getActivity(), MyProInviteActivity.class));
                 break;
             case R.id.rl_my_gift:
                 //我的礼物箱
