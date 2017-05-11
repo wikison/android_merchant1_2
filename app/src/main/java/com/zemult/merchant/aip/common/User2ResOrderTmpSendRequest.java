@@ -30,7 +30,7 @@ public class User2ResOrderTmpSendRequest extends PostStringRequest<Type> {
 
         public void convertJosn() {
             ejson = Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("resOrderId", resOrderId),
+                    new Pair<String, String>("resOrderId", resOrderId+""),
                     new Pair<String, String>("phoneNum", phoneNum)
             ));
         }
