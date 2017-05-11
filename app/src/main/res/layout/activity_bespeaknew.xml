@@ -303,13 +303,44 @@
 
 
 
+            <RelativeLayout
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_toRightOf="@+id/tv_1"
+                    android:layout_centerVertical="true"
+                    android:layout_height="1dp"
+                    android:background="#999999"
+                    android:layout_width="50dp"/>
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/tv_1"
+                    android:layout_centerInParent="true"
+                    style="@style/text_15_black_999"
+                    android:text="生成并发送服务订单到"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_toLeftOf="@+id/tv_1"
+                    android:layout_centerVertical="true"
+                    android:layout_height="1dp"
+                    android:background="#999999"
+                    android:layout_width="50dp"/>
+            </RelativeLayout>
+
         <LinearLayout
-            android:background="@color/white"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
             android:layout_width="match_parent"
-            android:layout_height="146dp">
+            android:layout_height="100dp">
 
             <LinearLayout
-                android:background="@drawable/ripple_item_clicked2"
                 android:id="@+id/ll_share_wechat"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -320,7 +351,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/wei_xing_icon" />
+                    android:src="@mipmap/order_weixin" />
 
                 <TextView
                     android:layout_marginTop="12dp"
@@ -333,7 +364,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="@drawable/ripple_item_clicked2"
                 android:id="@+id/ll_share_lianxiren"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -344,14 +374,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/lianxiren_icon" />
+                    android:src="@mipmap/order_duanxin" />
 
                 <TextView
                     android:layout_marginTop="12dp"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="手机联系人"
+                    android:text="短信"
                     android:textSize="@dimen/font_24px"
                     android:textColor="#222222" />
             </LinearLayout>

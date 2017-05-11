@@ -679,4 +679,8 @@ public class Urls {
     public static String USER2_SALEUSER_COMMENT_SETREAD = "user2_saleUser_comment_setRead";
     //手机号绑定微信并且登录
     public static String USER_WX_BAND_PHONE = "user_wx_band_phone";
+    //发送短信(临时服务订单)
+    public static String USER2_RES_ORDER_TMP_SEND = "user2_res_order_tmp_send";
+
+
 }

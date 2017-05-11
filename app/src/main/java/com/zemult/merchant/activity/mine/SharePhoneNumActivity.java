@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.common.User2ResOrderTmpSendRequest;
+import com.zemult.merchant.aip.common.UserWxBandPhoneRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.ToastUtil;
@@ -20,6 +25,7 @@ import com.zemult.merchant.util.ToastUtil;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
+import zema.volley.network.ResponseListener;
 
 /**
  * Created by admin on 2017/1/24.
@@ -83,6 +89,45 @@ public class SharePhoneNumActivity extends BaseActivity {
     };
 
 
+    //微信绑定手机号登陆(注册)
+    private User2ResOrderTmpSendRequest user2ResOrderTmpSendRequest;
+    private void user_wx_band_phone(){
+        showUncanclePd();
+        try {
+            if (user2ResOrderTmpSendRequest != null) {
+                user2ResOrderTmpSendRequest.cancel();
+            }
+            final User2ResOrderTmpSendRequest.Input input = new User2ResOrderTmpSendRequest.Input();
+            input.resOrderId = tmpid;
+            input.phoneNum = phoneNumEt.getText().toString();
+            input.convertJosn();
+
+            user2ResOrderTmpSendRequest = new User2ResOrderTmpSendRequest(input, new ResponseListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                    dismissPd();
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    int status = ((CommonResult) response).status;
+                    if (status == 1) {
+                        ToastUtil.showMessage("发送成功");
+                        finish();
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                    dismissPd();
+                }
+            });
+            sendJsonRequest(user2ResOrderTmpSendRequest);
+        } catch (Exception e) {
+            Log.e("USER_REGISTER", e.toString());
+        }
+    }
+
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ok_btn})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -94,11 +139,8 @@ public class SharePhoneNumActivity extends BaseActivity {
                 if (TextUtils.isEmpty(phoneNumEt.getText().toString())) {
                     ToastUtil.showMessage("请输入客户手机号码");
                 } else {
-
-
+                    user_wx_band_phone();
                 }
-
-
                 break;
         }
     }
