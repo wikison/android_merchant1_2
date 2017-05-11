@@ -270,7 +270,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="订金"
-                    android:drawableRight="@mipmap/exclamation"
                     />
 
                 <EditText
@@ -303,7 +302,65 @@
                 />
 
 
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="146dp">
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_wechat"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/wei_xing_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="微信好友"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/ripple_item_clicked2"
+                android:id="@+id/ll_share_lianxiren"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/lianxiren_icon" />
+
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="手机联系人"
+                    android:textSize="@dimen/font_24px"
+                    android:textColor="#222222" />
+            </LinearLayout>
+
+            </LinearLayout>
+
+
             <com.flyco.roundview.RoundTextView
+                android:visibility="gone"
                 android:layout_marginTop="90dp"
                 android:id="@+id/btn_bespeak_commit"
                 android:layout_width="match_parent"

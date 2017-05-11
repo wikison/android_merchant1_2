@@ -467,6 +467,24 @@ public final class DateTimeUtil implements Serializable {
 
 
     /**
+     * 如果选择日期是今天显示当天
+     */
+    public static String getWeekDayOfWeekisToday(Date date) {
+        String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        int week = getDayOfWeek(date);
+
+        int todayweek = getDayOfWeek(new Date());
+        if(todayweek==week){
+            return "当天";
+        }
+        else{
+            return weeks[week - 1];
+        }
+
+    }
+
+
+    /**
      * 根据指定的年、月、日返回当前是星期几。1表示星期天、2表示星期一、7表示星期六。
      *
      * @param date
@@ -1301,6 +1319,32 @@ public final class DateTimeUtil implements Serializable {
         String datestr=sdf2.format(date);
 
         return  datestr;
+    }
+
+
+    /**
+     0:00-12:00 显示11:30
+     12:00 - 18:00 显示18:00
+     18:00 - 24:00 显示 20:00
+     * @return
+     * @throws ParseException
+     */
+    public static  String getOrderTime()  {
+      int currenthour=Integer.parseInt(getFormatDateTime(new Date(), "HH"));
+        if(currenthour>=0&&currenthour<12){
+            currenthour=11;
+            return getCurrentDate()+ " (当天) 11:30";
+        }
+        else  if(currenthour>=12&&currenthour<18){
+            currenthour=18;
+            return getCurrentDate()+ " (当天) 18:00";
+        }
+        else {
+            currenthour=20;
+            return  getCurrentDate()+" (当天) 20:00";
+        }
+
+
     }
 
 }

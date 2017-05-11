@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f4f4f4"
+              android:orientation="vertical"
+              tools:context=".activity.mine.NicknameActivity">
+
+    <include
+        android:id="@+id/include_layout_head"
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <LinearLayout
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_15_black_28"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:text="手机号码"/>
+
+        <EditText
+            android:id="@+id/phoneNum_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/margin_16dp"
+            android:hint="请输入客户手机号码"
+            android:inputType="phone"
+            android:maxLength="15"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:textColor="@color/font_black_28"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <View style="@style/view1dp"></View>
+
+
+    <Button
+        android:id="@+id/ok_btn"
+        style="@style/common_btn_235"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:text="发送短信"/>
+
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.zemult.merchant.im;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.bigkoo.pickerview.TimePickerView;
 import com.flyco.roundview.RoundTextView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -30,6 +32,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.mine.MyFansActivity;
+import com.zemult.merchant.activity.mine.SharePhoneNumActivity;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.aip.mine.User2RemindIMInfoRequest;
@@ -45,6 +48,7 @@ import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -53,6 +57,11 @@ import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -101,6 +110,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
     @Bind(R.id.view_line1)
     View viewLine1;
 
+
     User2RemindIMInfoRequest user2RemindIMInfoRequest;
 
     UserInfoOwnerRequest userInfoOwnerRequest;
@@ -110,9 +120,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
     String merchantId,reviewstatus;
     int CHOOSEMERCHANT = 100,planId,CHOOSEPLAN=101,remindIMId;
     boolean isFromMerchant;
-    SharePopwindow popwindow;
+//    SharePopwindow popwindow;
     Merchant2SaveResOrderTmp merchant2SaveResOrderTmp;
-
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_bespeaknew);
@@ -157,7 +166,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
             }
             shopname =getIntent().getStringExtra("merchantName");
             bespekShopname.setText(shopname);
-            bespekShopname.setCompoundDrawables(null, null, null, null);
+//            bespekShopname.setCompoundDrawables(null, null, null, null);
         } else {
             bespekShopname.setText("请选择商户");
         }
@@ -179,38 +188,41 @@ public class CreateBespeakNewActivity extends BaseActivity {
         });
         lhTvTitle.setText("生成服务订单");
 
-
-        popwindow = new SharePopwindow(CreateBespeakNewActivity.this, new SharePopwindow.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                switch (position) {
-                    case SharePopwindow.WECHAT:
-                        popwindow.dismiss();
-                        merchant2_saveResOrderTmp();
-                        break;
-                    case SharePopwindow.LXR:
+        ordertime=DateTimeUtil.getOrderTime().replace("(当天) ","")+":00";
+        bespekTime.setText(DateTimeUtil.getOrderTime());
 
 
-
-                        break;
-                    case SharePopwindow.YUEFU:
-                        popwindow.dismiss();
-                        Intent    intent = new Intent(CreateBespeakNewActivity.this, MyFansActivity.class);
-                        intent.putExtra(MyFansActivity.INTENT_USERID, SlashHelper.userManager().getUserId());
-                        intent.putExtra("merchantId",merchantId);
-                        intent.putExtra("ordertime",ordertime);
-                        intent.putExtra("reservationMoney",etDingjin.getText().toString());
-                        intent.putExtra("shopname",shopname);
-                        intent.putExtra("note",note);
-                        intent.putExtra("orderpeople",orderpeople);
-                        intent.putExtra("planId",planId);
-                        intent.putExtra("fromAct","CreateBespeakNewActivity");
-                        startActivity(intent);
-
-                        break;
-                }
-            }
-        });
+//        popwindow = new SharePopwindow(CreateBespeakNewActivity.this, new SharePopwindow.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                switch (position) {
+//                    case SharePopwindow.WECHAT:
+//                        popwindow.dismiss();
+//                        merchant2_saveResOrderTmp();
+//                        break;
+//                    case SharePopwindow.LXR:
+//
+//
+//
+//                        break;
+//                    case SharePopwindow.YUEFU:
+//                        popwindow.dismiss();
+//                        Intent    intent = new Intent(CreateBespeakNewActivity.this, MyFansActivity.class);
+//                        intent.putExtra(MyFansActivity.INTENT_USERID, SlashHelper.userManager().getUserId());
+//                        intent.putExtra("merchantId",merchantId);
+//                        intent.putExtra("ordertime",ordertime);
+//                        intent.putExtra("reservationMoney",etDingjin.getText().toString());
+//                        intent.putExtra("shopname",shopname);
+//                        intent.putExtra("note",note);
+//                        intent.putExtra("orderpeople",orderpeople);
+//                        intent.putExtra("planId",planId);
+//                        intent.putExtra("fromAct","CreateBespeakNewActivity");
+//                        startActivity(intent);
+//
+//                        break;
+//                }
+//            }
+//        });
 
 
     }
@@ -346,7 +358,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单] " + ordertime + "  " + shopname+"(商户)");
+                            object.put("taskTitle", "[服务订单] " + (ordertime.length()<17?ordertime
+                                    :ordertime.substring(0,16) ) + "  " + shopname+"(商户)");
                             object.put("serviceId",  SlashHelper.userManager().getUserId());
                             object.put("reservationId", ((CommonResult) response).reservationId);
                         } catch (JSONException e) {
@@ -381,7 +394,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
     }
 
 
-    private void merchant2_saveResOrderTmp() {
+    private void merchant2_saveResOrderTmp(final int viewId) {
 
         try {
             if (merchant2SaveResOrderTmp != null) {
@@ -412,14 +425,23 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 @Override
                 public void onResponse(Object response) {
                     if (((CommonResult) response).status == 1) {
-                        UMImage shareImage = new UMImage(CreateBespeakNewActivity.this, R.mipmap.icon_share);
-                        new ShareAction(CreateBespeakNewActivity.this)
-                                .setPlatform(SHARE_MEDIA.WEIXIN)
-                                .setCallback(umShareListener)
-                                .withText("[服务订单] " + ordertime + "  " + shopname+"(商户)")
-                                .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/wxsharepay_index.do?preId="+((CommonResult) response).tmpid+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect")
-                                .withMedia(shareImage).withTitle("服务订单")
-                                .share();
+                        if(viewId==R.id.ll_share_wechat){
+                            UMImage shareImage = new UMImage(CreateBespeakNewActivity.this, R.mipmap.icon_share);
+                            new ShareAction(CreateBespeakNewActivity.this)
+                                    .setPlatform(SHARE_MEDIA.WEIXIN)
+                                    .setCallback(umShareListener)
+                                    .withText("您的管家【"+SlashHelper.userManager().getUserinfo().getName()+"】发来一个服务订单 " + ordertime + "  " + shopname+"(商户) 立即查看并确认...")
+                                    .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/wxsharepay_index.do?preId="+((CommonResult) response).tmpid+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect")
+                                    .withMedia(shareImage).withTitle("服务订单")
+                                    .share();
+                        }
+                        else{
+                            Intent intent =new Intent(CreateBespeakNewActivity.this,SharePhoneNumActivity.class);
+                            intent.putExtra("tmpid",((CommonResult) response).tmpid);
+                            startActivity(intent);
+
+                        }
+
 
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -433,7 +455,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_bespeak_commit, R.id.rl_ordershopname, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rl_ordershopname,    R.id.ll_share_wechat,
+            R.id.ll_share_lianxiren, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -455,11 +478,11 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
                 break;
 
-            case R.id.btn_bespeak_commit:
+            case R.id.ll_share_wechat:
+            case R.id.ll_share_lianxiren:
                 if (noLogin(CreateBespeakNewActivity.this))
                     return;
                 shopname = bespekShopname.getText().toString();
-                ordertime = bespekTime.getText().toString();
                 note = AppUtils.replaceBlank(etCustomerRemark.getText().toString());
                 strdingjin = etDingjin.getText().toString();
                 strremark = etCustomerRemark.getText().toString();
@@ -476,7 +499,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     return;
                 }
 
-                if (StringUtils.isEmpty(ordertime) || "选择时间".equals(ordertime)) {
+                if ( "选择时间".equals(bespekTime.getText().toString())) {
                     ToastUtil.showMessage("请选择预约时间");
                     return;
                 }
@@ -486,18 +509,11 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 }
 
                 if(customerId==0){
-                    popwindow.showType(true,false,false,false,true,false);
-                    if (popwindow.isShowing())
-                        popwindow.dismiss();
-                    else
-                        popwindow.showAtLocation(llRoot, Gravity.BOTTOM, 0, 0); //设置layout在PopupWindow中显示的位置
-
+                    merchant2_saveResOrderTmp(view.getId());
                 }
                 else{
                     user_reservation_add();
                 }
-
-
                 break;
 
             case R.id.rl_ordershopname:
@@ -510,9 +526,12 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
                 break;
             case R.id.rl_ordertime:
-                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-                        this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
-                dateTimePicKDialog.dateTimePicKDialog(bespekTime);
+//                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+//                        this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
+//                dateTimePicKDialog.dateTimePicKDialog(bespekTime);
+                showTimePicker();
+
+
                 break;
             case R.id.play_btn:
                 if(remindIMId!=0){
@@ -528,7 +547,52 @@ public class CreateBespeakNewActivity extends BaseActivity {
         }
     }
 
+    private void showTimePicker() {
+        Date now = new Date();
+        Calendar selectedDate = new GregorianCalendar();
+        if (!StringUtils.isBlank(ordertime)) {
+            selectedDate.setTime(DateTimeUtil.getDate(ordertime, "yyyy-MM-dd HH:mm:ss"));
+        }
+        Calendar startDate = new GregorianCalendar();
+        startDate.setTime(now);
+        Calendar endDate = new GregorianCalendar();
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 7));
+        TimePickerView  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                Date now = new Date();
+                if (date.getTime() - now.getTime() < 0) {
+                    ToastUtil.showMessage("选择时间不能晚于当前时间");
+                } else {
+                    ordertime = DateTimeUtil.getFormatTime(date);
+                    bespekTime.setText(getTime(date));
+                }
 
+            }
+        }).setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentSize(18)//滚轮文字大小
+                .setTitleSize(20)//标题文字大小
+                .setTitleText("选择时间")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(false)//是否循环滚动
+                .setTitleColor(Color.BLACK)//标题文字颜色
+                .setSubmitColor(getResources().getColor(R.color.font_main))//确定按钮文字颜色
+                .setCancelColor(Color.BLACK)//取消按钮文字颜色
+                .setTitleBgColor(Color.WHITE)//标题背景颜色 Night mode
+                .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+        pvTime.show();
+    }
+
+    private String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd (*) HH:mm");
+        return format.format(date).replace("*", DateTimeUtil.getWeekDayOfWeekisToday(date));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -566,19 +630,16 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 user_reservation_add();
                 Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
-            popwindow.dismiss();
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
             Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享失败", Toast.LENGTH_SHORT).show();
-            popwindow.dismiss();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享取消了", Toast.LENGTH_SHORT).show();
-            popwindow.dismiss();
         }
     };
 

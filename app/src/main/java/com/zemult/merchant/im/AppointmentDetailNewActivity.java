@@ -3,6 +3,7 @@ package com.zemult.merchant.im;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.bigkoo.pickerview.TimePickerView;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
@@ -64,6 +66,7 @@ import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
@@ -75,7 +78,12 @@ import com.zemult.merchant.view.common.CommonDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -114,7 +122,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Bind(R.id.pernumber_tv)
     TextView pernumberTv;
     @Bind(R.id.tv_time)
-    TextView tvTime;
+    TextView bespekTime;
     @Bind(R.id.tv_extra)
     TextView tvExtra;
     @Bind(R.id.tv_dingjin)
@@ -192,7 +200,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     TextView tvName;
     @Bind(R.id.serveraccount_btn)
     Button serveraccountBtn;
-    String reservationId = "";
+    String reservationId = "",ordertime = "";
     int type;
     String replayNote;
     int  merchantReviewstatus,planId,CHOOSEPLAN=101;
@@ -432,7 +440,16 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                     shopTv.setText(mReservation.merchantName);
                     pernumberTv.setText(mReservation.num + "人");
-                    tvTime.setText(mReservation.reservationTime);
+
+                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    try {
+                        Date date=sdf.parse(mReservation.reservationTime);
+                        bespekTime.setText(getTime(date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
                     tvExtra.setText(mReservation.note);
                     tvDingjin.setText(Convert.getMoneyString(mReservation.reservationMoney));
                     etCustomerremark.setText(mReservation.note);
@@ -464,11 +481,11 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             input.num = orderpeople;
             input.planId = planId;
             input.note = etCustomerremark.getText().toString();
-            if(tvTime.getText().toString().length()<17){
-                input.reservationTime= tvTime.getText().toString()+ ":00";
+            if(ordertime.length()<17){
+                input.reservationTime= ordertime+ ":00";
             }
             else{
-                input.reservationTime= tvTime.getText().toString();
+                input.reservationTime= ordertime;
             }
 
             input.reservationMoney= etDingjin.getText().toString();
@@ -490,8 +507,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单] " +(tvTime.getText().toString().length()<17?tvTime.getText().toString()
-                                    :tvTime.getText().toString().substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
+                            object.put("taskTitle", "[服务订单] " +(ordertime.length()<17?ordertime
+                                    :ordertime.substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
                             object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId + "");
                         } catch (JSONException e) {
@@ -903,8 +920,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     pmnvSelectDeadline.setVisibility(View.VISIBLE);
                     Drawable dra= getResources().getDrawable(R.mipmap.right_btn);
                     dra.setBounds( 0, 0, dra.getMinimumWidth(),dra.getMinimumHeight());
-                    tvTime.setCompoundDrawablePadding(10);
-                    tvTime.setCompoundDrawablesWithIntrinsicBounds(null, null, dra, null);
+                    bespekTime.setCompoundDrawablePadding(10);
+                    bespekTime.setCompoundDrawablesWithIntrinsicBounds(null, null, dra, null);
 
                     pernumberTv.setVisibility(View.GONE);
                     tvExtra.setVisibility(View.GONE);
@@ -932,9 +949,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     rlOrdertime.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-                                    AppointmentDetailNewActivity.this, tvTime.getText().toString(), "预约时间必须大于当前时间", 1);
-                            dateTimePicKDialog.dateTimePicKDialog(tvTime);
+//                            DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+//                                    AppointmentDetailNewActivity.this, tvTime.getText().toString(), "预约时间必须大于当前时间", 1);
+//                            dateTimePicKDialog.dateTimePicKDialog(tvTime);
+                            showTimePicker();
                         }
                     });
 
@@ -944,7 +962,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     etDingjin.setVisibility(View.GONE);
                     etCustomerremark.setVisibility(View.GONE);
                     pmnvSelectDeadline.setVisibility(View.GONE);
-                    tvTime.setCompoundDrawables(null, null, null, null);
+                    bespekTime.setCompoundDrawables(null, null, null, null);
 
                     pernumberTv.setVisibility(View.VISIBLE);
                     tvExtra.setVisibility(View.VISIBLE);
@@ -994,6 +1012,54 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+
+    private void showTimePicker() {
+        Date now = new Date();
+        Calendar selectedDate = new GregorianCalendar();
+        if (!StringUtils.isBlank(ordertime)) {
+            selectedDate.setTime(DateTimeUtil.getDate(ordertime, "yyyy-MM-dd HH:mm:ss"));
+        }
+        Calendar startDate = new GregorianCalendar();
+        startDate.setTime(now);
+        Calendar endDate = new GregorianCalendar();
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 7));
+        TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                Date now = new Date();
+                if (date.getTime() - now.getTime() < 0) {
+                    ToastUtil.showMessage("选择时间不能晚于当前时间");
+                } else {
+                    ordertime = DateTimeUtil.getFormatTime(date);
+                    bespekTime.setText(getTime(date));
+                }
+
+            }
+        }).setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentSize(18)//滚轮文字大小
+                .setTitleSize(20)//标题文字大小
+                .setTitleText("选择时间")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(false)//是否循环滚动
+                .setTitleColor(Color.BLACK)//标题文字颜色
+                .setSubmitColor(getResources().getColor(R.color.font_main))//确定按钮文字颜色
+                .setCancelColor(Color.BLACK)//取消按钮文字颜色
+                .setTitleBgColor(Color.WHITE)//标题背景颜色 Night mode
+                .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+        pvTime.show();
+    }
+
+    private String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd (*) HH:mm");
+        return format.format(date).replace("*", DateTimeUtil.getWeekDayOfWeekisToday(date));
     }
 
 

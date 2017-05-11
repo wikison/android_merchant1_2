@@ -40,6 +40,7 @@ import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.conversation.YWMessageChannel;
 import com.android.volley.VolleyError;
+import com.bigkoo.pickerview.TimePickerView;
 import com.czt.mp3recorder.MP3Recorder;
 import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
@@ -54,6 +55,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.oss.OssFileService;
@@ -69,8 +71,12 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -240,6 +246,10 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             }
         });
         lhTvTitle.setText("线上约服");
+
+        ordertime= DateTimeUtil.getOrderTime().replace("(当天) ","")+":00";
+        bespekTime.setText(DateTimeUtil.getOrderTime());
+
         imageButtonDial=(ImageButton)findViewById(R.id.imageButtonDial);
 
         imageButtonDial.setOnLongClickListener(new View.OnLongClickListener() {
@@ -398,6 +408,54 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
     }
 
+
+    private void showTimePicker() {
+        Date now = new Date();
+        Calendar selectedDate = new GregorianCalendar();
+        if (!StringUtils.isBlank(ordertime)) {
+            selectedDate.setTime(DateTimeUtil.getDate(ordertime, "yyyy-MM-dd HH:mm:ss"));
+        }
+        Calendar startDate = new GregorianCalendar();
+        startDate.setTime(now);
+        Calendar endDate = new GregorianCalendar();
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 7));
+        TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                Date now = new Date();
+                if (date.getTime() - now.getTime() < 0) {
+                    ToastUtil.showMessage("选择时间不能晚于当前时间");
+                } else {
+                    ordertime = DateTimeUtil.getFormatTime(date);
+                    bespekTime.setText(getTime(date));
+                }
+
+            }
+        }).setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentSize(18)//滚轮文字大小
+                .setTitleSize(20)//标题文字大小
+                .setTitleText("选择时间")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(false)//是否循环滚动
+                .setTitleColor(Color.BLACK)//标题文字颜色
+                .setSubmitColor(getResources().getColor(R.color.font_main))//确定按钮文字颜色
+                .setCancelColor(Color.BLACK)//取消按钮文字颜色
+                .setTitleBgColor(Color.WHITE)//标题背景颜色 Night mode
+                .setBgColor(Color.WHITE)//滚轮背景颜色 Night mode
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+        pvTime.show();
+    }
+
+    private String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd (*) HH:mm");
+        return format.format(date).replace("*", DateTimeUtil.getWeekDayOfWeekisToday(date));
+    }
+
     @OnClick({R.id.lh_btn_back, R.id.ll_back,R.id.btn_delete, R.id.rl_my_service,R.id.btn_bespeak_commit, R.id.rl_ordertime,R.id.rll_voice})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -408,7 +466,6 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
             case R.id.btn_bespeak_commit:
                 if (noLogin(CustomerCreateBespeakActivity.this))
                     return;
-                ordertime = bespekTime.getText().toString();
                 renjun=etCustomerrenjun.getText().toString();
                 if(StringUtils.isBlank(fileUrl)){
                     if (StringUtils.isEmpty(orderpeople)) {
@@ -416,7 +473,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                         return;
                     }
 
-                    if (StringUtils.isEmpty(ordertime) || "请选择预约时间".equals(ordertime)) {
+                    if ("请选择预约时间".equals(bespekTime.getText().toString())) {
                         ToastUtil.showMessage("请选择预约时间");
                         return;
                     }
@@ -431,9 +488,11 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
                 break;
 
             case R.id.rl_ordertime:
-                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
-                        this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
-                dateTimePicKDialog.dateTimePicKDialog(bespekTime);
+//                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(
+//                        this, bespekTime.getText().toString(), "预约时间必须大于当前时间", 1);
+//                dateTimePicKDialog.dateTimePicKDialog(bespekTime);
+
+                showTimePicker();
                 break;
 
             case R.id.rll_voice:

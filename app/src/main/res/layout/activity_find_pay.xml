@@ -153,7 +153,6 @@
 
                 <TextView
                     style="@style/text_15_black_28"
-                    android:drawableRight="@mipmap/exclamation"
                     android:text="订金"/>
 
                 <EditText

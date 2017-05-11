@@ -354,7 +354,6 @@
 
                 <TextView
                     android:gravity="center"
-                    android:drawableRight="@mipmap/exclamation"
                     style="@style/detail_left"
                     android:text="订金" />
 

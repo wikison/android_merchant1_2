@@ -221,7 +221,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@mipmap/exclamation"
                         android:gravity="center"
                         android:text="订金" />
 
@@ -329,8 +328,6 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@mipmap/exclamation"
                         android:gravity="center"
                         android:text="订金" />
 
