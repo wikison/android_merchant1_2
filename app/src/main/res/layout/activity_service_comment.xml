@@ -9,6 +9,97 @@
     tools:context="com.zemult.merchant.activity.mine.MyInviteActivity">
 
     <include layout="@layout/layout_head"/>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearLayout_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/simple_head_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/user_icon" />
+
+            <RelativeLayout
+                android:layout_toRightOf="@+id/simple_head_iv"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/simple_name_tv"
+                    android:text="张三"
+                    android:textSize="15sp"
+                    android:textColor="@color/font_black_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/simple_type_tv"
+                    android:textSize="12sp"
+                    android:textColor="@color/font_black_999"
+                    android:text="服务评价"
+                    android:layout_alignBottom="@+id/simple_name_tv"
+                    android:layout_toRightOf="@+id/simple_name_tv"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.hedgehog.ratingbar.RatingBar
+                    android:id="@+id/simple_ratingbar"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:clickable="false"
+                    app:halfstart="true"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/kongxing_icon"
+                    app:starFill="@mipmap/xing_icon"
+                    app:starHalf="@mipmap/banxing_icon"
+                    app:starImageHeight="16dp"
+                    app:starImageWidth="16dp"
+                    app:starImagePadding="3dp"/>
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/simple_time_tv"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/font_black_999"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/simple_note_tv"
+            android:textSize="14sp"
+            android:paddingLeft="16dp"
+            android:text="--------------------------------------------------------------------------------------------------"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:background="@color/white"
+            android:textColor="@color/font_black_28"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            style="@style/divider12dp"/>
+
+
+    </LinearLayout>
+
+
     <com.zemult.merchant.view.SmoothListView.SmoothListView
         android:id="@+id/comment_lv"
         android:layout_width="match_parent"

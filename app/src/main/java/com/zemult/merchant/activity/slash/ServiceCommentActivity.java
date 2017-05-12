@@ -1,9 +1,11 @@
 package com.zemult.merchant.activity.slash;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,12 +23,14 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Comment;
 import com.zemult.merchant.model.apimodel.APIM_ManagerNewsCommentList;
 import com.zemult.merchant.util.AppUtils;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -41,10 +45,23 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
     ImageView iv;
     @Bind(R.id.rl_no_data)
     RelativeLayout rlNoData;
+    @Bind(R.id.linearLayout_simple)
+    LinearLayout linearLayoutSimple;
+
     CommentsListRequest commentsListRequest;
     User2SaleUserCommentSetReadRequest user2SaleUserCommentSetReadRequest;
     List<M_Comment> mDatas = new ArrayList<M_Comment>();
     CommonAdapter commonAdapter;
+    @Bind(R.id.simple_head_iv)
+    ImageView simpleHeadIv;
+    @Bind(R.id.simple_name_tv)
+    TextView simpleNameTv;
+    @Bind(R.id.simple_ratingbar)
+    RatingBar simpleRatingbar;
+    @Bind(R.id.simple_time_tv)
+    TextView simpleTimeTv;
+    @Bind(R.id.simple_note_tv)
+    TextView simpleNoteTv;
     private int page = 1;
     int saleUserId;
     int merchantId;
@@ -75,6 +92,14 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
 
         if (saleUserId > 0) {
             commentsList();
+        } else {
+            linearLayoutSimple.setVisibility(View.VISIBLE);
+            commentLv.setVisibility(View.GONE);
+            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(),simpleHeadIv);
+            simpleNameTv.setText( SlashHelper.userManager().getUserinfo().getName());
+            simpleRatingbar.setStar(getIntent().getIntExtra("comment",0));
+            simpleTimeTv.setText(getIntent().getStringExtra("commentNote").substring(0, 10));
+            simpleNoteTv.setText(getIntent().getStringExtra("commentTime"));
         }
     }
 
@@ -231,5 +256,12 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
             setResult(RESULT_OK);
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -380,7 +380,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
                             if(mReservation.isComment==1){//是否评价(0:否,1:是)
-                                inviteBtn.setVisibility(View.GONE);
+                                inviteBtn.setVisibility(View.VISIBLE);
+                                inviteBtn.setText("查看评价");
                             }
                             else{
                                 inviteBtn.setVisibility(View.VISIBLE);
@@ -404,7 +405,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         }
 
 
-                        //状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时))
+                        //状态(0:待确认,1:预约成功,2:已支付(被消费单关联支付以后),3:预约失效(待确认超时)，4：预约未支付(超时))
                     } else if (mReservation.state == 2) {
                         tvState.setText("已支付");
                         if (type == 0) {//客户
@@ -431,7 +432,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                         lhTvTitle.setText("服务定单");
                         llState.setVisibility(View.VISIBLE);
-                    } else if (mReservation.state == 3||mReservation.state == 4) {
+                    } else if (mReservation.state == 3||mReservation.state == 4) {//没支付完成，超过预约时间
                         tvState.setText("已结束");
                         serveraccountBtn.setVisibility(View.GONE);
                         lhTvTitle.setText("服务定单");
@@ -859,16 +860,26 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
 
             case R.id.invite_btn:
+                if(mReservation.isComment==1){//是否评价(0:否,1:是)
+                    //查看评价
+                    Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
+                    intent2.putExtra("comment", mReservation.comment);
+                    intent2.putExtra("commentNote", mReservation.commentNote);
+                    intent2.putExtra("commentTime", mReservation.commentTime);
+                    startActivity(intent2);
+                }else{
+                    //评价
+                    Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
+                    intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
+                    intent2.putExtra("managerhead", mReservation.saleUserHead);
+                    intent2.putExtra("managername",mReservation.saleUserName);
+                    intent2.putExtra("merchantName", mReservation.merchantName);
+                    if (!TextUtils.isEmpty(reservationId))
+                        intent2.putExtra("reservationId", Integer.valueOf(reservationId));
+                    startActivityForResult(intent2,10002);
+                }
 
-                //评价
-                Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
-                intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
-                intent2.putExtra("managerhead", mReservation.saleUserHead);
-                intent2.putExtra("managername",mReservation.saleUserName);
-                intent2.putExtra("merchantName", mReservation.merchantName);
-                if (!TextUtils.isEmpty(reservationId))
-                    intent2.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivityForResult(intent2,10002);
+
 
                 break;
             case R.id.jiezhang_btn:

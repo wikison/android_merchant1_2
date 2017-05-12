@@ -1323,27 +1323,50 @@ public final class DateTimeUtil implements Serializable {
 
 
     /**
-     0:00-12:00 显示11:30
-     12:00 - 18:00 显示18:00
-     18:00 - 24:00 显示 20:00
+     0:00-11:29 显示11:30
+     11:30 - 17:59 显示18:00
+     18:00 - 19:59 显示 20:00
+     20:00 - 23:59 显示 当前时间
+     日期为当天
+     如果是当天 显示今天
+     如果不是当天 显示周几
+     格式 yyyy-MM-dd(week) HH:mm
      * @return
      * @throws ParseException
      */
     public static  String getOrderTime()  {
       int currenthour=Integer.parseInt(getFormatDateTime(new Date(), "HH"));
-        if(currenthour>=0&&currenthour<12){
-            currenthour=11;
-            return getCurrentDate()+ " (当天) 11:30";
-        }
-        else  if(currenthour>=12&&currenthour<18){
-            currenthour=18;
-            return getCurrentDate()+ " (当天) 18:00";
-        }
-        else {
-            currenthour=20;
-            return  getCurrentDate()+" (当天) 20:00";
+        int currentmin=Integer.parseInt(getFormatDateTime(new Date(), "mm"));
+        String retTime="";
+        if(currenthour>=0&&currenthour<=11){
+            if(currenthour==11&&currentmin>=0&&currentmin<=29){
+                retTime= getCurrentDate()+ " (当天) 11:30";
+            }
+            else{
+                retTime= getCurrentDate()+ " (当天) 11:30";
+            }
+
         }
 
+        if(currenthour>=11&&currenthour<=17){
+            if(currentmin>=30&&currentmin<=59){
+                retTime= getCurrentDate()+ " (当天) 18:00";
+            }
+        }
+
+        if(currenthour>=18&&currenthour<=19){
+            if(currentmin>=00&&currentmin<=59){
+                retTime= getCurrentDate()+ " (当天) 20:00";
+            }
+        }
+
+        if(currenthour>=20&&currenthour<=23){
+            if(currentmin>=00&&currentmin<=59){
+                retTime= getCurrentDate()+ " (当天) "+currenthour+":"+currentmin;
+            }
+        }
+
+        return retTime;
 
     }
 
