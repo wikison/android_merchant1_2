@@ -240,6 +240,13 @@ public class CommonViewHolder {
         return this;
     }
 
+    //本地圆形图片
+    public CommonViewHolder setCircleResImage(int viewId,int resouseid) {
+        ImageView imageView = getView(viewId);
+        imageManager.loadCircleResImage(resouseid, imageView);
+        return this;
+    }
+
 
     /**
      * 通过ResourceId设置ImageView 的图片

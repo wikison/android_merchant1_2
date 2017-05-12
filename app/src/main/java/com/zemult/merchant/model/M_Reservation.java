@@ -123,6 +123,8 @@ public class M_Reservation implements Serializable {
 
     @Expose
     public int isComment;//是否评价(0:否,1:是)
+    @Expose
+    public String title		;	//邀请函主题
 
     @Expose
     public int comment;//评价的星数(0-5)
