@@ -150,5 +150,6 @@ public class CommonResult {
     @Expose
     public int  tmpid;//临时表id
 
-
+    @Expose
+    public String  shorturl;//短链接
 }

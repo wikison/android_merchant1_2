@@ -1,6 +1,7 @@
 package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
+import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
@@ -44,6 +46,7 @@ public class SharePhoneNumActivity extends BaseActivity {
     Button okBtn;
 
     int tmpid;
+    String orderTime,shopName;
 
     @Override
     public void setContentView() {
@@ -56,6 +59,8 @@ public class SharePhoneNumActivity extends BaseActivity {
         okBtn.setBackgroundResource(R.drawable.next_bg_btn_select);
         phoneNumEt.addTextChangedListener(watcher);
         tmpid=getIntent().getIntExtra("tmpid",0);
+        orderTime=getIntent().getStringExtra("orderTime");
+        shopName=getIntent().getStringExtra("shopName");
 
     }
 
@@ -114,8 +119,10 @@ public class SharePhoneNumActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        ToastUtil.showMessage("发送成功");
-                        finish();
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+phoneNumEt.getText().toString()));
+                        intent.putExtra("sms_body", "【约服】您的好友"+ SlashHelper.userManager().getUserinfo().getName()
+                                +"发来一个服务订单，"+orderTime+shopName+"，立即去查看并确认..."+  ((CommonResult) response).shorturl);
+                        startActivity(intent);
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
                     }
