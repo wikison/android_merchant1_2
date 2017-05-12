@@ -681,6 +681,8 @@ public class Urls {
     public static String USER_WX_BAND_PHONE = "user_wx_band_phone";
     //发送短信(临时服务订单)
     public static String USER2_RES_ORDER_TMP_SEND = "user2_res_order_tmp_send";
-
-
+    //我的邀请函列表
+    public static String USER2_ORDERINVITATION_LIST = "user2_orderInvitation_list";
+    //我的被邀请函列表
+    public static String USER2_ORDERINVITATION_FEED_LIST = "user2_orderInvitation_feed_list";
 }
