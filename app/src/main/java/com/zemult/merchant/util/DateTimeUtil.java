@@ -1349,7 +1349,10 @@ public final class DateTimeUtil implements Serializable {
         }
 
         if(currenthour>=11&&currenthour<=17){
-            if(currentmin>=30&&currentmin<=59){
+            if(currenthour==11&&currentmin>=30&&currentmin<=59){
+                retTime= getCurrentDate()+ " (当天) 18:00";
+            }
+            else{
                 retTime= getCurrentDate()+ " (当天) 18:00";
             }
         }
