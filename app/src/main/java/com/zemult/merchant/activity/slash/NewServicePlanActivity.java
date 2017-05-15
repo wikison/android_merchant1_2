@@ -133,7 +133,6 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
                 if (((APIM_PlanInfo) response).status == 1) {
                     M_Plan plan = ((APIM_PlanInfo) response).planInfo;
                     etTitle.setText(plan.name);
-//                    etContent.setText(plan.note.replace("[回车]", "\n"));
                     etContent.setText(plan.note);
                     if (plan.state == 0)
                         scOpen.setChecked(false);
@@ -210,7 +209,10 @@ public class NewServicePlanActivity extends BaseImageChooseActivity implements
         showPd();
         if (!photos.isEmpty()) {
             //有图片
-            ossService = OssHelper.initOSS(this);
+            if(ossService == null){
+                ossService = OssHelper.initOSS(this);
+            }
+
             for (int i = 0; i < photos.size(); i++) {
                 if (SlashHelper.userManager().getUserinfo() != null
                         && !photos.get(i).startsWith("http://")) {
