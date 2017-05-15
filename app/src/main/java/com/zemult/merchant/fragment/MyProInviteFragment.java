@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.User2OrderInvitationFeedListRequest;
 import com.zemult.merchant.aip.mine.User2OrderInvitationListRequest;
 import com.zemult.merchant.app.BaseFragment;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.DateTimeUtil;
+import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
@@ -319,9 +322,8 @@ public class MyProInviteFragment extends BaseFragment implements SmoothListView.
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 reservationId = mDatas.get(position - 1).reservationId;
-//                Intent intent = new Intent(mActivity, ServiceTicketDetailActivity.class);
-//                intent.putExtra(ServiceTicketDetailActivity.INTENT_RESERVATIONID, reservationId + "");
-//                startActivity(intent);
+                IntentUtil.start_activity(getActivity(), BaseWebViewActivity.class,
+                        new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
             }
         });
 

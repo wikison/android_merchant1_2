@@ -27,8 +27,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 9
-        versionName "2.1.1"
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.1.1", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
+        versionName "2.2"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.2", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
 
     signingConfigs {
