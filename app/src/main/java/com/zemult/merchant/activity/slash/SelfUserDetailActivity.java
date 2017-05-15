@@ -223,7 +223,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-        lhTvTitle.setText("我的管家详情");
+        lhTvTitle.setText("我是服务管家");
         llRight.setVisibility(View.VISIBLE);
         ivRight.setImageResource(R.mipmap.fenxiang_icon);
         imageManager.loadCircleHead(userHead, ivHead, "@120w_120h");
