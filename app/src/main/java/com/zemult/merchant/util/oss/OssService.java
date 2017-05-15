@@ -2,18 +2,22 @@ package com.zemult.merchant.util.oss;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageHelper;
+import com.zemult.merchant.util.ToastUtil;
+import com.zemult.merchant.view.common.LoadingDialog;
 
 import java.io.File;
 import java.util.HashMap;
@@ -50,8 +54,7 @@ public class OssService {
             return;
         }
 
-        File mfile = new File(AppUtils.removeFileHeader(localFile));
-        File imageFile = new File(AppUtils.removeFileHeader(ImageHelper.saveCompressBitmap4Upload(mfile.getPath())));
+        File imageFile = new File(AppUtils.removeFileHeader(localFile));
 
 
         // 构造上传请求
@@ -67,7 +70,6 @@ public class OssService {
                 }
             });
         }
-
 
         OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
@@ -109,6 +111,4 @@ public class OssService {
             }
         });
     }
-
-
 }
