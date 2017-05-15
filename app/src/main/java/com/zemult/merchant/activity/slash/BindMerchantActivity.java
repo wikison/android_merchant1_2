@@ -73,7 +73,7 @@ public class BindMerchantActivity extends BaseActivity {
     private Activity mActivity;
     private M_Merchant merchantInfo;
     private int merchantId;
-    private String positionName, tags;
+    private String positionName="", tags;
 
     @Override
     public void setContentView() {
@@ -326,7 +326,7 @@ public class BindMerchantActivity extends BaseActivity {
                 break;
             case R.id.rl_service_position:
                 intent = new Intent(mActivity, PositionSetActivity.class);
-                intent.putExtra("position_name", "");
+                intent.putExtra("position_name", positionName);
                 startActivityForResult(intent, MODIFY_POSITION);
                 break;
             case R.id.btn_bind:

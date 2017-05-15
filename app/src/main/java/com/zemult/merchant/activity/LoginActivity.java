@@ -302,7 +302,6 @@ public class LoginActivity extends BaseActivity {
                             public void onError(int errorCode, String errorMessage) {
                                 loadingDialog.dismiss();
                                 if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
-                                    Notification.showToastMsg(LoginActivity.this, "用户不存在");
                                 } else {
                                     Notification.showToastMsg(LoginActivity.this, errorMessage);
                                 }

@@ -212,7 +212,7 @@ public class MineFragment extends BaseFragment {
                     intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
                     startActivity(intent);
                 } else {
-                    CommonDialog.showDialogListener(mContext, "一键注册服务管家", "暂不要", "一键注册", getResources().getString(R.string.one_key_service), new View.OnClickListener() {
+                    CommonDialog.showDialogListener(mContext, "服务管家一键注册", "暂不要", "一键注册", getResources().getString(R.string.one_key_service_mine), new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             CommonDialog.DismissProgressDialog();

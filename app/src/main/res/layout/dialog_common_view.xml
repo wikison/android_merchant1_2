@@ -22,13 +22,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="28dp"
                 android:id="@+id/tv_title"
                 style="@style/text_16_black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
                 android:gravity="center"
-                android:text="标题"
+                android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 />
 
@@ -42,20 +43,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingBottom="28.0dip"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:paddingTop="28.0dip">
 
 
                 <TextView
-                    android:gravity="center"
                     android:id="@+id/laytext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:gravity="center"
                     android:singleLine="false"
                     android:textColor="@color/black"
                     android:textSize="16.0sp"/>
@@ -116,9 +117,9 @@
                 android:gravity="center"
                 android:singleLine="false"
                 android:text="确定"
-                android:textStyle="bold"
                 android:textColor="#007aff"
-                android:textSize="@dimen/font_32px"/>
+                android:textSize="@dimen/font_32px"
+                android:textStyle="bold"/>
         </LinearLayout>
     </com.flyco.roundview.RoundLinearLayout>
 
