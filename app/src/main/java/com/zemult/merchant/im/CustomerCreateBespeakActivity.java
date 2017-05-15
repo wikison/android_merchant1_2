@@ -605,7 +605,12 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
 
         input.userId = SlashHelper.userManager().getUserId();
         input.merchantId = m_merchant.merchantId; //服务商户id
-        input.reservationTime =StringUtils.isBlank(ordertime)?"":ordertime+":00" ;//预约时间
+        if(ordertime.length()<17){
+            input.reservationTime= ordertime+ ":00";
+        }
+        else{
+            input.reservationTime= ordertime;
+        }
         input.num = orderpeople;//人数
         input.perMoney =renjun ;//人均预算
         input.tags =StringUtils.isBlank(selectTag)?"":selectTag ;//服务管家id

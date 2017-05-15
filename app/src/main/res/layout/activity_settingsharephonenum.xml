@@ -28,6 +28,7 @@
 
         <EditText
             android:id="@+id/phoneNum_et"
+            android:layout_marginRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -39,6 +40,15 @@
             android:paddingLeft="@dimen/margin_16dp"
             android:textColor="@color/font_black_28"
             android:textSize="15sp"/>
+
+
+        <ImageView
+            android:layout_marginLeft="-40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/choose_people_iv"
+            android:background="@mipmap/people"
+            />
     </LinearLayout>
 
     <View style="@style/view1dp"></View>

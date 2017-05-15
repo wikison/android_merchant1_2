@@ -1,5 +1,6 @@
 package com.zemult.merchant.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
@@ -13,14 +14,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.aip.common.User2ReservationEditInvitationRequest;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
+import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SharePopwindow;
 
 import java.io.UnsupportedEncodingException;
@@ -28,6 +34,7 @@ import java.net.URLDecoder;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import zema.volley.network.ResponseListener;
 
 public class ShareAppointmentActivity extends BaseActivity {
 
@@ -43,7 +50,8 @@ public class ShareAppointmentActivity extends BaseActivity {
     RelativeLayout llRoot;
     private SharePopwindow popwindow;
     String shareurl,sharecontent,sharetitle,sharename="";
-
+    User2ReservationEditInvitationRequest user2ReservationEditInvitationRequest;
+    int reservationId;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_share_appointment);
@@ -61,6 +69,7 @@ public class ShareAppointmentActivity extends BaseActivity {
         shareurl=getIntent().getStringExtra("shareurl");
         sharecontent=getIntent().getStringExtra("sharecontent");
         sharetitle=getIntent().getStringExtra("sharetitle");
+        reservationId=getIntent().getIntExtra("reservationId",0);
         webview.setWebChromeClient(new WebChromeClient());
         webview.loadUrl(shareurl);
 
@@ -163,7 +172,37 @@ public class ShareAppointmentActivity extends BaseActivity {
     }
 
 
+    //生成邀请函(服务单)
+    private void user2_reservation_editInvitation() {
+        try {
+            if (user2ReservationEditInvitationRequest != null) {
+                user2ReservationEditInvitationRequest.cancel();
+            }
+            User2ReservationEditInvitationRequest.Input input = new User2ReservationEditInvitationRequest.Input();
+            input.reservationId = reservationId;
+            input.convertJosn();
 
+            user2ReservationEditInvitationRequest = new User2ReservationEditInvitationRequest(input, new ResponseListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error);
+                }
+
+                @Override
+                public void onResponse(Object response) {
+                    if (((CommonResult) response).status == 1) {
+                        setResult(RESULT_OK);
+                        finish();
+
+                    } else {
+                        ToastUtil.showMessage(((CommonResult) response).info);
+                    }
+                }
+            });
+            sendJsonRequest(user2ReservationEditInvitationRequest);
+        } catch (Exception e) {
+        }
+    }
 
     UMShareListener umShareListener = new UMShareListener() {
         @Override
@@ -173,6 +212,7 @@ public class ShareAppointmentActivity extends BaseActivity {
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
             } else {
+                user2_reservation_editInvitation();
                 Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
             popwindow.dismiss();

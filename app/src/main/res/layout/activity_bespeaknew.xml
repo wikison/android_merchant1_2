@@ -302,7 +302,13 @@
                 />
 
 
-
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_choosesend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
             <RelativeLayout
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
@@ -388,7 +394,7 @@
 
             </LinearLayout>
 
-
+</LinearLayout>
             <com.flyco.roundview.RoundTextView
                 android:visibility="gone"
                 android:layout_marginTop="90dp"

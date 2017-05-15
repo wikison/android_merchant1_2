@@ -41,10 +41,12 @@ import com.zemult.merchant.activity.mine.MyQr4OrderActivity;
 import com.zemult.merchant.activity.mine.PayInfoActivity;
 import com.zemult.merchant.activity.mine.ServiceHistoryDetailActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
+import com.zemult.merchant.activity.slash.ServiceCommentActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
+import com.zemult.merchant.aip.common.User2ReservationEditInvitationRequest;
 import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
 import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
 import com.zemult.merchant.aip.mine.UserRewardPayAddRequest;
@@ -56,6 +58,7 @@ import com.zemult.merchant.alipay.taskpay.AssessmentActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayType4OrderActivity;
 import com.zemult.merchant.alipay.taskpay.ChoosePayTypeActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.im.common.Notification;
@@ -166,6 +169,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     Button billdetailsBtn;
     @Bind(R.id.cus_billdetails_btn)
     Button cusBilldetailsBtn;
+    @Bind(R.id.jiezhang_btn)
+    Button jiezhangBtn;
     @Bind(R.id.call_btn)
     Button callBtn;
     @Bind(R.id.sl_data)
@@ -211,6 +216,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     User2ReservationPayRequest  user2ReservationPayRequest;
     User2ReservationSureRequest user2ReservationSureRequest;
     UserRewardPayAddRequest rewardPayAddRequest;
+
 
     public static String REFLASH_MYAPPOINT = "reflash_myappoint";
     String userName="",fileUrl="";
@@ -379,6 +385,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             llZanshang.setVisibility(View.GONE);
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
+                            if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                                jiezhangBtn.setText("生成邀请函");
+                            }
+                            else{
+                                jiezhangBtn.setText("查看邀请函");
+                            }
+
                             if(mReservation.isComment==1){//是否评价(0:否,1:是)
                                 inviteBtn.setVisibility(View.VISIBLE);
                                 inviteBtn.setText("查看评价");
@@ -574,6 +587,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         } catch (Exception e) {
         }
     }
+
+
+
+
+
+
 
     //用户确认预约单
     private void user2_reservation_sure() {
@@ -862,7 +881,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             case R.id.invite_btn:
                 if(mReservation.isComment==1){//是否评价(0:否,1:是)
                     //查看评价
-                    Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
+                    Intent intent2 = new Intent(this, ServiceCommentActivity.class);
                     intent2.putExtra("comment", mReservation.comment);
                     intent2.putExtra("commentNote", mReservation.commentNote);
                     intent2.putExtra("commentTime", mReservation.commentTime);
@@ -884,14 +903,20 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
             case R.id.jiezhang_btn:
 
-                //邀请好友
-                Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
-                urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
-                urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
-                urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
-                        "，诚挚邀请，期待您的赴约。");
-                startActivity(urlintent);
-
+                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                    //邀请好友
+                    Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
+                    urlintent.putExtra("reservationId",mReservation.reservationId);
+                    urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                    urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                    urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                            "，诚挚邀请，期待您的赴约。");
+                    startActivityForResult(urlintent,10003);
+                }
+                else{
+                    IntentUtil.start_activity(this, BaseWebViewActivity.class,
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                }
 
                 break;
 
@@ -998,7 +1023,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
             case R.id.iv_reward:
                 showDialog();
-
+                break;
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
                     rewardMoney = 0;
@@ -1222,7 +1247,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10001||requestCode ==10002 ) {//赞赏-生成支付单
+        if (requestCode == 10001||requestCode ==10002||requestCode ==10003 ) {//赞赏-生成支付单  10003 分享刷新
             userReservationInfo();
         }
         if (requestCode == 1000&&RESULT_OK==resultCode ) {//支付定金

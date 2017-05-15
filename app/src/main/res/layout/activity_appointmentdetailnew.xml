@@ -639,7 +639,7 @@
                             android:layout_marginLeft="25dp"
                             android:layout_toRightOf="@+id/invite_btn"
                             android:padding="8dp"
-                            android:text="邀请函"
+                            android:text="生成邀请函"
                             />
                     </RelativeLayout>
 

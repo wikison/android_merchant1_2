@@ -133,6 +133,8 @@ public class M_Reservation implements Serializable {
     @Expose
     public String  commentTime;//评价时间(格式为"yyyy-MM-dd HH:mm:ss")
 
+    @Expose
+    public int  isInvitation;//是否生成了邀请函(0:否,1:是)
 
 
 }

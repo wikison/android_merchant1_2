@@ -685,4 +685,9 @@ public class Urls {
     public static String USER2_ORDERINVITATION_LIST = "user2_orderInvitation_list";
     //我的被邀请函列表
     public static String USER2_ORDERINVITATION_FEED_LIST = "user2_orderInvitation_feed_list";
+    //生成邀请函(服务单)
+    public static String USER2_RESERVATION_EDITINVITATION = "user2_reservation_editInvitation";
+
+
+
 }

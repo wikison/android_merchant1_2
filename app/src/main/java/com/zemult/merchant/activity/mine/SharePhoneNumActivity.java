@@ -1,7 +1,10 @@
 package com.zemult.merchant.activity.mine;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +48,9 @@ public class SharePhoneNumActivity extends BaseActivity {
     EditText phoneNumEt;
     @Bind(R.id.ok_btn)
     Button okBtn;
+    @Bind(R.id.choose_people_iv)
+    ImageView choosePeopleIv;
+
 
     int tmpid;
     String orderTime,shopName;
@@ -135,7 +142,7 @@ public class SharePhoneNumActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ok_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.ok_btn,R.id.choose_people_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -149,6 +156,96 @@ public class SharePhoneNumActivity extends BaseActivity {
                     user_wx_band_phone();
                 }
                 break;
+
+            case R.id.choose_people_iv:
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
+                break;
+
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+
+            case (1) :
+            {
+
+                if (resultCode == Activity.RESULT_OK)
+                {
+
+                    Uri contactData = data.getData();
+
+                    Cursor c = managedQuery(contactData, null, null, null, null);
+
+                    c.moveToFirst();
+
+                    String phoneNum=this.getContactPhone(c);
+                    phoneNumEt.setText(phoneNum);
+
+                }
+
+                break;
+
+            }
+
+        }
+
+
+
+
+    }
+
+
+    //获取联系人电话
+    private String getContactPhone(Cursor cursor)
+    {
+
+        int phoneColumn = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
+        int phoneNum = cursor.getInt(phoneColumn);
+        String phoneResult="";
+        //System.out.print(phoneNum);
+        if (phoneNum > 0)
+        {
+            // 获得联系人的ID号
+            int idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+            String contactId = cursor.getString(idColumn);
+            // 获得联系人的电话号码的cursor;
+            Cursor phones = getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = " + contactId,
+                    null, null);
+            //int phoneCount = phones.getCount();
+            //allPhoneNum = new ArrayList<String>(phoneCount);
+            if (phones.moveToFirst())
+            {
+                // 遍历所有的电话号码
+                for (;!phones.isAfterLast();phones.moveToNext())
+                {
+                    int index = phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    int typeindex = phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
+                    int phone_type = phones.getInt(typeindex);
+                    String phoneNumber = phones.getString(index);
+                    switch(phone_type)
+                    {
+                        case 2:
+                            phoneResult=phoneNumber;
+                            break;
+                    }
+                    //allPhoneNum.add(phoneNumber);
+                }
+                if (!phones.isClosed())
+                {
+                    phones.close();
+                }
+            }
+        }
+        return phoneResult;
     }
 }

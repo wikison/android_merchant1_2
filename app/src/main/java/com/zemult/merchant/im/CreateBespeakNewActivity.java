@@ -110,6 +110,10 @@ public class CreateBespeakNewActivity extends BaseActivity {
     @Bind(R.id.view_line1)
     View viewLine1;
 
+    @Bind(R.id.ll_choosesend)
+    LinearLayout llChoosesend;
+
+
 
     User2RemindIMInfoRequest user2RemindIMInfoRequest;
 
@@ -149,9 +153,13 @@ public class CreateBespeakNewActivity extends BaseActivity {
         if(customerId==0){
             rlOrderuser.setVisibility(View.GONE);
             viewLine1.setVisibility(View.GONE);
+            llChoosesend.setVisibility(View.VISIBLE);
+            btnBespeakCommit.setVisibility(View.GONE);
         }
         else{
             get_user_info_owner_request();
+            llChoosesend.setVisibility(View.GONE);
+            btnBespeakCommit.setVisibility(View.VISIBLE);
         }
 
         if (null!=merchantId&&null!=reviewstatus) {
@@ -459,7 +467,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rl_ordershopname,    R.id.ll_share_wechat,
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rl_ordershopname,    R.id.ll_share_wechat, R.id.btn_bespeak_commit,
             R.id.ll_share_lianxiren, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -511,15 +519,42 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     ToastUtil.showMessage("请输入包厢或房间号");
                     return;
                 }
+                merchant2_saveResOrderTmp(view.getId());
 
-                if(customerId==0){
-                    merchant2_saveResOrderTmp(view.getId());
-                }
-                else{
-                    user_reservation_add();
-                }
                 break;
 
+
+            case R.id.btn_bespeak_commit:
+                if (noLogin(CreateBespeakNewActivity.this))
+                    return;
+                shopname = bespekShopname.getText().toString();
+                note = AppUtils.replaceBlank(etCustomerRemark.getText().toString());
+                strdingjin = etDingjin.getText().toString();
+                strremark = etCustomerRemark.getText().toString();
+                if ("请选择商户".equals(shopname)) {
+                    ToastUtil.showMessage("请选择商户");
+                    return;
+                }
+                if ( StringUtils.isBlank(merchantId)) {
+                    ToastUtil.showMessage("请选择商户");
+                    return;
+                }
+                if (StringUtils.isEmpty(orderpeople)) {
+                    ToastUtil.showMessage("请选择预约人数");
+                    return;
+                }
+
+                if ( "选择时间".equals(bespekTime.getText().toString())) {
+                    ToastUtil.showMessage("请选择预约时间");
+                    return;
+                }
+                if (StringUtils.isEmpty(strremark)) {
+                    ToastUtil.showMessage("请输入包厢或房间号");
+                    return;
+                }
+                user_reservation_add();
+
+                break;
             case R.id.rl_ordershopname:
                 if (!isFromMerchant) {
                     Intent intent = new Intent(CreateBespeakNewActivity.this, ChooseReservationMerchantActivity.class);
@@ -550,6 +585,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
         }
     }
+
 
     private void showTimePicker() {
         Date now = new Date();

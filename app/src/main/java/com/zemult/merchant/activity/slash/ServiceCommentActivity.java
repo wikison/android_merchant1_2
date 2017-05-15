@@ -93,13 +93,14 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
         if (saleUserId > 0) {
             commentsList();
         } else {
+            rlNoData.setVisibility(View.GONE);
             linearLayoutSimple.setVisibility(View.VISIBLE);
             commentLv.setVisibility(View.GONE);
             imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(),simpleHeadIv);
             simpleNameTv.setText( SlashHelper.userManager().getUserinfo().getName());
             simpleRatingbar.setStar(getIntent().getIntExtra("comment",0));
-            simpleTimeTv.setText(getIntent().getStringExtra("commentNote").substring(0, 10));
-            simpleNoteTv.setText(getIntent().getStringExtra("commentTime"));
+            simpleTimeTv.setText(getIntent().getStringExtra("commentTime").substring(0, 10));
+            simpleNoteTv.setText(getIntent().getStringExtra("commentNote")==null?"":getIntent().getStringExtra("commentNote"));
         }
     }
 
