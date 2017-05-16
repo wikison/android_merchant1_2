@@ -670,7 +670,6 @@ public class CreateBespeakNewActivity extends BaseActivity {
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
             } else {
-                user_reservation_add();
                 Toast.makeText(CreateBespeakNewActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
         }

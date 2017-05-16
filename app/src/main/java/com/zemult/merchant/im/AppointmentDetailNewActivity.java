@@ -454,10 +454,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                     shopTv.setText(mReservation.merchantName);
                     pernumberTv.setText(mReservation.num + "人");
-
+                    ordertime= mReservation.reservationTime;
                     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     try {
-                        Date date=sdf.parse(mReservation.reservationTime);
+                        Date date=sdf.parse(StringUtils.isBlank(mReservation.reservationTime)?"":mReservation.reservationTime);
                         bespekTime.setText(getTime(date));
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -1019,7 +1019,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
                 if (!TextUtils.isEmpty(reservationId))
                     intent.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivity(intent);
+                startActivityForResult(intent,10004);
                 break;
 
             case R.id.iv_reward:
@@ -1250,7 +1250,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10001||requestCode ==10002||requestCode ==10003 ) {//赞赏-生成支付单  10003 分享刷新
+        if (requestCode == 10001||requestCode ==10002||requestCode ==10003||requestCode == 10004) {//赞赏-生成支付单  10003 分享刷新  快捷买单成功
             userReservationInfo();
         }
         if (requestCode == 1000&&RESULT_OK==resultCode ) {//支付定金
