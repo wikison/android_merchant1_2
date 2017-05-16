@@ -107,7 +107,7 @@ public class HeaderHomeView extends HeaderViewInterface<String> {
         mImageManager.loadCircleHead(entity.saleUserHead, ivHead);
 
         tvService.setText(entity.getExperienceText() + "管家");
-        tvNum.setText("·"+entity.saleUserFanNum + "人关注");
+        tvNum.setText("·"+entity.saleUserFanNum + "关注");
         tvMoney.setText("·"+entity.money + "元收益");
         rlMe.setOnClickListener(new View.OnClickListener() {
             @Override
