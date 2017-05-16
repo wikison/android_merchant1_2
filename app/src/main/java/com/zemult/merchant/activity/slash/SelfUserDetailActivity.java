@@ -638,6 +638,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
+                setResult(RESULT_OK);
                 Intent in = new Intent(Constants.BROCAST_LOGIN);
                 sendBroadcast(in);
                 onBackPressed();
