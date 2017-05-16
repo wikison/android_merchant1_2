@@ -241,7 +241,7 @@ public class MyServiceTicketFragment extends BaseFragment implements SmoothListV
                                         holder.setText(R.id.tv_saleuser, mReservation.saleUserName);
 
                                         holder.setText(R.id.tv_merchantName, mReservation.merchantName);
-                                        holder.setText(R.id.tv_reservationTime,mReservation.reservationTime);
+                                        holder.setText(R.id.tv_reservationTime,mReservation.reservationTime.substring(0,16));
                                         String time = mReservation.reservationTime;
 
 //                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime + DateTimeUtil.getWeekDayOfWeek(time) + "  " + time.substring(11, 16));
