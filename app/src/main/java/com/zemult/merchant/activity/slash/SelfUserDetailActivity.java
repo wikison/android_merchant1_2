@@ -232,7 +232,7 @@ public class SelfUserDetailActivity extends BaseActivity {
             tvName.setText(userName);
         }
         tvAccount.setText("￥" + Convert.getMoneyString(SlashHelper.userManager().getUserinfo().money) + "元");
-        tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "客户关注");
+        tvFocus.setText(SlashHelper.userManager().getUserinfo().getFansNum() + "关注");
 
         if (fromSaleLogin == 1) {
             sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));

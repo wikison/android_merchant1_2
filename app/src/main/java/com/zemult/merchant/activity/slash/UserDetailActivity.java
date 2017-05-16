@@ -408,7 +408,7 @@ public class UserDetailActivity extends BaseActivity {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tvLevel.setCompoundDrawables(drawable, null, null, null);
         }
-        tvFocus.setText(userInfo.fansNum + "人已关注");
+        tvFocus.setText(userInfo.fansNum + "已关注");
 
         merchantNum = userInfo.saleUserNum;
 
