@@ -213,7 +213,7 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
                                         holder.setText(R.id.tv_saleuser, mReservation.name);
 
                                         holder.setText(R.id.tv_merchantName, mReservation.merchantName);
-                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime);
+                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime.substring(0,16));
 
                                         switch (mReservation.state) {
                                             //状态(状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时)))
