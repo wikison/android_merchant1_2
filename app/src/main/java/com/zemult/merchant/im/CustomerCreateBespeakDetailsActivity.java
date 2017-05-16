@@ -38,6 +38,7 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.DateTimePickDialogUtil;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
@@ -180,7 +181,7 @@ public class CustomerCreateBespeakDetailsActivity extends BaseActivity {
                         tvShopname.setText(m_reservation.merchantName);
                         tvName.setText(m_reservation.userName);
                         imageManager.loadCircleHead(m_reservation.userHead,vUser);
-                        tvShijian.setText(m_reservation.reservationTime);
+                        tvShijian.setText(DateTimeUtil.getDateFromWeekString(m_reservation.reservationTime));
                         tvRenshu.setText(m_reservation.num+"人");
                         tvRenjun.setText(m_reservation.perMoney+"元");
                         fileUrl=m_reservation.replayNote;

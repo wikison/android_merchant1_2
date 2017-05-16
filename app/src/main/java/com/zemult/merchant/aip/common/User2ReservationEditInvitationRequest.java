@@ -29,7 +29,7 @@ public class User2ReservationEditInvitationRequest extends PostStringRequest<Typ
 
         public void convertJosn() {
             ejson = Convert.securityJson(Convert.pairsToJson(
-                    new Pair<String, String>("phoneNum", reservationId+"")
+                    new Pair<String, String>("reservationId", reservationId+"")
             ));
         }
     }

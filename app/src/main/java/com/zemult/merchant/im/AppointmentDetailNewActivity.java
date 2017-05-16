@@ -619,7 +619,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务定单] " + mReservation.reservationTime + "  " + mReservation.merchantName+"(商户)");
+                            object.put("taskTitle", "[服务定单] " + (mReservation.reservationTime .length()<17?mReservation.reservationTime
+                                    :mReservation.reservationTime .substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
                             object.put("serviceId",  mReservation.saleUserId+ "");
                             object.put("reservationId", reservationId);
                         } catch (JSONException e) {

@@ -195,7 +195,8 @@ public class ChoosePayType4OrderActivity extends BaseActivity {
         try {
             object.put("customizeMessageType", "Task");
             object.put("tasktype", "ORDER");
-            object.put("taskTitle", "[服务定单] " + reservationTime + "  " + merchantName + "(商户)");
+            object.put("taskTitle", "[服务定单] " +(reservationTime.length()<17?reservationTime
+                    :reservationTime.substring(0,16) ) + "  " + merchantName + "(商户)");
             object.put("serviceId", toUserId + "");
             object.put("reservationId", reservationId);
         } catch (JSONException e) {

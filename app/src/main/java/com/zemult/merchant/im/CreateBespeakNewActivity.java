@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,6 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.SharePhoneNumActivity;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
@@ -47,13 +45,11 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.PMNumView;
-import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -311,7 +307,14 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     if (((M_Reservation) response).status == 1) {
                         M_Reservation m_reservation= ((M_Reservation) response);
-                        bespekTime.setText(StringUtils.isBlank(m_reservation.reservationTime)?"选择时间":m_reservation.reservationTime);
+                        if(StringUtils.isBlank(m_reservation.reservationTime)){
+                            bespekTime.setText("选择时间");
+                        }
+                        else{
+                            bespekTime.setText(DateTimeUtil.getDateFromWeekString(m_reservation.reservationTime));
+
+                        }
+
                         int ordernum=m_reservation.num;
                         if(ordernum!=0){
                             pmnvSelectDeadline.setDefaultNum(ordernum);

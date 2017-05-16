@@ -277,7 +277,8 @@ public class MyFansActivity extends MBaseActivity implements SmoothListView.ISmo
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单] " + ordertime + "  " + shopname+"(商户)");
+                            object.put("taskTitle", "[服务订单] " + (ordertime.length()<17?ordertime
+                                    :ordertime.substring(0,16) ) + "  " + shopname+"(商户)");
                             object.put("serviceId",  SlashHelper.userManager().getUserId());
                             object.put("reservationId", ((CommonResult) response).reservationId);
                         } catch (JSONException e) {
