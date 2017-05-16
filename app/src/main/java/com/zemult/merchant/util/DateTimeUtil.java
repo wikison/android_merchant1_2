@@ -1379,7 +1379,7 @@ public final class DateTimeUtil implements Serializable {
         Date dateInfo = DateTimeUtil.getDateFromString(dateStr, "yyyy-MM-dd HH:mm:ss");
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(dateInfo);
-        String reservationTimeInfo = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + 1 + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " (" + DateTimeUtil.getWeekDayOfWeekisToday(dateInfo) + ") " + dateStr.substring(11, 16);
+        String reservationTimeInfo = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " (" + DateTimeUtil.getWeekDayOfWeekisToday(dateInfo) + ") " + dateStr.substring(11, 16);
         return reservationTimeInfo;
     }
 
