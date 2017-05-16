@@ -1352,6 +1352,9 @@ public final class DateTimeUtil implements Serializable {
             if(currenthour==11&&currentmin>=30&&currentmin<=59){
                 retTime= getCurrentDate()+ " (当天) 18:00";
             }
+           else if(currenthour==11&&currentmin>=0&&currentmin<=29){
+                retTime= getCurrentDate()+ " (当天) 11:30";
+            }
             else{
                 retTime= getCurrentDate()+ " (当天) 18:00";
             }
@@ -1372,5 +1375,15 @@ public final class DateTimeUtil implements Serializable {
         return retTime;
 
     }
+
+
+    public static String getDateFromWeekString(String dateStr) {
+        Date dateInfo = DateTimeUtil.getDateFromString(dateStr, "yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(dateInfo);
+        String reservationTimeInfo =calendar.YEAR+ "-" +calendar.MONDAY + "-" + calendar.DAY_OF_MONTH + " (" + DateTimeUtil.getDayOfWeek(dateInfo) + ") " + dateStr.substring(11, 16);
+        return reservationTimeInfo;
+    }
+
 
 }
