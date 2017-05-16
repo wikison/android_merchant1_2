@@ -197,6 +197,7 @@ public final class DateTimeUtil implements Serializable {
     public static String getCurrentTime() {
         return getFormatDateTime(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
+
     public static String getCurrentTime2() {
         return getFormatDateTime(new Date(), "HH:mm:ss");
     }
@@ -472,12 +473,11 @@ public final class DateTimeUtil implements Serializable {
     public static String getWeekDayOfWeekisToday(Date date) {
         String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
         int week = getDayOfWeek(date);
-        String sday =getFormatDateTime(date, "dd");
+        String sday = getFormatDateTime(date, "dd");
         String cday = getFormatDateTime(new Date(), "dd");
-        if((sday.equals(cday))){
+        if ((sday.equals(cday))) {
             return "当天";
-        }
-        else{
+        } else {
             return weeks[week - 1];
         }
 
@@ -1307,68 +1307,66 @@ public final class DateTimeUtil implements Serializable {
         int longDiff = (int) DateTimeUtil.getDiff(DateTimeUtil.getDateByAddMinute(createTime, minute), DateTimeUtil.getCurrentTime());
         int iDiffMinute = (int) (longDiff / 60);
         int iDiffSecond = longDiff % 60;
-        result= iDiffMinute+"分"+iDiffSecond+"秒";
+        result = iDiffMinute + "分" + iDiffSecond + "秒";
         return result;
     }
 
-    public static  String formatDate(String mdate) throws ParseException {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date=sdf.parse(mdate);
+    public static String formatDate(String mdate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf.parse(mdate);
 
-        SimpleDateFormat sdf2=new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        String datestr=sdf2.format(date);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String datestr = sdf2.format(date);
 
-        return  datestr;
+        return datestr;
     }
 
 
     /**
-     0:00-11:29 显示11:30
-     11:30 - 17:59 显示18:00
-     18:00 - 19:59 显示 20:00
-     20:00 - 23:59 显示 当前时间
-     日期为当天
-     如果是当天 显示今天
-     如果不是当天 显示周几
-     格式 yyyy-MM-dd(week) HH:mm
+     * 0:00-11:29 显示11:30
+     * 11:30 - 17:59 显示18:00
+     * 18:00 - 19:59 显示 20:00
+     * 20:00 - 23:59 显示 当前时间
+     * 日期为当天
+     * 如果是当天 显示今天
+     * 如果不是当天 显示周几
+     * 格式 yyyy-MM-dd(week) HH:mm
+     *
      * @return
      * @throws ParseException
      */
-    public static  String getOrderTime()  {
-      int currenthour=Integer.parseInt(getFormatDateTime(new Date(), "HH"));
-        int currentmin=Integer.parseInt(getFormatDateTime(new Date(), "mm"));
-        String retTime="";
-        if(currenthour>=0&&currenthour<=11){
-            if(currenthour==11&&currentmin>=0&&currentmin<=29){
-                retTime= getCurrentDate()+ " (当天) 11:30";
-            }
-            else{
-                retTime= getCurrentDate()+ " (当天) 11:30";
+    public static String getOrderTime() {
+        int currenthour = Integer.parseInt(getFormatDateTime(new Date(), "HH"));
+        int currentmin = Integer.parseInt(getFormatDateTime(new Date(), "mm"));
+        String retTime = "";
+        if (currenthour >= 0 && currenthour <= 11) {
+            if (currenthour == 11 && currentmin >= 0 && currentmin <= 29) {
+                retTime = getCurrentDate() + " (当天) 11:30";
+            } else {
+                retTime = getCurrentDate() + " (当天) 11:30";
             }
 
         }
 
-        if(currenthour>=11&&currenthour<=17){
-            if(currenthour==11&&currentmin>=30&&currentmin<=59){
-                retTime= getCurrentDate()+ " (当天) 18:00";
-            }
-           else if(currenthour==11&&currentmin>=0&&currentmin<=29){
-                retTime= getCurrentDate()+ " (当天) 11:30";
-            }
-            else{
-                retTime= getCurrentDate()+ " (当天) 18:00";
+        if (currenthour >= 11 && currenthour <= 17) {
+            if (currenthour == 11 && currentmin >= 30 && currentmin <= 59) {
+                retTime = getCurrentDate() + " (当天) 18:00";
+            } else if (currenthour == 11 && currentmin >= 0 && currentmin <= 29) {
+                retTime = getCurrentDate() + " (当天) 11:30";
+            } else {
+                retTime = getCurrentDate() + " (当天) 18:00";
             }
         }
 
-        if(currenthour>=18&&currenthour<=19){
-            if(currentmin>=00&&currentmin<=59){
-                retTime= getCurrentDate()+ " (当天) 20:00";
+        if (currenthour >= 18 && currenthour <= 19) {
+            if (currentmin >= 00 && currentmin <= 59) {
+                retTime = getCurrentDate() + " (当天) 20:00";
             }
         }
 
-        if(currenthour>=20&&currenthour<=23){
-            if(currentmin>=00&&currentmin<=59){
-                retTime= getCurrentDate()+ " (当天) "+currenthour+":"+currentmin;
+        if (currenthour >= 20 && currenthour <= 23) {
+            if (currentmin >= 00 && currentmin <= 59) {
+                retTime = getCurrentDate() + " (当天) " + currenthour + ":" + currentmin;
             }
         }
 
@@ -1381,7 +1379,7 @@ public final class DateTimeUtil implements Serializable {
         Date dateInfo = DateTimeUtil.getDateFromString(dateStr, "yyyy-MM-dd HH:mm:ss");
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(dateInfo);
-        String reservationTimeInfo =calendar.YEAR+ "-" +calendar.MONDAY + "-" + calendar.DAY_OF_MONTH + " (" + DateTimeUtil.getDayOfWeek(dateInfo) + ") " + dateStr.substring(11, 16);
+        String reservationTimeInfo = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " (" + DateTimeUtil.getWeekDayOfWeekisToday(dateInfo) + ") " + dateStr.substring(11, 16);
         return reservationTimeInfo;
     }
 
