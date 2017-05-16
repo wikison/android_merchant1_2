@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -315,13 +316,8 @@ public class CreateBespeakNewActivity extends BaseActivity {
                             bespekTime.setText("选择时间");
                         }
                         else{
-                            Date dateInfo = DateTimeUtil.getDateFromString(m_reservation.reservationTime, "yyyy-MM-dd HH:mm:ss");
-                            Calendar calendar = GregorianCalendar.getInstance();
-                            calendar.setTime(dateInfo);
-                            String reservationTimeInfo =calendar.YEAR+ "-" +calendar.MONDAY + "-" + calendar.DAY_OF_MONTH + " (" + DateTimeUtil.getDayOfWeek(dateInfo) + ") " + m_reservation.reservationTime.substring(11, 16);
-                            bespekTime.setText( reservationTimeInfo);
+                            bespekTime.setText(DateTimeUtil.getDateFromWeekString(m_reservation.reservationTime));
 
-                            bespekTime.setText(m_reservation.reservationTime);
                         }
 
                         int ordernum=m_reservation.num;
