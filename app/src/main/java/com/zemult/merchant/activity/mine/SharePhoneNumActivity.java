@@ -1,10 +1,13 @@
 package com.zemult.merchant.activity.mine;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,11 +21,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.slash.ConnectLocalPhoneActivity;
 import com.zemult.merchant.aip.common.User2ResOrderTmpSendRequest;
 import com.zemult.merchant.aip.common.UserWxBandPhoneRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.model.CommonResult;
+import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.EditFilter;
 import com.zemult.merchant.util.SlashHelper;
@@ -158,8 +163,10 @@ public class SharePhoneNumActivity extends BaseActivity {
                 break;
 
             case R.id.choose_people_iv:
-                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                startActivityForResult(intent, 1);
+                ActivityCompat.requestPermissions(SharePhoneNumActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 100);
+
+
+
                 break;
 
         }
@@ -167,29 +174,35 @@ public class SharePhoneNumActivity extends BaseActivity {
 
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults[0]==0) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
+            }catch (Exception e){
+            }
+        }
+        else {
+            ToastUtil.showMessage("需要获取联系人权限");
+        }
+    }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode)
         {
-
             case (1) :
             {
-
                 if (resultCode == Activity.RESULT_OK)
                 {
-
                     Uri contactData = data.getData();
-
                     Cursor c = managedQuery(contactData, null, null, null, null);
-
                     c.moveToFirst();
-
                     String phoneNum=this.getContactPhone(c);
                     phoneNumEt.setText(phoneNum);
-
                 }
-
                 break;
 
             }
