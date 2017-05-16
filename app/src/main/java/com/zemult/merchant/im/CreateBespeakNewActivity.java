@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +30,6 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.MyFansActivity;
 import com.zemult.merchant.activity.mine.SharePhoneNumActivity;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
@@ -47,13 +45,11 @@ import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_UserLogin;
 import com.zemult.merchant.util.AppUtils;
-import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ShareText;
 import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.PMNumView;
-import com.zemult.merchant.view.SharePopwindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -318,7 +314,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                             Date dateInfo = DateTimeUtil.getDateFromString(m_reservation.reservationTime, "yyyy-MM-dd HH:mm:ss");
                             Calendar calendar = GregorianCalendar.getInstance();
                             calendar.setTime(dateInfo);
-                            String reservationTimeInfo =calendar.YEAR+ "-" +calendar.MONDAY + "-" + calendar.DAY_OF_MONTH + " (" + DateTimeUtil.getDayOfWeek(dateInfo) + ") " + m_reservation.reservationTime.substring(11, 16);
+                            String reservationTimeInfo =calendar.get(Calendar.YEAR)+ "-" +calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " (" + DateTimeUtil.getWeekDayOfWeekisToday(dateInfo) + ") " + m_reservation.reservationTime.substring(11, 16);
                             bespekTime.setText( reservationTimeInfo);
 
                             bespekTime.setText(m_reservation.reservationTime);
