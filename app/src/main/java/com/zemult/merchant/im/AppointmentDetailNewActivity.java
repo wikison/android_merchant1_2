@@ -1232,11 +1232,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         CommonDialog.DismissProgressDialog();
 
                         Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                        urlintent.putExtra("reservationId",mReservation.reservationId);
                         urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
                         urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
                         urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
                                 "，诚挚邀请，期待您的赴约。");
-                        startActivity(urlintent);
+                        startActivityForResult(urlintent,10003);
+
                     }
                 });
                 SlashHelper.setSettingBoolean(reservationId+"",true);
