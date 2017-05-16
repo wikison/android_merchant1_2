@@ -356,6 +356,7 @@ public class BindCardTwoFragment extends BaseFragment {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
+                        ToastUtil.showMessage("绑定成功");
                         SlashHelper.userManager().getUserinfo().setIsConfirm(1);
                         Bundle bundle1 = new Bundle();
                         bundle1.putString(BindCardSuccessFragment.BANK_NAME, bundle.getString(BANK_NAME));
