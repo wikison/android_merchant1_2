@@ -438,10 +438,10 @@ public class CreateBespeakNewActivity extends BaseActivity {
                             new ShareAction(CreateBespeakNewActivity.this)
                                     .setPlatform(SHARE_MEDIA.WEIXIN)
                                     .setCallback(umShareListener)
-                                    .withText("您的管家【"+SlashHelper.userManager().getUserinfo().getName()+"】发来一个服务订单 " +  (ordertime.length()<17?ordertime
-                                            :ordertime.substring(0,16) )  + "  " + shopname+"(商户) 立即查看并确认。")
+                                    .withText("您的管家【"+SlashHelper.userManager().getUserinfo().getName()+"】为您预约了 " +  (ordertime.length()<17?ordertime
+                                            :ordertime.substring(0,16) )  + "  " + shopname+"(商户) 立即查看并确认...")
                                     .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/wxsharepay_index.do?preId="+((CommonResult) response).tmpid+"&response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect")
-                                    .withMedia(shareImage).withTitle("服务订单")
+                                    .withMedia(shareImage).withTitle("您的管家【"+SlashHelper.userManager().getUserinfo().getName()+"】发来一个服务订单")
                                     .share();
                         }
                         else{
