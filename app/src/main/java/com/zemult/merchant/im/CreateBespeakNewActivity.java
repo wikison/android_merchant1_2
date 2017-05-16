@@ -311,7 +311,19 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     if (((M_Reservation) response).status == 1) {
                         M_Reservation m_reservation= ((M_Reservation) response);
-                        bespekTime.setText(StringUtils.isBlank(m_reservation.reservationTime)?"选择时间":m_reservation.reservationTime);
+                        if(StringUtils.isBlank(m_reservation.reservationTime)){
+                            bespekTime.setText("选择时间");
+                        }
+                        else{
+                            Date dateInfo = DateTimeUtil.getDateFromString(m_reservation.reservationTime, "yyyy-MM-dd HH:mm:ss");
+                            Calendar calendar = GregorianCalendar.getInstance();
+                            calendar.setTime(dateInfo);
+                            String reservationTimeInfo =calendar.YEAR+ "-" +calendar.MONDAY + "-" + calendar.DAY_OF_MONTH + " (" + DateTimeUtil.getDayOfWeek(dateInfo) + ") " + m_reservation.reservationTime.substring(11, 16);
+                            bespekTime.setText( reservationTimeInfo);
+
+                            bespekTime.setText(m_reservation.reservationTime);
+                        }
+
                         int ordernum=m_reservation.num;
                         if(ordernum!=0){
                             pmnvSelectDeadline.setDefaultNum(ordernum);

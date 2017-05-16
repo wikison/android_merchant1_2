@@ -472,9 +472,9 @@ public final class DateTimeUtil implements Serializable {
     public static String getWeekDayOfWeekisToday(Date date) {
         String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
         int week = getDayOfWeek(date);
-
-        int todayweek = getDayOfWeek(new Date());
-        if(todayweek==week){
+        String sday =getFormatDateTime(date, "dd");
+        String cday = getFormatDateTime(new Date(), "dd");
+        if((sday.equals(cday))){
             return "当天";
         }
         else{
