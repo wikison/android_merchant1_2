@@ -27,9 +27,14 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.Convert;
+import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -189,7 +194,14 @@ public class ServiceTicketDetailActivity extends BaseActivity {
 
                     nameTv.setText(mReservation.saleUserName);
                     shopTv.setText(mReservation.merchantName);
-                    tvTime.setText(mReservation.reservationTime);
+//                    tvTime.setText(mReservation.reservationTime);
+
+//                    Date dateInfo = DateTimeUtil.getDateFromString(mReservation.reservationTime, "yyyy-MM-dd HH:mm:ss");
+//                    Calendar calendar = GregorianCalendar.getInstance();
+//                    calendar.setTime(dateInfo);
+//                    String reservationTimeInfo = mReservation.reservationTime.substring(0, 10)+" (" + DateTimeUtil.getDateFromWeekString(dateInfo) + ") " + mReservation.reservationTime.substring(11, 16);
+                    tvTime.setText( DateTimeUtil.getDateFromWeekString(mReservation.reservationTime));
+
                     pernumberTv.setText("" + mReservation.num);
                     tvRoom.setText(mReservation.note);
                     switch (mReservation.state) {
