@@ -26,7 +26,7 @@ android {
         applicationId "com.zemult.merchant"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 9
+        versionCode 10
         versionName "2.2"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.2", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
@@ -83,18 +83,18 @@ android {
 
     productFlavors {
         d00 {}//泽马
-//        d01 {}//华为
-//        d02 {}//OPPO
-//        d03 {}//小米
-//        d04 {}//VIVO
-//        d05 {}//三星
-//        d06 {}//魅族
-//        d07 {}//金立
-//        d08 {}//海信
-//        d09 {}//联想
-//        d10 {}//百度
-//        d11 {}//360
-//        d12 {}//应用宝
+        d01 {}//华为
+        d02 {}//OPPO
+        d03 {}//小米
+        d04 {}//VIVO
+        d05 {}//三星
+        d06 {}//魅族
+        d07 {}//金立
+        d08 {}//海信
+        d09 {}//联想
+        d10 {}//百度
+        d11 {}//360
+        d12 {}//应用宝
     }
 
     productFlavors.all { flavor ->
