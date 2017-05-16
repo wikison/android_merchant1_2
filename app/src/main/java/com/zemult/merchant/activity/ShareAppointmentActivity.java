@@ -81,6 +81,7 @@ public class ShareAppointmentActivity extends BaseActivity {
 
                 switch (position) {
                     case SharePopwindow.SINA:
+                        user2_reservation_editInvitation();
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.SINA)
                                 .setCallback(umShareListener)
@@ -90,6 +91,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .share();
                         break;
                     case SharePopwindow.WECHAT:
+                        user2_reservation_editInvitation();
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN)
                                 .setCallback(umShareListener)
@@ -99,6 +101,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .share();
                         break;
                     case SharePopwindow.WECHAT_FRIEND:
+                        user2_reservation_editInvitation();
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                 .setCallback(umShareListener)
@@ -108,6 +111,7 @@ public class ShareAppointmentActivity extends BaseActivity {
                                 .share();
                         break;
                     case SharePopwindow.QQ:
+                        user2_reservation_editInvitation();
                         new ShareAction(ShareAppointmentActivity.this)
                                 .setPlatform(SHARE_MEDIA.QQ)
                                 .setCallback(umShareListener)
@@ -212,7 +216,6 @@ public class ShareAppointmentActivity extends BaseActivity {
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 收藏成功", Toast.LENGTH_SHORT).show();
             } else {
-                user2_reservation_editInvitation();
                 Toast.makeText(ShareAppointmentActivity.this, ShareText.shareMediaToCN(platform) + " 分享成功", Toast.LENGTH_SHORT).show();
             }
             popwindow.dismiss();
