@@ -201,7 +201,7 @@ public class SharePhoneNumActivity extends BaseActivity {
                     Cursor c = managedQuery(contactData, null, null, null, null);
                     c.moveToFirst();
                     String phoneNum=this.getContactPhone(c);
-                    phoneNumEt.setText(phoneNum);
+                    phoneNumEt.setText(phoneNum.replaceAll(" ","").replaceAll("-",""));
                 }
                 break;
 
