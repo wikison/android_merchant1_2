@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,7 +47,6 @@ import com.alibaba.mobileim.conversation.YWP2PConversationBody;
 import com.alibaba.mobileim.conversation.YWTribeConversationBody;
 import com.alibaba.mobileim.fundamental.widget.WxAlertDialog;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
-import com.zemult.merchant.R;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.media.MediaService;
 import com.alibaba.sdk.android.media.upload.UploadListener;
@@ -56,9 +54,9 @@ import com.alibaba.sdk.android.media.upload.UploadTask;
 import com.alibaba.sdk.android.media.utils.FailReason;
 import com.alibaba.wxlib.thread.WXThreadPoolMgr;
 import com.alibaba.wxlib.util.RequestPermissionUtil;
+import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ReceiveRedActivity;
 import com.zemult.merchant.activity.SendAppreciateRedActivity;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.activity.slash.SendPresentSuccessActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.app.AppApplication;
@@ -67,11 +65,10 @@ import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.CreateBespeakNewActivity;
 import com.zemult.merchant.im.CustomerCreateBespeakDetailsActivity;
+import com.zemult.merchant.im.common.Constant;
 import com.zemult.merchant.im.common.Notification;
 import com.zemult.merchant.im.privateimage.PictureUtils;
 import com.zemult.merchant.im.privateimage.PreviewImageActivity;
-import com.zemult.merchant.im.common.Constant;
-import com.zemult.merchant.model.M_Present;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SPUtils;
 import com.zemult.merchant.util.SlashHelper;
@@ -570,7 +567,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
                     JSONObject customizeObject = new JSONObject(contentObject.optString("customize"));
                     if("ORDER".equals(customizeObject.getString("tasktype"))){
                             Intent intent =new Intent(fragment.getActivity(),AppointmentDetailNewActivity.class);
-                            intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
+                            intent.putExtra(AppointmentDetailNewActivity.INTENT_RESERVATIONID,customizeObject.getString("reservationId"));
                             fragment.startActivity(intent);
                     }
                     else if("VOICE".equals(customizeObject.getString("tasktype"))){

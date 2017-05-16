@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.adapter.slash.ChooseReservationAdapter;
 import com.zemult.merchant.aip.reservation.UserReservationSaleListRequest;
 import com.zemult.merchant.aip.slash.UserInfoRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.model.M_Merchant;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.M_Userinfo;
@@ -123,9 +123,9 @@ public class ChoosePayReservationActivity extends BaseActivity {
         adapter.setOnAllClickListener(new ChooseReservationAdapter.OnAllClickListener() {
             @Override
             public void onAllClick(int position) {
-                Intent intent = new Intent(mContext, AppointmentDetailActivity.class);
-                intent.putExtra(AppointmentDetailActivity.INTENT_TYPE, 0);
-                intent.putExtra(AppointmentDetailActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
+                Intent intent = new Intent(mContext, AppointmentDetailNewActivity.class);
+                intent.putExtra(AppointmentDetailNewActivity.INTENT_TYPE, 0);
+                intent.putExtra(AppointmentDetailNewActivity.INTENT_RESERVATIONID, adapter.getItem(position).reservationId + "");
                 startActivity(intent);
             }
         });

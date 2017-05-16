@@ -244,7 +244,7 @@ public class MyProInviteFragment extends BaseFragment implements SmoothListView.
                                         Date dateInfo = DateTimeUtil.getDateFromString(mReservation.reservationTime, "yyyy-MM-dd HH:mm:ss");
                                         Calendar calendar = new GregorianCalendar();
                                         calendar.setTime(dateInfo);
-                                        String reservationTimeInfo = calendar.get(Calendar.MONTH) + 1 + "月-" + calendar.get(Calendar.DAY_OF_MONTH) + "日 (" + DateTimeUtil.getChinaDayOfWeek(dateInfo) + ") " + mReservation.reservationTime.substring(11, 16);
+                                        String reservationTimeInfo = (calendar.get(Calendar.MONTH) + 1) + "月-" + calendar.get(Calendar.DAY_OF_MONTH) + "日 (" + DateTimeUtil.getChinaDayOfWeek(dateInfo) + ") " + mReservation.reservationTime.substring(11, 16);
                                         holder.setText(R.id.tv_time, reservationTimeInfo);
                                     }
 
