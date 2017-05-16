@@ -445,7 +445,7 @@ public class RegisterActivity extends BaseActivity {
                     Intent intent = new Intent(RegisterActivity.this, SelfUserDetailActivity.class);
                     intent.putExtra("user_sale_login", 1);
                     intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());
-                    startActivity(intent);
+                    startActivityForResult(intent, 0x110);
                 }
             }
         });

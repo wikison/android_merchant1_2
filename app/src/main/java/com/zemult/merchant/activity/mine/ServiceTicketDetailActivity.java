@@ -359,6 +359,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
 
     private void invite() {
         Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
+        urlintent.putExtra("reservationId",mReservation.reservationId);
         urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
         urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
         urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
@@ -372,6 +373,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1000) {
+                Intent intent = new Intent(Constants.BROCAST_REFRESH_MYSERVICETICKET);
+                intent.putExtra("userPayId", userPayId);
+                setResult(RESULT_OK, intent);
                 setResult(RESULT_OK);
                 onBackPressed();
 

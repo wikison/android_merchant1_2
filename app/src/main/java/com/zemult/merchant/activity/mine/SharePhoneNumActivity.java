@@ -2,6 +2,8 @@ package com.zemult.merchant.activity.mine;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -197,11 +199,14 @@ public class SharePhoneNumActivity extends BaseActivity {
             {
                 if (resultCode == Activity.RESULT_OK)
                 {
-                    Uri contactData = data.getData();
-                    Cursor c = managedQuery(contactData, null, null, null, null);
-                    c.moveToFirst();
-                    String phoneNum=this.getContactPhone(c);
-                    phoneNumEt.setText(phoneNum.replaceAll(" ","").replaceAll("-",""));
+                    ReadContactMsg    readContactMsg = new ReadContactMsg(this,data);
+                     String phoneNum=readContactMsg.getPhone();
+                    if(phoneNum!=null){
+                        phoneNumEt.setText(phoneNum.replaceAll(" ","").replaceAll("-","").replaceAll("\\+86",""));
+                    }else{
+                        ToastUtil.showMessage("获取联系人号码失败，请手动输入");
+                    }
+
                 }
                 break;
 
@@ -215,50 +220,38 @@ public class SharePhoneNumActivity extends BaseActivity {
     }
 
 
-    //获取联系人电话
-    private String getContactPhone(Cursor cursor)
-    {
-
-        int phoneColumn = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
-        int phoneNum = cursor.getInt(phoneColumn);
-        String phoneResult="";
-        //System.out.print(phoneNum);
-        if (phoneNum > 0)
-        {
-            // 获得联系人的ID号
-            int idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-            String contactId = cursor.getString(idColumn);
-            // 获得联系人的电话号码的cursor;
-            Cursor phones = getContentResolver().query(
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                    null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = " + contactId,
-                    null, null);
-            //int phoneCount = phones.getCount();
-            //allPhoneNum = new ArrayList<String>(phoneCount);
-            if (phones.moveToFirst())
-            {
-                // 遍历所有的电话号码
-                for (;!phones.isAfterLast();phones.moveToNext())
-                {
-                    int index = phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                    int typeindex = phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-                    int phone_type = phones.getInt(typeindex);
-                    String phoneNumber = phones.getString(index);
-                    switch(phone_type)
-                    {
-                        case 2:
-                            phoneResult=phoneNumber;
-                            break;
-                    }
-                    //allPhoneNum.add(phoneNumber);
+    class ReadContactMsg{
+        private String name;
+        private String phone;
+        public ReadContactMsg(Context context, Intent data){
+            super();
+            Uri contactData = data.getData();
+            CursorLoader cursorLoader = new CursorLoader(context,contactData,null,null,null,null);
+            Cursor cursor = cursorLoader.loadInBackground();
+            if(cursor.moveToFirst()){
+                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                phone = "此联系人暂未存入号码";
+                Cursor phones = getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId,
+                        null,
+                        null);
+                if (phones.moveToFirst()) {
+                    phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 }
-                if (!phones.isClosed())
-                {
-                    phones.close();
-                }
+                phones.close();
             }
+            cursor.close();
         }
-        return phoneResult;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
     }
 }
