@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.ShareAppointmentActivity;
 import com.zemult.merchant.activity.slash.FindPayActivity;
+import com.zemult.merchant.activity.slash.ServiceCommentActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
@@ -140,7 +141,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 planId = 0;
                 bespekPlan.setText("选择服务方案");
             }
-            if(intent.getIntExtra("planId",0)==planId&&1==intent.getIntExtra("state",0)){
+            if (intent.getIntExtra("planId", 0) == planId && 1 == intent.getIntExtra("state", 0)) {
                 bespekPlan.setText(intent.getStringExtra("planName"));
             }
 
@@ -199,9 +200,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                             tvState.setText("已确定");
 
                             if (mReservation.isComment == 1) {
-                                recomBtn.setVisibility(View.GONE);
+                                recomBtn.setText("查看评价");
                             } else {
-                                recomBtn.setVisibility(View.VISIBLE);
+                                recomBtn.setText("评价一下");
                             }
 
                             if (mReservation.merchantReviewstatus == 2) {
@@ -251,7 +252,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
-                planintent.putExtra("planId",mReservation.planId);
+                planintent.putExtra("planId", mReservation.planId);
                 planintent.putExtra("choosePlan", true);
                 startActivity(planintent);
                 break;
@@ -261,7 +262,16 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.recom_btn:
                 //评价
-                goAssessment();
+                if (mReservation.isComment == 1) {//是否评价(0:否,1:是)
+                    //查看评价
+                    Intent intent2 = new Intent(this, ServiceCommentActivity.class);
+                    intent2.putExtra("comment", mReservation.comment);
+                    intent2.putExtra("commentNote", mReservation.commentNote);
+                    intent2.putExtra("commentTime", mReservation.commentTime);
+                    startActivity(intent2);
+                } else {
+                    goAssessment();
+                }
                 break;
             case R.id.invite_btn:
                 //邀请好友
