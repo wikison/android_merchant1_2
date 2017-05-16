@@ -16,10 +16,8 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.mine.AppointmentDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
-import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.mine.UserSaleReservationList;
 import com.zemult.merchant.app.BaseFragment;
 import com.zemult.merchant.config.Constants;
@@ -29,7 +27,6 @@ import com.zemult.merchant.model.apimodel.APIM_UserReservationList;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
-import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
 import java.lang.ref.WeakReference;
