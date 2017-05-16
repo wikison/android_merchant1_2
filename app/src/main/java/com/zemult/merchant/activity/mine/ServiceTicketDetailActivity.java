@@ -373,6 +373,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1000) {
+                Intent intent = new Intent(Constants.BROCAST_REFRESH_MYSERVICETICKET);
+                intent.putExtra("userPayId", userPayId);
+                setResult(RESULT_OK, intent);
                 setResult(RESULT_OK);
                 onBackPressed();
 
