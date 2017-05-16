@@ -23,6 +23,7 @@ import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.aip.mine.UserReservationInfoRequest;
 import com.zemult.merchant.alipay.taskpay.Assessment4ServiceActivity;
 import com.zemult.merchant.app.BaseActivity;
+import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
 import com.zemult.merchant.model.M_Reservation;
@@ -204,6 +205,12 @@ public class ServiceTicketDetailActivity extends BaseActivity {
 
                     pernumberTv.setText("" + mReservation.num);
                     tvRoom.setText(mReservation.note);
+
+
+
+
+
+
                     switch (mReservation.state) {
 //状态(状态(0:待确认,1:预约成功,2:已支付,3:预约失效(待确认超时)，4：预约未支付(超时)))
                         case 0:
@@ -222,9 +229,24 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                                 success1Ll.setVisibility(View.VISIBLE);
                                 tvRight.setVisibility(View.VISIBLE);
                                 tvRight.setText("快捷买单");
+                                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                                    inviteBtn.setText("生成邀请函");
+                                }
+                                else{
+                                    inviteBtn.setText("查看邀请函");
+                                }
+
+
                                 tvDingjinSuccess.setText("￥" + (mReservation.reservationMoney == 0 ? "0" : Convert.getMoneyString(mReservation.reservationMoney)));
                             } else {
                                 success2Ll.setVisibility(View.VISIBLE);
+
+                                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                                    creatinviteBtn.setText("生成邀请函");
+                                }
+                                else{
+                                    creatinviteBtn.setText("查看邀请函");
+                                }
                             }
                             break;
                         case 2:
@@ -287,10 +309,27 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 break;
             case R.id.invite_btn:
                 //邀请好友
-                invite();
+
+
+                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                    invite();
+                }
+                else{
+                    IntentUtil.start_activity(this, BaseWebViewActivity.class,
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                }
+
+
+
                 break;
             case R.id.creatinvite_btn:
-                invite();
+                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                    invite();
+                }
+                else{
+                    IntentUtil.start_activity(this, BaseWebViewActivity.class,
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                }
                 break;
             case R.id.tv_right:
                 //快速结账
@@ -324,7 +363,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
         urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
         urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
                 "，诚挚邀请，期待您的赴约。");
-        startActivity(urlintent);
+        startActivityForResult(urlintent,10003);
     }
 
 
@@ -342,6 +381,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 intent.putExtra("userPayId", userPayId);
                 setResult(RESULT_OK, intent);
                 sendBroadcast(intent);
+            }
+            else  if(requestCode==10003){
+                userReservationInfo();
             }
         }
     }

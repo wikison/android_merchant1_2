@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_marginTop="8dp"
                     style="@style/text_12_black_999"
-                    android:text="不想动脑子就找人为你做主"/>
+                    android:text="给您匹对更贴心的服务管家"/>
 
             </LinearLayout>
         </LinearLayout>
