@@ -308,27 +308,14 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.invite_btn:
-                //邀请好友
-
-
-                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
-                    invite();
-                }
-                else{
-                    IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
-                }
-
-
-
-                break;
             case R.id.creatinvite_btn:
+                //邀请好友
                 if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                     invite();
                 }
                 else{
                     IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
                 }
                 break;
             case R.id.tv_right:
