@@ -46,7 +46,7 @@ public class NicknameActivity extends MBaseActivity {
         ButterKnife.bind(this);
         lhBtnBack.setVisibility(View.VISIBLE);
         lhTvTitle.setVisibility(View.VISIBLE);
-        lhTvTitle.setText("昵称");
+        lhTvTitle.setText("名字");
         lhBtnRight.setVisibility(View.VISIBLE);
 
         lhBtnRight.setText("保存");
