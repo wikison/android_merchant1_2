@@ -599,7 +599,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
         Calendar startDate = new GregorianCalendar();
         startDate.setTime(now);
         Calendar endDate = new GregorianCalendar();
-        endDate.setTime(DateTimeUtil.getDateAdd(now, 7));
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 365));
         TimePickerView  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
