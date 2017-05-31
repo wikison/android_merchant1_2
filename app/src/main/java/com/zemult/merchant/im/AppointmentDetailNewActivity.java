@@ -1085,7 +1085,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             startActivityForResult(roomintent,ROOMINFO);
                         }
                     });
-                    user2_reservation_edit();
+                    if(StringUtils.isBlank(etCustomerremark.getText().toString())){
+                      ToastUtil.showMessage("请输入预约信息");
+                    }
+                    else{
+                        user2_reservation_edit();
+                    }
+
                 }
                 break;
             case R.id.lh_btn_right:
