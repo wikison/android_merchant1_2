@@ -30,6 +30,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.mine.MyServiceTicketActivity;
 import com.zemult.merchant.activity.mine.SharePhoneNumActivity;
 import com.zemult.merchant.activity.slash.ChooseReservationMerchantActivity;
 import com.zemult.merchant.activity.slash.ServicePlanActivity;
@@ -109,16 +110,29 @@ public class CreateBespeakNewActivity extends BaseActivity {
     @Bind(R.id.ll_choosesend)
     LinearLayout llChoosesend;
 
+    @Bind(R.id.bespek_room)
+    TextView bespekRoom;
 
+    @Bind(R.id.rl_room)
+    RelativeLayout rlRoom;
+
+    @Bind(R.id.iv_right)
+    ImageView ivRight;
+    @Bind(R.id.ll_right)
+    LinearLayout llRight;
+
+    String inordertime = "", outordertime = "", ordername = "", orderphone = "";
+
+    int roomnum ;
 
     User2RemindIMInfoRequest user2RemindIMInfoRequest;
 
     UserInfoOwnerRequest userInfoOwnerRequest;
     UserReservationAddRequest userReservationAddRequest;
     int customerId;
-    String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople, note,customerName,customerHead;
+    String shopname = "", ordertime = "",strdingjin="",strremark="", orderpeople,note,customerName,customerHead;
     String merchantId,reviewstatus;
-    int CHOOSEMERCHANT = 100,planId,CHOOSEPLAN=101,remindIMId;
+    int CHOOSEMERCHANT = 100,planId,CHOOSEPLAN=101,ROOMINFO=102,remindIMId;
     boolean isFromMerchant;
 //    SharePopwindow popwindow;
     Merchant2SaveResOrderTmp merchant2SaveResOrderTmp;
@@ -190,11 +204,12 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 pmnvSelectDeadline.setDefaultNum(num);
             }
         });
-        lhTvTitle.setText("生成服务订单");
+        lhTvTitle.setText("发订单");
 
         ordertime=DateTimeUtil.getOrderTime().replace("(当天) ","")+":00";
         bespekTime.setText(DateTimeUtil.getOrderTime());
-
+//        llRight.setVisibility(View.VISIBLE);
+//        ivRight.setImageResource(R.mipmap.icon_historybill);
 
 //        popwindow = new SharePopwindow(CreateBespeakNewActivity.this, new SharePopwindow.OnItemClickListener() {
 //            @Override
@@ -352,6 +367,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
             input.reservationMoney =etDingjin.getText().toString() ;
             input.remindIMId=remindIMId;
             input.planId=planId;
+            if(!StringUtils.isBlank(inordertime)){
+                input.isRoom=1;//是否填写了房间信息(0:否,1:是)
+                input.checkInTime=inordertime;
+                input.checkOutTime=outordertime;
+                input.roomNum=roomnum;
+                input.userName=ordername;
+                input.userPhone=orderphone;
+            }
+            else{
+                input.isRoom=0;
+            }
+
             input.convertJosn();
 
             userReservationAddRequest = new UserReservationAddRequest(input, new ResponseListener() {
@@ -470,14 +497,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rl_ordershopname,    R.id.ll_share_wechat, R.id.btn_bespeak_commit,
-            R.id.ll_share_lianxiren, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.rl_ordershopname,R.id.iv_right, R.id.ll_right, R.id.ll_share_wechat, R.id.btn_bespeak_commit,
+            R.id.ll_share_lianxiren, R.id.rl_ordertime,R.id.play_btn,R.id.rl_plan,R.id.rl_room})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 finish();
                 break;
+//            case R.id.iv_right:
+//            case R.id.ll_right:
+//                startActivity(new Intent(CreateBespeakNewActivity.this, MyServiceTicketActivity.class));
+//                break;
             case R.id.rl_plan:
                 //选择方案
                 if(null!=merchantId){
@@ -493,6 +524,18 @@ public class CreateBespeakNewActivity extends BaseActivity {
 
                 break;
 
+            case R.id.rl_room:
+
+                Intent roomintent =new Intent(CreateBespeakNewActivity.this,CreateRoomBespeakActivity.class);
+                roomintent.putExtra("inordertime",inordertime);
+                roomintent.putExtra("outordertime",outordertime);
+                roomintent.putExtra("ordername",ordername);
+                roomintent.putExtra("orderphone",orderphone);
+                roomintent.putExtra("roomnum",roomnum);
+                roomintent.putExtra("roletype",1);
+                startActivityForResult(roomintent,ROOMINFO);
+
+            break;
             case R.id.ll_share_wechat:
             case R.id.ll_share_lianxiren:
                 if (noLogin(CreateBespeakNewActivity.this))
@@ -562,7 +605,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                 if (!isFromMerchant) {
                     Intent intent = new Intent(CreateBespeakNewActivity.this, ChooseReservationMerchantActivity.class);
                     intent.putExtra("userId", SlashHelper.userManager().getUserId());// 管家id
-                    intent.putExtra("actionFrom", "CreateBespeakActivity");
+                    intent.putExtra("actionFrom", "CreateRoomBespeakActivity");
                     startActivityForResult(intent, CHOOSEMERCHANT);
                 }
 
@@ -658,7 +701,20 @@ public class CreateBespeakNewActivity extends BaseActivity {
             bespekPlan.setText(data.getStringExtra("planName"));
             planId = data.getIntExtra("planId", 0);
         }
+        if (requestCode == ROOMINFO && resultCode == RESULT_OK) {
+             inordertime = data.getStringExtra("inordertime");
+             outordertime = data.getStringExtra("outordertime");
+             ordername = data.getStringExtra("ordername");
+             orderphone = data.getStringExtra("orderphone");
+             roomnum=data.getIntExtra("roomnum",roomnum);
+            if(StringUtils.isBlank(outordertime)){
+                bespekRoom.setText("");
+            }
+            else{
+                bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+            }
 
+        }
     }
 
 

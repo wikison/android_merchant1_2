@@ -148,6 +148,20 @@ public class PMNumView extends LinearLayout implements View.OnClickListener, Tex
         EditFilter.IntegerFilter(etNum, 0, maxNum);
     }
 
+    public void setDisable(boolean  disable) {
+        if(disable){
+            etNum.setEnabled(false);
+            plus.setVisibility(GONE);
+            decrease.setVisibility(GONE);
+        }
+        else{
+            etNum.setEnabled(true);
+            plus.setVisibility(VISIBLE);
+            decrease.setVisibility(VISIBLE);
+        }
+
+
+    }
 
     @Override
     public void onClick(View v) {

@@ -235,7 +235,7 @@
 //                if (!isFromMerchant) {
 //                    Intent intent = new Intent(ModifyBespeakActivity.this, ChooseReservationMerchantActivity.class);
 //                    intent.putExtra("userId", serviceId);// 管家id
-//                    intent.putExtra("actionFrom", "CreateBespeakActivity");
+//                    intent.putExtra("actionFrom", "CreateRoomBespeakActivity");
 //                    startActivityForResult(intent, CHOOSEMERCHANT);
 //                }
 //

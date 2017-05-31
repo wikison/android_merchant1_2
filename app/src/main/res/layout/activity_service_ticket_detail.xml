@@ -157,7 +157,7 @@
                     android:id="@+id/tv_beizhu"
                     style="@style/detail_left"
                     android:layout_gravity="center"
-                    android:text="包厢/房间号" />
+                    android:text="预约信息" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -214,6 +214,47 @@
                     />
 
             </RelativeLayout>
+
+            <View
+                style="@style/view1dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"></View>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/rl_room"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/ripple_item_clicked2">
+
+                <TextView
+                    android:gravity="center"
+                    style="@style/detail_left"
+                    android:text="房间信息"
+                    />
+
+
+                <TextView
+                    android:id="@+id/bespek_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/right_btn"
+                    android:text=""
+                    android:maxWidth="250dp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:textColor="#999999"
+                    />
+
+            </RelativeLayout>
+
+
+
+
             <View
                 style="@style/view1dp"
                 android:layout_marginLeft="15dp"
@@ -238,7 +279,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="订金" />
+                        android:text="预约订金" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"

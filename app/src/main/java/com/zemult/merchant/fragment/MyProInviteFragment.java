@@ -327,10 +327,10 @@ public class MyProInviteFragment extends BaseFragment implements SmoothListView.
                 reservationId = mDatas.get(position - 1).reservationId;
                 if (pagePosition == 0) {
                     IntentUtil.start_activity(getActivity(), BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=0"));
                 } else {
                     IntentUtil.start_activity(getActivity(), BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=1"));
                 }
             }
         });

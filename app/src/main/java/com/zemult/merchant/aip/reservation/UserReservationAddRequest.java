@@ -28,6 +28,15 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
         public int planId;		//服务方案id
 
 
+
+
+        public int isRoom;// 是否填写了房间信息(0:否,1:是)
+        public int       roomNum;//房间数
+        public String       checkInTime;//入住时间
+        public String checkOutTime;// 离开时间
+        public String userName;//联系人名称
+        public String       userPhone;//联系人电话
+
         public void convertJosn(){
             if(remindIMId==0){
                 ejson=Convert.securityJson(Convert.pairsToJson(
@@ -38,6 +47,12 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
                         new Pair<String, String>("num", num+""),
                         new Pair<String, String>("planId", "0".equals(planId+"")?"":planId+""),
                         new Pair<String, String>("reservationMoney", reservationMoney),
+                        new Pair<String, String>("isRoom", isRoom+""),
+                        new Pair<String, String>("roomNum", roomNum+""),
+                        new Pair<String, String>("checkInTime", checkInTime),
+                        new Pair<String, String>("checkOutTime", checkOutTime),
+                        new Pair<String, String>("userName", userName),
+                        new Pair<String, String>("userPhone", userPhone),
                         new Pair<String, String>("note", note)));
             }
             else{
@@ -50,6 +65,12 @@ public class UserReservationAddRequest extends PostStringRequest<Type>  {
                         new Pair<String, String>("planId", "0".equals(planId+"")?"":planId+""),
                         new Pair<String, String>("reservationMoney", reservationMoney),
                         new Pair<String, String>("remindIMId", remindIMId+""),
+                        new Pair<String, String>("isRoom", isRoom+""),
+                        new Pair<String, String>("roomNum", roomNum+""),
+                        new Pair<String, String>("checkInTime", checkInTime),
+                        new Pair<String, String>("checkOutTime", checkOutTime),
+                        new Pair<String, String>("userName", userName),
+                        new Pair<String, String>("userPhone", userPhone),
                         new Pair<String, String>("note", note)));
             }
 

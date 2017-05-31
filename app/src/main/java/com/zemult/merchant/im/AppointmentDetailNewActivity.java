@@ -193,8 +193,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     LinearLayout llDingdanhaoma;
     @Bind(R.id.rl_plan)
     RelativeLayout rlPlan;
+    @Bind(R.id.rl_room)
+    RelativeLayout rlRoom;
     @Bind(R.id.bespek_plan)
     TextView bespekPlan;
+    @Bind(R.id.bespek_room)
+    TextView bespekRoom;
     @Bind(R.id.btn_modify)
     RoundTextView btnModify;
     @Bind(R.id.dinghaole_tv)
@@ -216,7 +220,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     User2ReservationPayRequest  user2ReservationPayRequest;
     User2ReservationSureRequest user2ReservationSureRequest;
     UserRewardPayAddRequest rewardPayAddRequest;
-
+    String inordertime = "", outordertime = "", ordername = "", orderphone = "";
+    int roomnum,ROOMINFO=1005;
 
     public static String REFLASH_MYAPPOINT = "reflash_myappoint";
     String userName="",fileUrl="";
@@ -247,6 +252,21 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         alertDialog = new Dialog(this, R.style.MMTheme_DataSheet);
         userReservationInfo();
         registerReceiver(new String[]{Constants.BROCAST_DISABLE_PLAN});
+
+        rlRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
+                roomintent.putExtra("inordertime",inordertime);
+                roomintent.putExtra("outordertime",outordertime);
+                roomintent.putExtra("ordername",ordername);
+                roomintent.putExtra("orderphone",orderphone);
+                roomintent.putExtra("roomnum",roomnum);
+                roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
+                startActivityForResult(roomintent,ROOMINFO);
+            }
+        });
+
     }
 
     @Override
@@ -312,6 +332,22 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     else {
                         rlPlan.setVisibility(View.GONE);
                     }
+
+
+                    if(mReservation.isRoom!=0){
+                        inordertime =mReservation.checkInTime;
+                        outordertime = mReservation.checkOutTime;
+                        ordername = mReservation.userName;
+                        orderphone = mReservation.userPhone;
+                        roomnum=mReservation.roomNum;
+                        bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+                        rlRoom.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        rlRoom.setVisibility(View.GONE);
+                    }
+
+
 
                     if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
                         rlDingjin.setVisibility(View.VISIBLE);
@@ -503,6 +539,19 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             }
 
             input.reservationMoney= etDingjin.getText().toString();
+
+            if(!StringUtils.isBlank(inordertime)){
+                input.isRoom=1;//是否填写了房间信息(0:否,1:是)
+                input.checkInTime=inordertime;
+                input.checkOutTime=outordertime;
+                input.roomNum=roomnum;
+                input.userName=ordername;
+                input.userPhone=orderphone;
+            }
+            else{
+                input.isRoom=0;
+            }
+
             input.convertJosn();
 
             user2ReservationEditRequest = new User2ReservationEditRequest(input, new ResponseListener() {
@@ -789,6 +838,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 EventBus.getDefault().post(REFLASH_MYAPPOINT);
                 onBackPressed();
                 break;
+
             case R.id.rl_plan:
                 //选择方案
                 if (type == 0) {//我是客户的状态下
@@ -916,7 +966,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 }
                 else{
                     IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=0"));
                 }
 
                 break;
@@ -993,6 +1043,20 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         }
                     });
 
+                    rlRoom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
+                            roomintent.putExtra("inordertime",inordertime);
+                            roomintent.putExtra("outordertime",outordertime);
+                            roomintent.putExtra("ordername",ordername);
+                            roomintent.putExtra("orderphone",orderphone);
+                            roomintent.putExtra("roomnum",roomnum);
+                            roomintent.putExtra("roletype",1);//  type = 1;//服务管家  0  客户
+                            startActivityForResult(roomintent,ROOMINFO);
+                        }
+                    });
+
                 }
                 else{
                     btnModify.setText("修改");
@@ -1008,6 +1072,19 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     rlOrdertime.setClickable(false);
                     tvExtra.setText(etCustomerremark.getText().toString());
                     tvDingjin.setText(etDingjin.getText().toString());
+                    rlRoom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
+                            roomintent.putExtra("inordertime",inordertime);
+                            roomintent.putExtra("outordertime",outordertime);
+                            roomintent.putExtra("ordername",ordername);
+                            roomintent.putExtra("orderphone",orderphone);
+                            roomintent.putExtra("roomnum",roomnum);
+                            roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
+                            startActivityForResult(roomintent,ROOMINFO);
+                        }
+                    });
                     user2_reservation_edit();
                 }
                 break;
@@ -1261,7 +1338,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             bespekPlan.setText(data.getStringExtra("planName"));
             planId = data.getIntExtra("planId", 0);
         }
-
+        if (requestCode == ROOMINFO && resultCode == RESULT_OK) {
+            inordertime = data.getStringExtra("inordertime");
+            outordertime = data.getStringExtra("outordertime");
+            ordername = data.getStringExtra("ordername");
+            orderphone = data.getStringExtra("orderphone");
+            roomnum=data.getIntExtra("roomnum",roomnum);
+            bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+        }
 
     }
 

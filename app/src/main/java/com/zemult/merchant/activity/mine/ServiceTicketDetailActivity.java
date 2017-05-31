@@ -26,6 +26,8 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
+import com.zemult.merchant.im.AppointmentDetailNewActivity;
+import com.zemult.merchant.im.CreateRoomBespeakActivity;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.Convert;
 import com.zemult.merchant.util.DateTimeUtil;
@@ -111,13 +113,19 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     TextView bespekPlan;
     @Bind(R.id.rl_plan)
     RelativeLayout rlPlan;
+    @Bind(R.id.rl_room)
+    RelativeLayout rlRoom;
+    @Bind(R.id.bespek_room)
+    TextView bespekRoom;
+
     private Context mContext;
     private Activity mActivity;
     M_Reservation mReservation;
     protected ImageManager mImageManager;
     UserReservationInfoRequest userReservationInfoRequest;
     int merchantReviewstatus, planId, CHOOSEPLAN = 101;
-
+    String inordertime = "", outordertime = "", ordername = "", orderphone = "";
+    int roomnum;
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_service_ticket_detail);
@@ -192,6 +200,19 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                         rlPlan.setVisibility(View.GONE);
                     }
 
+
+                    if(mReservation.isRoom!=0){
+                        inordertime =mReservation.checkInTime;
+                        outordertime = mReservation.checkOutTime;
+                        ordername = mReservation.userName;
+                        orderphone = mReservation.userPhone;
+                        roomnum=mReservation.roomNum;
+                        bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+                        rlRoom.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        rlRoom.setVisibility(View.GONE);
+                    }
 
                     nameTv.setText(mReservation.saleUserName);
                     shopTv.setText(mReservation.merchantName);
@@ -276,13 +297,22 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right})
+    @OnClick({R.id.lh_btn_back, R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right,R.id.rl_room})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
-
             case R.id.ll_back:
                 onBackPressed();
+                break;
+            case R.id.rl_room:
+            Intent roomintent =new Intent(ServiceTicketDetailActivity.this,CreateRoomBespeakActivity.class);
+            roomintent.putExtra("inordertime",inordertime);
+            roomintent.putExtra("outordertime",outordertime);
+            roomintent.putExtra("ordername",ordername);
+            roomintent.putExtra("orderphone",orderphone);
+            roomintent.putExtra("roomnum",roomnum);
+            roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
+            startActivity(roomintent);
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
@@ -315,7 +345,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 }
                 else{
                     IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=0"));
                 }
                 break;
             case R.id.tv_right:

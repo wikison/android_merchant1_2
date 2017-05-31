@@ -137,4 +137,15 @@ public class M_Reservation implements Serializable {
     public int  isInvitation;//是否生成了邀请函(0:否,1:是)
 
 
+    @Expose
+    public int   isRoom	;		//	否	是否填写了房间信息(0:否,1:是)
+    @Expose
+    public String  checkInTime;			//	否	入住时间
+    @Expose
+    public String   checkOutTime;			//	否	离开时间
+    @Expose
+    public int  roomNum	;		//	否	房间数
+
+
+
 }

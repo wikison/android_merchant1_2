@@ -1082,6 +1082,31 @@ public final class DateTimeUtil implements Serializable {
 
     }
 
+
+    /**
+     * 返回两个日期之间相差多少天。
+     *
+     * @param startDate 格式"yyyy/MM/dd"
+     * @param endDate   格式"yyyy/MM/dd"
+     * @return 整数。
+     */
+    public static int getDiffDays2(String startDate, String endDate) {
+        long diff = 0;
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date sDate = ft.parse(startDate + " 00:00:00");
+            Date eDate = ft.parse(endDate + " 00:00:00");
+            diff = eDate.getTime() - sDate.getTime();
+            diff = diff / 86400000;// 1000*60*60*24;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (int) diff;
+
+    }
+
+
+
     /**
      * 返回两个日期之间的详细日期数组(包括开始日期和结束日期)。
      * 例如：2007/07/01 到2007/07/03 ,那么返回数组

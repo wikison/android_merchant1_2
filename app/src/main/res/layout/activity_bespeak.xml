@@ -6,7 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.zemult.merchant.im.CreateBespeakActivity">
+              tools:context="com.zemult.merchant.im.CreateRoomBespeakActivity">
 
     <include
         android:id="@+id/layout_head"
@@ -24,8 +24,9 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+
             <RelativeLayout
-                android:id="@+id/rl_ordershopname"
+                android:id="@+id/rl_in_ordertime"
                 style="@style/container_height88"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -38,12 +39,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="商户"
-                    />
+                    android:text="入住时间" />
 
 
                 <TextView
-                    android:id="@+id/bespek_shopname"
+                    android:id="@+id/tv_in_bespek_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -51,18 +51,17 @@
                     android:layout_marginRight="5dp"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
-                    android:text="请选择商户"
-                    android:textColor="#282828"
-                    />
+                    android:text="请选择入住时间"
+                    android:textColor="#999999" />
 
             </RelativeLayout>
 
-            <View
-                style="@style/divider1dp"
-                />
+
+            <View style="@style/divider1dp" />
+
 
             <RelativeLayout
-                android:id="@+id/rl_ordertime"
+                android:id="@+id/rl_out_ordertime"
                 style="@style/container_height88"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -75,12 +74,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="时间"
-                    />
+                    android:text="离店时间" />
 
 
                 <TextView
-                    android:id="@+id/bespek_time"
+                    android:id="@+id/tv_out_bespek_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -88,15 +86,13 @@
                     android:layout_marginRight="5dp"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
-                    android:text="请选择预约时间"
-                    android:textColor="#999999"
-                    />
+                    android:text="请选择离店时间"
+                    android:textColor="#999999" />
 
             </RelativeLayout>
 
 
-            <View
-                style="@style/divider1dp"               />
+            <View style="@style/divider1dp" />
 
 
             <RelativeLayout
@@ -111,20 +107,18 @@
                     style="@style/text_15_black_28"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="人数"/>
+                    android:text="房间数" />
 
                 <com.zemult.merchant.view.PMNumView
                     android:id="@+id/pmnv_select_deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
 
-            <View
-                style="@style/divider1dp"
-                />
+            <View style="@style/divider1dp" />
 
             <RelativeLayout
                 android:id="@+id/rl_customername"
@@ -135,9 +129,11 @@
 
                 <TextView
                     style="@style/text_15_black_28"
+                    android:layout_alignBaseline="@+id/et_customername"
+                    android:layout_alignBottom="@+id/et_customername"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="联系人"/>
+                    android:layout_alignParentStart="true"
+                    android:text="联系人姓名" />
 
                 <EditText
                     android:id="@+id/et_customername"
@@ -148,45 +144,16 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="输入您的姓名"
+                    android:hint="输入联系人姓名"
                     android:maxLength="15"
                     android:textColor="#999999"
-                    android:textColorHint="#999999"/>
+                    android:textColorHint="#999999" />
 
-                <RadioGroup
-                    android:id="@+id/rg_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:checkedButton="@+id/rb_xiansheng"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-
-                    >
-
-                    <RadioButton
-                        android:id="@+id/rb_nvshi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="女士"
-                        />
-
-                    <RadioButton
-                        android:id="@+id/rb_xiansheng"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="先生"
-                        />
-
-                </RadioGroup>
 
             </RelativeLayout>
 
 
-            <View
-                style="@style/divider1dp"
-                />
+            <View style="@style/divider1dp" />
 
             <RelativeLayout
                 android:id="@+id/rl_customerphone"
@@ -199,7 +166,7 @@
                     style="@style/text_15_black_28"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="手机号码"/>
+                    android:text="联系人电话" />
 
                 <EditText
                     android:id="@+id/et_customerphone"
@@ -211,111 +178,64 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:gravity="right"
-                    android:hint="请输入手机号码"
+                    android:hint="请输入联系人电话"
                     android:inputType="phone"
                     android:textColor="#999999"
-                    android:textColorHint="#999999"/>
+                    android:textColorHint="#999999" />
 
             </RelativeLayout>
 
 
-            <View
-                style="@style/divider1dp"
-                />
+            <View style="@style/divider1dp" />
 
             <RelativeLayout
-                android:id="@+id/rl_my_service"
+                android:visibility="invisible"
+                android:id="@+id/ll_bottom"
+                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingBottom="15dp"
-                android:paddingLeft="@dimen/margin_12dp"
-                android:paddingRight="@dimen/margin_12dp"
-                android:paddingTop="15dp">
+                android:layout_height="wrap_content">
 
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_bespeak_cancel"
+                    android:layout_width="120dp"
+                    android:layout_height="@dimen/common_btn_height_35"
+                    android:layout_marginLeft="@dimen/j30dp"
+                    android:layout_marginRight="@dimen/j20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_36px"
+                    app:rv_backgroundColor="@color/font_main"
+                    app:rv_backgroundPressColor="@color/bg_ce"
+                    app:rv_cornerRadius="18dp"
+                    app:rv_strokeColor="@color/divider_dc"
+                    app:rv_strokeWidth="1px" />
 
-                <TextView
-                    android:id="@+id/tv_my_service"
-                    style="@style/text_14_black_28"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:text="TA的服务"/>
-
-                <com.zemult.merchant.view.FNRadioGroup
-                    android:id="@+id/fn_my_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/btn_bespeak_commit"
+                    android:layout_width="120dp"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginLeft="@dimen/margin_24dp"
-                    android:layout_toRightOf="@+id/tv_my_service"/>
-
+                    android:layout_height="@dimen/common_btn_height_35"
+                    android:layout_marginLeft="@dimen/j20dp"
+                    android:layout_marginRight="@dimen/j30dp"
+                    android:layout_marginTop="30dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="完成"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_36px"
+                    app:rv_backgroundColor="@color/font_main"
+                    app:rv_backgroundPressColor="@color/bg_ce"
+                    app:rv_cornerRadius="18dp"
+                    app:rv_strokeColor="@color/divider_dc"
+                    app:rv_strokeWidth="1px" />
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="备注"/>
 
-            <com.flyco.roundview.RoundRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                app:rv_backgroundColor="@color/white"
-                app:rv_cornerRadius="5dp"
-                app:rv_strokeColor="#e1e1e1"
-                app:rv_strokeWidth="1px">
-
-                <EditText
-                    android:id="@+id/et_bespeak"
-                    style="@style/text_15_black_28"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_margin="5dp"
-                    android:background="@color/white"
-                    android:gravity="top"
-                    android:hint="请输入您的其他需求"
-                    android:padding="5dp"/>
-
-
-                <TextView
-                    android:id="@+id/editnum"
-                    style="@style/text_10_black_999"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/et_task_title"
-                    android:paddingBottom="@dimen/margin_6dp"
-                    android:paddingRight="@dimen/margin_6dp"
-                    android:text="100"/>
-            </com.flyco.roundview.RoundRelativeLayout>
-
-
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/btn_bespeak_commit"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_btn_height_35"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/j70dp"
-                android:layout_marginRight="@dimen/j70dp"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="预约服务"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_36px"
-                app:rv_backgroundColor="@color/font_main"
-                app:rv_backgroundPressColor="@color/bg_ce"
-                app:rv_cornerRadius="18dp"
-                app:rv_strokeColor="@color/divider_dc"
-                app:rv_strokeWidth="1px"/>
 
         </LinearLayout>
     </ScrollView>

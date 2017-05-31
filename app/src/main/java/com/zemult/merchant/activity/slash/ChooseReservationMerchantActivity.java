@@ -85,7 +85,7 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 M_Merchant m_merchant = (M_Merchant) lv.getAdapter().getItem(position);
-                if (null != actionFrom && actionFrom.equals("CreateBespeakActivity")) {
+                if (null != actionFrom && actionFrom.equals("CreateRoomBespeakActivity")) {
                     Intent intent = new Intent();
                     intent.putExtra("tags", m_merchant.tags);
                     intent.putExtra("shopName", m_merchant.name);
@@ -95,7 +95,7 @@ public class ChooseReservationMerchantActivity extends BaseActivity {
                     finish();
                 }
 //                if (null != actionFrom && actionFrom.equals("UserDetailActivity")) {
-//                    Intent intent = new Intent(mContext, CreateBespeakActivity.class);
+//                    Intent intent = new Intent(mContext, CreateRoomBespeakActivity.class);
 //                    intent.putExtra("serviceId", userId);
 //                    Bundle mBundle = new Bundle();
 //                    mBundle.putSerializable("m_merchant", m_merchant);
