@@ -153,7 +153,7 @@
 
                 <TextView
                     style="@style/text_15_black_28"
-                    android:text="订金"/>
+                    android:text="预约订金"/>
 
                 <EditText
                     android:id="@+id/et_reservation_money"

@@ -72,7 +72,7 @@
                 <TextView
                     style="@style/text_15_black_28"
                     android:layout_marginLeft="12dp"
-                    android:text="订金"
+                    android:text="预约订金"
                     android:textSize="15sp"/>
 
                 <TextView

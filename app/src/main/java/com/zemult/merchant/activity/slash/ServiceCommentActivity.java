@@ -96,7 +96,7 @@ public class ServiceCommentActivity extends BaseActivity implements SmoothListVi
             rlNoData.setVisibility(View.GONE);
             linearLayoutSimple.setVisibility(View.VISIBLE);
             commentLv.setVisibility(View.GONE);
-            imageManager.loadCircleImage(SlashHelper.userManager().getUserinfo().getHead(),simpleHeadIv);
+            imageManager.loadCircleHead(SlashHelper.userManager().getUserinfo().getHead(),simpleHeadIv);
             simpleNameTv.setText( SlashHelper.userManager().getUserinfo().getName());
             simpleRatingbar.setStar(getIntent().getIntExtra("comment",0));
             simpleTimeTv.setText(getIntent().getStringExtra("commentTime").substring(0, 10));

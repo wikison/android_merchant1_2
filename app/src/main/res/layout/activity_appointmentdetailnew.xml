@@ -355,7 +355,7 @@
                 <TextView
                     android:gravity="center"
                     style="@style/detail_left"
-                    android:text="房间信息"
+                    android:text="订房详情"
                     />
 
 
@@ -415,7 +415,7 @@
                     android:drawableRight="@mipmap/bianji_black_icon"
                     android:drawablePadding="5dp"
                     android:maxLength="5"
-                    android:hint="如需收取订金请输入金额"
+                    android:hint="如需收取预约订金请输入金额"
                     android:inputType="phone"
                     android:textColor="#999999"
                     android:textColorHint="#999999"/>
@@ -495,7 +495,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/text_14_black_999"
-                android:text="订金如需退款请线下和商户协商"
+                android:text="预约订金如需退款请线下和商户协商"
                 />
 
             <LinearLayout

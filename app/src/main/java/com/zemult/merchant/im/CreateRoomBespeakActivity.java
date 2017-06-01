@@ -1,9 +1,11 @@
 package com.zemult.merchant.im;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -85,12 +87,14 @@ public class CreateRoomBespeakActivity extends BaseActivity {
         roletype=getIntent().getIntExtra("roletype",0);
         if(roletype==1){
             llBottom.setVisibility(View.VISIBLE);
+            lhTvTitle.setText("预定房间");
         }
         else{
             pmnvSelectDeadline.setDisable(true);
             llBottom.setVisibility(View.GONE);
             etCustomerphone.setEnabled(false);
             etCustomername.setEnabled(false);
+            lhTvTitle.setText("订房详情");
         }
 
         if(!StringUtils.isBlank(inordertime)){
@@ -129,7 +133,7 @@ public class CreateRoomBespeakActivity extends BaseActivity {
                 pmnvSelectDeadline.setDefaultNum(num);
             }
         });
-        lhTvTitle.setText("房间信息");
+
     }
 
     @Override
@@ -147,7 +151,7 @@ public class CreateRoomBespeakActivity extends BaseActivity {
         Calendar startDate = new GregorianCalendar();
         startDate.setTime(now);
         Calendar endDate = new GregorianCalendar();
-        endDate.setTime(DateTimeUtil.getDateAdd(now, 15));
+        endDate.setTime(DateTimeUtil.getDateAdd(now, 365));
         TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -186,7 +190,7 @@ public class CreateRoomBespeakActivity extends BaseActivity {
         Calendar startDate = new GregorianCalendar();
         startDate.setTime(DateTimeUtil.getDateAdd(selectinDate, 1));
         Calendar endDate = new GregorianCalendar();
-        endDate.setTime(DateTimeUtil.getDateAdd(selectinDate, 7));
+        endDate.setTime(DateTimeUtil.getDateAdd(selectinDate, 365));
         TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -228,6 +232,15 @@ public class CreateRoomBespeakActivity extends BaseActivity {
                 break;
             case R.id.btn_bespeak_cancel:
 
+                tvInBespekTime.setText("请选择入住时间");
+                tvOutBespekTime.setText("请选择入住时间");
+                etCustomername.setText("");
+                etCustomerphone.setText("");
+                pmnvSelectDeadline.setDefaultNum(1);
+                pmnvSelectDeadline.setText("" + pmnvSelectDeadline.getDefaultNum());
+                selectinDate=null;
+                inordertime="";
+                outordertime="";
                 Intent intent2 =new Intent();
                 intent2.putExtra("outordertime","");
                 intent2.putExtra("inordertime","");
@@ -235,7 +248,6 @@ public class CreateRoomBespeakActivity extends BaseActivity {
                 intent2.putExtra("orderphone","");
                 intent2.putExtra("roomnum",0);
                 setResult(RESULT_OK,intent2);
-                finish();
 
                 break;
             case R.id.btn_bespeak_commit:
@@ -258,7 +270,7 @@ public class CreateRoomBespeakActivity extends BaseActivity {
                     ToastUtil.showMessage("请选择离店时间");
                     return;
                 }
-                if (StringUtils.isEmpty(ordername)) {
+                if (StringUtils.isEmpty(ordername.trim())) {
                     ToastUtil.showMessage("请填写联系人姓名");
                     return;
                 }
@@ -299,6 +311,18 @@ public class CreateRoomBespeakActivity extends BaseActivity {
                 break;
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        if(getCurrentFocus()!=null)
+        {
+            ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(getCurrentFocus()
+                                    .getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+        super.onPause();
     }
 
 }

@@ -575,7 +575,7 @@
         <activity android:name=".activity.mine.CustomManageActivity" />
         <activity
             android:name=".im.CreateRoomBespeakActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            />
         <activity android:name=".im.CustomerCreateBespeakActivity" />
         <activity android:name=".im.CustomerCreateBespeakDetailsActivity" />
         <activity
@@ -588,7 +588,6 @@
         <activity android:name=".activity.mine.AccountSafeActivity" />
         <activity android:name=".activity.mine.MyAppointmentActivity" />
         <activity android:name=".activity.slash.TAMerchantListActivity" />
-        <activity android:name=".activity.mine.AppointmentDetailActivity" />
         <activity
             android:name=".im.AppointmentDetailNewActivity"
             android:launchMode="singleTask" />

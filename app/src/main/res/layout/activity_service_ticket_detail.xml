@@ -230,7 +230,7 @@
                 <TextView
                     android:gravity="center"
                     style="@style/detail_left"
-                    android:text="房间信息"
+                    android:text="订房详情"
                     />
 
 
@@ -394,7 +394,7 @@
                         style="@style/detail_left"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="订金" />
+                        android:text="预约订金" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"

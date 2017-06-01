@@ -595,7 +595,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
                     return;
                 }
                 if (StringUtils.isEmpty(strremark)) {
-                    ToastUtil.showMessage("请输入包厢或房间号");
+                    ToastUtil.showMessage("请输入预约信息");
                     return;
                 }
                 user_reservation_add();

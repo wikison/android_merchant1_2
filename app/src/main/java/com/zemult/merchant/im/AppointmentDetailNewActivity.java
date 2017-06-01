@@ -1059,6 +1059,13 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                 }
                 else{
+                    if(StringUtils.isBlank(etCustomerremark.getText().toString())){
+                        ToastUtil.showMessage("请输入预约信息");
+                        return;
+                    }
+
+
+
                     btnModify.setText("修改");
                     etDingjin.setVisibility(View.GONE);
                     etCustomerremark.setVisibility(View.GONE);
@@ -1085,12 +1092,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             startActivityForResult(roomintent,ROOMINFO);
                         }
                     });
-                    if(StringUtils.isBlank(etCustomerremark.getText().toString())){
-                      ToastUtil.showMessage("请输入预约信息");
-                    }
-                    else{
+
                         user2_reservation_edit();
-                    }
 
                 }
                 break;

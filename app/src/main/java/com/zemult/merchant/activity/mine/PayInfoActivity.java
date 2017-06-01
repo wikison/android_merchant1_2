@@ -192,7 +192,7 @@ public class PayInfoActivity extends BaseActivity {
                     } else if (m.type == 4) {
 
                     } else if (m.type == 5) {
-                        tvState.setText("订金");
+                        tvState.setText("预约订金");
                         havedingjinLl.setVisibility(View.GONE);
                         llPay.setVisibility(View.GONE);
 

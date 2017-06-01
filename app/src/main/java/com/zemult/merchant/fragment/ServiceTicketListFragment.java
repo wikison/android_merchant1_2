@@ -220,7 +220,7 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
                                             case 0:
                                                 holder.setViewVisible(R.id.money_ll);
                                                 holder.setText(R.id.tv_state, "待确认");
-                                                holder.setText(R.id.tv_orderdescription, "待支付订金");
+                                                holder.setText(R.id.tv_orderdescription, "待支付预约订金");
                                                 holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.reservationMoney));
 
 
@@ -229,7 +229,7 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
                                                 if (mReservation.merchantReviewstatus == 2) {
                                                     holder.setViewVisible(R.id.money_ll);
                                                     holder.setText(R.id.tv_state, "待买单");
-                                                    holder.setText(R.id.tv_orderdescription, "已付订金");
+                                                    holder.setText(R.id.tv_orderdescription, "已付预约订金");
                                                     holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.reservationMoney));
 
                                                 } else {

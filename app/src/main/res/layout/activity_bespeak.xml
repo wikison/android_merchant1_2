@@ -205,7 +205,7 @@
                     android:layout_marginTop="30dp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="取消"
+                    android:text="重置"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_36px"
                     app:rv_backgroundColor="@color/font_main"
