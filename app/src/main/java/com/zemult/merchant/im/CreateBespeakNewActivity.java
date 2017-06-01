@@ -452,6 +452,17 @@ public class CreateBespeakNewActivity extends BaseActivity {
             input.note = note;
             input.reservationMoney =etDingjin.getText().toString() ;
             input.planId=planId;
+            if(!StringUtils.isBlank(inordertime)){
+                input.isRoom=1;//是否填写了房间信息(0:否,1:是)
+                input.checkInTime=inordertime;
+                input.checkOutTime=outordertime;
+                input.roomNum=roomnum;
+                input.userName=ordername;
+                input.userPhone=orderphone;
+            }
+            else{
+                input.isRoom=0;
+            }
             input.convertJosn();
 
             merchant2SaveResOrderTmp = new Merchant2SaveResOrderTmp(input, new ResponseListener() {

@@ -271,7 +271,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="预定房间"
+                    android:text="预订房间"
                     />
 
 

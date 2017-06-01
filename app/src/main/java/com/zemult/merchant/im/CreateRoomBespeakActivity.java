@@ -87,7 +87,7 @@ public class CreateRoomBespeakActivity extends BaseActivity {
         roletype=getIntent().getIntExtra("roletype",0);
         if(roletype==1){
             llBottom.setVisibility(View.VISIBLE);
-            lhTvTitle.setText("预定房间");
+            lhTvTitle.setText("预订房间");
         }
         else{
             pmnvSelectDeadline.setDisable(true);
