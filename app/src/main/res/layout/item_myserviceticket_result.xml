@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_f0"
-    android:orientation="vertical"
-
-    >
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f0"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_servicedate"
@@ -14,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="2016-6-20"
+        android:text=""
         android:textColor="@color/font_black_46"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 
     <com.flyco.roundview.RoundLinearLayout
@@ -41,7 +39,7 @@
             android:padding="12dp"
             android:paddingRight="5dp"
             android:text="已支付"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:id="@+id/money_ll"
@@ -58,7 +56,7 @@
                 android:layout_marginLeft="10dp"
                 android:paddingRight="5dp"
                 android:text="消费金额"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_price"
@@ -70,8 +68,8 @@
                 android:layout_marginLeft="10dp"
                 android:padding="15dp"
                 android:paddingRight="5dp"
-                android:text="￥1988"
-                android:textStyle="bold" />
+                android:text=""
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:text="服务管家：" />
+                android:text="服务管家："/>
 
             <ImageView
                 android:id="@+id/iv_headimage"
@@ -95,7 +93,7 @@
                 android:layout_marginLeft="12dp"
                 android:clickable="false"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/user_icon" />
+                android:src="@mipmap/user_icon"/>
 
 
             <TextView
@@ -105,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:paddingRight="5dp"
-                android:text="12345" />
+                android:text=""/>
 
         </LinearLayout>
 
@@ -121,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="商户：" />
+                android:text="商户："/>
 
             <TextView
                 android:id="@+id/tv_merchantName"
@@ -130,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:paddingRight="5dp"
-                android:text="12345" />
+                android:text=""/>
 
         </LinearLayout>
 
@@ -145,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="预约时间：" />
+                android:text="预约时间："/>
 
             <TextView
                 android:id="@+id/tv_reservationTime"
@@ -154,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:paddingRight="5dp"
-                android:text="12345" />
+                android:text=""/>
 
         </LinearLayout>
 
@@ -170,7 +168,7 @@
             android:paddingLeft="10dp"
             android:text="查看详情"
             android:textColor="@color/normal_tab"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
     </com.flyco.roundview.RoundLinearLayout>
 
