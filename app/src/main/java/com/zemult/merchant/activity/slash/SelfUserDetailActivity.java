@@ -574,6 +574,7 @@ public class SelfUserDetailActivity extends BaseActivity {
 
                 }
 
+                //服务单记录
                 @Override
                 public void onServiceList(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, ServiceTicketListActivity.class);
@@ -586,6 +587,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                     startActivity(intent);
                 }
 
+                //交易单记录
                 @Override
                 public void onServiceHistoryList(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, ServiceHistoryActivity.class);
@@ -594,6 +596,7 @@ public class SelfUserDetailActivity extends BaseActivity {
                     startActivity(intent);
                 }
 
+                //评价
                 @Override
                 public void onCommentList(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, ServiceCommentActivity.class);
@@ -609,6 +612,7 @@ public class SelfUserDetailActivity extends BaseActivity {
 
                 }
 
+                //服务方案
                 @Override
                 public void onServicePlanList(M_Merchant entity) {
                     Intent intent = new Intent(SelfUserDetailActivity.this, ServicePlanActivity.class);

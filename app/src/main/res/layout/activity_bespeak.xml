@@ -12,24 +12,24 @@
         android:id="@+id/layout_head"
         layout="@layout/layout_head"/>
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
-
 
             <RelativeLayout
                 android:id="@+id/rl_in_ordertime"
                 style="@style/container_height88"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="58dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="入住时间" />
+                    android:text="入住时间"/>
 
 
                 <TextView
@@ -52,19 +52,19 @@
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
                     android:text="请选择入住时间"
-                    android:textColor="#999999" />
+                    android:textColor="#999999"/>
 
             </RelativeLayout>
 
 
-            <View style="@style/divider1dp" />
+            <View style="@style/divider1dp"/>
 
 
             <RelativeLayout
                 android:id="@+id/rl_out_ordertime"
                 style="@style/container_height88"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="58dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="离店时间" />
+                    android:text="离店时间"/>
 
 
                 <TextView
@@ -87,18 +87,19 @@
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
                     android:text="请选择离店时间"
-                    android:textColor="#999999" />
+                    android:textColor="#999999"/>
 
             </RelativeLayout>
 
 
-            <View style="@style/divider1dp" />
+            <View style="@style/divider1dp"/>
 
 
             <RelativeLayout
                 android:id="@+id/rl_select_deadline"
                 style="@style/container_height88"
                 android:background="@color/white"
+                android:layout_height="58dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -107,23 +108,24 @@
                     style="@style/text_15_black_28"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="房间数" />
+                    android:text="房间数"/>
 
                 <com.zemult.merchant.view.PMNumView
                     android:id="@+id/pmnv_select_deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
 
 
-            <View style="@style/divider1dp" />
+            <View style="@style/divider1dp"/>
 
             <RelativeLayout
                 android:id="@+id/rl_customername"
                 style="@style/container_height88"
                 android:background="@color/white"
+                android:layout_height="58dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -133,7 +135,7 @@
                     android:layout_alignBottom="@+id/et_customername"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="联系人姓名" />
+                    android:text="联系人姓名"/>
 
                 <EditText
                     android:id="@+id/et_customername"
@@ -147,17 +149,18 @@
                     android:hint="输入联系人姓名"
                     android:maxLength="6"
                     android:textColor="#999999"
-                    android:textColorHint="#999999" />
+                    android:textColorHint="#999999"/>
 
 
             </RelativeLayout>
 
 
-            <View style="@style/divider1dp" />
+            <View style="@style/divider1dp"/>
 
             <RelativeLayout
                 android:id="@+id/rl_customerphone"
                 style="@style/container_height88"
+                android:layout_height="58dp"
                 android:background="@color/white"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
@@ -166,7 +169,7 @@
                     style="@style/text_15_black_28"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="联系人电话" />
+                    android:text="联系人电话"/>
 
                 <EditText
                     android:id="@+id/et_customerphone"
@@ -181,62 +184,59 @@
                     android:hint="请输入联系人电话"
                     android:inputType="phone"
                     android:textColor="#999999"
-                    android:textColorHint="#999999" />
+                    android:textColorHint="#999999"/>
 
             </RelativeLayout>
-
-
-            <View style="@style/divider1dp" />
-
-            <RelativeLayout
-                android:visibility="invisible"
-                android:id="@+id/ll_bottom"
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.flyco.roundview.RoundTextView
-                    android:id="@+id/btn_bespeak_cancel"
-                    android:layout_width="120dp"
-                    android:layout_height="@dimen/common_btn_height_35"
-                    android:layout_marginLeft="@dimen/j30dp"
-                    android:layout_marginRight="@dimen/j20dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="30dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="重置"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_36px"
-                    app:rv_backgroundColor="@color/font_main"
-                    app:rv_backgroundPressColor="@color/bg_ce"
-                    app:rv_cornerRadius="18dp"
-                    app:rv_strokeColor="@color/divider_dc"
-                    app:rv_strokeWidth="1px" />
-
-                <com.flyco.roundview.RoundTextView
-                    android:id="@+id/btn_bespeak_commit"
-                    android:layout_width="120dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_height="@dimen/common_btn_height_35"
-                    android:layout_marginLeft="@dimen/j20dp"
-                    android:layout_marginRight="@dimen/j30dp"
-                    android:layout_marginTop="30dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="完成"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_36px"
-                    app:rv_backgroundColor="@color/font_main"
-                    app:rv_backgroundPressColor="@color/bg_ce"
-                    app:rv_cornerRadius="18dp"
-                    app:rv_strokeColor="@color/divider_dc"
-                    app:rv_strokeWidth="1px" />
-
-            </RelativeLayout>
-
-
-
         </LinearLayout>
-    </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="60dp"
+            android:visibility="invisible">
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/btn_bespeak_cancel"
+                android:layout_width="140dp"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="@dimen/j20dp"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="重置"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_36px"
+                app:rv_backgroundColor="@color/font_main"
+                app:rv_backgroundPressColor="@color/bg_ce"
+                app:rv_cornerRadius="18dp"
+                app:rv_strokeColor="@color/divider_dc"
+                app:rv_strokeWidth="1px"/>
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/btn_bespeak_commit"
+                android:layout_width="140dp"
+                android:layout_height="@dimen/common_btn_height_35"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/j20dp"
+                android:layout_marginRight="35dp"
+                android:layout_marginTop="30dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_36px"
+                app:rv_backgroundColor="@color/font_main"
+                app:rv_backgroundPressColor="@color/bg_ce"
+                app:rv_cornerRadius="18dp"
+                app:rv_strokeColor="@color/divider_dc"
+                app:rv_strokeWidth="1px"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </LinearLayout>

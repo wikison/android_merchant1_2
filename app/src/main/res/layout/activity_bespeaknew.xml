@@ -27,50 +27,47 @@
 
             <RelativeLayout
                 android:id="@+id/rl_orderuser"
-                style="@style/container_height88"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
 
                 <ImageView
-                    android:src="@mipmap/user_icon"
                     android:id="@+id/v_user"
-                    android:layout_centerVertical="true"
                     android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/user_icon"/>
 
                 <TextView
                     android:id="@+id/tv_customername"
-                    android:layout_toRightOf="@+id/v_user"
                     style="@style/text_15_black_28"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/v_user"
                     android:text="消费者"
                     />
 
                 <Button
-                    android:visibility="gone"
-                    android:layout_centerVertical="true"
                     android:id="@+id/play_btn"
                     style="@style/common_btn_235"
-                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginBottom="@dimen/margin_12dp"
                     android:layout_marginLeft="20dp"
-                    android:drawablePadding="10dp"
                     android:background="@drawable/detail_white_btn"
                     android:drawableLeft="@mipmap/icon_xuqiu"
+                    android:drawablePadding="10dp"
                     android:paddingLeft="10dp"
-                    android:text="线上约服需求"
                     android:paddingRight="20dp"
-                    android:layout_alignParentRight="true"
-                    android:textColor="#e6bb7c" />
-
+                    android:text="线上约服需求"
+                    android:textColor="#e6bb7c"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
 
 
             </RelativeLayout>
@@ -83,9 +80,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_ordershopname"
-                style="@style/container_height88"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -120,9 +115,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_ordertime"
-                style="@style/container_height88"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -132,8 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="时间"
-                    />
+                    android:text="到店时间"/>
 
 
                 <TextView
@@ -153,13 +145,12 @@
 
 
             <View
-                style="@style/divider1dp"               />
+                style="@style/divider1dp"/>
 
 
             <RelativeLayout
                 android:id="@+id/rl_select_deadline"
-                style="@style/container_height88"
-                android:background="@color/white"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -185,8 +176,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_customername"
-                style="@style/container_height88"
-                android:background="@color/white"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -220,9 +210,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_plan"
-                style="@style/container_height88"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -245,23 +233,22 @@
                     android:layout_marginRight="5dp"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
-                    android:text="选择服务方案"
-                    android:maxWidth="250dp"
-                    android:lines="1"
                     android:ellipsize="end"
+                    android:lines="1"
+                    android:maxWidth="250dp"
+                    android:text="选择服务方案"
                     android:textColor="#999999"
                     />
 
             </RelativeLayout>
+
             <View
                 style="@style/divider1dp"
                 />
 
             <RelativeLayout
                 android:id="@+id/rl_room"
-                style="@style/container_height88"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -284,10 +271,10 @@
                     android:layout_marginRight="5dp"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/right_btn"
-                    android:text=""
-                    android:maxWidth="250dp"
-                    android:lines="1"
                     android:ellipsize="end"
+                    android:lines="1"
+                    android:maxWidth="250dp"
+                    android:text=""
                     android:textColor="#999999"
                     />
 
@@ -298,8 +285,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_customerphone"
-                style="@style/container_height88"
-                android:background="@color/white"
+                style="@style/layout_item"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
 
@@ -320,133 +306,134 @@
                     android:layout_marginLeft="70dp"
                     android:background="@null"
                     android:gravity="right"
-                    android:maxLength="5"
                     android:hint="如需收取预约订金请输入金额"
                     android:inputType="numberDecimal"
+                    android:maxLength="5"
                     android:textColor="#999999"
                     android:textColorHint="#999999"/>
 
             </RelativeLayout>
 
 
-
             <TextView
                 android:id="@+id/tv_dingjin_tpis"
-                android:padding="10dp"
+                style="@style/text_15_black_999"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/text_15_black_999"
+                android:padding="10dp"
                 android:text="预约订金如需退款请线下和商户协商"
                 />
 
 
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/ll_choosesend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <RelativeLayout
-                android:layout_marginTop="50dp"
+            <LinearLayout
+                android:id="@+id/ll_choosesend"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <ImageView
-                    android:layout_toRightOf="@+id/tv_1"
-                    android:layout_centerVertical="true"
-                    android:layout_height="1dp"
-                    android:background="#999999"
-                    android:layout_width="50dp"/>
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/tv_1"
-                    android:layout_centerInParent="true"
-                    style="@style/text_15_black_999"
-                    android:text="生成并发送服务订单到"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:layout_toLeftOf="@+id/tv_1"
-                    android:layout_centerVertical="true"
-                    android:layout_height="1dp"
-                    android:background="#999999"
-                    android:layout_width="50dp"/>
-            </RelativeLayout>
-
-        <LinearLayout
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_width="match_parent"
-            android:layout_height="130dp">
-
-            <LinearLayout
-                android:id="@+id/ll_share_wechat"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/order_weixin" />
-
-                <TextView
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="微信好友"
-                    android:textSize="@dimen/font_24px"
-                    android:textColor="#222222" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_share_lianxiren"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/order_duanxin" />
-
-                <TextView
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="短信"
-                    android:textSize="@dimen/font_24px"
-                    android:textColor="#222222" />
-            </LinearLayout>
-
-            </LinearLayout>
-
-</LinearLayout>
-            <com.flyco.roundview.RoundTextView
                 android:visibility="gone"
-                android:layout_marginTop="90dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp">
+
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_1"
+                        android:background="#999999"/>
+
+                    <TextView
+                        android:id="@+id/tv_1"
+                        style="@style/text_15_black_999"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="生成并发送服务订单到"/>
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tv_1"
+                        android:background="#999999"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_share_wechat"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/order_weixin"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center"
+                            android:text="微信好友"
+                            android:textColor="#222222"
+                            android:textSize="@dimen/font_24px"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_share_lianxiren"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/order_duanxin"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center"
+                            android:text="短信"
+                            android:textColor="#222222"
+                            android:textSize="@dimen/font_24px"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.flyco.roundview.RoundTextView
                 android:id="@+id/btn_bespeak_commit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_btn_height_35"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/j70dp"
                 android:layout_marginRight="@dimen/j70dp"
+                android:layout_marginTop="90dp"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="生成并发送订单"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_36px"
+                android:visibility="gone"
                 app:rv_backgroundColor="@color/font_main"
                 app:rv_backgroundPressColor="@color/bg_ce"
                 app:rv_cornerRadius="18dp"

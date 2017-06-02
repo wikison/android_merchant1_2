@@ -40,6 +40,8 @@ import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by admin on 2017/4/13.
  */
@@ -139,9 +141,10 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 reservationId = mDatas.get(position - 1).reservationId;
-                Intent intent =new Intent(getActivity(),AppointmentDetailNewActivity.class);
-                intent.putExtra(AppointmentDetailNewActivity.INTENT_RESERVATIONID,reservationId+"");
-                getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), AppointmentDetailNewActivity.class);
+                intent.putExtra(AppointmentDetailNewActivity.INTENT_RESERVATIONID, reservationId + "");
+
+                startActivityForResult(intent, Activity.RESULT_FIRST_USER);
             }
         });
 
@@ -214,8 +217,8 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
                                         holder.setText(R.id.tv_saleuser, mReservation.name);
 
                                         holder.setText(R.id.tv_merchantName, mReservation.merchantName);
-                                        if(!StringUtils.isBlank(mReservation.reservationTime)){
-                                            holder.setText(R.id.tv_reservationTime, mReservation.reservationTime.substring(0,16));
+                                        if (!StringUtils.isBlank(mReservation.reservationTime)) {
+                                            holder.setText(R.id.tv_reservationTime, mReservation.reservationTime.substring(0, 16));
                                         }
 
                                         switch (mReservation.state) {
@@ -255,44 +258,6 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
                                                 break;
                                         }
 
-
-//                                        //状态(1:预约成功,2:已支付,3:预约结束)
-//                                        if (mReservation.state == 1) {
-//                                            holder.setText(R.id.tv_state, "已确认");
-//                                            holder.setViewGone(R.id.money_ll);
-//                                        } else if (mReservation.state == 2) {
-//                                            holder.setText(R.id.tv_state, "已支付");
-//                                            holder.setViewVisible(R.id.money_ll);
-//                                            holder.setText(R.id.tv_price, "￥" + Convert.getMoneyString(mReservation.userPayMoney));
-//                                        } else if (mReservation.state == 3) {
-//                                            holder.setText(R.id.tv_state, "已结束");
-//                                            holder.setViewGone(R.id.money_ll);
-//                                        } else if (mReservation.state == 4) {
-//                                            holder.setText(R.id.tv_state, "已结束");
-//                                            holder.setViewGone(R.id.money_ll);
-//                                        }
-//
-//
-//                                        String time = mReservation.reservationTime;
-
-//                                        holder.setText(R.id.tv_reservationTime, mReservation.reservationTime + DateTimeUtil.getWeekDayOfWeek(time) + "  " + time.substring(11, 16));
-
-//
-//
-//                                       long a = DateTimeUtil.getIntervalDays(DateTimeUtil.getCurrentDate(), mReservation.reservationTime.substring(0, 10));
-//getWeekDayOfWeek
-//                                        if (a < 1 && a >= 0) {
-//                                            holder.setText(R.id.day_tv, "今天");
-//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
-//                                        } else if (a >= 1 && a < 2) {
-//                                            holder.setText(R.id.day_tv, "昨天");
-//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(11, 16));
-//                                        } else {
-//                                            holder.setText(R.id.day_tv, DateTimeUtil.getChinaDayofWeek(mReservation.reservationTime.substring(0, 10)));
-//                                            holder.setText(R.id.time_tv, mReservation.reservationTime.substring(5, 10));
-//                                        }
-
-
                                     }
 
                                 });
@@ -322,6 +287,13 @@ public class ServiceTicketListFragment extends BaseFragment implements SmoothLis
         sendJsonRequest(userSaleReservationList);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            onRefresh();
+        }
+    }
 
     @Override
     public void onRefresh() {

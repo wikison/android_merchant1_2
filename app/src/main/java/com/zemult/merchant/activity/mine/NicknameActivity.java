@@ -2,7 +2,6 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +38,7 @@ public class NicknameActivity extends MBaseActivity {
     LinearLayout llBack;
 
     UserEditinfoRequest userEditinfoRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,15 @@ public class NicknameActivity extends MBaseActivity {
         lhBtnRight.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         ninameEt.setText(SlashHelper.userManager().getUserinfo().getName());
 
-        EditFilter.WordFilter(ninameEt, 6);
+        ninameEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    ninameEt.setText("");
+                    EditFilter.WordFilter(ninameEt, 6);
+                }
+            }
+        });
 
     }
 
@@ -99,8 +107,6 @@ public class NicknameActivity extends MBaseActivity {
         });
         sendJsonRequest(userEditinfoRequest);
     }
-
-
 
 
     @OnClick({R.id.ll_back, R.id.lh_btn_right, R.id.lh_btn_back})
