@@ -46,7 +46,6 @@ import com.zemult.merchant.activity.slash.ServicePlanActivity;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.SendRewardAdapter;
 import com.zemult.merchant.aip.common.CommonRewardRequest;
-import com.zemult.merchant.aip.common.User2ReservationEditInvitationRequest;
 import com.zemult.merchant.aip.mine.User2ReservationInfoRequest;
 import com.zemult.merchant.aip.mine.User2ReservationPayRequest;
 import com.zemult.merchant.aip.mine.UserRewardPayAddRequest;
@@ -68,7 +67,6 @@ import com.zemult.merchant.model.M_Bill;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.model.apimodel.APIM_PresentList;
 import com.zemult.merchant.util.Convert;
-import com.zemult.merchant.util.DateTimePickDialogUtil;
 import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
@@ -209,26 +207,26 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     TextView tvName;
     @Bind(R.id.serveraccount_btn)
     Button serveraccountBtn;
-    String reservationId = "",ordertime = "";
+    String reservationId = "", ordertime = "";
     int type;
     String replayNote;
-    int  merchantReviewstatus,planId,CHOOSEPLAN=101;
+    int merchantReviewstatus, planId, CHOOSEPLAN = 101;
     M_Reservation mReservation;
     User2ReservationInfoRequest user2ReservationInfoRequest;
     User2ReservationEditRequest user2ReservationEditRequest;
-    User2ReservationDelRequest  user2ReservationDelRequest;
-    User2ReservationPayRequest  user2ReservationPayRequest;
+    User2ReservationDelRequest user2ReservationDelRequest;
+    User2ReservationPayRequest user2ReservationPayRequest;
     User2ReservationSureRequest user2ReservationSureRequest;
     UserRewardPayAddRequest rewardPayAddRequest;
     String inordertime = "", outordertime = "", ordername = "", orderphone = "";
-    int roomnum,ROOMINFO=1005;
+    int roomnum, ROOMINFO = 1005;
 
     public static String REFLASH_MYAPPOINT = "reflash_myappoint";
-    String userName="",fileUrl="";
+    String userName = "", fileUrl = "";
     ImageManager mimageManager;
     @Bind(R.id.cb_reward)
     CheckBox cbReward;
-    double  rewardMoney = 0;
+    double rewardMoney = 0;
     Set<Integer> selectIdSet = new HashSet<Integer>();
     Set<Integer> selectIdSetTemp = new HashSet<Integer>();
     private SendRewardAdapter adapterReward;
@@ -256,14 +254,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         rlRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
-                roomintent.putExtra("inordertime",inordertime);
-                roomintent.putExtra("outordertime",outordertime);
-                roomintent.putExtra("ordername",ordername);
-                roomintent.putExtra("orderphone",orderphone);
-                roomintent.putExtra("roomnum",roomnum);
-                roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
-                startActivityForResult(roomintent,ROOMINFO);
+                Intent roomintent = new Intent(AppointmentDetailNewActivity.this, CreateRoomBespeakActivity.class);
+                roomintent.putExtra("inordertime", inordertime);
+                roomintent.putExtra("outordertime", outordertime);
+                roomintent.putExtra("ordername", ordername);
+                roomintent.putExtra("orderphone", orderphone);
+                roomintent.putExtra("roomnum", roomnum);
+                roomintent.putExtra("roletype", 0);//  type = 1;//服务管家  0  客户
+                startActivityForResult(roomintent, ROOMINFO);
             }
         });
 
@@ -283,11 +281,11 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_DISABLE_PLAN.equals(intent.getAction())) {
-            if(intent.getIntExtra("planId",0)==planId&&0==intent.getIntExtra("state",0)){
-                planId=0;
+            if (intent.getIntExtra("planId", 0) == planId && 0 == intent.getIntExtra("state", 0)) {
+                planId = 0;
                 bespekPlan.setText("选择服务方案");
             }
-            if(intent.getIntExtra("planId",0)==planId&&1==intent.getIntExtra("state",0)){
+            if (intent.getIntExtra("planId", 0) == planId && 1 == intent.getIntExtra("state", 0)) {
                 bespekPlan.setText(intent.getStringExtra("planName"));
             }
 
@@ -318,35 +316,32 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 dismissPd();
                 if (((M_Reservation) response).status == 1) {
                     mReservation = (M_Reservation) response;
-                    userName=mReservation.saleUserName;
-                    fileUrl=mReservation.replayNote;
+                    userName = mReservation.saleUserName;
+                    fileUrl = mReservation.replayNote;
                     merchantReviewstatus = mReservation.merchantReviewstatus;
                     slData.setVisibility(View.VISIBLE);
                     tvNodata.setVisibility(View.GONE);
 
-                    if(!StringUtils.isBlank(mReservation.planName)){
-                        planId=mReservation.planId;
+                    if (!StringUtils.isBlank(mReservation.planName)) {
+                        planId = mReservation.planId;
                         bespekPlan.setText(mReservation.planName);
                         rlPlan.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         rlPlan.setVisibility(View.GONE);
                     }
 
 
-                    if(mReservation.isRoom!=0){
-                        inordertime =mReservation.checkInTime;
+                    if (mReservation.isRoom != 0) {
+                        inordertime = mReservation.checkInTime;
                         outordertime = mReservation.checkOutTime;
                         ordername = mReservation.userName;
                         orderphone = mReservation.userPhone;
-                        roomnum=mReservation.roomNum;
-                        bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+                        roomnum = mReservation.roomNum;
+                        bespekRoom.setText("共" + DateTimeUtil.getDiffDays2(inordertime, outordertime) + "天");
                         rlRoom.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         rlRoom.setVisibility(View.GONE);
                     }
-
 
 
                     if (merchantReviewstatus == 2) {//商户审核状态(0未审核,1待审核,2审核通过)
@@ -372,15 +367,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         rlcustomer.setVisibility(View.VISIBLE);
                         rlService.setVisibility(View.GONE);
                         tvName.setText(mReservation.name);
-                        if(!TextUtils.isEmpty(mReservation.head)){
+                        if (!TextUtils.isEmpty(mReservation.head)) {
                             mimageManager.loadCircleHead(mReservation.head, vUser);
                         }
 
                         //语音信息
-                        if(mReservation.remindIMId!=0){
+                        if (mReservation.remindIMId != 0) {
                             playBtn.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             playBtn.setVisibility(View.GONE);
                         }
                     } else if (type == 0) {//客户
@@ -421,28 +415,25 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             llZanshang.setVisibility(View.GONE);
                             dinghaoleTv.setVisibility(View.VISIBLE);
                             ordersuccessBtnRl.setVisibility(View.VISIBLE);
-                            if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                            if (mReservation.isInvitation == 0) {//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                                 jiezhangBtn.setText("生成邀请函");
-                            }
-                            else{
+                            } else {
                                 jiezhangBtn.setText("查看邀请函");
                             }
 
-                            if(mReservation.isComment==1){//是否评价(0:否,1:是)
+                            if (mReservation.isComment == 1) {//是否评价(0:否,1:是)
                                 inviteBtn.setVisibility(View.VISIBLE);
                                 inviteBtn.setText("查看评价");
-                            }
-                            else{
+                            } else {
                                 inviteBtn.setVisibility(View.VISIBLE);
                             }
-                            if(mReservation.merchantReviewstatus==2){
+                            if (mReservation.merchantReviewstatus == 2) {
                                 lhBtnRight.setVisibility(View.VISIBLE);
                                 lhBtnRight.setText("快捷买单");
                             }
                             serveraccountBtn.setVisibility(View.GONE);
-                        }
-                        else{
-                            if(!StringUtils.isBlank(mReservation.phoneNum)){
+                        } else {
+                            if (!StringUtils.isBlank(mReservation.phoneNum)) {
                                 playBtn.setVisibility(View.GONE);
                                 callBtn.setVisibility(View.VISIBLE);
                             }
@@ -463,8 +454,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                             lhBtnRight.setVisibility(View.GONE);
                             dinghaoleTv.setVisibility(View.GONE);
                             ordersuccessBtnRl.setVisibility(View.GONE);
-                        }
-                        else{
+                        } else {
                             billdetailsBtn.setVisibility(View.VISIBLE);
                             cusBilldetailsBtn.setVisibility(View.GONE);
                         }
@@ -474,14 +464,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         llWeikuan.setVisibility(View.VISIBLE);
                         llDingdanhaoma.setVisibility(View.VISIBLE);
                         tvDingdanhaoma.setText(mReservation.userPayNumber);
-                        tvWeikuan.setText(mReservation.userPayMoney+"");
+                        tvWeikuan.setText(mReservation.userPayMoney + "");
                         Drawable drawable1 = getResources().getDrawable(R.mipmap.money_gray);
                         drawable1.setBounds(0, 0, 40, 40);
                         tvWeikuan.setCompoundDrawables(drawable1, null, null, null);//只放左边
 
                         lhTvTitle.setText("服务定单");
                         llState.setVisibility(View.VISIBLE);
-                    } else if (mReservation.state == 3||mReservation.state == 4) {//没支付完成，超过预约时间
+                    } else if (mReservation.state == 3 || mReservation.state == 4) {//没支付完成，超过预约时间
                         tvState.setText("已结束");
                         serveraccountBtn.setVisibility(View.GONE);
                         lhTvTitle.setText("服务定单");
@@ -490,10 +480,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
                     shopTv.setText(mReservation.merchantName);
                     pernumberTv.setText(mReservation.num + "人");
-                    ordertime= mReservation.reservationTime;
-                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    ordertime = mReservation.reservationTime;
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     try {
-                        Date date=sdf.parse(StringUtils.isBlank(mReservation.reservationTime)?"":mReservation.reservationTime);
+                        Date date = sdf.parse(StringUtils.isBlank(mReservation.reservationTime) ? "" : mReservation.reservationTime);
                         bespekTime.setText(getTime(date));
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -504,8 +494,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     tvDingjin.setText(Convert.getMoneyString(mReservation.reservationMoney));
                     etCustomerremark.setText(mReservation.note);
 
-                    etDingjin.setText(mReservation.reservationMoney+"");
-                    orderpeople = mReservation.num  ;
+                    etDingjin.setText(mReservation.reservationMoney + "");
+                    orderpeople = mReservation.num;
 
                 } else {
                     slData.setVisibility(View.GONE);
@@ -531,25 +521,23 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             input.num = orderpeople;
             input.planId = planId;
             input.note = etCustomerremark.getText().toString();
-            if(ordertime.length()<17){
-                input.reservationTime= ordertime+ ":00";
-            }
-            else{
-                input.reservationTime= ordertime;
+            if (ordertime.length() < 17) {
+                input.reservationTime = ordertime + ":00";
+            } else {
+                input.reservationTime = ordertime;
             }
 
-            input.reservationMoney= etDingjin.getText().toString();
+            input.reservationMoney = etDingjin.getText().toString();
 
-            if(!StringUtils.isBlank(inordertime)){
-                input.isRoom=1;//是否填写了房间信息(0:否,1:是)
-                input.checkInTime=inordertime;
-                input.checkOutTime=outordertime;
-                input.roomNum=roomnum;
-                input.userName=ordername;
-                input.userPhone=orderphone;
-            }
-            else{
-                input.isRoom=0;
+            if (!StringUtils.isBlank(inordertime)) {
+                input.isRoom = 1;//是否填写了房间信息(0:否,1:是)
+                input.checkInTime = inordertime;
+                input.checkOutTime = outordertime;
+                input.roomNum = roomnum;
+                input.userName = ordername;
+                input.userPhone = orderphone;
+            } else {
+                input.isRoom = 0;
             }
 
             input.convertJosn();
@@ -570,8 +558,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务订单] " +(ordertime.length()<17?ordertime
-                                    :ordertime.substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
+                            object.put("taskTitle", "[服务订单] " + (ordertime.length() < 17 ? ordertime
+                                    : ordertime.substring(0, 16)) + "  " + mReservation.merchantName + "(商户)");
                             object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId + "");
                         } catch (JSONException e) {
@@ -586,6 +574,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
 //                        startActivity(imKit.getChattingActivityIntent(mReservation.saleUserId+""));
+                        setResult(RESULT_OK);
                         finish();
 
                     } else {
@@ -597,7 +586,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         } catch (Exception e) {
         }
     }
-
 
 
     //服务管家撤销预约单(未确认的)
@@ -626,6 +614,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
+                        setResult(RESULT_OK);
                         finish();
                     } else {
                         ToastUtil.showMessage(((CommonResult) response).info);
@@ -636,11 +625,6 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         } catch (Exception e) {
         }
     }
-
-
-
-
-
 
 
     //用户确认预约单
@@ -668,9 +652,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         try {
                             object.put("customizeMessageType", "Task");
                             object.put("tasktype", "ORDER");
-                            object.put("taskTitle", "[服务定单] " + (mReservation.reservationTime .length()<17?mReservation.reservationTime
-                                    :mReservation.reservationTime .substring(0,16) )+ "  " + mReservation.merchantName+"(商户)");
-                            object.put("serviceId",  mReservation.saleUserId+ "");
+                            object.put("taskTitle", "[服务定单] " + (mReservation.reservationTime.length() < 17 ? mReservation.reservationTime
+                                    : mReservation.reservationTime.substring(0, 16)) + "  " + mReservation.merchantName + "(商户)");
+                            object.put("serviceId", mReservation.saleUserId + "");
                             object.put("reservationId", reservationId);
                         } catch (JSONException e) {
 
@@ -679,7 +663,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         messageBody.setSummary("[服务定单]"); // 可以理解为消息的标题，用于显示会话列表和消息通知栏
                         YWMessage message = YWMessageChannel.createCustomMessage(messageBody);
                         YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.saleUserId+ "", imKit.getIMCore().getAppKey());
+                        IYWContact appContact = YWContactFactory.createAPPContact(mReservation.saleUserId + "", imKit.getIMCore().getAppKey());
                         imKit.getConversationService()
                                 .forwardMsgToContact(appContact
                                         , message, forwardCallBack);
@@ -695,6 +679,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         } catch (Exception e) {
         }
     }
+
     //用户打/赞赏-生成支付单（支付宝）
     private void user_reward_pay_add() {
         try {
@@ -760,12 +745,12 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             }
             User2ReservationPayRequest.Input input = new User2ReservationPayRequest.Input();
             input.reservationId = mReservation.reservationId;
-            input.userId= SlashHelper.userManager().getUserId();
-            input.merchantId= mReservation.merchantId;
-            input.saleUserId= mReservation.saleUserId;
-            input.money= mReservation.reservationMoney;//支付单金额(定金金额)
-            input.consumeMoney=Convert.getMoneyString( mReservation.reservationMoney+rewardMoney);//当次支付总金额(money+rewardMoney)
-            input.rewardMoney= rewardMoney;//打赏金额(没有为0)
+            input.userId = SlashHelper.userManager().getUserId();
+            input.merchantId = mReservation.merchantId;
+            input.saleUserId = mReservation.saleUserId;
+            input.money = mReservation.reservationMoney;//支付单金额(定金金额)
+            input.consumeMoney = Convert.getMoneyString(mReservation.reservationMoney + rewardMoney);//当次支付总金额(money+rewardMoney)
+            input.rewardMoney = rewardMoney;//打赏金额(没有为0)
             input.convertJosn();
 
             user2ReservationPayRequest = new User2ReservationPayRequest(input, new ResponseListener() {
@@ -778,9 +763,9 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     if (((CommonResult) response).status == 1) {
                         Intent intent = new Intent(AppointmentDetailNewActivity.this, ChoosePayType4OrderActivity.class);
-                        intent.putExtra("consumeMoney", (mReservation.reservationMoney+rewardMoney));
+                        intent.putExtra("consumeMoney", (mReservation.reservationMoney + rewardMoney));
                         intent.putExtra("order_sn", ((CommonResult) response).number);
-                        intent.putExtra("userPayId",  ((CommonResult) response).userPayId);
+                        intent.putExtra("userPayId", ((CommonResult) response).userPayId);
                         intent.putExtra("reservationId", reservationId);
                         intent.putExtra("rewardMoney", rewardMoney);
                         intent.putExtra("toUserId", mReservation.saleUserId);
@@ -789,7 +774,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                         intent.putExtra("saleHead", mReservation.saleUserHead);
                         intent.putExtra("merchantName", mReservation.merchantName);
                         intent.putExtra("reservationTime", mReservation.reservationTime);
-                        String imMessageTitle="",imMessageContent="";
+                        String imMessageTitle = "", imMessageContent = "";
                         for (int i : selectIdSet) {
                             imMessageTitle = imMessageTitle + moneyList.get(i).name + ",";
                             imMessageContent = imMessageContent + moneyList.get(i).name + moneyList.get(i).money + ",";
@@ -829,13 +814,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn,R.id.serveraccount_btn,R.id.call_btn,R.id.lh_btn_right,R.id.invite_btn,R.id.rl_plan,
-            R.id.cus_billdetails_btn,R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel,R.id.btn_modify,R.id.iv_reward,R.id.customerconfirm_btn})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.head_iv, R.id.play_btn, R.id.serveraccount_btn, R.id.call_btn, R.id.lh_btn_right, R.id.invite_btn, R.id.rl_plan,
+            R.id.cus_billdetails_btn, R.id.billdetails_btn, R.id.jiezhang_btn, R.id.btn_cancel, R.id.btn_modify, R.id.iv_reward, R.id.customerconfirm_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 EventBus.getDefault().post(REFLASH_MYAPPOINT);
+                setResult(RESULT_OK);
                 onBackPressed();
                 break;
 
@@ -844,32 +830,31 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 if (type == 0) {//我是客户的状态下
                     //查看
                     Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
-                    planintent.putExtra("planId",mReservation.planId);
-                    planintent.putExtra("choosePlan",true);
+                    planintent.putExtra("planId", mReservation.planId);
+                    planintent.putExtra("choosePlan", true);
                     startActivity(planintent);
                 }
 
                 if (type == 1) {//我是管家的状态下
-                    if(btnModify.getText().toString().equals("修改")){
+                    if (btnModify.getText().toString().equals("修改")) {
                         //查看
                         Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);//
-                        planintent.putExtra("planId",mReservation.planId);
+                        planintent.putExtra("planId", mReservation.planId);
 
                         startActivity(planintent);
-                    }
-                    else{
+                    } else {
                         //修改
-                        Intent planintent = new Intent(AppointmentDetailNewActivity.this,ServicePlanActivity.class);
-                        planintent.putExtra("saleUserId",SlashHelper.userManager().getUserId());
-                        planintent.putExtra("merchantId",mReservation.merchantId);
-                        planintent.putExtra("choosePlan",true);
+                        Intent planintent = new Intent(AppointmentDetailNewActivity.this, ServicePlanActivity.class);
+                        planintent.putExtra("saleUserId", SlashHelper.userManager().getUserId());
+                        planintent.putExtra("merchantId", mReservation.merchantId);
+                        planintent.putExtra("choosePlan", true);
                         startActivityForResult(planintent, CHOOSEPLAN);
                     }
 
                 }
                 break;
             case R.id.call_btn:
-                if(!StringUtils.isBlank(mReservation.phoneNum)){
+                if (!StringUtils.isBlank(mReservation.phoneNum)) {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     Uri data = Uri.parse("tel:" + mReservation.phoneNum);
                     intent.setData(data);
@@ -878,14 +863,14 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
             case R.id.serveraccount_btn:
                 Intent intentServer = new Intent(this, MyQr4OrderActivity.class);
-                intentServer.putExtra("reservationMoney",mReservation.reservationMoney);
-                intentServer.putExtra("experience",mReservation.saleUserExperience);
-                intentServer.putExtra("saleUserId",mReservation.saleUserId);
-                intentServer.putExtra("saleHead",mReservation.saleUserHead);
-                intentServer.putExtra("saleName",mReservation.saleUserName);
-                intentServer.putExtra("merchantName",mReservation.merchantName);
-                intentServer.putExtra("merchantId",mReservation.merchantId);
-                intentServer.putExtra("reservationId",mReservation.reservationId);
+                intentServer.putExtra("reservationMoney", mReservation.reservationMoney);
+                intentServer.putExtra("experience", mReservation.saleUserExperience);
+                intentServer.putExtra("saleUserId", mReservation.saleUserId);
+                intentServer.putExtra("saleHead", mReservation.saleUserHead);
+                intentServer.putExtra("saleName", mReservation.saleUserName);
+                intentServer.putExtra("merchantName", mReservation.merchantName);
+                intentServer.putExtra("merchantId", mReservation.merchantId);
+                intentServer.putExtra("reservationId", mReservation.reservationId);
                 if (!TextUtils.isEmpty(reservationId))
                     intentServer.putExtra("reservationId", Integer.valueOf(reservationId));
                 startActivity(intentServer);
@@ -909,64 +894,60 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             case R.id.cus_billdetails_btn:
                 IntentUtil.intStart_activity(this,
                         PayInfoActivity.class, new Pair<String, Integer>("userPayId", mReservation.userPayId));
-            break;
+                break;
 
             case R.id.customerconfirm_btn:
                 //确认预约单
                 if (!cbReward.isChecked()) {
-                    rewardMoney=0;
+                    rewardMoney = 0;
                 }
-                if(mReservation.reservationMoney+rewardMoney==0){
+                if (mReservation.reservationMoney + rewardMoney == 0) {
                     user2_reservation_sure();
-                }
-                else if(mReservation.reservationMoney==0&&rewardMoney!=0){
+                } else if (mReservation.reservationMoney == 0 && rewardMoney != 0) {
                     user2_reservation_sure();
                     user_reward_pay_add();
-                }
-                else{
+                } else {
                     user2_reservation_pay();
                 }
 
                 break;
 
             case R.id.invite_btn:
-                if(mReservation.isComment==1){//是否评价(0:否,1:是)
+                if (mReservation.isComment == 1) {//是否评价(0:否,1:是)
                     //查看评价
                     Intent intent2 = new Intent(this, ServiceCommentActivity.class);
                     intent2.putExtra("comment", mReservation.comment);
                     intent2.putExtra("commentNote", mReservation.commentNote);
                     intent2.putExtra("commentTime", mReservation.commentTime);
                     startActivity(intent2);
-                }else{
+                } else {
                     //评价
                     Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
                     intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
                     intent2.putExtra("managerhead", mReservation.saleUserHead);
-                    intent2.putExtra("managername",mReservation.saleUserName);
+                    intent2.putExtra("managername", mReservation.saleUserName);
                     intent2.putExtra("merchantName", mReservation.merchantName);
                     if (!TextUtils.isEmpty(reservationId))
                         intent2.putExtra("reservationId", Integer.valueOf(reservationId));
-                    startActivityForResult(intent2,10002);
+                    startActivityForResult(intent2, 10002);
                 }
-
 
 
                 break;
             case R.id.jiezhang_btn:
 
-                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                if (mReservation.isInvitation == 0) {//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                     //邀请好友
                     Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
-                    urlintent.putExtra("reservationId",mReservation.reservationId);
+                    urlintent.putExtra("reservationId", mReservation.reservationId);
                     urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
                     urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
                     urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
                             "，诚挚邀请，期待您的赴约。");
-                    startActivityForResult(urlintent,10003);
-                }
-                else{
+                    startActivityForResult(urlintent, 10003);
+                } else {
                     IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=0"));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId + "&type=0"));
                 }
 
                 break;
@@ -974,7 +955,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
 
             case R.id.btn_cancel:
 
-                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this,null, "否", "是", "是否撤销服务单", new View.OnClickListener() {
+                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, null, "否", "是", "是否撤销服务单", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         CommonDialog.DismissProgressDialog();
@@ -990,23 +971,23 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 break;
 
             case R.id.play_btn:
-                if(mReservation.remindIMId!=0){
-                    Intent intent =new Intent(AppointmentDetailNewActivity.this, CustomerCreateBespeakDetailsActivity.class);
-                    intent.putExtra("remindIMId",mReservation.remindIMId);
-                    intent.putExtra("userId",mReservation.userId);
+                if (mReservation.remindIMId != 0) {
+                    Intent intent = new Intent(AppointmentDetailNewActivity.this, CustomerCreateBespeakDetailsActivity.class);
+                    intent.putExtra("remindIMId", mReservation.remindIMId);
+                    intent.putExtra("userId", mReservation.userId);
                     startActivity(intent);
                 }
 
                 break;
 
             case R.id.btn_modify:
-                if(btnModify.getText().toString().equals("修改")){
+                if (btnModify.getText().toString().equals("修改")) {
                     btnModify.setText("完成并发送");
                     etDingjin.setVisibility(View.VISIBLE);
                     etCustomerremark.setVisibility(View.VISIBLE);
                     pmnvSelectDeadline.setVisibility(View.VISIBLE);
-                    Drawable dra= getResources().getDrawable(R.mipmap.right_btn);
-                    dra.setBounds( 0, 0, dra.getMinimumWidth(),dra.getMinimumHeight());
+                    Drawable dra = getResources().getDrawable(R.mipmap.right_btn);
+                    dra.setBounds(0, 0, dra.getMinimumWidth(), dra.getMinimumHeight());
                     bespekTime.setCompoundDrawablePadding(10);
                     bespekTime.setCompoundDrawablesWithIntrinsicBounds(null, null, dra, null);
 
@@ -1018,15 +999,15 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     pmnvSelectDeadline.setMinNum(1);
                     pmnvSelectDeadline.setMaxNum(99);
                     pmnvSelectDeadline.setDefaultNum(orderpeople);
-                    pmnvSelectDeadline.setText(orderpeople+"");
+                    pmnvSelectDeadline.setText(orderpeople + "");
                     pmnvSelectDeadline.setFilter();
 
                     pmnvSelectDeadline.setOnNumChangeListener(new PMNumView.NumChangeListener() {
                         @Override
                         public void onNumChanged(int num) {
-                            orderpeople = num ;
+                            orderpeople = num;
                             pmnvSelectDeadline.setDefaultNum(num);
-                            pernumberTv.setText(orderpeople+ "人");
+                            pernumberTv.setText(orderpeople + "人");
                         }
                     });
 
@@ -1046,24 +1027,22 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     rlRoom.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
-                            roomintent.putExtra("inordertime",inordertime);
-                            roomintent.putExtra("outordertime",outordertime);
-                            roomintent.putExtra("ordername",ordername);
-                            roomintent.putExtra("orderphone",orderphone);
-                            roomintent.putExtra("roomnum",roomnum);
-                            roomintent.putExtra("roletype",1);//  type = 1;//服务管家  0  客户
-                            startActivityForResult(roomintent,ROOMINFO);
+                            Intent roomintent = new Intent(AppointmentDetailNewActivity.this, CreateRoomBespeakActivity.class);
+                            roomintent.putExtra("inordertime", inordertime);
+                            roomintent.putExtra("outordertime", outordertime);
+                            roomintent.putExtra("ordername", ordername);
+                            roomintent.putExtra("orderphone", orderphone);
+                            roomintent.putExtra("roomnum", roomnum);
+                            roomintent.putExtra("roletype", 1);//  type = 1;//服务管家  0  客户
+                            startActivityForResult(roomintent, ROOMINFO);
                         }
                     });
 
-                }
-                else{
-                    if(StringUtils.isBlank(etCustomerremark.getText().toString())){
+                } else {
+                    if (StringUtils.isBlank(etCustomerremark.getText().toString())) {
                         ToastUtil.showMessage("请输入预约信息");
                         return;
                     }
-
 
 
                     btnModify.setText("修改");
@@ -1082,18 +1061,18 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                     rlRoom.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent roomintent =new Intent(AppointmentDetailNewActivity.this,CreateRoomBespeakActivity.class);
-                            roomintent.putExtra("inordertime",inordertime);
-                            roomintent.putExtra("outordertime",outordertime);
-                            roomintent.putExtra("ordername",ordername);
-                            roomintent.putExtra("orderphone",orderphone);
-                            roomintent.putExtra("roomnum",roomnum);
-                            roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
-                            startActivityForResult(roomintent,ROOMINFO);
+                            Intent roomintent = new Intent(AppointmentDetailNewActivity.this, CreateRoomBespeakActivity.class);
+                            roomintent.putExtra("inordertime", inordertime);
+                            roomintent.putExtra("outordertime", outordertime);
+                            roomintent.putExtra("ordername", ordername);
+                            roomintent.putExtra("orderphone", orderphone);
+                            roomintent.putExtra("roomnum", roomnum);
+                            roomintent.putExtra("roletype", 0);//  type = 1;//服务管家  0  客户
+                            startActivityForResult(roomintent, ROOMINFO);
                         }
                     });
 
-                        user2_reservation_edit();
+                    user2_reservation_edit();
 
                 }
                 break;
@@ -1105,7 +1084,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
                 intent.putExtra("userSaleId", Integer.valueOf(mReservation.saleUserId));
                 if (!TextUtils.isEmpty(reservationId))
                     intent.putExtra("reservationId", Integer.valueOf(reservationId));
-                startActivityForResult(intent,10004);
+                startActivityForResult(intent, 10004);
                 break;
 
             case R.id.iv_reward:
@@ -1114,7 +1093,7 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             case R.id.cb_reward:
                 if (cbReward.isChecked()) {
                     rewardMoney = 0;
-                    if(selectIdSet.size()==0){
+                    if (selectIdSet.size() == 0) {
                         selectIdSet.add(1);
                     }
                     for (Integer selectidposition : selectIdSet) {
@@ -1304,31 +1283,30 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     }
 
 
+    void showInviteDialog() {
+        if (!SlashHelper.getSettingBoolean(reservationId + "", false)) {
+            CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonDialog.DismissProgressDialog();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonDialog.DismissProgressDialog();
 
-     void showInviteDialog() {
-            if(!SlashHelper.getSettingBoolean(reservationId+"",false)){
-                CommonDialog.showDialogListener(AppointmentDetailNewActivity.this, "生成邀请函", "否", "是", "太棒了！订单已确认，做个精美的邀请函去邀请好友吧~", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonDialog.DismissProgressDialog();
+                    Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
+                    urlintent.putExtra("reservationId", mReservation.reservationId);
+                    urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
+                    urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
+                    urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
+                            "，诚挚邀请，期待您的赴约。");
+                    startActivityForResult(urlintent, 10003);
 
-                        Intent urlintent = new Intent(AppointmentDetailNewActivity.this, ShareAppointmentActivity.class);
-                        urlintent.putExtra("reservationId",mReservation.reservationId);
-                        urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
-                        urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
-                        urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
-                                "，诚挚邀请，期待您的赴约。");
-                        startActivityForResult(urlintent,10003);
-
-                    }
-                });
-                SlashHelper.setSettingBoolean(reservationId+"",true);
-            }
+                }
+            });
+            SlashHelper.setSettingBoolean(reservationId + "", true);
+        }
 
     }
 
@@ -1336,10 +1314,10 @@ public class AppointmentDetailNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10001||requestCode ==10002||requestCode ==10003||requestCode == 10004) {//赞赏-生成支付单  10003 分享刷新  快捷买单成功
+        if (requestCode == 10001 || requestCode == 10002 || requestCode == 10003 || requestCode == 10004) {//赞赏-生成支付单  10003 分享刷新  快捷买单成功
             userReservationInfo();
         }
-        if (requestCode == 1000&&RESULT_OK==resultCode ) {//支付定金
+        if (requestCode == 1000 && RESULT_OK == resultCode) {//支付定金
             showInviteDialog();
             userReservationInfo();
         }
@@ -1352,8 +1330,8 @@ public class AppointmentDetailNewActivity extends BaseActivity {
             outordertime = data.getStringExtra("outordertime");
             ordername = data.getStringExtra("ordername");
             orderphone = data.getStringExtra("orderphone");
-            roomnum=data.getIntExtra("roomnum",roomnum);
-            bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+            roomnum = data.getIntExtra("roomnum", roomnum);
+            bespekRoom.setText("共" + DateTimeUtil.getDiffDays2(inordertime, outordertime) + "天");
         }
 
     }
