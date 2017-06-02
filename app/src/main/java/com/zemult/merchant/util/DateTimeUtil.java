@@ -476,7 +476,7 @@ public final class DateTimeUtil implements Serializable {
         String sday = getFormatDateTime(date, "dd");
         String cday = getFormatDateTime(new Date(), "dd");
         if ((sday.equals(cday))) {
-            return "当天";
+            return "今天";
         } else {
             return weeks[week - 1];
         }
@@ -1366,32 +1366,32 @@ public final class DateTimeUtil implements Serializable {
         String retTime = "";
         if (currenthour >= 0 && currenthour <= 11) {
             if (currenthour == 11 && currentmin >= 0 && currentmin <= 29) {
-                retTime = getCurrentDate() + " (当天) 11:30";
+                retTime = getCurrentDate() + " (今天) 11:30";
             } else {
-                retTime = getCurrentDate() + " (当天) 11:30";
+                retTime = getCurrentDate() + " (今天) 11:30";
             }
 
         }
 
         if (currenthour >= 11 && currenthour <= 17) {
             if (currenthour == 11 && currentmin >= 30 && currentmin <= 59) {
-                retTime = getCurrentDate() + " (当天) 18:00";
+                retTime = getCurrentDate() + " (今天) 18:00";
             } else if (currenthour == 11 && currentmin >= 0 && currentmin <= 29) {
-                retTime = getCurrentDate() + " (当天) 11:30";
+                retTime = getCurrentDate() + " (今天) 11:30";
             } else {
-                retTime = getCurrentDate() + " (当天) 18:00";
+                retTime = getCurrentDate() + " (今天) 18:00";
             }
         }
 
         if (currenthour >= 18 && currenthour <= 19) {
             if (currentmin >= 00 && currentmin <= 59) {
-                retTime = getCurrentDate() + " (当天) 20:00";
+                retTime = getCurrentDate() + " (今天) 20:00";
             }
         }
 
         if (currenthour >= 20 && currenthour <= 23) {
             if (currentmin >= 00 && currentmin <= 59) {
-                retTime = getCurrentDate() + " (当天) " + currenthour + ":" + currentmin;
+                retTime = getCurrentDate() + " (今天) " + currenthour + ":" + currentmin;
             }
         }
 

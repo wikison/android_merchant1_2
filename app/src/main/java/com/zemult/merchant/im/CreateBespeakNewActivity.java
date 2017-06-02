@@ -206,7 +206,7 @@ public class CreateBespeakNewActivity extends BaseActivity {
         });
         lhTvTitle.setText("发订单");
 
-        ordertime=DateTimeUtil.getOrderTime().replace("(当天) ","")+":00";
+        ordertime=DateTimeUtil.getOrderTime().replace("(今天) ","")+":00";
         bespekTime.setText(DateTimeUtil.getOrderTime());
 //        llRight.setVisibility(View.VISIBLE);
 //        ivRight.setImageResource(R.mipmap.icon_historybill);

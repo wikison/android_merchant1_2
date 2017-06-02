@@ -9,6 +9,7 @@ allprojects {
     repositories {
         maven { url 'http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/' }
         maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 
@@ -210,4 +211,5 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

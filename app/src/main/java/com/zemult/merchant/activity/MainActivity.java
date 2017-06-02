@@ -33,6 +33,7 @@ import com.alibaba.mobileim.login.IYWConnectionListener;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.alibaba.mobileim.login.YWLoginState;
 import com.android.volley.VolleyError;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
@@ -162,6 +163,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         mApp = (AppApplication) getApplication();
         // 初始化布局元素
         initViews();
+        MobclickAgent.setScenarioType(mApp, MobclickAgent.EScenarioType. E_UM_NORMAL);
         fragmentManager = getSupportFragmentManager();
         // 第一次启动时选中第0个tab
         setTabSelection(0);
@@ -890,5 +892,15 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
         }
 
     }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
 
 }

@@ -247,7 +247,7 @@ public class CustomerCreateBespeakActivity extends BaseActivity {
         });
         lhTvTitle.setText("线上约服");
 
-        ordertime= DateTimeUtil.getOrderTime().replace("(当天) ","")+":00";
+        ordertime= DateTimeUtil.getOrderTime().replace("(今天) ","")+":00";
         bespekTime.setText(DateTimeUtil.getOrderTime());
 
         imageButtonDial=(ImageButton)findViewById(R.id.imageButtonDial);
