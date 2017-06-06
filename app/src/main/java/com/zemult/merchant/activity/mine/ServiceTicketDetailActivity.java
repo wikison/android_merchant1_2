@@ -26,7 +26,6 @@ import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.config.Constants;
 import com.zemult.merchant.config.Urls;
-import com.zemult.merchant.im.AppointmentDetailNewActivity;
 import com.zemult.merchant.im.CreateRoomBespeakActivity;
 import com.zemult.merchant.model.M_Reservation;
 import com.zemult.merchant.util.Convert;
@@ -34,10 +33,6 @@ import com.zemult.merchant.util.DateTimeUtil;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.IntentUtil;
 import com.zemult.merchant.util.SlashHelper;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -126,6 +121,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     int merchantReviewstatus, planId, CHOOSEPLAN = 101;
     String inordertime = "", outordertime = "", ordername = "", orderphone = "";
     int roomnum;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_service_ticket_detail);
@@ -201,16 +197,15 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                     }
 
 
-                    if(mReservation.isRoom!=0){
-                        inordertime =mReservation.checkInTime;
+                    if (mReservation.isRoom != 0) {
+                        inordertime = mReservation.checkInTime;
                         outordertime = mReservation.checkOutTime;
                         ordername = mReservation.userName;
                         orderphone = mReservation.userPhone;
-                        roomnum=mReservation.roomNum;
-                        bespekRoom.setText("共"+DateTimeUtil.getDiffDays2(inordertime,outordertime)+"天");
+                        roomnum = mReservation.roomNum;
+                        bespekRoom.setText("共" + DateTimeUtil.getDiffDays2(inordertime, outordertime) + "天");
                         rlRoom.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         rlRoom.setVisibility(View.GONE);
                     }
 
@@ -222,14 +217,10 @@ public class ServiceTicketDetailActivity extends BaseActivity {
 //                    Calendar calendar = GregorianCalendar.getInstance();
 //                    calendar.setTime(dateInfo);
 //                    String reservationTimeInfo = mReservation.reservationTime.substring(0, 10)+" (" + DateTimeUtil.getDateFromWeekString(dateInfo) + ") " + mReservation.reservationTime.substring(11, 16);
-                    tvTime.setText( DateTimeUtil.getDateFromWeekString(mReservation.reservationTime));
+                    tvTime.setText(DateTimeUtil.getDateFromWeekString(mReservation.reservationTime));
 
                     pernumberTv.setText("" + mReservation.num);
                     tvRoom.setText(mReservation.note);
-
-
-
-
 
 
                     switch (mReservation.state) {
@@ -250,10 +241,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                                 success1Ll.setVisibility(View.VISIBLE);
                                 tvRight.setVisibility(View.VISIBLE);
                                 tvRight.setText("快捷买单");
-                                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                                if (mReservation.isInvitation == 0) {//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                                     inviteBtn.setText("生成邀请函");
-                                }
-                                else{
+                                } else {
                                     inviteBtn.setText("查看邀请函");
                                 }
 
@@ -262,10 +252,9 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                             } else {
                                 success2Ll.setVisibility(View.VISIBLE);
 
-                                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                                if (mReservation.isInvitation == 0) {//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                                     creatinviteBtn.setText("生成邀请函");
-                                }
-                                else{
+                                } else {
                                     creatinviteBtn.setText("查看邀请函");
                                 }
                             }
@@ -297,7 +286,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right,R.id.rl_room})
+    @OnClick({R.id.lh_btn_back, R.id.rl_plan, R.id.ll_back, R.id.lookorder_btn, R.id.recom_btn, R.id.invite_btn, R.id.creatinvite_btn, R.id.tv_right, R.id.rl_room})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
@@ -305,14 +294,14 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.rl_room:
-            Intent roomintent =new Intent(ServiceTicketDetailActivity.this,CreateRoomBespeakActivity.class);
-            roomintent.putExtra("inordertime",inordertime);
-            roomintent.putExtra("outordertime",outordertime);
-            roomintent.putExtra("ordername",ordername);
-            roomintent.putExtra("orderphone",orderphone);
-            roomintent.putExtra("roomnum",roomnum);
-            roomintent.putExtra("roletype",0);//  type = 1;//服务管家  0  客户
-            startActivity(roomintent);
+                Intent roomintent = new Intent(ServiceTicketDetailActivity.this, CreateRoomBespeakActivity.class);
+                roomintent.putExtra("inordertime", inordertime);
+                roomintent.putExtra("outordertime", outordertime);
+                roomintent.putExtra("ordername", ordername);
+                roomintent.putExtra("orderphone", orderphone);
+                roomintent.putExtra("roomnum", roomnum);
+                roomintent.putExtra("roletype", 0);//  type = 1;//服务管家  0  客户
+                startActivity(roomintent);
                 break;
             case R.id.rl_plan:
                 Intent planintent = new Intent(this, ServicePlanActivity.class);//
@@ -340,12 +329,11 @@ public class ServiceTicketDetailActivity extends BaseActivity {
             case R.id.invite_btn:
             case R.id.creatinvite_btn:
                 //邀请好友
-                if(mReservation.isInvitation==0){//邀请函文字描述   是否生成了邀请函(0:否,1:是)
+                if (mReservation.isInvitation == 0) {//邀请函文字描述   是否生成了邀请函(0:否,1:是)
                     invite();
-                }
-                else{
+                } else {
                     IntentUtil.start_activity(this, BaseWebViewActivity.class,
-                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId+"&type=0"));
+                            new Pair<String, String>("titlename", "邀请函详情"), new Pair<String, String>("share", "true"), new Pair<String, String>("reservationId", reservationId + ""), new Pair<String, String>("url", Constants.RESERVATIONFEEDBACKINFO + reservationId + "&type=0"));
                 }
                 break;
             case R.id.tv_right:
@@ -361,8 +349,6 @@ public class ServiceTicketDetailActivity extends BaseActivity {
     }
 
     private void goAssessment() {
-
-
         Intent intent2 = new Intent(this, Assessment4ServiceActivity.class);
         intent2.putExtra(FindPayActivity.M_RESERVATION, mReservation);
         intent2.putExtra("managerhead", mReservation.saleUserHead);
@@ -376,12 +362,12 @@ public class ServiceTicketDetailActivity extends BaseActivity {
 
     private void invite() {
         Intent urlintent = new Intent(this, ShareAppointmentActivity.class);
-        urlintent.putExtra("reservationId",mReservation.reservationId);
+        urlintent.putExtra("reservationId", mReservation.reservationId);
         urlintent.putExtra("shareurl", Urls.BASIC_URL.replace("inter_json", "app") + "share_reservation_info.do?reservationId=" + reservationId);
         urlintent.putExtra("sharetitle", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】邀您赴约");
         urlintent.putExtra("sharecontent", "您的好友【" + SlashHelper.userManager().getUserinfo().getName() + "】刚刚预定了" + mReservation.reservationTime + mReservation.merchantName +
                 "，诚挚邀请，期待您的赴约。");
-        startActivityForResult(urlintent,10003);
+        startActivityForResult(urlintent, 10003);
     }
 
 
@@ -402,8 +388,7 @@ public class ServiceTicketDetailActivity extends BaseActivity {
                 intent.putExtra("userPayId", userPayId);
                 setResult(RESULT_OK, intent);
                 sendBroadcast(intent);
-            }
-            else  if(requestCode==10003){
+            } else if (requestCode == 10003) {
                 userReservationInfo();
             }
         }

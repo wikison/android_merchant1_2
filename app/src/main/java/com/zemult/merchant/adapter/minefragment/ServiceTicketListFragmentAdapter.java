@@ -16,7 +16,7 @@ public class ServiceTicketListFragmentAdapter extends FragmentStatePagerAdapter 
     private Context context;
     private String[] titles = new String[]{"全部", "待确认", "待买单", "已结束"};
     ServiceTicketListFragment serviceTicketListFragment;
-    int saleUserId,merchantId;
+    int saleUserId, merchantId;
 
     public ServiceTicketListFragmentAdapter(FragmentManager fm, int saleUserId, int merchantId) {
         super(fm);

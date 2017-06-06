@@ -87,6 +87,8 @@ public class Constants {
     public static String SERVICELEVEL = Urls.MAIN_URL + "html/dzyx_common/level.html";
     //服务管家协议
     public static String SERVICEXIEYI = Urls.MAIN_URL + "html/dzyx_sale/xieyi.html";
+    //生成预邀函
+    public static String SHARE_PREINVITATION_ADD = Urls.MAIN_URL + "dzyx/app/share_preInvitation_add.do?userId=";
     //分享预邀单
     public static String PRE_SHARE_INVITATION = Urls.MAIN_URL + "dzyx/app/share_perInvitation_info.do?perId=";
     // APK

@@ -464,7 +464,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 transaction.commitAllowingStateLoss();
                 break;
 
-            default:
+            case 4:
                 mineImage.setImageResource(R.mipmap.wode2_icon);
                 mineText.setTextColor(getResources().getColor(R.color.sel_color));
                 if (mineFragment == null) {
@@ -872,7 +872,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 startActivityForResult(intent, ACTION_OVERLAY_PERMISSION);
             } else {
                 if (conversationFragment == null) {
-                    conversationFragment = mIMKit.getConversationFragment();//= new MainFriendFragment() new SfriendFragment();mIMKit.getConversationFragment()   conversationFragment
+                    conversationFragment = mIMKit.getConversationFragment();
                     transaction.add(R.id.content, conversationFragment);
                 } else {
                     transaction.show(conversationFragment);
@@ -882,7 +882,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             }
         } else {
             if (conversationFragment == null) {
-                conversationFragment = mIMKit.getConversationFragment();//= new MainFriendFragment() new SfriendFragment();mIMKit.getConversationFragment()   conversationFragment
+                conversationFragment = mIMKit.getConversationFragment();
                 transaction.add(R.id.content, conversationFragment);
             } else {
                 transaction.show(conversationFragment);

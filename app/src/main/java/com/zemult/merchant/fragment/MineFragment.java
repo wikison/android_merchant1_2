@@ -290,6 +290,7 @@ public class MineFragment extends BaseFragment {
                 //我的预约
                 break;
 
+            //我发起的预邀函
             case R.id.rl_my_invite:
                 startActivity(new Intent(getActivity(), MyProInviteActivity.class));
                 break;

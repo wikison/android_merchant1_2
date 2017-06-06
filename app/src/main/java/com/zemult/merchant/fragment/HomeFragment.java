@@ -43,8 +43,8 @@ import com.zemult.merchant.activity.city.entity.City;
 import com.zemult.merchant.activity.city.utils.StringUtils;
 import com.zemult.merchant.activity.mine.MyAppointmentActivity;
 import com.zemult.merchant.activity.search.SearchHotActivity;
-import com.zemult.merchant.activity.slash.PreInviteActivity;
 import com.zemult.merchant.activity.slash.SelfUserDetailActivity;
+import com.zemult.merchant.activity.slash.SharePreInviteActivity;
 import com.zemult.merchant.activity.slash.User2FirstSaleUserRequest;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
@@ -171,7 +171,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                                 break;
 
                             case 2:
-                                intent = new Intent(mActivity, PreInviteActivity.class);
+                                intent = new Intent(mActivity, SharePreInviteActivity.class);
                                 startActivity(intent);
                                 break;
                             case 3:
