@@ -7,12 +7,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.flyco.roundview.RoundTextView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -32,32 +30,24 @@ import butterknife.OnClick;
 
 public class SharePreInviteActivity extends BaseActivity {
 
+    User2ReservationEditInvitationRequest user2ReservationEditInvitationRequest;
+    String preId, invitor, activityName, time, feedbackTime, note;
+    @Bind(R.id.webview)
+    WebView webview;
     @Bind(R.id.lh_btn_back)
     Button lhBtnBack;
     @Bind(R.id.ll_back)
     LinearLayout llBack;
-    @Bind(R.id.lh_tv_title)
-    TextView lhTvTitle;
-    @Bind(R.id.webview)
-    WebView webview;
     @Bind(R.id.ll_root)
-    RelativeLayout llRoot;
-    @Bind(R.id.btn_share)
-    RoundTextView btnShare;
-    @Bind(R.id.rl_share)
-    RelativeLayout rlShare;
-    User2ReservationEditInvitationRequest user2ReservationEditInvitationRequest;
-    String preId, invitor, activityName, time, feedbackTime, note;
+    FrameLayout llRoot;
 
     @Override
     public void setContentView() {
-        setContentView(R.layout.activity_share_appointment);
+        setContentView(R.layout.activity_share_pre_invite);
     }
 
     @Override
     public void init() {
-        lhTvTitle.setText("");
-
         WebSettings wSet = webview.getSettings();
         wSet.setJavaScriptCanOpenWindowsAutomatically(true);
         wSet.setJavaScriptEnabled(true);
@@ -65,6 +55,17 @@ public class SharePreInviteActivity extends BaseActivity {
         webview.setWebViewClient(new MyWebViewClient());
         webview.setWebChromeClient(new WebChromeClient());
         webview.loadUrl(Constants.SHARE_PREINVITATION_ADD + SlashHelper.userManager().getUserId());
+
+        webview.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > 100) {
+                    llBack.setVisibility(View.INVISIBLE);
+                } else {
+                    llBack.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     class MyWebViewClient extends WebViewClient {
@@ -88,15 +89,12 @@ public class SharePreInviteActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.btn_share})
+    @OnClick({R.id.lh_btn_back, R.id.ll_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
                 finish();
-                break;
-            case R.id.btn_share:
-                shareToWX();
                 break;
         }
     }
