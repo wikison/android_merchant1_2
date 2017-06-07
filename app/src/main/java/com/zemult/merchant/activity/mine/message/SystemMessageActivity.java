@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
 
@@ -87,6 +88,12 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     holder.setText(R.id.tv_messagetitle,message.title);
                     holder.setText(R.id.tv_messagecontent,message.note);
                     holder.setImage2(R.id.iv_icon,message.pic);
+                    if(StringUtils.isBlank(message.pic)){
+                        holder.setViewGone(R.id.iv_icon);
+                    }
+                    else{
+                        holder.setImage2(R.id.iv_icon,message.pic);
+                    }
                     holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -122,7 +129,12 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                 else  if(message.messageType==9) {//系统消息
                     holder.setText(R.id.tv_messagetitle,message.title);
                     holder.setText(R.id.tv_messagecontent,message.note);
-                    holder.setImage2(R.id.iv_icon,message.pic);
+                    if(StringUtils.isBlank(message.pic)){
+                        holder.setViewGone(R.id.iv_icon);
+                    }
+                    else{
+                        holder.setImage2(R.id.iv_icon,message.pic);
+                    }
                     holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
