@@ -79,10 +79,8 @@ public class SharePreInviteActivity extends BaseActivity {
                 feedbackTime = uri.getQueryParameter("feedbackTime");
                 note = uri.getQueryParameter("note");
 
-            } else if (url.contains("baidumap://map/?")) {
-            } else {
-                view.loadUrl(url);
             }
+            shareToWX();
 
             return true;
         }

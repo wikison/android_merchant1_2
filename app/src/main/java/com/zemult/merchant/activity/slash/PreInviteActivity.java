@@ -374,7 +374,7 @@ public class PreInviteActivity extends BaseActivity {
         new ShareAction(PreInviteActivity.this)
                 .setPlatform(SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener)
-                .withText("您的好友【" + etOrganizer.getText().toString() + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
+                .withText("您的好友【" + etOrganizer.getText().toString()  + "】拟于" + selectTime.substring(0, 4) + "年" + selectTime.substring(5, 7) + "月" + selectTime.substring(8, 10) + "日" + selectTime.substring(11, 16) + "举行" + selectTopic + ", 请确认")
                 .withTargetUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx22ea2af5e7d47cb1&redirect_uri=http://www.yovoll.com/dzyx/app/share_preInvitation_info.do?preId=" + preId + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect")
                 .withMedia(shareImage)
                 .withTitle("您的好友【" + etOrganizer.getText().toString() + "】发起了一个" + selectTopic)

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -31,7 +30,6 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
@@ -159,7 +157,6 @@ public class SalemanInfoSettingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
-                setResult(RESULT_OK);
                 onBackPressed();
                 break;
             case R.id.mis_headgo_layout:
@@ -206,9 +203,8 @@ public class SalemanInfoSettingActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
     }
 }
