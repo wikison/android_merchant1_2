@@ -169,6 +169,7 @@ public class SelfUserDetailActivity extends BaseActivity {
     //    public static int ADD_MERCHANT = 333;
     public static int EDIT_USER_INFO = 444;
     public static int SET_COMMENT_READ = 555;
+    public static int REFRESH_SERVICE_LIST = 666;
     private int userId;// 用户id(要查看的用户)
     private boolean isSelf = true; //用户是否是自己
     private UserInfoRequest userInfoRequest; // 查看用户(其它人)详情
@@ -219,7 +220,7 @@ public class SelfUserDetailActivity extends BaseActivity {
         fromSaleLogin = getIntent().getIntExtra("user_sale_login", 0);
         mContext = this;
         mActivity = this;
-        registerReceiver(new String[]{Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
+        registerReceiver(new String[]{Constants.BROCAST_UPDATEMYINFO, Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS});
     }
 
     private void initView() {
@@ -583,8 +584,11 @@ public class SelfUserDetailActivity extends BaseActivity {
                     // 有待确认的服务单跳转到待确认列表
                     if (entity.unSureOrderNum > 0) {
                         intent.putExtra("page_position", 1);
+                        startActivityForResult(intent, REFRESH_SERVICE_LIST);
+                    } else {
+                        startActivity(intent);
                     }
-                    startActivity(intent);
+
                 }
 
                 //交易单记录
@@ -642,9 +646,6 @@ public class SelfUserDetailActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.lh_btn_back:
             case R.id.ll_back:
-                setResult(RESULT_OK);
-                Intent in = new Intent(Constants.BROCAST_LOGIN);
-                sendBroadcast(in);
                 onBackPressed();
                 break;
             case R.id.btn_contact:
@@ -750,6 +751,8 @@ public class SelfUserDetailActivity extends BaseActivity {
                 getOtherMerchantList();
             } else if (requestCode == SET_COMMENT_READ) {
                 getOtherMerchantList();
+            } else if (requestCode == REFRESH_SERVICE_LIST) {
+                getOtherMerchantList();
             } else if (requestCode == EDIT_USER_INFO) {
                 getUserInfo();
 
@@ -764,13 +767,14 @@ public class SelfUserDetailActivity extends BaseActivity {
         if (intent == null || TextUtils.isEmpty(intent.getAction())) {
             return;
         }
+        if (Constants.BROCAST_UPDATEMYINFO.equals(intent.getAction())) {
+            getUserInfo();
+        }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             selectPosition = 0;
             getOtherMerchantList();
 
-            Intent intent1 = new Intent(Constants.BROCAST_LOGIN);
-            sendBroadcast(intent1);
         }
     }
 

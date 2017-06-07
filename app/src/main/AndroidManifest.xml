@@ -614,6 +614,7 @@
         <activity android:name=".activity.slash.BeManagerSuccessActivity" />
         <activity android:name=".activity.mine.MyInviteActivity" />
         <activity android:name=".activity.slash.PreInviteActivity" />
+        <activity android:name=".activity.slash.SharePreInviteActivity" />
         <activity android:name=".activity.mine.ThirdBandPhoneActivity" />
         <activity
             android:name=".activity.PoiPickActivity"

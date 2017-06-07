@@ -15,5 +15,7 @@ public class M_Title implements Serializable {
     public String name;    //	主题名称
     @Expose
     public String icon;    //	主题图标
+    @Expose
+    public String note;    //	主题描述
 
 }

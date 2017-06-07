@@ -290,6 +290,7 @@ public class MineFragment extends BaseFragment {
                 //我的预约
                 break;
 
+            //我发起的预邀函
             case R.id.rl_my_invite:
                 startActivity(new Intent(getActivity(), MyProInviteActivity.class));
                 break;
@@ -377,6 +378,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
+                    mContext.sendBroadcast(new Intent(Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS));
                     Intent intent = new Intent(getActivity(), SelfUserDetailActivity.class);
                     intent.putExtra("user_sale_login", 1);
                     intent.putExtra(SelfUserDetailActivity.USER_ID, SlashHelper.userManager().getUserId());

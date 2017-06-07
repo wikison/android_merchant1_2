@@ -21,7 +21,8 @@ public class ServiceTicketListActivity extends BaseActivity {
     @Bind(R.id.vp_my_sertick)
     ViewPager vpMySertick;
     int page_position = -1;
-    int saleUserId,merchantId;
+    int saleUserId, merchantId;
+
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_service_ticket_list);
@@ -38,12 +39,12 @@ public class ServiceTicketListActivity extends BaseActivity {
     private void initData() {
         lhTvTitle.setText("服务单记录");
         page_position = getIntent().getIntExtra("page_position", 0);
-        saleUserId=getIntent().getIntExtra("saleUserId",0);
-        merchantId=getIntent().getIntExtra("merchantId",0);
+        saleUserId = getIntent().getIntExtra("saleUserId", 0);
+        merchantId = getIntent().getIntExtra("merchantId", 0);
     }
 
     private void initView() {
-        ServiceTicketListFragmentAdapter adapter = new ServiceTicketListFragmentAdapter(getSupportFragmentManager(),saleUserId,merchantId);
+        ServiceTicketListFragmentAdapter adapter = new ServiceTicketListFragmentAdapter(getSupportFragmentManager(), saleUserId, merchantId);
         vpMySertick.setAdapter(adapter);
         vpMySertick.setOffscreenPageLimit(4);
         vpMySertick.setCurrentItem(page_position);
@@ -78,5 +79,12 @@ public class ServiceTicketListActivity extends BaseActivity {
                 onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+
+        super.onBackPressed();
     }
 }

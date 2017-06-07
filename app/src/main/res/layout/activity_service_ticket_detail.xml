@@ -215,11 +215,6 @@
 
             </RelativeLayout>
 
-            <View
-                style="@style/view1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"></View>
-
             <RelativeLayout
                 android:visibility="gone"
                 android:id="@+id/rl_room"
@@ -253,12 +248,6 @@
             </RelativeLayout>
 
 
-
-
-            <View
-                style="@style/view1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"></View>
             <LinearLayout
                 android:id="@+id/havepayed_ll"
                 android:layout_width="match_parent"
@@ -364,14 +353,6 @@
 
             </LinearLayout>
 
-
-
-
-
-            <View
-                style="@style/view1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"></View>
 
             <LinearLayout
                 android:id="@+id/success1_ll"
