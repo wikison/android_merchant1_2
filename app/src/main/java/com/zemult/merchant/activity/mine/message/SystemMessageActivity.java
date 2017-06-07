@@ -84,10 +84,7 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if(message.messageType==-1){//消息类型(-1:系统广告，0:激励红包，1:注册欢迎，2:升级,3:被举报警告,9系统消息)
-                    holder.setText(R.id.tv_messagetitle,message.title);
-                    holder.setText(R.id.tv_messagecontent,message.note);
-                    holder.setImage2(R.id.iv_icon,message.pic);
+                if(message.messageType==-1||message.messageType==9){//消息类型(-1:系统广告，0:激励红包，1:注册欢迎，2:升级,3:被举报警告,9系统消息)
                     if(StringUtils.isBlank(message.pic)){
                         holder.setViewGone(R.id.iv_icon);
                     }
@@ -101,6 +98,19 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                                     new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
                         }
                     });
+
+                    if(StringUtils.isBlank(message.title)){
+                        holder.setViewGone(R.id.tv_messagetitle);
+                    }else {
+                        holder.setText(R.id.tv_messagetitle,message.title);
+                    }
+
+
+                    if(StringUtils.isBlank(message.note)){
+                        holder.setViewGone(R.id.tv_messagecontent);
+                    }else {
+                        holder.setText(R.id.tv_messagecontent,message.note);
+                    }
                 }
                 else  if(message.messageType==0) {//红包
                     holder.setViewGone(R.id.tv_messagecontent);
@@ -125,23 +135,6 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     holder.setText(R.id.tv_messagetitle,message.note);
                     holder.setViewGone(R.id.tv_messagecontent);
 
-                }
-                else  if(message.messageType==9) {//系统消息
-                    holder.setText(R.id.tv_messagetitle,message.title);
-                    holder.setText(R.id.tv_messagecontent,message.note);
-                    if(StringUtils.isBlank(message.pic)){
-                        holder.setViewGone(R.id.iv_icon);
-                    }
-                    else{
-                        holder.setImage2(R.id.iv_icon,message.pic);
-                    }
-                    holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
-                                    new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
-                        }
-                    });
                 }
                 else   {//1:注册欢迎
                     holder.setViewGone(R.id.tv_messagetitle);
