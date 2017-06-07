@@ -27,9 +27,9 @@ android {
         applicationId "com.zemult.merchant"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 12
-        versionName "2.3"
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.3", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
+        versionCode 13
+        versionName "2.3.1"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "default_channel", RELEASE_VERSION_VALUE: "v2.3.1", DEBUG_VERSION_VALUE: "测试版本号:Android_${releaseTime()}"]
     }
 
     signingConfigs {
