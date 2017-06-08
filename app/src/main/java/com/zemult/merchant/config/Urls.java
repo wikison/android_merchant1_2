@@ -688,6 +688,9 @@ public class Urls {
     //生成邀请函(服务单)
     public static String USER2_RESERVATION_EDITINVITATION = "user2_reservation_editInvitation";
 
+    //更新用户的的位置定位信息
+    public static String COMMON_CHANGEUSERCITY = "common_changeUserCity";
+
 
 
 }

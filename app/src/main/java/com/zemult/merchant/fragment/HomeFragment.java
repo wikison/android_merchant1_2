@@ -49,6 +49,7 @@ import com.zemult.merchant.activity.slash.User2FirstSaleUserRequest;
 import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.slashfrgment.AllIndustryAdapter;
 import com.zemult.merchant.adapter.slashfrgment.HomeChild1_2_3Adapter;
+import com.zemult.merchant.aip.common.CommonChangeUserCityRequest;
 import com.zemult.merchant.aip.discover.CommonGetadvertListRequest;
 import com.zemult.merchant.aip.mine.UserReservationListRequest;
 import com.zemult.merchant.aip.slash.CommonFirstpageIndustryListRequest;
@@ -135,6 +136,8 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private LinearLayoutManager linearLayoutManager;
     private int industryId = -1;
     private SharePopwindow sharePopWindow;
+
+    CommonChangeUserCityRequest commonChangeUserCityRequest;
 
     @OnClick({R.id.ll_city, R.id.rl_add})
     public void onClick(View view) {
@@ -423,6 +426,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         String district = aMapLocation.getDistrict();
                         String name = StringUtils.extractLocation(location, district);
                         String no = aMapLocation.getCityCode();
+                        String adCode = aMapLocation.getAdCode();
                         City city = new City(name, "", no);
                         dbManager.insertCity(city);
                         Log.e("onLocationChanged", "city: " + city);
@@ -437,6 +441,9 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
                         Constants.CENTER = (String) SPUtils.get(mContext, Constants.SP_CENTER, Constants.CENTER);
                         tvCity.setText(aMapLocation.getPoiName());
                         //tvCity.setText(city.getName());
+                        if (SlashHelper.userManager().getUserId() != 0) {
+                            common_changeUserCity(no, adCode);
+                        }
 
                     } else {
                         dbManager.insertCity(new City(Constants.CITY_NAME, Constants.CITY_PINYIN, Constants.CITYID));
@@ -447,6 +454,31 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             }
         });
         mLocationClient.startLocation();
+    }
+
+    private void common_changeUserCity(String no, String adCode) {
+        if (commonChangeUserCityRequest != null) {
+            commonChangeUserCityRequest.cancel();
+        }
+        CommonChangeUserCityRequest.Input input = new CommonChangeUserCityRequest.Input();
+        input.userId = SlashHelper.userManager().getUserId();
+        input.city = no;
+        input.area = adCode;
+
+        input.convertJosn();
+        commonChangeUserCityRequest = new CommonChangeUserCityRequest(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+
+            @Override
+            public void onResponse(Object response) {
+                if (((CommonResult) response).status == 1) {
+                } else {
+                }
+            }
+        });
+        sendJsonRequest(commonChangeUserCityRequest);
     }
 
     private void getNetworkData() {
@@ -469,7 +501,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             onRefresh();
         } else if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             user2_first_saleUser();
-        }else if(Constants.BROCAST_ACCOUNT_OCCUPIED.equals(intent.getAction())){
+        } else if (Constants.BROCAST_ACCOUNT_OCCUPIED.equals(intent.getAction())) {
             headerHomeView.setMyInfo(null);
         }
     }
@@ -703,6 +735,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             headerHomeView.setMyInfo(null);
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
