@@ -61,6 +61,16 @@
 				android:layout_width="50dp"
 				android:layout_height="50dp"
 				android:src="@mipmap/chart_hongbao_icon"/>
+
+			<ImageView
+				android:visibility="gone"
+				android:id="@+id/iv_icon2"
+				android:layout_margin="12dp"
+				android:clickable="false"
+				android:scaleType="centerCrop"
+				android:layout_width="match_parent"
+				android:layout_height="100dp"
+				android:src="@mipmap/merchant_default_cover"/>
 			<TextView
 				android:id="@+id/tv_messagetitle"
 				android:clickable="false"

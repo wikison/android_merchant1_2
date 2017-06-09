@@ -65,5 +65,5 @@ public class M_Message {
 
     @Expose public int urlType			;//链接类型(0:web网页类,1:app内部业务页面-)
 
-    @Expose public String[] appUrl			;
+    @Expose public M_Zone appUrl			;
 }

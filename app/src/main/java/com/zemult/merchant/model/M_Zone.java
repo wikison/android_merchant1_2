@@ -13,4 +13,10 @@ public class M_Zone {
     @Expose
     public  String	code			;	//	地区编号
 
+    @Expose
+    public  int	type			;
+    @Expose
+    public  int	merchantId			;
+    @Expose
+    public  int	saleUserId			;
 }

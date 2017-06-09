@@ -92,19 +92,27 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     e.printStackTrace();
                 }
                 if(message.messageType==-1||message.messageType==9){//消息类型(-1:系统广告，0:激励红包，1:注册欢迎，2:升级,3:被举报警告,9系统消息)
-                    if(StringUtils.isBlank(message.pic)){
-                        holder.setViewGone(R.id.iv_icon);
-                    }
-                    else{
-                        holder.setImage2(R.id.iv_icon,message.pic);
-                    }
+
                     if(StringUtils.isBlank(message.title)){
                         holder.setViewGone(R.id.tv_messagetitle);
                         if(!StringUtils.isBlank(message.pic)){
-                            holder.setImage3(R.id.iv_icon,message.pic);
+                            holder.setImage2(R.id.iv_icon2,message.pic);
+                            holder.setViewVisible(R.id.iv_icon2);
+                            holder.setViewGone(R.id.iv_icon);
+                        }
+                        else{
+                            holder.setViewGone(R.id.iv_icon2);
                         }
                     }else {
                         holder.setText(R.id.tv_messagetitle,message.title);
+                        holder.setViewGone(R.id.iv_icon2);
+                        if(StringUtils.isBlank(message.pic)){
+                            holder.setViewGone(R.id.iv_icon);
+                        }
+                        else{
+                            holder.setViewVisible(R.id.iv_icon);
+                            holder.setImage2(R.id.iv_icon,message.pic);
+                        }
                     }
 
                         holder.setText(R.id.tv_messagecontent,message.note);
@@ -134,14 +142,14 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     }
                     if(message.urlType==1){
                         try {
-                       String   type= message.appUrl[0];
-                        if("1".equals(type)){//saleUserId=xx
-                            final String   saleUserId=    message.appUrl[1];
+                       int   type= message.appUrl.type;
+                        if(type==1){//saleUserId=xx
+                            final int   saleUserId=    message.appUrl.saleUserId;
                             holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(SystemMessageActivity.this, UserDetailActivity.class);
-                                    intent.putExtra(UserDetailActivity.USER_ID, Integer.parseInt(saleUserId));
+                                    intent.putExtra(UserDetailActivity.USER_ID, saleUserId);
                                     startActivity(intent);
                                 }
                             });
@@ -149,18 +157,18 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(SystemMessageActivity.this, UserDetailActivity.class);
-                                    intent.putExtra(UserDetailActivity.USER_ID, Integer.parseInt(saleUserId));
+                                    intent.putExtra(UserDetailActivity.USER_ID, saleUserId);
                                     startActivity(intent);
                                 }
                             });
                         }
-                        if("2".equals(type)){//merchantId=xx
-                            final  String   merchantId=    message.appUrl[1];
+                        if(type==2){//merchantId=xx
+                            final  int   merchantId=    message.appUrl.merchantId;
                             holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(SystemMessageActivity.this, MerchantDetailActivity.class);
-                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, Integer.parseInt(merchantId));
+                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchantId);
                                     startActivity(intent);
                                 }
                             });
@@ -168,7 +176,7 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(SystemMessageActivity.this, MerchantDetailActivity.class);
-                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, Integer.parseInt(merchantId));
+                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, merchantId);
                                     startActivity(intent);
                                 }
                             });
@@ -182,7 +190,10 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
 
                 }
                 else  if(message.messageType==0) {//红包
+                    holder.setViewGone(R.id.iv_icon2);
+                    holder.setViewVisible(R.id.iv_icon);
                     holder.setViewGone(R.id.tv_messagecontent);
+                    holder.setViewVisible(R.id.tv_messagetitle);
                     holder.setText(R.id.tv_messagetitle,message.note);
                     holder.setImageResource(R.id.iv_icon,R.mipmap.chart_hongbao_icon);
                     holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
@@ -196,12 +207,18 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                 }
                 else  if(message.messageType==2) {//升级
                     holder.setImageResource(R.id.iv_icon,R.mipmap.chat_xiaoxi_icon);
+                    holder.setViewGone(R.id.iv_icon2);
+                    holder.setViewVisible(R.id.iv_icon);
                     holder.setText(R.id.tv_messagetitle,message.note);
+                    holder.setViewVisible(R.id.tv_messagetitle);
                     holder.setViewGone(R.id.tv_messagecontent);
                 }
                 else  if(message.messageType==3) {//被举报警告
                     holder.setImageResource(R.id.iv_icon,R.mipmap.chat_xiaoxi_icon);
+                    holder.setViewGone(R.id.iv_icon2);
+                    holder.setViewVisible(R.id.iv_icon);
                     holder.setText(R.id.tv_messagetitle,message.note);
+                    holder.setViewVisible(R.id.tv_messagetitle);
                     holder.setViewGone(R.id.tv_messagecontent);
 
                 }
@@ -209,6 +226,7 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     holder.setViewGone(R.id.tv_messagetitle);
                     holder.setViewGone(R.id.tv_messagecontent);
                     holder.setViewGone(R.id.iv_icon);
+                    holder.setViewGone(R.id.iv_icon2);
                     holder.setViewVisible(R.id.tv_messageother);
                     holder.setText(R.id.tv_messageother,message.note);
 
