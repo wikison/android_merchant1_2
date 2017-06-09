@@ -190,13 +190,27 @@ public class CommonViewHolder {
         if(!TextUtils.isEmpty(url)){
             //    Glide.with(mContext).load(url).into(imageView);
             imageManager.loadUrlImage2(url, imageView);
-
         }
-
         return this;
     }
 
-
+    /**
+     * 系统消息用打，高度固定，宽度全屏
+     * @param viewId
+     * @param url
+     * @return
+     */
+    public CommonViewHolder setImage3(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(100,LinearLayout.LayoutParams.MATCH_PARENT);
+        imageView.setLayoutParams(layoutParams);
+        //这里可以修改为自己的图片加载库
+        if(!TextUtils.isEmpty(url)){
+            //    Glide.with(mContext).load(url).into(imageView);
+            imageManager.loadUrlImage2(url, imageView);
+        }
+        return this;
+    }
 
 
 

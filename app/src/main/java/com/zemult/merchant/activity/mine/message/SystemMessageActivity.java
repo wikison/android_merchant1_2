@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zemult.merchant.R;
+import com.zemult.merchant.activity.AddFriendsActivity;
 import com.zemult.merchant.activity.mine.BillInfoActivity;
+import com.zemult.merchant.activity.slash.MerchantDetailActivity;
 import com.zemult.merchant.activity.slash.TaskDetailActivity;
+import com.zemult.merchant.activity.slash.UserDetailActivity;
 import com.zemult.merchant.adapter.CommonAdapter;
 import com.zemult.merchant.adapter.CommonViewHolder;
 import com.zemult.merchant.aip.mine.UserMessageListSys_1_2Request;
@@ -20,6 +23,7 @@ import com.zemult.merchant.aip.task.TaskIndustryRecordInfoRequest;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.app.base.MBaseActivity;
 import com.zemult.merchant.config.Constants;
+import com.zemult.merchant.model.CommonResult;
 import com.zemult.merchant.model.M_Message;
 import com.zemult.merchant.model.apimodel.APIM_CommonSysMessageList;
 import com.zemult.merchant.model.apimodel.APIM_TaskIndustryInfo;
@@ -29,6 +33,8 @@ import com.zemult.merchant.util.SlashHelper;
 import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.view.SmoothListView.SmoothListView;
 
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +42,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.JSONUtils;
 import cn.trinea.android.common.util.StringUtils;
 import cn.trinea.android.common.util.ToastUtils;
 import zema.volley.network.ResponseListener;
@@ -91,26 +98,88 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                     else{
                         holder.setImage2(R.id.iv_icon,message.pic);
                     }
-                    holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
-                                    new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
-                        }
-                    });
-
                     if(StringUtils.isBlank(message.title)){
                         holder.setViewGone(R.id.tv_messagetitle);
+                        if(!StringUtils.isBlank(message.pic)){
+                            holder.setImage3(R.id.iv_icon,message.pic);
+                        }
                     }else {
                         holder.setText(R.id.tv_messagetitle,message.title);
                     }
 
-
-                    if(StringUtils.isBlank(message.note)){
-                        holder.setViewGone(R.id.tv_messagecontent);
-                    }else {
                         holder.setText(R.id.tv_messagecontent,message.note);
+
+                    if(message.urlType==0){//链接类型(0:web网页类,1:app内部业务页面-)
+                        holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
+                                        new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
+                            }
+                        });
+                        holder.setOnclickListener(R.id.tv_messagetitle, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
+                                        new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
+                            }
+                        });
+                        holder.setOnclickListener(R.id.tv_messagecontent, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                IntentUtil.start_activity(SystemMessageActivity.this,BaseWebViewActivity.class,
+                                        new Pair<String, String>("titlename","消息详情"),new Pair<String, String>("url",message.url));
+                            }
+                        });
                     }
+                    if(message.urlType==1){
+                        try {
+                       String   type= message.appUrl[0];
+                        if("1".equals(type)){//saleUserId=xx
+                            final String   saleUserId=    message.appUrl[1];
+                            holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SystemMessageActivity.this, UserDetailActivity.class);
+                                    intent.putExtra(UserDetailActivity.USER_ID, Integer.parseInt(saleUserId));
+                                    startActivity(intent);
+                                }
+                            });
+                            holder.setOnclickListener(R.id.tv_messagecontent, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SystemMessageActivity.this, UserDetailActivity.class);
+                                    intent.putExtra(UserDetailActivity.USER_ID, Integer.parseInt(saleUserId));
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                        if("2".equals(type)){//merchantId=xx
+                            final  String   merchantId=    message.appUrl[1];
+                            holder.setOnclickListener(R.id.ll_hongbao, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SystemMessageActivity.this, MerchantDetailActivity.class);
+                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, Integer.parseInt(merchantId));
+                                    startActivity(intent);
+                                }
+                            });
+                            holder.setOnclickListener(R.id.tv_messagecontent, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SystemMessageActivity.this, MerchantDetailActivity.class);
+                                    intent.putExtra(MerchantDetailActivity.MERCHANT_ID, Integer.parseInt(merchantId));
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                        }catch (Exception e){
+
+                        }
+                    }
+
+
+
                 }
                 else  if(message.messageType==0) {//红包
                     holder.setViewGone(R.id.tv_messagecontent);

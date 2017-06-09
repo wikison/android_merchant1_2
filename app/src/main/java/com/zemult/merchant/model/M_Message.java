@@ -2,6 +2,8 @@ package com.zemult.merchant.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.lang.reflect.Array;
+
 
 /**
  * Created by zhangkai on 2016/6/8.
@@ -60,4 +62,8 @@ public class M_Message {
     @Expose public String  fromUserName	;//来自 用户名称（messageType=5/8）
     @Expose public double  money	;//金额
     @Expose public int userPayId			;
+
+    @Expose public int urlType			;//链接类型(0:web网页类,1:app内部业务页面-)
+
+    @Expose public String[] appUrl			;
 }
