@@ -1,82 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.zemult.merchant.view.PreviewVideoView
-        android:id="@+id/vv_preview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vp_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <com.zemult.merchant.view.PreviewIndicator
-        android:id="@+id/indicator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="110dp"
-        android:gravity="center_horizontal|bottom"
-        android:orientation="horizontal" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-       android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-        
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="100dp"
-            android:text="登录"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/font_black_28"
-            android:background="@drawable/guide_btn"
-            android:layout_height="35dp" />
-
-
-        <Button
-            android:id="@+id/register_btn"
-            android:layout_toRightOf="@id/login_btn"
-            android:layout_marginLeft="16sp"
-            android:layout_width="100dp"
-            android:text="注册"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/font_black_28"
-            android:background="@drawable/guide_btn"
-            android:layout_height="35dp" />
-
-
-
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/weixinlog_iv"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:src="@mipmap/weixin"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content" />
-
-
-    <Button
-        android:id="@+id/btn_pass"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:text="跳过"
-        android:textColor="@color/font_black_28"
-        android:textSize="14sp"
-        android:background="@drawable/btn_pass"
-        android:layout_alignParentRight="true"
-        android:layout_height="25dp" />
+        android:id="@+id/viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/transparent"/>
 
 
 </RelativeLayout>
