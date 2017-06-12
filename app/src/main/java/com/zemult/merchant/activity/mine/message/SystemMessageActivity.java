@@ -102,16 +102,19 @@ public class SystemMessageActivity extends MBaseActivity implements SmoothListVi
                         }
                         else{
                             holder.setViewGone(R.id.iv_icon2);
+                            holder.setViewGone(R.id.iv_icon);
                         }
                     }else {
                         holder.setText(R.id.tv_messagetitle,message.title);
                         holder.setViewGone(R.id.iv_icon2);
                         if(StringUtils.isBlank(message.pic)){
                             holder.setViewGone(R.id.iv_icon);
+                            holder.setViewGone(R.id.iv_icon2);
                         }
                         else{
                             holder.setViewVisible(R.id.iv_icon);
                             holder.setImage2(R.id.iv_icon,message.pic);
+                            holder.setViewGone(R.id.iv_icon);
                         }
                     }
 
