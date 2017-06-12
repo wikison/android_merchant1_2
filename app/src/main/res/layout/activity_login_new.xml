@@ -68,7 +68,6 @@
                 app:rv_cornerRadius="5dp"
                 android:padding="5dp"
                 android:text="获取验证码"
-
                 android:textColor="@color/bg_head"
                 android:textSize="15sp"/>
         </LinearLayout>

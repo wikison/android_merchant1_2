@@ -3,39 +3,28 @@ package com.zemult.merchant.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.login.YWLoginCode;
 import com.android.volley.VolleyError;
+import com.flyco.roundview.RoundTextView;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
-import com.zemult.merchant.activity.PasswordActivity;
-import com.zemult.merchant.activity.RegisterActivity;
 import com.zemult.merchant.aip.common.CommonCheckcodeRequest;
 import com.zemult.merchant.aip.common.CommonGetCodeRequest;
 import com.zemult.merchant.aip.common.UserBandWxInfoPhoneRequest;
 import com.zemult.merchant.aip.common.UserGetPwdRequest;
 import com.zemult.merchant.aip.common.UserIsRegisterRequest;
-import com.zemult.merchant.aip.common.UserLoginRequest;
-import com.zemult.merchant.aip.common.UserLoginWxRequest;
-import com.zemult.merchant.aip.common.UserRegisterRequest;
+import com.zemult.merchant.aip.common.UserLogin2_3Request;
 import com.zemult.merchant.aip.common.UserWxBandPhoneRequest;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.config.Constants;
@@ -52,9 +41,7 @@ import com.zemult.merchant.util.ToastUtil;
 import com.zemult.merchant.util.UserManager;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.trinea.android.common.util.DigestUtils;
 import cn.trinea.android.common.util.StringUtils;
 import zema.volley.network.ResponseListener;
 
@@ -73,7 +60,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     @Bind(R.id.et_phone)
     EditText etPhone;
     @Bind(R.id.tv_sendcode)
-    TextView tvSendcode;
+    RoundTextView tvSendcode;
     @Bind(R.id.et_code)
     EditText etCode;
     @Bind(R.id.btn_bangding)
@@ -138,18 +125,10 @@ public class ThirdBandPhoneActivity extends BaseActivity {
         btnBangding.setBackgroundResource(R.drawable.next_bg_btn_select);
         etPhone.addTextChangedListener(watcher);
         etCode.addTextChangedListener(watcher);
-        tvSendcode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
-        tvSendcode.getPaint().setAntiAlias(true);//抗锯齿
 
         registerReceiver(new String[]{Constants.BROCAST_LOGIN});
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick({R.id.lh_btn_back, R.id.ll_back, R.id.tv_sendcode, R.id.btn_bangding})
     public void onClick(View view) {
@@ -171,7 +150,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_bangding:
-                if(!StringMatchUtils.isMobileNO(etPhone.getText().toString()))
+                if (!StringMatchUtils.isMobileNO(etPhone.getText().toString()))
                     ToastUtil.showMessage("请输入正确的手机号码");
 
                 checkCode();
@@ -180,8 +159,9 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     }
 
     private UserBandWxInfoPhoneRequest userBandWxInfoPhoneRequest;
-        private void user_band_wx_info_phone() {
-            showUncanclePd();
+
+    private void user_band_wx_info_phone() {
+        showUncanclePd();
         try {
             if (userBandWxInfoPhoneRequest != null) {
                 userBandWxInfoPhoneRequest.cancel();
@@ -201,7 +181,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                 public void onResponse(Object response) {
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        if(((CommonResult) response).isBand == 0)// 是否已经绑定了微信账号(0:否,1:是)
+                        if (((CommonResult) response).isBand == 0)// 是否已经绑定了微信账号(0:否,1:是)
                             getCode();
                         else
                             ToastUtil.showMessage("手机号码已绑定请先解绑");
@@ -219,6 +199,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     }
 
     private CommonGetCodeRequest request_common_getcode;
+
     private void getCode() {
         try {
             if (request_common_getcode != null) {
@@ -241,9 +222,10 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                         ToastUtil.showMessage("验证码已发送, 请查收!");
                         tvSendcode.setText("重新获取(" + 60 + "s)");
                         tvSendcode.setClickable(false);
+                        tvSendcode.getDelegate().setStrokeColor(0xff828282);
                         tvSendcode.setTextColor(0xff828282);
                         waitForClick();
-                    }else
+                    } else
                         ToastUtil.showMessage(((CommonResult) response).info);
                 }
             });
@@ -255,6 +237,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     }
 
     private CommonCheckcodeRequest request_common_checkcode;
+
     private void checkCode() {//发送验证码校验
         try {
             if (request_common_checkcode != null) {
@@ -288,6 +271,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
     }
 
     private UserIsRegisterRequest request_user_is_register;
+
     private void isRegister() {
         try {
             if (request_user_is_register != null) {
@@ -308,12 +292,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     // 返回结果状态值,值为0或1.(0表示已经有该手机号；1表示新手机号码)
                     int status = ((CommonResult) response).status;
                     if (status == 1) {
-                        Intent intent = new Intent(ThirdBandPhoneActivity.this, ThirdBandPhoneSetPwdActivity.class);
-                        intent.putExtra("nickname", nickname);
-                        intent.putExtra("head", head);
-                        intent.putExtra("openid", openid);
-                        intent.putExtra("phone", etPhone.getText().toString());
-                        startActivity(intent);
+                        get_user_login_request();
                     } else {
                         user_wx_band_phone();
                     }
@@ -324,9 +303,72 @@ public class ThirdBandPhoneActivity extends BaseActivity {
             Log.e("USER_IS_REGISTER", e.toString());
         }
     }
+
+    //用户登录
+    UserLogin2_3Request user_login_request;
+
+    private void get_user_login_request() {
+        loadingDialog.show();
+        if (user_login_request != null) {
+            user_login_request.cancel();
+        }
+        UserLogin2_3Request.Input input = new UserLogin2_3Request.Input();
+        input.account = etPhone.getText().toString();
+        input.code = etCode.getText().toString();
+        input.device_token = SlashHelper.deviceManager().getUmengDeviceToken();
+        input.convertJosn();
+
+        user_login_request = new UserLogin2_3Request(input, new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(final Object response) {
+                if (((APIM_UserLogin) response).status == 1) {
+                    AppUtils.initIm(((APIM_UserLogin) response).userInfo.getUserId() + "", Urls.APP_KEY);
+                    loginHelper.login_Sample(((APIM_UserLogin) response).userInfo.getUserId() + "", ((APIM_UserLogin) response).userInfo.getPassword(), Urls.APP_KEY, new IWxCallback() {
+                        @Override
+                        public void onSuccess(Object... arg0) {
+                            loadingDialog.dismiss();
+                            UserManager.instance().saveUserinfo(((APIM_UserLogin) response).userInfo);
+                            SlashHelper.setSettingString("last_login_phone", SlashHelper.userManager().getUserinfo().getPhoneNum());
+                            setResult(RESULT_OK);
+                            Intent intent = new Intent(Constants.BROCAST_LOGIN);
+                            sendBroadcast(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onProgress(int arg0) {
+
+                        }
+
+                        @Override
+                        public void onError(int errorCode, String errorMessage) {
+                            loadingDialog.dismiss();
+                            if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登录
+                            } else {
+                                Notification.showToastMsg(ThirdBandPhoneActivity.this, errorMessage);
+                            }
+                        }
+                    });
+
+
+                } else {
+                    ToastUtil.showMessage(((APIM_UserLogin) response).info);
+                }
+                loadingDialog.dismiss();
+            }
+        });
+        sendJsonRequest(user_login_request);
+    }
+
     //微信绑定手机号登陆(注册)
     private UserWxBandPhoneRequest wxBandPhoneRequest;
-    private void user_wx_band_phone(){
+
+    private void user_wx_band_phone() {
         showUncanclePd();
         try {
             if (wxBandPhoneRequest != null) {
@@ -364,6 +406,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
 
     //根据用户id获取密码
     private UserGetPwdRequest userGetPwdRequest;
+
     private void user_get_pwd(final int userId) {
         showUncanclePd();
         if (userGetPwdRequest != null) {
@@ -389,7 +432,7 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     UserManager.instance().saveUserinfo(userInfo);
 
                     AppUtils.initIm(((CommonResult) response).userId + "", Urls.APP_KEY);
-                    loginHelper.login_Sample(userId+ "", ((CommonResult) response).password, Urls.APP_KEY, new IWxCallback() {
+                    loginHelper.login_Sample(userId + "", ((CommonResult) response).password, Urls.APP_KEY, new IWxCallback() {
                         @Override
                         public void onSuccess(Object... arg0) {
                             loadingDialog.dismiss();
@@ -437,7 +480,8 @@ public class ThirdBandPhoneActivity extends BaseActivity {
                     isWait = false;
                     tvSendcode.setText("重新获取");
                     tvSendcode.setClickable(true);
-                    tvSendcode.setTextColor(0xffe6bb7c);
+                    tvSendcode.setTextColor(getResources().getColor(R.color.font_main));
+                    tvSendcode.getDelegate().setStrokeColor(getResources().getColor(R.color.font_main));
                     i = 60;
                 }
             }

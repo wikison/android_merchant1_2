@@ -397,8 +397,15 @@ public class LoginNewActivity extends BaseActivity {
                 break;
             case R.id.tv_sendcode:
                 strPhone = etPhone.getText().toString();
-                if (!StringUtils.isBlank(strPhone))
-                    getCode();
+                if (StringUtils.isBlank(strPhone)) {
+                    ToastUtil.showMessage("手机号不能为空");
+                    return;
+                }
+                if (!StringMatchUtils.isMobileNO(strPhone)) {
+                    ToastUtil.showMessage("请输入正确的手机号码");
+                    return;
+                }
+                getCode();
                 break;
             case R.id.tv_protocol:
                 IntentUtil.start_activity(LoginNewActivity.this, BaseWebViewActivity.class, new Pair<String, String>("titlename", getString(R.string.app_name) + "服务协议"), new Pair<String, String>("url", Constants.PROTOCOL_REGISTER));
