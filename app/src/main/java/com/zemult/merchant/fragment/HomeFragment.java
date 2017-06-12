@@ -136,6 +136,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     private LinearLayoutManager linearLayoutManager;
     private int industryId = -1;
     private SharePopwindow sharePopWindow;
+    boolean bLocationPermission;
 
     CommonChangeUserCityRequest commonChangeUserCityRequest;
 
@@ -403,7 +404,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     };
 
     private void initLocation() {
-        boolean bLocationPermission = AndPermission.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
+        bLocationPermission = AndPermission.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (bLocationPermission) {
             location();
         } else {
@@ -497,8 +498,10 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
         }
         Log.d(getClass().getName(), "[onReceive] action:" + intent.getAction());
         if (Constants.BROCAST_LOGIN.equals(intent.getAction())) {
-            if (SlashHelper.userManager().getUserId() != 0)
+            if (SlashHelper.userManager().getUserId() != 0) {
                 user2_first_saleUser();
+                initLocation();
+            }
             onRefresh();
         } else if (Constants.BROCAST_BE_SERVER_MANAGER_SUCCESS.equals(intent.getAction())) {
             user2_first_saleUser();
@@ -681,7 +684,6 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     @Override
     public void onRefresh() {
         mContext.sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
-        initLocation();
         user2_first_saleUser();
         homePresenter.merchant_firstpage_List(industryId, page = 1, Constants.ROWS, false);
     }
