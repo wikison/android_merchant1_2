@@ -12,7 +12,7 @@ import com.umeng.message.UmengMessageService;
 import com.umeng.message.common.UmLog;
 import com.umeng.message.entity.UMessage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.activity.SplashActivity;
 import com.zemult.merchant.app.base.BaseWebViewActivity;
 import com.zemult.merchant.util.SlashHelper;
@@ -77,7 +77,7 @@ public class MyPushIntentService extends UmengMessageService {
 					PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 					mBuilder.setContentIntent(contentIntent);
 				}else {
-					Intent  notificationIntent  = new Intent(context, LoginActivity.class);
+					Intent  notificationIntent  = new Intent(context, LoginNewActivity.class);
 					notificationIntent.putExtra("actfrom","notification");
 					notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
 					PendingIntent contentIntent =PendingIntent.getActivity(this, 0,notificationIntent, 0);

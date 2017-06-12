@@ -21,7 +21,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.activity.slash.dotask.NewDoTaskPicActivity;
 import com.zemult.merchant.activity.slash.dotask.NewDoTaskVoteActivity;
@@ -382,7 +382,7 @@ public class SearchDetailActivity extends BaseActivity implements ICompleteTaskV
                         @Override
                         public void onClick(View v) {
                             CommonDialog.DismissProgressDialog();
-                            startActivity(new Intent(mContext, LoginActivity.class));
+                            startActivity(new Intent(mContext, LoginNewActivity.class));
                         }
                     });
                     return;
@@ -489,7 +489,7 @@ public class SearchDetailActivity extends BaseActivity implements ICompleteTaskV
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivity(new Intent(mContext, LoginNewActivity.class));
                 }
             });
             return;

@@ -18,7 +18,7 @@ import com.yanzhenjie.permission.PermissionNo;
 import com.yanzhenjie.permission.PermissionYes;
 import com.zemult.merchant.R;
 import com.zemult.merchant.activity.HeadManageActivity;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
@@ -195,7 +195,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    startActivity(new Intent(context, LoginNewActivity.class));
                 }
             });
             return true;

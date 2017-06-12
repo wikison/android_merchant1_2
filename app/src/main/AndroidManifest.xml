@@ -255,6 +255,9 @@
             android:name=".activity.LoginActivity"
             android:launchMode="singleInstance" />
         <activity
+            android:name=".activity.LoginNewActivity"
+            android:launchMode="singleInstance" />
+        <activity
             android:name=".activity.slash.MerchantEnterActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:windowSoftInputMode="stateAlwaysHidden" />

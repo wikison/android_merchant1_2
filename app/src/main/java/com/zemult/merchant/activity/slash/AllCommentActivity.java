@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slashfrgment.PlanCommentAdapter;
 import com.zemult.merchant.app.BaseActivity;
@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ToastUtils;
 
@@ -193,7 +192,7 @@ public class AllCommentActivity extends BaseActivity implements ICommentView, Sm
                         @Override
                         public void onClick(View v) {
                             CommonDialog.DismissProgressDialog();
-                            startActivity(new Intent(mContext, LoginActivity.class));
+                            startActivity(new Intent(mContext, LoginNewActivity.class));
                         }
                     });
                 }

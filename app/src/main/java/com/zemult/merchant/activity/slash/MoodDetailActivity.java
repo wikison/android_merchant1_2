@@ -24,8 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slashfrgment.PlanCommentAdapter;
 import com.zemult.merchant.app.BaseActivity;
@@ -48,10 +52,6 @@ import com.zemult.merchant.view.FixedListView;
 import com.zemult.merchant.view.HeaderMoodDetailView;
 import com.zemult.merchant.view.SharePopwindow;
 import com.zemult.merchant.view.common.CommonDialog;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,7 +253,7 @@ public class MoodDetailActivity extends BaseActivity implements IMoodDetailView,
                         @Override
                         public void onClick(View v) {
                             CommonDialog.DismissProgressDialog();
-                            startActivityForResult(new Intent(mContext, LoginActivity.class), LOGIN_REQ);
+                            startActivityForResult(new Intent(mContext, LoginNewActivity.class), LOGIN_REQ);
                         }
                     });
                 }
@@ -573,7 +573,7 @@ public class MoodDetailActivity extends BaseActivity implements IMoodDetailView,
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
-                    startActivityForResult(new Intent(mContext, LoginActivity.class), LOGIN_REQ);
+                    startActivityForResult(new Intent(mContext, LoginNewActivity.class), LOGIN_REQ);
                 }
             });
             return;

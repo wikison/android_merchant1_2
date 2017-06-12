@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.app.AppApplication;
 import com.zemult.merchant.app.BaseActivity;
 import com.zemult.merchant.util.SlashHelper;
@@ -79,7 +79,7 @@ public class ChangePassSucActivity extends BaseActivity {
     public void onBackPressed() {
         SlashHelper.userManager().saveUserinfo(null);
         mApp.iPasswordState = 0;
-        Intent intent = new Intent(ChangePassSucActivity.this, LoginActivity.class);
+        Intent intent = new Intent(ChangePassSucActivity.this, LoginNewActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         super.onBackPressed();

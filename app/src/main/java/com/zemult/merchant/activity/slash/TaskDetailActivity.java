@@ -36,7 +36,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.activity.ReportActivity;
 import com.zemult.merchant.adapter.slashfrgment.HomeTaskAdapter;
 import com.zemult.merchant.adapter.slashfrgment.PlanCommentAdapter;
@@ -380,7 +380,7 @@ public class TaskDetailActivity extends BaseActivity implements ITaskDetailView,
                         @Override
                         public void onClick(View v) {
                             CommonDialog.DismissProgressDialog();
-                            startActivityForResult(new Intent(mContext, LoginActivity.class), LOGIN_REQ);
+                            startActivityForResult(new Intent(mContext, LoginNewActivity.class), LOGIN_REQ);
                         }
                     });
                 }
@@ -861,7 +861,7 @@ public class TaskDetailActivity extends BaseActivity implements ITaskDetailView,
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
-                    startActivityForResult(new Intent(mContext, LoginActivity.class), LOGIN_REQ);
+                    startActivityForResult(new Intent(mContext, LoginNewActivity.class), LOGIN_REQ);
                 }
             });
             return;

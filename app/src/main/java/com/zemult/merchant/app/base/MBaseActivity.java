@@ -18,7 +18,7 @@ import com.android.volley.Request;
 import com.bugtags.library.Bugtags;
 import com.google.gson.Gson;
 import com.zemult.merchant.R;
-import com.zemult.merchant.activity.LoginActivity;
+import com.zemult.merchant.activity.LoginNewActivity;
 import com.zemult.merchant.util.AppUtils;
 import com.zemult.merchant.util.ImageManager;
 import com.zemult.merchant.util.SlashHelper;
@@ -376,7 +376,7 @@ public class MBaseActivity extends Activity implements OnClickListener {
                 @Override
                 public void onClick(View v) {
                     CommonDialog.DismissProgressDialog();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    startActivity(new Intent(context, LoginNewActivity.class));
                 }
             });
             return true;

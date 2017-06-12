@@ -8,12 +8,12 @@ public class Urls {
 
     public static String MAIN_URL = "http://www.yovoll.com/";
     //正式
-//    public static String URL = "http://www.yovoll.com/dzyx/";
-//    public static String APP_KEY = "23630707";
+    public static String URL = "http://www.yovoll.com/dzyx/";
+    public static String APP_KEY = "23630707";
 
     //测试
-    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
-    public static String APP_KEY = "23521799";
+//    public static String URL = "http://test1.54xiegang.com/dzyx_test/";
+//    public static String APP_KEY = "23521799";
 
 
     public static String BASIC_URL = URL + "inter_json/";
@@ -690,6 +690,9 @@ public class Urls {
 
     //更新用户的的位置定位信息
     public static String COMMON_CHANGEUSERCITY = "common_changeUserCity";
+    //用户验证码登录
+    public static String USER_LOGIN_2_3 = "user_login_2_3";
+
 
 
 

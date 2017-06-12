@@ -277,7 +277,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
             slashText.setTextColor(getResources().getColor(R.color.sel_color));
             transaction.hide(mineFragment).show(slashFragment).commitAllowingStateLoss();
 
-            IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+            IntentUtil.start_activity(MainActivity.this, LoginNewActivity.class);
         }
         if ("relogin".equals(s)) {
             if (conversationFragment != null) {
@@ -364,7 +364,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                     UserMessageBillNumUnread_1_2_2Request();
                     setTabSelection(1);
                 } else {
-                    IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+                    IntentUtil.start_activity(MainActivity.this, LoginNewActivity.class);
                 }
 
                 break;
@@ -377,7 +377,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                     }
                     mSlashMenuWindow.showMenuWindow(v);
                 } else {
-                    IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+                    IntentUtil.start_activity(MainActivity.this, LoginNewActivity.class);
                 }
 
                 break;
@@ -387,7 +387,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     setTabSelection(3);
                 } else {
-                    IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+                    IntentUtil.start_activity(MainActivity.this, LoginNewActivity.class);
                 }
 
                 break;
@@ -396,7 +396,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                 if (SlashHelper.userManager().getUserinfo() != null) {
                     setTabSelection(4);
                 } else {
-                    IntentUtil.start_activity(MainActivity.this, LoginActivity.class);
+                    IntentUtil.start_activity(MainActivity.this, LoginNewActivity.class);
                 }
 
 
@@ -550,7 +550,7 @@ public class MainActivity extends MAppCompatActivity implements View.OnClickList
                         startActivity(mainintent);
 
 
-                        Intent intent = new Intent(AppApplication.getContext(), LoginActivity.class);
+                        Intent intent = new Intent(AppApplication.getContext(), LoginNewActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         AppApplication.getContext().startActivity(intent);
 

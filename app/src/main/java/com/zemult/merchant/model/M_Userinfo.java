@@ -37,7 +37,7 @@ public class M_Userinfo implements Serializable {
     @Expose
     String province;    //	所属省份
     @Expose
-    public String password;
+    public String password; //MD5加密过后的密码
 
     @Expose
     String city;    //	所属城市
