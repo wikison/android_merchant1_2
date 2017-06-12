@@ -239,6 +239,10 @@ public class LoginNewActivity extends BaseActivity {
             ToastUtil.showMessage("请输入正确的手机号码");
             return;
         }
+        if (!cbAgree.isChecked()) {
+            ToastUtil.showMessage("请勾选同意本平台协议");
+            return;
+        }
         if (!StringUtils.isBlank(strPhone) && !StringUtils.isBlank(strCode))
             get_user_login_request();
     }
@@ -386,6 +390,7 @@ public class LoginNewActivity extends BaseActivity {
                 thirdLogin();
                 break;
             case R.id.btn_login:
+
                 login();
                 break;
             case R.id.al_tv_notnow:

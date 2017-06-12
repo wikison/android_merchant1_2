@@ -167,5 +167,5 @@
         android:layout_marginTop="60dp"
         android:background="@drawable/common_selector_btn"
         android:gravity="center"
-        android:text="下一步"/>
+        android:text="登录"/>
 </LinearLayout>

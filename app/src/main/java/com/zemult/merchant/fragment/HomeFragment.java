@@ -474,6 +474,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
             @Override
             public void onResponse(Object response) {
                 if (((CommonResult) response).status == 1) {
+
                 } else {
                 }
             }
@@ -680,6 +681,7 @@ public class HomeFragment extends BaseFragment implements SmoothListView.ISmooth
     @Override
     public void onRefresh() {
         mContext.sendBroadcast(new Intent(Constants.BROCAST_UPDATEMYINFO));
+        initLocation();
         user2_first_saleUser();
         homePresenter.merchant_firstpage_List(industryId, page = 1, Constants.ROWS, false);
     }
