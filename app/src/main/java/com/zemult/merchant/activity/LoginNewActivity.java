@@ -143,7 +143,7 @@ public class LoginNewActivity extends BaseActivity {
 
         lhTvTitle.setText("登录");
         btnLogin.setEnabled(false);
-        btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
+        btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select_login);
 
         String strLoginPhone = SlashHelper.getSettingString("last_login_phone", "");
         if (!StringUtils.isBlank(strLoginPhone) && strLoginPhone.length() == 11) {
@@ -196,12 +196,12 @@ public class LoginNewActivity extends BaseActivity {
                 if (etPhone.getText().toString().length() > 0
                         && etCode.getText().toString().length() > 0) {
                     btnLogin.setEnabled(true);
-                    btnLogin.setBackgroundResource(R.drawable.common_selector_btn);
+                    btnLogin.setBackgroundResource(R.drawable.common_selector_btn_login);
                 }
 
             } else {
                 btnLogin.setEnabled(false);
-                btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select);
+                btnLogin.setBackgroundResource(R.drawable.next_bg_btn_select_login);
             }
         }
 
